@@ -17,6 +17,15 @@ app.use((req, res) => {
     res.status(404).send('Recurso no encontrado');
 });
 
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    res.status(err.httpStatus || 500).send({
+        status: 'error',
+        message:  err.message
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Server on ${PORT}`);
 });
