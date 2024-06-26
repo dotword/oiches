@@ -1,14 +1,14 @@
 'use strict'
 
 import dotenv from 'dotenv'
-
+import cors from 'cors'
 import express from 'express'
 dotenv.config()
 
 const app = express()
 
 const { PORT } = process.env
-
+app.use(cors())
 app.get('/', (req, res) => {
   res.send('Hola desde Oiches!!')
 })
