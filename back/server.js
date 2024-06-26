@@ -1,17 +1,17 @@
 'use strict';
 
-import dotenv from 'dotenv';
-dotenv.config();
-
 import express from 'express';
+import dotenv from 'dotenv';
+import routes from './src/routes/index.js';
+
+dotenv.config();
 
 const app = express();
 
 const { PORT } = process.env;
 
-app.get('/', (req, res) => {
-    res.send('Hola desde Oiches!!');
-});
+/**Llamado a rutas */
+app.use(routes);
 
 app.use((req, res) => {
     res.status(404).send('Recurso no encontrado');
