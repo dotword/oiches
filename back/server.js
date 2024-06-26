@@ -1,31 +1,31 @@
-'use strict';
+'use strict'
 
-import dotenv from 'dotenv';
-dotenv.config();
+import dotenv from 'dotenv'
 
-import express from 'express';
+import express from 'express'
+dotenv.config()
 
-const app = express();
+const app = express()
 
-const { PORT } = process.env;
+const { PORT } = process.env
 
 app.get('/', (req, res) => {
-    res.send('Hola desde Oiches!!');
-});
+  res.send('Hola desde Oiches!!')
+})
 
 app.use((req, res) => {
-    res.status(404).send('Recurso no encontrado');
-});
+  res.status(404).send('Recurso no encontrado')
+})
 
 app.use((err, req, res, next) => {
-    console.error(err);
+  console.error(err)
 
-    res.status(err.httpStatus || 500).send({
-        status: 'error',
-        message: err.message,
-    });
-});
+  res.status(err.httpStatus || 500).send({
+    status: 'error',
+    message: err.message
+  })
+})
 
 app.listen(PORT, () => {
-    console.log(`Server on ${PORT}`);
-});
+  console.log(`Server on ${PORT}`)
+})
