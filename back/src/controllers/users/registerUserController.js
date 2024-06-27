@@ -1,6 +1,6 @@
 import insertUserService from '../../services/users/insertUserService.js';
 
-const registerUserController = (req, res, next) => {
+const registerUserController = async (req, res, next) => {
     try {
         const { email, password, role } = req.body;
 
@@ -20,7 +20,6 @@ const registerUserController = (req, res, next) => {
             },
         });
     } catch (error) {
-        console.log(error);
         next(error);
     }
 };
