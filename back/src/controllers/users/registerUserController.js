@@ -1,3 +1,5 @@
+import insertUserService from '../../services/users/insertUserService.js';
+
 const registerUserController = (req, res, next) => {
     try {
         const { email, password, role } = req.body;
@@ -7,6 +9,8 @@ const registerUserController = (req, res, next) => {
             error.httpStatus = 400;
             throw error;
         }
+
+        // insertUserService cuando esté lista la DB
 
         res.send({
             data: {
