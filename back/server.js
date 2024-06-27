@@ -1,16 +1,16 @@
 'use strict';
 
-import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
+import express from 'express';
 import routes from './src/routes/index.js';
-
 dotenv.config();
-
-const app = express();
-app.use(express.json());
 
 const { PORT } = process.env;
 
+const app = express();
+app.use(express.json());
+app.use(cors());
 /**Llamado a rutas */
 app.use(routes);
 
