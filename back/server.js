@@ -1,17 +1,18 @@
 'use strict'
 
-import dotenv from 'dotenv'
-import cors from 'cors'
-import express from 'express'
-dotenv.config()
+import dotenv from 'dotenv';
+import cors from 'cors';
+import express from 'express';
+import routes from './src/routes/index.js';
+dotenv.config();
 
-const app = express()
+const { PORT } = process.env;
 
-const { PORT } = process.env
-app.use(cors())
-app.get('/', (req, res) => {
-  res.send('Hola desde Oiches!!')
-})
+const app = express();
+app.use(express.json());
+app.use(cors());
+/**Llamado a rutas */
+app.use(routes);
 
 app.use((req, res) => {
   res.status(404).send('Recurso no encontrado')

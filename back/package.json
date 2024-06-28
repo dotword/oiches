@@ -19,7 +19,8 @@
         "standard": "^17.1.0"
     },
     "eslintConfig": {
-        "extends": "standard"
+        "extends": "standard",
+        "mysql2": "^3.10.1"
     },
     "devDependencies": {
         "nodemon": "^3.1.4"

@@ -1,5 +1,13 @@
-import express from 'express'
+import express from 'express';
 
-const router = express.Router()
+import usersRouter from './usersRouter.js';
+import salasRouter from './salasRouter.js';
+import musicosRouter from './musicosRouter.js';
 
-export default router
+const router = express.Router();
+
+router.use(usersRouter);
+router.use(salasRouter);
+router.use(musicosRouter);
+
+export default router;
