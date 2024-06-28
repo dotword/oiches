@@ -17,10 +17,13 @@ const getPool = async () => {
                 timezone: 'Z',
             });
         }
+        // Con el pool temporal creamos la base de datos si no existe.
+        await poolTemp.query(`CREATE DATABASE IF NOT EXISTS ${MYSQL_DB}`);
 
         return await pool;
     } catch (error) {
         console.log(error);
+        throw error;
     }
 };
 
