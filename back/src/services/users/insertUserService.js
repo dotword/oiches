@@ -1,8 +1,45 @@
-const insertUserService = {
-    // Conectar DB getPool
+import getPool from '../../database/getPool.js';
+
+const insertUserService = async (username, email, password, roles) => {
+    const pool = await getPool();
+
+    // Buscamos en la base de datos algún usuario con ese nombre.
+    let [users] = await pool.query(
+        `SELECT id FROM usuarios WHERE username = ?`,
+        [username]
+    );
+
+    // Si existe algún usuario con ese nombre lanzamos un error.
+    if (users.length > 0) {
+        throw {
+            httpStatus: 409, // Conflict
+            code: 'USER_ALREADY_REGISTERED',
+            message: 'El nombre de usuario ya está registrado',
+        };
+    }
+
     // Comprobar que el email no esté registrado
-    // Si email ya está registrado retornar error
+    [users] = await pool.query(` SELECT id FROM usuarios WHERE email=?`, [
+        email,
+    ]);
+
+    // Si existe algún usuario con ese email lanzamos un error.
+    if (users.length > 0) {
+        throw {
+            httpStatus: 409, // Conflict
+            code: 'EMAIL_ALREADY_REGISTERED',
+            message: 'El email ya está registrado',
+        };
+    }
+
     // Si el email NO se encuentra insertar en la DB
+    await pool.query(
+        `
+            INSERT INTO usuarios (username, email, password, roles) 
+            VALUES (?,?,?,?)
+        `,
+        [username, email, password, roles]
+    );
 };
 
 export default insertUserService;
