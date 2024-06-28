@@ -1,3 +1,5 @@
+import randomstring from 'randomstring';
+
 import insertUserService from '../../services/users/insertUserService.js';
 
 const registerUserController = async (req, res, next) => {
@@ -8,10 +10,16 @@ const registerUserController = async (req, res, next) => {
         // await validateSchemaUtil(newUserSchema, req.body);
 
         // Creamos el código de registro.
-        // const registrationCode = randomstring.generate(30);
+        const registrationCode = randomstring.generate(30);
 
         // Insertamos el usuario.
-        await insertUserService(username, email, password, roles);
+        await insertUserService(
+            username,
+            email,
+            password,
+            roles,
+            registrationCode
+        );
 
         res.send({
             status: 'ok',

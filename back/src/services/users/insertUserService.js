@@ -1,6 +1,14 @@
+import bcrypt from 'bcrypt';
+
 import getPool from '../../database/getPool.js';
 
-const insertUserService = async (username, email, password, roles) => {
+const insertUserService = async (
+    username,
+    email,
+    password,
+    roles,
+    registrationCode
+) => {
     const pool = await getPool();
 
     // Buscamos en la base de datos algún usuario con ese nombre.
@@ -32,13 +40,18 @@ const insertUserService = async (username, email, password, roles) => {
         };
     }
 
+    // Lógica de envío de email
+
+    // Encriptamos la contraseña.
+    const hashedPass = await bcrypt.hash(password, 10);
+
     // Si el email NO se encuentra insertar en la DB
     await pool.query(
         `
-            INSERT INTO usuarios (username, email, password, roles) 
-            VALUES (?,?,?,?)
+            INSERT INTO usuarios (username, email, password, roles, registrationCode ) 
+            VALUES (?,?,?,?,?)
         `,
-        [username, email, password, roles]
+        [username, email, hashedPass, roles, registrationCode]
     );
 };
 
