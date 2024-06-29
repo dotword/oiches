@@ -1,4 +1,4 @@
-import getPool from "../../database/getPool.js";
+/* eslint-disable no-useless-catch */
 import { compare, hash } from "bcrypt";
 
 export const passwordChangeService = async (password,newPassword,user) => {
