@@ -1,8 +1,11 @@
-import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 
-dotenv.config();
-const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
+import {
+    MYSQL_HOST,
+    MYSQL_USER,
+    MYSQL_PASSWORD,
+    MYSQL_DATABASE,
+} from '../../env.js';
 
 let pool;
 const getPool = async () => {
