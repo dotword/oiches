@@ -21,7 +21,7 @@ await pool.query(`
  id INT AUTO_INCREMENT PRIMARY KEY,
  username VARCHAR(50) NOT NULL UNIQUE,
  email VARCHAR(100) NOT NULL UNIQUE,
- password VARCHAR(25) NOT NULL,
+ password VARCHAR(250) NOT NULL,
  avatar VARCHAR(25),
  registrationCode CHAR(30),
  roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
