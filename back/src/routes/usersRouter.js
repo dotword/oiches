@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Endpoint registro de usuarios
 router.post('/users/registro', registerUserController);
+
 router.post('/users/login', registerUserController);
 router.patch('/users/password', registerUserController);
 
