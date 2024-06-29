@@ -8,7 +8,8 @@ const registerUserController = async (req, res, next) => {
 
         // Validamos el body con Joi.
         // await validateSchemaUtil(newUserSchema, req.body);
-
+        if (!username || !email || !password)
+            throw new Error('Se esperaba email y contraseña', 400);
         // Creamos el código de registro.
         const registrationCode = randomstring.generate(30);
 

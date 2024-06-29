@@ -1,10 +1,9 @@
-'use strict'
+'use strict';
 
-import dotenv from 'dotenv';
+import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import routes from './src/routes/index.js';
-dotenv.config();
 
 const { PORT } = process.env;
 
@@ -15,18 +14,18 @@ app.use(cors());
 app.use(routes);
 
 app.use((req, res) => {
-  res.status(404).send('Recurso no encontrado')
-})
+    res.status(404).send('Recurso no encontrado');
+});
 
 app.use((err, req, res, next) => {
-  console.error(err)
+    console.error(err);
 
-  res.status(err.httpStatus || 500).send({
-    status: 'error',
-    message: err.message
-  })
-})
+    res.status(err.httpStatus || 500).send({
+        status: 'error',
+        message: err.message,
+    });
+});
 
 app.listen(PORT, () => {
-  console.log(`Server on ${PORT}`)
-})
+    console.log(`Server on ${PORT}`);
+});

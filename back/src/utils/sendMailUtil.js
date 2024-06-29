@@ -1,11 +1,11 @@
 // Importamos las dependencias.
+import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
 // Importamos los errores.
-import { sendEmailError } from '../services/errorService.js';
 
 // Obtenemos las variables de entorno necesarias.
-import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '../../env.js';
+const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
 
 // Creamos un transporte para poder enviar emails con nodemailer.
 const transport = nodemailer.createTransport({
@@ -28,9 +28,9 @@ const sendMailUtil = async (email, subject, body) => {
         };
 
         await transport.sendMail(mailOptions);
-    } catch (err) {
-        console.error(err);
-        sendEmailError();
+    } catch (error) {
+        console.error(error);
+        // generateErrorsUtils
     }
 };
 

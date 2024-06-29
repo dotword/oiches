@@ -1,6 +1,10 @@
+import 'dotenv/config';
 import bcrypt from 'bcrypt';
 
 import getPool from '../../database/getPool.js';
+import sendMailUtil from '../../utils/sendMailUtil.js';
+
+const { URL_FRONT } = process.env;
 
 const insertUserService = async (
     username,
@@ -40,7 +44,24 @@ const insertUserService = async (
         };
     }
 
-    // Lógica de envío de email
+    // Creamos el asunto del email de verificación.
+    const emailSubject = 'Activa tu usuario en Oiches:)';
+
+    // Creamos el contenido del email
+    const emailBody = `
+             ¡Bienvenid@ ${username}!
+
+             Gracias por registrarte en Oiches. Para activar tu cuenta, haz clic en el siguiente enlace:
+
+             <a href="${URL_FRONT}/users/validate/${registrationCode}">Activar mi cuenta</a>
+         `;
+
+    // Enviamos el email de verificación al usuario.
+    try {
+        await sendMailUtil(email, emailSubject, emailBody);
+    } catch (error) {
+        return;
+    }
 
     // Encriptamos la contraseña.
     const hashedPass = await bcrypt.hash(password, 10);
