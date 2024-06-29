@@ -1,4 +1,4 @@
-import getPool from './getPool';
+import getPool from './getPool.js';
 
 const main = async () =>{
     let pool;
