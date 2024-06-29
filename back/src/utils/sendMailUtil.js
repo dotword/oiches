@@ -1,12 +1,10 @@
 // Importamos las dependencias.
-import 'dotenv/config';
 import nodemailer from 'nodemailer';
 
 // Importamos los errores.
 
 // Obtenemos las variables de entorno necesarias.
-const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-
+import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '../../env.js';
 // Creamos un transporte para poder enviar emails con nodemailer.
 const transport = nodemailer.createTransport({
     host: SMTP_HOST,

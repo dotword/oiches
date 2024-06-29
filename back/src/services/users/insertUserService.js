@@ -1,10 +1,9 @@
-import 'dotenv/config';
 import bcrypt from 'bcrypt';
 
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
 
-const { URL_FRONT } = process.env;
+import { URL_FRONT } from '../../../env.js';
 
 const insertUserService = async (
     username,
