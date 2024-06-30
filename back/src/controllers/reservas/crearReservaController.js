@@ -2,7 +2,7 @@ import { crearReservaService } from "../../services/reservas/crearReservaService
 export const crearReservaController = async (req,res,next) =>{
   try {
     const { fecha, hora, nombre } = req.body;
-    if(!fecha, !hora , !nombre){
+    if(!fecha || !hora || !nombre){
       throw {
         status:400,
         message:'Es necesario la fecha, hora y el nombre de la reserva.'
