@@ -14,6 +14,12 @@ export const loginUserController = async (req,res,next) =>{
         code: 'BAD REQUEST'
       }
     }
+    if(!user.active){
+      throw {
+        status: 400,
+        message:'El usuario no esta activado, verifica su email para la verificación de usuario.'
+      }
+    }
     if ([email, password].includes('' || undefined)) {
       const error = new Error('Todos los campos son requeridos')
       error.status = 400
