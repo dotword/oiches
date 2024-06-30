@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS generos_musicales, grupo_comments, grupo_media, grupos, reservas, sala_comments, sala_media, salas, usuarios, votos_grupos, votos_salas'
+            'DROP TABLE IF EXISTS generos_musicales, grupo_comments, grupo_media, grupos, reservas, sala_comments, sala_fotos, salas, usuarios, votos_grupos, votos_salas'
         );
 
         console.log('Creando tablas...');
@@ -38,6 +38,7 @@ const main = async () => {
             usuario_id INT,
             nombre VARCHAR(100) NOT NULL,
             provincia VARCHAR(255),
+            genero VARCHAR(50),
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),
@@ -83,16 +84,7 @@ deletedAt DATETIME NULL
     `);
 
         await pool.query(`
-        CREATE TABLE IF NOT EXISTS Generos_musicales_salas(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nombre VARCHAR(50),
-            generos_id INT,
-            FOREIGN KEY(generos_id) REFERENCES Salas(id)
-        );
-    `);
-
-        await pool.query(`
-        CREATE TABLE IF NOT EXISTS Sala_media(
+        CREATE TABLE IF NOT EXISTS Sala_fotos(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
                 salaId INT,
