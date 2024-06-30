@@ -17,7 +17,7 @@ export const loginUserController = async (req,res,next) =>{
     if(!user.active){
       throw {
         status: 400,
-        message:'El usuario no esta activado, verifica su email para la verificascion de usuario.'
+        message:'El usuario no esta activado, verifica su email para la verificación de usuario.'
       }
     }
     if ([email, password].includes('' || undefined)) {
