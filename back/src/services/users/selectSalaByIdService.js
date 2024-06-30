@@ -32,8 +32,7 @@ const selectSalaByIdService = async (idSala) => {
         `SELECT id, name FROM sala_fotos WHERE salaId = ?`,
         [idSala]
     );
-
-    // // Agregamos el array de fotos a la entrada.
+    // Agregamos el array de fotos a la entrada.
     entry[0].photos = photos;
 
     // Obtenemos el array de los comentarios de la sala.
@@ -41,14 +40,30 @@ const selectSalaByIdService = async (idSala) => {
         `SELECT descripcion, grupo_id FROM sala_comments WHERE sala_id = ?`,
         [idSala]
     );
-
-    // // Agregamos el array de fotos a la entrada.
+    // Agregamos el array de los comentarios de la sala.
     entry[0].comments = comments;
+
+    // Obtenemos el array de las reservas de la sala.
+    const [reservations] = await pool.query(
+        `
+            SELECT
+                R.nombre,
+                R.grupo_id,
+                G.nombre AS grupo,
+                R.fecha,
+                R.hora,
+                R.confirmada
+            FROM Reservas R
+            LEFT JOIN Grupos G ON G.id= R.grupo_id 
+            WHERE sala_id = ?
+        `,
+        [idSala]
+    );
+    // Agregamos el array de las reservas de la sala.
+    entry[0].reservations = reservations;
 
     return {
         entry,
-        // ...entry[0],
-        // photos,
     };
 };
 

@@ -123,10 +123,10 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Sala_comments(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 sala_id INT,
                 grupo_id INT,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY (grupo_id) REFERENCES Grupos(id)
             );
