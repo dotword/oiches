@@ -2,10 +2,16 @@ import getPool from '../../database/getPool.js';
 import { compare } from 'bcrypt';
 import pkg from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../env.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import loginUserSchema from '../../schemas/users/loginUserSchema.js';
+
 export const loginUserController = async (req, res, next) => {
     try {
         const pool = await getPool();
         const { email, password } = req.body;
+        // Validamos el body con Joi.
+        await validateSchemaUtil(loginUserSchema, req.body);
+
         const [[user]] = await pool.query(
             'SELECT * FROM usuarios WHERE email LIKE ?',
             [email]
