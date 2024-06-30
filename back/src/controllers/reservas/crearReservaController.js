@@ -4,7 +4,6 @@ export const crearReservaController = async (req,res,next) =>{
     const { fecha, hora, nombre } = req.body;
     if(!fecha || !hora || !nombre){
      return res.status(404).json({
-        status:400,
         message:'Es necesario la fecha, hora y el nombre de la reserva.'
       })
     }
@@ -12,7 +11,6 @@ export const crearReservaController = async (req,res,next) =>{
     const { sala_id } = req.params;
     if(!sala_id){
       return res.status(404).json({
-        status:400,
         message:"Es necesario seleccionar una sala para reservar."
       })
                                   
