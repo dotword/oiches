@@ -2,6 +2,8 @@ import { validationResult } from "express-validator";
 import insertSalaService from "../../services/salas/insertSalaService.js";
 import userExists from "../../middleware/userExists.js";
 
+
+// FALTA VALIDACION POR JOI
 const createSalaController = async (req, res, next) => {
     try {
       const { nombre, provincia, genero, capacidad, descripcion, precios, direccion, condiciones, equipamiento, email } = req.body;
