@@ -9,13 +9,12 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS generos_musicales, grupo_comments, grupo_media, grupos, reservas, sala_comments, sala_fotos, salas, usuarios, votos_grupos, votos_salas'
+            'DROP TABLE IF EXISTS generos_musicales, grupo_comments, Grupo_fotos, grupo_media, grupos, reservas, sala_comments, sala_fotos, salas, usuarios, votos_grupos, votos_salas'
         );
 
         console.log('Creando tablas...');
 
         // Creando tablas Usuarios
-
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Usuarios(
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,6 +25,7 @@ const main = async () => {
                 registrationCode CHAR(30),
                 roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
                 active BOOLEAN DEFAULT false,
+                recoverPassCode CHAR(10),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deletedAt DATETIME NULL
@@ -65,8 +65,6 @@ const main = async () => {
                 usuario_id INT,
                 FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
                 rider VARCHAR(255),
-                avatar VARCHAR(255),
-                enlaces VARCHAR(255),
                 email VARCHAR(255),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -75,31 +73,32 @@ const main = async () => {
         `);
 
         await pool.query(`
-        CREATE TABLE IF NOT EXISTS Generos_musicales(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nombre VARCHAR(50),
-            generos_id INT,
-            FOREIGN KEY(generos_id) REFERENCES Grupos(id)
-        );
-    `);
+            CREATE TABLE IF NOT EXISTS Sala_fotos(
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL,
+                    salaId INT,
+                    FOREIGN KEY (salaId) REFERENCES Salas(id),
+                    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
 
         await pool.query(`
-        CREATE TABLE IF NOT EXISTS Sala_fotos(
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
-                salaId INT,
-                FOREIGN KEY (salaId) REFERENCES Salas(id),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-    `);
+            CREATE TABLE IF NOT EXISTS Grupo_fotos(
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(100) NOT NULL,
+                    grupoId INT,
+                    FOREIGN KEY (grupoId) REFERENCES Grupos(id),
+                    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupo_media(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 grupo_id INT,
                 url VARCHAR(255) NOT NULL,
-                mimetype VARCHAR(255),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
 
@@ -112,10 +111,10 @@ const main = async () => {
                 confirmada BOOLEAN DEFAULT false,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES Grupos(id),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 fecha VARCHAR(15),
-                hora VARCHAR(15)
+                hora VARCHAR(15),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
         `);
 
@@ -125,7 +124,7 @@ const main = async () => {
                 descripcion TEXT,
                 sala_id INT,
                 grupo_id INT,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY (grupo_id) REFERENCES Grupos(id)
@@ -136,10 +135,10 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Grupo_comments(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 sala_id INT,
                 grupo_id INT,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES Grupos(id)
             );
