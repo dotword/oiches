@@ -1,45 +1,65 @@
 import getPool from '../../database/getPool.js';
-import pkg from 'jsonwebtoken';
-import { JWT_SECRET } from '../../../env.js';
-const aprobarReservaService = async (token, reserva_id) => {
+import sendMailUtil from '../../utils/sendMailUtil.js';
+import { URL_FRONT } from '../../../env.js';
+
+const aprobarReservaService = async (reserva_id) => {
     try {
         const pool = await getPool();
 
-        const decoded = pkg.verify(token, JWT_SECRET);
-
-        const { id: usuario_id } = decoded;
-
-        const [grupoResults] = await pool.query(
-            'SELECT id FROM Grupos WHERE usuario_id = ?',
-            [usuario_id]
+        // Comprobar si la reserva ya está confirmada
+        const [salaConfirm] = await pool.query(
+            'SELECT confirmada FROM reservas WHERE id = ?',
+            [reserva_id]
         );
-        if (grupoResults.length === 0) {
+        const confirmSala = salaConfirm[0].confirmada;
+        // const salaId = salaConfirm[0].sala_id;
+
+        // Comprobar el email del grupo
+        const [grupoConfirm] = await pool.query(
+            'SELECT grupo_id, nombre FROM reservas WHERE id = ?',
+            [reserva_id]
+        );
+        const grupoId = grupoConfirm[0].grupo_id;
+        const reservaName = grupoConfirm[0].nombre;
+
+        const [emailGrupo] = await pool.query(
+            'SELECT email, nombre FROM grupos WHERE id = ?',
+            [grupoId]
+        );
+        const grupoEmail = emailGrupo[0].email;
+        const grupoNombre = emailGrupo[0].nombre;
+
+        if (confirmSala === 1) {
             throw {
-                status: 404,
-                message:
-                    'No se han encontrado grupos con el usuario con el que esta intentado acceder.',
+                httpStatus: 400,
+                message: 'La reserva ya ha sido confirmada',
             };
         }
-        const grupo_id = grupoResults[0].id;
 
-        const [reservaResults] = await pool.query(
-            'SELECT * FROM Reservas WHERE grupo_id = ? AND sala_id = ?',
-            [grupo_id, sala_id]
-        );
-        if (reservaResults.length === 0) {
-            throw {
-                status: 400,
-                message: 'No existe ninguna reserva con la id proporcionada.',
-            };
+        // Creamos el asunto del email de verificación.
+        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido confirmada.)`;
+
+        // Creamos el contenido del email
+        const emailBody = `
+             Hola ${grupoNombre}!
+
+             Tu reserva "${reservaName}" ha sido confirmada.
+
+             Entra en tu cuenta para ver todos los detalles.
+
+             <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+         `;
+
+        // Enviamos el email de verificación al usuario.
+        try {
+            await sendMailUtil(grupoEmail, emailSubject, emailBody);
+        } catch (error) {
+            return;
         }
-        const reserva_id = reservaResults[0].id;
-        await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
-        return {
-            reserva: {
-                grupoResults,
-                reservaResults,
-            },
-        };
+
+        await pool.query('UPDATE Reservas SET confirmada = 1 WHERE id = ?', [
+            reserva_id,
+        ]);
     } catch (error) {
         console.log(error);
         throw error;
