@@ -164,12 +164,28 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación.
 -   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado.
 
-## Endpoints del diario
+## Endpoints del salas
 
--   **POST** - `/entries` - Crea una entrada.
+<!-- -   **POST** - `/entries` - Crea una entrada.
+-   **GET** - `/entries` - Retorna el listado de entradas. -->
+
+-   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
+<!-- -   **POST** - `/entries/:entryId/photos` - Agregar una foto a una entrada.
+-   **DELETE** - `/entries/:entryId/photos/:photoId` - Eliminar una foto de una entrada.
+-   **POST** - `/entries/:entryId/votes` - Vota una entrada (entre 1 y 5).
+-   **DELETE** - `/entries/:entryId` - Eliminar una entrada. -->
+
+## Endpoints del grupos
+
+<!-- -   **POST** - `/entries` - Crea una entrada.
 -   **GET** - `/entries` - Retorna el listado de entradas.
 -   **GET** - `/entries/:entryId` - Retorna una entrada en concreto.
 -   **POST** - `/entries/:entryId/photos` - Agregar una foto a una entrada.
 -   **DELETE** - `/entries/:entryId/photos/:photoId` - Eliminar una foto de una entrada.
 -   **POST** - `/entries/:entryId/votes` - Vota una entrada (entre 1 y 5).
--   **DELETE** - `/entries/:entryId` - Eliminar una entrada.
+-   **DELETE** - `/entries/:entryId` - Eliminar una entrada. -->
+
+## Endpoints de reservas
+
+**POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala.
+**DELETE** - `/cancelar-reserva/:sala_id` - Cancela una reserva
