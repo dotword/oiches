@@ -1,15 +1,16 @@
 import randomstring from 'randomstring';
 
 import insertUserService from '../../services/users/insertUserService.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import newUserSchema from '../../schemas/users/newUserSchema.js';
 
 const registerUserController = async (req, res, next) => {
     try {
         const { username, email, password, roles } = req.body;
 
         // Validamos el body con Joi.
-        // await validateSchemaUtil(newUserSchema, req.body);
-        if (!username || !email || !password)
-            throw new Error('Se esperaba email y contraseña', 400);
+        await validateSchemaUtil(newUserSchema, req.body);
+
         // Creamos el código de registro.
         const registrationCode = randomstring.generate(30);
 
