@@ -17,19 +17,19 @@ const main = async () => {
         // Creando tablas Usuarios
 
         await pool.query(`
-     CREATE TABLE IF NOT EXISTS Usuarios(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            username VARCHAR(50) NOT NULL UNIQUE,
-            email VARCHAR(100) NOT NULL UNIQUE,
-            password VARCHAR(250) NOT NULL,
-            avatar VARCHAR(25),
-            registrationCode CHAR(30),
-            roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
-            active BOOLEAN DEFAULT false,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-            deletedAt DATETIME NULL
-        );
+            CREATE TABLE IF NOT EXISTS Usuarios(
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(50) NOT NULL UNIQUE,
+                email VARCHAR(100) NOT NULL UNIQUE,
+                password VARCHAR(250) NOT NULL,
+                avatar VARCHAR(25),
+                registrationCode CHAR(30),
+                roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
+                active BOOLEAN DEFAULT false,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                deletedAt DATETIME NULL
+            );
     `);
 
         await pool.query(`
@@ -138,7 +138,9 @@ const main = async () => {
                 descripcion TEXT,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                sala_id INT,
                 grupo_id INT,
+                FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES Grupos(id)
             );
         `);
