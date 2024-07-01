@@ -1,6 +1,6 @@
 import getPool from './getPool.js';
 
-const main = async () =>{
+const main = async () => {
     let pool;
 
     try {
@@ -16,7 +16,7 @@ const main = async () =>{
 
         // Creando tablas Usuarios
 
-await pool.query(`
+        await pool.query(`
      CREATE TABLE IF NOT EXISTS Usuarios(
  id INT AUTO_INCREMENT PRIMARY KEY,
  username VARCHAR(50) NOT NULL UNIQUE,
@@ -30,9 +30,9 @@ await pool.query(`
  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
  deletedAt DATETIME NULL
 );
-    `)
+    `);
 
-await pool.query(`
+        await pool.query(`
     CREATE TABLE IF NOT EXISTS Salas(
 id INT AUTO_INCREMENT PRIMARY KEY,
 usuario_id INT,
@@ -52,10 +52,10 @@ createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 deletedAt DATETIME NULL
 );
-    `)
+    `);
 
-// Creando tabla Grupos
-await pool.query(`
+        // Creando tabla Grupos
+        await pool.query(`
     CREATE TABLE IF NOT EXISTS Grupos(
 id INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50)  NOT NULL UNIQUE,
@@ -73,18 +73,18 @@ createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 deletedAt DATETIME NULL
 );
-    `)
+    `);
 
-await pool.query(`
+        await pool.query(`
     CREATE TABLE IF NOT EXISTS Generos_musicales(
 id INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(50),
 generos_id INT,
 FOREIGN KEY(generos_id) REFERENCES Grupos(id)
 );
-    `)
+    `);
 
-    await pool.query(`
+        await pool.query(`
         CREATE TABLE IF NOT EXISTS Sala_media(
 id INT AUTO_INCREMENT PRIMARY KEY,
 sala_id INT,
@@ -92,7 +92,7 @@ url VARCHAR(255) NOT NULL,
 mimetype VARCHAR(255),
 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-    `)
+    `);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupo_media(
@@ -102,9 +102,9 @@ url VARCHAR(255) NOT NULL,
 mimetype VARCHAR(255),
 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-     `)
+     `);
 
-            await pool.query(`
+        await pool.query(`
                 CREATE TABLE IF NOT EXISTS Reservas(
 id INT AUTO_INCREMENT PRIMARY KEY,
 nombre VARCHAR(100) NOT NULL,
@@ -118,9 +118,9 @@ updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 fecha VARCHAR(15),
 hora VARCHAR(15)
 );
-    `)
+    `);
 
-            await pool.query(`
+        await pool.query(`
                 CREATE TABLE IF NOT EXISTS Sala_comments(
 id INT AUTO_INCREMENT PRIMARY KEY,
 descripcion TEXT,
@@ -129,7 +129,7 @@ updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 sala_id INT,
 FOREIGN KEY(sala_id) REFERENCES Salas(id)
 );
-    `)
+    `);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupo_comments(
@@ -141,9 +141,9 @@ grupo_id INT,
 FOREIGN KEY(grupo_id) REFERENCES Grupos(id)
 );
 
-    `)
+    `);
 
-            await pool.query(`
+        await pool.query(`
                 CREATE TABLE IF NOT EXISTS votos_grupos(
 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 value TINYINT UNSIGNED NOT NULL,
@@ -153,9 +153,9 @@ createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
 FOREIGN KEY (voto_sala_id) REFERENCES Salas(id)
 );
-     `)
+     `);
 
-                await pool.query(`
+        await pool.query(`
                     CREATE TABLE IF NOT EXISTS votos_salas(
 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
 value TINYINT UNSIGNED NOT NULL,
@@ -166,13 +166,12 @@ FOREIGN KEY (voto_grupo_id) REFERENCES Grupos(id),
 FOREIGN KEY (sala_id) REFERENCES Salas(id)
 );
     `);
-    console.log('¡Tablas creadas!')
-
+        console.log('¡Tablas creadas!');
     } catch (err) {
         console.error(err);
-    } finally{
+    } finally {
         process.exit();
     }
-}
+};
 
 main();

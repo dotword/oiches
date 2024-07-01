@@ -4,12 +4,17 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import routes from './src/routes/index.js';
+import staticFilesMiddleware from './src/middleware/staticFiles.js';
 
 const { PORT } = process.env;
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+// Usar el middleware para archivos estáticos
+staticFilesMiddleware(app);
+
 /**Llamado a rutas */
 app.use(routes);
 
