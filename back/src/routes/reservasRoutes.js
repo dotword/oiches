@@ -13,6 +13,6 @@ router.post('/reservar-sala/:sala_id', checkIfGroup, crearReservaController);
 router.delete('/cancelar-reserva/:sala_id', cancelarReservaController);
 
 // Endpoint aprobar una reserva
-router.post('/aprobar-reserva/:sala_id', aprobarReservaController);
+router.patch('/aprobar-reserva/:reserva_id', aprobarReservaController);
 
 export default router;

@@ -1,12 +1,14 @@
+import aprobarReservaService from '../../services/reservas/aprobarReservaService.js';
+
 const aprobarReservaController = async (req, res, next) => {
     try {
-        // const { registrationCode } = req.params;
+        const { token } = req.headers;
+        const reserva_id = req.params;
 
-        // await updateUserRegCodeService(registrationCode);
+        await aprobarReservaService(token, reserva_id);
 
-        res.send({
-            status: 'ok',
-            message: 'aprobada la reserva',
+        res.status(200).json({
+            message: 'Se ha borrado la reserva con exito ',
         });
     } catch (error) {
         next(error);

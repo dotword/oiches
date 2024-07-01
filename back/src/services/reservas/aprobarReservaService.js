@@ -1,11 +1,12 @@
 import getPool from '../../database/getPool.js';
 import pkg from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../env.js';
-export const cancelarReservaService = async (token, sala_id) => {
+const aprobarReservaService = async (token, reserva_id) => {
     try {
         const pool = await getPool();
 
         const decoded = pkg.verify(token, JWT_SECRET);
+
         const { id: usuario_id } = decoded;
 
         const [grupoResults] = await pool.query(
@@ -32,7 +33,6 @@ export const cancelarReservaService = async (token, sala_id) => {
             };
         }
         const reserva_id = reservaResults[0].id;
-
         await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
         return {
             reserva: {
@@ -45,3 +45,5 @@ export const cancelarReservaService = async (token, sala_id) => {
         throw error;
     }
 };
+
+export default aprobarReservaService;
