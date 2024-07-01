@@ -22,11 +22,11 @@ export const crearReservaController = async (req,res,next) =>{
     }
     const {reserva: { grupoResults, salaResults} } = await crearReservaService(fecha,hora,nombre,token,sala_id)
    
-      if (grupoResults.length === 0) {
+    if (!grupoResults || grupoResults.length === 0) {
       return res.status(404).json({ message: 'No se encontró un grupo asociado al usuario.' });
     }
     const grupo_id = grupoResults[0].id;
-    if (salaResults.length === 0) {
+    if (!salaResults || salaResults.length === 0) {
       return res.status(404).json({ message: 'Sala no encontrada.' });
     }
 
