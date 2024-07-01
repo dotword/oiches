@@ -1,7 +1,7 @@
 import getPool from "../database/getPool.js";
 import generateErrorsUtil from "../utils/generateErrorsUtil.js";
 
-const userExists = async (req, res, next) => {
+const salaExists = async (req, res, next) => {
   try {
     const pool = await getPool();
 
@@ -29,4 +29,4 @@ const userExists = async (req, res, next) => {
   }
 };
 
-export default userExists;
+export default salaExists;
