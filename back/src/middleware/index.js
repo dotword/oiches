@@ -1,16 +1,13 @@
 // AQUI VAN LOS MIDDLEWARES
 'use strict';
+// AQUI VAN LOS MIDDLEWARES
+'use strict';
 
-// const staticFilesMiddleware = require('./staticFiles');
+// Importar el middleware para archivos estáticos
+import staticFilesMiddleware from './staticFiles.js';
 
-// module.exports = (app) => {
-//     // Usar el middleware para archivos estáticos
-//     staticFilesMiddleware(app);
-// };
-
-const staticFilesMiddleware = require('./staticFiles');
-
-module.exports = (app) => {
+// Exportar como una función que toma `app` como argumento
+export default function (app) {
     // Usar el middleware para archivos estáticos
     staticFilesMiddleware(app);
-};
+}
