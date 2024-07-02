@@ -4,7 +4,6 @@ import createSalaController from '../controllers/salas/createSalaController.js';
 import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
 import uploadFiles from '../middleware/uploadFiles.js';
-import { listSalasController } from '../controllers/salas/listSalasController.js';
 
 const router = express.Router();
 
@@ -16,8 +15,5 @@ router.get('/salas/:idSala', getSalaDetailController);
 
 //Endpoint para aplicar middleware de subir archivos
 router.post('/uploads/', uploadFiles);
-
-//Endpoint de filtro/busqueda y ordenacion
-router.get('/salas', listSalasController);
 
 export default router;

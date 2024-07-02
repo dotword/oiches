@@ -1,4 +1,4 @@
-import selectSalaByIdService from '../../services/users/selectSalaByIdService.js';
+import selectSalaByIdService from '../../services/salas/selectSalaByIdService.js';
 
 const getSalaDetailController = async (req, res, next) => {
     try {
