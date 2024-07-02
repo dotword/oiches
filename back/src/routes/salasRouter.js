@@ -13,6 +13,9 @@ router.post('/users/salas', authUser, salaExists, createSalaController);
 // Endpoint detalle sala
 router.get('/salas/:idSala', getSalaDetailController);
 
+//Endpoint de filtro/busqueda y ordenacion
+router.get('/salas', listSalasController);
+
 //Endpoint para aplicar middleware de subir archivos
 router.post('/uploads/', uploadFiles);
 
