@@ -4,7 +4,7 @@ import { cancelarReservaController } from '../controllers/reservas/cancelarReser
 import aprobarReservaController from '../controllers/reservas/aprobarReservaController.js';
 import { checkIfGroup } from '../middleware/checkIfGroup.js';
 import authUser from '../middleware/authUser.js';
-import userExists from '../middleware/userExists.js';
+import salaExists from '../middleware/salaExists.js';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ router.delete('/cancelar-reserva/:sala_id', cancelarReservaController);
 router.put(
     '/aprobar-reserva/:reserva_id',
     authUser,
-    userExists,
+    salaExists,
     aprobarReservaController
 );
 
