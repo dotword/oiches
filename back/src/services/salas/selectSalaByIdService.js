@@ -17,7 +17,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.equipamiento,
                 S.condiciones,
                 AVG(IFNULL(V.value, 0)) AS votes,
-                GM.nombre,
+                GM.nombre AS genero,
                 S.createdAt
             FROM Salas S
             LEFT JOIN votos_salas V ON V.sala_id = S.id           
