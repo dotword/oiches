@@ -46,7 +46,7 @@ const main = async () => {
             id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
             usuario_id INT NOT NULL,
             nombre VARCHAR(100) NOT NULL,
-            provincia VARCHAR(255),
+            provincia VARCHAR(255) NOT NULL,
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),

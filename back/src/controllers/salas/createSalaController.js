@@ -1,6 +1,7 @@
 import insertSalaService from '../../services/salas/insertSalaService.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import createSalaSchema from '../../schemas/salas/createSalaSchema.js';
 
-// FALTA VALIDACION POR JOI
 const createSalaController = async (req, res, next) => {
     try {
         const {
@@ -14,6 +15,9 @@ const createSalaController = async (req, res, next) => {
             equipamiento,
             email,
         } = req.body;
+
+        // Validamos el body con Joi.
+        await validateSchemaUtil(createSalaSchema, req.body);
 
         const { id } = req.user;
 
