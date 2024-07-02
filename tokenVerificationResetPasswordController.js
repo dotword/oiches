@@ -18,7 +18,7 @@ export const resetPassword = async (req, res) => {
         res.status(200).json({ message: 'Contraseña reestablecida correctamente'});
 
     } catch (error) {
-        res.status(400).json({ error: 'Token inválido o expirado'});
+        console.error('Error en validación de token', error);
        next(error);
     }
 };
