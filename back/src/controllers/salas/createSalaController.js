@@ -6,7 +6,6 @@ const createSalaController = async (req, res, next) => {
         const {
             nombre,
             provincia,
-            genero,
             capacidad,
             descripcion,
             precios,
@@ -22,7 +21,6 @@ const createSalaController = async (req, res, next) => {
             id,
             nombre,
             provincia,
-            genero,
             capacidad,
             descripcion,
             precios,
@@ -40,7 +38,6 @@ const createSalaController = async (req, res, next) => {
                     usuario_id: req.user.id,
                     nombre,
                     provincia,
-                    genero,
                     capacidad,
                     descripcion,
                     precios,
