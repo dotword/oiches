@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS generos_musicales, grupo_comments, Grupo_fotos, grupo_media, grupos, reservas, sala_comments, sala_fotos, salas, usuarios, votos_grupos, votos_salas'
+            'DROP TABLE IF EXISTS votos_salas, votos_grupos, grupo_comments, sala_comments, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -33,12 +33,20 @@ const main = async () => {
     `);
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS Generos_musicales(
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
+
+        await pool.query(`
         CREATE TABLE IF NOT EXISTS Salas(
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            usuario_id INT,
+            id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+            usuario_id INT NOT NULL,
             nombre VARCHAR(100) NOT NULL,
             provincia VARCHAR(255),
-            genero VARCHAR(50),
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),
@@ -50,8 +58,20 @@ const main = async () => {
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             deletedAt DATETIME NULL
-        );
-    `);
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS Generos_salas(
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                salaId INT NOT NULL,
+                generoId INT NOT NULL,
+                FOREIGN KEY (salaId) REFERENCES Salas(id),
+                FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
 
         // Creando tabla Grupos
         await pool.query(`
@@ -61,7 +81,6 @@ const main = async () => {
                 provincia VARCHAR(255),
                 honorarios INT,
                 biografia TEXT,
-                genero VARCHAR(255),
                 usuario_id INT,
                 FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
                 rider VARCHAR(255),
@@ -69,6 +88,18 @@ const main = async () => {
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deletedAt DATETIME NULL
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS Generos_grupos(
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                grupoId INT NOT NULL,
+                generoId INT NOT NULL,
+                FOREIGN KEY (grupoId) REFERENCES Grupos(id),
+                FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
         `);
 
@@ -166,6 +197,28 @@ const main = async () => {
                 FOREIGN KEY (voto_grupo_id) REFERENCES Grupos(id),
                 FOREIGN KEY (sala_id) REFERENCES Salas(id)
             );
+        `);
+
+        await pool.query(`
+            INSERT INTO Generos_musicales VALUES
+                (DEFAULT, 'Rock', DEFAULT, DEFAULT),
+                (DEFAULT, 'Pop', DEFAULT, DEFAULT),
+                (DEFAULT, 'Metal', DEFAULT, DEFAULT),
+                (DEFAULT, 'Funk', DEFAULT, DEFAULT),
+                (DEFAULT, 'Country', DEFAULT, DEFAULT),
+                (DEFAULT, 'Folk', DEFAULT, DEFAULT),
+                (DEFAULT, 'Jazz', DEFAULT, DEFAULT),
+                (DEFAULT, 'Reggae', DEFAULT, DEFAULT),
+                (DEFAULT, 'Indie', DEFAULT, DEFAULT),
+                (DEFAULT, 'Electrónica', DEFAULT, DEFAULT),
+                (DEFAULT, 'Soul', DEFAULT, DEFAULT),
+                (DEFAULT, 'Canción de autor', DEFAULT, DEFAULT),
+                (DEFAULT, 'Flamenco', DEFAULT, DEFAULT),
+                (DEFAULT, 'Clásica', DEFAULT, DEFAULT),
+                (DEFAULT, 'Latina', DEFAULT, DEFAULT),
+                (DEFAULT, 'Reaggeton', DEFAULT, DEFAULT),
+                (DEFAULT, 'Hip-Hop', DEFAULT, DEFAULT),
+                (DEFAULT, 'Blues', DEFAULT, DEFAULT);
         `);
 
         console.log('¡Tablas creadas!');
