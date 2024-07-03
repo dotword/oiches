@@ -3,12 +3,11 @@ import aprobarReservaService from '../../services/reservas/aprobarReservaService
 const aprobarReservaController = async (req, res, next) => {
     try {
         const { reserva_id } = req.params;
-        // FALTA VALIDACION POR JOI
 
         await aprobarReservaService(reserva_id);
 
         res.status(200).json({
-            message: 'Se ha aprovado la reserva ',
+            message: 'Se ha modificado tu reserva. Revisa tu email.',
         });
     } catch (error) {
         next(error);

@@ -4,7 +4,6 @@ import createSalaController from '../controllers/salas/createSalaController.js';
 import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
 import { listSalasController } from '../controllers/salas/listSalasController.js';
-import uploadFiles from '../middleware/uploadFiles.js';
 
 const router = express.Router();
 

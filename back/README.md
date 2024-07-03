@@ -154,38 +154,25 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 ## Endpoints del usuario
 
--   **POST** - `/users/registro` - Crea un nuevo usuario pendiente de activar.
--   **PUT** - `/users/validate/:registrationCode` - Valida a un usuario recién registrado.
--   **POST** - `/users/login` - Logea a un usuario retornando un token.
--   **GET** - `/users/:userId` - Retorna información pública de un usuario (ver el perfil).
--   **GET** - `/users` - Retorna información privada del usuario con el id del token.
-<!-- -   **PUT** - `/users/avatar` - Permite actualizar el avatar del usuario. -->
--   **POST** - `/users/password/recover` - Envía al usuario un correo de recuperación de contraseña.
--   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación.
--   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado.
+-   **POST** - `/users/registro` - Crea un nuevo usuario pendiente de activar. (Carmen)
+-   **PUT** - `/users/validate/:registrationCode` - Valida a un usuario recién registrado. (Isa)
+-   **POST** - `/users/login` - Logea a un usuario retornando un token. (Aitor)
+-   **POST** - `/users/password/recover` - Envía al usuario un correo de recuperación de contraseña. (Angel)
+-   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación. (Angel)
+-   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado. (Aitor)
 
 ## Endpoints del salas
 
-<!-- -   **POST** - `/entries` - Crea una entrada.
--   **GET** - `/entries` - Retorna el listado de entradas. -->
+-   **POST** - `/users/salas` - Crea una sala. (Isa)
+-   **GET** - `/salas/:idSala` - Retorna el detalle de una sala (Carmen)
+-   /**GET** - `/salas` - Retorna el listado de salas. (Fran)
 
--   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
-<!-- -   **POST** - `/entries/:entryId/photos` - Agregar una foto a una entrada.
--   **DELETE** - `/entries/:entryId/photos/:photoId` - Eliminar una foto de una entrada.
--   **POST** - `/entries/:entryId/votes` - Vota una entrada (entre 1 y 5).
--   **DELETE** - `/entries/:entryId` - Eliminar una entrada. -->
+## Endpoints del musicos
 
-## Endpoints del grupos
-
-<!-- -   **POST** - `/entries` - Crea una entrada.
--   **GET** - `/entries` - Retorna el listado de entradas.
--   **GET** - `/entries/:entryId` - Retorna una entrada en concreto.
--   **POST** - `/entries/:entryId/photos` - Agregar una foto a una entrada.
--   **DELETE** - `/entries/:entryId/photos/:photoId` - Eliminar una foto de una entrada.
--   **POST** - `/entries/:entryId/votes` - Vota una entrada (entre 1 y 5).
--   **DELETE** - `/entries/:entryId` - Eliminar una entrada. -->
+-   **GET** - `/generos` - Lista estilos musicales (Isa)
 
 ## Endpoints de reservas
 
-**POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala.
-**DELETE** - `/cancelar-reserva/:sala_id` - Cancela una reserva
+-   **POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala. (Aitor)
+-   **DELETE** - `/cancelar-reserva/:sala_id` - Cancela una reserva (Aitor)
+-   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva Carmen

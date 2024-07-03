@@ -15,7 +15,7 @@ router.put('/users/validate/:registrationCode', validateUserController);
 // Login de usuario.
 router.post('/users/login', loginUserController);
 
-// Editar la contraseña de un usuario
+// Editar la contraseña de un usuario una vez logeado
 router.patch('/users/password', passwordChangeController);
 
 export default router;

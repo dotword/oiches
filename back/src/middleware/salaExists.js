@@ -21,7 +21,7 @@ const salaExists = async (req, res, next) => {
         // Comprobar si el usuario tiene el rol de 'sala'
         if (user[0].roles !== 'sala') {
             throw generateErrorsUtil(
-                'El usuario no tiene permisos de salass',
+                'El usuario no tiene permisos de salas',
                 403
             );
         }
