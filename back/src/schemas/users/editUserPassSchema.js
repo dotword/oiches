@@ -15,9 +15,6 @@ const editUserPassSchema = Joi.object({
         .required()
         .messages(joiErrorMessages),
 
-    //Esperar al endpoint de recuperación de contraseña
-    // recoverPassCode: joi.string().required().messages(joiErrorMessages),
-
     newPassword: Joi.string()
         .pattern(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[¡!$%^&*()_+|~=`{}:";'<>¿?,.])[a-zA-Z0-9¡!$%^&*()_+|~=`{}:";'<>¿?,.]{8,}$/

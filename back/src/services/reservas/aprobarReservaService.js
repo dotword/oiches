@@ -12,7 +12,6 @@ const aprobarReservaService = async (reserva_id) => {
             [reserva_id]
         );
         const confirmSala = salaConfirm[0].confirmada;
-        // const salaId = salaConfirm[0].sala_id;
 
         // Comprobar el email del grupo
         const [grupoConfirm] = await pool.query(
