@@ -165,7 +165,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 -   **POST** - `/users/salas` - Crea una sala. (Isa)
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala (Carmen)
--   /**GET** - `/salas` - Retorna el listado de salas. (Fran)
+-   **GET** - `/salas` - Retorna el listado de salas. (Fran)
 
 ## Endpoints del musicos
 
