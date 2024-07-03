@@ -1,9 +1,8 @@
 'use strict';
-
+import routes from './src/routes/index.js';
 import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
-import routes from './src/routes/index.js';
 import staticFilesMiddleware from './src/middleware/staticFiles.js';
 import fileUpload from 'express-fileupload';
 

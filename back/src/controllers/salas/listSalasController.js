@@ -2,10 +2,10 @@ import { listSalasService } from '../../services/salas/listSalasService.js';
 
 export async function listSalasController(req, res, next) {
     try {
-        const filters = {
-            name: req.query.name,
-            capacity: req.query.capacity,
-        };
+        const filters = {};
+        for (const key in req.query) {
+            filters[key] = req.query[key];
+        }
 
         const sort = {
             field: req.query.sortField,
@@ -13,7 +13,7 @@ export async function listSalasController(req, res, next) {
         };
 
         const salas = await listSalasService(filters, sort);
-        res.json(salas);
+        res.status(200).json(salas);
     } catch (error) {
         next(error);
     }
