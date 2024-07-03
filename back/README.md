@@ -166,10 +166,9 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 ## Endpoints del salas
 
-<!-- -   **POST** - `/entries` - Crea una entrada.
--   **GET** - `/entries` - Retorna el listado de entradas. -->
-
+-   **POST** - `/users/salas` - Crea una sala.
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
+-   **GET** - `/salas` - Retorna el listado de salas.
 <!-- -   **POST** - `/entries/:entryId/photos` - Agregar una foto a una entrada.
 -   **DELETE** - `/entries/:entryId/photos/:photoId` - Eliminar una foto de una entrada.
 -   **POST** - `/entries/:entryId/votes` - Vota una entrada (entre 1 y 5).
