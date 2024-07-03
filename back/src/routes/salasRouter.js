@@ -3,7 +3,6 @@ import { getSalaDetailController } from '../controllers/salas/index.js';
 import createSalaController from '../controllers/salas/createSalaController.js';
 import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
-import uploadFiles from '../middleware/uploadFiles.js';
 import { listSalasController } from '../controllers/salas/listSalasController.js';
 
 const router = express.Router();
