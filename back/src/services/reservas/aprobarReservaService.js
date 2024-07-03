@@ -6,18 +6,18 @@ const aprobarReservaService = async (reserva_id) => {
     try {
         const pool = await getPool();
 
-        // Comprobar si la reserva ya está confirmada
-        const [salaConfirm] = await pool.query(
-            'SELECT confirmada FROM reservas WHERE id = ?',
-            [reserva_id]
-        );
-        const confirmSala = salaConfirm[0].confirmada;
-
         // Comprobar el email del grupo
         const [grupoConfirm] = await pool.query(
             'SELECT grupo_id, nombre FROM reservas WHERE id = ?',
             [reserva_id]
         );
+
+        if (grupoConfirm.length === 0) {
+            throw {
+                httpStatus: 400,
+                message: 'No existe esa reserva',
+            };
+        }
         const grupoId = grupoConfirm[0].grupo_id;
         const reservaName = grupoConfirm[0].nombre;
 
@@ -28,26 +28,36 @@ const aprobarReservaService = async (reserva_id) => {
         const grupoEmail = emailGrupo[0].email;
         const grupoNombre = emailGrupo[0].nombre;
 
-        if (confirmSala === 1) {
-            throw {
-                httpStatus: 400,
-                message: 'La reserva ya ha sido confirmada',
-            };
-        }
+        // Comprobar si la reserva ya está confirmada
+        const [salaConfirm] = await pool.query(
+            'SELECT confirmada, sala_id FROM reservas WHERE id = ?',
+            [reserva_id]
+        );
+        const confirmSala = salaConfirm[0].confirmada;
 
         // Creamos el asunto del email de verificación.
-        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido confirmada.)`;
+        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido ${
+            confirmSala === 0 ? 'confirmada' : 'cancelada'
+        })`;
 
         // Creamos el contenido del email
         const emailBody = `
-             Hola ${grupoNombre}!
+                     Hola ${grupoNombre}!
+        
+                     Tu reserva "${reservaName}" ha sido ${
+            confirmSala === 0 ? 'confirmada' : 'cancelada'
+        }.
 
-             Tu reserva "${reservaName}" ha sido confirmada.
-
-             Entra en tu cuenta para ver todos los detalles.
-
-             <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
-         `;
+                    ${
+                        confirmSala === 0
+                            ? 'Entra en tu cuenta para ver todos los detalles.'
+                            : 'Ponte en contacto con la sala para saber más detalles.'
+                    }
+        
+                     
+        
+                     <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+                 `;
 
         // Enviamos el email de verificación al usuario.
         try {
@@ -56,9 +66,17 @@ const aprobarReservaService = async (reserva_id) => {
             return;
         }
 
-        await pool.query('UPDATE Reservas SET confirmada = 1 WHERE id = ?', [
-            reserva_id,
-        ]);
+        if (confirmSala === 0) {
+            await pool.query(
+                'UPDATE Reservas SET confirmada = 1 WHERE id = ?',
+                [reserva_id]
+            );
+        } else {
+            await pool.query(
+                'UPDATE Reservas SET confirmada = 0 WHERE id = ?',
+                [reserva_id]
+            );
+        }
     } catch (error) {
         console.log(error);
         throw error;
