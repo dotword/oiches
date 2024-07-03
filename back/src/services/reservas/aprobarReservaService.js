@@ -2,7 +2,7 @@ import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
 import { URL_FRONT } from '../../../env.js';
 
-const aprobarReservaService = async (reserva_id) => {
+const aprobarReservaService = async (reserva_id, id) => {
     try {
         const pool = await getPool();
 
@@ -34,6 +34,21 @@ const aprobarReservaService = async (reserva_id) => {
             [reserva_id]
         );
         const confirmSala = salaConfirm[0].confirmada;
+        const salaId = salaConfirm[0].sala_id;
+
+        const [userIdSala] = await pool.query(
+            'SELECT usuario_id FROM salas WHERE id = ?',
+            [salaId]
+        );
+        const userId_sala = userIdSala[0].usuario_id;
+
+        if (id !== userId_sala) {
+            throw {
+                status: 403,
+                message:
+                    'No tiene permisos para confirmar/cancelar la reserva de esta sala.',
+            };
+        }
 
         // Creamos el asunto del email de verificación.
         const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido ${

@@ -29,20 +29,6 @@ const selectSalaByIdService = async (idSala) => {
         `,
         [idSala]
     );
-
-    // Comprobar que la sala existe
-    const [salaResults] = await pool.query(
-        'SELECT nombre FROM Salas WHERE id = ?',
-        [idSala]
-    );
-
-    if (salaResults.length === 0) {
-        throw {
-            status: 404,
-            message: 'No se encontró la sala a la que intentas acceder.',
-        };
-    }
-
     // Obtenemos el array de fotos de la entrada.
     const [photos] = await pool.query(
         `SELECT id, name FROM sala_fotos WHERE salaId = ?`,
