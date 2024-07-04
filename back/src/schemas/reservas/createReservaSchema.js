@@ -10,7 +10,13 @@ import joiErrorMessages from '../joiErrorMessages.js';
 const newUserSchema = Joi.object({
     nombre: Joi.string().max(100).required().messages(joiErrorMessages),
     fecha: Joi.date().required().messages(joiErrorMessages),
-    hora: Joi.string().max(5).required().messages(joiErrorMessages),
+    hora: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            'string.pattern.base':
+                'El campo de hora debe estar en formato HH:mm',
+        }),
 });
 
 export default newUserSchema;
