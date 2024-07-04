@@ -21,7 +21,7 @@ router.post('/users/login', loginUserController);
 router.patch('/users/password', passwordChangeController);
 
 // Endpoint de recuperación de contraseña
-router.post('/users/resetPassword', requestPasswordReset);
-router.post('/users/tokenResetPassword', resetPasswordToken);
+// router.post('/users/resetPassword', requestPasswordReset);
+// router.post('/users/tokenResetPassword', resetPasswordToken);
 
 export default router;
