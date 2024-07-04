@@ -13,7 +13,7 @@ router.post('/users/salas', authUser, salaExists, createSalaController);
 // Endpoint detalle sala
 router.get('/salas/:idSala', getSalaDetailController);
 
-//Endpoint de filtro/busqueda y ordenacion
-router.get('/salas', listSalasController);
+// Endpoint de filtro/búsqueda y ordenación
+router.get('/salas?', listSalasController);
 
 export default router;
