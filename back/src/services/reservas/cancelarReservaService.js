@@ -25,7 +25,7 @@ export const cancelarReservaService = async (token, sala_id) => {
             'SELECT * FROM Reservas WHERE grupo_id = ? AND sala_id = ?',
             [grupo_id, sala_id]
         );
-        console.log(reservaResults);
+
         if (reservaResults[0].confirmada === 1) {
             throw {
                 message:
