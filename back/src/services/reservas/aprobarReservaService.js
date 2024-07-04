@@ -36,6 +36,7 @@ const aprobarReservaService = async (reserva_id, id) => {
         const confirmSala = salaConfirm[0].confirmada;
         const salaId = salaConfirm[0].sala_id;
 
+        // Verificar que la sala se corresponde con la reserva
         const [userIdSala] = await pool.query(
             'SELECT usuario_id FROM salas WHERE id = ?',
             [salaId]
