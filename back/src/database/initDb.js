@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS votos_salas, votos_grupos, grupo_comments, sala_comments, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS votos_salas, votos_grupos, grupo_comments, sala_comments, reservas, grupo_media, grupo_fotos, sala_fotos, provincias_grupos, generos_grupos, grupos, provincias_salas, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -42,11 +42,19 @@ const main = async () => {
         `);
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS Provincias(
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                provincia VARCHAR(255) NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
+
+        await pool.query(`
         CREATE TABLE IF NOT EXISTS Salas(
             id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
             usuario_id INT NOT NULL,
             nombre VARCHAR(100) NOT NULL,
-            provincia VARCHAR(255) NOT NULL,
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),
@@ -73,12 +81,23 @@ const main = async () => {
             );
         `);
 
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS Provincias_salas(
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                salaId INT NOT NULL,
+                provinciaId INT NOT NULL,
+                FOREIGN KEY (salaId) REFERENCES Salas(id),
+                FOREIGN KEY (provinciaId) REFERENCES Provincias(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
+
         // Creando tabla Grupos
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupos(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(50)  NOT NULL UNIQUE,
-                provincia VARCHAR(255),
                 honorarios INT,
                 biografia TEXT,
                 usuario_id INT,
@@ -98,6 +117,18 @@ const main = async () => {
                 generoId INT NOT NULL,
                 FOREIGN KEY (grupoId) REFERENCES Grupos(id),
                 FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS Provincias_grupos(
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                grupoId INT NOT NULL,
+                provinciaId INT NOT NULL,
+                FOREIGN KEY (grupoId) REFERENCES Grupos(id),
+                FOREIGN KEY (provinciaId) REFERENCES Provincias(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
@@ -219,6 +250,12 @@ const main = async () => {
                 (DEFAULT, 'Reaggeton', DEFAULT, DEFAULT),
                 (DEFAULT, 'Hip-Hop', DEFAULT, DEFAULT),
                 (DEFAULT, 'Blues', DEFAULT, DEFAULT);
+        `);
+
+        await pool.query(`
+            INSERT INTO Provincias VALUES
+            (DEFAULT, 'Álava', DEFAULT, DEFAULT), (DEFAULT, 'Albacete', DEFAULT, DEFAULT), (DEFAULT, 'Alicante', DEFAULT, DEFAULT), (DEFAULT, 'Almería', DEFAULT, DEFAULT), (DEFAULT, 'Asturias', DEFAULT, DEFAULT), (DEFAULT, 'Ávila', DEFAULT, DEFAULT), (DEFAULT, 'Badajoz', DEFAULT, DEFAULT), (DEFAULT, 'Baleares', DEFAULT, DEFAULT), (DEFAULT, 'Barcelona', DEFAULT, DEFAULT), (DEFAULT, 'Burgos', DEFAULT, DEFAULT), (DEFAULT, 'Cáceres', DEFAULT, DEFAULT), (DEFAULT, 'Cádiz', DEFAULT, DEFAULT), (DEFAULT, 'Cantabria', DEFAULT, DEFAULT), (DEFAULT, 'Castellón', DEFAULT, DEFAULT), (DEFAULT, 'Ciudad Real', DEFAULT, DEFAULT), (DEFAULT, 'Córdoba', DEFAULT, DEFAULT), (DEFAULT, 'Cuenca', DEFAULT, DEFAULT), (DEFAULT, 'Girona', DEFAULT, DEFAULT), (DEFAULT, 'Granada', DEFAULT, DEFAULT), (DEFAULT, 'Guadalajara', DEFAULT, DEFAULT), (DEFAULT, 'Guipúzcoa', DEFAULT, DEFAULT), (DEFAULT, 'Huelva', DEFAULT, DEFAULT), (DEFAULT, 'Huesca', DEFAULT, DEFAULT), (DEFAULT, 'Jaén', DEFAULT, DEFAULT), (DEFAULT, 'La Rioja', DEFAULT, DEFAULT), (DEFAULT, 'Las Palmas', DEFAULT, DEFAULT), (DEFAULT, 'León', DEFAULT, DEFAULT), (DEFAULT, 'Lleida', DEFAULT, DEFAULT), (DEFAULT, 'Lugo', DEFAULT, DEFAULT), (DEFAULT, 'Madrid', DEFAULT, DEFAULT), (DEFAULT, 'Málaga', DEFAULT, DEFAULT), (DEFAULT, 'Murcia', DEFAULT, DEFAULT), (DEFAULT, 'Navarra', DEFAULT, DEFAULT), (DEFAULT, 'Ourense', DEFAULT, DEFAULT), (DEFAULT, 'Palencia', DEFAULT, DEFAULT), (DEFAULT, 'Pontevedra', DEFAULT, DEFAULT), (DEFAULT, 'Salamanca', DEFAULT, DEFAULT), (DEFAULT, 'Segovia', DEFAULT, DEFAULT), (DEFAULT, 'Sevilla', DEFAULT, DEFAULT), (DEFAULT, 'Soria', DEFAULT, DEFAULT), (DEFAULT, 'Tarragona', DEFAULT, DEFAULT), (DEFAULT, 'Santa Cruz de Tenerife', DEFAULT, DEFAULT), (DEFAULT, 'Teruel', DEFAULT, DEFAULT), (DEFAULT, 'Toledo', DEFAULT, DEFAULT), (DEFAULT, 'Valencia', DEFAULT, DEFAULT), (DEFAULT, 'Valladolid', DEFAULT, DEFAULT), (DEFAULT, 'Vizcaya', DEFAULT, DEFAULT), (DEFAULT, 'Zamora', DEFAULT, DEFAULT), (DEFAULT, 'Zaragoza', DEFAULT, DEFAULT)
+
         `);
 
         console.log('¡Tablas creadas!');

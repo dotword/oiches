@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
 import { URL_FRONT } from '../../../env.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const insertUserService = async (
     username,
@@ -20,13 +21,11 @@ const insertUserService = async (
     );
 
     // Si existe algún usuario con ese nombre lanzamos un error.
-    if (users.length > 0) {
-        throw {
-            httpStatus: 409, // Conflict
-            code: 'USER_ALREADY_REGISTERED',
-            message: 'El nombre de usuario ya está registrado',
-        };
-    }
+    if (users.length > 0)
+        throw generateErrorsUtil(
+            'El nombre de usuario ya está registrado',
+            409
+        );
 
     // Comprobar que el email no esté registrado
     [users] = await pool.query(` SELECT id FROM usuarios WHERE email=?`, [
@@ -34,13 +33,8 @@ const insertUserService = async (
     ]);
 
     // Si existe algún usuario con ese email lanzamos un error.
-    if (users.length > 0) {
-        throw {
-            httpStatus: 409, // Conflict
-            code: 'EMAIL_ALREADY_REGISTERED',
-            message: 'El email ya está registrado',
-        };
-    }
+    if (users.length > 0)
+        throw generateErrorsUtil('El email ya está registrado', 409);
 
     // Creamos el asunto del email de verificación.
     const emailSubject = 'Activa tu usuario en Oiches:)';

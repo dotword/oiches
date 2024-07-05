@@ -174,5 +174,6 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 ## Endpoints de reservas
 
 -   **POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala. (Aitor)
--   **DELETE** - `/cancelar-reserva/:sala_id` - Cancela una reserva (Aitor)
--   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva Carmen
+-   **DELETE** - `/cancelar-reserva/:sala_id` - Grupo borra una reserva (Aitor)
+-   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva (Carmen)
+-   **DELETE** - `/borrar-reserva/:reserva_id` - Sala borra una reserva (Carmen)
