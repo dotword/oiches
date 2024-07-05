@@ -5,8 +5,8 @@ import aprobarReservaController from '../controllers/reservas/aprobarReservaCont
 import borrarReservaSalaController from '../controllers/reservas/borrarReservaSalaController.js';
 
 import { checkIfGroup } from '../middleware/checkIfGroup.js';
-import authUser from '../middleware/authUser.js';
-import salaExists from '../middleware/salaExists.js';
+// import authUser from '../middleware/authUser.js';
+// import salaExists from '../middleware/salaExists.js';
 
 const router = express.Router();
 
@@ -17,12 +17,7 @@ router.post('/reservar-sala/:sala_id', checkIfGroup, crearReservaController);
 router.delete('/cancelar-reserva/:sala_id', cancelarReservaController);
 
 // Endpoint para que la sala pueda aprobar/cancelar una reserva
-router.put(
-    '/aprobar-reserva/:reserva_id',
-    authUser,
-    salaExists,
-    aprobarReservaController
-);
+router.put('/aprobar-reserva/:reserva_id', aprobarReservaController);
 
 // Endpoint para que la sala borre una reserva si no está confirmada
 router.delete('/borrar-reserva/:reserva_id', borrarReservaSalaController);

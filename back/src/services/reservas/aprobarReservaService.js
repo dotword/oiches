@@ -1,10 +1,56 @@
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
-import { URL_FRONT } from '../../../env.js';
+import pkg from 'jsonwebtoken';
+import { JWT_SECRET, URL_FRONT } from '../../../env.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-const aprobarReservaService = async (reserva_id, id) => {
+const aprobarReservaService = async (token, reserva_id) => {
     try {
         const pool = await getPool();
+
+        const decoded = pkg.verify(token, JWT_SECRET);
+        const { id: usuario_id } = decoded;
+
+        const [salaInfo] = await pool.query(
+            'SELECT confirmada, sala_id, fecha FROM reservas WHERE id = ?',
+            [reserva_id]
+        );
+        // Comprobar que la reserva existe
+        if (salaInfo.length === 0)
+            throw generateErrorsUtil(
+                'No se han encontrado la reserva que intentas borrar.',
+                404
+            );
+        const reservaConfirm = salaInfo[0].confirmada;
+        const salaId = salaInfo[0].sala_id;
+
+        // Verificar que la sala le corresponde al usuario
+        const [usersalaInfo] = await pool.query(
+            'SELECT usuario_id FROM salas WHERE id = ?',
+            [salaId]
+        );
+        const idUser_salaReserva = usersalaInfo[0].usuario_id;
+
+        if (idUser_salaReserva !== usuario_id) {
+            throw generateErrorsUtil(
+                'No tienes permiso para modificar está reserva.',
+                404
+            );
+        }
+
+        // Comprobar que la fecha de la reserva es anterior a hoy
+        const dateReserva = salaInfo[0].fecha;
+        // Convertir la fecha ingresada a un objeto Date
+        const dateReservation = new Date(dateReserva);
+        // Obtener la fecha de hoy
+        const today = new Date();
+        // Comprobar fechas
+        if (dateReservation < today) {
+            throw generateErrorsUtil(
+                'No puedes modificar una reserva anterior a la fecha de hoy.',
+                404
+            );
+        }
 
         // Comprobar el email del grupo
         const [grupoConfirm] = await pool.query(
@@ -28,32 +74,9 @@ const aprobarReservaService = async (reserva_id, id) => {
         const grupoEmail = emailGrupo[0].email;
         const grupoNombre = emailGrupo[0].nombre;
 
-        // Comprobar si la reserva ya está confirmada
-        const [salaConfirm] = await pool.query(
-            'SELECT confirmada, sala_id FROM reservas WHERE id = ?',
-            [reserva_id]
-        );
-        const confirmSala = salaConfirm[0].confirmada;
-        const salaId = salaConfirm[0].sala_id;
-
-        // Verificar que la sala se corresponde con la reserva
-        const [userIdSala] = await pool.query(
-            'SELECT usuario_id FROM salas WHERE id = ?',
-            [salaId]
-        );
-        const userId_sala = userIdSala[0].usuario_id;
-
-        if (id !== userId_sala) {
-            throw {
-                status: 403,
-                message:
-                    'No tiene permisos para confirmar/cancelar la reserva de esta sala.',
-            };
-        }
-
         // Creamos el asunto del email de verificación.
         const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido ${
-            confirmSala === 0 ? 'confirmada' : 'cancelada'
+            reservaConfirm === 0 ? 'confirmada' : 'cancelada'
         })`;
 
         // Creamos el contenido del email
@@ -61,11 +84,11 @@ const aprobarReservaService = async (reserva_id, id) => {
                      Hola ${grupoNombre}!
         
                      Tu reserva "${reservaName}" ha sido ${
-            confirmSala === 0 ? 'confirmada' : 'cancelada'
+            reservaConfirm === 0 ? 'confirmada' : 'cancelada'
         }.
 
                     ${
-                        confirmSala === 0
+                        reservaConfirm === 0
                             ? 'Entra en tu cuenta para ver todos los detalles.'
                             : 'Ponte en contacto con la sala para saber más detalles.'
                     }
@@ -82,7 +105,7 @@ const aprobarReservaService = async (reserva_id, id) => {
             return;
         }
 
-        if (confirmSala === 0) {
+        if (reservaConfirm === 0) {
             await pool.query(
                 'UPDATE Reservas SET confirmada = 1 WHERE id = ?',
                 [reserva_id]
