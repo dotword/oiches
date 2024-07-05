@@ -1,6 +1,7 @@
 import getPool from '../../database/getPool.js';
 import pkg from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../env.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const borrarReservaSalaService = async (token, reserva_id) => {
     try {
@@ -16,21 +17,19 @@ const borrarReservaSalaService = async (token, reserva_id) => {
         );
 
         // Comprobar que la reserva existe
-        if (idSala.length === 0) {
-            throw {
-                status: 404,
-                message: 'No se han encontrado la reserva que intentas borrar.',
-            };
-        }
+        if (idSala.length === 0)
+            throw generateErrorsUtil(
+                'No se han encontrado la reserva que intentas borrar.',
+                404
+            );
 
         // Comprobar que la reserva no esté confirmada
         const reservaConfirm = idSala[0].confirmada;
-        if (reservaConfirm === 1) {
-            throw {
-                message:
-                    'La reserva esta confirmada, no puede cancelar una reserva confirmada.',
-            };
-        }
+        if (reservaConfirm === 1)
+            throw generateErrorsUtil(
+                'La reserva esta confirmada, no puede borrar una reserva confirmada.'
+            );
+
         const sala_id = idSala[0].sala_id;
 
         // Verificar que la sala le corresponde al usuario
@@ -40,11 +39,14 @@ const borrarReservaSalaService = async (token, reserva_id) => {
         );
         const idUser_salaReserva = userIdSala[0].usuario_id;
 
-        if (idUser_salaReserva !== usuario_id) {
-            throw {
-                message: 'No tienes permiso para borrar está reserva.',
-            };
-        }
+        if (idUser_salaReserva !== usuario_id)
+            throw generateErrorsUtil(
+                'No tienes permiso para borrar está reserva.',
+                404
+            );
+
+        console.log(idUser_salaReserva);
+        console.log(usuario_id);
 
         await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
     } catch (error) {
