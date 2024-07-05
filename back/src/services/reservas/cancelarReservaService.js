@@ -1,8 +1,9 @@
 import getPool from '../../database/getPool.js';
 import pkg from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../env.js';
-export const cancelarReservaService = async (token, sala_id) => {
+export const cancelarReservaService = async (token, reserva_id) => {
     try {
+      const {sala_id:id}=reserva_id
         const pool = await getPool();
 
         const decoded = pkg.verify(token, JWT_SECRET);
@@ -19,28 +20,28 @@ export const cancelarReservaService = async (token, sala_id) => {
                     'No se han encontrado grupos con el usuario con el que esta intentado acceder.',
             };
         }
-        const grupo_id = grupoResults[0].id;
 
         const [reservaResults] = await pool.query(
-            'SELECT * FROM Reservas WHERE grupo_id = ? AND sala_id = ?',
-            [grupo_id, sala_id]
+            'SELECT * FROM reservas WHERE id = ?',
+            [id]
         );
+        
 
-        if (reservaResults[0].confirmada === 1) {
-            throw {
-                message:
-                    'La reserva esta confirmada, no puede cancelar una reserva confirmada.',
-            };
-        }
         if (reservaResults.length === 0) {
             throw {
                 status: 400,
                 message: 'No existe ninguna reserva con la id proporcionada.',
             };
         }
-        const reserva_id = reservaResults[0].id;
+        if (reservaResults[0].confirmada === 1) {
+            throw {
+                message:
+                    'La reserva esta confirmada, no puede cancelar una reserva confirmada.',
+            };
+        }
+        
 
-        await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
+        await pool.query('DELETE FROM Reservas WHERE id = ?', [id]);
         return {
             reserva: {
                 grupoResults,
