@@ -2,6 +2,8 @@ import express from 'express';
 import { crearReservaController } from '../controllers/reservas/crearReservaController.js';
 import { cancelarReservaController } from '../controllers/reservas/cancelarReservaController.js';
 import aprobarReservaController from '../controllers/reservas/aprobarReservaController.js';
+import borrarReservaSalaController from '../controllers/reservas/borrarReservaSalaController.js';
+
 import { checkIfGroup } from '../middleware/checkIfGroup.js';
 import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
@@ -21,5 +23,8 @@ router.put(
     salaExists,
     aprobarReservaController
 );
+
+// Endpoint para que la sala borre una reserva si no está confirmada
+router.delete('/borrar-reserva/:reserva_id', borrarReservaSalaController);
 
 export default router;
