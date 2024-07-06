@@ -14,7 +14,7 @@ const router = express.Router();
 router.post('/reservar-sala/:sala_id', checkIfGroup, crearReservaController);
 
 // Endpoint para que el grupo borre una reserva si no está confirmada
-router.delete('/cancelar-reserva/:sala_id', cancelarReservaController);
+router.delete('/cancelar-reserva/:reserva_id', cancelarReservaController);
 
 // Endpoint para que la sala pueda aprobar/cancelar una reserva
 router.put('/aprobar-reserva/:reserva_id', aprobarReservaController);
