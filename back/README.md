@@ -17,30 +17,48 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 ### usuarios
 
-| Campo                | Tipo         | Descripción                                 |
-| -------------------- | ------------ | ------------------------------------------- |
-| id                   | INT          | Identificador único del usuario             |
-| email                | VARCHAR(100) | Correo electrónico del usuario              |
-| password             | VARCHAR(250) | Contraseña del usuario (hash)               |
-| username             | VARCHAR(50)  | Nombre de usuario del usuario               |
-| avatar               | VARCHAR(25 ) | URL del avatar del usuario                  |
-| role                 | ENUM         | Rol del usuario ("admin", "sala" o "grupo") |
-| active               | TINYINT      | Indica si el usuario está activo o no       |
-| registrationCode     | VARCHAR(36)  | Código de registro del usuario              |
-| \*\* recoverPassCode | VARCHAR(36)  | Código de recuperación de contraseña        |
-| createdAt            | DATETIME     | Fecha y hora de creación del usuario        |
-| modifiedAt           | DATETIME     | Fecha y hora de la última modificación      |
-| deletedAT            | DATETIME     | Fecha y hora eliminación                    |
+| Campo            | Tipo         | Descripción                                 |
+| ---------------- | ------------ | ------------------------------------------- |
+| id               | INT          | Identificador único del usuario             |
+| email            | VARCHAR(100) | Correo electrónico del usuario              |
+| password         | VARCHAR(250) | Contraseña del usuario (hash)               |
+| username         | VARCHAR(50)  | Nombre de usuario del usuario               |
+| avatar           | VARCHAR(25 ) | URL del avatar del usuario                  |
+| role             | ENUM         | Rol del usuario ("admin", "sala" o "grupo") |
+| active           | TINYINT      | Indica si el usuario está activo o no       |
+| registrationCode | VARCHAR(36)  | Código de registro del usuario              |
+| recoverPassCode  | VARCHAR(36)  | Código de recuperación de contraseña        |
+| createdAt        | DATETIME     | Fecha y hora de creación del usuario        |
+| modifiedAt       | DATETIME     | Fecha y hora de la última modificación      |
+| deletedAT        | DATETIME     | Fecha y hora eliminación                    |
+
+### generos_musicales
+
+| Campo     | Tipo        | Descripción                            |
+| --------- | ----------- | -------------------------------------- |
+| id        | INT         | Identificador único del genero         |
+| nombre    | VARCHAR(50) | nombre del género                      |
+| createdAt | DATETIME    | Fecha y hora de creación               |
+| updatedAt | DATETIME    | Fecha y hora de la última modificación |
+
+### provincias
+
+| Campo     | Tipo         | Descripción                            |
+| --------- | ------------ | -------------------------------------- |
+| id        | INT          | Identificador único del genero         |
+| provincia | VARCHAR(255) | nombre del género                      |
+| createdAt | DATETIME     | Fecha y hora de creación               |
+| updatedAt | DATETIME     | Fecha y hora de la última modificación |
 
 ### salas
 
 | Campo        | Tipo          | Descripción                            |
 | ------------ | ------------- | -------------------------------------- |
-| id           | INT           | Identificador único del usuario        |
-| usuario_id   | VARCHAR(100)  | Identificador del usuario creado       |
+| id           | INT           | Identificador único de la sala         |
+| usuario_id   | VARCHAR(100)  | Identificador del usuario              |
 | nombre       | VARCHAR(100)  | Nombre de la sala                      |
-| provincia    | VARCHAR(255)  | Provincia de la sala                   |
-| genero       | VARCHAR(50)   | Género/s musical de la sala            |
+| capacidad    | INT           | Aforo de la sala                       |
+| descripcion  | TEXT          | descripcion de la sala                 |
 | precios      | DECIMAL(10,2) | Precio del alquiler de la sala         |
 | direccion    | VARCHAR(255)  | Dirección de la sala                   |
 | condiciones  | TEXT          | Condiciones de la sala                 |
@@ -50,24 +68,60 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 | updatedAt    | DATETIME      | Fecha y hora de la última modificación |
 | deletedAT    | DATETIME      | Fecha y hora eliminación               |
 
+### generos_salas
+
+| Campo     | Tipo     | Descripción                            |
+| --------- | -------- | -------------------------------------- |
+| id        | INT      | Identificador único                    |
+| salaId    | INT      | Id de la sala                          |
+| generoId  | INT      | Id del genero                          |
+| createdAt | DATETIME | Fecha y hora de creación               |
+| updatedAt | DATETIME | Fecha y hora de la última modificación |
+
+### provincias_salas
+
+| Campo       | Tipo     | Descripción                            |
+| ----------- | -------- | -------------------------------------- |
+| id          | INT      | Identificador único                    |
+| salaId      | INT      | Id de la sala                          |
+| provinciaId | INT      | Id de la provincia                     |
+| createdAt   | DATETIME | Fecha y hora de creación               |
+| updatedAt   | DATETIME | Fecha y hora de la última modificación |
+
 ### grupos
 
-| Campo       | Tipo         | Descripción                            |
-| ----------- | ------------ | -------------------------------------- |
-| id          | INT          | Identificador único del usuario        |
-| usuario_id  | INT          | Identificador del usuario creado       |
-| nombre      | VARCHAR(50)  | Nombre del grupo                       |
-| provincia   | VARCHAR(255) | Provincia del grupo                    |
-| honorarios  | INT          | Caché del grupo                        |
-| biografia   | TEXT         | Biografía del grupo                    |
-| genero      | VARCHAR(255) | Género/s musical del grupo             |
-| rider       | VARCHAR(255) | Rider del grupo                        |
-| \*\* avatar | VARCHAR(255) | Avatar del grupo                       |
-| \*\*enlaces | VARCHAR(255) | Enlaces de audio/video del grupo       |
-| email       | VARCHAR(255) | Email de contacto                      |
-| createdAt   | DATETIME     | Fecha y hora de creación del grupo     |
-| updatedAt   | DATETIME     | Fecha y hora de la última modificación |
-| deletedAT   | DATETIME     | Fecha y hora eliminación               |
+| Campo      | Tipo         | Descripción                            |
+| ---------- | ------------ | -------------------------------------- |
+| id         | INT          | Identificador único del usuario        |
+| usuario_id | INT          | Identificador del usuario creado       |
+| nombre     | VARCHAR(50)  | Nombre del grupo                       |
+| honorarios | INT          | Caché del grupo                        |
+| biografia  | TEXT         | Biografía del grupo                    |
+| rider      | VARCHAR(255) | Rider del grupo                        |
+| email      | VARCHAR(255) | Email de contacto                      |
+| createdAt  | DATETIME     | Fecha y hora de creación del grupo     |
+| updatedAt  | DATETIME     | Fecha y hora de la última modificación |
+| deletedAT  | DATETIME     | Fecha y hora eliminación               |
+
+### generos_grupos
+
+| Campo     | Tipo     | Descripción                            |
+| --------- | -------- | -------------------------------------- |
+| id        | INT      | Identificador único                    |
+| grupoId   | INT      | Id del grupo                           |
+| generoId  | INT      | Id del genero                          |
+| createdAt | DATETIME | Fecha y hora de creación               |
+| updatedAt | DATETIME | Fecha y hora de la última modificación |
+
+### provincias_grupos
+
+| Campo       | Tipo     | Descripción                            |
+| ----------- | -------- | -------------------------------------- |
+| id          | INT      | Identificador único                    |
+| grupoId     | INT      | Id del grupo                           |
+| provinciaId | INT      | Id de la provincia                     |
+| createdAt   | DATETIME | Fecha y hora de creación               |
+| updatedAt   | DATETIME | Fecha y hora de la última modificación |
 
 ### Sala_fotos
 
@@ -165,7 +219,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 -   **POST** - `/users/salas` - Crea una sala. (Isa)
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala (Carmen)
--   **GET** - `/salas` - Retorna el listado de salas. (Fran)
+-   **GET** - `/salas?` - Retorna el listado de salas con filtro. (Fran)
 
 ## Endpoints del musicos
 
@@ -174,6 +228,6 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 ## Endpoints de reservas
 
 -   **POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala. (Aitor)
--   **DELETE** - `/cancelar-reserva/:sala_id` - Grupo borra una reserva (Aitor)
+-   **DELETE** - `/cancelar-reserva/:reserva_id` - Grupo borra una reserva (Aitor)
 -   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva (Carmen)
 -   **DELETE** - `/borrar-reserva/:reserva_id` - Sala borra una reserva (Carmen)
