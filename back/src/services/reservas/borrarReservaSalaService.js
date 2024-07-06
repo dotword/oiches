@@ -1,6 +1,7 @@
 import getPool from '../../database/getPool.js';
+import sendMailUtil from '../../utils/sendMailUtil.js';
 import pkg from 'jsonwebtoken';
-import { JWT_SECRET } from '../../../env.js';
+import { JWT_SECRET, URL_FRONT } from '../../../env.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const borrarReservaSalaService = async (token, reserva_id) => {
@@ -12,7 +13,7 @@ const borrarReservaSalaService = async (token, reserva_id) => {
 
         // Traer el id de la sala
         const [idSala] = await pool.query(
-            'SELECT sala_id, confirmada FROM reservas WHERE id = ?',
+            'SELECT sala_id FROM reservas WHERE id = ?',
             [reserva_id]
         );
 
@@ -24,11 +25,11 @@ const borrarReservaSalaService = async (token, reserva_id) => {
             );
 
         // Comprobar que la reserva no esté confirmada
-        const reservaConfirm = idSala[0].confirmada;
-        if (reservaConfirm === 1)
-            throw generateErrorsUtil(
-                'La reserva esta confirmada, no puede borrar una reserva confirmada.'
-            );
+        // const reservaConfirm = idSala[0].confirmada;
+        // if (reservaConfirm === 1)
+        //     throw generateErrorsUtil(
+        //         'La reserva esta confirmada, no puede borrar una reserva confirmada.'
+        //     );
 
         const sala_id = idSala[0].sala_id;
 
@@ -45,8 +46,52 @@ const borrarReservaSalaService = async (token, reserva_id) => {
                 404
             );
 
-        console.log(idUser_salaReserva);
-        console.log(usuario_id);
+        // Comprobar el email del grupo
+        const [grupoConfirm] = await pool.query(
+            'SELECT grupo_id, nombre FROM reservas WHERE id = ?',
+            [reserva_id]
+        );
+
+        if (grupoConfirm.length === 0) {
+            throw {
+                httpStatus: 400,
+                message: 'No existe esa reserva',
+            };
+        }
+        const grupoId = grupoConfirm[0].grupo_id;
+        const reservaName = grupoConfirm[0].nombre;
+
+        const [emailGrupo] = await pool.query(
+            'SELECT email, nombre FROM grupos WHERE id = ?',
+            [grupoId]
+        );
+        const grupoEmail = emailGrupo[0].email;
+        const grupoNombre = emailGrupo[0].nombre;
+
+        // Creamos el asunto del email de verificación.
+        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido cancelada.`;
+
+        // Creamos el contenido del email
+        const emailBody = `
+                    Hola ${grupoNombre}!
+        
+                    Tu reserva "${reservaName}" ha sido cancelada.
+
+                    Ponte en contacto con la sala para saber más detalles.                    
+        
+                    <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+
+                    
+
+                    Saludos del equipo de Oiches.
+                 `;
+
+        // Enviamos el email de verificación al usuario.
+        try {
+            await sendMailUtil(grupoEmail, emailSubject, emailBody);
+        } catch (error) {
+            return;
+        }
 
         await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
     } catch (error) {

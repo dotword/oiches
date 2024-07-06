@@ -38,6 +38,11 @@ const aprobarReservaService = async (token, reserva_id) => {
             );
         }
 
+        // Comprobar que la reseva no esté confirmada
+        if (reservaConfirm === 1) {
+            throw generateErrorsUtil('Esta reserva ya está confirmada.', 404);
+        }
+
         // Comprobar que la fecha de la reserva es anterior a hoy
         const dateReserva = salaInfo[0].fecha;
         // Convertir la fecha ingresada a un objeto Date
@@ -75,27 +80,21 @@ const aprobarReservaService = async (token, reserva_id) => {
         const grupoNombre = emailGrupo[0].nombre;
 
         // Creamos el asunto del email de verificación.
-        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido ${
-            reservaConfirm === 0 ? 'confirmada' : 'cancelada'
-        })`;
+        const emailSubject = `Tu reserva "${reservaName}", en Oiches ha sido confirmada.`;
 
         // Creamos el contenido del email
         const emailBody = `
-                     Hola ${grupoNombre}!
+                    Hola ${grupoNombre}!
         
-                     Tu reserva "${reservaName}" ha sido ${
-            reservaConfirm === 0 ? 'confirmada' : 'cancelada'
-        }.
+                    Tu reserva "${reservaName}" ha sido confirmada.
 
-                    ${
-                        reservaConfirm === 0
-                            ? 'Entra en tu cuenta para ver todos los detalles.'
-                            : 'Ponte en contacto con la sala para saber más detalles.'
-                    }
-        
-                     
-        
-                     <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+                    Entra en tu cuenta para ver todos los detalles.
+  
+                    <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+
+                    
+
+                    Saludos del equipo de Oiches.
                  `;
 
         // Enviamos el email de verificación al usuario.
@@ -105,17 +104,9 @@ const aprobarReservaService = async (token, reserva_id) => {
             return;
         }
 
-        if (reservaConfirm === 0) {
-            await pool.query(
-                'UPDATE Reservas SET confirmada = 1 WHERE id = ?',
-                [reserva_id]
-            );
-        } else {
-            await pool.query(
-                'UPDATE Reservas SET confirmada = 0 WHERE id = ?',
-                [reserva_id]
-            );
-        }
+        await pool.query('UPDATE Reservas SET confirmada = 1 WHERE id = ?', [
+            reserva_id,
+        ]);
     } catch (error) {
         console.log(error);
         throw error;
