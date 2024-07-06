@@ -8,7 +8,6 @@ export async function listSalasService(filters, sort) {
         Salas.id, 
         Salas.usuario_id, 
         Salas.nombre, 
-        Salas.provincia, 
         Salas.createdAt,
         GM.nombre AS genero,
         (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
@@ -17,7 +16,9 @@ export async function listSalasService(filters, sort) {
     FROM 
         Salas 
     LEFT JOIN generos_salas GS ON GS.salaId = Salas.id
-    LEFT JOIN generos_musicales GM ON GM.id = GS.id 
+    LEFT JOIN generos_musicales GM ON GM.id = GS.id
+    LEFT JOIN provincias_salas PS ON PS.salaId = Salas.id
+    LEFT JOIN provincias P ON P.id = PS.id 
     WHERE 
         1=1
         `;
@@ -28,13 +29,15 @@ export async function listSalasService(filters, sort) {
         query += ' AND Salas.nombre LIKE ?';
         queryParams.push(`%${filters.nombre}%`);
     }
-    if (filters.provincia) {
-        query += ' AND Salas.provincia = ?';
-        queryParams.push(filters.provincia);
-    }
+
     if (filters.genero) {
         query += ' AND GM.nombre = ?';
         queryParams.push(filters.genero);
+    }
+
+    if (filters.provincia) {
+        query += ' AND P.provincia = ?';
+        queryParams.push(filters.provincia);
     }
 
     // Ordenamiento
