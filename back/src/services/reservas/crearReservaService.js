@@ -15,6 +15,15 @@ export const crearReservaService = async (fecha,hora,nombre,token,sala_id) =>{
     const [salaResults] = await pool.query('SELECT id FROM Salas WHERE id = ?', [sala_id]);
     await pool.query('INSERT INTO Reservas(nombre, fecha, hora, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?)', [nombre, fecha, hora, sala_id, grupo_id]);
 
+    const [reservaResults] = await pool.query('SELECT * FROM reservas WHERE confirmada =? AND sala_id = ?', [1,sala_id])
+     reservaResults.forEach(result => {
+    console.log(result);
+    if(fecha === result.fecha && hora === result.hora){
+      throw {
+        message:"Ya hay una reserva para esta fecha y hora."
+      }
+    }
+    });
     return {
       message: 'Reserva realizada con éxito',
       reserva: {

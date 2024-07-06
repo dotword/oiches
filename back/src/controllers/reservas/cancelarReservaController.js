@@ -2,9 +2,9 @@ import { cancelarReservaService } from '../../services/reservas/cancelarReservaS
 export const cancelarReservaController = async (req, res, next) => {
     try {
         const { token } = req.headers;
-        const sala_id = req.params;
+        const reserva_id = req.params;
 
-        await cancelarReservaService(token, sala_id);
+        await cancelarReservaService(token, reserva_id);
 
         res.status(200).json({
             message: 'Se ha borrado la reserva con exito ',
