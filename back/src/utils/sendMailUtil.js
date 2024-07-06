@@ -1,7 +1,6 @@
 // Importamos las dependencias.
 import nodemailer from 'nodemailer';
-
-// Importamos los errores.
+import generateErrorsUtil from './generateErrorsUtil.js';
 
 // Obtenemos las variables de entorno necesarias.
 import { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } from '../../env.js';
@@ -27,8 +26,7 @@ const sendMailUtil = async (email, subject, body) => {
 
         await transport.sendMail(mailOptions);
     } catch (error) {
-        console.error(error);
-        // generateErrorsUtils
+        generateErrorsUtil('Error al enviar email.', 500);
     }
 };
 
