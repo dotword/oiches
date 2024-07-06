@@ -1,12 +1,8 @@
 import sharp from 'sharp';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
-import dotenv from 'dotenv';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
-
-dotenv.config;
-
-const {UPLOADS_DIR} = process.env;
+import { UPLOADS_DIR } from '../../env.js';
 
 const uploadPhotos = async (req, res, next) => {
     try {
