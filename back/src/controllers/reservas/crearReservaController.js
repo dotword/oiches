@@ -27,6 +27,17 @@ export const crearReservaController = async (req, res, next) => {
                 message: 'Es necesario seleccionar una sala para reservar.',
             });
         }
+        const now = new Date();
+
+        
+        const reservaDate = new Date(`${fecha}T${hora}`);
+
+        
+        if (reservaDate < now) {
+            return res.status(400).json({
+                message: 'No se puede reservar una fecha que ya ha pasado.',
+            });
+        }
         const {
             reserva: { grupoResults, salaResults },
         } = await crearReservaService(fecha, hora, nombre, token, sala_id);
