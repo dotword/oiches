@@ -1,5 +1,6 @@
 import sharp from 'sharp';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
+import fs from 'fs/promises';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { UPLOADS_DIR } from '../../env.js';
@@ -16,6 +17,13 @@ const uploadPhotos = async (req, res, next) => {
         const uploadsDir = path.resolve(
             path.join(import.meta.dirname, '..', UPLOADS_DIR)
         );
+
+        //Si no existe la carpeta uploads, crearla.
+        try {
+            await fs.access(uploadsDir)
+        } catch (error) {
+            await fs.mkdir(uploadsDir)
+        }
 
         // Iterar en las imagenes
         for (const [key, file] of Object.entries(req.files)) {

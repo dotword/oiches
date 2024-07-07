@@ -5,7 +5,6 @@ import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
 import { listSalasController } from '../controllers/salas/listSalasController.js';
 
-
 const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
