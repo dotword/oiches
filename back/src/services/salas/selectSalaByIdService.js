@@ -67,7 +67,8 @@ const selectSalaByIdService = async (idSala) => {
     entry[0].reservations = reservations;
 
     return {
-        entry,
+        ...entry[0],
+        photos,
     };
 };
 

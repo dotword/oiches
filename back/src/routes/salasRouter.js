@@ -4,6 +4,7 @@ import createSalaController from '../controllers/salas/createSalaController.js';
 import authUser from '../middleware/authUser.js';
 import salaExists from '../middleware/salaExists.js';
 import { listSalasController } from '../controllers/salas/listSalasController.js';
+import addSalaPhotoController from '../controllers/salas/addSalaPhotoController.js';
 
 const router = express.Router();
 
@@ -15,5 +16,15 @@ router.get('/salas/:idSala', getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
+
+// Agregar una foto a una entrada.
+router.post(
+    '/salas/:salaId/photos',
+    // authUserController,
+    // userExistsController,
+    // entryExistsController,
+    // canEditController,
+    addSalaPhotoController
+);
 
 export default router;
