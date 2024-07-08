@@ -52,7 +52,7 @@ const main = async () => {
 
         await pool.query(`
         CREATE TABLE IF NOT EXISTS Salas(
-            id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+            id CHAR(36) PRIMARY KEY NOT NULL,
             usuario_id INT NOT NULL,
             nombre VARCHAR(100) NOT NULL,
             capacidad INT,
@@ -72,7 +72,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Generos_salas(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                salaId INT NOT NULL,
+                salaId CHAR(36) NOT NULL,
                 generoId INT NOT NULL,
                 FOREIGN KEY (salaId) REFERENCES Salas(id),
                 FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
@@ -84,7 +84,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Provincias_salas(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                salaId INT NOT NULL,
+                salaId CHAR(36) NOT NULL,
                 provinciaId INT NOT NULL,
                 FOREIGN KEY (salaId) REFERENCES Salas(id),
                 FOREIGN KEY (provinciaId) REFERENCES Provincias(id),
@@ -138,7 +138,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Sala_fotos(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(100) NOT NULL,
-                    salaId INT,
+                    salaId CHAR(36) NOT NULL,
                     FOREIGN KEY (salaId) REFERENCES Salas(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
@@ -168,7 +168,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Reservas(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
-                sala_id INT,
+                sala_id CHAR(36) NOT NULL,
                 grupo_id INT,
                 confirmada BOOLEAN DEFAULT false,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
@@ -184,7 +184,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Sala_comments(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
-                sala_id INT,
+                sala_id CHAR(36) NOT NULL,
                 grupo_id INT,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -197,7 +197,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Grupo_comments(
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
-                sala_id INT,
+                sala_id CHAR(36) NOT NULL,
                 grupo_id INT,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -211,7 +211,7 @@ const main = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 value TINYINT UNSIGNED NOT NULL,
                 grupo_id INT,
-                voto_sala_id INT,
+                voto_sala_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
                 FOREIGN KEY (voto_sala_id) REFERENCES Salas(id)
@@ -223,7 +223,7 @@ const main = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 value TINYINT UNSIGNED NOT NULL,
                 voto_grupo_id INT,
-                sala_id INT,
+                sala_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (voto_grupo_id) REFERENCES Grupos(id),
                 FOREIGN KEY (sala_id) REFERENCES Salas(id)

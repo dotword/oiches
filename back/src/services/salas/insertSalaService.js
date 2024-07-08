@@ -1,7 +1,9 @@
+// Importamos las dependencias.
+import { v4 as uuid } from 'uuid';
+
 import getPool from '../../database/getPool.js';
 
 const insertSalaService = async (
-    usuario_id,
     nombre,
     capacidad,
     descripcion,
@@ -9,16 +11,21 @@ const insertSalaService = async (
     direccion,
     condiciones,
     equipamiento,
-    email
+    email,
+    usuario_id
 ) => {
     const pool = await getPool();
 
-    const [result] = await pool.query(
+    // Generamos el id de la entrada.
+    const salaId = uuid();
+
+    await pool.query(
         `
-            INSERT INTO salas (usuario_id,nombre,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email)
-            VALUES (?,?,?,?,?,?,?,?,?)
+            INSERT INTO salas (id, usuario_id,nombre,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email)
+            VALUES (?,?,?,?,?,?,?,?,?,?)
         `,
         [
+            salaId,
             usuario_id,
             nombre,
             capacidad,
@@ -30,8 +37,6 @@ const insertSalaService = async (
             email,
         ]
     );
-
-    const { salaId } = result;
 
     return salaId;
 };
