@@ -1,20 +1,39 @@
-import getPool from "../../database/getPool.js";
+import getPool from '../../database/getPool.js';
 
-const insertSalaService = async (usuario_id,nombre,provincia,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email) => {
-
+const insertSalaService = async (
+    usuario_id,
+    nombre,
+    capacidad,
+    descripcion,
+    precios,
+    direccion,
+    condiciones,
+    equipamiento,
+    email
+) => {
     const pool = await getPool();
 
     const [result] = await pool.query(
         `
-            INSERT INTO salas (usuario_id,nombre,provincia,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email)
-            VALUES (?,?,?,?,?,?,?,?,?,?)
+            INSERT INTO salas (usuario_id,nombre,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email)
+            VALUES (?,?,?,?,?,?,?,?,?)
         `,
-        [usuario_id,nombre,provincia,capacidad,descripcion,precios,direccion,condiciones,equipamiento,email]
+        [
+            usuario_id,
+            nombre,
+            capacidad,
+            descripcion,
+            precios,
+            direccion,
+            condiciones,
+            equipamiento,
+            email,
+        ]
     );
 
     const { salaId } = result;
 
     return salaId;
-}
+};
 
 export default insertSalaService;

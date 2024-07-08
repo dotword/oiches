@@ -7,7 +7,6 @@ import joiErrorMessages from '../joiErrorMessages.js';
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const newUserSchema = Joi.object({
     nombre: Joi.string().required().messages(joiErrorMessages),
-    provincia: Joi.string().required().messages(joiErrorMessages),
     capacidad: Joi.number().positive().integer().messages(joiErrorMessages),
     descripcion: Joi.string().max(2000).messages(joiErrorMessages),
     precios: Joi.number().min(0).messages(joiErrorMessages),

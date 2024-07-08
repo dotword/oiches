@@ -4,6 +4,7 @@ import  validateUserController  from '../controllers/users/validateUserControlle
 import { loginUserController } from '../controllers/users/loginUserController.js';
 import { passwordChangeController } from '../controllers/users/passwordChangeController.js';
 import sendRecoverPassController from '../controllers/users/sendRecoverPassController.js';
+import editUserPassController from '../controllers/users/editUserPassController.js';
 
 const router = express.Router();
 
@@ -25,6 +26,6 @@ router.post('/users/password/recover', sendRecoverPassController);
 router.put('/users/password', passwordChangeController);
 
 // Editar la contraseña de un usuario con un código de recuperación.
-// router.put('/users/password', editUserPassController);
+router.put('/users/password', editUserPassController);
 
 export default router;

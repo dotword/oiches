@@ -1,27 +1,37 @@
 import sharp from 'sharp';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
+import fs from 'fs/promises';
 import path from 'path';
+import { v4 as uuidv4 } from 'uuid';
+import { UPLOADS_DIR } from '../../env.js';
 
-const uploadFiles = async (req, res, next) => {
+const uploadPhotos = async (req, res, next) => {
     try {
-        // Si no existe archivo, lanzamos un error.
+
+        // Si no existen fotos, lanzar error
         if (!req.files || Object.keys(req.files).length === 0) {
             const err = generateErrorsUtil('Faltan campos', 400);
             return next(err);
         }
 
-        // Obtener la ruta absoluta del directorio 'uploads'
         const uploadsDir = path.resolve(
-            path.join(import.meta.dirname, '..', 'uploads')
+            path.join(import.meta.dirname, '..', UPLOADS_DIR)
         );
 
-        // Iterar sobre los archivos subidos
+        //Si no existe la carpeta uploads, crearla.
+        try {
+            await fs.access(uploadsDir)
+        } catch (error) {
+            await fs.mkdir(uploadsDir)
+        }
+
+        // Iterar en las imagenes
         for (const [key, file] of Object.entries(req.files)) {
-            // Generar un nombre de archivo único si no se proporciona un nombre de campo
-            const fileName = key ? `${key}-${file.name}` : file.name;
+            // Generar nombre unico fotos con uuid
+            const fileName = `${uuidv4()}.jpeg`;
             const filePath = path.join(uploadsDir, fileName);
 
-            // Redimensionar la imagen con Sharp
+            // Modificar imagenes con sharp
             await sharp(file.data)
                 .resize(300, 300)
                 .toFormat('jpeg')
@@ -34,4 +44,4 @@ const uploadFiles = async (req, res, next) => {
     }
 };
 
-export default uploadFiles;
+export default uploadPhotos;
