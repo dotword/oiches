@@ -1,6 +1,6 @@
 import getPool from '../../database/getPool.js';
 
-const insertSalaPhotoService = async (photoName, salaId) => {
+const insertSalaPhotoService = async (photoName, idSala) => {
     const pool = await getPool();
 
     const [result] = await pool.query(
@@ -8,7 +8,7 @@ const insertSalaPhotoService = async (photoName, salaId) => {
         INSERT INTO sala_fotos (name, salaId)
         VALUES (?,?)
     `,
-        [photoName, salaId]
+        [photoName, idSala]
     );
 
     const { insertId } = result;

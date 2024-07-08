@@ -6,7 +6,7 @@ const getSalaDetailController = async (req, res, next) => {
 
         // Dado que queremos permitir que un usuario no logeado acceda a este controlador,
         // habrá momentos en los que no exista "req.sala". Con la interrogación indicamos a JavaScript que "sala" puede ser undefined.
-        const sala = await selectSalaByIdService(idSala, req.sala?.id);
+        const sala = await selectSalaByIdService(idSala, req.user?.id);
 
         res.send({
             status: 'ok',

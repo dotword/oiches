@@ -14,12 +14,6 @@ const insertUserService = async (
 ) => {
     const pool = await getPool();
 
-    // No dejar registrarse con un role admin
-    if (roles === 'admin')
-        throw generateErrorsUtil(
-            'No se puede registrar con un role de administrador'
-        );
-
     // Buscamos en la base de datos algún usuario con ese nombre.
     let [users] = await pool.query(
         `SELECT id FROM usuarios WHERE username = ?`,

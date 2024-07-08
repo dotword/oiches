@@ -1,5 +1,5 @@
 import { cancelarReservaService } from '../../services/reservas/cancelarReservaService.js';
-export const cancelarReservaController = async (req, res, next) => {
+const cancelarReservaController = async (req, res, next) => {
     try {
         const { token } = req.headers;
         const reserva_id = req.params;
@@ -13,3 +13,4 @@ export const cancelarReservaController = async (req, res, next) => {
         next(error);
     }
 };
+export default cancelarReservaController;

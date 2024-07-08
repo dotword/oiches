@@ -6,7 +6,6 @@ const createSalaController = async (req, res, next) => {
     try {
         const {
             nombre,
-            provincia,
             capacidad,
             descripcion,
             precios,
@@ -24,7 +23,6 @@ const createSalaController = async (req, res, next) => {
         const salaId = await insertSalaService(
             id,
             nombre,
-            provincia,
             capacidad,
             descripcion,
             precios,

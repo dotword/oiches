@@ -3,9 +3,10 @@ import { passwordChangeService } from '../../services/users/passwordChangeServic
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import editUserPassSchema from '../../schemas/users/editUserPassSchema.js';
 
-export const passwordChangeController = async (req, res, next) => {
+const passwordChangeController = async (req, res, next) => {
     try {
         const pool = await getPool();
+
         const { email, password, newPassword } = req.body;
 
         // Validamos el body con Joi.
@@ -42,3 +43,5 @@ export const passwordChangeController = async (req, res, next) => {
         next(error);
     }
 };
+
+export default passwordChangeController;

@@ -1,21 +1,29 @@
-'use strict';
-import routes from './src/routes/index.js';
-import 'dotenv/config';
-import cors from 'cors';
 import express from 'express';
-import staticFilesMiddleware from './src/middleware/staticFiles.js';
+import 'dotenv/config';
 import fileUpload from 'express-fileupload';
+import cors from 'cors';
+import morgan from 'morgan';
 
-const { PORT } = process.env;
+import routes from './src/routes/index.js';
+
+import { PORT, UPLOADS_DIR } from './env.js';
+// import staticFilesMiddleware from './src/middleware/staticFiles.js';
 
 const app = express();
-app.use(express.json());
+app.use(morgan('dev'));
 app.use(cors());
-// Usar el middleware para archivos estáticos
-staticFilesMiddleware(app);
 
-//Middleware para analizar solicitudes
+// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
+app.use(express.static(UPLOADS_DIR));
+
+app.use(express.json());
+
+// Middleware que "desencripta" un body en formato "form-data" creando la propiedad
+// "body" y la propiedad "files" en el objeto "request"
 app.use(fileUpload());
+
+// Usar el middleware para archivos estáticos
+// staticFilesMiddleware(app);
 
 /**Llamado a rutas */
 app.use(routes);

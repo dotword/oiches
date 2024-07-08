@@ -1,7 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
 import sharp from 'sharp';
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
 import { UPLOADS_DIR } from '../../env.js';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
@@ -23,7 +23,7 @@ export const uploadPhotos = async (img, width) => {
 
         sharpImg.resize(width);
 
-        const imgName = `${uuidv4()}.jpg`;
+        const imgName = `${uuid()}.jpg`;
 
         const pathImg = path.join(uploadDir, imgName);
 
@@ -34,3 +34,5 @@ export const uploadPhotos = async (img, width) => {
         throw generateErrorsUtil('Error al guardar la imagen', 500);
     }
 };
+
+export default uploadPhotos;
