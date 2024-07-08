@@ -1,46 +1,37 @@
-import sharp from 'sharp';
-import generateErrorsUtil from '../utils/generateErrorsUtil.js';
 import fs from 'fs/promises';
 import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import sharp from 'sharp';
+import { v4 as uuid } from 'uuid';
+
 import { UPLOADS_DIR } from '../../env.js';
+import generateErrorsUtil from '../utils/generateErrorsUtil.js';
 
-const uploadPhotos = async (req, res, next) => {
+export const uploadPhotos = async (img, width) => {
     try {
+        // Ruta absoluta al directorio de subida de archivos.
+        const uploadDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}`);
 
-        // Si no existen fotos, lanzar error
-        if (!req.files || Object.keys(req.files).length === 0) {
-            const err = generateErrorsUtil('Faltan campos', 400);
-            return next(err);
-        }
-
-        const uploadsDir = path.resolve(
-            path.join(import.meta.dirname, '..', UPLOADS_DIR)
-        );
-
-        //Si no existe la carpeta uploads, crearla.
+        // Si no existe la carpeta upolads la creamos, si no accedemos a ella
         try {
-            await fs.access(uploadsDir)
-        } catch (error) {
-            await fs.mkdir(uploadsDir)
+            await fs.access(uploadDir);
+        } catch {
+            await fs.mkdir(uploadDir);
         }
 
-        // Iterar en las imagenes
-        for (const [key, file] of Object.entries(req.files)) {
-            // Generar nombre unico fotos con uuid
-            const fileName = `${uuidv4()}.jpeg`;
-            const filePath = path.join(uploadsDir, fileName);
+        // crear un objeto de tipo sharp
+        const sharpImg = sharp(img.data);
 
-            // Modificar imagenes con sharp
-            await sharp(file.data)
-                .resize(300, 300)
-                .toFormat('jpeg')
-                .toFile(filePath);
-        }
+        sharpImg.resize(width);
 
-        res.status(200).json({ message: 'Archivos cargados correctamente' });
-    } catch (err) {
-        next(err);
+        const imgName = `${uuid()}.jpg`;
+
+        const pathImg = path.join(uploadDir, imgName);
+
+        await sharpImg.toFile(pathImg); // Guardando el archivo en el  disco
+
+        return imgName;
+    } catch (error) {
+        throw generateErrorsUtil('Error al guardar la imagen', 500);
     }
 };
 

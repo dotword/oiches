@@ -2,19 +2,13 @@ import { crearReservaService } from '../../services/reservas/crearReservaService
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createReservaSchema from '../../schemas/reservas/createReservaSchema.js';
 
-export const crearReservaController = async (req, res, next) => {
+const crearReservaController = async (req, res, next) => {
     try {
         const { fecha, hora, nombre } = req.body;
 
         // Validación con JOI
         await validateSchemaUtil(createReservaSchema, req.body);
 
-        // VALIDADO CON JOI
-        // if(!fecha || !hora || !nombre){
-        //  return res.status(400).json({
-        //     message:'Es necesario la fecha, hora y el nombre de la reserva.'
-        //   })
-        // }
         const { token } = req.headers;
         if (!token) {
             return res.status(401).json({
@@ -29,10 +23,8 @@ export const crearReservaController = async (req, res, next) => {
         }
         const now = new Date();
 
-        
         const reservaDate = new Date(`${fecha}T${hora}`);
 
-        
         if (reservaDate < now) {
             return res.status(400).json({
                 message: 'No se puede reservar una fecha que ya ha pasado.',
@@ -67,3 +59,5 @@ export const crearReservaController = async (req, res, next) => {
         next(error);
     }
 };
+
+export default crearReservaController;

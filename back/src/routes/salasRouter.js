@@ -1,14 +1,35 @@
 import express from 'express';
-import { getSalaDetailController } from '../controllers/salas/index.js';
-import createSalaController from '../controllers/salas/createSalaController.js';
-import authUser from '../middleware/authUser.js';
-import salaExists from '../middleware/salaExists.js';
-import { listSalasController } from '../controllers/salas/listSalasController.js';
+
+// Importamos las funciones controladoras intermedias.
+import {
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+} from '../middleware/index.js';
+
+// Importamos las funciones controladoras finales.
+import {
+    createSalaController,
+    getSalaDetailController,
+    listSalasController,
+    addSalaPhotoController,
+} from '../controllers/salas/index.js';
 
 const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
 router.post('/users/salas', authUser, salaExists, createSalaController);
+
+// Agregar una foto a una sala.
+router.post(
+    '/salas/:idSala/photos',
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+    addSalaPhotoController
+);
 
 // Endpoint detalle sala
 router.get('/salas/:idSala', getSalaDetailController);

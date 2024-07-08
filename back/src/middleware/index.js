@@ -1,13 +1,17 @@
-// AQUI VAN LOS MIDDLEWARES
-'use strict';
-// AQUI VAN LOS MIDDLEWARES
-'use strict';
+import authUser from './authUser.js';
+import checkIfGroup from './checkIfGroup.js';
+import salaExists from './salaExists.js';
+import { uploadPhotos } from './uploadPhotos.js';
+import staticFiles from './staticFiles.js';
+import userExists from './userExists.js';
+import canEditSala from './canEditSala.js';
 
-// Importar el middleware para archivos estáticos
-import staticFilesMiddleware from './staticFiles.js';
-
-// Exportar como una función que toma `app` como argumento
-export default function (app) {
-    // Usar el middleware para archivos estáticos
-    staticFilesMiddleware(app);
-}
+export {
+    authUser,
+    checkIfGroup,
+    salaExists,
+    uploadPhotos,
+    staticFiles,
+    userExists,
+    canEditSala,
+};

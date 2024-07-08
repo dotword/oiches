@@ -1,6 +1,6 @@
 import { listSalasService } from '../../services/salas/listSalasService.js';
 
-export async function listSalasController(req, res, next) {
+const listSalasController = async (req, res, next) => {
     try {
         const filters = {};
         for (const key in req.query) {
@@ -17,4 +17,6 @@ export async function listSalasController(req, res, next) {
     } catch (error) {
         next(error);
     }
-}
+};
+
+export default listSalasController;

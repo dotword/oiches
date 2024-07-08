@@ -1,65 +1,64 @@
-import getPool from '../../database/getPool.js';
-import { compare } from 'bcrypt';
-import pkg from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 import { JWT_SECRET } from '../../../env.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import loginUserSchema from '../../schemas/users/loginUserSchema.js';
+import selectUserByEmailService from '../../services/users/selectUserByEmailService.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-export const loginUserController = async (req, res, next) => {
+const loginUserController = async (req, res, next) => {
     try {
-        const pool = await getPool();
         const { email, password } = req.body;
+
         // Validamos el body con Joi.
         await validateSchemaUtil(loginUserSchema, req.body);
 
-        const [[user]] = await pool.query(
-            'SELECT * FROM usuarios WHERE email LIKE ?',
-            [email]
-        );
-        if (!user) {
-            throw {
-                status: 400,
-                message: 'Credenciales inválidas email',
-                code: 'BAD REQUEST',
-            };
+        // Seleccionamos los datos del usuario que necesitamos utilizando el email.
+        const user = await selectUserByEmailService(email);
+
+        // Variable que almacenará un valor booleano indicando si la contraseña es correcto o no.
+        let validPass;
+
+        // Si existe un usuario comprobamos si la contraseña coincide.
+        if (user) {
+            // Comprobamos si la contraseña es válida.
+            validPass = await bcrypt.compare(password, user.password);
         }
-        if (!user.active) {
-            throw {
-                status: 400,
-                message:
-                    'El usuario no esta activado, verifica su email para la verificación de usuario.',
-            };
-        }
-        if ([email, password].includes('' || undefined)) {
-            const error = new Error('Todos los campos son requeridos');
-            error.status = 400;
-            throw error;
-        }
-        const isValidPassword = await compare(password, user.password);
-        if (!isValidPassword) {
-            throw {
-                status: 400,
-                message: 'Credenciales invalidas password',
-                code: 'Bad Request',
-            };
-        }
-        const token = pkg.sign(
-            {
-                id: user.id,
-                username: user.username,
-                avatar: user.avatar,
+
+        // Si las contraseña no coincide o no existe un usuario con el email proporcionado
+        // lanzamos un error.
+        if (!user || !validPass)
+            throw generateErrorsUtil('Credenciales inválidas', 401);
+
+        // Si el usuario no está activo lanzamos un error.
+        if (!user.active)
+            throw generateErrorsUtil(
+                'Usuario pendiente de activar. Por favor, verifica tu cuenta antes de continuar.',
+                403
+            );
+
+        // Objeto con la información que queremos almacenar en el token.
+        const tokenInfo = {
+            id: user.id,
+            role: user.role,
+        };
+
+        // Creamos el token.
+        const token = jwt.sign(tokenInfo, JWT_SECRET, {
+            expiresIn: '7d',
+        });
+
+        res.send({
+            status: 'ok',
+            data: {
+                token,
             },
-            JWT_SECRET,
-            {
-                expiresIn: '7d',
-            }
-        );
-        return res.status(200).json({
-            ok: true,
-            token,
         });
     } catch (error) {
         console.log(error);
         next(error);
     }
 };
+
+export default loginUserController;

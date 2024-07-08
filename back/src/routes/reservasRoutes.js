@@ -1,12 +1,14 @@
 import express from 'express';
-import { crearReservaController } from '../controllers/reservas/crearReservaController.js';
-import { cancelarReservaController } from '../controllers/reservas/cancelarReservaController.js';
-import aprobarReservaController from '../controllers/reservas/aprobarReservaController.js';
-import borrarReservaSalaController from '../controllers/reservas/borrarReservaSalaController.js';
 
-import { checkIfGroup } from '../middleware/checkIfGroup.js';
-// import authUser from '../middleware/authUser.js';
-// import salaExists from '../middleware/salaExists.js';
+// Importamos las funciones controladoras intermedias.
+import { checkIfGroup } from '../middleware/index.js';
+
+import {
+    crearReservaController,
+    cancelarReservaController,
+    aprobarReservaController,
+    borrarReservaSalaController,
+} from '../controllers/reservas/index.js';
 
 const router = express.Router();
 
