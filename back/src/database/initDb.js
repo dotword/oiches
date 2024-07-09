@@ -96,7 +96,7 @@ const main = async () => {
         // Creando tabla Grupos
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupos(
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id CHAR(36) PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50)  NOT NULL UNIQUE,
                 honorarios INT,
                 biografia TEXT,
@@ -113,7 +113,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Generos_grupos(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                grupoId INT NOT NULL,
+                grupoId CHAR(36) NOT NULL,
                 generoId INT NOT NULL,
                 FOREIGN KEY (grupoId) REFERENCES Grupos(id),
                 FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
@@ -125,7 +125,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Provincias_grupos(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                grupoId INT NOT NULL,
+                grupoId CHAR(36) NOT NULL,
                 provinciaId INT NOT NULL,
                 FOREIGN KEY (grupoId) REFERENCES Grupos(id),
                 FOREIGN KEY (provinciaId) REFERENCES Provincias(id),
@@ -148,7 +148,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS Grupo_fotos(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(100) NOT NULL,
-                    grupoId INT,
+                    grupoId CHAR(36) NOT NULL,
                     FOREIGN KEY (grupoId) REFERENCES Grupos(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
@@ -157,7 +157,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Grupo_media(
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                grupo_id INT,
+                grupo_id CHAR(36) NOT NULL,
                 url VARCHAR(255) NOT NULL,
                 FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -169,7 +169,7 @@ const main = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
                 sala_id CHAR(36) NOT NULL,
-                grupo_id INT,
+                grupo_id CHAR(36) NOT NULL,
                 confirmada BOOLEAN DEFAULT false,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES Grupos(id),
@@ -185,7 +185,7 @@ const main = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
                 sala_id CHAR(36) NOT NULL,
-                grupo_id INT,
+                grupo_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
@@ -198,7 +198,7 @@ const main = async () => {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 descripcion TEXT,
                 sala_id CHAR(36) NOT NULL,
-                grupo_id INT,
+                grupo_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
@@ -210,7 +210,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS votos_grupos(
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 value TINYINT UNSIGNED NOT NULL,
-                grupo_id INT,
+                grupo_id CHAR(36) NOT NULL,
                 voto_sala_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
@@ -222,7 +222,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS votos_salas(
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 value TINYINT UNSIGNED NOT NULL,
-                voto_grupo_id INT,
+                voto_grupo_id CHAR(36) NOT NULL,
                 sala_id CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (voto_grupo_id) REFERENCES Grupos(id),

@@ -8,7 +8,6 @@ import joiErrorMessages from '../joiErrorMessages.js';
 const editUserRecoveryPassSchema = Joi.object({
     email: Joi.string().email().required().messages(joiErrorMessages),
     recoverPassCode: Joi.string().required().messages(joiErrorMessages),
-
     newPass: Joi.string()
         .pattern(
             /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[¡!$%^&*()_+|~=`{}:";'<>¿?,.])[a-zA-Z0-9¡!$%^&*()_+|~=`{}:";'<>¿?,.]{8,}$/
