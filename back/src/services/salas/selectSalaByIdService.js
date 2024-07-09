@@ -8,6 +8,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.id,
                 S.usuario_id,
                 S.nombre,
+                (SELECT provincia FROM provincias WHERE provincias.id = S.provincia) AS Provincia,
                 S.direccion,
                 S.email,
                 S.precios,
@@ -17,17 +18,14 @@ const selectSalaByIdService = async (idSala) => {
                 S.condiciones,
                 AVG(IFNULL(V.value, 0)) AS votes,
                 GM.nombre AS genero,
-                P.provincia AS provincia,
                 S.createdAt
             FROM Salas S
             LEFT JOIN votos_salas V ON V.sala_id = S.id           
             INNER JOIN usuarios U ON U.id = S.usuario_id
             LEFT JOIN generos_salas GS ON GS.salaId = S.id           
-            LEFT JOIN generos_musicales GM ON GM.id = GS.generoId
-            LEFT JOIN provincias_salas PS ON PS.salaId = S.id           
-            LEFT JOIN provincias P ON P.id = PS.provinciaId    
+            INNER JOIN generos_musicales GM ON GM.id = GS.generoId
             WHERE S.id = ?
-            GROUP BY GM.nombre, P.provincia
+            GROUP BY GM.nombre
         `,
         [idSala]
     );

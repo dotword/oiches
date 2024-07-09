@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import { v4 as uuid } from 'uuid';
 
 import { UPLOADS_DIR } from '../../env.js';
-import generateErrorsUtil from '../utils/generateErrorsUtil.js';
+import generateErrorsUtil from './generateErrorsUtil.js';
 
 export const uploadPhotos = async (img, width) => {
     try {
