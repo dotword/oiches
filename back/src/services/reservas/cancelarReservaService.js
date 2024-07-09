@@ -3,7 +3,7 @@ import pkg from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../env.js';
 export const cancelarReservaService = async (token, reserva_id) => {
     try {
-        const { sala_id: id } = reserva_id;
+        
         const pool = await getPool();
 
         const decoded = pkg.verify(token, JWT_SECRET);
@@ -23,7 +23,7 @@ export const cancelarReservaService = async (token, reserva_id) => {
 
         const [reservaResults] = await pool.query(
             'SELECT * FROM reservas WHERE id = ?',
-            [id]
+            [reserva_id]
         );
 
         if (reservaResults.length === 0) {
@@ -39,7 +39,7 @@ export const cancelarReservaService = async (token, reserva_id) => {
             };
         }
 
-        await pool.query('DELETE FROM Reservas WHERE id = ?', [id]);
+        await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
         return {
             reserva: {
                 grupoResults,
