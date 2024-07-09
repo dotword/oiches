@@ -2,7 +2,7 @@ import { cancelarReservaService } from '../../services/reservas/cancelarReservaS
 const cancelarReservaController = async (req, res, next) => {
     try {
         const { token } = req.headers;
-        const reserva_id = req.params;
+        const {reserva_id} = req.params;
 
         await cancelarReservaService(token, reserva_id);
 
