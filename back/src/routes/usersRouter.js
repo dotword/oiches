@@ -29,8 +29,6 @@ router.patch('/users/password', passwordChangeController);
 // Enviar email de recuperación de contraseña.
 router.post('/users/password/recover', sendRecoverPassController);
 
-router.put('/users/password', passwordChangeController);
-
 // Editar la contraseña de un usuario con un código de recuperación.
 router.put('/users/password', editUserPassController);
 
