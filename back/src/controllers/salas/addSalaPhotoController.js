@@ -1,6 +1,6 @@
 import selectSalaByIdService from '../../services/salas/selectSalaByIdService.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
-import uploadPhotos from '../../middleware/uploadPhotos.js';
+import { uploadPhotos } from '../../utils/uploadPhotos.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
 
 const addSalaPhotoController = async (req, res, next) => {
