@@ -232,6 +232,7 @@ const main = async () => {
 
         await pool.query(`
             INSERT INTO Generos_musicales VALUES
+                (DEFAULT, 'Todos', DEFAULT, DEFAULT),
                 (DEFAULT, 'Rock', DEFAULT, DEFAULT),
                 (DEFAULT, 'Pop', DEFAULT, DEFAULT),
                 (DEFAULT, 'Metal', DEFAULT, DEFAULT),

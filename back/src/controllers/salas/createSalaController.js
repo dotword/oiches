@@ -4,7 +4,6 @@ import createSalaSchema from '../../schemas/salas/createSalaSchema.js';
 import uploadPhotos from '../../middleware/uploadPhotos.js';
 import insertSalaService from '../../services/salas/insertSalaService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
-import listSalasService from '../../services/listas/listGenreService.js';
 import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
 
 const createSalaController = async (req, res, next) => {
@@ -20,7 +19,6 @@ const createSalaController = async (req, res, next) => {
             email,
         } = req.body;
 
-        // console.log('Log: ' + Object.assign(req.body, req.files));
         // Validamos el body con Joi.
         await validateSchemaUtil(
             createSalaSchema,
@@ -43,8 +41,6 @@ const createSalaController = async (req, res, next) => {
         // Array donde pushearemos los géneros.
         const generos = [];
 
-        // Recorremos los géneros
-        // for (const genero of Object.values(req.body.genero)) {
         // Guardamos el genero
         const generoId = req.body.genero;
 
@@ -57,7 +53,6 @@ const createSalaController = async (req, res, next) => {
             generoId: generoId,
             salaId: salaId,
         });
-        // }
 
         // Array donde pushearemos las fotos (si hay).
         const photos = [];
