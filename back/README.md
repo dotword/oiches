@@ -218,10 +218,11 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 ## Endpoints del salas
 
 -   **POST** - `/users/salas` - Crea una sala. (Isa)
+-   **POST** - `/salas/:idSala/photos` - Subir una imagen a la sala (Carmen)
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala (Carmen)
 -   **GET** - `/salas?` - Retorna el listado de salas con filtro. (Fran)
 
-## Endpoints del musicos
+## Endpoints del listas
 
 -   **GET** - `/generos` - Lista estilos musicales (Isa)
 

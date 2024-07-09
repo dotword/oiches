@@ -15,7 +15,7 @@ const newUserSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().required().messages(joiErrorMessages),
-    genero: Joi.number().max(30).required().messages(joiErrorMessages),
+    genero: Joi.any().required().messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
     photoA: imgSchema.optional(),
     photoB: imgSchema.optional(),

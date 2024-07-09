@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { v4 as uuid } from 'uuid';
 
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
@@ -13,6 +14,8 @@ const insertUserService = async (
     registrationCode
 ) => {
     const pool = await getPool();
+    // Generamos el id del usuario.
+    const userId = uuid();
 
     // Buscamos en la base de datos algún usuario con ese nombre.
     let [users] = await pool.query(
@@ -61,10 +64,10 @@ const insertUserService = async (
     // Si el email NO se encuentra insertar en la DB
     await pool.query(
         `
-            INSERT INTO usuarios (username, email, password, roles, registrationCode ) 
-            VALUES (?,?,?,?,?)
+            INSERT INTO usuarios (id, username, email, password, roles, registrationCode ) 
+            VALUES (?, ?,?,?,?,?)
         `,
-        [username, email, hashedPass, roles, registrationCode]
+        [userId, username, email, hashedPass, roles, registrationCode]
     );
 };
 
