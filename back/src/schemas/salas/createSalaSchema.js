@@ -1,5 +1,6 @@
 // Importamos joi.
 import Joi from 'joi';
+import imgSchema from '../imgSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -14,6 +15,12 @@ const newUserSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().required().messages(joiErrorMessages),
+    genero: Joi.number().max(30).required().messages(joiErrorMessages),
+    provincia: Joi.number().max(50).required().messages(joiErrorMessages),
+    photoA: imgSchema.optional(),
+    photoB: imgSchema.optional(),
+    photoC: imgSchema.optional(),
+    photoD: imgSchema.optional(),
 });
 
 export default newUserSchema;

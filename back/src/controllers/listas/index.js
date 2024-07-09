@@ -1,3 +1,3 @@
 import listGenreController from './listGenreController.js';
 
-export { listGenreController };
+export default listGenreController;

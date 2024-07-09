@@ -17,9 +17,9 @@ export async function listSalasService(filters, sort) {
     FROM 
         Salas 
     LEFT JOIN generos_salas GS ON GS.salaId = Salas.id
-    LEFT JOIN generos_musicales GM ON GM.id = GS.id
+    LEFT JOIN generos_musicales GM ON GM.id = GS.generoId
     LEFT JOIN provincias_salas PS ON PS.salaId = Salas.id
-    LEFT JOIN provincias P ON P.id = PS.id 
+    LEFT JOIN provincias P ON P.id = PS.provinciaId 
     WHERE 
         1=1
         `;

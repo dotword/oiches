@@ -23,9 +23,9 @@ const selectSalaByIdService = async (idSala) => {
             LEFT JOIN votos_salas V ON V.sala_id = S.id           
             INNER JOIN usuarios U ON U.id = S.usuario_id
             LEFT JOIN generos_salas GS ON GS.salaId = S.id           
-            LEFT JOIN generos_musicales GM ON GM.id = GS.id
+            LEFT JOIN generos_musicales GM ON GM.id = GS.generoId
             LEFT JOIN provincias_salas PS ON PS.salaId = S.id           
-            LEFT JOIN provincias P ON P.id = PS.id    
+            LEFT JOIN provincias P ON P.id = PS.provinciaId    
             WHERE S.id = ?
             GROUP BY GM.nombre, P.provincia
         `,
