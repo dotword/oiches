@@ -5,6 +5,7 @@ import uploadPhotos from '../../middleware/uploadPhotos.js';
 import insertSalaService from '../../services/salas/insertSalaService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
 import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
+import insertSalaProvinciaService from '../../services/salas/insertSalaProvinciaService.js';
 
 const createSalaController = async (req, res, next) => {
     try {
@@ -38,6 +39,12 @@ const createSalaController = async (req, res, next) => {
             req.user.id
         );
 
+        // Guardamos la provincia
+        const provinciaId = req.body.provincia;
+
+        // Insertamos el género en la tabla generos_salas
+        await insertSalaProvinciaService(provinciaId, salaId);
+
         // Array donde pushearemos los géneros.
         const generos = [];
 
@@ -46,7 +53,6 @@ const createSalaController = async (req, res, next) => {
 
         // Insertamos el género en la tabla generos_salas
         await insertSalaGeneroService(generoId, salaId);
-        console.log('gen Id: ' + generoId + '  Sala: ' + salaId);
 
         // Pusheamos los géneros al array de generos_salas
         generos.push({
@@ -88,6 +94,8 @@ const createSalaController = async (req, res, next) => {
                     condiciones,
                     equipamiento,
                     email,
+                    provincia: provinciaId,
+                    generos,
                     photos,
                     createdAt: new Date(),
                 },
