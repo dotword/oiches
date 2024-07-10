@@ -6,9 +6,8 @@ import { v4 as uuid } from 'uuid';
 import { UPLOADS_DIR } from '../../env.js';
 import generateErrorsUtil from './generateErrorsUtil.js';
 
-export const uploadPhotos = async (img) => {
+export const uploadFiles = async (img) => {
     try {
-        console.log('img.name ', img);
         // Ruta absoluta al directorio de subida de archivos.
         const uploadDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}`);
 
@@ -18,8 +17,6 @@ export const uploadPhotos = async (img) => {
         } catch {
             await fs.mkdir(uploadDir);
         }
-
-        // const file = req.file;
 
         if (!img) {
             throw generateErrorsUtil('No se ha subido ningún archivo.', 404);
@@ -51,4 +48,4 @@ export const uploadPhotos = async (img) => {
     }
 };
 
-export default uploadPhotos;
+export default uploadFiles;

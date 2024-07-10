@@ -1,10 +1,8 @@
-// import listGenreController from '../listas/index.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createSalaSchema from '../../schemas/salas/createSalaSchema.js';
-import { uploadPhotos } from '../../utils/uploadFiles.js';
+import { uploadFiles } from '../../utils/uploadFiles.js';
 import insertSalaService from '../../services/salas/insertSalaService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
-// import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
 
 const createSalaController = async (req, res, next) => {
     try {
@@ -41,14 +39,6 @@ const createSalaController = async (req, res, next) => {
             req.user.id
         );
 
-        // Recorremos el array de géneros, slice para evitar más de 3 géneros
-        // for (const gen of Object.values(req.body.genero).slice(0, 3)) {
-        //     // insertamos los géneros en la tabla generos_salas
-        //     insertSalaGeneroService(gen, salaId);
-        // }
-
-        // insertSalaGeneroService(Object.values(req.body.genero), salaId);
-
         // Array donde pushearemos las fotos (si hay).
         const photos = [];
 
@@ -57,7 +47,7 @@ const createSalaController = async (req, res, next) => {
             // Recorremos las fotos. Para evitar que tenga más de 4 fotos aplicamos slice.
             for (const photo of Object.values(req.files).slice(0, 4)) {
                 // Guardamos la foto y obtenemos su nombre. Redimensionamos a un ancho de 600px.
-                const photoName = await uploadPhotos(photo, 600);
+                const photoName = await uploadFiles(photo, 600);
 
                 // Insertamos la foto en la tabla de fotos.
                 await insertSalaPhotoService(photoName, salaId);
