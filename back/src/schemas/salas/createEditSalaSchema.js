@@ -14,12 +14,12 @@ const createEditSalaSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().messages(joiErrorMessages),
-    // genero: Joi.any().required().messages(joiErrorMessages),
+    genero: Joi.number()
+        .positive()
+        .integer()
+        .required()
+        .messages(joiErrorMessages),
     provincia: Joi.number().max(50).messages(joiErrorMessages),
-    // photoA: imgSchema.optional(),
-    // photoB: imgSchema.optional(),
-    // photoC: imgSchema.optional(),
-    // photoD: imgSchema.optional(),
 });
 
 export default createEditSalaSchema;

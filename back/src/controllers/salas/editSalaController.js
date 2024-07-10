@@ -1,5 +1,4 @@
 import editSalaService from '../../services/salas/editSalaService.js';
-import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createEditSalaSchema from '../../schemas/salas/createEditSalaSchema.js';
 
@@ -10,6 +9,7 @@ const editSalaController = async (req, res, next) => {
         const {
             nombre,
             provincia,
+            generos,
             capacidad,
             descripcion,
             precios,
@@ -20,10 +20,10 @@ const editSalaController = async (req, res, next) => {
         } = req.body;
 
         // Validamos el body con Joi.
-        // await validateSchemaUtil(
-        //     createEditSalaSchema,
-        //     Object.assign(req.body, req.files)
-        // );
+        await validateSchemaUtil(
+            createEditSalaSchema,
+            Object.assign(req.body, req.files)
+        );
 
         // Actualizar solo los campos que se proporcionan
         const updatedFields = {};
@@ -38,21 +38,13 @@ const editSalaController = async (req, res, next) => {
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;
         if (email !== undefined) updatedFields.email = email;
-        // if (genero !== undefined) updatedFields.genero = genero;
+        if (generos !== undefined) updatedFields.generos = generos;
 
         if (updatedFields) await editSalaService(idSala, updatedFields);
-        // if (req.body.genero) {
-        //     await insertSalaGeneroService(
-        //         Object.values(req.body.genero),
-        //         salaId
-        //     );
-        // }
 
         res.send({
             status: 'ok',
-            data: {
-                idSala,
-            },
+            message: 'Sala actualizada',
         });
     } catch (error) {
         next(error);
