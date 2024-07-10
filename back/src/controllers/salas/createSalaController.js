@@ -4,7 +4,7 @@ import createSalaSchema from '../../schemas/salas/createSalaSchema.js';
 import { uploadPhotos } from '../../utils/uploadFiles.js';
 import insertSalaService from '../../services/salas/insertSalaService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
-import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
+// import insertSalaGeneroService from '../../services/salas/insertSalaGeneroService.js';
 
 const createSalaController = async (req, res, next) => {
     try {

@@ -15,7 +15,11 @@ const createSalaSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().required().messages(joiErrorMessages),
-    generos: Joi.any().required().messages(joiErrorMessages),
+    generos: Joi.number()
+        .positive()
+        .integer()
+        .required()
+        .messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
     photoA: imgSchema.optional(),
     photoB: imgSchema.optional(),

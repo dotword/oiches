@@ -16,7 +16,8 @@ export async function listSalasService(filters, sort) {
 
     FROM 
         Salas 
-            
+    LEFT JOIN generos_musicales ON generos_musicales.id = Salas.generos
+    LEFT JOIN provincias ON provincias.id = Salas.provincia        
     WHERE 
         1=1
         `;
@@ -29,12 +30,12 @@ export async function listSalasService(filters, sort) {
     }
 
     if (filters.genero) {
-        query += ' AND generos_musicales.nombre = ?';
+        query += ' AND Salas.generos = ?';
         queryParams.push(filters.genero);
     }
 
     if (filters.provincia) {
-        query += ' AND provincias.provincia = ?';
+        query += ' AND Salas.provincia = ?';
         queryParams.push(filters.provincia);
     }
 
