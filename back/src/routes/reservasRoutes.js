@@ -8,6 +8,7 @@ import {
     cancelarReservaController,
     aprobarReservaController,
     borrarReservaSalaController,
+    listReservaController
 } from '../controllers/reservas/index.js';
 
 const router = express.Router();
@@ -20,7 +21,7 @@ router.delete('/cancelar-reserva/:reserva_id', cancelarReservaController);
 
 // Endpoint para que la sala pueda aprobar/cancelar una reserva
 router.put('/aprobar-reserva/:reserva_id', aprobarReservaController);
-
+router.get('/reservas/:sala_id',listReservaController)
 // Endpoint para que la sala borre una reserva si no está confirmada
 router.delete('/borrar-reserva/:reserva_id', borrarReservaSalaController);
 
