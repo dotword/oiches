@@ -34,7 +34,7 @@ const main = async () => {
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Generos_musicales(
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -43,7 +43,7 @@ const main = async () => {
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Provincias(
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 provincia VARCHAR(255) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -56,6 +56,7 @@ const main = async () => {
             usuario_id CHAR(36) NOT NULL,
             nombre VARCHAR(100) NOT NULL,
             provincia INT NOT NULL,
+            generos INT NOT NULL,
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),
@@ -64,6 +65,7 @@ const main = async () => {
             equipamiento TEXT,
             email VARCHAR(100) NOT NULL,
             FOREIGN KEY(provincia) REFERENCES Provincias(id),
+            FOREIGN KEY(generos) REFERENCES generos_musicales(id),
             FOREIGN KEY(usuario_id) REFERENCES Usuarios(id),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -88,6 +90,7 @@ const main = async () => {
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50) NOT NULL UNIQUE,
                 provincia INT NOT NULL,
+                generos INT NOT NULL,
                 honorarios INT,
                 biografia TEXT,
                 usuario_id CHAR(36) NOT NULL,
@@ -95,6 +98,7 @@ const main = async () => {
                 email VARCHAR(255),
                 FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
                 FOREIGN KEY(provincia) REFERENCES Provincias(id),
+                FOREIGN KEY(generos) REFERENCES generos_musicales(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deletedAt DATETIME NULL
@@ -211,7 +215,6 @@ const main = async () => {
 
         await pool.query(`
             INSERT INTO Generos_musicales VALUES
-                (DEFAULT, 'Todos', DEFAULT, DEFAULT),
                 (DEFAULT, 'Rock', DEFAULT, DEFAULT),
                 (DEFAULT, 'Pop', DEFAULT, DEFAULT),
                 (DEFAULT, 'Metal', DEFAULT, DEFAULT),

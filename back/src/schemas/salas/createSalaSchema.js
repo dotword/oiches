@@ -6,7 +6,7 @@ import imgSchema from '../imgSchema.js';
 import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
-const newUserSchema = Joi.object({
+const createSalaSchema = Joi.object({
     nombre: Joi.string().required().messages(joiErrorMessages),
     capacidad: Joi.number().positive().integer().messages(joiErrorMessages),
     descripcion: Joi.string().max(2000).messages(joiErrorMessages),
@@ -15,7 +15,7 @@ const newUserSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().required().messages(joiErrorMessages),
-    genero: Joi.any().required().messages(joiErrorMessages),
+    generos: Joi.any().required().messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
     photoA: imgSchema.optional(),
     photoB: imgSchema.optional(),
@@ -23,4 +23,4 @@ const newUserSchema = Joi.object({
     photoD: imgSchema.optional(),
 });
 
-export default newUserSchema;
+export default createSalaSchema;

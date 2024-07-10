@@ -9,16 +9,14 @@ export async function listSalasService(filters, sort) {
         Salas.usuario_id, 
         Salas.nombre, 
         Salas.createdAt,
-        GM.nombre AS genero,
-        P.provincia AS provincia,
+        (SELECT provincia FROM provincias WHERE provincias.id = Salas.provincia) AS Provincia,
+        (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = Salas.generos) AS Genero,
         (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
         (SELECT AVG(value) FROM votos_salas WHERE votos_salas.sala_id = Salas.id) AS media_votos
 
     FROM 
         Salas 
-    LEFT JOIN generos_salas GS ON GS.salaId = Salas.id
-    LEFT JOIN generos_musicales GM ON GM.id = GS.generoId
-    LEFT JOIN provincias P ON P.id = Salas.provincia
+            
     WHERE 
         1=1
         `;
@@ -31,12 +29,12 @@ export async function listSalasService(filters, sort) {
     }
 
     if (filters.genero) {
-        query += ' AND GM.nombre = ?';
+        query += ' AND generos_musicales.nombre = ?';
         queryParams.push(filters.genero);
     }
 
     if (filters.provincia) {
-        query += ' AND P.provincia = ?';
+        query += ' AND provincias.provincia = ?';
         queryParams.push(filters.provincia);
     }
 
