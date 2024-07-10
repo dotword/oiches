@@ -1,18 +1,6 @@
 import getPool from '../../database/getPool.js';
 
-const editSalaService = async (
-    // nombre,
-    // provincia,
-    // capacidad,
-    // descripcion,
-    // precios,
-    // direccion,
-    // condiciones,
-    // equipamiento,
-    // email,
-    idSala,
-    updatedFields
-) => {
+const editSalaService = async (idSala, updatedFields) => {
     const pool = await getPool();
 
     // Crear las partes de la consulta dinámicamente según los campos proporcionados
