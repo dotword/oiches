@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { UPLOADS_DIR } from '../../env.js';
 import generateErrorsUtil from './generateErrorsUtil.js';
 
-export const uploadFiles = async (img) => {
+export const uploadFiles = async (img, width) => {
     try {
         // Ruta absoluta al directorio de subida de archivos.
         const uploadDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}`);
@@ -39,7 +39,8 @@ export const uploadFiles = async (img) => {
         // crear un objeto de tipo sharp
         const sharpImg = sharp(img.data);
 
-        sharpImg.resize(600);
+        sharpImg.resize(!width ? 600 : width);
+        
         await sharpImg.toFile(outputFilePath); // Guardando el foto en el  disco
 
         return imgName;
