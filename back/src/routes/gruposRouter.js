@@ -10,6 +10,7 @@ import {
 
 // Importamos las funciones controladoras finales.
 import { editGrupoController } from '../controllers/grupos/index.js';
+import { addGrupoPhotoController } from '../controllers/grupos/index.js';
 
 const router = express.Router();
 
@@ -21,6 +22,16 @@ router.put(
     grupoExists,
     canEditGrupo,
     editGrupoController
+);
+
+// Agregar fotos a un grupo.
+router.post(
+    '/grupos/:idGrupo/photos',
+    authUser,
+    userExists,
+    grupoExists,
+    canEditGrupo,
+    addGrupoPhotoController
 );
 
 export default router;
