@@ -1,20 +1,18 @@
+
 import getPool from "../../database/getPool.js";
 
+// Función que realiza una consulta a la base de datos para seleccionar a un usuario con un id dado.
 const selectUserByIdService = async (userId) => {
-  try {
     const pool = await getPool();
+
+    // Comprobamos si hay algún usuario con el email proporcionado.
     const [users] = await pool.query(
-      "SELECT id, email, avatar FROM usuarios WHERE id = ?",
-      [userId]
+        `SELECT id, username, email, avatar, createdAt FROM usuarios WHERE id = ?`,
+        [userId]
     );
-    if (users.length === 0) {
-      throw new Error(`Usuario con ID ${userId} no encontrado`);
-    }
+
+
     return users[0];
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
 };
 
 export default selectUserByIdService;

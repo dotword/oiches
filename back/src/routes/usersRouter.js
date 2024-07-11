@@ -4,6 +4,7 @@ import express from 'express';
 import {
 authUser,
 userExists,
+canEditUser
 } from '../middleware/index.js'
 
 // Importamos las funciones controladoras finales.
@@ -14,7 +15,8 @@ import {
     passwordChangeController,
     sendRecoverPassController,
     editUserPassController,
-    editUserController,
+    editUserEmailController,
+    editUserAvatarController
 } from '../controllers/users/index.js';
 
 
@@ -38,7 +40,10 @@ router.post('/users/password/recover', sendRecoverPassController);
 // Editar la contraseña de un usuario con un código de recuperación.
 router.put('/users/password', editUserPassController);
 
-//Editar perfil usuario
-router.put('/users/edit/:userId', authUser, userExists, editUserController);
+//Editar email del perfil usuario
+router.put('/users/email/:userId', authUser, userExists,canEditUser, editUserEmailController);
+
+//Editar avatar usuario
+router.put('/users/avatar/:userId',authUser,userExists,canEditUser,editUserAvatarController);
 
 export default router;
