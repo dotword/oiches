@@ -22,9 +22,9 @@ const addSalaPhotoController = async (req, res, next) => {
                 'No se pueden subir más de 4 fotos a la sala',
                 409
             );
-        console.log('req.files.photo controller', req.files.photo);
+
         // Guardamos la foto en la carpeta uploads, redimensionamos a un ancho de 600px y obtenemos su nombre.
-        const photoName = await uploadFiles(req.files.photo);
+        const photoName = await uploadFiles(req.files.photo, 600);
 
         // Guardamos la foto en la base de datos y obtenemos el id de la misma.
         await insertSalaPhotoService(photoName, idSala);
