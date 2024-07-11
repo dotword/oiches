@@ -230,6 +230,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **PUT** - `/grupos/:idGrupo/edit` - Actualizar un grupo
 -   **GET** - `/grupos/:idGrupo` - Retorna el detalle de un grupo
 -   **POST** - `/grupos/:idGrupo/file` - Subir una archivos a un grupo
+-   **DELETE** - `/grupos/:idGrupo/file/:fileId` - Borra un archivo del grupo
 
 ## Endpoints del listas
 

@@ -9,10 +9,11 @@ import {
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
-import { editGrupoController } from '../controllers/grupos/index.js';
 import {
+    editGrupoController,
     addGrupoPhotoController,
     getGrupoDetailController,
+    deleteGrupoPhotoController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -35,6 +36,16 @@ router.post(
     grupoExists,
     canEditGrupo,
     addGrupoPhotoController
+);
+
+// Eliminar archivo del grupo.
+router.delete(
+    '/grupos/:idGrupo/file/:fileId',
+    authUser,
+    userExists,
+    grupoExists,
+    canEditGrupo,
+    deleteGrupoPhotoController
 );
 
 // Endpoint detalle grupo
