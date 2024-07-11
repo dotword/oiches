@@ -208,28 +208,30 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 ## Endpoints del usuario
 
--   **POST** - `/users/registro` - Crea un nuevo usuario pendiente de activar. (Carmen)
--   **PUT** - `/users/validate/:registrationCode` - Valida a un usuario recién registrado. (Isa)
--   **POST** - `/users/login` - Logea a un usuario retornando un token. (Aitor)
--   **POST** - `/users/password/recover` - Envía al usuario un correo de recuperación de contraseña. (Angel)
--   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación. (Angel)
--   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado. (Aitor)
+-   **POST** - `/users/registro` - Crea un nuevo usuario pendiente de activar.
+-   **PUT** - `/users/validate/:registrationCode` - Valida a un usuario recién registrado
+-   **POST** - `/users/login` - Logea a un usuario retornando un token.
+-   **POST** - `/users/password/recover` - Envía al usuario un correo de recuperación de contraseña.
+-   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación.
+-   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado.
+    /\* - **PUT** - `/users/edit/:userId` - Editar perfil usuario
 
 ## Endpoints del salas
 
--   **POST** - `/users/salas` - Crea una sala. (Isa)
--   **PUT** - `/salas/:idSala/edit` - Actualizar una sala (Carmen)
-<!-- -   **POST** - `/salas/:idSala/photos` - Subir una imagen a la sala (Carmen) -->
--   **GET** - `/salas/:idSala` - Retorna el detalle de una sala (Carmen)
--   **GET** - `/salas?` - Retorna el listado de salas con filtro. (Fran)
+-   **POST** - `/users/salas` - Crea una sala.
+-   **PUT** - `/salas/:idSala/edit` - Actualizar una sala
+-   **POST** - `/salas/:idSala/photos` - Subir una imagen a la sala
+-   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
+-   **GET** - `/salas?` - Retorna el listado de salas con filtro.
 
 ## Endpoints del listas
 
--   **GET** - `/generos` - Lista estilos musicales (Isa)
+-   **GET** - `/generos` - Lista estilos musicales
 
 ## Endpoints de reservas
 
--   **POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala. (Aitor)
--   **DELETE** - `/cancelar-reserva/:reserva_id` - Grupo borra una reserva (Aitor)
--   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva (Carmen)
--   **DELETE** - `/borrar-reserva/:reserva_id` - Sala borra una reserva (Carmen)
+-   **POST** - `/reservar-sala/:sala_id` - Crea una reserva de sala.
+-   **DELETE** - `/cancelar-reserva/:reserva_id` - Grupo borra una reserva
+-   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva
+-   **DELETE** - `/borrar-reserva/:reserva_id` - Sala borra una reserva
+-   **GET** - `/reservas/:sala_id` - Listar reservas de una sala

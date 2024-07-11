@@ -14,11 +14,7 @@ const createEditSalaSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     email: Joi.string().email().messages(joiErrorMessages),
-    genero: Joi.number()
-        .positive()
-        .integer()
-        .required()
-        .messages(joiErrorMessages),
+    generos: Joi.number().positive().integer().messages(joiErrorMessages),
     provincia: Joi.number().max(50).messages(joiErrorMessages),
 });
 

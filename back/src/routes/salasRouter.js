@@ -15,6 +15,7 @@ import {
     listSalasController,
     editSalaController,
     addSalaPhotoController,
+    deleteSalaPhotoController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -40,6 +41,16 @@ router.post(
     salaExists,
     canEditSala,
     addSalaPhotoController
+);
+
+// Eliminar una foto de una sala.
+router.delete(
+    '/salas/:idSala/photos/:photoId',
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+    deleteSalaPhotoController
 );
 
 // Endpoint detalle sala

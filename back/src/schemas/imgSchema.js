@@ -14,7 +14,7 @@ const imgSchema = joi
             .valid('image/jpeg', 'image/jpg', 'image/png')
             .required()
             .messages(joiErrorMessages),
-        size: joi.number().max(5000000).required().messages(joiErrorMessages),
+        size: joi.number().max(3000000).required().messages(joiErrorMessages),
     })
     .unknown(true);
 
