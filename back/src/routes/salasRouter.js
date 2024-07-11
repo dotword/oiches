@@ -13,6 +13,7 @@ import {
     createSalaController,
     getSalaDetailController,
     listSalasController,
+    editSalaController,
     addSalaPhotoController,
 } from '../controllers/salas/index.js';
 
@@ -20,6 +21,16 @@ const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
 router.post('/users/salas', authUser, salaExists, createSalaController);
+
+// Actualizar una sala
+router.put(
+    '/salas/:idSala/edit',
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+    editSalaController
+);
 
 // Agregar una foto a una sala.
 router.post(

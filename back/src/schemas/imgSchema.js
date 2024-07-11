@@ -11,7 +11,7 @@ const imgSchema = joi
         name: joi.string().required().messages(joiErrorMessages),
         mimetype: joi
             .string()
-            .valid('image/jpeg', 'image/png')
+            .valid('image/jpeg', 'image/jpg', 'image/png')
             .required()
             .messages(joiErrorMessages),
         size: joi.number().max(5000000).required().messages(joiErrorMessages),
