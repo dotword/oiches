@@ -234,3 +234,4 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **DELETE** - `/cancelar-reserva/:reserva_id` - Grupo borra una reserva
 -   **PUT** - `/aprobar-reserva/:reserva_id` - confirmar reserva
 -   **DELETE** - `/borrar-reserva/:reserva_id` - Sala borra una reserva
+-   **GET** - `/reservas/:sala_id` - Listar reservas de una sala
