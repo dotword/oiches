@@ -27,9 +27,9 @@ router.put(
     editGrupoController
 );
 
-// Agregar fotos a un grupo.
+// Agregar fotos y pdf a un grupo.
 router.post(
-    '/grupos/:idGrupo/photos',
+    '/grupos/:idGrupo/file',
     authUser,
     userExists,
     grupoExists,

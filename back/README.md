@@ -229,7 +229,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 
 -   **PUT** - `/grupos/:idGrupo/edit` - Actualizar un grupo
 -   **GET** - `/grupos/:idGrupo` - Retorna el detalle de un grupo
--   **POST** - `/grupos/:idGrupo/photos` - Subir una imagen a un grupo
+-   **POST** - `/grupos/:idGrupo/file` - Subir una archivos a un grupo
 
 ## Endpoints del listas
 
