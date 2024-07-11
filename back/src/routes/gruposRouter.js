@@ -10,7 +10,10 @@ import {
 
 // Importamos las funciones controladoras finales.
 import { editGrupoController } from '../controllers/grupos/index.js';
-import { addGrupoPhotoController } from '../controllers/grupos/index.js';
+import {
+    addGrupoPhotoController,
+    getGrupoDetailController,
+} from '../controllers/grupos/index.js';
 
 const router = express.Router();
 
@@ -33,5 +36,8 @@ router.post(
     canEditGrupo,
     addGrupoPhotoController
 );
+
+// Endpoint detalle grupo
+router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
 export default router;
