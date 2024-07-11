@@ -15,7 +15,7 @@ export {
     staticFiles,
     userExists,
     canEditSala,
-    canEditUser
+    canEditUser,
     grupoExists,
     canEditGrupo,
 };
