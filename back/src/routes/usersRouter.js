@@ -14,7 +14,8 @@ import {
     passwordChangeController,
     sendRecoverPassController,
     editUserPassController,
-    editUserController,
+    editUserEmailController,
+    editUserAvatarController
 } from '../controllers/users/index.js';
 
 
@@ -38,7 +39,10 @@ router.post('/users/password/recover', sendRecoverPassController);
 // Editar la contraseña de un usuario con un código de recuperación.
 router.put('/users/password', editUserPassController);
 
-//Editar perfil usuario
-router.put('/users/edit/:userId', authUser, userExists, editUserController);
+//Editar email del perfil usuario
+router.put('/users/email/:userId', authUser, userExists, editUserEmailController);
+
+//Editar avatar usuario
+router.put('/users/avatar/:userId',authUser,userExists,editUserAvatarController);
 
 export default router;
