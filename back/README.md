@@ -221,8 +221,13 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **POST** - `/users/salas` - Crea una sala.
 -   **PUT** - `/salas/:idSala/edit` - Actualizar una sala
 -   **POST** - `/salas/:idSala/photos` - Subir una imagen a la sala
+-   **DELETE** - `/salas/:idSala/photos/:photoId` - Borra la imagen de una sala
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
 -   **GET** - `/salas?` - Retorna el listado de salas con filtro.
+
+## Endpoints de grupos
+
+-   **PUT** - `/grupos/:idGrupo/edit` - Actualizar un grupo
 
 ## Endpoints del listas
 
