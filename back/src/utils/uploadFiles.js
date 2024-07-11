@@ -7,7 +7,6 @@ import { UPLOADS_DIR } from '../../env.js';
 import generateErrorsUtil from './generateErrorsUtil.js';
 
 export const uploadFiles = async (img, width) => {
-export const uploadFiles = async (img, width) => {
     try {
         // Ruta absoluta al directorio de subida de archivos.
         const uploadDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}`);
