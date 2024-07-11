@@ -5,6 +5,9 @@ import staticFiles from './staticFiles.js';
 import userExists from './userExists.js';
 import canEditSala from './canEditSala.js';
 import canEditUser from './canEditUser.js';
+import grupoExists from './gruposExists.js';
+import canEditGrupo from './canEditGrupo.js';
+
 export {
     authUser,
     checkIfGroup,
@@ -13,4 +16,6 @@ export {
     userExists,
     canEditSala,
     canEditUser
+    grupoExists,
+    canEditGrupo,
 };

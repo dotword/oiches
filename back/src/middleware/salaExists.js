@@ -5,25 +5,18 @@ const salaExists = async (req, res, next) => {
     try {
         const pool = await getPool();
 
-        const userId = req.params.usuario_id || req.user?.id;
+        // Obtenemos el id de la sala de los path params.
+        const { idSala } = req.params;
 
-        const [user] = await pool.query(
+        const [sala] = await pool.query(
             `
-                SELECT id, roles FROM usuarios WHERE id=?
+                SELECT id FROM salas WHERE id=?
             `,
-            [userId]
+            [idSala]
         );
 
-        if (!user.length) {
-            throw generateErrorsUtil('Usuario no encontrado', 400);
-        }
-
-        // Comprobar si el usuario tiene el rol de 'sala'
-        if (user[0].roles !== 'sala') {
-            throw generateErrorsUtil(
-                'El usuario no tiene permisos de salas',
-                403
-            );
+        if (!sala.length) {
+            throw generateErrorsUtil('Sala no encontrada', 400);
         }
 
         next();
