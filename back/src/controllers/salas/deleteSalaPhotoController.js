@@ -15,8 +15,6 @@ const deleteSalaPhotoController = async (req, res, next) => {
 
         // Variable que almacenará la foto que queremos eliminar.
         const photo = sala.photos.find((photo) => photo.id === photoId);
-        // console.log('photoId ', photoId);
-        // console.log('photo name ', photo.name);
 
         // Si la foto no existe en el array de fotos de la entrada lanzamos un error.
         if (!photo)

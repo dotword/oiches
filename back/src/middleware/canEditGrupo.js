@@ -13,14 +13,10 @@ const canEditGrupo = async (req, res, next) => {
         // no existe, obtenemos el id de los path params.
         const userId = req.params.usuario_id || req.user?.id;
 
-        console.log('userId ', userId);
-
         const [grupoOwner] = await pool.query(
             `SELECT usuario_id FROM grupos WHERE id = ?`,
             [idGrupo]
         );
-
-        console.log('grupoOwner ', grupoOwner);
 
         // // Si no somos los propietarios lanzamos un error.
         if (grupoOwner[0].usuario_id !== userId)
