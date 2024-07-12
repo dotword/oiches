@@ -214,7 +214,8 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **POST** - `/users/password/recover` - Envía al usuario un correo de recuperación de contraseña.
 -   **PUT** - `/users/password/reset` - Actualiza la contraseña de un usuario mediante un código de recuperación.
 -   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado.
-    /\* - **PUT** - `/users/edit/:userId` - Editar perfil usuario
+-   **PUT** - `/users/email/:userId` - Editar email usuario
+-   **PUT** - `/users/avatar/:userId` - Editar avatar usuario
 
 ## Endpoints del salas
 
