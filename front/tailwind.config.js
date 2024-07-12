@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage:{
+        'oiches-live':"url('/oiches/front/src/assets/oiches-Live.jpg')"
+      }
+    },
   },
   plugins: [],
 }
