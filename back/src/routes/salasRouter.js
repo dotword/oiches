@@ -17,6 +17,7 @@ import {
     editSalaController,
     addSalaPhotoController,
     deleteSalaPhotoController,
+    voteSalaController
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -65,5 +66,9 @@ router.get('/salas/:idSala', getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
+
+//Endpoint votacion y comentarios sala
+router.post('/salas/:idSala/votes',authUser,userExists,salaExists,voteSalaController);
+
 
 export default router;
