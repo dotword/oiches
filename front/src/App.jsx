@@ -1,24 +1,20 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import LoginForm from './components/LoginForm';
-import { useAuth } from './authContext';
-import React from 'react';
+import { AuthContextProvider } from './context/auth/auth.context.jsx';
+import { Home } from './pages/Home.jsx';
+import { RegisterForm } from './pages/RegisterForm.jsx';
 
 function App() {
-  const { auth, logout } = useAuth();
-
-  return (
-    <>
-      <h1>Oiches</h1>
-      {auth ? (
-        <div>
-          <h2>Bienvenido, {auth.userInfo.name}</h2>
-          <button onClick={logout}>Cerrar Sesión</button>
-        </div>
-      ) : (
-        <LoginForm />
-      )}
-    </>
-  );
+    return (
+         <AuthContextProvider>
+            <>
+            <Routes>
+                <Route path='/' element={<Home/>}></Route>
+                <Route path='/register' element={<RegisterForm/>}></Route>
+            </Routes>
+            </>
+         </AuthContextProvider>
+    );
 }
 
 export default App;
