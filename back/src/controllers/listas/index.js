@@ -1,3 +1,4 @@
 import listGenreController from './listGenreController.js';
+import listProvinciasController from './listProvinciasController.js';
 
-export default listGenreController;
+export { listGenreController, listProvinciasController };
