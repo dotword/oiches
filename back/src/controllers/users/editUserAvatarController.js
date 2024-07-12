@@ -1,5 +1,7 @@
 import selectUserByIdService from '../../services/users/selectUserByIdService.js';
 import updateUserAvatarService from '../../services/users/updateUserAvatarService.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import editUserAvatarSchema from '../../schemas/users/editUserAvatarSchema.js';
 
 import { uploadFiles, deleteFiles } from '../../utils/uploadFiles.js';
 
@@ -10,7 +12,7 @@ const editUserAvatarController = async (req, res, next) => {
         const { userId } = req.params;
 
         // Validamos el body con Joi. Si "files" no existe enviamos un objeto vacÃ­o.
-        // await validateSchemaUtil(editUserAvatarSchema, req.files || {});
+        await validateSchemaUtil(editUserAvatarSchema, req.files || {});
 
         // Obtenemos los datos del usuario para comprobar si ya tiene un avatar previo.
         const user = await selectUserByIdService(userId);
