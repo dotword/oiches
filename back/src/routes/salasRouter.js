@@ -6,6 +6,7 @@ import {
     userExists,
     salaExists,
     canEditSala,
+    checkIfSala,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -21,7 +22,13 @@ import {
 const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
-router.post('/users/salas', authUser, salaExists, createSalaController);
+router.post(
+    '/users/salas',
+    authUser,
+    userExists,
+    checkIfSala,
+    createSalaController
+);
 
 // Actualizar una sala
 router.put(
