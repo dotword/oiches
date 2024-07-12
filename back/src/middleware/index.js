@@ -7,6 +7,7 @@ import canEditSala from './canEditSala.js';
 import canEditUser from './canEditUser.js';
 import grupoExists from './gruposExists.js';
 import canEditGrupo from './canEditGrupo.js';
+import checkIfSala from './checkIfSala.js';
 
 export {
     authUser,
@@ -18,4 +19,5 @@ export {
     canEditUser,
     grupoExists,
     canEditGrupo,
+    checkIfSala,
 };

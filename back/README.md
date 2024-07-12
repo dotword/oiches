@@ -236,6 +236,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 ## Endpoints del listas
 
 -   **GET** - `/generos` - Lista estilos musicales
+-   **GET** - `/provincias` - Lista provincias
 
 ## Endpoints de reservas
 
