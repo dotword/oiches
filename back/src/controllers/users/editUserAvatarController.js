@@ -8,7 +8,6 @@ import { uploadFiles, deleteFiles } from '../../utils/uploadFiles.js';
 // Importamos el esquema.
 const editUserAvatarController = async (req, res, next) => {
     try {
-        // console.log(req.files.avatar);
         const { userId } = req.params;
 
         // Validamos el body con Joi. Si "files" no existe enviamos un objeto vacÃ­o.

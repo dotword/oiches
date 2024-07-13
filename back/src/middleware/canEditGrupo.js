@@ -11,7 +11,7 @@ const canEditGrupo = async (req, res, next) => {
 
         // Intentamos obtener el id de usuario de la propiedad "user". Si dicha propiedad
         // no existe, obtenemos el id de los path params.
-        const userId = req.params.usuario_id || req.user?.id;
+        const userId = req.params.user_id || req.user?.id;
 
         const [grupoOwner] = await pool.query(
             `SELECT usuario_id FROM grupos WHERE id = ?`,
