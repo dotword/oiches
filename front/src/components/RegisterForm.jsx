@@ -15,7 +15,12 @@ export const RegisterForm = () => {
       password: formValues.get('password'),
       email: formValues.get('email')
     };
+    const password2 = formValues.get('password2');
 
+    if (data.password !== password2) {
+      toast.error('Las contraseñas no coinciden');
+      return;
+    }
     const url = import.meta.env.VITE_API_URL_BASE;
     console.log(url);
 
