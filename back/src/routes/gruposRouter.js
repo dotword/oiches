@@ -6,6 +6,7 @@ import {
     userExists,
     grupoExists,
     canEditGrupo,
+    hasOneGroup,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -14,9 +15,19 @@ import {
     addGrupoPhotoController,
     getGrupoDetailController,
     deleteGrupoPhotoController,
+    createGrupoController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
+
+// Crear un nuevo grupo
+router.post(
+    '/users/grupo',
+    authUser,
+    userExists,
+    hasOneGroup,
+    createGrupoController
+);
 
 // Actualizar un grupo
 router.put(
