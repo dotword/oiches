@@ -46,10 +46,10 @@ export const RegisterForm = ({ className }) => {
                 toast.success(message);
             }
         } catch (err) {
-            console.error('Error during registration:', err);
+            console.error('Error durante el registro', err);
             toast.error(err.message);
             setError(
-                'An error occurred during registration. Please try again.'
+                'Error durante el registro. Porfavor intentalo de nuevo.'
             );
         }
     };
