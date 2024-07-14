@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Input } from './Input.jsx';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -56,8 +56,8 @@ export const RegisterForm = ({ className }) => {
 
     return (
         <>
-            <div className="absolute top-1 left-1/2 justify-between hidden w-1/2 p-5 lg:flex lg:text-black ">
-                <button className="flex gap-1">
+            <section className="absolute top-1 left-1/2 justify-between hidden w-1/2 p-6 lg:flex lg:text-black ">
+                <button className="flex hover:text-purpleOiches gap-1">
                     <svg
                         className="self-center"
                         xmlns="http://www.w3.org/2000/svg"
@@ -74,23 +74,24 @@ export const RegisterForm = ({ className }) => {
                 </button>
                 <p>
                     ¿Ya tienes una cuenta?
-                    <Link to="/login" className=" text-yellow-200">
+                    <Link to="/login" className="  hover:text-purpleOiches text-yellowOiches">
                         {' '}
                         Log in
                     </Link>
                 </p>
-            </div>
+            </section>
             <form onSubmit={handleSubmit} className={className}>
                 <h3 className="text-4xl">Registro</h3>
                 <p>Lorem ipsum dolor sit amet consectetur</p>
                 <hr />
                 <div className="flex gap-4 pla">
                     <label>
-                        Grupo <input type="radio" name="roles" value="grupo" />
+                        Grupo <input className='accent-purpleOiches' type="radio" name="roles" value="grupo" />
                     </label>
                     <label>
                         Sala{' '}
                         <input
+                            className=' accent-purpleOiches '
                             type="radio"
                             required
                             name="roles"
@@ -106,7 +107,7 @@ export const RegisterForm = ({ className }) => {
                             name="name"
                             placeholder="Led Zeppelin"
                             required
-                            className="border mt-2 h-10 w-full"
+                            className="form-input"
                         />
                     </label>
                     <label htmlFor="email">
@@ -116,7 +117,7 @@ export const RegisterForm = ({ className }) => {
                             name="email"
                             placeholder="Youremail@example.com"
                             required
-                            className="border mt-2 h-10 w-full"
+                            className="form-input"
                         />
                     </label>
                     <label htmlFor="password">
@@ -126,7 +127,7 @@ export const RegisterForm = ({ className }) => {
                             name="password"
                             placeholder="Yourpassword0?"
                             required
-                            className="border mt-2 h-10 w-full"
+                            className="form-input"
                         />
                     </label>
                     <label htmlFor="password2">
@@ -136,18 +137,18 @@ export const RegisterForm = ({ className }) => {
                             name="password2"
                             placeholder="Yourpassword0?"
                             required
-                            className="border mt-2 h-10 w-full"
+                            className="form-input"
                         />
                     </label>
                 </div>
                 <p>
-                    <input type="checkbox" name="terms" required /> Acepto los
+                    <input className=' accent-purpleOiches' type="checkbox" name="terms" required /> Acepto los
                     términos y condiciones
                 </p>
                 {error && <p className="text-red-500">{error}</p>}
                 <button
                     type="submit"
-                    className="p-4 w-full bg-slate-500 justify-center rounded"
+                    className="p-4 w-full hover:text-white hover:bg-opacity-80 transition-all bg-purpleOiches text-xl justify-center rounded"
                 >
                     Crear cuenta
                 </button>
@@ -163,7 +164,7 @@ export const RegisterForm = ({ className }) => {
                 draggable
                 pauseOnHover
                 theme="light"
-                transition={Bounce} // Correct usage of transition
+                transition={Bounce} 
             />
         </>
     );

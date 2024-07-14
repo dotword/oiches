@@ -1,18 +1,18 @@
 import { Link, NavLink } from 'react-router-dom';
 import oiches from '../assets/Live.jpg';
 import { RegisterForm } from '../components/RegisterForm.jsx';
-
+import oichesLogo from '../assets/Horizontal_blanco.webp'
 export const RegisterPage = () => {
     return (
         <div className="h-screen lg:flex lg:w-screen">
             <section className="h-1/3 text-white lg:w-1/2">
-                <img
-                    src={oiches}
-                    className="-z-50 absolute h-1/3 w-full lg:w-1/2 lg:h-screen "
-                    alt=""
-                />
-                <div className="flex justify-between lg:hidden lg:text-black ">
-                    <button className="flex gap-1">
+                    <img
+                        src={oiches}
+                        className="-z-50 absolute h-1/3 w-full lg:w-1/2 lg:h-screen "
+                        alt=""
+                    />
+                <div className="flex justify-between lg:hidden lg:text-black p-4">
+                    <button className="flex hover:text-purpleOiches gap-1">
                         <svg
                             className="self-center"
                             xmlns="http://www.w3.org/2000/svg"
@@ -29,16 +29,17 @@ export const RegisterPage = () => {
                     </button>
                     <p>
                         ¿Ya tienes una cuenta?
-                        <Link to="/login" className=" text-yellow-200">
+                        <NavLink to="/login" className=" hover:text-purpleOiches text-yellowOiches">
                             {' '}
                             Log in
-                        </Link>
+                        </NavLink>
                     </p>
                 </div>
                 <div className="flex flex-col gap-10 pt-5 lg:h-screen lg:gap-y-60">
                     <div className="flex place-content-center">
-                        <img className="self-center" alt="Logo de Oiches" />
-                        <h2 className="text-5xl text-center">Oiches</h2>
+                        <NavLink to={'/home'}>
+                            <img src={oichesLogo} className="self-center px-10 mt-10 max-w-sm" alt="Logo de Oiches" />
+                        </NavLink>
                     </div>
                     <blockquote className="hidden lg:flex lg:flex-col lg:mx-auto lg:w-1/2">
                         Cuando estoy en el escenario, siento que puedo
@@ -46,11 +47,11 @@ export const RegisterPage = () => {
                         recibo del público.Es un intercambio de amor y pasión
                         que no se puede describir con palabras, se se puede
                         sentir <br />
-                        <cite className="mt-6">Jimi Hendrick</cite>
+                        <cite className="mt-6">Jimi Hendrix</cite>
                     </blockquote>
                 </div>
             </section>
-            <RegisterForm className="flex flex-col gap-5 p-2 lg:w-1/3 mx-auto lg:mt-20 " />
+            <RegisterForm className="flex justify-between max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 " />
         </div>
     );
 };
