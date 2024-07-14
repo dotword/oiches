@@ -21,27 +21,27 @@ export function AuthContextProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
 
     function signIn(token) {
-        localStorage.setItem('AUTH_TOKEN_TJ', token);
+        localStorage.setItem('AUTH_TOKEN', token);
 
         const user = jwtDecode(token);
         setCurrentUser(user)
     }
 
     function signOut() {
-        localStorage.removeItem('AUTH_TOKEN_TJ')
+        localStorage.removeItem('AUTH_TOKEN')
         setCurrentUser(null)
     }
 
     useEffect(() => {
 
-        const token = localStorage.getItem('AUTH_TOKEN_TJ')
+        const token = localStorage.getItem('AUTH_TOKEN')
 
         if (token) {
             const user = jwtDecode(token)
 
             if (user.exp * 1000 < Date.now()) {
-                localStorage.removeItem('AUTH_TOKEN_TJ')
-                navigate('/sign-in')
+                localStorage.removeItem('AUTH_TOKEN')
+                navigate('/login')
             } else {
                 setCurrentUser(user)
             }
@@ -52,7 +52,7 @@ export function AuthContextProvider({ children }) {
     useEffect(() => {
 
         const handleStorage = (event) => {
-            if (event.key == 'AUTH_TOKEN_TJ') {
+            if (event.key == 'AUTH_TOKEN') {
                 if (event.newValue) {
                     const user = jwtDecode(event.newValue);
                     setCurrentUser(user)
