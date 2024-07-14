@@ -7,23 +7,16 @@ import morgan from 'morgan';
 import routes from './src/routes/index.js';
 
 import { PORT, UPLOADS_DIR } from './env.js';
-// import staticFilesMiddleware from './src/middleware/staticFiles.js';
 
 const app = express();
 app.use(morgan('dev'));
+app.use(express.json());
 app.use(cors());
+
+app.use(fileUpload());
 
 // Middleware que indica a Express cuál es el directorio de ficheros estáticos.
 app.use('/uploads', express.static(UPLOADS_DIR));
-
-app.use(express.json());
-
-// Middleware que "desencripta" un body en formato "form-data" creando la propiedad
-// "body" y la propiedad "files" en el objeto "request"
-app.use(fileUpload());
-
-// Usar el middleware para archivos estáticos
-// staticFilesMiddleware(app);
 
 /**Llamado a rutas */
 app.use(routes);
