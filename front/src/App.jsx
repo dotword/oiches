@@ -1,22 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import { AuthContextProvider } from './context/auth/auth.context.jsx';
-import { Home } from './components/Home.jsx';
+
+import Home from './pages/Home.jsx';
 import { RegisterPage } from './pages/Register.jsx';
-
-
-
+import './App.css';
 
 function App() {
     return (
-         <AuthContextProvider>
-            <>
+        <>
             <Routes>
-                <Route path='/' element={<Home/>}></Route>
-                <Route path='/register' element={<RegisterPage/>}></Route>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<RegisterPage />} />
             </Routes>
-            </>
-         </AuthContextProvider>
+        </>
     );
 }
 

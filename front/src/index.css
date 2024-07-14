@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        font-family: 'Encode Sans', sans-serif;
+    }
+}
+@layer components {
+    .btn-account {
+        @apply py-1 px-3 bg-purpleOiches rounded-md text-white hover:text-black transition-all;
+    }
+}
