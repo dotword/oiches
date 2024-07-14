@@ -14,7 +14,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 // Middleware que indica a Express cuál es el directorio de ficheros estáticos.
-app.use(express.static(UPLOADS_DIR));
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 app.use(express.json());
 
