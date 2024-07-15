@@ -18,6 +18,7 @@ import {
     createGrupoController,
 } from '../controllers/grupos/index.js';
 
+import { listGruposController } from '../controllers/grupos/listGruposController.js';
 const router = express.Router();
 
 // Crear un nuevo grupo
@@ -61,5 +62,8 @@ router.delete(
 
 // Endpoint detalle grupo
 router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
+
+// Endpoint listado de grupos con filtro, búsqueda y ordenación
+router.get('/grupos', listGruposController);
 
 export default router;
