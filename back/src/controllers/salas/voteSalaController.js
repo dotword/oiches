@@ -1,28 +1,38 @@
-import generateErrorsUtil from "../../utils/generateErrorsUtil.js";
-import selectSalaVotesServices from "../../services/salas/selectSalaVotesServices.js";
-import insertVoteSalaService from "../../services/salas/insertVoteSalaService.js";
-import insertCommentSalaService from "../../services/salas/insertSalaCommentService.js";
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
+import insertVoteSalaService from '../../services/salas/insertVoteSalaService.js';
+import insertCommentSalaService from '../../services/salas/insertSalaCommentService.js';
+import selectSalaByIdService from '../../services/salas/selectSalaByIdService.js';
 
 const voteSalaController = async (req, res, next) => {
     try {
         const { idSala } = req.params;
         const { value, comment } = req.body;
-        const { id: voto_grupo_id } = req.user;  // Extracting user ID
+        const { id: userId } = req.user; // Extraemos el ID
 
-        if (value <= 0) throw generateErrorsUtil('El valor debe ser mayor a cero', 409);
-        if (value > 5) throw generateErrorsUtil('El valor debe ser menor a 5', 409);
+        if (value <= 0 || value > 5) {
+            throw generateErrorsUtil('El valor debe ser entre 1 y 5', 409);
+        }
 
-        const sala = await selectSalaVotesServices(req, idSala);
-        if (sala[0].usuario_id === voto_grupo_id) throw generateErrorsUtil('No se puede votar su propia entrada', 403);
+        const sala = await selectSalaByIdService(idSala);
+        if (!sala) {
+            throw generateErrorsUtil('Sala no encontrada', 404);
+        }
 
-        const avgVotes = await insertVoteSalaService(value, idSala, voto_grupo_id);
+        if (sala.usuario_id === userId) {
+            throw generateErrorsUtil('No se puede votar su propia entrada', 403);
+        }
 
-        // Insertar comentario en la tabla sala_comments
-        await insertCommentSalaService(comment, idSala, voto_grupo_id);
+        // Insertamos votos 
+        const avgVotes = await insertVoteSalaService(value, idSala, userId);
+
+        // Insertamos comentarios
+        if (comment && comment.trim()) {
+            await insertCommentSalaService(comment, idSala, userId);
+        }
 
         res.send({
             status: 'ok',
-            data: avgVotes
+            data: avgVotes,
         });
     } catch (error) {
         next(error);

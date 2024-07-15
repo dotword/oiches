@@ -1,6 +1,6 @@
 import getPool from "../../database/getPool.js";
 
-const selectSalaVotesServices = async (req, idSala) => {
+const selectSalaVotesServices = async (id, idSala) => {
     const pool = await getPool();
 
     const [sala] = await pool.query(
@@ -14,7 +14,7 @@ const selectSalaVotesServices = async (req, idSala) => {
             GROUP BY s.id
             ORDER BY s.createdAt DESC
         `,
-        [req.user.id, idSala]
+        [id, idSala]
     );
 
     return sala;

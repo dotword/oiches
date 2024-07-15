@@ -7,6 +7,7 @@ import {
     salaExists,
     canEditSala,
     checkIfSala,
+    checkIfGroup
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -68,7 +69,7 @@ router.get('/salas/:idSala', getSalaDetailController);
 router.get('/salas?', listSalasController);
 
 //Endpoint votacion y comentarios sala
-router.post('/salas/:idSala/votes',authUser,userExists,salaExists,voteSalaController);
+router.post('/salas/:idSala/votes',authUser,userExists,checkIfGroup,salaExists,voteSalaController);
 
 
 export default router;
