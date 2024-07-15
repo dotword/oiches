@@ -15,10 +15,10 @@ import {
     editGrupoController,
     getGrupoDetailController,
     createGrupoController,
-    voteGrupoController
+    listGruposController,
+    voteGrupoController,
 } from '../controllers/grupos/index.js';
 
-import { listGruposController } from '../controllers/grupos/listGruposController.js';
 const router = express.Router();
 
 // Crear un nuevo grupo
@@ -44,10 +44,16 @@ router.put(
 router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
 //Endpoint grupo votos y comentarios
-router.post('/grupos/:idGrupo/votes',authUser,userExists,checkIfSala,grupoExists,voteGrupoController)
+router.post(
+    '/grupos/:idGrupo/votes',
+    authUser,
+    userExists,
+    checkIfSala,
+    grupoExists,
+    voteGrupoController
+);
 
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
 router.get('/grupos?', listGruposController);
-
 
 export default router;

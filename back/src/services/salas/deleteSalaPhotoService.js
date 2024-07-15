@@ -2,11 +2,11 @@
 import getPool from '../../database/getPool.js';
 
 // Función que realiza una consulta a la base de datos para eliminar una foto de una entrada.
-const deleteSalaPhotoService = async (photoId) => {
+const deleteSalaPhotoService = async (deletePhoto) => {
     const pool = await getPool();
 
     // Eliminamos la foto.
-    await pool.query(`DELETE FROM sala_fotos WHERE id = ?`, [photoId]);
+    await pool.query(`DELETE FROM sala_fotos WHERE id = ?`, [deletePhoto]);
 };
 
 export default deleteSalaPhotoService;

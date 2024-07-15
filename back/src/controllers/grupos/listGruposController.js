@@ -1,6 +1,6 @@
 import { listGruposService } from '../../services/grupos/listGruposService.js';
 
-export async function listGruposController(req, res, next) {
+const listGruposController = async (req, res, next) => {
     try {
         const filters = {
             nombre: req.query.nombre,
@@ -19,4 +19,5 @@ export async function listGruposController(req, res, next) {
     } catch (error) {
         next(error);
     }
-}
+};
+export default listGruposController;
