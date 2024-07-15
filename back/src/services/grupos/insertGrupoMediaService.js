@@ -2,7 +2,7 @@ import getPool from '../../database/getPool.js';
 
 import { v4 as uuid } from 'uuid';
 
-const insertGrupoMediaService = async (mediaName, idGrupo) => {
+export const insertGrupoMediaService = async (mediaName, idGrupo) => {
     // Generamos el id de la entrada.
     const mediaId = uuid();
 
@@ -21,4 +21,9 @@ const insertGrupoMediaService = async (mediaName, idGrupo) => {
     return insertId;
 };
 
-export default insertGrupoMediaService;
+export const deleteGrupoMediaService = async (mediaDelete) => {
+    const pool = await getPool();
+
+    // Eliminamos la foto.
+    await pool.query(`DELETE FROM grupo_media WHERE id = ?`, [mediaDelete]);
+};

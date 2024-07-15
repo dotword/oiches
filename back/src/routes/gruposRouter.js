@@ -13,9 +13,7 @@ import {
 // Importamos las funciones controladoras finales.
 import {
     editGrupoController,
-    addGrupoPhotoController,
     getGrupoDetailController,
-    deleteGrupoPhotoController,
     createGrupoController,
     voteGrupoController
 } from '../controllers/grupos/index.js';
@@ -40,26 +38,6 @@ router.put(
     grupoExists,
     canEditGrupo,
     editGrupoController
-);
-
-// Agregar fotos y pdf a un grupo.
-router.post(
-    '/grupos/:idGrupo/file',
-    authUser,
-    userExists,
-    grupoExists,
-    canEditGrupo,
-    addGrupoPhotoController
-);
-
-// Eliminar archivo del grupo.
-router.delete(
-    '/grupos/:idGrupo/file/:fileId',
-    authUser,
-    userExists,
-    grupoExists,
-    canEditGrupo,
-    deleteGrupoPhotoController
 );
 
 // Endpoint detalle grupo

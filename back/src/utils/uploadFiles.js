@@ -9,7 +9,7 @@ import generateErrorsUtil from './generateErrorsUtil.js';
 export const uploadFiles = async (img, width) => {
     try {
         // Ruta absoluta al directorio de subida de archivos.
-        const uploadDir = path.join(process.cwd(), `./src/${UPLOADS_DIR}`);
+        const uploadDir = path.join(process.cwd(), `./${UPLOADS_DIR}`);
 
         // Si no existe la carpeta upolads la creamos, si no accedemos a ella
         try {
@@ -50,14 +50,10 @@ export const uploadFiles = async (img, width) => {
 
 export default uploadFiles;
 
-export const deleteFiles = async (imgName) => {
+export const deleteFiles = async (deleted) => {
     try {
         // Ruta absoluta al archivo que queremos eliminar.
-        const imgPath = path.join(
-            process.cwd(),
-            `./src/${UPLOADS_DIR}`,
-            imgName
-        );
+        const imgPath = path.join(process.cwd(), `./${UPLOADS_DIR}`, deleted);
 
         // Comprobamos si la imagen existe con la ayuda del método "access".
         try {

@@ -2,8 +2,8 @@ import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createGrupoSchema from '../../schemas/grupos/createGrupoSchema.js';
 import { uploadFiles } from '../../utils/uploadFiles.js';
 import insertGrupoService from '../../services/grupos/insertGrupoService.js';
-import insertGrupoPhotoService from '../../services/grupos/insertGrupoPhotoService.js';
-import insertGrupoMediaService from '../../services/grupos/insertGrupoMediaService.js';
+import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
+import { insertGrupoMediaService } from '../../services/grupos/insertGrupoMediaService.js';
 
 const createGrupoController = async (req, res, next) => {
     try {
@@ -17,11 +17,12 @@ const createGrupoController = async (req, res, next) => {
             email,
             media,
         } = req.body;
+        console.log('media ', media);
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
             createGrupoSchema,
-            Object.assign(req.body, req.files)
+            Object.assign(req.body, req.files || {})
         );
 
         const grupoId = await insertGrupoService(
@@ -36,11 +37,13 @@ const createGrupoController = async (req, res, next) => {
         );
 
         const medias = [];
-        for (const media of Object.values(req.body.media).slice(0, 4)) {
-            await insertGrupoMediaService(media, grupoId);
-            medias.push({
-                url: media,
-            });
+        if (req.body.media) {
+            for (const media of Object.values(req.body.media).slice(0, 5)) {
+                await insertGrupoMediaService(media, grupoId);
+                medias.push({
+                    url: media,
+                });
+            }
         }
 
         // Array donde pushearemos las fotos (si hay).
@@ -76,7 +79,7 @@ const createGrupoController = async (req, res, next) => {
                     rider,
                     email,
                     photos,
-                    media,
+                    medias,
                     createdAt: new Date(),
                 },
             },

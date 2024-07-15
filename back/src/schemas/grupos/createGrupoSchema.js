@@ -2,7 +2,7 @@
 import Joi from 'joi';
 import imgSchema from '../imgSchema.js';
 import fileSchema from '../fileSchema.js';
-import urlSchema from '../urlSchema.js';
+// import urlSchema from '../urlSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -25,7 +25,7 @@ const createGrupoSchema = Joi.object({
     photoC: imgSchema.optional(),
     photoD: imgSchema.optional(),
     file: fileSchema.optional(),
-    media: urlSchema.optional(),
+    media: Joi.any().messages(joiErrorMessages),
 });
 
 export default createGrupoSchema;
