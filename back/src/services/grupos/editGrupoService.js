@@ -11,19 +11,17 @@ const editGrupoService = async (idGrupo, updatedFields) => {
         values.push(value);
     }
 
-    if (fields.length === 0) {
-        throw new Error('No hay campos para actualizar');
+    if (fields.length !== 0) {
+        values.push(idGrupo);
+
+        const query = `
+                UPDATE grupos
+                 SET ${fields.join(', ')}
+                WHERE id=?
+            `;
+
+        await pool.query(query, values);
     }
-
-    values.push(idGrupo);
-
-    const query = `
-            UPDATE grupos
-             SET ${fields.join(', ')}
-            WHERE id=?
-        `;
-
-    await pool.query(query, values);
 };
 
 export default editGrupoService;

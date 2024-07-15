@@ -1,5 +1,5 @@
 import getPool from '../../database/getPool.js';
-import generateErrorsUtil from "../../utils/generateErrorsUtil.js";
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const selectGrupoByIdService = async (idGrupo) => {
     const pool = await getPool();
@@ -25,6 +25,14 @@ const selectGrupoByIdService = async (idGrupo) => {
         `,
         [idGrupo]
     );
+
+    // Obtenemos el array de los media del grupo.
+    const [media] = await pool.query(
+        `SELECT id, url FROM grupo_media WHERE grupo_id = ?`,
+        [idGrupo]
+    );
+    // Agregamos el array de los comentarios del grupo.
+    entry[0].media = media;
 
     if (entry.length === 0) {
         throw generateErrorsUtil('Grupo no encontrado', 404);

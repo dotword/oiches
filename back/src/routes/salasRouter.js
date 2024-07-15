@@ -7,7 +7,7 @@ import {
     salaExists,
     canEditSala,
     checkIfSala,
-    checkIfGroup
+    checkIfGroup,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -16,9 +16,7 @@ import {
     getSalaDetailController,
     listSalasController,
     editSalaController,
-    addSalaPhotoController,
-    deleteSalaPhotoController,
-    voteSalaController
+    voteSalaController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -42,26 +40,6 @@ router.put(
     editSalaController
 );
 
-// Agregar una foto a una sala.
-router.post(
-    '/salas/:idSala/photos',
-    authUser,
-    userExists,
-    salaExists,
-    canEditSala,
-    addSalaPhotoController
-);
-
-// Eliminar una foto de una sala.
-router.delete(
-    '/salas/:idSala/photos/:photoId',
-    authUser,
-    userExists,
-    salaExists,
-    canEditSala,
-    deleteSalaPhotoController
-);
-
 // Endpoint detalle sala
 router.get('/salas/:idSala', getSalaDetailController);
 
@@ -69,7 +47,13 @@ router.get('/salas/:idSala', getSalaDetailController);
 router.get('/salas?', listSalasController);
 
 //Endpoint votacion y comentarios sala
-router.post('/salas/:idSala/votes',authUser,userExists,checkIfGroup,salaExists,voteSalaController);
-
+router.post(
+    '/salas/:idSala/votes',
+    authUser,
+    userExists,
+    checkIfGroup,
+    salaExists,
+    voteSalaController
+);
 
 export default router;

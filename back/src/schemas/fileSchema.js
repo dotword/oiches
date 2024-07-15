@@ -11,7 +11,7 @@ const fileSchema = joi
         name: joi.string().required().messages(joiErrorMessages),
         mimetype: joi
             .string()
-            .valid('application/pdf')
+            .valid('image/jpeg', 'image/jpg', 'image/png', 'application/pdf')
             .required()
             .messages(joiErrorMessages),
         size: joi.number().max(3000000).required().messages(joiErrorMessages),
