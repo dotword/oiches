@@ -9,6 +9,5 @@ export {
     createSalaController,
     listSalasController,
     editSalaController,
-    deleteSalaPhotoController,
     voteSalaController,
 };

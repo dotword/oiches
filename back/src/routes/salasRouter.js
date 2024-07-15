@@ -16,8 +16,6 @@ import {
     getSalaDetailController,
     listSalasController,
     editSalaController,
-    addSalaPhotoController,
-    deleteSalaPhotoController,
     voteSalaController,
 } from '../controllers/salas/index.js';
 

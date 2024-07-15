@@ -9,4 +9,5 @@ export {
     getGrupoDetailController,
     createGrupoController,
     voteGrupoController,
+    listGruposController,
 };
