@@ -4,6 +4,7 @@ import listSalasController from './listSalasController.js';
 import addSalaPhotoController from './addSalaPhotoController.js';
 import deleteSalaPhotoController from './deleteSalaPhotoController.js';
 import editSalaController from './editSalaController.js';
+import voteSalaController from './voteSalaController.js';
 
 export {
     getSalaDetailController,
@@ -12,4 +13,5 @@ export {
     addSalaPhotoController,
     editSalaController,
     deleteSalaPhotoController,
+    voteSalaController
 };

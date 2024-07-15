@@ -1,4 +1,5 @@
 import getPool from '../../database/getPool.js';
+import generateErrorsUtil from "../../utils/generateErrorsUtil.js";
 
 const selectGrupoByIdService = async (idGrupo) => {
     const pool = await getPool();
@@ -24,21 +25,22 @@ const selectGrupoByIdService = async (idGrupo) => {
         `,
         [idGrupo]
     );
+
+    if (entry.length === 0) {
+        throw generateErrorsUtil('Grupo no encontrado', 404);
+    }
+
     // Obtenemos el array de fotos de la entrada.
     const [photos] = await pool.query(
         `SELECT id, name FROM grupo_fotos WHERE grupoId = ?`,
         [idGrupo]
     );
-    // Agregamos el array de fotos a la entrada.
-    entry[0].photos = photos;
 
     // Obtenemos el array de los comentarios del grupo.
     const [comments] = await pool.query(
         `SELECT descripcion, sala_id FROM grupo_comments WHERE grupo_id = ?`,
         [idGrupo]
     );
-    // Agregamos el array de los comentarios del grupo.
-    entry[0].comments = comments;
 
     // Obtenemos el array de las reservas del grupo.
     const [reservations] = await pool.query(
@@ -56,12 +58,12 @@ const selectGrupoByIdService = async (idGrupo) => {
         `,
         [idGrupo]
     );
-    // Agregamos el array de las reservas de la sala.
-    entry[0].reservations = reservations;
 
     return {
         ...entry[0],
         photos,
+        comments,
+        reservations,
     };
 };
 

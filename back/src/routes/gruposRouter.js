@@ -7,6 +7,7 @@ import {
     grupoExists,
     canEditGrupo,
     hasOneGroup,
+    checkIfSala,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -16,6 +17,7 @@ import {
     getGrupoDetailController,
     deleteGrupoPhotoController,
     createGrupoController,
+    voteGrupoController
 } from '../controllers/grupos/index.js';
 
 import { listGruposController } from '../controllers/grupos/listGruposController.js';
@@ -63,7 +65,11 @@ router.delete(
 // Endpoint detalle grupo
 router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
+//Endpoint grupo votos y comentarios
+router.post('/grupos/:idGrupo/votes',authUser,userExists,checkIfSala,grupoExists,voteGrupoController)
+
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
-router.get('/grupos', listGruposController);
+router.get('/grupos?', listGruposController);
+
 
 export default router;
