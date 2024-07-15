@@ -6,7 +6,6 @@ const listGruposController = async (req, res, next) => {
             nombre: req.query.nombre,
             provincia: req.query.provincia,
             generos: req.query.generos,
-            honorarios: req.query.honorarios,
         };
 
         const sort = {
