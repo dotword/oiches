@@ -216,6 +216,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **PATCH** - `/users/password` - Actualiza la contraseña de un usuario una vez logeado.
 -   **PUT** - `/users/email/:userId` - Editar email usuario
 -   **PUT** - `/users/avatar/:userId` - Editar avatar usuario
+-   **GET** - `/users` - Perfil privado del usuario
 
 ## Endpoints del salas
 

@@ -28,7 +28,7 @@ const Menu = () => {
             {!userLogged ? (
                 <>
                     <NavLink
-                        to={'/'}
+                        to={'/login'}
                         className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
                     >
                         Login
