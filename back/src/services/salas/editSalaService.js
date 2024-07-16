@@ -11,19 +11,17 @@ const editSalaService = async (idSala, updatedFields) => {
         values.push(value);
     }
 
-    if (fields.length === 0) {
-        throw new Error('No hay campos para actualizar');
+    if (fields.length !== 0) {
+        values.push(idSala);
+
+        const query = `
+                UPDATE salas
+                 SET ${fields.join(', ')}
+                WHERE id=?
+            `;
+
+        await pool.query(query, values);
     }
-
-    values.push(idSala);
-
-    const query = `
-            UPDATE salas
-             SET ${fields.join(', ')}
-            WHERE id=?
-        `;
-
-    await pool.query(query, values);
 };
 
 export default editSalaService;

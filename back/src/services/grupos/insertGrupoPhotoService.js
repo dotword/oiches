@@ -2,7 +2,7 @@ import getPool from '../../database/getPool.js';
 
 import { v4 as uuid } from 'uuid';
 
-const insertGrupoPhotoService = async (photoName, idGrupo) => {
+export const insertGrupoPhotoService = async (photoName, idGrupo) => {
     // Generamos el id de la entrada.
     const photoId = uuid();
 
@@ -21,4 +21,10 @@ const insertGrupoPhotoService = async (photoName, idGrupo) => {
     return insertId;
 };
 
-export default insertGrupoPhotoService;
+// Función que realiza una consulta a la base de datos para eliminar una foto de una entrada.
+export const deleteGrupoPhotoService = async (deletePhoto) => {
+    const pool = await getPool();
+
+    // Eliminamos la foto.
+    await pool.query(`DELETE FROM grupo_fotos WHERE id = ?`, [deletePhoto]);
+};
