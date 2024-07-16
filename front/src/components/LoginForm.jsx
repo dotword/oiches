@@ -1,41 +1,68 @@
-import React, { useState } from "react";
-import { useAuth } from "../authContext";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { loginUserService } from '../services/loginUserService.jsx';
+import { AuthContext } from "../context/auth/auth.context.jsx";
 
 const LoginForm = () => {
-    const [username, setUsername] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useAuth();
-
+    const [error, setError] = useState('');
+  
+    const navigate = useNavigate();
+    const auth = useContext(AuthContext);
+   
+    const { signIn, currentUser } = auth
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const response = await fetch('http://localhost:3000/api/login',{
-            method: 'POST',
-            headers: { 'Content-Type': 'applicatio/json' },
-            body: JSON.stringify({ username, password }),
-        });
-
-        const data = await response.json();
-        if(response.ok) {
-            login(data.token, data.user);
-        } else {
-            alert('Fallo de login');
-        }
+      e.preventDefault();
+  
+      try {
+        const {data} = await loginUserService({ email, password })
+        console.log(data);
+        signIn(data.token, data.user);
+        navigate('/');
+      } catch (error) {
+        setError(error.message);
+      }
     };
-
+  
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Usuario</label>
-                <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                />
-            </div>
-            <button type="submit">Iniciar sesión</button>
+      <>
+        <form className="" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="email">Usuario: </label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Introduce tu usuario"
+              value={email}
+              required
+              onChange={(e) => setemail(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Contraseña: </label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Introduce tu contraseña"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div>
+            <input type="submit" value="Iniciar sesión" />
+          </div>
+          <div>
+            {error ? <p>{error}</p> : ''}
+          </div>
+          <div>
+            <p>Recuperar contraseña</p>
+          </div>
         </form>
+      </>
     );
-};
-
-export default LoginForm;
+  };
+  
+  export default LoginForm;
