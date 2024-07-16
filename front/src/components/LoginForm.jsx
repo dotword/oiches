@@ -1,25 +1,25 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContextProvider } from "../context/auth.context.jsx";
+
+import { loginUserService } from '../services/loginUserService.jsx';
 import { AuthContext } from "../context/auth/auth.context.jsx";
-import { loginUserService } from '../services/LoginUserService.jsx';
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
+    const [email, setemail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
   
     const navigate = useNavigate();
-    const { setToken } = useContext(AuthContext);
-    const { login } = AuthContextProvider();
-  
+    const auth = useContext(AuthContext);
+   
+    const { signIn, currentUser } = auth
     const handleSubmit = async (e) => {
       e.preventDefault();
   
       try {
-        const data = await loginUserService({ email, password });
-        setToken(data.token);
-        login(data.token, data.email);
+        const {data} = await loginUserService({ email, password })
+        console.log(data);
+        signIn(data.token, data.user);
         navigate('/');
       } catch (error) {
         setError(error.message);
@@ -28,16 +28,16 @@ const LoginForm = () => {
   
     return (
       <>
-        <form onSubmit={handleSubmit}>
+        <form className="" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="email">Correo electrónico: </label>
+            <label htmlFor="email">Usuario: </label>
             <input
               type="text"
               name="email"
-              placeholder="Introduce tu correo electrónico"
+              placeholder="Introduce tu usuario"
               value={email}
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setemail(e.target.value)}
             />
           </div>
           <div>
