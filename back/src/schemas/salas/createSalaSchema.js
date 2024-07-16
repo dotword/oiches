@@ -14,13 +14,26 @@ const createSalaSchema = Joi.object({
     direccion: Joi.string().required().messages(joiErrorMessages),
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
-    email: Joi.string().email().required().messages(joiErrorMessages),
     generos: Joi.number()
         .positive()
         .integer()
         .required()
         .messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
+    horaReservasStart: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            'string.pattern.base':
+                'El campo de hora debe estar en formato HH:mm',
+        }),
+    horaReservasEnd: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            'string.pattern.base':
+                'El campo de hora debe estar en formato HH:mm',
+        }),
     photoA: imgSchema.optional(),
     photoB: imgSchema.optional(),
     photoC: imgSchema.optional(),

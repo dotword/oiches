@@ -12,7 +12,7 @@ export async function listSalasService(filters, sort) {
         (SELECT provincia FROM provincias WHERE provincias.id = Salas.provincia) AS Provincia,
         (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = Salas.generos) AS Genero,
         (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
-        (SELECT AVG(value) FROM votos_salas WHERE votos_salas.sala_id = Salas.id) AS media_votos
+        (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = Salas.id) AS media_votos
 
     FROM 
         Salas 
