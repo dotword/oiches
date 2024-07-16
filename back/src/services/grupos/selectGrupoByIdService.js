@@ -1,3 +1,4 @@
+import path from 'path';
 import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
@@ -43,6 +44,18 @@ const selectGrupoByIdService = async (idGrupo) => {
         `SELECT id, name FROM grupo_fotos WHERE grupoId = ?`,
         [idGrupo]
     );
+    const fotos = [];
+    const pdf = [];
+
+    for (const photo of photos) {
+        path.extname(photo.name) === '.pdf'
+            ? pdf.push({
+                  name: photo.name,
+              })
+            : fotos.push({
+                  name: photo.name,
+              });
+    }
 
     // Obtenemos el array de los comentarios del grupo.
     const [comments] = await pool.query(
@@ -70,6 +83,8 @@ const selectGrupoByIdService = async (idGrupo) => {
     return {
         ...entry[0],
         photos,
+        fotos,
+        pdf,
         comments,
         reservations,
     };
