@@ -8,6 +8,7 @@ import {
     canEditSala,
     checkIfSala,
     checkIfGroup,
+    grupoCanVote,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -41,18 +42,18 @@ router.put(
 );
 
 // Endpoint detalle sala
-router.get('/salas/:idSala', getSalaDetailController);
+router.get('/salas/:idSala', salaExists, getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
 
-//Endpoint votacion y comentarios sala
+//Endpoint votacion y comentarios de un grupo a una sala
 router.post(
-    '/salas/:idSala/votes',
+    '/salas/:idReserva/votes',
     authUser,
     userExists,
     checkIfGroup,
-    salaExists,
+    grupoCanVote,
     voteSalaController
 );
 

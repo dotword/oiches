@@ -19,11 +19,8 @@ const authUser = async (req, res, next) => {
             throw generateErrorUtil('Credenciales invalidas', 401);
         }
 
-        // Extraer el ID y el rol del usuario del token desencriptado
-        const { id, roles } = tokenInfo;
-
         // Crear la propiedad "user" en el objeto "request" con el ID y el rol
-        req.user = { id, roles };
+        req.user = tokenInfo;
 
         next();
     } catch (err) {

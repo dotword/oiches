@@ -4,7 +4,7 @@ import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.
 import { uploadFiles, deleteFiles } from '../../utils/uploadFiles.js';
 import deleteSalaPhotoService from '../../services/salas/deleteSalaPhotoService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
-import createEditSalaSchema from '../../schemas/salas/createEditSalaSchema.js';
+import editSalaSchema from '../../schemas/salas/editSalaSchema.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const editSalaController = async (req, res, next) => {
@@ -21,13 +21,14 @@ const editSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
-            email,
+            horaReservasStart,
+            horaReservasEnd,
             deletePhoto,
         } = req.body;
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
-            createEditSalaSchema,
+            editSalaSchema,
             Object.assign(req.body, req.files || {})
         );
 
@@ -49,7 +50,10 @@ const editSalaController = async (req, res, next) => {
         if (condiciones !== undefined) updatedFields.condiciones = condiciones;
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;
-        if (email !== undefined) updatedFields.email = email;
+        if (horaReservasStart !== undefined)
+            updatedFields.horaReservasStart = horaReservasStart;
+        if (horaReservasEnd !== undefined)
+            updatedFields.horaReservasEnd = horaReservasEnd;
         if (generos !== undefined) updatedFields.generos = generos;
 
         await editSalaService(idSala, updatedFields);

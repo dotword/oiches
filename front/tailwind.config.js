@@ -6,6 +6,7 @@ export default {
             colors: {
                 yellowOiches: '#ffc800',
                 purpleOiches: '#800080',
+                greyOiches: '#5d5d5d',
             },
             backgroundImage: {
                 'oiches-live':

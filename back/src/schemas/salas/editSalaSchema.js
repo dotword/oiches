@@ -6,7 +6,7 @@ import imgSchema from '../imgSchema.js';
 import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
-const createEditSalaSchema = Joi.object({
+const editSalaSchema = Joi.object({
     nombre: Joi.string().messages(joiErrorMessages),
     provincia: Joi.number().max(50).messages(joiErrorMessages),
     direccion: Joi.string().messages(joiErrorMessages),
@@ -16,9 +16,22 @@ const createEditSalaSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     descripcion: Joi.string().max(2000).messages(joiErrorMessages),
     precios: Joi.number().min(0).messages(joiErrorMessages),
-    email: Joi.string().email().messages(joiErrorMessages),
+    horaReservasStart: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            'string.pattern.base':
+                'El campo de hora debe estar en formato HH:mm',
+        }),
+    horaReservasEnd: Joi.string()
+        .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
+        .required()
+        .messages({
+            'string.pattern.base':
+                'El campo de hora debe estar en formato HH:mm',
+        }),
     photo: imgSchema.optional(),
     deletePhoto: Joi.string().messages(joiErrorMessages),
 });
 
-export default createEditSalaSchema;
+export default editSalaSchema;

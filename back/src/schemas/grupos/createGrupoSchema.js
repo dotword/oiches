@@ -19,7 +19,6 @@ const createGrupoSchema = Joi.object({
     honorarios: Joi.number().min(0).messages(joiErrorMessages),
     biografia: Joi.string().max(2000).messages(joiErrorMessages),
     rider: Joi.string().messages(joiErrorMessages),
-    email: Joi.string().email().required().messages(joiErrorMessages),
     photoA: imgSchema.optional(),
     photoB: imgSchema.optional(),
     photoC: imgSchema.optional(),

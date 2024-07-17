@@ -14,7 +14,6 @@ const createGrupoController = async (req, res, next) => {
             honorarios,
             biografia,
             rider,
-            email,
             media,
         } = req.body;
         console.log('media ', media);
@@ -32,8 +31,7 @@ const createGrupoController = async (req, res, next) => {
             honorarios,
             biografia,
             req.user.id,
-            rider,
-            email
+            rider
         );
 
         const medias = [];
@@ -77,7 +75,6 @@ const createGrupoController = async (req, res, next) => {
                     honorarios,
                     biografia,
                     rider,
-                    email,
                     photos,
                     medias,
                     createdAt: new Date(),

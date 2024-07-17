@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useGrupo from '../hooks/useGrupo';
+import Live from '../assets/Live.jpg';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -10,41 +11,71 @@ const GrupoDetail = () => {
     const { entry, error } = useGrupo(idGrupo);
 
     return entry ? (
-        <>
-            <section className="relative">
+        <main>
+            <section className="relative max-h-44 overflow-hidden">
                 {entry.photos.length ? (
                     <img
-                        src={`${VITE_API_URL_BASE}/uploads/${entry.photos[1].name}`}
-                        alt="imagen"
+                        className="w-full opacity-80"
+                        src={`${VITE_API_URL_BASE}/uploads/${entry.fotos[0].name}`}
+                        alt="imagen grupo"
                     />
                 ) : (
-                    'La entrada no contiene imagenes'
+                    <img
+                        src={Live}
+                        className="w-full opacity-80"
+                        alt="imagen"
+                    />
                 )}
-                <div className="pt-7 pb-4 px-6 ">
+                <div className="p-4 absolute top-0 w-full h-full flex flex-col justify-between">
                     <Link to={'/'}>
-                        <p className="font-semibold">&#60; Back</p>
+                        <p>&#60; Back</p>
                     </Link>
-                    <h1 className="w-full text-center mt-8 mb-4 text-2xl/8 font-semibold md:text-black md:mt-12">
+                    <h1 className="w-full text-center mb-4 text-3xl/8 font-semibold md:text-black md:mt-12">
                         {entry.nombre}
                     </h1>
+                    <p className="text-right text-sm">
+                        Votos:{' '}
+                        <span className="font-semibold">
+                            {Math.round(entry.votes)}
+                        </span>
+                    </p>
                 </div>
-                <div className="bg-hero-image bg-cover bg-bottom w-full h-full absolute top-0 opacity-80 -z-10"></div>
             </section>
-            {entry.photos.length ? (
-                entry.photos.map((photo) => (
-                    <div key={photo.id}>
-                        <img
-                            src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                            alt="imagen"
-                        />
-                    </div>
-                ))
-            ) : (
-                <p>La entrada no tiene imagenes para mostrar</p>
-            )}
-        </>
+            <section>
+                <div>
+                    <p className="flex flex-col mb-2">
+                        <span className="font-semibold">Estilo: </span>
+                        <span className="text-greyOiches">{entry.Genero}</span>
+                    </p>
+                    <p className="flex flex-col">
+                        <span className="font-semibold">Provincia: </span>
+                        <span className="text-greyOiches">
+                            {entry.Provincia}
+                        </span>
+                    </p>
+                    <p className="flex flex-col">
+                        <span className="font-semibold">Caché: </span>
+                        <span className="text-greyOiches">
+                            {entry.honorarios}
+                        </span>
+                    </p>
+                    <p className="flex flex-col">
+                        <span className="font-semibold">Rider: </span>
+                        <span className="text-greyOiches">{entry.rider}</span>
+                    </p>
+                    <p className="flex flex-col">
+                        <span className="font-semibold">Email: </span>
+                        <span className="text-greyOiches">
+                            <a className="" href={`mailto:${entry.email}`}>
+                                {entry.email}
+                            </a>
+                        </span>
+                    </p>
+                </div>
+            </section>
+        </main>
     ) : (
-        <p>Erropr {error}</p>
+        <p>Error {error}</p>
     );
 };
 
