@@ -3,10 +3,10 @@ import getPool from '../database/getPool.js';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
 
 // Función controladora intermedia que comprueba si un usuario tiene permiso para editar una sala.
-const grupoCanVote = async (req, res, next) => {
+const salaCanVote = async (req, res, next) => {
     try {
         const pool = await getPool();
-        // Obtenemos el id la reseva.
+        // Obtenemos el id la reserva.
         const { idReserva } = req.params;
         const userId = req.user.id;
 
@@ -20,7 +20,7 @@ const grupoCanVote = async (req, res, next) => {
 
         if (!reserva.length) {
             throw generateErrorsUtil(
-                'a reserva que intentas votar no está confirmada o no existe',
+                'La reserva que intentas votar no está confirmada o no existe',
                 400
             );
         }
@@ -30,31 +30,31 @@ const grupoCanVote = async (req, res, next) => {
 
         if (dateReserva > new Date()) {
             throw generateErrorsUtil(
-                'No puedes votar a una sala en la que aún no tocaste',
+                'No puedes votar a un grupo que no tocó en tu sala',
                 404
             );
         }
 
-        // Comprobar que el usuario tenga ese grupo
-        const [grupoOwner] = await pool.query(
-            `SELECT id FROM grupos WHERE usuario_id = ?`,
+        // Comprobar que el usuario tenga esa sala
+        const [salaOwner] = await pool.query(
+            `SELECT id FROM salas WHERE usuario_id = ?`,
             [userId]
         );
 
-        if (grupoOwner[0].id !== reserva[0].grupo_id)
+        if (salaOwner[0].id !== reserva[0].sala_id)
             throw generateErrorsUtil(
                 'El usuario no está autorizado para hacer esta operación',
                 409
             );
 
-        // Comprobar que el grupo no haya votado antes a la sala
+        // Comprobar que la sala no haya votado antes al grupo
         const [hasVoted] = await pool.query(
-            `SELECT salaVotada FROM votos_salas WHERE grupoVota = ?`,
-            [reserva[0].grupo_id]
+            `SELECT grupoVotado FROM votos_grupos WHERE salaVota = ?`,
+            [reserva[0].sala_id]
         );
 
         if (hasVoted[0])
-            throw generateErrorsUtil('Ya has votado a esta sala', 409);
+            throw generateErrorsUtil('Ya has votado a este grupo', 409);
 
         // Pasamos el control a la siguiente función controladora.
         next();
@@ -63,4 +63,4 @@ const grupoCanVote = async (req, res, next) => {
     }
 };
 
-export default grupoCanVote;
+export default salaCanVote;

@@ -10,6 +10,7 @@ import canEditGrupo from './canEditGrupo.js';
 import checkIfSala from './checkIfSala.js';
 import hasOneGroup from './hasOneGroup.js';
 import grupoCanVote from './grupoCanVote.js';
+import salaCanVote from './salaCanVote.js';
 
 export {
     authUser,
@@ -24,4 +25,5 @@ export {
     checkIfSala,
     hasOneGroup,
     grupoCanVote,
+    salaCanVote,
 };

@@ -1,39 +1,23 @@
-import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import insertVoteGrupoService from '../../services/grupos/insertVoteGrupoService.js';
-import insertCommentGrupoService from '../../services/grupos/insertCommentGrupoService.js';
-import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
+import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
+import votosSchema from '../../schemas/votosSchema.js';
 
 const voteGrupoController = async (req, res, next) => {
     try {
-        const { idGrupo } = req.params;
-        const { value, comment } = req.body;
-        const { id: userId } = req.user; // Extraemos el id de usuario
+        const { idReserva } = req.params;
+        const { voto, comment } = req.body;
 
+        // Validar con JOI
+        await validateSchemaUtil(votosSchema, Object.assign(req.body));
 
-        if (value <= 0 || value > 5) {
-            throw generateErrorsUtil('El valor debe ser entre 1 y 5', 409);
-        }
-
-        const grupo = await selectGrupoByIdService(idGrupo);
-        if (!grupo) {
-            throw generateErrorsUtil('Grupo no encontrado', 404);
-        }
-
-        if (grupo.usuario_id === userId) {
-            throw generateErrorsUtil('No se puede votar su propia entrada', 403);
-        }
-
-        // Insertar voto
-        const avgVotes = await insertVoteGrupoService(value, idGrupo, userId);
-
-        // Insertar comentarios
-        if (comment && comment.trim()) {
-            await insertCommentGrupoService(comment, idGrupo, userId);
-        }
+        await insertVoteGrupoService(voto, comment, idReserva);
 
         res.send({
             status: 'ok',
-            data: avgVotes,
+            data: {
+                voto,
+                comment,
+            },
         });
     } catch (error) {
         next(error);
