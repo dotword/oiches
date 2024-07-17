@@ -36,7 +36,14 @@ router.put(
 );
 
 // Endpoint para que la sala borre una reserva si no está confirmada
-router.delete('/borrar-reserva/:reserva_id', borrarReservaSalaController);
+router.delete(
+    '/borrar-reserva/:reserva_id',
+    authUser,
+    userExists,
+    checkIfSala,
+    canEditReserva,
+    borrarReservaSalaController
+);
 
 // Endpoint para listar reservas de una sala
 router.get('/reservas/:sala_id', listReservaController);
