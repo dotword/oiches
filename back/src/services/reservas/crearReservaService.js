@@ -5,8 +5,8 @@ import { v4 as uuid } from 'uuid';
 
 export const crearReservaService = async (
     fecha,
-    hora,
-    nombre,
+    horaInicio,
+    horaFin,
     token,
     sala_id
 ) => {
@@ -30,8 +30,8 @@ export const crearReservaService = async (
             [sala_id]
         );
         await pool.query(
-            'INSERT INTO Reservas(id, nombre, fecha, hora, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
-            [reservaId, nombre, fecha, hora, sala_id, grupo_id]
+            'INSERT INTO Reservas(id, fecha, horaInicio,horaFin, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
+            [reservaId, fecha, horaInicio , horaFin, sala_id, grupo_id]
         );
 
         const [reservaResults] = await pool.query(
@@ -40,18 +40,17 @@ export const crearReservaService = async (
         );
         reservaResults.forEach((result) => {
             console.log(result);
-            if (fecha === result.fecha && hora === result.hora) {
+            if (fecha === result.fecha && horaInicio === result.horaInicio) {
                 throw {
                     message: 'Ya hay una reserva para esta fecha y hora.',
                 };
             }
         });
         return {
-            message: 'Reserva realizada con éxito',
             reserva: {
-                nombre,
                 fecha,
-                hora,
+                horaInicio,
+                horaFin,
                 sala_id,
                 grupo_id,
                 salaResults,

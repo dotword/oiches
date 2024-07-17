@@ -7,12 +7,6 @@ const checkIfGroup = async (req, res, next) => {
     try {
         const { token } = req.headers;
 
-        if (!token) {
-            return res
-                .status(400)
-                .json({ message: 'No se ha proporcionado el token.' });
-        }
-
         const decoded = jwt.verify(token, JWT_SECRET);
         const { id } = decoded;
 
