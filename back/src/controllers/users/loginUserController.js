@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { JWT_SECRET } from '../../../env.js';
+import { JWT_SECRET, JWT_EXPIRATION } from '../../../env.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import loginUserSchema from '../../schemas/users/loginUserSchema.js';
 import selectUserByEmailService from '../../services/users/selectUserByEmailService.js';
@@ -46,7 +46,7 @@ const loginUserController = async (req, res, next) => {
 
         // Creamos el token.
         const token = jwt.sign(tokenInfo, JWT_SECRET, {
-            expiresIn: '7d',
+            expiresIn: JWT_EXPIRATION,
         });
 
         res.send({
