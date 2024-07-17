@@ -6,9 +6,6 @@
     html {
         font-family: 'Encode Sans', sans-serif;
     }
-    .background-cover {
-        @apply bg-cover bg-center bg-no-repeat;
-    }
 }
 @layer components {
     .btn-account {
