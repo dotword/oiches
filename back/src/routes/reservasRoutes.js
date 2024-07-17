@@ -4,6 +4,8 @@ import express from 'express';
 import {
     checkIfGroup,
     authUser,
+    checkIfGroup,
+    authUser,
     userExists,
     checkIfSala,
     canEditReserva,
@@ -20,10 +22,10 @@ import {
 const router = express.Router();
 
 // Endpoint para que el grupo cree una reserva
-router.post('/reservar-sala/:sala_id', checkIfGroup, crearReservaController);
+router.post('/reservar-sala/:sala_id',authUser, checkIfGroup, crearReservaController);
 
 // Endpoint para que el grupo borre una reserva si no está confirmada
-router.delete('/cancelar-reserva/:reserva_id', cancelarReservaController);
+router.delete('/cancelar-reserva/:reserva_id',authUser, cancelarReservaController);
 
 // Endpoint para que la sala pueda aprobar una reserva
 router.put(
@@ -46,6 +48,6 @@ router.delete(
 );
 
 // Endpoint para listar reservas de una sala
-router.get('/reservas/:sala_id', listReservaController);
+router.get('/reservas/:sala_id', authUser,listReservaController);
 
 export default router;
