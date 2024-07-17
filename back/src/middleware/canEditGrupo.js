@@ -18,7 +18,7 @@ const canEditGrupo = async (req, res, next) => {
             [idGrupo]
         );
 
-        // // Si no somos los propietarios lanzamos un error.
+        // Si no somos los propietarios lanzamos un error.
         if (grupoOwner[0].usuario_id !== userId)
             throw generateErrorsUtil(
                 'El usuario no está autorizado para hacer esta operación',
