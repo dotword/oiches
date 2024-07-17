@@ -4,8 +4,6 @@ import express from 'express';
 import {
     checkIfGroup,
     authUser,
-    checkIfGroup,
-    authUser,
     userExists,
     checkIfSala,
     canEditReserva,
