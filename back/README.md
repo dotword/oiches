@@ -224,6 +224,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **PUT** - `/salas/:idSala/edit` - Actualizar una sala
 -   **GET** - `/salas/:idSala` - Retorna el detalle de una sala
 -   **GET** - `/salas?` - Retorna el listado de salas con filtro.
+-   **POST** - `/salas/:idReserva/votes` - votacion y comentarios de un grupo a una sala
 
 ## Endpoints de grupos
 
@@ -231,6 +232,7 @@ Los grupos seleccionan la sala y pueden contactar con ellos y/o hacer la reserva
 -   **PUT** - `/grupos/:idGrupo/edit` - Actualizar un grupo
 -   **GET** - `/grupos/:idGrupo` - Retorna el detalle de un grupo
 -   **GET** - `/grupos?` - Retorna el listado de grupos con filtro.
+-   **POST** - `/grupos/:idReserva/votes` - votacion y comentarios de una sala a un grupo
 
 ## Endpoints del listas
 

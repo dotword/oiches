@@ -12,6 +12,6 @@
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white hover:text-black transition-all;
     }
     .form-input {
-        @apply active:border-purpleOiches p-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full
+        @apply active:border-purpleOiches p-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full;
     }
 }
