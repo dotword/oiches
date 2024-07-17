@@ -18,6 +18,11 @@ export const UserValidationPopup = () => {
 
                 setStatus(result.status);
                 setMessage(result.message);
+
+                // Redirigir al usuario al login u otra página si la validación es exitosa
+                if (result.status === 'ok') {
+                    navigate('/login');
+                }
             } catch (error) {
                 setStatus('error');
                 setMessage('Error durante la validación. Por favor, inténtalo de nuevo.');
@@ -25,13 +30,13 @@ export const UserValidationPopup = () => {
         };
 
         validateUser();
-    }, [registrationCode]);
+    }, [registrationCode, navigate]);
 
     const handleRedirect = () => {
         if (status === 'ok') {
-            navigate('/login');
+            navigate('/login'); // Redirigir al login u otra página
         } else {
-            setStatus(null);
+            setStatus(null); // Limpiar el estado si no es 'ok'
         }
     };
 
@@ -52,3 +57,4 @@ export const UserValidationPopup = () => {
         </div>
     );
 };
+
