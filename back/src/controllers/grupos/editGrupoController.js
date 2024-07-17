@@ -24,7 +24,6 @@ const editGrupoController = async (req, res, next) => {
             honorarios,
             biografia,
             rider,
-            email,
             mediaName,
             mediaDelete,
             deletePhoto,
@@ -51,7 +50,6 @@ const editGrupoController = async (req, res, next) => {
         if (honorarios !== undefined) updatedFields.honorarios = honorarios;
         if (biografia !== undefined) updatedFields.biografia = biografia;
         if (rider !== undefined) updatedFields.rider = rider;
-        if (email !== undefined) updatedFields.email = email;
 
         await editGrupoService(idGrupo, updatedFields);
 

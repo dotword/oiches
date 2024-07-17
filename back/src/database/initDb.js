@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS votos_salas, votos_grupos, grupo_comments, sala_comments, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS votos_salas, votos_grupos, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -63,7 +63,8 @@ const main = async () => {
             direccion VARCHAR(255) NOT NULL,
             condiciones TEXT,
             equipamiento TEXT,
-            email VARCHAR(100) NOT NULL,
+            horaReservasStart VARCHAR(255) NOT NULL,
+            horaReservasEnd VARCHAR(255) NOT NULL,
             FOREIGN KEY(provincia) REFERENCES Provincias(id),
             FOREIGN KEY(generos) REFERENCES generos_musicales(id),
             FOREIGN KEY(usuario_id) REFERENCES Usuarios(id),
@@ -95,7 +96,6 @@ const main = async () => {
                 biografia TEXT,
                 usuario_id CHAR(36) NOT NULL,
                 rider VARCHAR(255),
-                email VARCHAR(255),
                 FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
                 FOREIGN KEY(provincia) REFERENCES Provincias(id),
                 FOREIGN KEY(generos) REFERENCES generos_musicales(id),
@@ -146,99 +146,77 @@ const main = async () => {
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
-
         await pool.query(`
             CREATE TABLE IF NOT EXISTS Reservas(
                 id CHAR(36) PRIMARY KEY NOT NULL,
-                nombre VARCHAR(100) NOT NULL,
                 sala_id CHAR(36) NOT NULL,
                 grupo_id CHAR(36) NOT NULL,
                 confirmada BOOLEAN DEFAULT false,
                 fecha VARCHAR(15),
-                hora VARCHAR(15),
+                horaInicio VARCHAR(15),
+                horaFin VARCHAR(15),
                 FOREIGN KEY(sala_id) REFERENCES Salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES Grupos(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
         `);
-
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Sala_comments(
+            CREATE TABLE IF NOT EXISTS votos_salas(
                 id CHAR(36) PRIMARY KEY NOT NULL,
-                descripcion TEXT,
-                sala_id CHAR(36) NOT NULL,
-                grupo_id CHAR(36) NOT NULL,
-                FOREIGN KEY(sala_id) REFERENCES Salas(id),
-                FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
+                voto TINYINT UNSIGNED NOT NULL,
+                comentario TEXT,
+                reservaId CHAR(36) NOT NULL,
+                grupoVota CHAR(36) NOT NULL,
+                salaVotada CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS Grupo_comments(
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                descripcion TEXT,
-                sala_id CHAR(36) NOT NULL,
-                grupo_id CHAR(36) NOT NULL,
-                FOREIGN KEY(sala_id) REFERENCES Salas(id),
-                FOREIGN KEY(grupo_id) REFERENCES Grupos(id),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                FOREIGN KEY (reservaId) REFERENCES Reservas(id),
+                FOREIGN KEY (grupoVota) REFERENCES Grupos(id),
+                FOREIGN KEY (salaVotada) REFERENCES Salas(id)
             );
         `);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS votos_grupos(
                 id CHAR(36) PRIMARY KEY NOT NULL,
-                value TINYINT UNSIGNED NOT NULL,
-                grupo_id CHAR(36) NOT NULL,
-                voto_sala_id CHAR(36) NOT NULL,
-                FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
-                FOREIGN KEY (voto_sala_id) REFERENCES Salas(id),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS votos_salas(
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                value TINYINT UNSIGNED NOT NULL,
-                voto_grupo_id CHAR(36) NOT NULL,
-                sala_id CHAR(36) NOT NULL,
+                voto TINYINT UNSIGNED NOT NULL,
+               comentario TEXT,
+                reservaId CHAR(36) NOT NULL,
+                salaVota CHAR(36) NOT NULL,
+                grupoVotado CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (voto_grupo_id) REFERENCES Grupos(id),
-                FOREIGN KEY (sala_id) REFERENCES Salas(id)
+                FOREIGN KEY (reservaId) REFERENCES Reservas(id),
+                FOREIGN KEY (grupoVotado) REFERENCES Grupos(id),
+                FOREIGN KEY (salaVota) REFERENCES Salas(id)
             );
         `);
 
         await pool.query(`
-            INSERT INTO Generos_musicales VALUES
-                (DEFAULT, 'Rock', DEFAULT, DEFAULT),
-                (DEFAULT, 'Pop', DEFAULT, DEFAULT),
-                (DEFAULT, 'Metal', DEFAULT, DEFAULT),
-                (DEFAULT, 'Funk', DEFAULT, DEFAULT),
-                (DEFAULT, 'Country', DEFAULT, DEFAULT),
-                (DEFAULT, 'Folk', DEFAULT, DEFAULT),
-                (DEFAULT, 'Jazz', DEFAULT, DEFAULT),
-                (DEFAULT, 'Reggae', DEFAULT, DEFAULT),
-                (DEFAULT, 'Indie', DEFAULT, DEFAULT),
-                (DEFAULT, 'Electrónica', DEFAULT, DEFAULT),
-                (DEFAULT, 'Soul', DEFAULT, DEFAULT),
-                (DEFAULT, 'Canción de autor', DEFAULT, DEFAULT),
-                (DEFAULT, 'Flamenco', DEFAULT, DEFAULT),
-                (DEFAULT, 'Clásica', DEFAULT, DEFAULT),
-                (DEFAULT, 'Latina', DEFAULT, DEFAULT),
-                (DEFAULT, 'Reaggeton', DEFAULT, DEFAULT),
-                (DEFAULT, 'Hip-Hop', DEFAULT, DEFAULT),
-                (DEFAULT, 'Blues', DEFAULT, DEFAULT);
+            INSERT INTO Generos_musicales (nombre) VALUES
+                ('Rock'),
+                ('Pop'),
+                ('Metal'),
+                ('Funk'),
+                ('Country'),
+                ('Folk'),
+                ('Jazz'),
+                ('Reggae'),
+                ('Indie'),
+                ('Electrónica'),
+                ('Soul'),
+                ('Canción de autor'),
+                ('Flamenco'),
+                ('Clásica'),
+                ('Latina'),
+                ('Reaggeton'),
+                ('Hip-Hop'),
+                ('Blues');
         `);
 
         await pool.query(`
-            INSERT INTO Provincias VALUES
-            (DEFAULT, 'Álava', DEFAULT, DEFAULT), (DEFAULT, 'Albacete', DEFAULT, DEFAULT), (DEFAULT, 'Alicante', DEFAULT, DEFAULT), (DEFAULT, 'Almería', DEFAULT, DEFAULT), (DEFAULT, 'Asturias', DEFAULT, DEFAULT), (DEFAULT, 'Ávila', DEFAULT, DEFAULT), (DEFAULT, 'Badajoz', DEFAULT, DEFAULT), (DEFAULT, 'Baleares', DEFAULT, DEFAULT), (DEFAULT, 'Barcelona', DEFAULT, DEFAULT), (DEFAULT, 'Burgos', DEFAULT, DEFAULT), (DEFAULT, 'Cáceres', DEFAULT, DEFAULT), (DEFAULT, 'Cádiz', DEFAULT, DEFAULT), (DEFAULT, 'Cantabria', DEFAULT, DEFAULT), (DEFAULT, 'Castellón', DEFAULT, DEFAULT), (DEFAULT, 'Ciudad Real', DEFAULT, DEFAULT), (DEFAULT, 'Córdoba', DEFAULT, DEFAULT), (DEFAULT, 'Cuenca', DEFAULT, DEFAULT), (DEFAULT, 'Girona', DEFAULT, DEFAULT), (DEFAULT, 'Granada', DEFAULT, DEFAULT), (DEFAULT, 'Guadalajara', DEFAULT, DEFAULT), (DEFAULT, 'Guipúzcoa', DEFAULT, DEFAULT), (DEFAULT, 'Huelva', DEFAULT, DEFAULT), (DEFAULT, 'Huesca', DEFAULT, DEFAULT), (DEFAULT, 'Jaén', DEFAULT, DEFAULT), (DEFAULT, 'La Rioja', DEFAULT, DEFAULT), (DEFAULT, 'Las Palmas', DEFAULT, DEFAULT), (DEFAULT, 'León', DEFAULT, DEFAULT), (DEFAULT, 'Lleida', DEFAULT, DEFAULT), (DEFAULT, 'Lugo', DEFAULT, DEFAULT), (DEFAULT, 'Madrid', DEFAULT, DEFAULT), (DEFAULT, 'Málaga', DEFAULT, DEFAULT), (DEFAULT, 'Murcia', DEFAULT, DEFAULT), (DEFAULT, 'Navarra', DEFAULT, DEFAULT), (DEFAULT, 'Ourense', DEFAULT, DEFAULT), (DEFAULT, 'Palencia', DEFAULT, DEFAULT), (DEFAULT, 'Pontevedra', DEFAULT, DEFAULT), (DEFAULT, 'Salamanca', DEFAULT, DEFAULT), (DEFAULT, 'Segovia', DEFAULT, DEFAULT), (DEFAULT, 'Sevilla', DEFAULT, DEFAULT), (DEFAULT, 'Soria', DEFAULT, DEFAULT), (DEFAULT, 'Tarragona', DEFAULT, DEFAULT), (DEFAULT, 'Santa Cruz de Tenerife', DEFAULT, DEFAULT), (DEFAULT, 'Teruel', DEFAULT, DEFAULT), (DEFAULT, 'Toledo', DEFAULT, DEFAULT), (DEFAULT, 'Valencia', DEFAULT, DEFAULT), (DEFAULT, 'Valladolid', DEFAULT, DEFAULT), (DEFAULT, 'Vizcaya', DEFAULT, DEFAULT), (DEFAULT, 'Zamora', DEFAULT, DEFAULT), (DEFAULT, 'Zaragoza', DEFAULT, DEFAULT)
-
+            INSERT INTO Provincias (provincia) VALUES
+            ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
+        
         `);
 
         console.log('¡Tablas creadas!');

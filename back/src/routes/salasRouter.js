@@ -41,7 +41,7 @@ router.put(
 );
 
 // Endpoint detalle sala
-router.get('/salas/:idSala', getSalaDetailController);
+router.get('/salas/:idSala', salaExists, getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);

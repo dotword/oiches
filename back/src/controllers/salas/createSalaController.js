@@ -16,7 +16,8 @@ const createSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
-            email,
+            horaReservasStart,
+            horaReservasEnd,
         } = req.body;
 
         // Validamos el body con Joi.
@@ -35,7 +36,8 @@ const createSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
-            email,
+            horaReservasStart,
+            horaReservasEnd,
             req.user.id
         );
 
@@ -73,7 +75,8 @@ const createSalaController = async (req, res, next) => {
                     direccion,
                     condiciones,
                     equipamiento,
-                    email,
+                    horaReservasStart,
+                    horaReservasEnd,
                     photos,
                     createdAt: new Date(),
                 },
