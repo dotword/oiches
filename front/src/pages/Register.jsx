@@ -1,8 +1,12 @@
-import {  NavLink } from 'react-router-dom';
+
+import {  NavLink,useParams } from 'react-router-dom';
 import oiches from '../assets/Live.jpg';
 import { RegisterForm } from '../components/RegisterForm.jsx';
-import oichesLogo from '../assets/Horizontal_blanco.webp'
+import oichesLogo from '../assets/Horizontal_blanco.webp';
+import { UserValidationPopup } from '../components/UserValidationPopup.jsx';
+
 export const RegisterPage = () => {
+    const { registrationCode } = useParams();
     return (
         <div className="h-screen lg:flex lg:w-screen">
             <section className="h-1/3 text-white lg:w-1/2">
@@ -52,6 +56,7 @@ export const RegisterPage = () => {
                 </div>
             </section>
             <RegisterForm className="flex justify-between max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 " />
+            {registrationCode && <UserValidationPopup />}
         </div>
     );
 };
