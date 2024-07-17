@@ -11,6 +11,7 @@ import checkIfSala from './checkIfSala.js';
 import hasOneGroup from './hasOneGroup.js';
 import grupoCanVote from './grupoCanVote.js';
 import salaCanVote from './salaCanVote.js';
+import canEditReserva from './canEditReserva.js';
 
 export {
     authUser,
@@ -26,4 +27,5 @@ export {
     hasOneGroup,
     grupoCanVote,
     salaCanVote,
+    canEditReserva,
 };
