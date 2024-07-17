@@ -4,7 +4,7 @@ import Home from './pages/Home.jsx';
 import { RegisterPage } from './pages/Register.jsx';
 import GrupoDetail from './components/GrupoDetail.jsx';
 import './App.css';
-import LoginForm from './components/LoginForm.jsx';
+import { LoginPage } from './pages/login.jsx';
 function App() {
     return (
         <>
@@ -12,7 +12,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/grupos/:idGrupo" element={<GrupoDetail />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/login" element={<LoginForm />} />
+                <Route path="/login" element={<LoginPage />} />
             </Routes>
         </>
     );
