@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Input } from './Input.jsx';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast, } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export const RegisterForm = ({ className }) => {
     const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
+        try {
         e.preventDefault();
         const formValues = new FormData(e.target);
         const data = {
@@ -23,9 +23,8 @@ export const RegisterForm = ({ className }) => {
             return;
         }
         const url = import.meta.env.VITE_API_URL_BASE;
-        console.log(url);
+     
 
-        try {
             const response = await fetch(`${url}/users/registro`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,9 +35,9 @@ export const RegisterForm = ({ className }) => {
 
             const result = await response.json();
             const { status, message } = result;
-            console.log(result);
+        
             if (status === 'error') {
-                console.log(status);
+               
                 toast.error(message);
             }
 
@@ -46,7 +45,7 @@ export const RegisterForm = ({ className }) => {
                 toast.success(message);
             }
         } catch (err) {
-            console.error('Error durante el registro', err);
+            
             toast.error(err.message);
             setError(
                 'Error durante el registro. Porfavor intentalo de nuevo.'
@@ -153,19 +152,6 @@ export const RegisterForm = ({ className }) => {
                     Crear cuenta
                 </button>
             </form>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce} 
-            />
         </>
     );
 };

@@ -3,12 +3,12 @@ import aprobarReservaService from '../../services/reservas/aprobarReservaService
 const aprobarReservaController = async (req, res, next) => {
     try {
         const { reserva_id } = req.params;
-        const { token } = req.headers;
 
-        await aprobarReservaService(token, reserva_id);
+        await aprobarReservaService(reserva_id);
 
-        res.status(200).json({
-            message: 'Se ha modificado tu reserva.',
+        res.send({
+            status: 'ok',
+            message: 'Se ha aprobado la reserva',
         });
     } catch (error) {
         next(error);

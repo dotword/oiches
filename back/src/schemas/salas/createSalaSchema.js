@@ -22,14 +22,12 @@ const createSalaSchema = Joi.object({
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
     horaReservasStart: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
-        .required()
         .messages({
             'string.pattern.base':
                 'El campo de hora debe estar en formato HH:mm',
         }),
     horaReservasEnd: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
-        .required()
         .messages({
             'string.pattern.base':
                 'El campo de hora debe estar en formato HH:mm',

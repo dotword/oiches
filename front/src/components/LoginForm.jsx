@@ -1,14 +1,12 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { loginUserService } from '../services/loginUserService.jsx';
 
 export const LoginForm = ({ className }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -19,7 +17,12 @@ export const LoginForm = ({ className }) => {
         e.preventDefault();
 
         try {
-            const { data } = await loginUserService({ email, password });
+            const formValues = new FormData(e.target);
+            const dataForm = {
+                password: formValues.get('password'),
+                email: formValues.get('email'),
+            };
+            const { data } = await loginUserService(dataForm);
             signIn(data.token, data.user);
             toast.success('Inicio de sesión exitoso');
             navigate('/');
@@ -64,14 +67,12 @@ export const LoginForm = ({ className }) => {
                 <hr />
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="email">
-                        Usuario*
+                        Email*
                         <Input
                             type="email"
                             name="email"
-                            placeholder="Introduce tu usuario"
+                            placeholder="Introduce tu email"
                             required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
                             className="form-input"
                         />
                     </label>
@@ -82,8 +83,6 @@ export const LoginForm = ({ className }) => {
                             name="password"
                             placeholder="Introduce tu contraseña"
                             required
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                             className="form-input"
                         />
                     </label>
@@ -104,19 +103,6 @@ export const LoginForm = ({ className }) => {
                     </Link>
                 </p>
             </form>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
         </>
     );
 };

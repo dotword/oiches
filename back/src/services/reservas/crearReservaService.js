@@ -1,13 +1,11 @@
 import getPool from '../../database/getPool.js';
-import { JWT_SECRET } from '../../../env.js';
-import pkg from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 
 export const crearReservaService = async (
     fecha,
-    hora,
-    nombre,
-    token,
+    horaInicio,
+    horaFin,
+    id,
     sala_id
 ) => {
     try {
@@ -16,12 +14,20 @@ export const crearReservaService = async (
         // Generamos el id de la entrada.
         const reservaId = uuid();
 
-        const decoded = pkg.verify(token, JWT_SECRET);
-        const { id: usuario_id } = decoded;
+        const today = new Date()
+        today.setHours(0, 0, 0, 0);
+        const reservaFecha = new Date(fecha)
+        reservaFecha.setHours(0, 0, 0, 0)
 
+        if (reservaFecha < today) {
+            throw {
+                message: 'No se puede reservar una fecha anterior a hoy.',
+            };
+        }
+       
         const [grupoResults] = await pool.query(
             'SELECT id FROM Grupos WHERE usuario_id = ?',
-            [usuario_id]
+            [id]
         );
         const grupo_id = grupoResults[0].id;
 
@@ -30,8 +36,8 @@ export const crearReservaService = async (
             [sala_id]
         );
         await pool.query(
-            'INSERT INTO Reservas(id, nombre, fecha, hora, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
-            [reservaId, nombre, fecha, hora, sala_id, grupo_id]
+            'INSERT INTO Reservas(id, fecha, horaInicio,horaFin, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
+            [reservaId, fecha, horaInicio , horaFin, sala_id, grupo_id]
         );
 
         const [reservaResults] = await pool.query(
@@ -40,18 +46,17 @@ export const crearReservaService = async (
         );
         reservaResults.forEach((result) => {
             console.log(result);
-            if (fecha === result.fecha && hora === result.hora) {
+            if (fecha === result.fecha && horaInicio === result.horaInicio) {
                 throw {
                     message: 'Ya hay una reserva para esta fecha y hora.',
                 };
             }
         });
         return {
-            message: 'Reserva realizada con éxito',
             reserva: {
-                nombre,
                 fecha,
-                hora,
+                horaInicio,
+                horaFin,
                 sala_id,
                 grupo_id,
                 salaResults,
