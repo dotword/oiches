@@ -23,7 +23,7 @@ export const RegisterForm = ({ className }) => {
             return;
         }
         const url = import.meta.env.VITE_API_URL_BASE;
-        console.log(url);
+     
 
             const response = await fetch(`${url}/users/registro`, {
                 headers: {
@@ -35,9 +35,9 @@ export const RegisterForm = ({ className }) => {
 
             const result = await response.json();
             const { status, message } = result;
-            console.log(result);
+        
             if (status === 'error') {
-                console.log(status);
+               
                 toast.error(message);
             }
 
@@ -45,7 +45,7 @@ export const RegisterForm = ({ className }) => {
                 toast.success(message);
             }
         } catch (err) {
-            console.error('Error durante el registro', err);
+            
             toast.error(err.message);
             setError(
                 'Error durante el registro. Porfavor intentalo de nuevo.'
