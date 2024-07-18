@@ -75,7 +75,6 @@ export const LoginForm = ({ className }) => {
                             name="email"
                             placeholder="Introduce tu usuario"
                             required
-                            onChange={(e) => setEmail(e.target.value)}
                             className="form-input"
                         />
                     </label>
@@ -86,7 +85,6 @@ export const LoginForm = ({ className }) => {
                             name="password"
                             placeholder="Introduce tu contraseña"
                             required
-                            onChange={(e) => setPassword(e.target.value)}
                             className="form-input"
                         />
                     </label>
