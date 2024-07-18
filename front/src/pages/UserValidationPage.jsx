@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from '../assets/Live.jpg';
+
 const UserValidationPage = () => {
     const [status, setStatus] = useState(null);
     const [message, setMessage] = useState('');
@@ -61,7 +62,7 @@ const UserValidationPage = () => {
             backgroundSize: 'cover',
             backdropFilter: 'blur(12px)', 
             WebkitBackdropFilter: 'blur(12px)', 
-            opacity: '0.8', 
+            opacity: '0.9', 
         }}>
             <ToastContainer />
             <div className="bg-white p-6 rounded shadow-lg">
