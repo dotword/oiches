@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import backgroundImage from '../assets/Live.jpg';
 const UserValidationPage = () => {
     const [status, setStatus] = useState(null);
     const [message, setMessage] = useState('');
@@ -15,16 +15,25 @@ const UserValidationPage = () => {
                 const url = `${import.meta.env.VITE_API_URL_BASE}/users/validate/${registrationCode}`;
                 const response = await fetch(url, {
                     method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 });
+
                 const result = await response.json();
 
-                setStatus(result.status);
-                setMessage(result.message);
-
-                if (result.status === 'ok') {
-                    toast.success('Validación Exitosa');
+                if (response.status === 200) {
+                    setStatus(result.status);
+                    setMessage(result.message);
+                    toast.success(result.message);
+                } else if (response.status === 409) {
+                    setStatus('error');
+                    setMessage('El usuario ya está activado');
+                    toast.info('El usuario ya está activado');
                 } else {
-                    toast.error('Validación Fallida');
+                    setStatus('error');
+                    setMessage(result.message);
+                    toast.error(result.message);
                 }
             } catch (error) {
                 setStatus('error');
@@ -47,7 +56,13 @@ const UserValidationPage = () => {
     if (status === null) return <p>Validando usuario...</p>;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-t bg-opacity-50 z-50" style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backdropFilter: 'blur(12px)', 
+            WebkitBackdropFilter: 'blur(12px)', 
+            opacity: '0.8', 
+        }}>
             <ToastContainer />
             <div className="bg-white p-6 rounded shadow-lg">
                 <h2 className="text-xl mb-4">{status === 'ok' ? 'Validación Exitosa' : 'Validación Fallida'}</h2>
