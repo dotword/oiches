@@ -1,29 +1,23 @@
 import getPool from '../../database/getPool.js';
-import { JWT_SECRET } from '../../../env.js';
-import pkg from 'jsonwebtoken';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-export const listReservaService = async (token) => {
+export const listReservaService = async (id) => {
   try {
     const pool = await getPool();
 
-    // Verificar y decodificar el token
-    const decoded = pkg.verify(token, JWT_SECRET);
-    const { id: usuario_id } = decoded;
-
-    // Obtener todas las salas asociadas al usuario
-    const [salaResults] = await pool.query('SELECT id FROM salas WHERE usuario_id = ?', [usuario_id]);
-    if (salaResults.length === 0) {
-      throw generateErrorsUtil('No se han encontrado salas para el usuario con el que estás logueado.', 400);
+  
+    const [grupoResults] = await pool.query('SELECT id FROM grupos WHERE usuario_id = ?', [id]);
+    if (grupoResults.length === 0) {
+      throw generateErrorsUtil('No se han encontrado grupos para el usuario con el que estás logueado.', 400);
     }
 
-    // Extraer los IDs de las salas
-    const salaIds = salaResults.map(sala => sala.id);
 
-    // Obtener las reservas asociadas a las salas
-    const [reservas] = await pool.query('SELECT * FROM reservas WHERE sala_id IN (?)', [salaIds]);
+    const grupoIds = grupoResults.map(grupo => grupo.id);
+
+
+    const [reservas] = await pool.query('SELECT * FROM reservas WHERE grupo_id IN (?)', [grupoIds]);
     if (reservas.length === 0) {
-      throw generateErrorsUtil('No se han encontrado reservas para estas salas.', 400);
+      throw generateErrorsUtil('No se han encontrado reservas para este grupo.', 400);
     }
 
     return  reservas ;

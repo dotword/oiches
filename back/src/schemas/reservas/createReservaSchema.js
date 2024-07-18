@@ -8,7 +8,6 @@ import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const newUserSchema = Joi.object({
-    nombre: Joi.string().max(100).required().messages(joiErrorMessages),
     fecha: Joi.date().required().messages(joiErrorMessages),
     horaInicio: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)
