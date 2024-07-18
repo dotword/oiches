@@ -1,16 +1,18 @@
-import {  NavLink } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import oiches from '../assets/Live.jpg';
 import { RegisterForm } from '../components/RegisterForm.jsx';
-import oichesLogo from '../assets/Horizontal_blanco.webp'
+import oichesLogo from '../assets/Horizontal_blanco.webp';
+
 export const RegisterPage = () => {
     return (
         <div className="h-screen lg:flex lg:w-screen">
             <section className="h-1/3 text-white lg:w-1/2">
-                    <img
-                        src={oiches}
-                        className="-z-50 absolute h-1/3 w-full lg:w-1/2 lg:h-screen "
-                        alt=""
-                    />
+                <img
+                    src={oiches}
+                    className="-z-50 absolute h-1/3 w-full lg:w-1/2 lg:h-screen"
+                    alt=""
+                />
                 <div className="flex justify-between lg:hidden lg:text-black p-4">
                     <button className="flex hover:text-purpleOiches gap-1">
                         <svg
@@ -51,7 +53,8 @@ export const RegisterPage = () => {
                     </blockquote>
                 </div>
             </section>
-            <RegisterForm className="flex justify-between max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 " />
+            <RegisterForm className="flex justify-between max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20" />
         </div>
     );
 };
+

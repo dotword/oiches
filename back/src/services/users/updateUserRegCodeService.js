@@ -16,8 +16,8 @@ const updateUserRegCodeService = async (registrationCode) => {
         [registrationCode]
     );
 
-    // Si no existe ningún usuario con ese código de registro lanzamos un error.
-    if(!user.length) throw generateErrorsUtil('Codigo de registro incorrecto', 403);
+    
+    // if(!user.length) throw generateErrorsUtil('Codigo de registro incorrecto', 403);
 
     // Actualizamos el usuario.
     await pool.query(
