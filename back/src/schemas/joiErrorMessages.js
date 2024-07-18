@@ -7,7 +7,7 @@ const joiErrorMessages = {
     'number.base': 'El valor de "{#key}" debe ser un número',
     'number.max': 'El archivo no debe exceder los 3 MB',
     'object.base': 'El valor de "{#key}" debe ser un objeto',
-    'any.only': 'Solo se permiten fotos jpeg o png',
+    'any.only': 'Solo se permiten fotos jpeg, png o webp',
     'string.email': 'Debe proporcionar un correo electrónico válido.',
     'string.pattern.base':
         'La contraseña debe contener al menos 8 caracteres, una mayúscula, una minúscula, un número y un símbolo de puntuación."',

@@ -11,9 +11,17 @@ const fileSchema = joi
         name: joi.string().required().messages(joiErrorMessages),
         mimetype: joi
             .string()
-            .valid('image/jpeg', 'image/jpg', 'image/png', 'application/pdf')
+            .valid(
+                'image/jpeg',
+                'image/jpg',
+                'image/png',
+                'image/webp',
+                'application/pdf'
+            )
             .required()
-            .messages(joiErrorMessages),
+            .messages({
+                'any.only': 'Solo se permiten archivos jpeg, png, webp o pdf',
+            }),
         size: joi.number().max(3000000).required().messages(joiErrorMessages),
     })
     .unknown(true);
