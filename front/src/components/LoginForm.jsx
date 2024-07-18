@@ -1,13 +1,12 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import {  toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { loginUserService } from '../services/loginUserService.jsx';
 
 export const LoginForm = ({ className }) => {
- 
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -18,7 +17,6 @@ export const LoginForm = ({ className }) => {
         e.preventDefault();
 
         try {
-
             const formValues = new FormData(e.target);
             const dataForm = {
                 password: formValues.get('password'),
@@ -69,11 +67,11 @@ export const LoginForm = ({ className }) => {
                 <hr />
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="email">
-                        Usuario*
+                        Email*
                         <Input
                             type="email"
                             name="email"
-                            placeholder="Introduce tu usuario"
+                            placeholder="Introduce tu email"
                             required
                             className="form-input"
                         />
@@ -105,7 +103,6 @@ export const LoginForm = ({ className }) => {
                     </Link>
                 </p>
             </form>
-    
         </>
     );
 };

@@ -16,6 +16,10 @@ const canEditReserva = async (req, res, next) => {
             [reserva_id]
         );
 
+        // Si la reserva no existe lanzamos un error.
+        if (salaId.length === 0)
+            throw generateErrorsUtil('La reserva no existe', 409);
+
         // Comprobamos que la sala pertenece al usuario
         const [salaOwner] = await pool.query(
             `SELECT id FROM salas WHERE usuario_id = ?`,
