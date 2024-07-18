@@ -1,7 +1,7 @@
 import { crearReservaService } from '../../services/reservas/crearReservaService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createReservaSchema from '../../schemas/reservas/createReservaSchema.js';
-
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 const crearReservaController = async (req, res, next) => {
     try {
         const { fecha, horaInicio, horaFin } = req.body;
@@ -9,13 +9,11 @@ const crearReservaController = async (req, res, next) => {
         // Validación con JOI
         await validateSchemaUtil(createReservaSchema, req.body);
 
-        const { token } = req.headers;
-
+        
+       const {id} = req.user
         const { sala_id } = req.params;
         if (!sala_id) {
-            return res.status(400).json({
-                message: 'Es necesario seleccionar una sala para reservar.',
-            });
+            throw generateErrorsUtil('Es necesario seleccionar una sala para reservar.', 400)
         }
 
         const {
@@ -24,18 +22,16 @@ const crearReservaController = async (req, res, next) => {
             fecha,
             horaInicio,
             horaFin,
-            token,
+            id,
             sala_id
         );
 
         if (!grupoResults || grupoResults.length === 0) {
-            return res.status(404).json({
-                message: 'No se encontró un grupo asociado al usuario.',
-            });
+             throw generateErrorsUtil('No se encontró un grupo asociado al usuario.', 400)
         }
         const grupo_id = grupoResults[0].id;
         if (!salaResults || salaResults.length === 0) {
-            return res.status(404).json({ message: 'Sala no encontrada.' });
+             throw generateErrorsUtil('Sala no encontrada.', 400)
         }
 
         res.status(200).json({

@@ -1,13 +1,11 @@
 import getPool from '../../database/getPool.js';
-import { JWT_SECRET } from '../../../env.js';
-import pkg from 'jsonwebtoken';
 import { v4 as uuid } from 'uuid';
 
 export const crearReservaService = async (
     fecha,
     horaInicio,
     horaFin,
-    token,
+    id,
     sala_id
 ) => {
     try {
@@ -16,12 +14,20 @@ export const crearReservaService = async (
         // Generamos el id de la entrada.
         const reservaId = uuid();
 
-        const decoded = pkg.verify(token, JWT_SECRET);
-        const { id: usuario_id } = decoded;
+        const today = new Date()
+        today.setHours(0, 0, 0, 0);
+        const reservaFecha = new Date(fecha)
+        reservaFecha.setHours(0, 0, 0, 0)
 
+        if (reservaFecha < today) {
+            throw {
+                message: 'No se puede reservar una fecha anterior a hoy.',
+            };
+        }
+       
         const [grupoResults] = await pool.query(
             'SELECT id FROM Grupos WHERE usuario_id = ?',
-            [usuario_id]
+            [id]
         );
         const grupo_id = grupoResults[0].id;
 
