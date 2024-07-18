@@ -7,6 +7,7 @@ export const RegisterForm = ({ className }) => {
     const [error, setError] = useState(null);
 
     const handleSubmit = async (e) => {
+        try {
         e.preventDefault();
         const formValues = new FormData(e.target);
         const data = {
@@ -24,7 +25,6 @@ export const RegisterForm = ({ className }) => {
         const url = import.meta.env.VITE_API_URL_BASE;
         console.log(url);
 
-        try {
             const response = await fetch(`${url}/users/registro`, {
                 headers: {
                     'Content-Type': 'application/json',
