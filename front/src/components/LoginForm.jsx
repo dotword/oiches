@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
@@ -105,19 +105,7 @@ export const LoginForm = ({ className }) => {
                     </Link>
                 </p>
             </form>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+    
         </>
     );
 };

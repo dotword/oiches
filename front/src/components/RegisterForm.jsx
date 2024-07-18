@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Input } from './Input.jsx';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {  toast, } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 export const RegisterForm = ({ className }) => {
@@ -153,19 +152,6 @@ export const RegisterForm = ({ className }) => {
                     Crear cuenta
                 </button>
             </form>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce} 
-            />
         </>
     );
 };
