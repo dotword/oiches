@@ -11,7 +11,7 @@ export default {
             backgroundImage: {
                 'oiches-live':
                     "url('/oiches/front/src/assets/oiches-Live.jpg')",
-                'hero-image': "url('../public/Live.jpg')",
+                'hero-image': "url('../Live.jpg')",
             },
         },
     },

@@ -4,23 +4,29 @@ import createReservaSchema from '../../schemas/reservas/createReservaSchema.js';
 
 const crearReservaController = async (req, res, next) => {
     try {
-        const { fecha, horaInicio,horaFin } = req.body;
+        const { fecha, horaInicio, horaFin } = req.body;
 
-        // // Validación con JOI
-         // await validateSchemaUtil(createReservaSchema, req.body);
+        // Validación con JOI
+        await validateSchemaUtil(createReservaSchema, req.body);
 
         const { token } = req.headers;
-        
+
         const { sala_id } = req.params;
         if (!sala_id) {
             return res.status(400).json({
                 message: 'Es necesario seleccionar una sala para reservar.',
             });
         }
-      
+
         const {
             reserva: { grupoResults, salaResults },
-        } = await crearReservaService(fecha, horaInicio,horaFin, token, sala_id);
+        } = await crearReservaService(
+            fecha,
+            horaInicio,
+            horaFin,
+            token,
+            sala_id
+        );
 
         if (!grupoResults || grupoResults.length === 0) {
             return res.status(404).json({
