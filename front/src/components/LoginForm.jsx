@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate, Link, NavLink } from 'react-router-dom';
+import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { loginUserService } from '../services/loginUserService.jsx';
@@ -35,7 +35,10 @@ export const LoginForm = ({ className }) => {
     return (
         <>
             <section className="absolute top-1 left-1/2 justify-between hidden w-1/2 p-6 lg:flex lg:text-black">
-                <NavLink to={"/"} className="flex hover:text-purpleOiches gap-1">
+                <NavLink
+                    to={'/'}
+                    className="flex hover:text-purpleOiches gap-1"
+                >
                     <svg
                         className="self-center"
                         xmlns="http://www.w3.org/2000/svg"
@@ -103,6 +106,7 @@ export const LoginForm = ({ className }) => {
                     </Link>
                 </p>
             </form>
+            <Toastify />
         </>
     );
 };

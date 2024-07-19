@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Input } from './Input.jsx';
-import {  toast, } from 'react-toastify';
+import { toast } from 'react-toastify';
+import Toastify from './Toastify.jsx';
 import { Link, NavLink } from 'react-router-dom';
 
 export const RegisterForm = ({ className }) => {
@@ -8,22 +9,21 @@ export const RegisterForm = ({ className }) => {
 
     const handleSubmit = async (e) => {
         try {
-        e.preventDefault();
-        const formValues = new FormData(e.target);
-        const data = {
-            roles: formValues.get('roles'),
-            username: formValues.get('name'),
-            password: formValues.get('password'),
-            email: formValues.get('email'),
-        };
-        const password2 = formValues.get('password2');
+            e.preventDefault();
+            const formValues = new FormData(e.target);
+            const data = {
+                roles: formValues.get('roles'),
+                username: formValues.get('name'),
+                password: formValues.get('password'),
+                email: formValues.get('email'),
+            };
+            const password2 = formValues.get('password2');
 
-        if (data.password !== password2) {
-            toast.error('Las contraseñas no coinciden');
-            return;
-        }
-        const url = import.meta.env.VITE_API_URL_BASE;
-     
+            if (data.password !== password2) {
+                toast.error('Las contraseñas no coinciden');
+                return;
+            }
+            const url = import.meta.env.VITE_API_URL_BASE;
 
             const response = await fetch(`${url}/users/registro`, {
                 headers: {
@@ -35,9 +35,8 @@ export const RegisterForm = ({ className }) => {
 
             const result = await response.json();
             const { status, message } = result;
-        
+
             if (status === 'error') {
-               
                 toast.error(message);
             }
 
@@ -45,18 +44,18 @@ export const RegisterForm = ({ className }) => {
                 toast.success(message);
             }
         } catch (err) {
-            
             toast.error(err.message);
-            setError(
-                'Error durante el registro. Porfavor intentalo de nuevo.'
-            );
+            setError('Error durante el registro. Porfavor intentalo de nuevo.');
         }
     };
 
     return (
         <>
             <section className="absolute top-1 left-1/2 justify-between hidden w-1/2 p-6 lg:flex lg:text-black ">
-                <NavLink to={"/"} className="flex hover:text-purpleOiches gap-1">
+                <NavLink
+                    to={'/'}
+                    className="flex hover:text-purpleOiches gap-1"
+                >
                     <svg
                         className="self-center"
                         xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +72,10 @@ export const RegisterForm = ({ className }) => {
                 </NavLink>
                 <p>
                     ¿Ya tienes una cuenta?
-                    <Link to="/login" className="  hover:text-purpleOiches text-yellowOiches">
+                    <Link
+                        to="/login"
+                        className="  hover:text-purpleOiches text-yellowOiches"
+                    >
                         {' '}
                         Log in
                     </Link>
@@ -85,12 +87,18 @@ export const RegisterForm = ({ className }) => {
                 <hr />
                 <div className="flex gap-4 pla">
                     <label>
-                        Grupo <input className='accent-purpleOiches' type="radio" name="roles" value="grupo" />
+                        Grupo{' '}
+                        <input
+                            className="accent-purpleOiches"
+                            type="radio"
+                            name="roles"
+                            value="grupo"
+                        />
                     </label>
                     <label>
                         Sala{' '}
                         <input
-                            className=' accent-purpleOiches '
+                            className=" accent-purpleOiches "
                             type="radio"
                             required
                             name="roles"
@@ -141,8 +149,13 @@ export const RegisterForm = ({ className }) => {
                     </label>
                 </div>
                 <p>
-                    <input className=' accent-purpleOiches' type="checkbox" name="terms" required /> Acepto los
-                    términos y condiciones
+                    <input
+                        className=" accent-purpleOiches"
+                        type="checkbox"
+                        name="terms"
+                        required
+                    />{' '}
+                    Acepto los términos y condiciones
                 </p>
                 {error && <p className="text-red-500">{error}</p>}
                 <button
@@ -152,6 +165,7 @@ export const RegisterForm = ({ className }) => {
                     Crear cuenta
                 </button>
             </form>
+            <Toastify />
         </>
     );
 };

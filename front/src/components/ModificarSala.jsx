@@ -1,10 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link, useParams } from 'react-router-dom';
-import { ToastContainer, toast, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Toastify from './Toastify.jsx';
+import { toast } from 'react-toastify';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
-import { getRoomService, saveRoomService } from '../services/ModificarSalaService.jsx'
+import {
+    getRoomService,
+    saveRoomService,
+} from '../services/ModificarSalaService.jsx';
 
 const RoomForm = () => {
     const [name, setName] = useState('');
@@ -38,7 +41,9 @@ const RoomForm = () => {
 
         try {
             await saveRoomService({ name, description }, roomId, token);
-            toast.success(`Sala ${roomId ? 'modificada' : 'creada'} exitosamente`);
+            toast.success(
+                `Sala ${roomId ? 'modificada' : 'creada'} exitosamente`
+            );
             navigate('/rooms');
         } catch (error) {
             setError(error.message);
@@ -49,12 +54,10 @@ const RoomForm = () => {
     return (
         <>
             <section>
-                <div>
-                    { 'front/public/Room.jpg' }
-                </div>
+                <div>{'front/public/Room.jpg'}</div>
                 <div>
                     <form onSubmit={handleSubmit}>
-                        <h3>{ roomId ? 'Modificar Sala' : 'Crear Sala' }</h3>
+                        <h3>{roomId ? 'Modificar Sala' : 'Crear Sala'}</h3>
                         <p>Lorem ipsum dolor sit amet consectetur</p>
                         <hr />
                         <div>
@@ -77,35 +80,23 @@ const RoomForm = () => {
                                     placeholder="Introduce la descripción de la sala"
                                     required
                                     value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
                                 />
                             </label>
                         </div>
                         {error && <p>{error}</p>}
                         <button type="submit">
-                            { roomId ? 'Modificar Sala' : 'Crear Sala' }
+                            {roomId ? 'Modificar Sala' : 'Crear Sala'}
                         </button>
                         <p>
-                            <Link to="/rooms">
-                                Volver a salas
-                            </Link>
+                            <Link to="/rooms">Volver a salas</Link>
                         </p>
                     </form>
                 </div>
             </section>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                transition={Bounce}
-            />
+            <Toastify />
         </>
     );
 };

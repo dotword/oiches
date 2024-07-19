@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion';
 
-export const CreacionModifciacionSala = () => {
+const Salas = () => {
     return (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            Creacion Modificacion Sala
+            Salas
         </motion.div>
     );
 };
+
+export default Salas;
