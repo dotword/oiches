@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input } from './Input.jsx';
 import {  toast, } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const RegisterForm = ({ className }) => {
     const [error, setError] = useState(null);
@@ -56,7 +56,7 @@ export const RegisterForm = ({ className }) => {
     return (
         <>
             <section className="absolute top-1 left-1/2 justify-between hidden w-1/2 p-6 lg:flex lg:text-black ">
-                <button className="flex hover:text-purpleOiches gap-1">
+                <NavLink to={"/"} className="flex hover:text-purpleOiches gap-1">
                     <svg
                         className="self-center"
                         xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@ export const RegisterForm = ({ className }) => {
                         />
                     </svg>{' '}
                     Back
-                </button>
+                </NavLink>
                 <p>
                     ¿Ya tienes una cuenta?
                     <Link to="/login" className="  hover:text-purpleOiches text-yellowOiches">

@@ -2,10 +2,11 @@ import { NavLink } from 'react-router-dom';
 import oiches from '../assets/Live.jpg';
 import { RegisterForm } from '../components/RegisterForm.jsx';
 import oichesLogo from '../assets/Horizontal_blanco.webp';
+import { motion } from 'framer-motion';
 
 export const RegisterPage = () => {
     return (
-        <div className="h-screen lg:flex lg:w-screen">
+        <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"100%"}} exit={{opacity:0,height:0}} className="h-screen lg:flex lg:w-screen">
             <section className="h-1/3 text-white lg:w-1/2">
                 <img
                     src={oiches}
@@ -13,7 +14,7 @@ export const RegisterPage = () => {
                     alt=""
                 />
                 <div className="flex justify-between lg:hidden lg:text-black p-4">
-                    <button className="flex hover:text-purpleOiches gap-1">
+                    <NavLink to={"/"} className="flex hover:text-purpleOiches gap-1">
                         <svg
                             className="self-center"
                             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +28,7 @@ export const RegisterPage = () => {
                             />
                         </svg>{' '}
                         Back
-                    </button>
+                    </NavLink>
                     <p>
                         ¿Ya tienes una cuenta?
                         <NavLink
@@ -60,6 +61,6 @@ export const RegisterPage = () => {
                 </div>
             </section>
             <RegisterForm className="flex justify-between max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20" />
-        </div>
+        </motion.div>
     );
 };

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from '../assets/Live.jpg';
+import { motion } from 'framer-motion';
 
 const UserValidationPage = () => {
     const [status, setStatus] = useState(null);
@@ -57,7 +58,7 @@ const UserValidationPage = () => {
     if (status === null) return <p>Validando usuario...</p>;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-t bg-opacity-50 z-50" style={{
+        <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"100%"}} exit={{opacity:0,height:0}} className="fixed inset-0 flex items-center justify-center bg-gradient-to-t bg-opacity-50 z-50" style={{
             backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'cover',
             backdropFilter: 'blur(12px)', 
@@ -75,7 +76,7 @@ const UserValidationPage = () => {
                     {status === 'ok' ? 'Ir al Login' : 'Intentar de Nuevo'}
                 </button>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
