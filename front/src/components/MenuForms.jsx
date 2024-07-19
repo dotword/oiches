@@ -6,7 +6,7 @@ const MenuForms = () => {
         <section className="md:w-1/2 flex">
             <div className="flex flex-col items-center justify-between p-4 w-full bg-hero-image bg-cover bg-bottom md:hidden">
                 <div className="min-h-20 w-full flex justify-between">
-                    <Link to={'/'}>
+                    <Link to={'/'} className="text-white">
                         <p>&#60; Back</p>
                     </Link>
                     <div className="flex gap-4">
