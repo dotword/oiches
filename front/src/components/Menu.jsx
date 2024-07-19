@@ -1,9 +1,11 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Menu = () => {
-    const { userLogged } = useContext(AuthContext);
+    const { currentUser, signOut } = useContext(AuthContext);
+    let navigate = useNavigate();
 
     return (
         <>
@@ -25,7 +27,7 @@ const Menu = () => {
             >
                 Sobre nosotros
             </NavLink>
-            {!userLogged ? (
+            {!currentUser ? (
                 <>
                     <NavLink
                         to={'/login'}
@@ -43,14 +45,17 @@ const Menu = () => {
             ) : (
                 <>
                     <NavLink
-                        to={'/'}
+                        onClick={() => {
+                            signOut();
+                            navigate('/login');
+                        }}
                         className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
                     >
                         Logout
                     </NavLink>
                     <NavLink
                         to={'/'}
-                        className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
+                        className="btn-account max-md:my-8 font-medium"
                     >
                         Mi perfil
                     </NavLink>

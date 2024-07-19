@@ -41,37 +41,53 @@ const GrupoDetail = () => {
                     </p>
                 </div>
             </section>
-            <section>
-                <div>
-                    <p className="flex flex-col mb-2">
-                        <span className="font-semibold">Estilo: </span>
-                        <span className="text-greyOiches">{entry.Genero}</span>
-                    </p>
-                    <p className="flex flex-col">
-                        <span className="font-semibold">Provincia: </span>
-                        <span className="text-greyOiches">
-                            {entry.Provincia}
-                        </span>
-                    </p>
-                    <p className="flex flex-col">
+            <section className="m-2">
+                <p className="flex gap-1 mb-2">
+                    <span className="font-semibold">Estilo: </span>
+                    <span className="text-greyOiches">{entry.Genero}</span>
+                </p>
+                <p className="flex gap-1 mb-2">
+                    <span className="font-semibold">Provincia: </span>
+                    <span className="text-greyOiches">{entry.Provincia}</span>
+                </p>
+                {entry.honorarios ? (
+                    <p className="flex gap-1 mb-2">
                         <span className="font-semibold">Caché: </span>
                         <span className="text-greyOiches">
                             {entry.honorarios}
                         </span>
                     </p>
-                    <p className="flex flex-col">
+                ) : (
+                    ''
+                )}
+
+                {entry.rider ? (
+                    <p className="flex gap-1 mb-2">
                         <span className="font-semibold">Rider: </span>
                         <span className="text-greyOiches">{entry.rider}</span>
                     </p>
-                    <p className="flex flex-col">
-                        <span className="font-semibold">Email: </span>
+                ) : (
+                    ''
+                )}
+
+                <p className="flex gap-1 mb-2">
+                    <span className="font-semibold">Email: </span>
+                    <span className="text-greyOiches">
+                        <a className="" href={`mailto:${entry.email}`}>
+                            {entry.email}
+                        </a>
+                    </span>
+                </p>
+                {entry.biografia ? (
+                    <p className="flex flex-col mb-2">
+                        <span className="font-semibold">Biografía: </span>
                         <span className="text-greyOiches">
-                            <a className="" href={`mailto:${entry.email}`}>
-                                {entry.email}
-                            </a>
+                            {entry.biografia}
                         </span>
                     </p>
-                </div>
+                ) : (
+                    ''
+                )}
             </section>
         </main>
     ) : (
