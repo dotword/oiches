@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import oiches from '../assets/Live.jpg';
 import { RegisterForm } from '../components/RegisterForm.jsx';
@@ -31,7 +30,10 @@ export const RegisterPage = () => {
                     </button>
                     <p>
                         ¿Ya tienes una cuenta?
-                        <NavLink to="/login" className=" hover:text-purpleOiches text-yellowOiches">
+                        <NavLink
+                            to="/login"
+                            className=" hover:text-purpleOiches text-yellowOiches"
+                        >
                             {' '}
                             Log in
                         </NavLink>
@@ -40,7 +42,11 @@ export const RegisterPage = () => {
                 <div className="flex flex-col gap-10 pt-5 lg:h-screen lg:gap-y-60">
                     <div className="flex place-content-center">
                         <NavLink to={'/home'}>
-                            <img src={oichesLogo} className="self-center px-10 mt-10 max-w-sm" alt="Logo de Oiches" />
+                            <img
+                                src={oichesLogo}
+                                className="self-center px-10 mt-10 max-w-sm"
+                                alt="Logo de Oiches"
+                            />
                         </NavLink>
                     </div>
                     <blockquote className="hidden lg:flex lg:flex-col lg:mx-auto lg:w-1/2">
@@ -57,4 +63,3 @@ export const RegisterPage = () => {
         </div>
     );
 };
-
