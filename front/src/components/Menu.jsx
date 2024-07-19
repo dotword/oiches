@@ -10,7 +10,7 @@ const Menu = () => {
     return (
         <>
             <NavLink
-                to={'/'}
+                to={'/salas'}
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Salas
