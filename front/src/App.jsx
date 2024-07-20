@@ -11,6 +11,7 @@ import { RecuperarPassword } from './pages/RecuperarPassword.jsx';
 import { CreacionModifciacionSala } from './pages/Creacion-ModifciacionSala.jsx';
 import UserValidationPage from './pages/UserValidationPage.jsx';
 import Salas from './pages/Salas.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 function App() {
     return (
@@ -34,6 +35,7 @@ function App() {
                         element={<CreacionModifciacionSala />}
                     />
                     <Route path="/salas" element={<Salas />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </AnimatePresence>
         </>
