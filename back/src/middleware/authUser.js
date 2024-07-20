@@ -7,7 +7,7 @@ const authUser = async (req, res, next) => {
         const { token } = req.headers;
 
         if (!token) {
-            generateErrorUtil('Se esperaba un token por el encabezado', 401);
+            throw generateErrorUtil('Se esperaba un token por el encabezado', 401);
         }
 
         let tokenInfo;
