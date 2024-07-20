@@ -1,27 +1,16 @@
 import { NavLink, Link } from 'react-router-dom';
 import oichesLogo from '../assets/Horizontal_blanco.webp';
 
-const MenuForms = () => {
+const MenuForms = ({ signInLogin }) => {
     return (
         <section className="md:w-1/2 flex">
             <div className="flex flex-col items-center justify-between p-4 w-full bg-hero-image bg-cover bg-bottom md:hidden">
                 <div className="min-h-20 w-full flex justify-between">
-                    <Link to={'/'} className="text-white">
+                    <Link to={'/'} className="text-white min-w-12">
                         <p>&#60; Back</p>
                     </Link>
-                    <div className="flex gap-4">
-                        <NavLink
-                            to="/register"
-                            className="hover:text-purpleOiches text-yellowOiches"
-                        >
-                            Registro
-                        </NavLink>
-                        <NavLink
-                            to="/login"
-                            className="hover:text-purpleOiches text-yellowOiches"
-                        >
-                            Login
-                        </NavLink>
+                    <div className="flex flex-wrap gap-2 text-white">
+                        {signInLogin}
                     </div>
                 </div>
                 <NavLink to={'/'}>
@@ -50,26 +39,11 @@ const MenuForms = () => {
                     <cite className="mt-6">Jimi Hendrix</cite>
                 </blockquote>
             </div>
-            <div className="absolute w-1/2 right-0 p-8 flex justify-between max-md:hidden">
+            <div className="absolute w-1/2 right-0 py-4 px-8 flex justify-between max-md:hidden">
                 <Link to={'/'}>
                     <p>&#60; Back</p>
                 </Link>
-                <div className="flex gap-4">
-                    <NavLink
-                        to="/register"
-                        className="hover:text-purpleOiches text-yellowOiches"
-                    >
-                        {' '}
-                        Registro
-                    </NavLink>
-                    <NavLink
-                        to="/login"
-                        className="hover:text-purpleOiches text-yellowOiches"
-                    >
-                        {' '}
-                        Login
-                    </NavLink>
-                </div>
+                <div className="flex gap-2">{signInLogin}</div>
             </div>
         </section>
     );
