@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
@@ -6,7 +5,7 @@ const NotFound = () => {
     return (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: '100%' }}
+            animate={{ opacity: 1, height: '100vh' }}
             exit={{ opacity: 0, height: 0 }}
             className="h-screen w-screen relative"
         >

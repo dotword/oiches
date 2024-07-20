@@ -12,10 +12,10 @@ const selectGrupoByIdService = async (idGrupo) => {
                 (SELECT provincia FROM provincias WHERE provincias.id = G.provincia) AS Provincia,
                 (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = G.generos) AS Genero,
                 (SELECT email FROM usuarios WHERE usuarios.id = G.usuario_id) AS email,
+                (SELECT avatar FROM usuarios WHERE usuarios.id = G.usuario_id) AS avatar,
                 G.honorarios,
                 G.biografia,
                 G.usuario_id,
-                G.rider,
                 AVG(IFNULL(V.voto, 0)) AS votes,
                 G.createdAt
             FROM Grupos G
