@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { Input } from './Input.jsx';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
-import { Input } from './Input.jsx';
 import RecoverPasswordService from '../services/RecoverPasswordService.js';
 
-const RecoverPasswordForm = ({ className }) => {
+const RecoverPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
@@ -31,7 +31,10 @@ const RecoverPasswordForm = ({ className }) => {
 
     return (
         <>
-            <form onSubmit={handleSubmit} className={className}>
+            <form
+                onSubmit={handleSubmit}
+                className="flex justify-between md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 mt-14"
+            >
                 <h1 className="text-4xl">Recupera tu acceso</h1>
                 <p>
                     ¿Olvidaste o perdiste tu contraseña? Escribe tu correo y te
