@@ -13,6 +13,10 @@ export default {
                     "url('/oiches/front/src/assets/oiches-Live.jpg')",
                 'hero-image': "url('../Live.jpg')",
             },
+            background404: {
+                'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",
+                'hero-image': "url('../404Pages.jpg')",
+            },
         },
     },
     plugins: [],
