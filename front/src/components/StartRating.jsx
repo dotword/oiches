@@ -1,12 +1,12 @@
 const StarRating = ({ rating }) => {
     return (
-        <div className="flex justify-end items-center">
+        <>
             {[...Array(5)].map((star, index) => {
                 const ratingValue = index + 1;
                 return (
                     <span
                         key={index}
-                        className="text-3xl cursor-default"
+                        className="text-2xl cursor-default"
                         style={{
                             color:
                                 ratingValue <= rating ? '#ffc800' : 'lightgray',
@@ -16,7 +16,7 @@ const StarRating = ({ rating }) => {
                     </span>
                 );
             })}
-        </div>
+        </>
     );
 };
 
