@@ -31,7 +31,7 @@ function App() {
                         element={<RecuperarPassword />}
                     />
                     <Route
-                        path="/creacionmodifciacionsala"
+                        path="/creacion-modificacion-sala"
                         element={<CreacionModifciacionSala />}
                     />
                     <Route path="/salas" element={<Salas />} />
