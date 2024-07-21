@@ -56,7 +56,7 @@ const main = async () => {
             usuario_id CHAR(36) NOT NULL,
             nombre VARCHAR(100) NOT NULL,
             provincia INT NOT NULL,
-            generos INT NOT NULL,
+            generos INT,
             capacidad INT,
             descripcion TEXT,
             precios DECIMAL(10,2),

@@ -9,9 +9,15 @@
 }
 @layer components {
     .btn-account {
-        @apply py-1 px-3 bg-purpleOiches rounded-md text-white hover:text-black transition-all;
+        @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all;
     }
     .form-input {
         @apply active:border-purpleOiches p-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full;
+    }
+    .form-select {
+        @apply active:border-purpleOiches px-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full bg-white;
+    }
+    .form-textarea {
+        @apply active:border-purpleOiches px-4 py-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 min-h-40 w-full;
     }
 }
