@@ -40,50 +40,35 @@ const SalaCreacion = () => {
         FetchGenresService(setGenres);
     }, []);
 
-    const handleImageSelect = (e) => {
-        setPhotoA(e.target.files[0]);
-        setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-    };
-
     const formData = new FormData();
     formData.append('nombre', nombre);
     formData.append('direccion', direccion);
     formData.append('provincia', provincia);
-    formData.append('generos', generos);
-    formData.append('capacidad', capacidad);
+    if (generos !== undefined) formData.append('generos', generos);
+    if (capacidad !== undefined) formData.append('capacidad', capacidad);
     formData.append('descripcion', descripcion);
-    formData.append('precios', precios);
+    if (precios !== undefined) formData.append('precios', precios);
     formData.append('condiciones', condiciones);
     formData.append('equipamiento', equipamiento);
-    formData.append('horaReservasStart', horaReservasStart);
-    formData.append('horaReservasEnd', horaReservasEnd);
-    formData.append('photoA', photoA);
-    formData.append('photoB', photoB);
-    formData.append('photoC', photoC);
-    formData.append('photoD', photoD);
+    if (horaReservasStart !== undefined)
+        formData.append('horaReservasStart', horaReservasStart);
+    if (horaReservasEnd !== undefined)
+        formData.append('horaReservasEnd', horaReservasEnd);
+    if (photoA !== null) formData.append('photoA', photoA);
+    if (photoB !== null) formData.append('photoB', photoB);
+    if (photoC !== null) formData.append('photoC', photoC);
+    if (photoD !== null) formData.append('photoD', photoD);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
+            console.log('cap ', photoA);
             const resp = await registerSalaService({
                 token,
                 formData,
             });
-            // const resp = await registerSalaService({
-            //     token,
-            //     nombre,
-            //     direccion,
-            //     provincia,
-            //     generos,
-            //     capacidad,
-            //     descripcion,
-            //     precios,
-            //     condiciones,
-            //     equipamiento,
-            //     horaReservasStart,
-            //     horaReservasEnd,
-            // });
+
             setResp(resp);
 
             toast.success('Has creado tu nueva sala con éxito');
