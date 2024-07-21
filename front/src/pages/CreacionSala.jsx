@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import SalaCreacion from '../components/SalaCreacion';
 
-export const CreacionModifciacionSala = () => {
+const CreacionSala = () => {
     return (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -16,3 +16,4 @@ export const CreacionModifciacionSala = () => {
         </motion.div>
     );
 };
+export default CreacionSala;
