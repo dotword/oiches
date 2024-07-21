@@ -1,69 +1,129 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
 
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
-import registerSalaService from '../services/registerSalaService.js';
+import getSalaService from '../services/getSalaService.js';
+import EditSalaService from '../services/EditSalaService.js';
 
-const SalaCreacion = () => {
+const SalaEdit = () => {
     const token = localStorage.getItem('AUTH_TOKEN');
+
+    const { idSala } = useParams();
+
+    useEffect(() => {
+        FetchProvinciasService(setProvinces);
+    }, []);
+
+    useEffect(() => {
+        const fetchRoom = async () => {
+            try {
+                const { data } = await getSalaService(idSala);
+                console.log('infoSala ', data);
+
+                setNombre(data.sala.nombre);
+                // data.sala.genero ? setGenero(data.sala.genero) : '';
+                setDireccion(data.sala.direccion);
+                setProvincia(data.sala.provinciaId);
+                // data.sala.capacidad ? setCapacidad(data.sala.capacidad) : 0;
+                // data.sala.precios ? setCapacidad(data.sala.precios) : '';
+                // data.sala.descripcion
+                //     ? setDescripcion(data.sala.descripcion)
+                //     : '';
+                // data.sala.condiciones
+                //     ? setCondiciones(data.sala.condiciones)
+                //     : '';
+                // data.sala.equipamiento
+                //     ? setEquipamiento(data.sala.equipamiento)
+                //     : '';
+                // setHoraReservasStart(data.sala.horaReservasStart);
+                // setHoraReservasEnd(data.sala.horaReservasEnd);
+            } catch (error) {
+                setError(error.message);
+                toast.error('Error al cargar la sala');
+            }
+        };
+
+        fetchRoom();
+    }, [idSala]);
 
     const [nombre, setNombre] = useState('');
     const [direccion, setDireccion] = useState('');
     const [provinces, setProvinces] = useState([]);
     const [provincia, setProvincia] = useState('');
-    const [genres, setGenres] = useState([]);
-    const [generos, setGenero] = useState();
-    const [capacidad, setCapacidad] = useState();
-    const [descripcion, setDescripcion] = useState();
-    const [precios, setPrecios] = useState();
-    const [condiciones, setCondiciones] = useState();
-    const [equipamiento, setEquipamiento] = useState();
-    const [horaReservasStart, setHoraReservasStart] = useState();
-    const [horaReservasEnd, setHoraReservasEnd] = useState();
+    const [provinceData, setProvinceData] = useState({ id: 0, provincia: '' });
+    console.log('provinceData ', provinceData);
+
+    // const [genres, setGenres] = useState([]);
+    // const [generos, setGenero] = useState();
+    // const [capacidad, setCapacidad] = useState();
+    // const [descripcion, setDescripcion] = useState();
+    // const [precios, setPrecios] = useState();
+    // const [condiciones, setCondiciones] = useState();
+    // const [equipamiento, setEquipamiento] = useState();
+    // const [horaReservasStart, setHoraReservasStart] = useState();
+    // const [horaReservasEnd, setHoraReservasEnd] = useState();
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
 
-    // const [selectedImage, setSelectedImage] = useState(null);
-    // const [previewUrl, setPreviewUrl] = useState(null);
+    //     const fetchRoom = async () => {
+    //         try {
+    //             const { data } = await getSalaByIdService(idSala, token);
 
-    useEffect(() => {
-        FetchProvinciasService(setProvinces);
-    }, []);
-    useEffect(() => {
-        FetchGenresService(setGenres);
-    }, []);
+    //             setNombre(data.sala.nombre);
+    //             setDescripcion(data.sala.descripcion);
+    //             setProvincia(data.sala.provincia);
+    //             setGenero(data.sala.genero);
+    //             if (data.sala.capacidad !== null)
+    //                 setCapacidad(data.sala.capacidad);
+    //             setPrecios(data.sala.precios);
+    //             setDireccion(data.sala.direccion);
+    //             setCondiciones(data.sala.condiciones);
+    //             setEquipamiento(data.sala.equipamiento);
+    //             setHoraReservasStart(data.sala.horaReservasStart);
+    //             setHoraReservasEnd(data.sala.horaReservasEnd);
 
-    // const handleImageSelect = (e) => {
-    //     setSelectedImage(e.target.files[0]);
-    //     setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-    // };
+    //             console.log('capa ', data.sala.capacidad);
+    //         } catch (error) {
+    //             setError(error.message);
+    //             toast.error('Error al cargar la sala');
+    //         }
+    //     };
+
+    //     fetchRoom();
+    // }, [idSala, token]);
+
+    // useEffect(() => {
+    //     FetchGenresService(setGenres);
+    // }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const resp = await registerSalaService({
+            const dataForm = new FormData(e.target);
+            // console.log('dataEdit ', data);
+            console.log(dataForm.get('province.id'));
+            // roles: formValues.get('roles'),
+            await EditSalaService({
                 token,
-                nombre,
-                direccion,
-                provincia,
-                generos,
-                capacidad,
-                descripcion,
-                precios,
-                condiciones,
-                equipamiento,
-                horaReservasStart,
-                horaReservasEnd,
+                idSala,
+                dataForm,
             });
-            setResp(resp);
-
-            toast.success('Has creado tu nueva sala con éxito');
+            toast.success('Has modificado sala con éxito');
         } catch (error) {
             setError(error.message);
-            toast.error('Error al crear la sala');
+            toast.error('Error al modificar la sala');
         }
+    };
+
+    const handleChangeProvincia = (event) => {
+        const { provincia, value } = event.target;
+        setProvinceData((prevData) => ({
+            ...prevData,
+            [provincia]: value,
+        }));
     };
 
     return (
@@ -79,12 +139,11 @@ const SalaCreacion = () => {
                             name="nombre"
                             placeholder="Nombre de la sala"
                             value={nombre}
-                            required
                             onChange={(e) => setNombre(e.target.value)}
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                    {/* <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="genre" className="font-semibold">
                             Género:
                         </label>
@@ -101,7 +160,7 @@ const SalaCreacion = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:
@@ -111,7 +170,6 @@ const SalaCreacion = () => {
                             name="direccion"
                             placeholder="Dirección de la sala"
                             value={direccion}
-                            required
                             onChange={(e) => setDireccion(e.target.value)}
                             className="form-input"
                         />
@@ -122,11 +180,10 @@ const SalaCreacion = () => {
                         </label>
                         <select
                             id="province"
-                            value={provincia}
+                            name="id"
+                            value={provinceData.id}
                             className="form-select"
-                            onChange={(event) =>
-                                setProvincia(event.target.value)
-                            }
+                            onChange={handleChangeProvincia}
                         >
                             <option value="">Provincia</option>
                             {provinces.map((province) => (
@@ -135,9 +192,15 @@ const SalaCreacion = () => {
                                 </option>
                             ))}
                         </select>
+                        <input
+                            id="provincia"
+                            name="provincia"
+                            value={provinceData.provincia}
+                            onChange={handleChangeProvincia}
+                        />
                     </div>
 
-                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
+                    {/* <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
                             Aforo:{' '}
                         </label>
@@ -241,26 +304,17 @@ const SalaCreacion = () => {
                             onChange={(e) => setHoraReservasEnd(e.target.value)}
                             className="form-input"
                         />
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="my-12 btn-account p-3 max-w-80">
-                    <input type="submit" value="Crear Sala" />
+                    <input type="submit" value="Modificar Sala" />
                 </div>
-                <div>
-                    {error && <p>{error}</p>}
-                    {resp.status == 'ok' ? (
-                        <>
-                            <p>{resp.message}</p>
-                        </>
-                    ) : (
-                        ''
-                    )}
-                </div>
+                <div>{error && <p>{error}</p>}</div>
             </form>
             <Toastify />
         </>
     );
 };
 
-export default SalaCreacion;
+export default SalaEdit;

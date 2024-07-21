@@ -11,6 +11,7 @@ import { RecuperarPassword } from './pages/RecuperarPassword.jsx';
 import { CreacionModifciacionSala } from './pages/Creacion-ModifciacionSala.jsx';
 import UserValidationPage from './pages/UserValidationPage.jsx';
 import Salas from './pages/Salas.jsx';
+import SalaEdit from './components/SalaEdit.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 function App() {
@@ -31,9 +32,11 @@ function App() {
                         element={<RecuperarPassword />}
                     />
                     <Route
-                        path="/creacion-modificacion-sala"
+                        path="/creacion-sala"
                         element={<CreacionModifciacionSala />}
                     />
+                    <Route path="/salas/:idSala/edit" element={<SalaEdit />} />
+
                     <Route path="/salas" element={<Salas />} />
                     <Route path="*" element={<NotFound />} />
                 </Routes>

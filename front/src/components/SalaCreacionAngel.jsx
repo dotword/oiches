@@ -1,18 +1,48 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 import Toastify from './Toastify.jsx';
-
+import { toast } from 'react-toastify';
+import { getRoomService, saveRoomService } from '../services/RoomService.js';
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
-import registerSalaService from '../services/registerSalaService.js';
 
-const SalaCreacion = () => {
+const RoomForm = () => {
+    const { idSala } = useParams();
     const token = localStorage.getItem('AUTH_TOKEN');
+
+    useEffect(() => {
+        if (idSala) {
+            const fetchRoom = async () => {
+                try {
+                    const { data } = await getRoomService(idSala, token);
+
+                    setNombre(data.sala.nombre);
+                    setDescripcion(data.sala.descripcion);
+                    setProvincia(data.sala.provincia);
+                    setGenero(data.sala.genero);
+                    setCapacidad(data.sala.capacidad);
+                    setPrecios(data.sala.precios);
+                    setDireccion(data.sala.direccion);
+                    setCondiciones(data.sala.condiciones);
+                    setEquipamiento(data.sala.equipamiento);
+                    setHoraReservasStart(data.sala.horaReservasStart);
+                    setHoraReservasEnd(data.sala.horaReservasEnd);
+
+                    console.log('provincia ', data.sala);
+                } catch (error) {
+                    setError(error.message);
+                    toast.error('Error al cargar la sala');
+                }
+            };
+
+            fetchRoom();
+        }
+    }, [idSala, token]);
 
     const [nombre, setNombre] = useState('');
     const [direccion, setDireccion] = useState('');
     const [provinces, setProvinces] = useState([]);
-    const [provincia, setProvincia] = useState('');
+    const [provincia, setProvincia] = useState();
     const [genres, setGenres] = useState([]);
     const [generos, setGenero] = useState();
     const [capacidad, setCapacidad] = useState();
@@ -22,11 +52,8 @@ const SalaCreacion = () => {
     const [equipamiento, setEquipamiento] = useState();
     const [horaReservasStart, setHoraReservasStart] = useState();
     const [horaReservasEnd, setHoraReservasEnd] = useState();
+    // const [deletePhoto, setDeletePhoto] = useState('');
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
-
-    // const [selectedImage, setSelectedImage] = useState(null);
-    // const [previewUrl, setPreviewUrl] = useState(null);
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -35,16 +62,13 @@ const SalaCreacion = () => {
         FetchGenresService(setGenres);
     }, []);
 
-    // const handleImageSelect = (e) => {
-    //     setSelectedImage(e.target.files[0]);
-    //     setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-    // };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const resp = await registerSalaService({
+            await saveRoomService({
                 token,
+                idSala,
                 nombre,
                 direccion,
                 provincia,
@@ -57,12 +81,15 @@ const SalaCreacion = () => {
                 horaReservasStart,
                 horaReservasEnd,
             });
-            setResp(resp);
+            toast.success(
+                `Sala ${idSala ? 'modificada' : 'creada'} exitosamente`
+            );
 
-            toast.success('Has creado tu nueva sala con éxito');
+            console.log('token ', token);
+            console.log('idSala ', idSala);
         } catch (error) {
             setError(error.message);
-            toast.error('Error al crear la sala');
+            toast.error('Error al guardar la sala');
         }
     };
 
@@ -75,8 +102,8 @@ const SalaCreacion = () => {
                             Nombre de la Sala:{' '}
                         </label>
                         <input
-                            type="text"
-                            name="nombre"
+                            type="nombre"
+                            name="text"
                             placeholder="Nombre de la sala"
                             value={nombre}
                             required
@@ -247,20 +274,11 @@ const SalaCreacion = () => {
                 <div className="my-12 btn-account p-3 max-w-80">
                     <input type="submit" value="Crear Sala" />
                 </div>
-                <div>
-                    {error && <p>{error}</p>}
-                    {resp.status == 'ok' ? (
-                        <>
-                            <p>{resp.message}</p>
-                        </>
-                    ) : (
-                        ''
-                    )}
-                </div>
+                <div>{error && <p>{error}</p>}</div>
             </form>
             <Toastify />
         </>
     );
 };
 
-export default SalaCreacion;
+export default RoomForm;
