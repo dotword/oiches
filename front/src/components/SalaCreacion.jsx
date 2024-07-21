@@ -24,9 +24,14 @@ const SalaCreacion = () => {
     const [horaReservasEnd, setHoraReservasEnd] = useState();
     const [error, setError] = useState('');
     const [resp, setResp] = useState('');
-
-    // const [selectedImage, setSelectedImage] = useState(null);
-    // const [previewUrl, setPreviewUrl] = useState(null);
+    const [photoA, setPhotoA] = useState(null);
+    const [previewUrlA, setPreviewUrlA] = useState(null);
+    const [photoB, setPhotoB] = useState(null);
+    const [previewUrlB, setPreviewUrlB] = useState(null);
+    const [photoC, setPhotoC] = useState(null);
+    const [previewUrlC, setPreviewUrlC] = useState(null);
+    const [photoD, setPhotoD] = useState(null);
+    const [previewUrlD, setPreviewUrlD] = useState(null);
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -35,28 +40,50 @@ const SalaCreacion = () => {
         FetchGenresService(setGenres);
     }, []);
 
-    // const handleImageSelect = (e) => {
-    //     setSelectedImage(e.target.files[0]);
-    //     setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-    // };
+    const handleImageSelect = (e) => {
+        setPhotoA(e.target.files[0]);
+        setPreviewUrl(URL.createObjectURL(e.target.files[0]));
+    };
+
+    const formData = new FormData();
+    formData.append('nombre', nombre);
+    formData.append('direccion', direccion);
+    formData.append('provincia', provincia);
+    formData.append('generos', generos);
+    formData.append('capacidad', capacidad);
+    formData.append('descripcion', descripcion);
+    formData.append('precios', precios);
+    formData.append('condiciones', condiciones);
+    formData.append('equipamiento', equipamiento);
+    formData.append('horaReservasStart', horaReservasStart);
+    formData.append('horaReservasEnd', horaReservasEnd);
+    formData.append('photoA', photoA);
+    formData.append('photoB', photoB);
+    formData.append('photoC', photoC);
+    formData.append('photoD', photoD);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const resp = await registerSalaService({
                 token,
-                nombre,
-                direccion,
-                provincia,
-                generos,
-                capacidad,
-                descripcion,
-                precios,
-                condiciones,
-                equipamiento,
-                horaReservasStart,
-                horaReservasEnd,
+                formData,
             });
+            // const resp = await registerSalaService({
+            //     token,
+            //     nombre,
+            //     direccion,
+            //     provincia,
+            //     generos,
+            //     capacidad,
+            //     descripcion,
+            //     precios,
+            //     condiciones,
+            //     equipamiento,
+            //     horaReservasStart,
+            //     horaReservasEnd,
+            // });
             setResp(resp);
 
             toast.success('Has creado tu nueva sala con éxito');
@@ -68,7 +95,7 @@ const SalaCreacion = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="nombre" className="font-semibold">
@@ -241,6 +268,93 @@ const SalaCreacion = () => {
                             onChange={(e) => setHoraReservasEnd(e.target.value)}
                             className="form-input"
                         />
+                    </div>
+                </div>
+
+                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip">
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoA"
+                            onChange={(e) => {
+                                setPhotoA(e.target.files[0]);
+                                setPreviewUrlA(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlA && (
+                                <img
+                                    src={previewUrlA}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoB"
+                            onChange={(e) => {
+                                setPhotoB(e.target.files[0]);
+                                setPreviewUrlB(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlB && (
+                                <img
+                                    src={previewUrlB}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoC"
+                            onChange={(e) => {
+                                setPhotoC(e.target.files[0]);
+                                setPreviewUrlC(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlC && (
+                                <img
+                                    src={previewUrlC}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoD"
+                            onChange={(e) => {
+                                setPhotoD(e.target.files[0]);
+                                setPreviewUrlD(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlD && (
+                                <img
+                                    src={previewUrlD}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
                     </div>
                 </div>
 
