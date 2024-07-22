@@ -77,19 +77,24 @@ const editSalaController = async (req, res, next) => {
             await deleteSalaPhotoService(deletePhoto);
         }
 
-        // Si la sala tiene más de 4 archivos lanzamos un error.
-        if (req.files !== null && sala.photos.length > 3)
-            throw generateErrorsUtil(
-                'No se pueden subir más de fotos a la sala',
-                409
-            );
+        // Array donde pushearemos las fotos (si hay).
+        const photos = [];
 
-        if (req.files !== null) {
-            // Guardamos la foto en la carpeta uploads y obtenemos su nombre.
-            const photoName = await uploadFiles(req.files.photo);
+        // Si "req.files" existe quiere decir que hay algún archivo en la petición.
+        if (req.files) {
+            // Recorremos las fotos. Para evitar que tenga más de 4 fotos aplicamos slice.
+            for (const photo of Object.values(req.files).slice(0, 4)) {
+                // Guardamos la foto y obtenemos su nombre. Redimensionamos a un ancho de 600px.
+                const photoName = await uploadFiles(photo, 600);
 
-            // Guardamos la foto en la base de datos y obtenemos el id de la misma.
-            await insertSalaPhotoService(photoName, idSala);
+                // Insertamos la foto en la tabla de fotos.
+                await insertSalaPhotoService(photoName, idSala);
+
+                // Pusheamos la foto al array de sala_fotos.
+                photos.push({
+                    name: photoName,
+                });
+            }
         }
 
         res.send({
