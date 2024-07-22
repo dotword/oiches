@@ -76,7 +76,7 @@ const SalaEdit = () => {
             dataForm.get('condiciones', condiciones);
             dataForm.get('equipamiento', equipamiento);
             dataForm.get('horaReservasStart', horaReservasStart);
-            dataForm.get('equipamiento', equipamiento);
+            dataForm.get('horaReservasEnd', horaReservasEnd);
 
             await EditSalaService({
                 token,
