@@ -1,30 +1,22 @@
 import getPool from '../database/getPool.js';
-import jwt from 'jsonwebtoken';
+import generateErrorsUtil from '../utils/generateErrorsUtil.js';
 
-const JWT_SECRET = process.env.JWT_SECRET; // Reemplaza con tu secreto JWT
 
 const checkIfGroup = async (req, res, next) => {
     try {
-        const { token } = req.headers;
-
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const { id } = decoded;
-
+        const currentUser = req.user
         const pool = await getPool();
         const [userResults] = await pool.query(
             'SELECT roles FROM Usuarios WHERE id = ?',
-            [id]
+            [currentUser.id]
         );
-
+        
         if (userResults.length === 0 || userResults[0].roles !== 'grupo') {
-            return res
-                .status(403)
-                .json({
-                    message: 'Acceso denegado. No es un usuario de tipo grupo.',
-                });
+            throw generateErrorsUtil(
+                'Acceso denegado. No es un usuario de tipo grupo.',
+                403
+            );
         }
-
-        req.usuario_id = id;
         next();
     } catch (error) {
         console.log(error);
