@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
 
@@ -7,7 +8,7 @@ import FetchGenresService from '../services/FetchGenresService.js';
 import registerSalaService from '../services/registerSalaService.js';
 
 const SalaCreacion = () => {
-    const token = localStorage.getItem('AUTH_TOKEN');
+    const { currentUser, token } = useContext(AuthContext);
 
     const [formValues, setFormValues] = useState({
         nombre: '',
@@ -95,7 +96,7 @@ const SalaCreacion = () => {
         horaReservasEnd,
     } = formValues;
 
-    return (
+    return currentUser ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
@@ -305,6 +306,8 @@ const SalaCreacion = () => {
             </form>
             <Toastify />
         </>
+    ) : (
+        <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );
 };
 

@@ -1,15 +1,9 @@
-import { useContext } from 'react';
 import { motion } from 'framer-motion';
-import { AuthContext } from '../context/auth/auth.context';
-
 import Header from '../components/Header';
 import SalaCreacion from '../components/SalaCreacion';
-import NotFound from './NotFound';
 
 const CreacionSala = () => {
-    const { currentUser } = useContext(AuthContext);
-
-    return currentUser ? (
+    return (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100%' }}
@@ -20,8 +14,6 @@ const CreacionSala = () => {
                 <SalaCreacion />
             </main>
         </motion.div>
-    ) : (
-        <NotFound />
     );
 };
 export default CreacionSala;
