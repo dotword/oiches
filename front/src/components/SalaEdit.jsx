@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../context/auth/auth.context';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -9,7 +10,7 @@ import getSalaService from '../services/getSalaService.js';
 import EditSalaService from '../services/EditSalaService.js';
 
 const SalaEdit = () => {
-    const token = localStorage.getItem('AUTH_TOKEN');
+    const { currentUser, token } = useContext(AuthContext);
 
     const { idSala } = useParams();
 
@@ -26,7 +27,14 @@ const SalaEdit = () => {
     const [equipamiento, setEquipamiento] = useState(' ');
     const [horaReservasStart, setHoraReservasStart] = useState();
     const [horaReservasEnd, setHoraReservasEnd] = useState();
-    // const [photoA, setPhotoA] = useState(null);
+    const [photoA, setPhotoA] = useState(null);
+    const [previewUrlA, setPreviewUrlA] = useState(null);
+    const [photoB, setPhotoB] = useState(null);
+    const [previewUrlB, setPreviewUrlB] = useState(null);
+    const [photoC, setPhotoC] = useState(null);
+    const [previewUrlC, setPreviewUrlC] = useState(null);
+    const [photoD, setPhotoD] = useState(null);
+    const [previewUrlD, setPreviewUrlD] = useState(null);
 
     const [error, setError] = useState('');
 
@@ -93,7 +101,7 @@ const SalaEdit = () => {
         }
     };
 
-    return (
+    return currentUser ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
@@ -269,7 +277,92 @@ const SalaEdit = () => {
                     </div>
                 </div>
 
-                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip"></div>
+                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip">
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoA"
+                            onChange={(e) => {
+                                setPhotoA(e.target.files[0]);
+                                setPreviewUrlA(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlA && (
+                                <img
+                                    src={previewUrlA}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoB"
+                            onChange={(e) => {
+                                setPhotoB(e.target.files[0]);
+                                setPreviewUrlB(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlB && (
+                                <img
+                                    src={previewUrlB}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoC"
+                            onChange={(e) => {
+                                setPhotoC(e.target.files[0]);
+                                setPreviewUrlC(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlC && (
+                                <img
+                                    src={previewUrlC}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                    <div className="mb-4">
+                        <input
+                            type="file"
+                            name="photoD"
+                            onChange={(e) => {
+                                setPhotoD(e.target.files[0]);
+                                setPreviewUrlD(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                        <section>
+                            {previewUrlD && (
+                                <img
+                                    src={previewUrlD}
+                                    alt="Vista previa"
+                                    width={'200px'}
+                                />
+                            )}
+                        </section>
+                    </div>
+                </div>
 
                 <div className="my-12 max-w-80">
                     <input
@@ -282,6 +375,8 @@ const SalaEdit = () => {
             </form>
             <Toastify />
         </>
+    ) : (
+        <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );
 };
 

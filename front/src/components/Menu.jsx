@@ -54,7 +54,7 @@ const Menu = () => {
                         Logout
                     </NavLink>
                     <NavLink
-                        to={'/'}
+                        to={'/users'}
                         className="btn-account max-md:my-8 font-medium"
                     >
                         Mi perfil
