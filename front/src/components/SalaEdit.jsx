@@ -1,128 +1,121 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
 
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
-import registerSalaService from '../services/registerSalaService.js';
+import getSalaService from '../services/getSalaService.js';
+import EditSalaService from '../services/EditSalaService.js';
 
-const SalaCreacion = () => {
+const SalaEdit = () => {
     const token = localStorage.getItem('AUTH_TOKEN');
 
-    const [formValues, setFormValues] = useState({
-        nombre: '',
-        direccion: '',
-        provincia: '',
-        generos: '',
-        capacidad: '',
-        descripcion: '',
-        precios: '',
-        condiciones: '',
-        equipamiento: '',
-        horaReservasStart: '',
-        horaReservasEnd: '',
-    });
+    const { idSala } = useParams();
 
+    const [nombre, setNombre] = useState('');
+    const [direccion, setDireccion] = useState('');
     const [provinces, setProvinces] = useState([]);
+    const [provincia, setProvincia] = useState('');
     const [genres, setGenres] = useState([]);
-    const [photos, setPhotos] = useState({
-        photoA: null,
-        photoB: null,
-        photoC: null,
-        photoD: null,
-    });
-    const [previews, setPreviews] = useState({
-        previewUrlA: null,
-        previewUrlB: null,
-        previewUrlC: null,
-        previewUrlD: null,
-    });
+    const [generos, setGenero] = useState();
+    const [capacidad, setCapacidad] = useState(0);
+    const [descripcion, setDescripcion] = useState(' ');
+    const [precios, setPrecios] = useState(0);
+    const [condiciones, setCondiciones] = useState(' ');
+    const [equipamiento, setEquipamiento] = useState(' ');
+    const [horaReservasStart, setHoraReservasStart] = useState();
+    const [horaReservasEnd, setHoraReservasEnd] = useState();
+
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
+    }, []);
+
+    useEffect(() => {
         FetchGenresService(setGenres);
     }, []);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-    };
+    useEffect(() => {
+        const fetchSala = async () => {
+            try {
+                const { data } = await getSalaService(idSala);
+                setNombre(data.sala.nombre);
+                setGenero(data.sala.generoId);
+                setDireccion(data.sala.direccion);
+                setProvincia(data.sala.provinciaId);
+                setCapacidad(data.sala.capacidad);
+                setPrecios(data.sala.precios);
+                setDescripcion(data.sala.descripcion);
+                setCondiciones(data.sala.condiciones);
+                setEquipamiento(data.sala.equipamiento);
+                setHoraReservasStart(data.sala.horaReservasStart);
+                setHoraReservasEnd(data.sala.horaReservasEnd);
+            } catch (error) {
+                setError(error.message);
+                toast.error('Error al cargar la sala');
+            }
+        };
 
-    const handleFileChange = (e, name) => {
-        const file = e.target.files[0];
-        setPhotos({ ...photos, [name]: file });
-        setPreviews({
-            ...previews,
-            [`previewUrl${name.charAt(name.length - 1).toUpperCase()}`]:
-                URL.createObjectURL(file),
-        });
-    };
+        fetchSala();
+    }, [idSala]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        Object.entries(formValues).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
-        });
-        Object.entries(photos).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
-        });
-
         try {
-            const response = await registerSalaService({ token, formData });
-            setResp(response);
-            toast.success('Has creado tu nueva sala con éxito');
+            const dataForm = new FormData(e.target);
+            dataForm.get('nombre', nombre);
+            dataForm.get('direccion', direccion);
+            dataForm.get('provincia', provincia);
+            dataForm.get('generos', generos);
+            dataForm.get('capacidad', capacidad);
+            dataForm.get('precios', precios);
+            dataForm.get('descripcion', descripcion);
+            dataForm.get('condiciones', condiciones);
+            dataForm.get('equipamiento', equipamiento);
+            dataForm.get('horaReservasStart', horaReservasStart);
+            dataForm.get('equipamiento', equipamiento);
+
+            await EditSalaService({
+                token,
+                idSala,
+                dataForm,
+            });
+            toast.success('Has modificado sala con éxito');
         } catch (error) {
             setError(error.message);
-            toast.error('Error al crear la sala');
+            toast.error('Error al modificar la sala');
         }
     };
 
-    const {
-        nombre,
-        direccion,
-        provincia,
-        generos,
-        capacidad,
-        descripcion,
-        precios,
-        condiciones,
-        equipamiento,
-        horaReservasStart,
-        horaReservasEnd,
-    } = formValues;
-
     return (
         <>
-            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
+            <form onSubmit={handleSubmit}>
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="nombre" className="font-semibold">
-                            Nombre de la Sala:
+                            Nombre de la Sala:{' '}
                         </label>
                         <input
                             type="text"
                             name="nombre"
                             placeholder="Nombre de la sala"
                             value={nombre}
-                            required
-                            onChange={handleChange}
+                            onChange={(e) => setNombre(e.target.value)}
                             className="form-input"
                         />
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                        <label htmlFor="generos" className="font-semibold">
+                        <label htmlFor="genre" className="font-semibold">
                             Género:
                         </label>
                         <select
-                            id="generos"
                             name="generos"
                             value={generos}
                             className="form-select"
-                            onChange={handleChange}
+                            onChange={(event) => setGenero(event.target.value)}
                         >
                             <option value="">Todos</option>
                             {genres.map((genre) => (
@@ -141,21 +134,21 @@ const SalaCreacion = () => {
                             name="direccion"
                             placeholder="Dirección de la sala"
                             value={direccion}
-                            required
-                            onChange={handleChange}
+                            onChange={(e) => setDireccion(e.target.value)}
                             className="form-input"
                         />
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
-                        <label htmlFor="provincia" className="font-semibold">
+                        <label htmlFor="province" className="font-semibold">
                             Selecciona:
                         </label>
                         <select
-                            id="provincia"
                             name="provincia"
                             value={provincia}
                             className="form-select"
-                            onChange={handleChange}
+                            onChange={(e) => {
+                                setProvincia(e.target.value);
+                            }}
                         >
                             <option value="">Provincia</option>
                             {provinces.map((province) => (
@@ -165,58 +158,60 @@ const SalaCreacion = () => {
                             ))}
                         </select>
                     </div>
+
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
-                            Aforo:
+                            Aforo:{' '}
                         </label>
                         <input
                             type="number"
                             name="capacidad"
                             placeholder="Aforo de la sala"
                             value={capacidad}
-                            onChange={handleChange}
                             className="form-input"
+                            onChange={(e) => setCapacidad(e.target.value)}
                         />
                     </div>
+
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="precios" className="font-semibold">
-                            Precios:
+                            Precios:{' '}
                         </label>
                         <input
                             type="number"
                             name="precios"
                             placeholder="Tarifa para los grupos"
                             value={precios}
-                            onChange={handleChange}
+                            onChange={(e) => setPrecios(e.target.value)}
                             className="form-input"
                         />
                     </div>
+
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="descripcion" className="font-semibold">
-                            Descripción:
+                            Descripción:{' '}
                         </label>
                         <textarea
                             name="descripcion"
                             value={descripcion}
-                            onChange={handleChange}
+                            onChange={(e) => setDescripcion(e.target.value)}
                             className="form-textarea"
-                            maxLength="2000"
                         ></textarea>
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
                     </div>
+
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="condiciones" className="font-semibold">
-                            Condiciones:
+                            Condiciones:{' '}
                         </label>
                         <textarea
                             type="text"
                             name="condiciones"
                             value={condiciones}
-                            onChange={handleChange}
+                            onChange={(e) => setCondiciones(e.target.value)}
                             className="form-textarea"
-                            maxLength="2000"
                         ></textarea>
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
@@ -230,9 +225,8 @@ const SalaCreacion = () => {
                             type="text"
                             name="equipamiento"
                             value={equipamiento}
-                            onChange={handleChange}
+                            onChange={(e) => setEquipamiento(e.target.value)}
                             className="form-textarea"
-                            maxLength="2000"
                         ></textarea>
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
@@ -249,7 +243,9 @@ const SalaCreacion = () => {
                             type="time"
                             name="horaReservasStart"
                             value={horaReservasStart}
-                            onChange={handleChange}
+                            onChange={(e) =>
+                                setHoraReservasStart(e.target.value)
+                            }
                             className="form-input"
                         />
                     </div>
@@ -264,48 +260,24 @@ const SalaCreacion = () => {
                             type="time"
                             name="horaReservasEnd"
                             value={horaReservasEnd}
-                            onChange={handleChange}
+                            onChange={(e) => setHoraReservasEnd(e.target.value)}
                             className="form-input"
                         />
                     </div>
                 </div>
-                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip">
-                    {['A', 'B', 'C', 'D'].map((key) => (
-                        <div className="mb-4" key={key}>
-                            <input
-                                type="file"
-                                name={`photo${key}`}
-                                onChange={(e) =>
-                                    handleFileChange(e, `photo${key}`)
-                                }
-                            />
-                            <section>
-                                {previews[`previewUrl${key}`] && (
-                                    <img
-                                        src={previews[`previewUrl${key}`]}
-                                        alt="Vista previa"
-                                        width={'200px'}
-                                    />
-                                )}
-                            </section>
-                        </div>
-                    ))}
-                </div>
+
                 <div className="my-12 max-w-80">
                     <input
                         type="submit"
-                        value="Crear Sala"
+                        value="Modificar Sala"
                         className="btn-account p-3 w-full"
                     />
                 </div>
-                <div>
-                    {error && <p>{error}</p>}
-                    {resp.status === 'ok' && <p>{resp.message}</p>}
-                </div>
+                <div>{error && <p>{error}</p>}</div>
             </form>
             <Toastify />
         </>
     );
 };
 
-export default SalaCreacion;
+export default SalaEdit;

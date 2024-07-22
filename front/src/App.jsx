@@ -8,8 +8,9 @@ import { RegisterPage } from './pages/Register.jsx';
 import GrupoDetail from './components/GrupoDetail.jsx';
 import { LoginPage } from './pages/Login.jsx';
 import { RecuperarPassword } from './pages/RecuperarPassword.jsx';
-import CreacionSala from './pages/CreacionSala.jsx';
 import UserValidationPage from './pages/UserValidationPage.jsx';
+import CreacionSala from './pages/CreacionSala.jsx';
+import EdicionSala from './pages/EdicionSala.jsx';
 import Salas from './pages/Salas.jsx';
 import NotFound from './pages/NotFound.jsx';
 
@@ -31,7 +32,10 @@ function App() {
                         element={<RecuperarPassword />}
                     />
                     <Route path="/creacion-sala" element={<CreacionSala />} />
-                    {/* <Route path="/salas/:idSala/edit" element={<SalaEdit />} /> */}
+                    <Route
+                        path="/salas/:idSala/edit"
+                        element={<EdicionSala />}
+                    />
 
                     <Route path="/salas" element={<Salas />} />
                     <Route path="*" element={<NotFound />} />

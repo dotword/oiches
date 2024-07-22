@@ -1,12 +1,12 @@
-const registerSalaService = async ({ token, formData }) => {
-    const url = `${import.meta.env.VITE_API_URL_BASE}/users/salas`;
+const EditSalaService = async ({ token, idSala, dataForm }) => {
+    const url = `${import.meta.env.VITE_API_URL_BASE}/salas/${idSala}/edit`;
 
     const response = await fetch(url, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             token: token,
         },
-        body: formData,
+        body: dataForm,
     });
 
     const json = await response.json();
@@ -16,4 +16,4 @@ const registerSalaService = async ({ token, formData }) => {
     return json;
 };
 
-export default registerSalaService;
+export default EditSalaService;
