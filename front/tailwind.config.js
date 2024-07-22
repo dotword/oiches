@@ -15,7 +15,7 @@ export default {
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",
-                'hero-image': "url('../404Pages.jpg')",
+                'hero-image-404': "url('../404Pages.jpg')",
             },
         },
     },

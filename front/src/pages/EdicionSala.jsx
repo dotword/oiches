@@ -1,9 +1,14 @@
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth/auth.context';
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import SalaEdit from '../components/SalaEdit';
+import NotFound from './NotFound';
 
 const EdicionSala = () => {
-    return (
+    const { currentUser } = useContext(AuthContext);
+
+    return currentUser ? (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100%' }}
@@ -14,6 +19,8 @@ const EdicionSala = () => {
                 <SalaEdit />
             </main>
         </motion.div>
+    ) : (
+        <NotFound />
     );
 };
 export default EdicionSala;

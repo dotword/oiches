@@ -28,7 +28,10 @@ const editSalaSchema = Joi.object({
             'string.pattern.base':
                 'El campo de hora debe estar en formato HH:mm',
         }),
-    photo: imgSchema.optional(),
+    photoA: imgSchema.optional(),
+    photoB: imgSchema.optional(),
+    photoC: imgSchema.optional(),
+    photoD: imgSchema.optional(),
     deletePhoto: Joi.string().messages(joiErrorMessages),
 });
 

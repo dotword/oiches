@@ -26,6 +26,7 @@ const SalaEdit = () => {
     const [equipamiento, setEquipamiento] = useState(' ');
     const [horaReservasStart, setHoraReservasStart] = useState();
     const [horaReservasEnd, setHoraReservasEnd] = useState();
+    // const [photoA, setPhotoA] = useState(null);
 
     const [error, setError] = useState('');
 
@@ -41,6 +42,7 @@ const SalaEdit = () => {
         const fetchSala = async () => {
             try {
                 const { data } = await getSalaService(idSala);
+
                 setNombre(data.sala.nombre);
                 setGenero(data.sala.generoId);
                 setDireccion(data.sala.direccion);
@@ -52,6 +54,7 @@ const SalaEdit = () => {
                 setEquipamiento(data.sala.equipamiento);
                 setHoraReservasStart(data.sala.horaReservasStart);
                 setHoraReservasEnd(data.sala.horaReservasEnd);
+                // setPhotoA(data.sala.photos[0]);
             } catch (error) {
                 setError(error.message);
                 toast.error('Error al cargar la sala');
@@ -92,7 +95,7 @@ const SalaEdit = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="nombre" className="font-semibold">
@@ -265,6 +268,8 @@ const SalaEdit = () => {
                         />
                     </div>
                 </div>
+
+                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip"></div>
 
                 <div className="my-12 max-w-80">
                     <input
