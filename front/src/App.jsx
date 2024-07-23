@@ -13,6 +13,7 @@ import Users from './pages/Users.jsx';
 import CreacionSala from './pages/CreacionSala.jsx';
 import EdicionSala from './pages/EdicionSala.jsx';
 import Salas from './pages/Salas.jsx';
+import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 function App() {
@@ -40,6 +41,8 @@ function App() {
                     />
 
                     <Route path="/salas" element={<Salas />} />
+                    <Route path="/creacion-grupo" element={<CreacionGrupo />} />
+
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </AnimatePresence>
