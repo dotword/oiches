@@ -28,7 +28,7 @@ router.get('/users/validate/:registrationCode', validateUserController);
 router.post('/users/login', loginUserController);
 
 // Editar la contraseña de un usuario una vez logeado
-router.patch('/users/password', passwordChangeController);
+router.patch('/users/password', authUser, passwordChangeController);
 
 // Enviar email de recuperación de contraseña.
 router.post('/users/password/recover', sendRecoverPassController);

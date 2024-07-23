@@ -1,23 +1,11 @@
-import getPool from '../database/getPool.js';
-import generateErrorsUtil from '../utils/generateErrorsUtil.js';
+import salaExistsService from '../services/middleware/salaExistsService.js';
 
 const salaExists = async (req, res, next) => {
     try {
-        const pool = await getPool();
-
         // Obtenemos el id de la sala de los path params.
         const { idSala } = req.params;
 
-        const [sala] = await pool.query(
-            `
-                SELECT id FROM salas WHERE id=?
-            `,
-            [idSala]
-        );
-
-        if (!sala.length) {
-            throw generateErrorsUtil('Sala no encontrada', 400);
-        }
+        await salaExistsService(idSala);
 
         next();
     } catch (error) {

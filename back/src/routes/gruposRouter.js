@@ -9,6 +9,7 @@ import {
     hasOneGroup,
     checkIfSala,
     salaCanVote,
+    checkIfGroup,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
@@ -27,6 +28,7 @@ router.post(
     '/users/grupo',
     authUser,
     userExists,
+    checkIfGroup,
     hasOneGroup,
     createGrupoController
 );

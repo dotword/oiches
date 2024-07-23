@@ -2,6 +2,7 @@ import getPool from '../../database/getPool.js';
 import { passwordChangeService } from '../../services/users/passwordChangeService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import editUserPassSchema from '../../schemas/users/editUserPassSchema.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const passwordChangeController = async (req, res, next) => {
     try {
@@ -19,13 +20,12 @@ const passwordChangeController = async (req, res, next) => {
             [email]
         );
 
-        if (!user) {
-            throw {
-                status: 404,
-                message: 'Usuario no coincide con el email proporcionado.',
-                code: 'Not Found',
-            };
-        }
+        if (!user)
+            throw generateErrorsUtil(
+                'Usuario no coincide con el email proporcionado.',
+                404
+            );
+
         const { hashedPass } = await passwordChangeService(
             password,
             newPassword,

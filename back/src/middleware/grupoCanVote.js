@@ -20,7 +20,7 @@ const grupoCanVote = async (req, res, next) => {
 
         if (!reserva.length) {
             throw generateErrorsUtil(
-                'a reserva que intentas votar no está confirmada o no existe',
+                'La reserva que intentas votar no está confirmada o no existe',
                 400
             );
         }
