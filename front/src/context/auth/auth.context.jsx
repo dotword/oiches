@@ -2,7 +2,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import getDataUserLoggedService from '../../services/getDataUserLoggedService';
 
 // crear el contexto y darle un valor inicial
 export const AuthContext = createContext({
@@ -20,21 +19,6 @@ export function AuthContextProvider({ children }) {
     const navigate = useNavigate();
     const token = localStorage.getItem('AUTH_TOKEN');
     const [currentUser, setCurrentUser] = useState(null);
-    const [userLogged, setUserLogged] = useState(null);
-
-    useEffect(() => {
-        const getDateUserLogged = async () => {
-            try {
-                const data = await getDataUserLoggedService({ token });
-
-                setUserLogged(data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        getDateUserLogged();
-    }, [token]);
 
     function signIn(token) {
         localStorage.setItem('AUTH_TOKEN', token);
@@ -91,7 +75,6 @@ export function AuthContextProvider({ children }) {
                 currentUser,
                 signIn,
                 signOut,
-                userLogged,
                 token,
             }}
         >

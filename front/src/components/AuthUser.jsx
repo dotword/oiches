@@ -1,10 +1,27 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
+import getDataUserLoggedService from '../services/getDataUserLoggedService';
 import userIcon from '/image-user-prof.png';
 
 const AuthUser = () => {
-    const { signOut, userLogged } = useContext(AuthContext);
+    const { signOut, token } = useContext(AuthContext);
+
+    const [userLogged, setUserLogged] = useState(null);
+
+    useEffect(() => {
+        const getDateUserLogged = async () => {
+            try {
+                const data = await getDataUserLoggedService({ token });
+
+                setUserLogged(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        getDateUserLogged();
+    }, [token]);
 
     return userLogged ? (
         <>
