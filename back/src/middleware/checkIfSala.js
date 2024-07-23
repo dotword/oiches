@@ -1,21 +1,10 @@
-import getPool from '../database/getPool.js';
-import generateErrorsUtil from '../utils/generateErrorsUtil.js';
+import checkIfSalaService from '../services/middleware/checkIfSalaService.js';
 
 const checkIfSala = async (req, res, next) => {
     try {
-        const pool = await getPool();
+        const userId = req.user.id;
 
-        const [userResults] = await pool.query(
-            'SELECT roles FROM Usuarios WHERE id = ?',
-            [req.user.id]
-        );
-
-        if (userResults.length === 0 || userResults[0].roles !== 'sala') {
-            throw generateErrorsUtil(
-                'Acceso denegado. No es un usuario de tipo sala',
-                409
-            );
-        }
+        await checkIfSalaService(userId);
 
         next();
     } catch (error) {

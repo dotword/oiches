@@ -4,9 +4,9 @@ export default {
     theme: {
         extend: {
             colors: {
-                yellowOiches: '#ffc800',
-                purpleOiches: '#800080',
-                greyOiches: '#5d5d5d',
+                yellowOiches: '#FFB500',
+                purpleOiches: '#9333FF',
+                greyOiches: '#8591A5',
             },
             backgroundImage: {
                 'oiches-live':

@@ -7,7 +7,10 @@ const authUser = async (req, res, next) => {
         const { token } = req.headers;
 
         if (!token) {
-            throw generateErrorUtil('Se esperaba un token por el encabezado', 401);
+            throw generateErrorUtil(
+                'Se esperaba un token por el encabezado',
+                401
+            );
         }
 
         let tokenInfo;
@@ -15,7 +18,6 @@ const authUser = async (req, res, next) => {
         try {
             tokenInfo = jwt.verify(token, JWT_SECRET);
         } catch (err) {
-            console.log(err);
             throw generateErrorUtil('Credenciales invalidas', 401);
         }
 
