@@ -8,8 +8,6 @@ const userExists = async (req, res, next) => {
         // no existe, obtenemos el id de los path params.
         const userId = req.user.id || req.params;
 
-        console.log('usi ', userId);
-
         await userExistsService(userId);
 
         // Pasamos el control a la siguiente función controladora.

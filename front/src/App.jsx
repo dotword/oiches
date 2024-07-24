@@ -13,7 +13,6 @@ import Users from './pages/Users.jsx';
 import CreacionSala from './pages/CreacionSala.jsx';
 import EdicionSala from './pages/EdicionSala.jsx';
 import Salas from './pages/Salas.jsx';
-// import DeleteSalaPhoto from './components/DeleteSalaPhoto.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import NotFound from './pages/NotFound.jsx';
 
