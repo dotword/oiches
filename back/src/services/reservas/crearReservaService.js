@@ -1,5 +1,6 @@
 import getPool from '../../database/getPool.js';
 import { v4 as uuid } from 'uuid';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 export const crearReservaService = async (
     fecha,
@@ -20,9 +21,9 @@ export const crearReservaService = async (
         reservaFecha.setHours(0, 0, 0, 0)
 
         if (reservaFecha < today) {
-            throw {
-                message: 'No se puede reservar una fecha anterior a hoy.',
-            };
+            throw generateErrorsUtil('No se puede reservar una fecha anterior a hoy.',404)
+              
+            
         }
        
         const [grupoResults] = await pool.query(
@@ -45,11 +46,9 @@ export const crearReservaService = async (
             [1, sala_id]
         );
         reservaResults.forEach((result) => {
-            console.log(result);
             if (fecha === result.fecha && horaInicio === result.horaInicio) {
-                throw {
-                    message: 'Ya hay una reserva para esta fecha y hora.',
-                };
+               throw generateErrorsUtil('Ya hay una reserva para esta fecha y hora.',402) 
+                     
             }
         });
         return {

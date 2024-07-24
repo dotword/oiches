@@ -29,7 +29,7 @@ const GrupoDetail = () => {
                 </section>
                 <section>
                     <h3 className='text-2xl'>Biografia :</h3>
-                    <p>{biografia ? biografia : "El grupo tiene que añadir la biografia."}</p>
+                    <p className='my-6'>{biografia ? biografia : "El grupo tiene que añadir la biografia."}</p>
                 </section>
                 <section>
                     <h3 className='text-2xl'>Videos :</h3>
