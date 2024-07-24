@@ -43,6 +43,7 @@ const selectSalaByIdService = async (idSala) => {
                 votos_salas.comentario,
                 votos_salas.voto,
                 votos_salas.createdAt,
+                votos_salas.id,
                 grupos.id AS grupoVotaId,
                 grupos.nombre AS grupoVotaName,
                 usuarios.avatar AS grupoAvatar
