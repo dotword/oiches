@@ -45,12 +45,10 @@ router.put(
 );
 
 // Añadir fotos a una sala
-router.put(
+router.post(
     '/salas/photos/:idSala',
     authUser,
     userExists,
-    salaExists,
-    canEditSala,
     insertPhotosSalaController
 );
 

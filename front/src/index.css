@@ -12,7 +12,7 @@
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;
     }
     .form-input {
-        @apply active:border-purpleOiches p-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full;
+        @apply active:border-purpleOiches p-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full;
     }
     .form-select {
         @apply active:border-purpleOiches px-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full bg-white;
@@ -20,7 +20,13 @@
     .form-textarea {
         @apply active:border-purpleOiches px-4 py-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 min-h-40 w-full;
     }
+    .sect-photo {
+        @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
+    }
+    .border-photos {
+        @apply flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-md relative overflow-clip;
+    }
     .button {
-        @apply p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all
+        @apply p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all;
     }
 }

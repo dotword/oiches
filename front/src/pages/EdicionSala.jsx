@@ -11,7 +11,9 @@ const EdicionSala = () => {
         >
             <Header txt="Edita tu Sala" />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
-                <SalaEdit />
+                <div className="p-6 bg-white rounded-lg shadow-md md:flex md:justify-between">
+                    <SalaEdit />
+                </div>
             </main>
         </motion.div>
     );

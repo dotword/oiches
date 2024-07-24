@@ -15,10 +15,7 @@ const insertPhotosSalaController = async (req, res, next) => {
             Object.assign(req.files || {})
         );
 
-        // Obtenemos la información de la sala para comprobar si somos los propietarios.
         const sala = await selectSalaByIdService(idSala);
-
-        console.log('sala ', sala);
 
         // Array donde pushearemos las fotos (si hay).
         const photos = [];
