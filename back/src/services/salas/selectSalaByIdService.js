@@ -40,13 +40,16 @@ const selectSalaByIdService = async (idSala) => {
     const [comentarios] = await pool.query(
         `
             SELECT
-                comentario,
-                voto,
-                (SELECT nombre FROM grupos WHERE grupos.id = votos_salas.grupoVota) AS grupoVota
-            FROM votos_salas 
+                votos_salas.comentario,
+                votos_salas.voto,
+                votos_salas.createdAt,
+                grupos.id AS grupoVotaId,
+                grupos.nombre AS grupoVotaName,
+                usuarios.avatar AS grupoAvatar
+            FROM votos_salas
             JOIN grupos ON grupos.id = votos_salas.grupoVota
-            WHERE salaVotada = ?
-  
+            JOIN usuarios ON usuarios.id = grupos.usuario_id
+            WHERE votos_salas.salaVotada = ?
         `,
         [idSala]
     );
