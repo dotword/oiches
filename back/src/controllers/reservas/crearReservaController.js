@@ -9,32 +9,31 @@ const crearReservaController = async (req, res, next) => {
         // Validación con JOI
         await validateSchemaUtil(createReservaSchema, req.body);
 
-        
-       const {id} = req.user
+        const { id } = req.user;
         const { sala_id } = req.params;
         if (!sala_id) {
-            throw generateErrorsUtil('Es necesario seleccionar una sala para reservar.', 400)
+            throw generateErrorsUtil(
+                'Es necesario seleccionar una sala para reservar.',
+                400
+            );
         }
 
         const {
             reserva: { grupoResults, salaResults },
-        } = await crearReservaService(
-            fecha,
-            horaInicio,
-            horaFin,
-            id,
-            sala_id
-        );
+        } = await crearReservaService(fecha, horaInicio, horaFin, id, sala_id);
 
         if (!grupoResults || grupoResults.length === 0) {
-             throw generateErrorsUtil('No se encontró un grupo asociado al usuario.', 400)
+            throw generateErrorsUtil(
+                'No se encontró un grupo asociado al usuario.',
+                400
+            );
         }
         const grupo_id = grupoResults[0].id;
         if (!salaResults || salaResults.length === 0) {
-             throw generateErrorsUtil('Sala no encontrada.', 400)
+            throw generateErrorsUtil('Sala no encontrada.', 400);
         }
 
-        res.status(200).json({
+        res.status(201).json({
             message: 'Reserva realizada con éxito',
             reserva: {
                 fecha,

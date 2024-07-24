@@ -1,6 +1,5 @@
 // Importamos joi.
 import Joi from 'joi';
-import imgSchema from '../imgSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -28,11 +27,6 @@ const editSalaSchema = Joi.object({
             'string.pattern.base':
                 'El campo de hora debe estar en formato HH:mm',
         }),
-    photoA: imgSchema.optional(),
-    photoB: imgSchema.optional(),
-    photoC: imgSchema.optional(),
-    photoD: imgSchema.optional(),
-    deletePhoto: Joi.string().messages(joiErrorMessages),
 });
 
 export default editSalaSchema;

@@ -3,6 +3,7 @@ import { AuthContext } from '../context/auth/auth.context';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
+import DeleteSalaPhoto from '../hooks/DeleteSalaPhoto.jsx';
 
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
@@ -13,6 +14,8 @@ const SalaEdit = () => {
     const { currentUser, token } = useContext(AuthContext);
 
     const { idSala } = useParams();
+
+    const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
 
     const [nombre, setNombre] = useState('');
     const [direccion, setDireccion] = useState('');
@@ -28,13 +31,15 @@ const SalaEdit = () => {
     const [horaReservasStart, setHoraReservasStart] = useState();
     const [horaReservasEnd, setHoraReservasEnd] = useState();
     const [photoA, setPhotoA] = useState(null);
-    const [previewUrlA, setPreviewUrlA] = useState(null);
     const [photoB, setPhotoB] = useState(null);
-    const [previewUrlB, setPreviewUrlB] = useState(null);
     const [photoC, setPhotoC] = useState(null);
-    const [previewUrlC, setPreviewUrlC] = useState(null);
     const [photoD, setPhotoD] = useState(null);
-    const [previewUrlD, setPreviewUrlD] = useState(null);
+    const [deletePhoto, setDeletePhoto] = useState('');
+    const [photoName, setPhotoName] = useState('');
+    const [newPhoto, setNewPhoto] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
+
+    // const [imageA, setImageA] = useState(null);
 
     const [error, setError] = useState('');
 
@@ -62,7 +67,10 @@ const SalaEdit = () => {
                 setEquipamiento(data.sala.equipamiento);
                 setHoraReservasStart(data.sala.horaReservasStart);
                 setHoraReservasEnd(data.sala.horaReservasEnd);
-                // setPhotoA(data.sala.photos[0]);
+                setPhotoA(data.sala.photos[0]);
+                setPhotoB(data.sala.photos[1]);
+                setPhotoC(data.sala.photos[2]);
+                setPhotoD(data.sala.photos[3]);
             } catch (error) {
                 setError(error.message);
                 toast.error('Error al cargar la sala');
@@ -72,6 +80,7 @@ const SalaEdit = () => {
         fetchSala();
     }, [idSala]);
 
+    // console.log(`${urlUploads}/${photoA.name}`);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -88,6 +97,7 @@ const SalaEdit = () => {
             dataForm.get('equipamiento', equipamiento);
             dataForm.get('horaReservasStart', horaReservasStart);
             dataForm.get('horaReservasEnd', horaReservasEnd);
+            dataForm.get('newPhoto', newPhoto);
 
             await EditSalaService({
                 token,
@@ -281,25 +291,26 @@ const SalaEdit = () => {
                     <div className="mb-4">
                         <input
                             type="file"
-                            name="photoA"
+                            name="newPhoto"
                             onChange={(e) => {
-                                setPhotoA(e.target.files[0]);
-                                setPreviewUrlA(
+                                setNewPhoto(e.target.files[0]);
+
+                                setPreviewUrl(
                                     URL.createObjectURL(e.target.files[0])
                                 );
                             }}
                         />
                         <section>
-                            {previewUrlA && (
+                            {previewUrl && (
                                 <img
-                                    src={previewUrlA}
+                                    src={previewUrl}
                                     alt="Vista previa"
                                     width={'200px'}
                                 />
                             )}
                         </section>
                     </div>
-                    <div className="mb-4">
+                    {/* <div className="mb-4">
                         <input
                             type="file"
                             name="photoB"
@@ -361,7 +372,7 @@ const SalaEdit = () => {
                                 />
                             )}
                         </section>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="my-12 max-w-80">
@@ -373,6 +384,62 @@ const SalaEdit = () => {
                 </div>
                 <div>{error && <p>{error}</p>}</div>
             </form>
+            <div>
+                {photoA ? (
+                    <div className="relative">
+                        <img
+                            src={`${urlUploads}/${photoA.name}`}
+                            alt="Vista previa"
+                            width={'200px'}
+                            onClick={() => {
+                                setDeletePhoto(photoA.id);
+                                setPhotoName(photoA.name);
+                            }}
+                        />
+                        <button
+                            onClick={() => {
+                                setDeletePhoto(photoA.id);
+                                setPhotoName(photoA.name);
+                            }}
+                        >
+                            Borrar foto
+                        </button>
+                    </div>
+                ) : (
+                    ''
+                )}
+            </div>
+            {
+                <DeleteSalaPhoto
+                    photoName={photoName}
+                    deletePhoto={deletePhoto}
+                />
+            }
+            {/* <div>
+                {photoB ? (
+                    <div className="relative">
+                        <img
+                            src={`${urlUploads}/${photoB.name}`}
+                            alt="Vista previa"
+                            width={'200px'}
+                            onClick={() => setDeletePhoto(photoB.id)}
+                        />
+                    </div>
+                ) : (
+                    ''
+                )}
+                <div className="relative">
+                    {!deletePhoto ? (
+                        <button onClick={() => setDeletePhoto(photoB.id)}>
+                            Borrar foto
+                        </button>
+                    ) : (
+                        <button onClick={() => setDeletePhoto(null)}>
+                            No Borrar
+                        </button>
+                    )}
+                </div>
+            </div> */}
             <Toastify />
         </>
     ) : (

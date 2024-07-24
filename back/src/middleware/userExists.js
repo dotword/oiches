@@ -6,7 +6,9 @@ const userExists = async (req, res, next) => {
     try {
         // Intentamos obtener el id de usuario de la propiedad "user". Si dicha propiedad
         // no existe, obtenemos el id de los path params.
-        const userId = req.params.userId || req.user.id;
+        const userId = req.user.id || req.params;
+
+        console.log('usi ', userId);
 
         await userExistsService(userId);
 
