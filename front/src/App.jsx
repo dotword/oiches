@@ -42,16 +42,6 @@ function App() {
                         element={<EdicionSala />}
                     />
 
-                    {/* <Route
-                        path="/salas/:photoName/:deletePhoto"
-                        element={<DeleteSalaPhoto />}
-                    /> */}
-
-                    {/* <Route
-                        path="/salas/:photoName/:deletePhoto"
-                        element={<DeleteSalaPhoto />}
-                    /> */}
-
                     <Route path="/salas" element={<Salas />} />
                     <Route path="/sala/:idSala" element={<SalaPage />} />
 
