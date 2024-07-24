@@ -3,12 +3,7 @@ const getSalaService = async (idSala) => {
 
     const url = `${VITE_API_URL_BASE}/salas/${idSala}`;
 
-    const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
+    const response = await fetch(url);
 
     const json = await response.json();
 
