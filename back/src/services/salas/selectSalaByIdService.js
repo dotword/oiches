@@ -2,7 +2,7 @@ import getPool from '../../database/getPool.js';
 
 const selectSalaByIdService = async (idSala) => {
     const pool = await getPool();
-    
+
     const [entry] = await pool.query(
         `
             SELECT 
@@ -40,19 +40,18 @@ const selectSalaByIdService = async (idSala) => {
     const [comentarios] = await pool.query(
         `
             SELECT
-                SC.id,
-                SC.descripcion,
-                SC.createdAt,
-                G.id AS grupoId,
-                G.nombre AS grupoVota,
-                U.avatar AS grupoAvatar
-            FROM sala_comments SC
-            JOIN grupos G ON G.id = SC.grupo_id
-            JOIN usuarios U ON U.id = G.usuario_id
-            WHERE SC.sala_id = ?
+                comentario,
+                voto,
+                (SELECT nombre FROM grupos WHERE grupos.id = votos_salas.grupoVota) AS grupoVota
+            FROM votos_salas 
+            JOIN grupos ON grupos.id = votos_salas.grupoVota
+            WHERE salaVotada = ?
+  
         `,
         [idSala]
     );
+    // Agregamos el array de los media del grupo.
+    entry[0].comentarios = comentarios;
 
     // Fetch photos and reservations
     const [photos] = await pool.query(

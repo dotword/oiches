@@ -47,12 +47,23 @@ function App() {
                         element={<DeleteSalaPhoto />}
                     /> */}
 
+                    {/* <Route
+                        path="/salas/:photoName/:deletePhoto"
+                        element={<DeleteSalaPhoto />}
+                    /> */}
+
                     <Route path="/salas" element={<Salas />} />
-                    <Route path="/sala/:idSala" element={<SalaPage/>} />
-                    
+                    <Route path="/sala/:idSala" element={<SalaPage />} />
+
                     <Route path="/creacion-grupo" element={<CreacionGrupo />} />
-                    <Route path="/sala/:idSala/reservas" element={<CrearReservaPage type={'sala'}/>} />
-                    <Route path="/grupo/:idGrupo/reservas" element={<CrearReservaPage type={'grupo'}/>} />
+                    <Route
+                        path="/sala/:idSala/reservas"
+                        element={<CrearReservaPage type={'sala'} />}
+                    />
+                    <Route
+                        path="/grupo/:idGrupo/reservas"
+                        element={<CrearReservaPage type={'grupo'} />}
+                    />
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </AnimatePresence>

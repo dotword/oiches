@@ -26,8 +26,8 @@ const SalaEdit = () => {
     const [precios, setPrecios] = useState(0);
     const [condiciones, setCondiciones] = useState(' ');
     const [equipamiento, setEquipamiento] = useState(' ');
-    const [horaReservasStart, setHoraReservasStart] = useState();
-    const [horaReservasEnd, setHoraReservasEnd] = useState();
+    const [horaReservasStart, setHoraReservasStart] = useState('');
+    const [horaReservasEnd, setHoraReservasEnd] = useState('');
 
     const [error, setError] = useState('');
 
