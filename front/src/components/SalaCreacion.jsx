@@ -270,24 +270,32 @@ const SalaCreacion = () => {
                         />
                     </div>
                 </div>
-                <div className="pt-4 md:w-2/5 md:pl-12 overflow-clip">
+                <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center">
+                    <p className="block font-medium mb-4 md:w-full text-center">
+                        Fotos de la sala
+                    </p>
                     {['A', 'B', 'C', 'D'].map((key) => (
-                        <div className="mb-4" key={key}>
-                            <input
-                                type="file"
-                                name={`photo${key}`}
-                                onChange={(e) =>
-                                    handleFileChange(e, `photo${key}`)
-                                }
-                            />
-                            <section>
-                                {previews[`previewUrl${key}`] && (
-                                    <img
-                                        src={previews[`previewUrl${key}`]}
-                                        alt="Vista previa"
-                                        width={'200px'}
+                        <div className="mb-4 flex flex-wrap gap-4" key={key}>
+                            <section className="sect-photo">
+                                <span className="border-photos">
+                                    {previews[`previewUrl${key}`] ? (
+                                        <img
+                                            src={previews[`previewUrl${key}`]}
+                                            alt="Vista previa"
+                                            width={'200px'}
+                                        />
+                                    ) : (
+                                        <span>Sube una foto</span>
+                                    )}
+                                    <input
+                                        type="file"
+                                        name={`photo${key}`}
+                                        className="absolute w-full h-full opacity-0 cursor-pointer"
+                                        onChange={(e) =>
+                                            handleFileChange(e, `photo${key}`)
+                                        }
                                     />
-                                )}
+                                </span>
                             </section>
                         </div>
                     ))}

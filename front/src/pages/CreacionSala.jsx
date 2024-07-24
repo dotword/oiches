@@ -11,7 +11,9 @@ const CreacionSala = () => {
         >
             <Header txt="Crea tu Sala" />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
-                <SalaCreacion />
+                <div className="p-6 bg-white rounded-lg shadow-md">
+                    <SalaCreacion />
+                </div>
             </main>
         </motion.div>
     );

@@ -9,9 +9,8 @@ export default {
                 greyOiches: '#8591A5',
             },
             backgroundImage: {
-                'oiches-live':
-                    "url('/oiches/front/src/assets/oiches-Live.jpg')",
-                'hero-image': "url('../Live.jpg')",
+                'oiches-live': "url('/oiches/front/src/assets/Live.jpg')",
+                'hero-image': "url('../public/Live.jpg')",
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",
