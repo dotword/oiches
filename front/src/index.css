@@ -20,4 +20,7 @@
     .form-textarea {
         @apply active:border-purpleOiches px-4 py-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 min-h-40 w-full;
     }
+    .button {
+        @apply hover:scale-105 transition-all
+    }
 }

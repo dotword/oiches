@@ -15,6 +15,7 @@ import EdicionSala from './pages/EdicionSala.jsx';
 import Salas from './pages/Salas.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import NotFound from './pages/NotFound.jsx';
+import { SalaPage } from './pages/SalaPage.jsx';
 
 function App() {
     return (
@@ -41,6 +42,7 @@ function App() {
                     />
 
                     <Route path="/salas" element={<Salas />} />
+                    <Route path="/sala/:idSala" element={<SalaPage/>} />
                     <Route path="/creacion-grupo" element={<CreacionGrupo />} />
 
                     <Route path="*" element={<NotFound />} />

@@ -2,6 +2,7 @@ import getPool from '../../database/getPool.js';
 
 const selectSalaByIdService = async (idSala) => {
     const pool = await getPool();
+    
     const [entry] = await pool.query(
         `
             SELECT 
@@ -31,24 +32,29 @@ const selectSalaByIdService = async (idSala) => {
         [idSala]
     );
 
+    if (entry.length === 0) {
+        return null;
+    }
+
     // Obtenemos el array de los comentarios de la sala
     const [comentarios] = await pool.query(
         `
             SELECT
-                comentario,
-                voto,
-                (SELECT nombre FROM grupos WHERE grupos.id = votos_salas.grupoVota) AS grupoVota
-            FROM votos_salas 
-            JOIN grupos ON grupos.id = votos_salas.grupoVota
-            WHERE salaVotada = ?
-  
+                SC.id,
+                SC.descripcion,
+                SC.createdAt,
+                G.id AS grupoId,
+                G.nombre AS grupoVota,
+                U.avatar AS grupoAvatar
+            FROM sala_comments SC
+            JOIN grupos G ON G.id = SC.grupo_id
+            JOIN usuarios U ON U.id = G.usuario_id
+            WHERE SC.sala_id = ?
         `,
         [idSala]
     );
-    // Agregamos el array de los media del grupo.
-    entry[0].comentarios = comentarios;
 
-    // Fetch photos, comments, and reservations
+    // Fetch photos and reservations
     const [photos] = await pool.query(
         `SELECT id, name FROM sala_fotos WHERE salaId = ?`,
         [idSala]
@@ -57,22 +63,19 @@ const selectSalaByIdService = async (idSala) => {
     const [reservations] = await pool.query(
         `
             SELECT
-            R.grupo_id,
+                R.grupo_id,
                 G.nombre AS grupo,
                 R.fecha,
                 R.horaInicio,
                 R.horaFin,
                 R.confirmada
-                FROM Reservas R
-                LEFT JOIN Grupos G ON G.id= R.grupo_id
-            WHERE sala_id = ?
-            `,
+            FROM Reservas R
+            LEFT JOIN Grupos G ON G.id = R.grupo_id
+            WHERE R.sala_id = ?
+        `,
         [idSala]
     );
 
-    if (entry.length === 0) {
-        return null;
-    }
     return {
         ...entry[0],
         comentarios,

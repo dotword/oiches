@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react';
-import getGrupoByIdService from '../services/getGrupoByIdService';
+import getSalaService from '../services/getSalaService.js';
 
-const useGrupo = (idGrupo) => {
+
+const useSala = (idSala) => {
     const [entry, setEntry] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
         const getEntry = async () => {
             try {
-                const json = await getGrupoByIdService(idGrupo);
+                const json = await getSalaService(idSala);
 
-                setEntry(json.data.grupo);
+                setEntry(json.data.sala);
             } catch (error) {
                 setError(error);
             }
         };
 
         getEntry();
-    }, [idGrupo]);
+    }, [idSala]);
 
     return { entry, error };
 };
 
-export default useGrupo;
+export default useSala;
