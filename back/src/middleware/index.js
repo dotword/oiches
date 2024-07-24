@@ -12,6 +12,7 @@ import hasOneGroup from './hasOneGroup.js';
 import grupoCanVote from './grupoCanVote.js';
 import salaCanVote from './salaCanVote.js';
 import canEditReserva from './canEditReserva.js';
+import canEditPhoto from './canEditPhoto.js';
 
 export {
     authUser,
@@ -28,4 +29,5 @@ export {
     grupoCanVote,
     salaCanVote,
     canEditReserva,
+    canEditPhoto,
 };
