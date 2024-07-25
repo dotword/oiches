@@ -35,7 +35,6 @@ const DeleteSalaPhotos = () => {
 
         fetchSalaPhotos();
     }, [idSala]);
-
     const handleClick = async (e) => {
         try {
             e.preventDefault();

@@ -24,7 +24,10 @@ const createGrupoSchema = Joi.object({
     photoC: imgSchema.optional(),
     photoD: imgSchema.optional(),
     file: fileSchema.optional(),
-    media: Joi.any().messages(joiErrorMessages),
+    mediaA: Joi.any().messages(joiErrorMessages),
+    mediaB: Joi.any().messages(joiErrorMessages),
+    mediaC: Joi.any().messages(joiErrorMessages),
+    mediaD: Joi.any().messages(joiErrorMessages),
 });
 
 export default createGrupoSchema;

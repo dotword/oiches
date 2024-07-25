@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
-// import SalaGrupo from '../components/GrupoCreacion';
+import GrupoCreacion from '../components/GrupoCreacion';
 
 const CreacionGrupo = () => {
     return (
@@ -11,7 +11,9 @@ const CreacionGrupo = () => {
         >
             <Header txt="Crea tu Grupo" />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
-                <h1>Creación Grupo</h1>
+                <div className="p-6 bg-white rounded-lg shadow-md">
+                    <GrupoCreacion />
+                </div>
             </main>
         </motion.div>
     );
