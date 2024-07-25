@@ -28,7 +28,7 @@ const GrupoDetail = () => {
         reservations,
         votes,
     } = entry;
-
+console.log(entry);
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -58,6 +58,8 @@ const GrupoDetail = () => {
                             : 'El grupo tiene que añadir la biografia.'}
                     </p>
                 </section>
+                {
+                    media.length > 0 &&
                 <section>
                     <h3 className="text-2xl">Videos :</h3>
                     <div className="grid grid-cols-1 place-items-center gap-6 my-6 w-full lg:grid-cols-2">
@@ -77,6 +79,7 @@ const GrupoDetail = () => {
                         })}
                     </div>
                 </section>
+                }
                 <section>
                     <h3 className="text-2xl">Fotos:</h3>
                     <div className="grid grid-cols-2 gap-4 my-6 place-items-center">

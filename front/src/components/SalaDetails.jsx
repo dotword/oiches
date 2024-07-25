@@ -37,6 +37,7 @@ const SalaDetail = () => {
         reservations,
         votes,
     } = entry;
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -116,20 +117,21 @@ const SalaDetail = () => {
                         <h3 className="text-2xl">Comentarios :</h3>
 
                         {comentarios.map((comentario) => {
+                        console.log(comentario);
                             return (
                                 <div
                                     key={comentario.id}
                                     className="my-6 border p-3 rounded-lg flex justify-between gap-20 max-w-fit"
                                 >
                                     <span>
-                                        {comentario.descripcion}
+                                        {comentario.comentario}
                                         <p className="text-gray-400">
                                             {comentario.createdAt.slice(0, 10)}
                                         </p>
                                     </span>
                                     <Link
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
-                                        to={`/grupos/${comentario.grupoId}`}
+                                        to={`/grupos/${comentario.grupoVotaId}`}
                                     >
                                         <img
                                             className="w-10"
@@ -140,7 +142,7 @@ const SalaDetail = () => {
                                             }
                                             alt=""
                                         />
-                                        <p>{comentario.grupoVota}</p>
+                                        <p>{comentario.grupoVotaName}</p>
                                     </Link>
                                 </div>
                             );
