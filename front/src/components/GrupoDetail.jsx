@@ -80,22 +80,17 @@ console.log(entry);
                     </div>
                 </section>
                 }
-                <section>
+               <section>
                     <h3 className="text-2xl">Fotos:</h3>
-                    <div className="grid grid-cols-2 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
+                            
                             <>
-                                <img
-                                    key={photos[0].id}
-                                    src={photos[0].url}
-                                    className="col-span-2 rounded-3xl"
-                                    alt="Foto principal"
-                                />
-                                {photos.slice(1).map((photo) => (
+                                {photos.map((photo) => (
                                     <img
                                         key={photo.id}
-                                        src={photo.url}
-                                        className="col-span-1 rounded-3xl"
+                                        src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
+                                        className="rounded-3xl max-h-96 shadow-xl"
                                         alt="Foto secundaria"
                                     />
                                 ))}
@@ -103,13 +98,8 @@ console.log(entry);
                         ) : (
                             <>
                                 <img
+                                    className="col-span-2 rounded-3xl"
                                     src={Noimage}
-                                    className="rounded-3xl"
-                                    alt="No image"
-                                />
-                                <img
-                                    src={Noimage}
-                                    className="rounded-3xl"
                                     alt="No image"
                                 />
                             </>

@@ -8,6 +8,7 @@ import Toastify from "../components/Toastify.jsx";
 import { useEffect } from "react";
 import noImage from "../assets/noimage.png"
 export const CrearReservaPage = ({type}) => {
+  const { VITE_API_URL_BASE} = import.meta.env;
   const navigate = useNavigate()
   const {idSala} = useParams()
   const {entry} = useSala(idSala)
@@ -27,13 +28,13 @@ export const CrearReservaPage = ({type}) => {
         <section className="flex flex-col place-items-center border rounded-lg mx-auto min-w-60 sm:flex-row sm:gap-6">
         {entry.photos.length > 0 ? (
         <img
-        className="w-full sm:w-auto"
-          src={entry.photos[0].url} 
+        className="max-w-md rounded-l-md"
+          src={`${VITE_API_URL_BASE}/uploads/${entry.photos[0].name}`}
           alt={`Una imagen de la sala ${entry.nombre}`} 
         />
       ) : (
         <img
-        className="w-full sm:w-auto" 
+        className="w-full sm:w-auto h-full rounded-l-md" 
           src={noImage} 
           alt="Imagen Default" 
         />
