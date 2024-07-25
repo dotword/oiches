@@ -57,7 +57,7 @@ const SalaEdit = () => {
                 setHoraReservasEnd(data.sala.horaReservasEnd);
             } catch (error) {
                 setError(error.message);
-                toast.error('Error al cargar la sala');
+                toast.error(error.message);
             }
         };
 

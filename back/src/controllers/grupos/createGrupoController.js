@@ -14,9 +14,13 @@ const createGrupoController = async (req, res, next) => {
             honorarios,
             biografia,
             rider,
-            media,
+            mediaA,
+            mediaB,
+            mediaC,
+            mediaD,
         } = req.body;
-        console.log('media ', media);
+
+        const medias = [mediaA, mediaB, mediaC, mediaD].filter(Boolean); // Filtrar valores no nulos
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
@@ -34,14 +38,10 @@ const createGrupoController = async (req, res, next) => {
             rider
         );
 
-        const medias = [];
-        if (req.body.media) {
-            for (const media of Object.values(req.body.media).slice(0, 5)) {
-                await insertGrupoMediaService(media, grupoId);
-                medias.push({
-                    url: media,
-                });
-            }
+        const mediaUrls = [];
+        for (const media of medias) {
+            await insertGrupoMediaService(media, grupoId);
+            mediaUrls.push({ url: media });
         }
 
         // Array donde pushearemos las fotos (si hay).
@@ -76,7 +76,7 @@ const createGrupoController = async (req, res, next) => {
                     biografia,
                     rider,
                     photos,
-                    medias,
+                    medias: mediaUrls,
                     createdAt: new Date(),
                 },
             },
