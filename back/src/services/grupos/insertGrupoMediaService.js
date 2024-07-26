@@ -25,5 +25,5 @@ export const deleteGrupoMediaService = async (mediaDelete) => {
     const pool = await getPool();
 
     // Eliminamos la foto.
-    await pool.query(`DELETE FROM grupo_media WHERE id = ?`, [mediaDelete]);
+    await pool.query(`DELETE FROM grupo_media WHERE url = ?`, [mediaDelete]);
 };
