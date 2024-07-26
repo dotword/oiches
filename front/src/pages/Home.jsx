@@ -10,6 +10,9 @@ const Home = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Encuentra tu Banda Sonora" />
+                <main>
+                    
+                </main>
             </motion.div>
         </>
     );

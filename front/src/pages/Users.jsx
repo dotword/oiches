@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import AuthUser from '../components/AuthUser';
+import { ListarReservas } from '../components/ListarReservas.jsx';
 
 const Users = () => {
     return (
@@ -13,6 +14,7 @@ const Users = () => {
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
                 <AuthUser />
             </main>
+            <ListarReservas/>
         </motion.div>
     );
 };
