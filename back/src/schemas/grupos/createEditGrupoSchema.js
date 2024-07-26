@@ -14,7 +14,7 @@ const createEditGrupoSchema = Joi.object({
     biografia: Joi.string().max(2000).messages(joiErrorMessages),
     rider: Joi.string().max(2000).messages(joiErrorMessages),
     mediaName: Joi.string().uri().messages(joiErrorMessages),
-    mediaDelete: Joi.string().messages(joiErrorMessages),
+    mediaDelete: Joi.string().uri().messages(joiErrorMessages),
     photo: fileSchema.optional(),
     deletePhoto: Joi.string().messages(joiErrorMessages),
 });

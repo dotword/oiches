@@ -20,12 +20,12 @@ const SalaEdit = () => {
     const [provinces, setProvinces] = useState([]);
     const [provincia, setProvincia] = useState('');
     const [genres, setGenres] = useState([]);
-    const [generos, setGenero] = useState();
-    const [capacidad, setCapacidad] = useState(0);
-    const [descripcion, setDescripcion] = useState(' ');
-    const [precios, setPrecios] = useState(0);
-    const [condiciones, setCondiciones] = useState(' ');
-    const [equipamiento, setEquipamiento] = useState(' ');
+    const [generos, setGenero] = useState('');
+    const [capacidad, setCapacidad] = useState('');
+    const [descripcion, setDescripcion] = useState('');
+    const [precios, setPrecios] = useState('');
+    const [condiciones, setCondiciones] = useState('');
+    const [equipamiento, setEquipamiento] = useState('');
     const [horaReservasStart, setHoraReservasStart] = useState('');
     const [horaReservasEnd, setHoraReservasEnd] = useState('');
 
@@ -44,17 +44,17 @@ const SalaEdit = () => {
             try {
                 const { data } = await getSalaService(idSala);
 
-                setNombre(data.sala.nombre);
-                setGenero(data.sala.generoId);
-                setDireccion(data.sala.direccion);
-                setProvincia(data.sala.provinciaId);
-                setCapacidad(data.sala.capacidad);
-                setPrecios(data.sala.precios);
-                setDescripcion(data.sala.descripcion);
-                setCondiciones(data.sala.condiciones);
-                setEquipamiento(data.sala.equipamiento);
-                setHoraReservasStart(data.sala.horaReservasStart);
-                setHoraReservasEnd(data.sala.horaReservasEnd);
+                setNombre(data.sala.nombre || '');
+                setGenero(data.sala.generoId || '');
+                setDireccion(data.sala.direccion || '');
+                setProvincia(data.sala.provinciaId || '');
+                setCapacidad(data.sala.capacidad || '');
+                setPrecios(data.sala.precios || '');
+                setDescripcion(data.sala.descripcion || '');
+                setCondiciones(data.sala.condiciones || '');
+                setEquipamiento(data.sala.equipamiento || '');
+                setHoraReservasStart(data.sala.horaReservasStart || '');
+                setHoraReservasEnd(data.sala.horaReservasEnd || '');
             } catch (error) {
                 setError(error.message);
                 toast.error(error.message);
@@ -63,23 +63,23 @@ const SalaEdit = () => {
 
         fetchSala();
     }, [idSala]);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const dataForm = new FormData(e.target);
-            dataForm.get('nombre', nombre);
-            dataForm.get('direccion', direccion);
-            dataForm.get('provincia', provincia);
-            dataForm.get('generos', generos);
-            dataForm.get('capacidad', capacidad);
-            dataForm.get('precios', precios);
-            dataForm.get('descripcion', descripcion);
-            dataForm.get('condiciones', condiciones);
-            dataForm.get('equipamiento', equipamiento);
-            dataForm.get('horaReservasStart', horaReservasStart);
-            dataForm.get('horaReservasEnd', horaReservasEnd);
+            const dataForm = new FormData();
+            dataForm.append('nombre', nombre || '');
+            dataForm.append('direccion', direccion || '');
+            dataForm.append('provincia', provincia || '');
+            dataForm.append('generos', generos || '');
+            dataForm.append('capacidad', capacidad || '');
+            dataForm.append('precios', precios || '');
+            dataForm.append('descripcion', descripcion || '');
+            dataForm.append('condiciones', condiciones || '');
+            dataForm.append('equipamiento', equipamiento || '');
+            dataForm.append('horaReservasStart', horaReservasStart || '');
+            dataForm.append('horaReservasEnd', horaReservasEnd || '');
+
             await EditSalaService({
                 token,
                 idSala,
@@ -88,7 +88,7 @@ const SalaEdit = () => {
             toast.success('Has modificado sala con éxito');
         } catch (error) {
             setError(error.message);
-            toast.error('Error al modificar la sala');
+            toast.error(error.message);
         }
     };
 
@@ -100,7 +100,7 @@ const SalaEdit = () => {
             >
                 <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                     <label htmlFor="nombre" className="font-semibold">
-                        Nombre de la Sala:{' '}
+                        Nombre de la Sala:
                     </label>
                     <input
                         type="text"
@@ -193,7 +193,7 @@ const SalaEdit = () => {
 
                 <div className="flex flex-col mb-4 md:w-full">
                     <label htmlFor="descripcion" className="font-semibold">
-                        Descripción:{' '}
+                        Descripción:
                     </label>
                     <textarea
                         name="descripcion"
@@ -208,7 +208,7 @@ const SalaEdit = () => {
 
                 <div className="flex flex-col mb-4 md:w-full">
                     <label htmlFor="condiciones" className="font-semibold">
-                        Condiciones:{' '}
+                        Condiciones:
                     </label>
                     <textarea
                         type="text"

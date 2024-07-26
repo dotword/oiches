@@ -61,7 +61,7 @@ const editGrupoController = async (req, res, next) => {
             );
 
         // Guardamos el enlace en DB.
-        if (mediaName !== undefined) {
+        if (mediaName !== undefined && mediaName.length > 0) {
             await insertGrupoMediaService(mediaName, idGrupo);
         }
 
