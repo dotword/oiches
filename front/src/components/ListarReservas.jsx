@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export const ListarReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -100,8 +101,8 @@ export const ListarReservas = () => {
           reservas.map((reserva) => (
             <>
             <section className='grid border grid-cols-6 max-w-6xl place-items-center gap-6 mx-auto' key={reserva.id}>
-              <p>{reserva.grupo_id}</p>
-              <p>{reserva.sala_id}</p>
+              <Link to={`/grupo/${reserva.grupo_id}`}>{reserva.grupo_id}</Link>
+              <Link to={`/sala/${reserva.sala_id}`}>{reserva.sala_id}</Link>
               <p>{reserva.confirmada === 0 ? 'Reserva no confirmada.' : 'Reserva confirmada'}</p>
               <p>{reserva.fecha}</p>
               <p>{reserva.horaInicio}</p>
