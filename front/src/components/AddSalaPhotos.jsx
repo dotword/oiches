@@ -37,7 +37,10 @@ const AddSalaPhotos = (idSala) => {
 
     return currentUser ? (
         <>
-            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
+            <form
+                onSubmit={handleSubmit}
+                className="md:flex md:flex-wrap justify-center"
+            >
                 <div className="mb-4 flex flex-wrap gap-4">
                     <section className="sect-photo">
                         <span className="border-photos">
@@ -63,15 +66,20 @@ const AddSalaPhotos = (idSala) => {
                                 }}
                             />
                         </span>
+                        {previewUrlA ? (
+                            <div className="mt-2 w-full">
+                                <input
+                                    type="submit"
+                                    value="Subir fotos"
+                                    className="btn-account"
+                                />
+                            </div>
+                        ) : (
+                            ''
+                        )}
                     </section>
                 </div>
-                <div className="mt-2 w-full">
-                    <input
-                        type="submit"
-                        value="Subir fotos"
-                        className="btn-account"
-                    />
-                </div>
+
                 <div>
                     {error && <p>{error}</p>}
                     {resp.status === 'ok' && <p>{resp.message}</p>}

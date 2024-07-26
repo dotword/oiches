@@ -78,7 +78,7 @@ const SalaCreacion = () => {
             toast.success('Has creado tu nueva sala con éxito');
         } catch (error) {
             setError(error.message);
-            toast.error('Error al crear la sala');
+            toast.error(error.message);
         }
     };
 
