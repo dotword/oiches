@@ -80,6 +80,43 @@ console.log(entry);
                     </div>
                 </section>
                 }
+                {comentarios.length > 0 && (
+                    <section>
+                        <h3 className="text-2xl">Comentarios :</h3>
+
+                        {comentarios.map((comentario) => {
+                        console.log(comentario);
+                            return (
+                                <div
+                                    key={comentario.id}
+                                    className="my-6 border p-3 rounded-lg flex justify-between gap-20 max-w-fit"
+                                >
+                                    <span>
+                                        {comentario.comentario}
+                                        <p className="text-gray-400">
+                                            {comentario.createdAt.slice(0, 10)}
+                                        </p>
+                                    </span>
+                                    <Link
+                                        className="flex place-items-center gap-2 hover:scale-105 transition-all"
+                                        to={`/sala/${comentario.salaVotaId}`}
+                                    >
+                                        <img
+                                            className="w-10"
+                                            src={
+                                                comentario.salaAvatar
+                                                    ? comentario.salaAvatar
+                                                    : DefaultProfile
+                                            }
+                                            alt=""
+                                        />
+                                        <p>{comentario.salaVotaNombre}</p>
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                    </section>
+                )}
                <section>
                     <h3 className="text-2xl">Fotos:</h3>
                     <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">

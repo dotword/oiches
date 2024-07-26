@@ -30,17 +30,21 @@ const selectGrupoByIdService = async (idGrupo) => {
     // Obtenemos el array de los comentarios del grupo
     const [comentarios] = await pool.query(
         `
-                SELECT
-                    comentario,
-                    voto,
-                    (SELECT nombre AS voto FROM salas WHERE salas.id = votos_grupos.salaVota) AS salaVota
-                FROM votos_grupos
-                JOIN salas ON salas.id = votos_grupos.salaVota
-                WHERE grupoVotado = ?
-      
-            `,
+          SELECT
+              votos_grupos.comentario,
+              votos_grupos.voto,
+              votos_grupos.createdAt,
+              votos_grupos.id,
+              salas.id AS salaVotaId,
+              salas.nombre AS salaVotaNombre,
+              usuarios.avatar AS salaAvatar
+          FROM votos_grupos
+          JOIN salas ON salas.id = votos_grupos.salaVota
+          JOIN usuarios ON usuarios.id = salas.usuario_id
+          WHERE votos_grupos.grupoVotado = ?
+        `,
         [idGrupo]
-    );
+      );
     // Agregamos el array de los media del grupo.
     entry[0].comentarios = comentarios;
 
