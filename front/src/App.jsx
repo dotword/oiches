@@ -25,7 +25,7 @@ function App() {
             <AnimatePresence>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/grupos/:idGrupo" element={<GrupoDetail />} />
+                    <Route path="/grupo/:idGrupo" element={<GrupoDetail />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route
                         path="/users/validate/:registrationCode"
@@ -39,7 +39,7 @@ function App() {
                     <Route path="/users" element={<Users />} />
                     <Route path="/creacion-sala" element={<CreacionSala />} />
                     <Route
-                        path="/salas/:idSala/edit"
+                        path="/sala/:idSala/edit"
                         element={<EdicionSala />}
                     />
 

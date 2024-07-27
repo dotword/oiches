@@ -132,7 +132,7 @@ const SalaDetail = () => {
                                     </span>
                                     <Link
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
-                                        to={`/grupos/${comentario.grupoVotaId}`}
+                                        to={`/grupo/${comentario.grupoVotaId}`}
                                     >
                                         <img
                                             className="w-10"
