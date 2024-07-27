@@ -35,25 +35,23 @@ export const AddGrupoMedia = () => {
     };
     return (
         <form onSubmit={handleSubmit}>
-            <div className="">
-                <p className="font-semibold mb-2">Enlaza un video:</p>
-                <input
-                    type="url"
-                    name="mediaName"
-                    placeholder="Añade enlaces a tus videos"
-                    value={mediaName}
-                    onChange={(e) => {
-                        e.target.value.includes('youtube.com/watch')
-                            ? setMediaName(
-                                  e.target.value.replace('watch?v=', 'embed/')
-                              )
-                            : setMediaName(e.target.value);
-                    }}
-                    className="form-input"
-                />
-            </div>
+            <p className="font-semibold mb-2">Enlaza un video:</p>
+            <input
+                type="url"
+                name="mediaName"
+                placeholder="Añade enlaces a tus videos de YouTube"
+                value={mediaName}
+                onChange={(e) => {
+                    e.target.value.includes('youtube.com/watch')
+                        ? setMediaName(
+                              e.target.value.replace('watch?v=', 'embed/')
+                          )
+                        : setMediaName(e.target.value);
+                }}
+                className="form-input"
+            />
 
-            <div className="my-12 max-w-80">
+            <div className="mt-3 max-w-80">
                 <input
                     type="submit"
                     value="Guardar video"
@@ -69,25 +67,16 @@ export const DeleteGrupoMedia = () => {
     const { currentUser, token } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
-    const [mediaA, setMediaA] = useState([]);
-    const [mediaB, setMediaB] = useState('');
-    const [mediaC, setMediaC] = useState('');
-    const [mediaD, setMediaD] = useState('');
+    const [media, setMedia] = useState([]);
     const [mediaDelete, setMediaDelete] = useState(null);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchGrupoMedia = async () => {
             try {
                 const { data } = await getGrupoByIdService(idGrupo);
-
-                setMediaA(data.grupo.media[0] || '');
-                setMediaB(data.grupo.media[1] || '');
-                setMediaC(data.grupo.media[2] || '');
-                setMediaD(data.grupo.media[3] || '');
+                setMedia(data.grupo.media);
             } catch (error) {
-                setError(error.message);
-                toast.error('Error al cargar los videos');
+                toast.error(error.message);
             }
         };
 
@@ -97,148 +86,49 @@ export const DeleteGrupoMedia = () => {
     const handleClick = async (e) => {
         try {
             e.preventDefault();
-            DeleteGrupoMediaService(mediaDelete, idGrupo, token);
+            await DeleteGrupoMediaService(mediaDelete, idGrupo, token);
+            setMedia(media.filter((item) => item.id !== mediaDelete));
             toast.success('Borraste el video');
         } catch (err) {
-            setError(error.message);
-            toast.error(error.message);
+            toast.error(err.message);
         }
     };
 
     return currentUser ? (
         <>
-            {mediaA && (
-                <div className="mb-8">
-                    <p className="font-semibold mb-2">Borrar videos:</p>
-                    <div className="flex flex-col gap-3 mb-4">
-                        <iframe
-                            className="w-full min-h-60 rounded-3xl"
-                            src={mediaA.url}
-                            title="YouTube video player"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerPolicy="strict-origin-when-cross-origin"
-                            allowFullScreen
-                        ></iframe>
-
-                        {mediaA.id === mediaDelete ? (
-                            <button
-                                id="buttonConfirm"
-                                onClick={handleClick}
-                                className="btn-account max-w-44"
-                            >
-                                Confirmar borrado
-                            </button>
-                        ) : (
-                            <button
-                                onClick={() => {
-                                    setMediaDelete(mediaA.id);
-                                }}
-                                className="btn-account max-w-44"
-                            >
-                                Borrar Video
-                            </button>
-                        )}
-                    </div>
-
-                    {mediaB && (
-                        <div className="flex flex-col gap-3 mb-4">
+            {media.length > 0 && (
+                <div className="mb-6 flex flex-wrap gap-x-8">
+                    <p className="font-semibold mb-4 w-full">Borrar videos:</p>
+                    {media.map((item, index) => (
+                        <div key={index} className="md:w-5/12 mb-6">
                             <iframe
-                                className="w-full min-h-60 rounded-3xl"
-                                src={mediaB.url}
-                                title="YouTube video player"
+                                className="w-full min-h-48 rounded-3xl"
+                                src={item.url}
+                                title={`YouTube video player ${index}`}
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerPolicy="strict-origin-when-cross-origin"
                                 allowFullScreen
                             ></iframe>
-
-                            {mediaB.id === mediaDelete ? (
+                            {item.id === mediaDelete ? (
                                 <button
                                     id="buttonConfirm"
                                     onClick={handleClick}
-                                    className="btn-account max-w-44"
+                                    className="btn-account max-w-44 mt-3"
                                 >
                                     Confirmar borrado
                                 </button>
                             ) : (
                                 <button
-                                    onClick={() => {
-                                        setMediaDelete(mediaB.id);
-                                    }}
-                                    className="btn-account max-w-44"
+                                    onClick={() => setMediaDelete(item.id)}
+                                    className="btn-account max-w-44 mt-3"
                                 >
                                     Borrar Video
                                 </button>
                             )}
                         </div>
-                    )}
-
-                    {mediaC && (
-                        <div className="flex flex-col gap-3 mb-4">
-                            <iframe
-                                className="w-full min-h-60 rounded-3xl"
-                                src={mediaC.url}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen
-                            ></iframe>
-
-                            {mediaC.id === mediaDelete ? (
-                                <button
-                                    id="buttonConfirm"
-                                    onClick={handleClick}
-                                    className="btn-account max-w-44"
-                                >
-                                    Confirmar borrado
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => {
-                                        setMediaDelete(mediaC.id);
-                                    }}
-                                    className="btn-account max-w-44"
-                                >
-                                    Borrar Video
-                                </button>
-                            )}
-                        </div>
-                    )}
-
-                    {mediaD && (
-                        <div className="flex flex-col gap-3 mb-4">
-                            <iframe
-                                className="w-full min-h-60 rounded-3xl"
-                                src={mediaD.url}
-                                title="YouTube video player"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerPolicy="strict-origin-when-cross-origin"
-                                allowFullScreen
-                            ></iframe>
-
-                            {mediaD.id === mediaDelete ? (
-                                <button
-                                    id="buttonConfirm"
-                                    onClick={handleClick}
-                                    className="btn-account max-w-44"
-                                >
-                                    Confirmar borrado
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => {
-                                        setMediaDelete(mediaD.id);
-                                    }}
-                                    className="btn-account max-w-44"
-                                >
-                                    Borrar Video
-                                </button>
-                            )}
-                        </div>
-                    )}
+                    ))}
                 </div>
             )}
         </>
-    ) : (
-        ''
-    );
+    ) : null;
 };

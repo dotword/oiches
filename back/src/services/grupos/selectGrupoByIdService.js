@@ -46,7 +46,7 @@ const selectGrupoByIdService = async (idGrupo) => {
           WHERE votos_grupos.grupoVotado = ?
         `,
         [idGrupo]
-      );
+    );
     // Agregamos el array de los media del grupo.
     entry[0].comentarios = comentarios;
 
@@ -101,6 +101,7 @@ const selectGrupoByIdService = async (idGrupo) => {
     return {
         ...entry[0],
         comentarios,
+        photos,
         fotos,
         pdf,
         reservations,

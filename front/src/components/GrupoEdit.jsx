@@ -78,8 +78,11 @@ const GrupoEdit = () => {
 
     return currentUser ? (
         <>
-            <form onSubmit={handleSubmit} className="">
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+            <form
+                onSubmit={handleSubmit}
+                className="md:grid md:grid-cols-2 md:gap-x-8"
+            >
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
                     <label htmlFor="nombre" className="font-semibold">
                         Nombre del Grupo:
                     </label>
@@ -92,7 +95,7 @@ const GrupoEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
                     <label htmlFor="genre" className="font-semibold">
                         Género:
                     </label>
@@ -110,9 +113,9 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
                     <label htmlFor="province" className="font-semibold">
-                        Selecciona:
+                        Provincia:
                     </label>
                     <select
                         name="provincia"
@@ -120,7 +123,7 @@ const GrupoEdit = () => {
                         className="form-select"
                         onChange={(e) => setProvincia(e.target.value)}
                     >
-                        <option value="">Provincia</option>
+                        <option value="">Selecciona</option>
                         {provinces.map((province) => (
                             <option key={province.id} value={province.id}>
                                 {province.provincia}
@@ -128,7 +131,7 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
                     <label htmlFor="honorarios" className="font-semibold">
                         Caché:
                     </label>
@@ -141,7 +144,7 @@ const GrupoEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:w-full">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="biografia" className="font-semibold">
                         Biografía:
                     </label>
@@ -156,7 +159,7 @@ const GrupoEdit = () => {
                     </p>
                 </div>
 
-                <div className="my-12 max-w-80">
+                <div className="mt-4 max-w-80">
                     <input
                         type="submit"
                         value="Modificar Grupo"
@@ -165,18 +168,18 @@ const GrupoEdit = () => {
                 </div>
                 <div>{error && <p>{error}</p>}</div>
             </form>
-            <section className="flex flex-col">
+            <section className="mt-12">
                 <DeleteGrupoMedia idGrupo={idGrupo} />
                 <AddGrupoMedia idGrupo={idGrupo} />
             </section>
-            <section className="flex flex-col">
+            <section className="mt-12">
                 {hasRider === 0 ? (
                     <AddGrupoFiles idGrupo={idGrupo} />
                 ) : (
                     <DeleteGrupoFiles idGrupo={idGrupo} />
                 )}
             </section>
-            <section className="flex flex-col">
+            <section className="mt-12">
                 <DeleteGrupoPhotos idGrupo={idGrupo} />
                 {hasPhotos < 4 ? <AddGrupoPhotos idGrupo={idGrupo} /> : ''}
             </section>

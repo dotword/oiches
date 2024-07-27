@@ -9,6 +9,8 @@ import {
     AddGrupoFotoService,
 } from '../services/GrupoFilesService.js';
 
+const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
+
 export const AddGrupoPhotos = () => {
     const { token } = useContext(AuthContext);
     const { idGrupo } = useParams();
@@ -41,18 +43,12 @@ export const AddGrupoPhotos = () => {
     };
     return (
         <>
-            <form
-                onSubmit={handleSubmit}
-                className="md:flex md:flex-wrap justify-center"
-            >
-                <div className="sect-photo">
-                    <span className="border-photos">
+            <form onSubmit={handleSubmit}>
+                <p className="font-semibold mb-2">Subir fotos</p>
+                <div className="sect-photo md:w-5/12">
+                    <span className="border-photos w-80">
                         {previewFoto ? (
-                            <img
-                                src={previewFoto}
-                                alt="Vista previa"
-                                width={'200px'}
-                            />
+                            <img src={previewFoto} alt="Vista previa" />
                         ) : (
                             <span>Sube una foto</span>
                         )}
@@ -71,11 +67,11 @@ export const AddGrupoPhotos = () => {
                     </span>
                 </div>
                 {previewFoto ? (
-                    <div className="mt-2 w-full">
+                    <div className="mt-3 max-w-80">
                         <input
                             type="submit"
                             value="Subir fotos"
-                            className="btn-account"
+                            className="btn-account max-w-44"
                         />
                     </div>
                 ) : (
@@ -96,24 +92,20 @@ export const AddGrupoFiles = () => {
     const { idGrupo } = useParams();
     const [rider, setFile] = useState(null);
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!rider) {
-            setResp('Selecciona un archivo');
-            return;
-        }
+
         try {
             const dataForm = new FormData();
             dataForm.append('rider', rider);
 
-            const response = await AddGrupoFilesService({
+            await AddGrupoFilesService({
                 token,
                 idGrupo,
                 dataForm,
             });
-            setResp(response);
+
             toast.success('Has subido tu rider con éxito');
         } catch (error) {
             setError(error.message);
@@ -124,7 +116,7 @@ export const AddGrupoFiles = () => {
         <form onSubmit={handleSubmit}>
             <p className="font-semibold mb-2">Sube el Rider (.pdf)</p>
             <div className="sect-photo">
-                <span className="border-photos w-full h-20">
+                <span className="border-photos w-80">
                     {rider ? (
                         <span className="text-xs p-1 overflow-hidden">
                             {rider.name}
@@ -142,7 +134,7 @@ export const AddGrupoFiles = () => {
                 </span>
             </div>
 
-            <div className="my-12 max-w-80">
+            <div className="mt-3 max-w-80">
                 <input
                     type="submit"
                     value="Guardar Rider"
@@ -150,7 +142,6 @@ export const AddGrupoFiles = () => {
                 />
             </div>
             <div>{error && <p>{error}</p>}</div>
-            {resp.status === 'ok' && <p>{resp.message}</p>}
         </form>
     );
 };
@@ -192,11 +183,14 @@ export const DeleteGrupoFiles = () => {
 
     return currentUser && rider ? (
         <>
+            <p className="font-semibold mb-2">Borra tu Rider:</p>
             <div className="sect-photo">
-                <span className="border-photos">
-                    <span className="text-xs p-1 overflow-hidden">
-                        {rider.name}
-                    </span>
+                <span className="border-photos w-80">
+                    <embed
+                        src={`${urlUploads}/${rider.name}`}
+                        type="application/pdf"
+                        width="100%"
+                    />
                 </span>
             </div>
             {deletePhoto === null ? (
@@ -206,7 +200,7 @@ export const DeleteGrupoFiles = () => {
                         setDeletePhoto(rider.id);
                         setPhotoName(rider.name);
                     }}
-                    className="btn-account my-4"
+                    className="btn-account my-3"
                 >
                     Borrar rider
                 </button>
@@ -214,7 +208,7 @@ export const DeleteGrupoFiles = () => {
                 <button
                     id="buttonConfirm"
                     onClick={handleClick}
-                    className="btn-account my-4"
+                    className="btn-account my-3"
                 >
                     Confirmar borrado
                 </button>
@@ -228,29 +222,17 @@ export const DeleteGrupoFiles = () => {
 export const DeleteGrupoPhotos = () => {
     const { currentUser, token } = useContext(AuthContext);
     const { idGrupo } = useParams();
-
-    const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
-
-    const [photoA, setPhotoA] = useState(null);
-    const [photoB, setPhotoB] = useState(null);
-    const [photoC, setPhotoC] = useState(null);
-    const [photoD, setPhotoD] = useState(null);
+    const [photos, setPhotos] = useState([]);
     const [deletePhoto, setDeletePhoto] = useState('');
     const [photoName, setPhotoName] = useState('');
-    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchGrupoPhotos = async () => {
             try {
                 const { data } = await getGrupoByIdService(idGrupo);
-
-                setPhotoA(data.grupo.fotos[0]);
-                setPhotoB(data.grupo.fotos[1]);
-                setPhotoC(data.grupo.fotos[2]);
-                setPhotoD(data.grupo.fotos[3]);
+                setPhotos(data.grupo.fotos);
             } catch (error) {
-                setError(error.message);
-                toast.error('Error al cargar las fotos');
+                toast.error(error.message);
             }
         };
 
@@ -260,153 +242,49 @@ export const DeleteGrupoPhotos = () => {
     const handleClick = async (e) => {
         try {
             e.preventDefault();
-
-            DeleteGrupoFilesService(photoName, deletePhoto, token);
+            await DeleteGrupoFilesService(photoName, deletePhoto, token);
             toast.success('Borrado con éxito');
+            setPhotos(photos.filter((photo) => photo.id !== deletePhoto));
         } catch (err) {
-            setError(error.message);
-            toast.error(error.message);
+            toast.error(err.message);
         }
     };
 
+    const renderPhoto = (photo) => (
+        <div key={photo.id} className="md:w-5/12 mb-6">
+            <div className="sect-photo">
+                <div className="border-photos w-full">
+                    <img
+                        src={`${urlUploads}/${photo.name}`}
+                        alt="Vista previa"
+                    />
+                </div>
+            </div>
+            {photo.id === deletePhoto ? (
+                <button
+                    onClick={handleClick}
+                    className="btn-account max-w-44 mt-3"
+                >
+                    Confirmar borrado
+                </button>
+            ) : (
+                <button
+                    onClick={() => {
+                        setDeletePhoto(photo.id);
+                        setPhotoName(photo.name);
+                    }}
+                    className="btn-account max-w-44 mt-3"
+                >
+                    Borrar foto
+                </button>
+            )}
+        </div>
+    );
+
     return currentUser ? (
-        <div className="flex flex-wrap justify-center gap-6 mb-12">
-            <p className="font-semibold mb-2">Borrar fotos:</p>
-            {photoA ? (
-                <div>
-                    <div className="sect-photo ">
-                        <div className="border-photos">
-                            <img
-                                src={`${urlUploads}/${photoA.name}`}
-                                alt="Vista previa"
-                                width={'200px'}
-                            />
-                        </div>
-                    </div>
-                    {photoA.id === deletePhoto ? (
-                        <button
-                            onClick={handleClick}
-                            className="btn-account my-4"
-                        >
-                            Confirmar borrado
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => {
-                                setDeletePhoto(photoA.id);
-                                setPhotoName(photoA.name);
-                            }}
-                            className="btn-account my-4"
-                        >
-                            Borrar foto
-                        </button>
-                    )}
-                </div>
-            ) : (
-                ''
-            )}
-
-            {photoB ? (
-                <div>
-                    <div className="sect-photo">
-                        <div className="border-photos">
-                            <img
-                                src={`${urlUploads}/${photoB.name}`}
-                                alt="Vista previa"
-                                width={'200px'}
-                            />
-                        </div>
-                    </div>
-                    {photoB.id === deletePhoto ? (
-                        <button
-                            onClick={handleClick}
-                            className="btn-account my-4"
-                        >
-                            Confirmar borrado
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => {
-                                setDeletePhoto(photoB.id);
-                                setPhotoName(photoB.name);
-                            }}
-                            className="btn-account my-4"
-                        >
-                            Borrar foto
-                        </button>
-                    )}
-                </div>
-            ) : (
-                ''
-            )}
-
-            {photoC ? (
-                <div>
-                    <div className="sect-photo">
-                        <div className="border-photos">
-                            <img
-                                src={`${urlUploads}/${photoC.name}`}
-                                alt="Vista previa"
-                                width={'200px'}
-                            />
-                        </div>
-                    </div>
-                    {photoC.id === deletePhoto ? (
-                        <button
-                            onClick={handleClick}
-                            className="btn-account my-4"
-                        >
-                            Confirmar borrado
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => {
-                                setDeletePhoto(photoC.id);
-                                setPhotoName(photoC.name);
-                            }}
-                            className="btn-account my-4"
-                        >
-                            Borrar foto
-                        </button>
-                    )}
-                </div>
-            ) : (
-                ''
-            )}
-
-            {photoD ? (
-                <div>
-                    <div className="sect-photo">
-                        <div className="border-photos">
-                            <img
-                                src={`${urlUploads}/${photoD.name}`}
-                                alt="Vista previa"
-                                width={'200px'}
-                            />
-                        </div>
-                    </div>
-                    {photoD.id === deletePhoto ? (
-                        <button
-                            onClick={handleClick}
-                            className="btn-account my-4"
-                        >
-                            Confirmar borrado
-                        </button>
-                    ) : (
-                        <button
-                            onClick={() => {
-                                setDeletePhoto(photoD.id);
-                                setPhotoName(photoD.name);
-                            }}
-                            className="btn-account my-4"
-                        >
-                            Borrar foto
-                        </button>
-                    )}
-                </div>
-            ) : (
-                ''
-            )}
+        <div className="mb-6 flex flex-wrap gap-x-8">
+            <p className="font-semibold mb-4 w-full">Borrar fotos:</p>
+            {photos.map(renderPhoto)}
         </div>
     ) : (
         ''
