@@ -48,6 +48,15 @@ const GrupoCreacion = () => {
         setFormValues({ ...formValues, [name]: value });
     };
 
+    const handleMediaChange = (e) => {
+        const { name, value } = e.target;
+        if (value.includes('youtube.com/watch')) {
+            // Convertir enlace de YouTube a formato embed
+            value.replace('watch?v=', 'embed/');
+        }
+        setFormValues({ ...formValues, [name]: value });
+    };
+
     const handleFotoChange = (e, name) => {
         const file = e.target.files[0];
         setPhotos({ ...photos, [name]: file });
@@ -57,6 +66,7 @@ const GrupoCreacion = () => {
                 URL.createObjectURL(file),
         });
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -67,7 +77,7 @@ const GrupoCreacion = () => {
         Object.entries(photos).forEach(([key, value]) => {
             if (value) formData.append(key, value);
         });
-        formData.append('file', file);
+        if (file) formData.append('file', file);
 
         try {
             const response = await registerGrupoService({ token, formData });
@@ -198,7 +208,7 @@ const GrupoCreacion = () => {
                                 name="mediaA"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaA}
-                                onChange={handleChange}
+                                onChange={handleMediaChange}
                                 className="form-input"
                             />
                             <input
@@ -206,7 +216,7 @@ const GrupoCreacion = () => {
                                 name="mediaB"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaB}
-                                onChange={handleChange}
+                                onChange={handleMediaChange}
                                 className="form-input"
                             />
                             <input
@@ -214,7 +224,7 @@ const GrupoCreacion = () => {
                                 name="mediaC"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaC}
-                                onChange={handleChange}
+                                onChange={handleMediaChange}
                                 className="form-input"
                             />
                             <input
@@ -222,7 +232,7 @@ const GrupoCreacion = () => {
                                 name="mediaD"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaD}
-                                onChange={handleChange}
+                                onChange={handleMediaChange}
                                 className="form-input"
                             />
                         </section>

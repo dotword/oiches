@@ -70,9 +70,11 @@ const selectGrupoByIdService = async (idGrupo) => {
         path.extname(photo.name) === '.pdf'
             ? pdf.push({
                   name: photo.name,
+                  id: photo.id,
               })
             : fotos.push({
                   name: photo.name,
+                  id: photo.id,
               });
     }
 
@@ -99,7 +101,6 @@ const selectGrupoByIdService = async (idGrupo) => {
     return {
         ...entry[0],
         comentarios,
-        photos,
         fotos,
         pdf,
         reservations,
