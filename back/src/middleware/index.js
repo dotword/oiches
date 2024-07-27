@@ -13,6 +13,7 @@ import grupoCanVote from './grupoCanVote.js';
 import salaCanVote from './salaCanVote.js';
 import canEditReserva from './canEditReserva.js';
 import canEditPhoto from './canEditPhoto.js';
+import canEditGrupoFiles from './canEditGrupoFiles.js';
 
 export {
     authUser,
@@ -30,4 +31,5 @@ export {
     salaCanVote,
     canEditReserva,
     canEditPhoto,
+    canEditGrupoFiles,
 };

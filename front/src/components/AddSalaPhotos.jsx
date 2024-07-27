@@ -31,7 +31,7 @@ const AddSalaPhotos = (idSala) => {
             toast.success('Foto subida con éxito');
         } catch (error) {
             setError(error.message);
-            toast.error('No se pueden subir más de 4 fotos por sala');
+            toast.error(error.message);
         }
     };
 
