@@ -7,26 +7,95 @@
         font-family: 'Encode Sans', sans-serif;
     }
 }
+
 @layer components {
     .btn-account {
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;
     }
+    .btn-buscar {
+        @apply py-2 px-6 bg-purple-600 rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer w-full md:w-auto;
+    }
     .form-input {
-        @apply active:border-purpleOiches p-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full;
+        @apply p-4 border border-gray-300 rounded-md mt-2 h-10 w-full focus:border-purple-600;
     }
     .form-select {
-        @apply active:border-purpleOiches px-4 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 h-10 w-full bg-white;
+        @apply px-4 border border-gray-300 rounded-md mt-2 h-10 w-full bg-white focus:border-purple-600;
     }
     .form-textarea {
-        @apply active:border-purpleOiches px-4 py-2 focus-visible:border-purpleOiches focus:border-purpleOiches border mt-2 min-h-40 w-full;
+        @apply px-4 py-2 border border-gray-300 rounded-md mt-2 min-h-40 w-full focus:border-purple-600;
     }
-    .sect-photo {
-        @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
+
+    /* Zona de héroe */
+    .hero {
+        @apply bg-gray-100 py-16 text-center h-[680px] w-full flex flex-col justify-center items-center;
     }
-    .border-photos {
-        @apply flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-md relative overflow-clip;
+
+    .hero-title {
+        @apply text-4xl font-bold text-gray-800 mb-4;
     }
+
+    .hero-subtitle {
+        @apply text-lg text-gray-600 mb-8;
+    }
+
+    /* Contenedor del formulario de filtros */
+    .sala-filter-form-container {
+        @apply w-full bg-gray-400 flex justify-center;
+    }
+
+    /* Filtros de salas */
+    .sala-filter-form {
+        @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
+    }
+
+    .sala-filter-form > * {
+        @apply mx-2 my-2;
+    }
+
+    .golden-ratio-1 {
+        @apply flex-1;
+    }
+
+    .golden-ratio-2 {
+        @apply flex-[1.618];
+    }
+
+    .golden-ratio-3 {
+        @apply flex-1;
+    }
+
+    .sala-filter-form button {
+        @apply flex-none;
+    }
+
+    /* Tarjetas de lista de salas */
+    .sala-list-container {
+        @apply w-full flex justify-center mt-20 mb-20;
+    }
+
+    .sala-list {
+        @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-8;
+    }
+
+    .sala-card {
+        @apply bg-gray-800 p-4 rounded-lg shadow-lg;
+    }
+
+    .sala-card-image {
+        @apply w-full h-96 object-cover rounded-lg mb-4;
+    }
+
+    .sala-card-title {
+        @apply text-xl font-bold text-white;
+    }
+
+    .sala-card-genre,
+    .sala-card-province,
+    .sala-card-votes {
+        @apply text-gray-400;
+    }
+
     .button {
-        @apply p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all;
+        @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
     }
 }
