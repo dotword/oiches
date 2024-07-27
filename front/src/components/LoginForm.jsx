@@ -25,7 +25,7 @@ export const LoginForm = () => {
             const { data } = await loginUserService(dataForm);
             signIn(data.token, data.user);
             toast.success('Inicio de sesión exitoso');
-            navigate('/');
+            navigate('/users');
         } catch (error) {
             setError(error.message);
             toast.error('Error al iniciar sesión');

@@ -37,49 +37,40 @@ const AddSalaPhotos = (idSala) => {
 
     return currentUser ? (
         <>
-            <form
-                onSubmit={handleSubmit}
-                className="md:flex md:flex-wrap justify-center"
-            >
-                <div className="mb-4 flex flex-wrap gap-4">
-                    <section className="sect-photo">
-                        <span className="border-photos">
-                            {previewUrlA ? (
-                                <img
-                                    src={previewUrlA}
-                                    alt="Vista previa"
-                                    width={'200px'}
-                                />
-                            ) : (
-                                <span>Sube una foto</span>
-                            )}
-
-                            <input
-                                type="file"
-                                name="photoA"
-                                className="absolute w-full h-full opacity-0 cursor-pointer"
-                                onChange={(e) => {
-                                    setPhotoA(e.target.files[0]);
-                                    setPreviewUrlA(
-                                        URL.createObjectURL(e.target.files[0])
-                                    );
-                                }}
-                            />
-                        </span>
+            <form onSubmit={handleSubmit}>
+                <div className="sect-photo">
+                    <span className="border-photos">
                         {previewUrlA ? (
-                            <div className="mt-2 w-full">
-                                <input
-                                    type="submit"
-                                    value="Subir fotos"
-                                    className="btn-account"
-                                />
-                            </div>
+                            <img src={previewUrlA} alt="Vista previa" />
                         ) : (
-                            ''
+                            <span>Sube una foto</span>
                         )}
-                    </section>
+
+                        <input
+                            type="file"
+                            name="photoA"
+                            className="absolute w-full h-full opacity-0 cursor-pointer"
+                            onChange={(e) => {
+                                setPhotoA(e.target.files[0]);
+                                setPreviewUrlA(
+                                    URL.createObjectURL(e.target.files[0])
+                                );
+                            }}
+                        />
+                    </span>
                 </div>
 
+                {previewUrlA ? (
+                    <div className="mt-3 max-w-80">
+                        <input
+                            type="submit"
+                            value="Subir fotos"
+                            className="btn-account max-w-44"
+                        />
+                    </div>
+                ) : (
+                    ''
+                )}
                 <div>
                     {error && <p>{error}</p>}
                     {resp.status === 'ok' && <p>{resp.message}</p>}

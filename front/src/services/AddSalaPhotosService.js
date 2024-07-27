@@ -19,3 +19,19 @@ const AddSalaPhotosService = async (props) => {
 };
 
 export default AddSalaPhotosService;
+
+export const DeleteSalaPhotoService = async (photoName, deletePhoto, token) => {
+    const url = `${
+        import.meta.env.VITE_API_URL_BASE
+    }/salas/${photoName}/${deletePhoto}`;
+
+    const response = await fetch(url, {
+        headers: {
+            token: token,
+        },
+        method: 'DELETE',
+    });
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message);
+    return json;
+};
