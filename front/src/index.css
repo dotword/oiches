@@ -108,3 +108,9 @@
         @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
     }
 }
+.slick-arrow:before{
+    color: #9333ff;
+}
+.slick-slide > div{
+    margin: 0px 10px;
+}
