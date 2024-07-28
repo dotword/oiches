@@ -32,7 +32,9 @@ const SalaCard = ({ sala }) => {
                 <span className="sub_title_ficha">Provincia:</span>{' '}
                 {sala.Provincia}
             </p>
-            <StarRating rating={sala.media_votos} />
+            <div className="mt-2">
+                <StarRating rating={sala.media_votos} />
+            </div>
         </div>
     );
 };

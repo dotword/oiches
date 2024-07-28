@@ -16,7 +16,7 @@ import { SalaPage } from './pages/SalaPage.jsx';
 import Salas from './pages/Salas.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import EdicionGrupo from './pages/EdicionGrupo.jsx';
-import GrupoDetail from './components/GrupoDetails.jsx';
+import GrupoDetail from './components/GrupoDetail.jsx';
 import Grupos from './pages/Grupos.jsx'; // Asegúrate de que la ruta de importación sea correcta
 import NotFound from './pages/NotFound.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';

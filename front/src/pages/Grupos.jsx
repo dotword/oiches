@@ -13,7 +13,7 @@ const Grupos = () => {
     useEffect(() => {
         const fetchGrupos = async () => {
             const initialGrupos = await FetchGruposService();
-            console.log('Grupos iniciales:', initialGrupos); // Añade este console.log
+            console.log('Grupos iniciales:', initialGrupos);
             setGrupos(initialGrupos);
             setFilteredGrupos(initialGrupos);
         };
@@ -23,7 +23,6 @@ const Grupos = () => {
 
     const handleFilterChange = async (filters) => {
         const filtered = await FetchGruposService(filters);
-        console.log('Grupos filtrados:', filtered); // Añade este console.log
         setFilteredGrupos(filtered);
     };
 

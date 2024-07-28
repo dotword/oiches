@@ -52,7 +52,6 @@
         @apply w-full bg-gray-400 flex justify-center;
     }
 
-    /* Contenedor del formulario de filtros */
     .grupo-filter-form-container {
         @apply w-full bg-gray-400 flex justify-center;
     }
@@ -62,7 +61,6 @@
         @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
     }
 
-    /* Filtros de salas */
     .grupo-filter-form {
         @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
     }
@@ -157,9 +155,11 @@
         @apply text-white; /*Negrita para texto como provincia genero etc... de las fichas*/
     }
 }
-.slick-arrow:before{
+
+.slick-arrow:before {
     color: #9333ff;
 }
-.slick-slide > div{
+
+.slick-slide > div {
     margin: 0px 10px;
 }
