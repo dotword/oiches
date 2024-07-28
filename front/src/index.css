@@ -98,4 +98,8 @@
     .button {
         @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
     }
+
+    .sub_title_ficha {
+        @apply text-white; /*Negrita para texto como provincia genero etc... de las fichas*/
+    }
 }
