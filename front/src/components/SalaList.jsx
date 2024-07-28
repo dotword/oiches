@@ -1,4 +1,3 @@
-import React from 'react';
 import SalaCard from './SalaCard';
 
 const SalaList = ({ salas }) => {

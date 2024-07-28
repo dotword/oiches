@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Home = () => {
     return (
@@ -10,9 +11,8 @@ const Home = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Encuentra tu Banda Sonora" />
-                <main>
-                    
-                </main>
+                <main></main>
+                <Footer />
             </motion.div>
         </>
     );

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import SalaCreacion from '../components/SalaCreacion';
+import Footer from '../components/Footer';
 
 const CreacionSala = () => {
     return (
@@ -15,6 +16,7 @@ const CreacionSala = () => {
                     <SalaCreacion />
                 </div>
             </main>
+            <Footer />
         </motion.div>
     );
 };
