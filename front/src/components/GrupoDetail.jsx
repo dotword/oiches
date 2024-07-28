@@ -119,14 +119,14 @@ const GrupoDetail = () => {
                 <section>
                     <h3 className="text-2xl">Fotos:</h3>
                     <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
-                        {photos.length > 0 ? (
+                        {fotos.length > 0 ? (
                             <>
-                                {photos.map((photo) => (
+                                {fotos.map((photo) => (
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
                                         className="rounded-3xl max-h-96 shadow-xl"
-                                        alt="Foto secundaria"
+                                        alt=""
                                     />
                                 ))}
                             </>
