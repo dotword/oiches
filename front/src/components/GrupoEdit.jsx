@@ -7,6 +7,13 @@ import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
 import getGrupoByIdService from '../services/getGrupoByIdService.js';
 import EditGrupoService from '../services/EditGrupoService.js';
+import { DeleteGrupoMedia, AddGrupoMedia } from './GrupoMedia.jsx';
+import {
+    DeleteGrupoFiles,
+    AddGrupoFiles,
+    AddGrupoPhotos,
+    DeleteGrupoPhotos,
+} from './GrupoFiles.jsx';
 
 const GrupoEdit = () => {
     const { currentUser, token } = useContext(AuthContext);
@@ -17,14 +24,10 @@ const GrupoEdit = () => {
     const [provincia, setProvincia] = useState('');
     const [genres, setGenres] = useState([]);
     const [generos, setGeneros] = useState('');
-    const [honorarios, setHonorarios] = useState('');
+    const [honorarios, setHonorarios] = useState(0);
     const [biografia, setBiografia] = useState('');
-    const [mediaA, setMediaA] = useState([]);
-    const [mediaB, setMediaB] = useState('');
-    const [mediaC, setMediaC] = useState('');
-    const [mediaD, setMediaD] = useState('');
-    const [mediaName, setMediaName] = useState('');
-    const [mediaDelete, setMediaDelete] = useState(null);
+    const [hasRider, setHasRider] = useState('');
+    const [hasPhotos, setHasPhotos] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -41,10 +44,8 @@ const GrupoEdit = () => {
                 setProvincia(data.grupo.provinciaId || '');
                 setHonorarios(data.grupo.honorarios || '');
                 setBiografia(data.grupo.biografia || '');
-                setMediaA(data.grupo.media[0] || '');
-                setMediaB(data.grupo.media[1]?.url || '');
-                setMediaC(data.grupo.media[2]?.url || '');
-                setMediaD(data.grupo.media[3]?.url || '');
+                setHasRider(data.grupo.pdf.length);
+                setHasPhotos(data.grupo.fotos.length);
             } catch (error) {
                 setError(error.message);
                 toast.error(error.message);
@@ -57,17 +58,12 @@ const GrupoEdit = () => {
         e.preventDefault();
         try {
             const dataForm = new FormData();
-            dataForm.append('nombre', nombre);
-            dataForm.append('provincia', provincia);
-            dataForm.append('generos', generos);
-            dataForm.append('honorarios', Number(honorarios));
-            dataForm.append('biografia', biografia);
-            if (mediaDelete) {
-                dataForm.append('mediaDelete', mediaDelete);
-            }
-            if (mediaName) {
-                dataForm.append('mediaName', mediaName);
-            }
+
+            dataForm.append('nombre', nombre || '');
+            dataForm.append('provincia', provincia || '');
+            dataForm.append('generos', generos || '');
+            dataForm.append('honorarios', honorarios || 0);
+            dataForm.append('biografia', biografia || '');
             await EditGrupoService({
                 token,
                 idGrupo,
@@ -79,15 +75,14 @@ const GrupoEdit = () => {
             toast.error(error.message);
         }
     };
-    console.log('md ', mediaName.length);
 
     return currentUser ? (
         <>
             <form
                 onSubmit={handleSubmit}
-                className="md:w-3/5 md:flex md:flex-wrap md:justify-between"
+                className="md:grid md:grid-cols-2 md:gap-x-8"
             >
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
                     <label htmlFor="nombre" className="font-semibold">
                         Nombre del Grupo:
                     </label>
@@ -100,7 +95,7 @@ const GrupoEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
                     <label htmlFor="genre" className="font-semibold">
                         Género:
                     </label>
@@ -118,9 +113,9 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
                     <label htmlFor="province" className="font-semibold">
-                        Selecciona:
+                        Provincia:
                     </label>
                     <select
                         name="provincia"
@@ -128,7 +123,7 @@ const GrupoEdit = () => {
                         className="form-select"
                         onChange={(e) => setProvincia(e.target.value)}
                     >
-                        <option value="">Provincia</option>
+                        <option value="">Selecciona</option>
                         {provinces.map((province) => (
                             <option key={province.id} value={province.id}>
                                 {province.provincia}
@@ -136,7 +131,7 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
                     <label htmlFor="honorarios" className="font-semibold">
                         Caché:
                     </label>
@@ -149,7 +144,7 @@ const GrupoEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:w-full">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="biografia" className="font-semibold">
                         Biografía:
                     </label>
@@ -163,33 +158,8 @@ const GrupoEdit = () => {
                         2000 caracteres como máximo
                     </p>
                 </div>
-                {mediaA && (
-                    <section className="mb-8">
-                        <p className="font-semibold mb-2">Borrar videos:</p>
-                        <div>
-                            <input
-                                type="button"
-                                value="Selecciona"
-                                name="mediaDelete"
-                                onClick={() => setMediaDelete(mediaA.url)}
-                                className="btn-account"
-                            />
-                            <p>{mediaA.url}</p>
-                        </div>
-                    </section>
-                )}
-                <section className="mb-8">
-                    <p className="font-semibold mb-2">Enlaza un video:</p>
-                    <input
-                        type="url"
-                        name="mediaName"
-                        placeholder="Añade enlaces a tus videos"
-                        value={mediaName}
-                        onChange={(e) => setMediaName(e.target.value)}
-                        className="form-input"
-                    />
-                </section>
-                <div className="my-12 max-w-80">
+
+                <div className="mt-4 max-w-80">
                     <input
                         type="submit"
                         value="Modificar Grupo"
@@ -198,6 +168,21 @@ const GrupoEdit = () => {
                 </div>
                 <div>{error && <p>{error}</p>}</div>
             </form>
+            <section className="mt-12">
+                <DeleteGrupoMedia idGrupo={idGrupo} />
+                <AddGrupoMedia idGrupo={idGrupo} />
+            </section>
+            <section className="mt-12">
+                {hasRider === 0 ? (
+                    <AddGrupoFiles idGrupo={idGrupo} />
+                ) : (
+                    <DeleteGrupoFiles idGrupo={idGrupo} />
+                )}
+            </section>
+            <section className="mt-12">
+                <DeleteGrupoPhotos idGrupo={idGrupo} />
+                {hasPhotos < 4 ? <AddGrupoPhotos idGrupo={idGrupo} /> : ''}
+            </section>
             <Toastify />
         </>
     ) : (

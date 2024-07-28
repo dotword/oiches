@@ -15,6 +15,7 @@ import {
     aprobarReservaController,
     borrarReservaSalaController,
     listReservaController,
+    listReservaGroups
 } from '../controllers/reservas/index.js';
 
 const router = express.Router();
@@ -46,6 +47,7 @@ router.delete(
 );
 
 // Endpoint para listar reservas de una sala
-router.get('/reservas/:sala_id', authUser,listReservaController);
+router.get('/reservas/salas/:sala_id', authUser,listReservaController);
+router.get('/reservas/grupos/:group_id', authUser,listReservaGroups);
 
 export default router;

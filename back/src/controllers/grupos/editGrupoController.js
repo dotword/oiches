@@ -1,33 +1,16 @@
 import editGrupoService from '../../services/grupos/editGrupoService.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
-import createEditGrupoSchema from '../../schemas/grupos/createEditGrupoSchema.js';
+import createEditGrupoSchema from '../../schemas/grupos/editGrupoSchema.js';
 import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
-import {
-    insertGrupoMediaService,
-    deleteGrupoMediaService,
-} from '../../services/grupos/insertGrupoMediaService.js';
-import { uploadFiles, deleteFiles } from '../../utils/uploadFiles.js';
-import {
-    insertGrupoPhotoService,
-    deleteGrupoPhotoService,
-} from '../../services/grupos/insertGrupoPhotoService.js';
+import { uploadFiles } from '../../utils/uploadFiles.js';
+import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
 
 const editGrupoController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
 
-        const {
-            nombre,
-            provincia,
-            generos,
-            honorarios,
-            biografia,
-            rider,
-            mediaName,
-            mediaDelete,
-            deletePhoto,
-        } = req.body;
+        const { nombre, provincia, generos, honorarios, biografia } = req.body;
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
@@ -49,46 +32,10 @@ const editGrupoController = async (req, res, next) => {
         if (generos !== undefined) updatedFields.generos = generos;
         if (honorarios !== undefined) updatedFields.honorarios = honorarios;
         if (biografia !== undefined) updatedFields.biografia = biografia;
-        if (rider !== undefined) updatedFields.rider = rider;
 
         await editGrupoService(idGrupo, updatedFields);
 
-        // Si el grupo tiene más de 4 enlaces lanzamos un error.
-        if (mediaName !== undefined && grupo.media.length > 3)
-            throw generateErrorsUtil(
-                'No se pueden subir más de 4 enlaces al grupo',
-                409
-            );
-
-        // Guardamos el enlace en DB.
-        if (mediaName !== undefined && mediaName.length > 0) {
-            await insertGrupoMediaService(mediaName, idGrupo);
-        }
-
-        // Borrar media
-        if (mediaDelete !== undefined) {
-            await deleteGrupoMediaService(mediaDelete);
-        }
-
-        // Borrar files
-        if (deletePhoto !== undefined) {
-            const photoName = grupo.photos.find(
-                (photo) => photo.id === deletePhoto
-            );
-
-            if (photoName === undefined)
-                throw generateErrorsUtil(
-                    'No se encuentra el archivo que intentas borrar',
-                    400
-                );
-
-            const deleted = photoName.name;
-
-            // Borramos la foto de la carpeta de subida de archivos.
-            await deleteFiles(deleted);
-            await deleteGrupoPhotoService(deletePhoto);
-        }
-
+        // Subir archivo a grupo
         // Si el grupo tiene más de 5 archivos lanzamos un error.
         if (req.files !== null && grupo.photos.length > 4)
             throw generateErrorsUtil(
@@ -97,11 +44,14 @@ const editGrupoController = async (req, res, next) => {
             );
 
         if (req.files !== null) {
-            // Guardamos la foto en la carpeta uploads y obtenemos su nombre.
-            const photoName = await uploadFiles(req.files.photo);
+            // Recorremos las fotos.
+            for (const file of Object.values(req.files)) {
+                // Guardamos la foto en la carpeta uploads y obtenemos su nombre.
+                const photoName = await uploadFiles(file, 600);
 
-            // Guardamos la foto en la base de datos y obtenemos el id de la misma.
-            await insertGrupoPhotoService(photoName, idGrupo);
+                // Guardamos la foto en la base de datos y obtenemos el id de la misma.
+                await insertGrupoPhotoService(photoName, idGrupo);
+            }
         }
 
         res.send({

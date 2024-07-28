@@ -21,9 +21,12 @@ export const insertGrupoMediaService = async (mediaName, idGrupo) => {
     return insertId;
 };
 
-export const deleteGrupoMediaService = async (mediaDelete) => {
+export const deleteGrupoMediaService = async (mediaDelete, idGrupo) => {
     const pool = await getPool();
 
     // Eliminamos la foto.
-    await pool.query(`DELETE FROM grupo_media WHERE url = ?`, [mediaDelete]);
+    await pool.query(`DELETE FROM grupo_media WHERE id = ? AND grupo_id = ?`, [
+        mediaDelete,
+        idGrupo,
+    ]);
 };

@@ -2,17 +2,17 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useSala from '../hooks/useSala.jsx';
 import Live from '../assets/Live.jpg';
-import StarRating from './StartRating';
+import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '../../public/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import { useEffect, useState } from 'react';
 
 const SalaDetail = () => {
-    const { VITE_API_URL_BASE} = import.meta.env;
-    const [imagenes,setImagenes] = useState('')
+    const { VITE_API_URL_BASE } = import.meta.env;
+    const [imagenes, setImagenes] = useState('');
     const { idSala } = useParams();
-    const url = VITE_API_URL_BASE
+    const url = VITE_API_URL_BASE;
     const { entry, error } = useSala(idSala);
     console.log(entry);
     const {
@@ -118,7 +118,7 @@ const SalaDetail = () => {
                         <h3 className="text-2xl">Comentarios :</h3>
 
                         {comentarios.map((comentario) => {
-                        console.log(comentario);
+                            console.log(comentario);
                             return (
                                 <div
                                     key={comentario.id}
@@ -132,7 +132,7 @@ const SalaDetail = () => {
                                     </span>
                                     <Link
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
-                                        to={`/grupos/${comentario.grupoVotaId}`}
+                                        to={`/grupo/${comentario.grupoVotaId}`}
                                     >
                                         <img
                                             className="w-10"
@@ -154,7 +154,6 @@ const SalaDetail = () => {
                     <h3 className="text-2xl">Fotos:</h3>
                     <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
-                            
                             <>
                                 {photos.map((photo) => (
                                     <img

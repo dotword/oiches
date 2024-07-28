@@ -28,7 +28,7 @@ const GrupoDetail = () => {
         reservations,
         votes,
     } = entry;
-console.log(entry);
+    console.log(entry);
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -58,33 +58,68 @@ console.log(entry);
                             : 'El grupo tiene que añadir la biografia.'}
                     </p>
                 </section>
-                {
-                    media.length > 0 &&
-                <section>
-                    <h3 className="text-2xl">Videos :</h3>
-                    <div className="grid grid-cols-1 place-items-center gap-6 my-6 w-full lg:grid-cols-2">
-                        {media.map((media) => {
+                {media.length > 0 && (
+                    <section>
+                        <h3 className="text-2xl">Videos :</h3>
+                        <div className="grid grid-cols-1 place-items-center gap-6 my-6 w-full lg:grid-cols-2">
+                            {media.map((media) => {
+                                return (
+                                    <iframe
+                                        className="w-full min-h-60 rounded-3xl"
+                                        key={media.id}
+                                        src={media.url}
+                                        title="YouTube video player"
+                                        frameBorder="1"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerPolicy="strict-origin-when-cross-origin"
+                                        allowFullScreen
+                                    ></iframe>
+                                );
+                            })}
+                        </div>
+                    </section>
+                )}
+                {comentarios.length > 0 && (
+                    <section>
+                        <h3 className="text-2xl">Comentarios :</h3>
+
+                        {comentarios.map((comentario) => {
+                            console.log(comentario);
                             return (
-                                <iframe
-                                    className="w-full min-h-60 rounded-3xl"
-                                    key={media.id}
-                                    src={media.url}
-                                    title="YouTube video player"
-                                    frameBorder="1"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                ></iframe>
+                                <div
+                                    key={comentario.id}
+                                    className="my-6 border p-3 rounded-lg flex justify-between gap-20 max-w-fit"
+                                >
+                                    <span>
+                                        {comentario.comentario}
+                                        <p className="text-gray-400">
+                                            {comentario.createdAt.slice(0, 10)}
+                                        </p>
+                                    </span>
+                                    <Link
+                                        className="flex place-items-center gap-2 hover:scale-105 transition-all"
+                                        to={`/sala/${comentario.salaVotaId}`}
+                                    >
+                                        <img
+                                            className="w-10"
+                                            src={
+                                                comentario.salaAvatar
+                                                    ? comentario.salaAvatar
+                                                    : DefaultProfile
+                                            }
+                                            alt=""
+                                        />
+                                        <p>{comentario.salaVotaNombre}</p>
+                                    </Link>
+                                </div>
                             );
                         })}
-                    </div>
-                </section>
-                }
-               <section>
+                    </section>
+                )}
+                <section>
                     <h3 className="text-2xl">Fotos:</h3>
                     <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
-                            
                             <>
                                 {photos.map((photo) => (
                                     <img

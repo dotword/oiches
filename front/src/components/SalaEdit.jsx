@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context';
+import { AuthContext } from '../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -33,9 +33,6 @@ const SalaEdit = () => {
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
-    }, []);
-
-    useEffect(() => {
         FetchGenresService(setGenres);
     }, []);
 
@@ -274,7 +271,7 @@ const SalaEdit = () => {
             </form>
 
             <div className="pt-4 md:w-4/12 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center">
-                <p className="block font-medium mb-4 md:w-full text-center">
+                <p className="block font-medium mb-8 md:w-full text-center">
                     Fotos de la sala
                 </p>
                 <DeleteSalaPhotos />

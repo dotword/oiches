@@ -5,18 +5,19 @@ import './App.css';
 
 import Home from './pages/Home.jsx';
 import { RegisterPage } from './pages/Register.jsx';
-import GrupoDetail from './components/GrupoDetail.jsx';
 import { LoginPage } from './pages/Login.jsx';
 import { RecuperarPassword } from './pages/RecuperarPassword.jsx';
 import UserValidationPage from './pages/UserValidationPage.jsx';
 import Users from './pages/Users.jsx';
+
 import CreacionSala from './pages/CreacionSala.jsx';
 import EdicionSala from './pages/EdicionSala.jsx';
+import { SalaPage } from './pages/SalaPage.jsx';
 import Salas from './pages/Salas.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import EdicionGrupo from './pages/EdicionGrupo.jsx';
+import GrupoDetail from './components/GrupoDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
-import { SalaPage } from './pages/SalaPage.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
             <AnimatePresence>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/grupos/:idGrupo" element={<GrupoDetail />} />
+                    <Route path="/grupo/:idGrupo" element={<GrupoDetail />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route
                         path="/users/validate/:registrationCode"
@@ -39,7 +40,7 @@ function App() {
                     <Route path="/users" element={<Users />} />
                     <Route path="/creacion-sala" element={<CreacionSala />} />
                     <Route
-                        path="/salas/:idSala/edit"
+                        path="/sala/:idSala/edit"
                         element={<EdicionSala />}
                     />
                     <Route path="/salas" element={<Salas />} />
@@ -49,7 +50,7 @@ function App() {
                         path="/grupos/:idGrupo/edit"
                         element={<EdicionGrupo />}
                     />
-
+                    <Route path="/grupos/:idGrupo" element={<GrupoDetail />} />
                     <Route
                         path="/sala/:idSala/reservas"
                         element={<CrearReservaPage type={'sala'} />}
