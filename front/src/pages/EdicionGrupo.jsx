@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import GrupoEdit from '../components/GrupoEdit';
+import Footer from '../components/Footer';
 
 const EdicionGrupo = () => {
     return (
@@ -15,6 +16,7 @@ const EdicionGrupo = () => {
                     <GrupoEdit />
                 </div>
             </main>
+            <Footer />
         </motion.div>
     );
 };

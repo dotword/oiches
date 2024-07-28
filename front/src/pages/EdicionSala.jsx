@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import SalaEdit from '../components/SalaEdit';
+import Footer from '../components/Footer';
 
 const EdicionSala = () => {
     return (
@@ -15,6 +16,7 @@ const EdicionSala = () => {
                     <SalaEdit />
                 </div>
             </main>
+            <Footer />
         </motion.div>
     );
 };

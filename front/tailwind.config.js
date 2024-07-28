@@ -10,7 +10,7 @@ export default {
             },
             backgroundImage: {
                 'oiches-live': "url('/oiches/front/src/assets/Live.jpg')",
-                'hero-image': "url('../public/Live.jpg')",
+                'hero-image': "url('/Live.jpg')",
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",

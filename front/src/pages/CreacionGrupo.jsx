@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import GrupoCreacion from '../components/GrupoCreacion';
+import Footer from '../components/Footer';
 
 const CreacionGrupo = () => {
     return (
@@ -15,6 +16,7 @@ const CreacionGrupo = () => {
                     <GrupoCreacion />
                 </div>
             </main>
+            <Footer />
         </motion.div>
     );
 };
