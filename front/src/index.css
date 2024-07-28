@@ -112,3 +112,9 @@
         @apply text-white; /*Negrita para texto como provincia genero etc... de las fichas*/
     }
 }
+.slick-arrow:before{
+    color: #9333ff;
+}
+.slick-slide > div{
+    margin: 0px 10px;
+}
