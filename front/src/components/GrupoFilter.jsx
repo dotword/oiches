@@ -1,8 +1,9 @@
+// src/components/GrupoFilter.jsx
 import React, { useState, useEffect } from 'react';
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
 
-const SalaFilter = ({ onFilterChange }) => {
+const GrupoFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
     const [filters, setFilters] = useState({
@@ -35,12 +36,12 @@ const SalaFilter = ({ onFilterChange }) => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="sala-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4"
+            className="grupo-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4"
         >
             <input
                 type="text"
                 name="nombre"
-                placeholder="Nombre"
+                placeholder="Nombre del grupo"
                 value={filters.nombre}
                 onChange={handleChange}
                 className="form-input golden-ratio-1"
@@ -51,7 +52,7 @@ const SalaFilter = ({ onFilterChange }) => {
                 onChange={handleChange}
                 className="form-select golden-ratio-2"
             >
-                <option value="">Género</option>
+                <option value="">Género musical</option>
                 {genres.map((genre) => (
                     <option key={genre.id} value={genre.id}>
                         {genre.nombre}
@@ -78,4 +79,4 @@ const SalaFilter = ({ onFilterChange }) => {
     );
 };
 
-export default SalaFilter;
+export default GrupoFilter;

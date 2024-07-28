@@ -1,38 +1,28 @@
-// src/pages/Salas.jsx
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SalaFilter from '../components/SalaFilter';
 import SalaList from '../components/SalaList';
 import FetchSalasService from '../services/FetchSalasService';
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer';
 
 const Salas = () => {
     const [salas, setSalas] = useState([]);
     const [filteredSalas, setFilteredSalas] = useState([]);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchSalas = async () => {
-            try {
-                const initialSalas = await FetchSalasService();
-                setSalas(initialSalas);
-                setFilteredSalas(initialSalas);
-            } catch (error) {
-                console.error('Error fetching salas:', error);
-                setError('Hubo un error al obtener las salas');
-            }
+            const initialSalas = await FetchSalasService();
+            setSalas(initialSalas);
+            setFilteredSalas(initialSalas);
         };
 
         fetchSalas();
     }, []);
 
     const handleFilterChange = async (filters) => {
-        try {
-            const filtered = await FetchSalasService(filters);
-            setFilteredSalas(filtered);
-        } catch (error) {
-            console.error('Error filtering salas:', error);
-            setError('Hubo un error al filtrar las salas');
-        }
+        const filtered = await FetchSalasService(filters);
+        setFilteredSalas(filtered);
     };
 
     return (
@@ -42,9 +32,10 @@ const Salas = () => {
             exit={{ opacity: 0, height: 0 }}
             className="container-salas"
         >
-            <div className="hero w-full h-[680px] bg-gray-200 flex flex-col items-center justify-center">
-                <h1 className="text-4xl font-bold">Encuentra tu Banda Sala</h1>
-                <p className="text-xl mt-4 text-center">
+            <Header />
+            <div className="hero w-full">
+                <h1 className="hero-title">Encuentra tu Banda Sala</h1>
+                <p className="hero-subtitle">
                     Et has minim elitr intellegat. Mea aeterno eleifend antiopam
                     ad, nam no suscipit quaerendum. At nam minimum ponderum. Est
                     audiam animal molestiae te.
@@ -53,10 +44,14 @@ const Salas = () => {
             <div className="sala-filter-form-container">
                 <SalaFilter onFilterChange={handleFilterChange} />
             </div>
-            <div className="sala-list-container mt-20">
-                {error && <p className="text-red-500">{error}</p>}
-                <SalaList salas={filteredSalas} />
+            <div className="sala-list-container">
+                {filteredSalas.length ? (
+                    <SalaList salas={filteredSalas} />
+                ) : (
+                    <p>No se encontraron salas</p>
+                )}
             </div>
+            <Footer />
         </motion.div>
     );
 };

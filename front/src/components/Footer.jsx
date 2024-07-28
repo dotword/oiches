@@ -7,20 +7,17 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { FaInstagram } from 'react-icons/fa';
 import { FaYoutube } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
-
 const Footer = () => {
     return (
-        <footer className="bg-black">
-            <div className=" text-greyOiches text-xs mt-12 w-11/12 max-w-7xl mx-auto pt-10 pb-6 md:grid md:grid-cols-2 md:gap-x-12">
-                <section className="mb-6">
-                    <a
-                        href="/"
-                        className="flex justify-center mb-6 md:justify-start md:mb-4"
-                    >
+        <footer className="bg-black text-white pt-10 pb-6">
+            <div className="max-w-7xl mx-auto px-10 flex flex-col md:grid md:grid-cols-2 gap-x-20 gap-y-10">
+                {/* Columna izquierda */}
+                <div className="flex flex-col items-start">
+                    <a href="/" className="mb-6">
                         <img
                             src={logoWhite}
                             alt="logo"
-                            className="max-w-48 md:max-w-32"
+                            className="h-16 md:max-w-54"
                         />
                     </a>
                     <p className="mb-6">
@@ -31,72 +28,84 @@ const Footer = () => {
                             Saber más
                         </a>
                     </p>
-                    <div className="flex flex-wrap justify-between gap-4 mx-auto max-w-80 md:ml-0">
+                    <div className="flex flex-col md:flex-row gap-4 items-start">
                         <div className="flex gap-4 items-center">
-                            <FaPhoneVolume className="text-lg text-white" />
+                            <FaPhoneVolume className="text-lg" />
                             <p className="flex flex-col gap-1">
                                 <span>¿Hablamos?</span>
-                                <span className="italic text-white font-semibold">
+                                <span className="italic font-semibold">
                                     555-437-2766
                                 </span>
                             </p>
                         </div>
                         <div className="flex gap-4 items-center">
-                            <FaEnvelope className="text-lg text-white" />
+                            <FaEnvelope className="text-lg" />
                             <p className="flex flex-col gap-1">
                                 <span>Contacta con nosotros</span>
-                                <span className="italic text-white font-semibold">
+                                <span className="italic font-semibold">
                                     hola@oiches.es
                                 </span>
                             </p>
                         </div>
                     </div>
-                </section>
-                <section className="mb-6 md:mt-5">
-                    <p className="text-white font-semibold mb-2">Newsletter</p>
+                    <div className="flex flex-col md:flex-row my-2 mt-10 items-start">
+                        <NavLink
+                            to={'/'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Sobre nosotros
+                        </NavLink>
+                        <NavLink
+                            to={'/'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Músicos
+                        </NavLink>
+                        <NavLink
+                            to={'/salas'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Salas
+                        </NavLink>
+                        <NavLink
+                            to={'/users'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Mi cuenta
+                        </NavLink>
+                    </div>
+                </div>
+
+                {/* Columna derecha */}
+                <div className="flex flex-col text-right items-start md:items-end mt-0 md:mt-0 ">
+                    <p className="font-semibold mb-2">Newsletter</p>
                     <p>
-                        Be the first one to know about discounts, offers and
+                        Be the first one to know about discounts, offers, and
                         events. Unsubscribe whenever you like.
                     </p>
-                    <div className="relative mt-4 mx-auto max-w-80">
+                    <div className="relative mt-4 w-full">
                         <input
-                            type="button"
-                            value="Tu email"
-                            className="bg-greyOiches/[.5] w-full text-left px-3 py-2 rounded-2xl text-white h-10"
+                            type="email"
+                            placeholder="Tu email"
+                            className="bg-greyOiches/[.5] w-full px-3 py-2 rounded-2xl text-white h-10"
                         />
                         <button
                             type="submit"
-                            className="bg-purpleOiches text-white px-2 py-1 rounded-2xl absolute h-4/5 right-3 top-1 font-semibold min-w-16"
+                            className="bg-purpleOiches text-white px-8 py-2 rounded-2xl absolute right-0 top-0 font-semibold"
                         >
                             Enviar
                         </button>
                     </div>
-                    <div className="mt-8 flex justify-center gap-4 text-white text-xl">
+                    <div className="flex gap-4 mt-8 text-xl">
                         <FaFacebook />
                         <FaXTwitter />
                         <FaInstagram />
                         <FaYoutube />
                     </div>
-                </section>
-                <section className="mb-6 flex flex-col gap-3 items-center text-sm md:flex-row">
-                    <NavLink to={'/'} className="hover:text-yellowOiches">
-                        Sobre nosotros
-                    </NavLink>
-                    <NavLink to={'/'} className="hover:text-yellowOiches">
-                        Músicos
-                    </NavLink>
-                    <NavLink to={'/salas'} className="hover:text-yellowOiches">
-                        Salas
-                    </NavLink>
-                    <NavLink to={'/users'} className="hover:text-yellowOiches">
-                        Mi cuenta
-                    </NavLink>
-                </section>
-                <section className="mt-8 md:mt-0 md:mb-6">
-                    <p className="flex items-center justify-center gap-2">
+                    <p className="flex items-start justify-start gap-2 mt-8">
                         <FaRegCopyright /> 2024, Todos los derechos reservados
                     </p>
-                </section>
+                </div>
             </div>
         </footer>
     );
