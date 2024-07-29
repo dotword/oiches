@@ -16,6 +16,7 @@ const Users = () => {
                 <div className="p-6 bg-white rounded-lg shadow-md">
                     <AuthUser />
                 </div>
+
                 {/* <ListarReservas /> */}
             </main>
             <Footer />

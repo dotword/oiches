@@ -61,19 +61,28 @@ const Header = ({ txt }) => {
             <a href="/" className="mt-6 md:hidden">
                 <img src={logoWhite} alt="logo" className="max-w-48" />
             </a>
-            <h1 className="text-white mt-5 mb-4 text-2xl/8 font-semibold text-center w-4/5 md:text-black md:mt-12">
-                {txt}
-            </h1>
-            <span className="relative w-full md:hidden">
-                <span
-                    className="block absolute bg-yellowOiches w-6 h-2 bottom-0 right-0"
-                    aria-hidden="true"
-                ></span>
-                <span
-                    className="block absolute bg-yellowOiches w-2 h-6 bottom-0 right-0"
-                    aria-hidden="true"
-                ></span>
-            </span>
+            {txt ? (
+                <h1 className="text-white mt-5 mb-4 text-2xl/8 font-semibold text-center w-4/5 md:text-black md:mt-12">
+                    {txt}
+                </h1>
+            ) : (
+                ''
+            )}
+
+            {txt ? (
+                <span className="relative w-full md:hidden">
+                    <span
+                        className="block absolute bg-yellowOiches w-6 h-2 bottom-0 right-0"
+                        aria-hidden="true"
+                    ></span>
+                    <span
+                        className="block absolute bg-yellowOiches w-2 h-6 bottom-0 right-0"
+                        aria-hidden="true"
+                    ></span>
+                </span>
+            ) : (
+                ''
+            )}
         </header>
     );
 };
