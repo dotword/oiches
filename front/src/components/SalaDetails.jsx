@@ -4,7 +4,7 @@ import useSala from '../hooks/useSala.jsx';
 import Live from '../assets/Live.jpg';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
-import DefaultProfile from '../../public/DefaultProfile2.png';
+import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import { useEffect, useState } from 'react';
 

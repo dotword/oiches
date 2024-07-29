@@ -73,7 +73,7 @@ const AuthUser = () => {
             toast.error(error.message);
         }
     };
-    console.log(edit);
+
     return userLogged ? (
         <>
             <div className="md:flex md:justify-around md:items-end md:max-w-3xl md:mx-auto">

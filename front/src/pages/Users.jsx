@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import AuthUser from '../components/AuthUser';
-import { ListarReservas } from '../components/ListarReservas.jsx';
+// import { ListarReservas } from '../components/ListarReservas.jsx';
 import Footer from '../components/Footer.jsx';
 
 const Users = () => {
@@ -16,7 +16,7 @@ const Users = () => {
                 <div className="p-6 bg-white rounded-lg shadow-md">
                     <AuthUser />
                 </div>
-                <ListarReservas />
+                {/* <ListarReservas /> */}
             </main>
             <Footer />
         </motion.div>

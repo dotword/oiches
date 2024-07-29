@@ -10,15 +10,11 @@ import { FaRegCopyright } from 'react-icons/fa';
 const Footer = () => {
     return (
         <footer className="bg-black text-white pt-10 pb-6">
-            <div className="max-w-7xl mx-auto px-10 flex flex-col md:grid md:grid-cols-2 gap-x-20 gap-y-10">
+            <div className="max-w-7xl mx-auto px-10 flex flex-col md:grid md:grid-cols-2 gap-x-20 gap-y-10 text-sm">
                 {/* Columna izquierda */}
                 <div className="flex flex-col items-start">
                     <a href="/" className="mb-6">
-                        <img
-                            src={logoWhite}
-                            alt="logo"
-                            className="h-16 md:max-w-54"
-                        />
+                        <img src={logoWhite} alt="logo" className="max-w-44" />
                     </a>
                     <p className="mb-6">
                         <b>Oiches</b> es una innovadora plataforma diseñada para
@@ -77,7 +73,7 @@ const Footer = () => {
                 </div>
 
                 {/* Columna derecha */}
-                <div className="flex flex-col text-right items-start md:items-end mt-0 md:mt-0 ">
+                <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-10">
                     <p className="font-semibold mb-2">Newsletter</p>
                     <p>
                         Be the first one to know about discounts, offers, and
@@ -103,7 +99,7 @@ const Footer = () => {
                         <FaYoutube />
                     </div>
                     <p className="flex items-start justify-start gap-2 mt-8">
-                        <FaRegCopyright /> 2024, Todos los derechos reservados
+                        <FaRegCopyright /> 2024 - Todos los derechos reservados
                     </p>
                 </div>
             </div>
