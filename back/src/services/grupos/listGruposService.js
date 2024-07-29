@@ -1,5 +1,3 @@
-// src/services/grupos/listGruposService.js
-
 import getPool from '../../database/getPool.js';
 
 export async function listGruposService(filters, sort) {
@@ -24,12 +22,13 @@ export async function listGruposService(filters, sort) {
             END 
             ORDER BY gf.createdAt
         ) AS pdfs,
-        COALESCE(SUM(v.voto), 0) AS votos
+        COALESCE(SUM(v.voto), 0) AS votos,
+        (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos
     FROM grupos g
     JOIN provincias p ON g.provincia = p.id
     JOIN generos_musicales gm ON g.generos = gm.id
     LEFT JOIN grupo_fotos gf ON g.id = gf.grupoId
-    LEFT JOIN votos_grupos v ON g.id = v.voto
+    LEFT JOIN votos_grupos v ON g.id = v.grupoVotado
     WHERE 1=1
     `;
 
