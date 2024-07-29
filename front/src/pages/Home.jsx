@@ -133,7 +133,7 @@ const Home = () => {
                             ref={listRef}
                             className="max-w-xs md:max-w-3xl sm:max-w-md lg:max-w-screen-lg mx-auto"
                         >
-                            <Slider className="rounded-xl" {...settings}>
+                            <Slider className="rounded-x1" {...settings}>
                                 {salas &&
                                     salas.map((sala) => (
                                         <SalaCard key={sala.id} sala={sala} />

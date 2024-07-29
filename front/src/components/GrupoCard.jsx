@@ -6,10 +6,10 @@ const GrupoCard = ({ grupo }) => {
     const navigate = useNavigate();
     const { VITE_API_URL_BASE } = import.meta.env;
 
-    // Construir la URL de la imagen
-    const imageUrl = grupo.foto
-        ? `${VITE_API_URL_BASE}/uploads/${grupo.gf.grupoId}`
-        : DefaultProfile;
+    const imageUrl =
+        grupo.fotos && grupo.fotos.length > 0 && grupo.fotos[0].name
+            ? `${VITE_API_URL_BASE}/uploads/${grupo.fotos[0].name}`
+            : DefaultProfile;
 
     const handleClick = () => {
         navigate(`/grupo/${grupo.id}`);
@@ -17,42 +17,27 @@ const GrupoCard = ({ grupo }) => {
 
     return (
         <div
-            className="grupo-card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer max-w-xs w-full h-auto"
+            className="card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer w-full sm:w-72 h-auto sm:h-96 mx-auto"
             onClick={handleClick}
         >
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
-                className="grupo-card-image w-full h-60 object-cover rounded-lg mb-4"
+                className="card-image w-full h-48 sm:h-48 object-cover rounded-lg mb-4"
             />
-            <div className="flex flex-col gap-2 p-2 h-full justify-between">
-                <h3 className="grupo-card-title text-xl font-bold mt-4">
-                    {grupo.nombre}
-                </h3>
-                {grupo.provincia_nombre && (
-                    <p>
-                        Provincia:{' '}
-                        <span className="text-gray-300">
-                            {grupo.provincia_nombre}
-                        </span>
-                    </p>
-                )}
-                {grupo.genero_nombre && (
-                    <p>
-                        Género:{' '}
-                        <span className="text-gray-300">
-                            {grupo.genero_nombre}
-                        </span>
-                    </p>
-                )}
-                {grupo.media_votos && (
-                    <div>
-                        <StarRating
-                            rating={grupo.media_votos}
-                            className="p-1"
-                        />
-                    </div>
-                )}
+            <h2 className="card-title text-lg font-bold mt-2">
+                {grupo.nombre}
+            </h2>
+            <p className="card-genre text-gray-400">
+                <span className="sub_title_ficha">Género:</span>{' '}
+                {grupo.genero_nombre}
+            </p>
+            <p className="card-province text-gray-400">
+                <span className="sub_title_ficha">Provincia:</span>{' '}
+                {grupo.provincia_nombre}
+            </p>
+            <div className="mt-2">
+                <StarRating rating={grupo.media_votos} />
             </div>
         </div>
     );

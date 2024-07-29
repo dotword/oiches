@@ -1,4 +1,3 @@
-// src/components/GrupoFilter.jsx
 import React, { useState, useEffect } from 'react';
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';

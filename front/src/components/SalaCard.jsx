@@ -14,21 +14,19 @@ const SalaCard = ({ sala }) => {
 
     return (
         <div
-            className="sala-card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer"
+            className="card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer w-full sm:w-72 h-auto sm:h-96 mx-auto"
             onClick={handleClick}
         >
             <img
                 src={imageUrl}
                 alt={sala.nombre}
-                className="sala-card-image w-full h-96 object-cover rounded-lg"
+                className="card-image w-full h-48 sm:h-48 object-cover rounded-lg mb-4"
             />
-            <h2 className="sala-card-title text-xl font-bold mt-4">
-                {sala.nombre}
-            </h2>
-            <p className="sala-card-genre text-gray-400">
+            <h2 className="card-title text-lg font-bold mt-2">{sala.nombre}</h2>
+            <p className="card-genre text-gray-400">
                 <span className="sub_title_ficha">Género:</span> {sala.Genero}
             </p>
-            <p className="sala-card-province text-gray-400">
+            <p className="card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}
                 {sala.Provincia}
             </p>
