@@ -14,6 +14,7 @@ import {
     editUserEmailController,
     editUserAvatarController,
     getOwnUserController,
+    getSalaListController,
 } from '../controllers/users/index.js';
 
 const router = express.Router();
@@ -56,5 +57,8 @@ router.put(
     canEditUser,
     editUserAvatarController
 );
+
+// Devuelve listado de salas de usuario tipo salal
+router.get('/users/salas', authUser, userExists, getSalaListController);
 
 export default router;

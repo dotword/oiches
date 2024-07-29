@@ -9,6 +9,7 @@ import {
 } from '../services/userEditService';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
+import UsersSalaList from './UsersSalaList.jsx';
 
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -216,7 +217,7 @@ const AuthUser = () => {
                     </button>
                 </section>
             </div>
-
+            <UsersSalaList />
             <Toastify />
         </>
     ) : (
