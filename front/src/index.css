@@ -45,27 +45,18 @@
     }
 
     /* Contenedor del formulario de filtros */
-    .sala-filter-form-container {
-        @apply w-full bg-gray-400 flex justify-center;
-    }
-
+    .sala-filter-form-container,
     .grupo-filter-form-container {
         @apply w-full bg-gray-400 flex justify-center;
     }
 
     /* Filtros de salas */
-    .sala-filter-form {
-        @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
-    }
-
+    .sala-filter-form,
     .grupo-filter-form {
         @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
     }
 
-    .sala-filter-form > * {
-        @apply mx-2 my-2;
-    }
-
+    .sala-filter-form > *,
     .grupo-filter-form > * {
         @apply mx-2 my-2;
     }
@@ -82,65 +73,43 @@
         @apply flex-1;
     }
 
-    .sala-filter-form button {
-        @apply flex-none;
-    }
-
+    .sala-filter-form button,
     .grupo-filter-form button {
         @apply flex-none;
     }
 
-    /* Tarjetas de lista de salas */
-    .sala-list-container {
-        @apply w-full flex justify-center mt-20 mb-20;
-    }
-
-    .sala-list {
-        @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-8;
-    }
-
-    .sala-card {
-        @apply bg-gray-800 p-4 rounded-lg shadow-lg;
-    }
-
-    .sala-card-image {
-        @apply w-full h-96 object-cover rounded-lg mb-4;
-    }
-
-    .sala-card-title {
-        @apply text-xl font-bold text-white;
-    }
-
-    .sala-card-genre,
-    .sala-card-province,
-    .sala-card-votes {
-        @apply text-gray-400;
-    }
-
-    /* Tarjetas de lista de grupos */
+    /* Tarjetas de lista */
+    .sala-list-container,
     .grupo-list-container {
         @apply w-full flex justify-center mt-20 mb-20;
     }
 
+    .sala-list,
     .grupo-list {
         @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-8;
     }
 
+    .sala-card,
     .grupo-card {
-        @apply bg-gray-800 p-4 rounded-lg shadow-lg;
+        @apply bg-gray-900 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
     }
 
+    .sala-card-image,
     .grupo-card-image {
-        @apply w-full h-96 object-cover rounded-lg mb-4;
+        @apply w-full h-56 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
     }
 
+    .sala-card-title,
     .grupo-card-title {
-        @apply text-xl font-bold text-white;
+        @apply text-xl font-bold text-white mb-2;
     }
 
-    .grupocard-genre,
+    .sala-card-genre,
+    .sala-card-province,
+    .sala-card-votes,
+    .grupo-card-genre,
     .grupo-card-province,
-    .grupocard-votes {
+    .grupo-card-votes {
         @apply text-gray-400;
     }
 
@@ -149,7 +118,7 @@
     }
 
     .sub_title_ficha {
-        @apply text-white; /*Negrita para texto como provincia genero etc... de las fichas*/
+        @apply text-white; /*Bold para texto como provincia genero etc... de las fichas*/
     }
 }
 

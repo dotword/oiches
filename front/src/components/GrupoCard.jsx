@@ -1,11 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import StarRating from './StartRating.jsx';
+import DefaultProfile from '../../public/Horizontal_blanco.webp';
 
 const GrupoCard = ({ grupo }) => {
     const navigate = useNavigate();
-    const imageUrl = `${import.meta.env.VITE_API_URL_BASE}/uploads/${
-        grupo.primera_foto
-    }`;
+    const { VITE_API_URL_BASE } = import.meta.env;
+
+    const imageUrl =
+        grupo.fotos && grupo.fotos.length > 0 && grupo.fotos[0].name
+            ? `${VITE_API_URL_BASE}/uploads/${grupo.fotos[0].name}`
+            : DefaultProfile;
 
     const handleClick = () => {
         navigate(`/grupo/${grupo.id}`);
@@ -13,23 +17,24 @@ const GrupoCard = ({ grupo }) => {
 
     return (
         <div
-            className="grupo-card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer"
+            className="card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer w-full sm:w-72 h-auto sm:h-96 mx-auto"
             onClick={handleClick}
         >
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
-                className="grupo-card-image w-full h-96 object-cover rounded-lg"
+                className="card-image w-full h-48 sm:h-48 object-cover rounded-lg mb-4"
             />
-            <h2 className="grupo-card-title text-xl font-bold mt-4">
+            <h2 className="card-title text-lg font-bold mt-2">
                 {grupo.nombre}
             </h2>
-            <p className="grupo-card-genre text-gray-400">
-                <span className="sub_title_ficha">Género:</span> {grupo.genero}
+            <p className="card-genre text-gray-400">
+                <span className="sub_title_ficha">Género:</span>{' '}
+                {grupo.genero_nombre}
             </p>
-            <p className="grupo-card-location text-gray-400">
-                <span className="sub_title_ficha">Ubicación:</span>{' '}
-                {grupo.ubicacion}
+            <p className="card-province text-gray-400">
+                <span className="sub_title_ficha">Provincia:</span>{' '}
+                {grupo.provincia_nombre}
             </p>
             <div className="mt-2">
                 <StarRating rating={grupo.media_votos} />
