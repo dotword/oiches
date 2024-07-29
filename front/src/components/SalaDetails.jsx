@@ -7,6 +7,7 @@ import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import { useEffect, useState } from 'react';
+import RatingForm from '../components/RatingForm';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;

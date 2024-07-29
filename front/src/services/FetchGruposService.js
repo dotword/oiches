@@ -10,10 +10,9 @@ const FetchGruposService = async (filters = {}) => {
         }
 
         const data = await response.json();
-        console.log('Datos obtenidos:', data); // Añade este console.log para depuración
         return data;
     } catch (error) {
-        console.error('Hubo un error al obtener los grupos:', error);
+        console.error('Hubo un error al obtener las salas:', error);
         return [];
     }
 };
