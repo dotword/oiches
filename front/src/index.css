@@ -52,12 +52,24 @@
         @apply w-full bg-gray-400 flex justify-center;
     }
 
+    .grupo-filter-form-container {
+        @apply w-full bg-gray-400 flex justify-center;
+    }
+
     /* Filtros de salas */
     .sala-filter-form {
         @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
     }
 
+    .grupo-filter-form {
+        @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
+    }
+
     .sala-filter-form > * {
+        @apply mx-2 my-2;
+    }
+
+    .grupo-filter-form > * {
         @apply mx-2 my-2;
     }
 
@@ -74,6 +86,10 @@
     }
 
     .sala-filter-form button {
+        @apply flex-none;
+    }
+
+    .grupo-filter-form button {
         @apply flex-none;
     }
 
@@ -104,13 +120,46 @@
         @apply text-gray-400;
     }
 
+    /* Tarjetas de lista de grupos */
+    .grupo-list-container {
+        @apply w-full flex justify-center mt-20 mb-20;
+    }
+
+    .grupo-list {
+        @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-8;
+    }
+
+    .grupo-card {
+        @apply bg-gray-800 p-4 rounded-lg shadow-lg;
+    }
+
+    .grupo-card-image {
+        @apply w-full h-96 object-cover rounded-lg mb-4;
+    }
+
+    .grupo-card-title {
+        @apply text-xl font-bold text-white;
+    }
+
+    .grupocard-genre,
+    .grupo-card-province,
+    .grupocard-votes {
+        @apply text-gray-400;
+    }
+
     .button {
         @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
     }
+
+    .sub_title_ficha {
+        @apply text-white; /*Negrita para texto como provincia genero etc... de las fichas*/
+    }
 }
-.slick-arrow:before{
+
+.slick-arrow:before {
     color: #9333ff;
 }
-.slick-slide > div{
+
+.slick-slide > div {
     margin: 0px 10px;
 }

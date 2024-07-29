@@ -1,28 +1,27 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Menu = () => {
     const { currentUser, signOut } = useContext(AuthContext);
-    let navigate = useNavigate();
+    const navigate = useNavigate();
 
     return (
         <>
             <NavLink
-                to={'/salas'}
+                to="/salas"
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Salas
             </NavLink>
             <NavLink
-                to={'/'}
+                to="/grupos" // Enlace corregido
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Músicos
             </NavLink>
             <NavLink
-                to={'/'}
+                to="/sobre-nosotros" // Asegúrate de que la ruta sea correcta
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Sobre nosotros
@@ -30,13 +29,13 @@ const Menu = () => {
             {!currentUser ? (
                 <>
                     <NavLink
-                        to={'/login'}
+                        to="/login"
                         className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
                     >
                         Login
                     </NavLink>
                     <NavLink
-                        to={'/register'}
+                        to="/register"
                         className="btn-account max-md:my-8 font-medium"
                     >
                         Registro
@@ -45,6 +44,7 @@ const Menu = () => {
             ) : (
                 <>
                     <NavLink
+                        to="#"
                         onClick={() => {
                             signOut();
                             navigate('/login');
@@ -54,7 +54,7 @@ const Menu = () => {
                         Logout
                     </NavLink>
                     <NavLink
-                        to={'/users'}
+                        to="/users"
                         className="btn-account max-md:my-8 font-medium"
                     >
                         Mi perfil

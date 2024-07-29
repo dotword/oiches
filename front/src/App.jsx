@@ -17,52 +17,49 @@ import Salas from './pages/Salas.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import EdicionGrupo from './pages/EdicionGrupo.jsx';
 import GrupoDetail from './components/GrupoDetail.jsx';
+import Grupos from './pages/Grupos.jsx'; // Asegúrate de que la ruta de importación sea correcta
 import NotFound from './pages/NotFound.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
 
 function App() {
     return (
-        <>
-            <AnimatePresence>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/grupo/:idGrupo" element={<GrupoDetail />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route
-                        path="/users/validate/:registrationCode"
-                        element={<UserValidationPage />}
-                    />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route
-                        path="/recover-password"
-                        element={<RecuperarPassword />}
-                    />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/creacion-sala" element={<CreacionSala />} />
-                    <Route
-                        path="/sala/:idSala/edit"
-                        element={<EdicionSala />}
-                    />
-                    <Route path="/salas" element={<Salas />} />
-                    <Route path="/sala/:idSala" element={<SalaPage />} />
-                    <Route path="/creacion-grupo" element={<CreacionGrupo />} />
-                    <Route
-                        path="/grupos/:idGrupo/edit"
-                        element={<EdicionGrupo />}
-                    />
-                    <Route path="/grupos/:idGrupo" element={<GrupoDetail />} />
-                    <Route
-                        path="/sala/:idSala/reservas"
-                        element={<CrearReservaPage type={'sala'} />}
-                    />
-                    <Route
-                        path="/grupo/:idGrupo/reservas"
-                        element={<CrearReservaPage type={'grupo'} />}
-                    />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </AnimatePresence>
-        </>
+        <AnimatePresence>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route
+                    path="/users/validate/:registrationCode"
+                    element={<UserValidationPage />}
+                />
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                    path="/recover-password"
+                    element={<RecuperarPassword />}
+                />
+                <Route path="/users" element={<Users />} />
+                <Route path="/creacion-sala" element={<CreacionSala />} />
+                <Route path="/sala/:idSala/edit" element={<EdicionSala />} />
+                <Route path="/salas" element={<Salas />} />
+                <Route path="/sala/:idSala" element={<SalaPage />} />
+                <Route path="/creacion-grupo" element={<CreacionGrupo />} />
+                <Route
+                    path="/grupos/:idGrupo/edit"
+                    element={<EdicionGrupo />}
+                />
+                <Route path="/grupo/:idGrupo" element={<GrupoDetail />} />
+                <Route path="/grupos" element={<Grupos />} />{' '}
+                {/* Añadida ruta para la página de grupos */}
+                <Route
+                    path="/sala/:idSala/reservas"
+                    element={<CrearReservaPage type="sala" />}
+                />
+                <Route
+                    path="/grupo/:idGrupo/reservas"
+                    element={<CrearReservaPage type="grupo" />}
+                />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </AnimatePresence>
     );
 }
 
