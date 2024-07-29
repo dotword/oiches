@@ -2,7 +2,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import getDataUserLoggedService from '../../services/getDataUserLoggedService';
+import getDataUserLoggedService from '../../services/getDataUserLoggedService.js';
 
 // crear el contexto y darle un valor inicial
 export const AuthContext = createContext({
