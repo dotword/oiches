@@ -29,7 +29,7 @@ const SliderMulti = ({ children }) => {
   };
 
   return (
-    <div className="w-80 lg:w-full mx-auto">
+    <div className="w-80 lg:w-full lg:max-w-screen-xl mx-auto">
       <div className="">
         <Slider {...settings} >
           {children}
