@@ -125,10 +125,10 @@ export const ListarReservas = () => {
               <div className='flex flex-col sm:flex-row justify-between mt-4 gap-2'>
                 <button onClick={()=>{
                   handleConfirm(reserva.id)
-                }} className='bg-blue-500 text-white p-2 rounded'>Confirmar</button>
+                }} className=' button bg-blue-500'>Confirmar</button>
                 <button onClick={()=>{
                   handleDelete(reserva.id)
-                }} className='bg-red-500 text-white p-2 rounded'>Cancelar</button>
+                }} className=' button bg-red-500'>Cancelar</button>
               </div>
             </>
           ))
