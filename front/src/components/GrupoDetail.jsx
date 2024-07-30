@@ -6,11 +6,13 @@ import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
+import useAuth from '../hooks/useAuth.jsx';
+
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
 
     const { idGrupo } = useParams();
-
+    const { currentUser} = useAuth()
     const { entry, error } = useGrupo(idGrupo);
     const {
         nombre,
@@ -42,13 +44,32 @@ const GrupoDetail = () => {
                     <h2 className="text-4xl self-start">{nombre}</h2>
                 </section>
                 <section className="grid grid-cols-2 gap-6 my-6">
-                    <span>
+                    {nombre && <span>
                         Nombre del Grupo/Artista{' '}
                         <p className=" text-gray-400">{nombre}</p>
-                    </span>
-                    <span>
+                    </span>}
+                   {Genero && <span>
                         Genero<p className=" text-gray-400">{Genero}</p>
-                    </span>
+                    </span>}
+                    {currentUser && (
+                        <span>
+                            Contacto{' '}
+                            <p className=" text-gray-400">{email}</p>
+                        </span>
+                    )}
+                    {honorarios && (
+                        <span>
+                            Honorarios{' '}
+                            <p className=" text-gray-400">{honorarios}</p>
+                        </span>
+                    )}
+                    {Provincia && (
+                        <span>
+                            Provincia{' '}
+                            <p className=" text-gray-400">{Provincia}</p>
+                        </span>
+                    )}
+                    
                 </section>
                 <section>
                     <h3 className="text-2xl">Biografia :</h3>
@@ -58,6 +79,12 @@ const GrupoDetail = () => {
                             : 'El grupo tiene que añadir la biografia.'}
                     </p>
                 </section>
+                {pdf && (
+                        <section>
+                            <h3 className='text-2xl'>Rider :</h3>
+                            <iframe className='my-6 w-80 h-80 rounded-3xl' src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}`} frameBorder="0"></iframe>
+                        </section>
+                    )}
                 {media.length > 0 && (
                     <section>
                         <h3 className="text-2xl">Videos :</h3>
@@ -79,6 +106,7 @@ const GrupoDetail = () => {
                         </div>
                     </section>
                 )}
+                
                 {comentarios.length > 0 && (
                     <section>
                         <h3 className="text-2xl">Comentarios :</h3>
@@ -88,7 +116,7 @@ const GrupoDetail = () => {
                             return (
                                 <div
                                     key={comentario.id}
-                                    className="my-6 border p-3 rounded-lg flex justify-between gap-20 max-w-fit"
+                                    className="my-6 border p-3 rounded-3xl flex flex-col w-fit justify-between"
                                 >
                                     <span>
                                         {comentario.comentario}
@@ -100,6 +128,9 @@ const GrupoDetail = () => {
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
                                         to={`/sala/${comentario.salaVotaId}`}
                                     >
+                                    <div>
+                                        <StarRating rating={comentario.voto}/>
+                                    </div>
                                         <img
                                             className="w-10"
                                             src={
@@ -118,14 +149,14 @@ const GrupoDetail = () => {
                 )}
                 <section>
                     <h3 className="text-2xl">Fotos:</h3>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-2 gap-4 my-6 place-items-center">
                         {fotos.length > 0 ? (
                             <>
                                 {fotos.map((photo) => (
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-3xl max-h-96 shadow-xl"
+                                        className="rounded-3xl max-h-80 shadow-xl"
                                         alt=""
                                     />
                                 ))}
