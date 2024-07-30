@@ -86,7 +86,7 @@
 
     .sala-list,
     .grupo-list {
-        @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mx-8;
+        @apply w-full sm:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8;
     }
 
     .sala-card,
@@ -96,7 +96,7 @@
 
     .sala-card-image,
     .grupo-card-image {
-        @apply w-full h-56 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
+        @apply w-full max-w-full h-48 max-h-48 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
     }
 
     .sala-card-title,

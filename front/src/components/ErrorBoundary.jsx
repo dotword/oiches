@@ -1,41 +1,45 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { FaCrown } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-class ErrorBoundary extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { hasError: false };
-    }
+const ErrorBoundary = ({ children }) => {
+    const [hasError, setHasError] = useState(false);
+    const location = useLocation();
 
-    static getDerivedStateFromError(error) {
-        return { hasError: true };
-    }
+    // Limpiar el estado de error al cambiar la ubicación
+    useEffect(() => {
+        setHasError(false);
+    }, [location]);
 
-    componentDidCatch(error, errorInfo) {
+    const componentDidCatch = (error, errorInfo) => {
+        setHasError(true);
         console.error('ErrorBoundary capturó un error', error, errorInfo);
+    };
+
+    if (hasError) {
+        return (
+            <div
+                className="flex flex-col items-center justify-center min-h-screen"
+                style={{ backgroundColor: '#121212', color: '#FFFFFF' }}
+            >
+                <img
+                    src="/Horizontal_blanco.webp"
+                    alt="Logo de Oiches"
+                    className="mt-4"
+                />
+                <h1 className="text-2xl mt-4">
+                    Lo siento mucho, me he equivocado; no volverá a ocurrir.
+                </h1>
+                <Link
+                    to="/"
+                    className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:scale-105 transition-all shadow-lg"
+                >
+                    Volver a la Home
+                </Link>
+            </div>
+        );
     }
 
-    render() {
-        if (this.state.hasError) {
-            return (
-                <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800">
-                    <FaCrown className="text-yellow-500" size={50} />
-                    <h1 className="text-2xl mt-4">
-                        Lo siento mucho, me he equivocado; no volverá a ocurrir.
-                    </h1>
-                    <Link
-                        to="/"
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-300"
-                    >
-                        Volver a la Home
-                    </Link>
-                </div>
-            );
-        }
-
-        return this.props.children;
-    }
-}
+    return children;
+};
 
 export default ErrorBoundary;
