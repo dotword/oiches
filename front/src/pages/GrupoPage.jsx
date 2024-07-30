@@ -1,4 +1,4 @@
 import GrupoDetail from '../components/GrupoDetails.jsx';
-export const SalaPage = () => {
+export const GrupoPage = () => {
     return <GrupoDetail />;
 };

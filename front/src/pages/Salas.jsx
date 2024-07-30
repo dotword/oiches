@@ -34,11 +34,10 @@ const Salas = () => {
         >
             <Header />
             <div className="hero w-full">
-                <h1 className="hero-title">Encuentra tu Banda Sala</h1>
+                <h1 className="hero-title">Encuentra tu Banda </h1>
                 <p className="hero-subtitle">
-                    Et has minim elitr intellegat. Mea aeterno eleifend antiopam
-                    ad, nam no suscipit quaerendum. At nam minimum ponderum. Est
-                    audiam animal molestiae te.
+                    Descubre y explora distintas salas, conecta con ellos y crea
+                    música juntos.
                 </p>
             </div>
             <div className="sala-filter-form-container">

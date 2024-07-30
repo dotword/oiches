@@ -13,7 +13,7 @@ const Grupos = () => {
     useEffect(() => {
         const fetchGrupos = async () => {
             const initialGrupos = await FetchGruposService();
-            console.log('Grupos iniciales:', initialGrupos);
+            // console.log('Grupos iniciales:', initialGrupos);
             setGrupos(initialGrupos);
             setFilteredGrupos(initialGrupos);
         };
