@@ -1,4 +1,3 @@
-import React from 'react';
 import GrupoCard from './GrupoCard';
 
 const GrupoList = ({ grupos }) => {

@@ -8,11 +8,13 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SalaFilter from '../components/SalaFilter.jsx';
 import FetchSalasService from '../services/FetchSalasService.js';
-import SalasImg from '../assets/SalasMusicales.jpeg';
-import GruposImg from '../assets/Musicos.jpeg';
+import SalasImg from '../assets/pexels-teddy-2263436.jpg';
+import GruposImg from '../assets/pexels-jibarofoto-2091383.jpg';
 import StarRating from '../components/StartRating.jsx';
 import Salas from './Salas.jsx';
 import GrupoCard from '../components/GrupoCard.jsx';
+import SliderMulti from '../components/SliderMulti.jsx';
+import Footer from '../components/Footer.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -100,18 +102,14 @@ const Home = () => {
             <div className="sala-filter-form-container">
                 <SalaFilter onFilterChange={handleFilterChange} />
             </div>
-            <main className="flex flex-col gap-6 max-w-screen-lg mx-auto">
+            <main className="flex flex-col gap-6 max-w-screen-xl mx-auto p-4 ">
                 <section className="grid gap-6">
-                    <div className="flex justify-between">
-                        <h2>Bandas/Musicos recomendados</h2>
-                        <Link to={'/grupos'}>Ver Todos</Link>
+                    <div className="flex justify-between place-items-center">
+                        <h2 className='text-3xl'>Bandas/Musicos recomendados</h2>
+                        <Link className='button p-1 text-center' to={'/grupos'}>Ver Todos</Link>
                     </div>
-                    <div className="w-full max-w-xs sm:max-w-md md:max-w-3xl lg:max-w-screen-lg mx-auto">
-                        <ul
-                            ref={listRef}
-                            className="max-w-xs md:max-w-3xl sm:max-w-md lg:max-w-screen-lg mx-auto"
-                        >
-                            <Slider className="rounded-xl" {...settings}>
+                    
+                            <SliderMulti>
                                 {grupos &&
                                     grupos.map((grupo) => (
                                         <GrupoCard
@@ -119,58 +117,54 @@ const Home = () => {
                                             grupo={grupo}
                                         />
                                     ))}
-                            </Slider>
-                        </ul>
-                    </div>
+                            </SliderMulti>
+                       
                 </section>
                 <section className="grid gap-6">
-                    <div className="flex justify-between">
-                        <h2>Salas de concierto recomendadas</h2>
-                        <Link to={'/salas'}> Ver Todas</Link>
+                    <div className="flex justify-between place-items-center">
+                        <h2 className='text-3xl'>Salas de concierto recomendadas</h2>
+                        <Link className='button p-1 text-center' to={'/salas'}> Ver Todas</Link>
                     </div>
-                    <div className="w-full max-w-xs sm:max-w-md md:max-w-3xl lg:max-w-screen-lg mx-auto">
-                        <ul
-                            ref={listRef}
-                            className="max-w-xs md:max-w-3xl sm:max-w-md lg:max-w-screen-lg mx-auto"
-                        >
-                            <Slider className="rounded-x1" {...settings}>
-                                {salas &&
+                    <SliderMulti>
+                    {salas &&
                                     salas.map((sala) => (
-                                        <SalaCard key={sala.id} sala={sala} />
+                                        <SalaCard
+                                            key={sala.id}
+                                            sala={sala}
+                                        />
                                     ))}
-                            </Slider>
-                        </ul>
-                    </div>
+                    </SliderMulti>
                 </section>
-                <section className="flex flex-col mx-auto my-10 gap-6 md:flex-row md:justify-around md:mx-0 md:mt-40 ">
+                <section className="flex flex-col lg:grid lg:grid-cols-2 mx-auto my-10 gap-6 md:flex-row md:justify-around md:mx-0 md:mt-40 ">
                     <Link
-                        className="relative hover:scale-110 transition-all"
+                        className="relative hover:scale-105 transition-all "
                         to={'/grupos'}
                     >
                         <img
-                            className="w-72 rounded-xl"
+                            className="w-96 lg:w-auto rounded-2xl"
                             src={GruposImg}
                             alt=""
                         />
-                        <span className="absolute bottom-3 px-2 z-50 text-xl w-full text-white bg-black bg-opacity-65">
+                        <span className="absolute bottom-3 px-4 z-50 text-3xl w-full text-white bg-black bg-opacity-65">
                             Musicos/Bandas
                         </span>
                     </Link>
                     <Link
-                        className="relative hover:scale-110 transition-all"
+                        className="relative hover:scale-105 transition-all"
                         to={'/salas'}
                     >
                         <img
-                            className="w-72 h-full rounded-xl"
+                            className="w-96 lg:w-auto h-full rounded-2xl"
                             src={SalasImg}
                             alt=""
                         />
-                        <span className="absolute bottom-3 px-2 z-50 text-xl text-white w-full bg-black bg-opacity-65">
+                        <span className="absolute bottom-3 px-4 z-50 text-3xl text-white w-full bg-black bg-opacity-65">
                             Salas Musicales
                         </span>
                     </Link>
                 </section>
             </main>
+            <Footer></Footer>
         </motion.div>
     );
 };
