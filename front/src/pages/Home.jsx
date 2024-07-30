@@ -14,6 +14,7 @@ import StarRating from '../components/StartRating.jsx';
 import Salas from './Salas.jsx';
 import GrupoCard from '../components/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
+import Footer from '../components/Footer.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -163,6 +164,7 @@ const Home = () => {
                     </Link>
                 </section>
             </main>
+            <Footer></Footer>
         </motion.div>
     );
 };
