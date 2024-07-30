@@ -10,7 +10,23 @@ const selectUserByIdService = async (userId) => {
         [userId]
     );
 
-    return users[0];
+    // Comprobamos los grupos del usuarios
+    const [grupos] = await pool.query(
+        `SELECT id, nombre FROM grupos WHERE usuario_id = ?`,
+        [userId]
+    );
+    // Agregamos el array de los media del grupo.
+    users[0].grupos = grupos;
+
+    // Comprobamos las salas del usuarios
+    const [salas] = await pool.query(
+        `SELECT id, nombre FROM salas WHERE usuario_id = ?`,
+        [userId]
+    );
+    // Agregamos el array de los media del grupo.
+    users[0].salas = salas;
+
+    return { ...users[0], grupos, salas };
 };
 
 export default selectUserByIdService;

@@ -1,10 +1,9 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Menu = () => {
     const { currentUser, signOut } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     return (
         <>
@@ -44,10 +43,9 @@ const Menu = () => {
             ) : (
                 <>
                     <NavLink
-                        to="#"
+                        to="/login"
                         onClick={() => {
                             signOut();
-                            navigate('/login');
                         }}
                         className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
                     >
