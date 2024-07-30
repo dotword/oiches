@@ -8,7 +8,7 @@ const GrupoFilter = ({ onFilterChange }) => {
     const [filters, setFilters] = useState({
         nombre: '',
         provincia: '',
-        genero: '',
+        generos: '',
     });
 
     useEffect(() => {
@@ -46,12 +46,12 @@ const GrupoFilter = ({ onFilterChange }) => {
                 className="form-input golden-ratio-1"
             />
             <select
-                name="genero"
-                value={filters.genero}
+                name="generos"
+                value={filters.generos}
                 onChange={handleChange}
                 className="form-select golden-ratio-2"
             >
-                <option value="">Género musical</option>
+                <option value="">Género</option>
                 {genres.map((genre) => (
                     <option key={genre.id} value={genre.id}>
                         {genre.nombre}
@@ -66,7 +66,7 @@ const GrupoFilter = ({ onFilterChange }) => {
             >
                 <option value="">Provincia</option>
                 {provinces.map((province) => (
-                    <option key={province.id} value={province.id}>
+                    <option key={province.nombre} value={province.nombre}>
                         {province.provincia}
                     </option>
                 ))}

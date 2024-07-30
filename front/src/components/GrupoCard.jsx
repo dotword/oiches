@@ -17,7 +17,7 @@ const GrupoCard = ({ grupo }) => {
 
     return (
         <div
-            className="card bg-gray-800 text-white p-4 rounded-lg shadow-lg cursor-pointer w-full sm:w-72 h-auto sm:h-96 mx-auto"
+            className="card bg-gray-800 text-white  p-3 rounded-lg shadow-lg cursor-pointer w-full  max-h-96  mx-auto"
             onClick={handleClick}
         >
             <img
@@ -30,7 +30,7 @@ const GrupoCard = ({ grupo }) => {
             </h2>
             <p className="card-genre text-gray-400">
                 <span className="sub_title_ficha">Género:</span>{' '}
-                { grupo.genero_nombre}
+                {grupo.genero_nombre}
             </p>
             <p className="card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}

@@ -34,8 +34,9 @@ export async function listGruposService(filters, sort) {
     }
 
     if (filters.generos) {
-        query += ' AND gm.nombre LIKE ?';
-        queryParams.push(`%${filters.generos}%`);
+        // Asegúrate de que el nombre de la propiedad coincide con lo que envías desde el frontend
+        query += ' AND gm.id = ?'; // Filtramos por ID de género
+        queryParams.push(filters.generos);
     }
 
     query += ' GROUP BY g.id, g.nombre, g.usuario_id, p.provincia, gm.nombre';
