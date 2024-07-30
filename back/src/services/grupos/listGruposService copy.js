@@ -1,5 +1,4 @@
 import getPool from '../../database/getPool.js';
-import path from 'path';
 
 export async function listGruposService(filters, sort) {
     const pool = await getPool();
@@ -11,6 +10,18 @@ export async function listGruposService(filters, sort) {
         g.usuario_id,
         p.provincia AS provincia_nombre,
         gm.nombre AS genero_nombre,
+        JSON_ARRAYAGG(
+            CASE 
+                WHEN gf.name NOT LIKE '%.pdf' THEN JSON_OBJECT('name', gf.name, 'createdAt', gf.createdAt) 
+                ELSE NULL 
+            END
+        ) AS fotos,
+        GROUP_CONCAT(
+            CASE 
+                WHEN gf.name LIKE '%.pdf' THEN gf.name 
+            END 
+            ORDER BY gf.createdAt
+        ) AS pdfs,
         COALESCE(SUM(v.voto), 0) AS votos,
         (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos
     FROM grupos g
@@ -45,31 +56,5 @@ export async function listGruposService(filters, sort) {
     }
 
     const [rows] = await pool.query(query, queryParams);
-    // Consulta para obtener las fotos agrupadas por grupo
-    const [photos] = await pool.query(`
-        SELECT id, name, grupoId 
-        FROM grupo_fotos
-    `);
-
-    // Agrupamos las fotos por grupo excluyendo los archivos PDF
-    const groupedPhotos = photos.reduce((acc, photo) => {
-        if (path.extname(photo.name).toLowerCase() !== '.pdf') {
-            if (!acc[photo.grupoId]) {
-                acc[photo.grupoId] = [];
-            }
-            acc[photo.grupoId].push({
-                id: photo.id,
-                name: photo.name,
-            });
-        }
-        return acc;
-    }, {});
-
-    // Añadimos las fotos correspondientes a cada grupo en el resultado
-    const result = rows.map((row) => ({
-        ...row,
-        fotos: groupedPhotos[row.id] || [],
-    }));
-
-    return result;
+    return rows;
 }
