@@ -7,9 +7,10 @@ import {
     modifyUserEmailService,
     modifyUserPasswordService,
 } from '../services/userEditService';
+// import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
-import UsersSalaList from './UsersSalaList.jsx';
+import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -217,7 +218,10 @@ const AuthUser = () => {
                     </button>
                 </section>
             </div>
-            <UsersSalaList />
+
+            <UsersSalaGrupoList />
+            {/* <ListarReservas /> */}
+
             <Toastify />
         </>
     ) : (
