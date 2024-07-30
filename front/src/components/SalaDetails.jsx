@@ -8,6 +8,7 @@ import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import { useEffect, useState } from 'react';
 import RatingForm from '../components/RatingForm';
+import useAuth from '../hooks/useAuth.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -15,6 +16,7 @@ const SalaDetail = () => {
     const { idSala } = useParams();
     const url = VITE_API_URL_BASE;
     const { entry, error } = useSala(idSala);
+    const {currentUser } = useAuth()
     console.log(entry);
     const {
         nombre,
@@ -24,7 +26,7 @@ const SalaDetail = () => {
         horaReservasEnd,
         horaReservasStart,
         condiciones,
-        Genero,
+        genero,
         direccion,
         capacidad,
         avatar,
@@ -37,9 +39,9 @@ const SalaDetail = () => {
         pdf,
         photos,
         reservations,
-        votes,
+        votos,
     } = entry;
-
+console.log(entry);
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -57,9 +59,9 @@ const SalaDetail = () => {
                         Nombre de la Sala{' '}
                         <p className=" text-gray-400">{nombre}</p>
                     </span>
-                    {Genero && (
+                    {genero && (
                         <span>
-                            Genero<p className=" text-gray-400">{Genero}</p>
+                            Genero<p className=" text-gray-400">{genero}</p>
                         </span>
                     )}
 
@@ -87,24 +89,19 @@ const SalaDetail = () => {
                             <p className=" text-gray-400">{condiciones}</p>
                         </span>
                     )}
-                    <div>
-                        {horaReservasStart && (
-                            <span>
-                                Hora inicio reservas:
-                                <p className="text-gray-400">
-                                    {horaReservasStart}
-                                </p>
-                            </span>
-                        )}
-                        {horaReservasEnd && (
-                            <span>
-                                Hora fin reservas:
-                                <p className="text-gray-400">
-                                    {horaReservasEnd}
-                                </p>
-                            </span>
-                        )}
-                    </div>
+                    {provincia && (
+                        <span>
+                            Provincia{' '}
+                            <p className=" text-gray-400">{provincia}</p>
+                        </span>
+                    )}
+                    {currentUser && (
+                        <span>
+                            Contacto{' '}
+                            <p className=" text-gray-400">{email}</p>
+                        </span>
+                    )}
+                   
                 </section>
                 <section>
                     <h3 className="text-2xl">Descripción :</h3>
@@ -119,11 +116,11 @@ const SalaDetail = () => {
                         <h3 className="text-2xl">Comentarios :</h3>
 
                         {comentarios.map((comentario) => {
-                            console.log(comentario);
+                            
                             return (
                                 <div
                                     key={comentario.id}
-                                    className="my-6 border p-3 rounded-lg flex justify-between gap-20 max-w-fit"
+                                    className="my-6 border p-3 rounded-lg justify-between w-fit flex flex-col "
                                 >
                                     <span>
                                         {comentario.comentario}
@@ -135,6 +132,9 @@ const SalaDetail = () => {
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
                                         to={`/grupo/${comentario.grupoVotaId}`}
                                     >
+                                    <div>
+                                        <StarRating rating={comentario.voto}></StarRating>
+                                    </div>
                                         <img
                                             className="w-10"
                                             src={
@@ -153,14 +153,14 @@ const SalaDetail = () => {
                 )}
                 <section>
                     <h3 className="text-2xl">Fotos:</h3>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
                             <>
                                 {photos.map((photo) => (
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-3xl max-h-96 shadow-xl"
+                                        className="rounded-3xl max-h-80 shadow-xl"
                                         alt="Foto secundaria"
                                     />
                                 ))}
@@ -178,9 +178,7 @@ const SalaDetail = () => {
                 </section>
                 <section>
                     <div className=" flex justify-around my-8">
-                        <button className="p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all">
-                            Contactar
-                        </button>
+                        
                         <Link
                             to={`/sala/${idSala}/reservas`}
                             className="p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all"

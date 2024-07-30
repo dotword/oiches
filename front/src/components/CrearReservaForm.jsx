@@ -87,8 +87,8 @@ export const CrearReservaForm = () => {
                     <button className="button" type="submit">
                         Crear Reserva
                     </button>
-                    <button className="button" type="reset">
-                        Clear
+                    <button className="button bg-red-500" type="reset">
+                        Borrar
                     </button>
                 </div>
             </form>

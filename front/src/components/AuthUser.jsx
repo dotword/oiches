@@ -7,7 +7,7 @@ import {
     modifyUserEmailService,
     modifyUserPasswordService,
 } from '../services/userEditService';
-// import { ListarReservas } from '../components/ListarReservas.jsx';
+import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
@@ -220,7 +220,7 @@ const AuthUser = () => {
             </div>
 
             <UsersSalaGrupoList />
-            {/* <ListarReservas /> */}
+            <ListarReservas /> 
 
             <Toastify />
         </>

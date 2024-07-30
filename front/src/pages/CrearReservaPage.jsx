@@ -42,9 +42,9 @@ export const CrearReservaPage = ({type}) => {
           <div className="flex flex-col  gap-2 px-6 min-w-26">
 
             <span>Dirección :<p>{entry.direccion}</p></span>
-            <span>Dirección :<p>{entry.provincia}</p></span>
+            <span>Provincia :<p>{entry.provincia}</p></span>
             {
-              entry.genero && <span>Dirección :<p>{entry.provincia}</p></span>
+              entry.genero && <span>Genero :<p>{entry.genero}</p></span>
             }
             
             {

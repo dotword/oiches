@@ -5,7 +5,7 @@ export const listReservaGroups = async (req, res, next) => {
         const {id} =req.user
         const reservas = await listReservaGroupsService(id);
         return res.status(200).json({
-            reservas,
+            reservas,   
         });
     } catch (error) {
         console.log(error);
