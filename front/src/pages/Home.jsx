@@ -59,9 +59,6 @@ const Home = () => {
                         <h2 className="text-3xl">
                         Bandas y músicos más votados:
                         </h2>
-                        <Link className="text-2xl" to={'/grupos'}>
-                            Ver Todos
-                        </Link>
                     </div>
 
                     <SliderMulti>
@@ -76,10 +73,6 @@ const Home = () => {
                         <h2 className="text-3xl">
                         Salas de conciertos más votadas:
                         </h2>
-                        <Link className='text-2xl' to={'/salas'}>
-                            {' '}
-                            Ver Todas
-                        </Link>
                     </div>
                     <SliderMulti>
                         {salas &&
@@ -87,6 +80,7 @@ const Home = () => {
                                 <SalaCard key={sala.id} sala={sala} />
                             ))}
                     </SliderMulti>
+                       
                 </section>
                 <section className="flex flex-col lg:grid lg:grid-cols-2 mx-auto gap-6 md:flex-row md:justify-around md:mx-auto md:my-6 xl:w-1200 ">
                     <Link
