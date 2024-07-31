@@ -76,7 +76,7 @@ const GrupoEdit = () => {
         }
     };
 
-    return userLogged && userLogged.roles === 'grupo' ? (
+    return userLogged.id && userLogged.roles === 'grupo' ? (
         <>
             <form
                 onSubmit={handleSubmit}
