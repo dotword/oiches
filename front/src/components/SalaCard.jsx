@@ -1,22 +1,21 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import StarRating from './StartRating.jsx';
+import DefaultProfile from '/Horizontal_blanco.webp';
 
 const SalaCard = ({ sala }) => {
     const navigate = useNavigate();
-    const imageUrl = `${import.meta.env.VITE_API_URL_BASE}/uploads/${
-        sala.primera_foto
-    }`;
+    const { VITE_API_URL_BASE } = import.meta.env;
+
+    const imageUrl = sala.primera_foto
+        ? `${VITE_API_URL_BASE}/uploads/${sala.primera_foto}`
+        : DefaultProfile;
 
     const handleClick = () => {
         navigate(`/sala/${sala.id}`);
     };
 
     return (
-        <div
-            className="sala-card bg-gray-800 text-white  p-3 rounded-lg shadow-lg cursor-pointer w-full  max-h-96  mx-auto"
-            onClick={handleClick}
-        >
+        <div className="card" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={sala.nombre}

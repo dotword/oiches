@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SalaFilter from '../components/SalaFilter';
 import SalaList from '../components/SalaList';
@@ -7,13 +7,13 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer';
 
 const Salas = () => {
-    const [salas, setSalas] = useState([]);
+    // const [salas, setSalas] = useState([]);
     const [filteredSalas, setFilteredSalas] = useState([]);
 
     useEffect(() => {
         const fetchSalas = async () => {
             const initialSalas = await FetchSalasService();
-            setSalas(initialSalas);
+            // setSalas(initialSalas);
             setFilteredSalas(initialSalas);
         };
 
@@ -33,9 +33,9 @@ const Salas = () => {
             className="container-salas"
         >
             <Header />
-            <div className="hero w-full">
-                <h1 className="hero-title">Encuentra tu Banda </h1>
-                <p className="hero-subtitle">
+            <div className="hero bg-hero-salas bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+                <h1 className="hero-title text-white">Encuentra tu Sala </h1>
+                <p className="hero-subtitle text-white">
                     Descubre y explora distintas salas, conecta con ellos y crea
                     música juntos.
                 </p>

@@ -9,7 +9,7 @@ const Menu = () => {
         <>
             <NavLink
                 to="/salas"
-                className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
+                className="max-md:my-8 font-medium hover:text-purpleOiches"
             >
                 Salas
             </NavLink>

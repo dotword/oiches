@@ -91,12 +91,13 @@ const Home = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header />
-            <div className="hero">
-                <h1 className="hero-title">Encuentra tu Banda Sala</h1>
-                <p className="hero-subtitle">
+            <div className="hero bg-hero-home bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+                <h1 className="hero-title text-white">
+                    Encuentra tu Banda Sonora
+                </h1>
+                <p className="hero-subtitle text-white">
                     Et has minim elitr intellegat. Mea aeterno eleifend antiopam
-                    ad, nam no suscipit quaerendum. At nam minimum ponderum. Est
-                    audiam animal molestiae te.
+                    ad, nam no suscipit quaerendum.
                 </p>
             </div>
             <div className="sala-filter-form-container">
@@ -105,34 +106,36 @@ const Home = () => {
             <main className="flex flex-col gap-6 max-w-screen-xl mx-auto p-4 ">
                 <section className="grid gap-6">
                     <div className="flex justify-between place-items-center">
-                        <h2 className='text-3xl'>Bandas/Musicos recomendados</h2>
-                        <Link className='button p-1 text-center' to={'/grupos'}>Ver Todos</Link>
+                        <h2 className="text-3xl">
+                            Bandas/Musicos recomendados
+                        </h2>
+                        <Link className="button p-1 text-center" to={'/grupos'}>
+                            Ver Todos
+                        </Link>
                     </div>
-                    
-                            <SliderMulti>
-                                {grupos &&
-                                    grupos.map((grupo) => (
-                                        <GrupoCard
-                                            key={grupo.id}
-                                            grupo={grupo}
-                                        />
-                                    ))}
-                            </SliderMulti>
-                       
+
+                    <SliderMulti>
+                        {grupos &&
+                            grupos.map((grupo) => (
+                                <GrupoCard key={grupo.id} grupo={grupo} />
+                            ))}
+                    </SliderMulti>
                 </section>
                 <section className="grid gap-6">
                     <div className="flex justify-between place-items-center">
-                        <h2 className='text-3xl'>Salas de concierto recomendadas</h2>
-                        <Link className='button p-1 text-center' to={'/salas'}> Ver Todas</Link>
+                        <h2 className="text-3xl">
+                            Salas de concierto recomendadas
+                        </h2>
+                        <Link className="button p-1 text-center" to={'/salas'}>
+                            {' '}
+                            Ver Todas
+                        </Link>
                     </div>
                     <SliderMulti>
-                    {salas &&
-                                    salas.map((sala) => (
-                                        <SalaCard
-                                            key={sala.id}
-                                            sala={sala}
-                                        />
-                                    ))}
+                        {salas &&
+                            salas.map((sala) => (
+                                <SalaCard key={sala.id} sala={sala} />
+                            ))}
                     </SliderMulti>
                 </section>
                 <section className="flex flex-col lg:grid lg:grid-cols-2 mx-auto my-10 gap-6 md:flex-row md:justify-around md:mx-0 md:mt-40 ">
