@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import Toastify from './Toastify.jsx';
+import { toast } from 'react-toastify';
 
 export const ListarReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -23,13 +25,17 @@ export const ListarReservas = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to delete reserva');
+        console.log(response);
+        toast.error('Fallo al eliminar la reserva')
+        throw new Error('Fallo al eliminar la reserva');
       }
       
       
       setReservas(reservas.filter(reserva => reserva.id !== reservaId));
+      toast.success('Su reserva se ha eliminado con exito')
     } catch (error) {
-      console.error('Error deleting reserva:', error);
+      toast.error(error)
+      console.error('Fallo al eliminar la reserva:', error);
     }
   };
 
@@ -51,7 +57,9 @@ export const ListarReservas = () => {
         setReservas(reservas.map(reserva => 
           reserva.id === reservaId ? { ...reserva, confirmada: 1 } : reserva
         ));
+        toast.success('Su reserva se ha confirmado con exito')
       } catch (error) {
+        toast.error(error)
         console.error('Error confirming reserva:', error);
       }
     }
@@ -100,6 +108,7 @@ export const ListarReservas = () => {
             setType('grupo');
           }
         } catch (error) {
+          toast.error(error)
           console.error('Error fetching data:', error);
         }
       }
@@ -133,7 +142,6 @@ export const ListarReservas = () => {
     fetchReservas();
   }, [token, VITE_API_URL_BASE, id, type]);
 
-  console.log(reservas);
 
   return (
     <>
@@ -150,10 +158,10 @@ export const ListarReservas = () => {
                   <Link to={`/sala/${reserva.sala_id}`}>
                     <p>Sala :</p>{reserva.sala_nombre}
                   </Link>
-                  <p>Estado :<p>{reserva.confirmada === 0 ? 'Reserva no confirmada.' : 'Reserva confirmada'}</p></p>
-                  <p><p>Fecha:</p>{reserva.fecha}</p>
-                  <p><p>Hora Inicio</p>{reserva.horaInicio}</p>
-                  <p><p>Hora Fin</p>{reserva.horaFin}</p>
+                  <p>Estado :<span className='block'>{reserva.confirmada === 0 ? 'Reserva no confirmada.' : 'Reserva confirmada'}</span></p>
+                  <p><span className='block'>Fecha:</span>{reserva.fecha}</p>
+                  <p><span className='block'>Hora Inicio</span>{reserva.horaInicio}</p>
+                  <p><span className='block'>Hora Fin</span>{reserva.horaFin}</p>
                 </section>
               </div>
               <div className='flex flex-col sm:flex-row  mt-4 gap-6'>
@@ -173,7 +181,7 @@ export const ListarReservas = () => {
           ))
         ) : (
           <div className='flex col-span-6 max-w-6xl place-items-center gap-6 mx-auto'>
-            <p>No reservations found.</p>
+            <p>No se han encontrado reservas.</p>
           </div>
         )}
       </section>

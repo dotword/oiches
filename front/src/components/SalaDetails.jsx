@@ -9,6 +9,7 @@ import Noimage from '../../src/assets/noimage.png';
 import { useEffect, useState } from 'react';
 import RatingForm from '../components/RatingForm';
 import useAuth from '../hooks/useAuth.jsx';
+import Footer from './Footer.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -17,31 +18,28 @@ const SalaDetail = () => {
     const url = VITE_API_URL_BASE;
     const { entry, error } = useSala(idSala);
     const {currentUser } = useAuth()
-    console.log(entry);
+    
     const {
         nombre,
         provincia,
         equipamiento,
         descripcion,
-        horaReservasEnd,
-        horaReservasStart,
+        
         condiciones,
         genero,
         direccion,
         capacidad,
         avatar,
-        biografia,
+    
         comentarios,
         email,
-        fotos,
-        honorarios,
-        media,
-        pdf,
+       
+        precios,
+        
         photos,
-        reservations,
-        votos,
+       
     } = entry;
-console.log(entry);
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -71,6 +69,13 @@ console.log(entry);
                             <p className=" text-gray-400">{capacidad}</p>
                         </span>
                     )}
+                    {precios && (
+                        <span>
+                            Precio{' '}
+                            <p className=" text-gray-400">{precios}€</p>
+                        </span>
+                    )}
+                    
                     {equipamiento && (
                         <span>
                             Equipamiento{' '}
@@ -129,7 +134,7 @@ console.log(entry);
                                         </p>
                                     </span>
                                     <Link
-                                        className="flex place-items-center gap-2 hover:scale-105 transition-all"
+                                        className="flex place-items-center gap-2 transition-all"
                                         to={`/grupo/${comentario.grupoVotaId}`}
                                     >
                                     <div>
@@ -188,6 +193,7 @@ console.log(entry);
                     </div>
                 </section>
             </main>
+            <Footer></Footer>
         </>
     ) : (
         <p>{error}</p>

@@ -7,6 +7,7 @@ import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
+import Footer from './Footer.jsx';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -26,11 +27,8 @@ const GrupoDetail = () => {
         honorarios,
         media,
         pdf,
-        photos,
-        reservations,
-        votes,
     } = entry;
-    console.log(entry);
+    
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -60,7 +58,7 @@ const GrupoDetail = () => {
                     {honorarios && (
                         <span>
                             Honorarios{' '}
-                            <p className=" text-gray-400">{honorarios}</p>
+                            <p className=" text-gray-400">{honorarios}€</p>
                         </span>
                     )}
                     {Provincia && (
@@ -173,6 +171,7 @@ const GrupoDetail = () => {
                     </div>
                 </section>
             </main>
+            <Footer></Footer>
         </>
     ) : (
         <p>{error}</p>
