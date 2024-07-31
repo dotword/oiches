@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import StarRating from './StartRating.jsx';
-import DefaultProfile from '../../public/Horizontal_blanco.webp';
+import DefaultProfile from '/Horizontal_blanco.webp';
 
 const GrupoCard = ({ grupo }) => {
     const navigate = useNavigate();
@@ -16,10 +16,7 @@ const GrupoCard = ({ grupo }) => {
     };
 
     return (
-        <div
-            className="card bg-gray-800 text-white  p-3 rounded-lg shadow-lg cursor-pointer w-full  max-h-96  mx-auto"
-            onClick={handleClick}
-        >
+        <div className="card" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={grupo.nombre}

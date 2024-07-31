@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
 
@@ -43,13 +43,13 @@ const SalaFilter = ({ onFilterChange }) => {
                 placeholder="Nombre"
                 value={filters.nombre}
                 onChange={handleChange}
-                className="form-input golden-ratio-1"
+                className="form-input placeholder:text-black"
             />
             <select
                 name="genero"
                 value={filters.genero}
                 onChange={handleChange}
-                className="form-select golden-ratio-2"
+                className="form-select"
             >
                 <option value="">Género</option>
                 {genres.map((genre) => (
@@ -62,7 +62,7 @@ const SalaFilter = ({ onFilterChange }) => {
                 name="provincia"
                 value={filters.provincia}
                 onChange={handleChange}
-                className="form-select golden-ratio-3"
+                className="form-select"
             >
                 <option value="">Provincia</option>
                 {provinces.map((province) => (

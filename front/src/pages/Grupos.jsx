@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import GrupoFilter from '../components/GrupoFilter';
 import GrupoList from '../components/GrupoList';
@@ -7,14 +7,13 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer';
 
 const Grupos = () => {
-    const [grupos, setGrupos] = useState([]);
+    // const [grupos, setGrupos] = useState([]);
     const [filteredGrupos, setFilteredGrupos] = useState([]);
 
     useEffect(() => {
         const fetchGrupos = async () => {
             const initialGrupos = await FetchGruposService();
-            // console.log('Grupos iniciales:', initialGrupos);
-            setGrupos(initialGrupos);
+            // setGrupos(initialGrupos);
             setFilteredGrupos(initialGrupos);
         };
 
@@ -34,9 +33,11 @@ const Grupos = () => {
             className="container-grupos"
         >
             <Header />
-            <div className="hero w-full">
-                <h1 className="hero-title">Encuentra tu Grupo Ideal</h1>
-                <p className="hero-subtitle">
+            <div className="hero bg-hero-grupos bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+                <h1 className="hero-title text-white">
+                    Encuentra tu Grupo Ideal
+                </h1>
+                <p className="hero-subtitle text-white">
                     Explora diversos grupos, conecta con ellos y crea música
                     juntos.
                 </p>

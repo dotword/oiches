@@ -1,5 +1,3 @@
-import React from 'react';
-
 const StarRating = ({ rating }) => {
     return (
         <>
@@ -8,10 +6,10 @@ const StarRating = ({ rating }) => {
                 return (
                     <span
                         key={index}
-                        className="text-2xl cursor-default"
+                        className="text-2xl mr-1 cursor-default"
                         style={{
                             color:
-                                ratingValue <= rating ? '#9333FF' : 'lightgray',
+                                ratingValue <= rating ? '#ffb500' : 'lightgray',
                         }}
                     >
                         &#9834;
