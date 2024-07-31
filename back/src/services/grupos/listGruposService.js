@@ -1,7 +1,7 @@
 import getPool from '../../database/getPool.js';
 import path from 'path';
 
-export async function listGruposService(filters, sort) {
+export async function listGruposService(filters) {
     const pool = await getPool();
 
     let query = `
@@ -34,18 +34,17 @@ export async function listGruposService(filters, sort) {
     }
 
     if (filters.generos) {
-        // Asegúrate de que el nombre de la propiedad coincide con lo que envías desde el frontend
         query += ' AND gm.id = ?'; // Filtramos por ID de género
         queryParams.push(filters.generos);
     }
 
     query += ' GROUP BY g.id, g.nombre, g.usuario_id, p.provincia, gm.nombre';
-
-    if (sort && sort.field && sort.order) {
-        query += ` ORDER BY ${sort.field} ${sort.order}`;
-    }
+    
+    // Ordenamiento fijo por media de votos, de mayor a menor
+    query += ' ORDER BY media_votos DESC';
 
     const [rows] = await pool.query(query, queryParams);
+
     // Consulta para obtener las fotos agrupadas por grupo
     const [photos] = await pool.query(`
         SELECT id, name, grupoId 
