@@ -16,7 +16,7 @@ import {
 } from './GrupoFiles.jsx';
 
 const GrupoEdit = () => {
-    const { currentUser, token, userLogged } = useContext(AuthContext);
+    const { token, userLogged } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
     const [nombre, setNombre] = useState('');
@@ -78,7 +78,6 @@ const GrupoEdit = () => {
 
     return userLogged && userLogged.roles === 'grupo' ? (
         <>
-            {console.log(userLogged)}
             <form
                 onSubmit={handleSubmit}
                 className="md:grid md:grid-cols-2 md:gap-x-8"

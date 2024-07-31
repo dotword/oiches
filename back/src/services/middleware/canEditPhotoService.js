@@ -3,12 +3,13 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const canEditPhotoService = async (deletePhoto, userId) => {
     const pool = await getPool();
-    console.log('deletePhoto ', deletePhoto);
 
     const [photoExists] = await pool.query(
         `SELECT salaId FROM sala_fotos WHERE id = ?`,
         [deletePhoto]
     );
+
+    const photoOwnerId = photoExists[0].salaId;
 
     // Comprobar que la foto existe
     if (!photoExists[0])
@@ -18,8 +19,8 @@ const canEditPhotoService = async (deletePhoto, userId) => {
         );
     // Comprobar que es user es dueño de la foto
     const [salaOwner] = await pool.query(
-        `SELECT usuario_id FROM salas WHERE usuario_id = ?`,
-        [userId]
+        `SELECT usuario_id FROM salas WHERE id = ?`,
+        [photoOwnerId]
     );
 
     // // Si no somos los propietarios lanzamos un error.
