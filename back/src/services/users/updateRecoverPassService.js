@@ -1,5 +1,6 @@
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
+import { URL_FRONT } from '../../../env.js';
 
 const updateRecoverPassService = async (email, recoverPassCode) => {
     const pool = await getPool();
@@ -14,8 +15,9 @@ const updateRecoverPassService = async (email, recoverPassCode) => {
     const body = `
          Se ha solicitado la recuperación de contraseña para este email en Oiches. 
                     
-                Utiliza el siguiente código para crear una nueva contraseña: ${recoverPassCode}
-    
+                Utiliza el este código para crear una nueva contraseña: ${recoverPassCode}
+                en el siguiente enlace <a href="${URL_FRONT}/users/password">Cambiar contraseña</a>
+
                 Si no has sido tú ignora este email.
 
                 Saludos del equipo de Oiches.
