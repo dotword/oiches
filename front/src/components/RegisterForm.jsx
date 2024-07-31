@@ -83,7 +83,7 @@ export const RegisterForm = () => {
                         <Input
                             type="text"
                             name="name"
-                            placeholder="Led Zeppelin"
+                            placeholder="miusername"
                             required
                             className="form-input"
                         />
