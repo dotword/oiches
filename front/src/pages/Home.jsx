@@ -53,7 +53,7 @@ const Home = () => {
                     ad, nam no suscipit quaerendum.
                 </p>
             </section>
-            <main className="flex flex-col gap-10 max-w-screen-xl mx-auto p-8 ">
+            <main className="flex flex-col gap-32 my-12 max-w-screen-xl mx-auto p-8 ">
                 <section className="grid gap-6">
                     <div className="flex justify-between place-items-center">
                         <h2 className="text-3xl">
