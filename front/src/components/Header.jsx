@@ -26,7 +26,7 @@ const Header = ({ txt }) => {
                     <div
                         className={
                             isNavOpen
-                                ? 'flex absolute w-full h-screen top-0 left-0 bg-white z-20 flex-col items-center justify-evenly'
+                                ? 'flex fixed w-full h-screen top-0 left-0 bg-white z-20 flex-col items-center justify-evenly'
                                 : 'hidden'
                         }
                     >
