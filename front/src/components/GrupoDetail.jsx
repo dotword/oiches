@@ -77,7 +77,7 @@ const GrupoDetail = () => {
                             : 'El grupo tiene que añadir la biografia.'}
                     </p>
                 </section>
-                {pdf && (
+                {pdf.length > 0 && (
                         <section>
                             <h3 className='text-2xl'>Rider :</h3>
                             <iframe className='my-6 w-80 h-80 rounded-3xl' src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}`} frameBorder="0"></iframe>
