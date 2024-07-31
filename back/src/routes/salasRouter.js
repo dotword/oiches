@@ -49,6 +49,8 @@ router.post(
     '/salas/photos/:idSala',
     authUser,
     userExists,
+    salaExists,
+    canEditSala,
     insertPhotosSalaController
 );
 

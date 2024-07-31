@@ -11,7 +11,7 @@ import getSalaService from '../services/getSalaService.js';
 import EditSalaService from '../services/EditSalaService.js';
 
 const SalaEdit = () => {
-    const { currentUser, token } = useContext(AuthContext);
+    const { userLogged, token } = useContext(AuthContext);
 
     const { idSala } = useParams();
 
@@ -89,7 +89,7 @@ const SalaEdit = () => {
         }
     };
 
-    return currentUser ? (
+    return userLogged && userLogged.roles === 'sala' ? (
         <>
             <form
                 onSubmit={handleSubmit}

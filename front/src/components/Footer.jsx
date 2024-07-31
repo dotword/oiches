@@ -24,7 +24,7 @@ const Footer = () => {
                             Saber más
                         </a>
                     </p>
-                    <div className="flex flex-col md:flex-row gap-4 items-start">
+                    <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 items-start md:flex-row">
                         <div className="flex gap-4 items-center">
                             <FaPhoneVolume className="text-lg" />
                             <p className="flex flex-col gap-1">
@@ -75,7 +75,7 @@ const Footer = () => {
                 {/* Columna derecha */}
                 <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-10">
                     <p className="font-semibold mb-2">Newsletter</p>
-                    <p>
+                    <p className="max-w-96">
                         Be the first one to know about discounts, offers, and
                         events. Unsubscribe whenever you like.
                     </p>

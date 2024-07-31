@@ -16,7 +16,7 @@ import {
 } from './GrupoFiles.jsx';
 
 const GrupoEdit = () => {
-    const { currentUser, token } = useContext(AuthContext);
+    const { token, userLogged } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
     const [nombre, setNombre] = useState('');
@@ -76,7 +76,7 @@ const GrupoEdit = () => {
         }
     };
 
-    return currentUser ? (
+    return userLogged && userLogged.roles === 'grupo' ? (
         <>
             <form
                 onSubmit={handleSubmit}
