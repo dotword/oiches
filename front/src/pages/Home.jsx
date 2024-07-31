@@ -44,7 +44,7 @@ const Home = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header />
-            <section className="w-screen hero bg-hero-home bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+            <section className="w-screen hero bg-hero-home bg-cover  relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
