@@ -4,7 +4,7 @@ export async function listSalasService(filters, sort) {
     const pool = await getPool();
 
     let query = `
-   SELECT 
+    SELECT 
         Salas.id, 
         Salas.usuario_id, 
         Salas.nombre, 
@@ -13,14 +13,14 @@ export async function listSalasService(filters, sort) {
         (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = Salas.generos) AS Genero,
         (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
         (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = Salas.id) AS media_votos
-
     FROM 
         Salas 
     LEFT JOIN generos_musicales ON generos_musicales.id = Salas.generos
     LEFT JOIN provincias ON provincias.id = Salas.provincia        
     WHERE 
         1=1
-        `;
+    `;
+    
     const queryParams = [];
 
     // Filtros específicos
@@ -39,9 +39,12 @@ export async function listSalasService(filters, sort) {
         queryParams.push(filters.provincia);
     }
 
-    // Ordenamiento
+    // Ordenamiento por media de votos siempre
+    query += ' ORDER BY media_votos DESC';
+
+    // Puedes agregar ordenamientos adicionales aquí si es necesario
     if (sort && sort.field && sort.order) {
-        query += ` ORDER BY ${sort.field} ${sort.order}`;
+        query += `, ${sort.field} ${sort.order}`;
     }
 
     const [rows] = await pool.query(query, queryParams);

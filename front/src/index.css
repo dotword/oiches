@@ -124,10 +124,17 @@
     }
 }
 
-.slick-arrow:before {
-    color: #9333ff;
-}
 
+.slick-prev:before, 
+.slick-next:before {
+    color: #9333ff; 
+    font-size: 30px; 
+    width: 30px;
+    height: 40px; 
+}
 .slick-slide > div {
     margin: 0px 10px;
+}
+.slick-dots li button:before{
+    font-size: 10px;
 }

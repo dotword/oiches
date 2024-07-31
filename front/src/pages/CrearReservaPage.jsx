@@ -7,14 +7,14 @@ import { toast } from "react-toastify";
 import Toastify from "../components/Toastify.jsx";
 import { useEffect } from "react";
 import noImage from "../assets/noimage.png"
+import Footer from "../components/Footer.jsx";
 export const CrearReservaPage = ({type}) => {
   const { VITE_API_URL_BASE} = import.meta.env;
   const navigate = useNavigate()
   const {idSala} = useParams()
   const {entry} = useSala(idSala)
   const {currentUser} = useAuth()
-  console.log(currentUser);
-  console.log(entry);
+
   
    if(!currentUser){
      toast.error('Necesitas loguearte como grupo para acceder a esta página')
@@ -60,6 +60,7 @@ export const CrearReservaPage = ({type}) => {
         </section>
         <CrearReservaForm/>
       </main>
+      <Footer/>
       <Toastify/>
     </>
   )
