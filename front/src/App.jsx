@@ -9,7 +9,7 @@ import { LoginPage } from './pages/Login.jsx';
 import { RecuperarPassword } from './pages/RecuperarPassword.jsx';
 import UserValidationPage from './pages/UserValidationPage.jsx';
 import Users from './pages/Users.jsx';
-
+import ChangePassword from './pages/ChangePassword.jsx';
 import CreacionSala from './pages/CreacionSala.jsx';
 import EdicionSala from './pages/EdicionSala.jsx';
 import { SalaPage } from './pages/SalaPage.jsx';
@@ -33,9 +33,10 @@ function App() {
                 />
                 <Route path="/login" element={<LoginPage />} />
                 <Route
-                    path="/recover-password"
+                    path="/users/password/recover"
                     element={<RecuperarPassword />}
                 />
+                <Route path="/users/password" element={<ChangePassword />} />
                 <Route path="/users" element={<Users />} />
                 <Route path="/creacion-sala" element={<CreacionSala />} />
                 <Route path="/sala/:idSala/edit" element={<EdicionSala />} />

@@ -70,7 +70,7 @@ const AuthUser = () => {
 
             await modifyUserPasswordService({ data, token });
 
-            toast.success('Email cambiado con éxito');
+            toast.success('Contraseña cambiada con éxito');
         } catch (error) {
             toast.error(error.message);
         }
@@ -171,7 +171,7 @@ const AuthUser = () => {
                                     Cambiar contraseña:{' '}
                                 </span>
                                 <div>
-                                    <label>Contraseña:</label>
+                                    <label>Contraseña actual:</label>
                                     <input
                                         type="password"
                                         name="password"
@@ -220,7 +220,7 @@ const AuthUser = () => {
             </div>
 
             <UsersSalaGrupoList />
-            <ListarReservas /> 
+            <ListarReservas />
 
             <Toastify />
         </>
