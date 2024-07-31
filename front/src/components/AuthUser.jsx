@@ -21,6 +21,7 @@ const AuthUser = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
+    const [repeatNewPassword, setRepeatNewPassword] = useState('');
     const [edit, setEdit] = useState(false);
 
     const handleAvatarChange = (e) => {
@@ -68,6 +69,11 @@ const AuthUser = () => {
             data.append('password', password);
             data.append('newPassword', newPassword);
 
+            if (newPassword !== repeatNewPassword) {
+                toast.error('Las contraseñas no coinciden');
+                return;
+            }
+
             await modifyUserPasswordService({ data, token });
 
             toast.success('Contraseña cambiada con éxito');
@@ -78,7 +84,7 @@ const AuthUser = () => {
 
     return userLogged ? (
         <>
-            <div className="md:flex md:justify-around md:items-end md:max-w-3xl md:mx-auto">
+            <div className="md:max-w-3xl md:mx-auto mb-12">
                 <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
                     <form onSubmit={handleAvatarSubmit}>
                         <div className="sect-photo w-40 h-40">
@@ -139,13 +145,13 @@ const AuthUser = () => {
 
                 <section className="flex flex-col mb-4 items-center gap-2">
                     {edit === true ? (
-                        <div className="my-4 flex flex-wrap flex-col gap-8 text-center">
+                        <div className="my-4 flex flex-wrap flex-col gap-8">
                             <form
                                 onSubmit={handleEmailSubmit}
-                                className="flex flex-col items-center gap-2"
+                                className="flex flex-col gap-2"
                             >
                                 <label className="font-semibold">
-                                    Cambiar email:
+                                    Cambiar email
                                 </label>
                                 <input
                                     type="email"
@@ -159,16 +165,16 @@ const AuthUser = () => {
                                 <input
                                     type="submit"
                                     value="Guardar"
-                                    className="btn-account max-w-44"
+                                    className="btn-account max-w-44 mx-auto"
                                 />
                             </form>
 
                             <form
                                 onSubmit={handlePasswordSubmit}
-                                className="flex flex-col items-center gap-2"
+                                className="flex flex-col gap-2"
                             >
                                 <span className="font-semibold">
-                                    Cambiar contraseña:{' '}
+                                    Cambiar contraseña
                                 </span>
                                 <div>
                                     <label>Contraseña actual:</label>
@@ -180,6 +186,7 @@ const AuthUser = () => {
                                         onChange={(e) =>
                                             setPassword(e.target.value)
                                         }
+                                        required
                                         className="form-input"
                                     />
                                 </div>
@@ -193,6 +200,23 @@ const AuthUser = () => {
                                         onChange={(e) =>
                                             setNewPassword(e.target.value)
                                         }
+                                        required
+                                        className="form-input"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="password2">
+                                        Repetir contraseña*{' '}
+                                    </label>
+                                    <input
+                                        type="password"
+                                        name="password2"
+                                        placeholder="Repite la nueva contraseña"
+                                        onChange={(e) =>
+                                            setRepeatNewPassword(e.target.value)
+                                        }
+                                        required
                                         className="form-input"
                                     />
                                 </div>
@@ -200,7 +224,7 @@ const AuthUser = () => {
                                 <input
                                     type="submit"
                                     value="Guardar"
-                                    className="btn-account max-w-44"
+                                    className="btn-account max-w-44 mx-auto"
                                 />
                             </form>
                         </div>
@@ -219,8 +243,8 @@ const AuthUser = () => {
                 </section>
             </div>
 
-            <UsersSalaGrupoList />
             <ListarReservas />
+            <UsersSalaGrupoList />
 
             <Toastify />
         </>
