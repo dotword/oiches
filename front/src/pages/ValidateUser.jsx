@@ -28,8 +28,9 @@ export const ValidateUser = () => {
 
       if (response.ok) {
         setSuccess(true);
-        toast.success('Usuario validado con exito')
+       
         navigate('/')
+        toast.success('Usuario validado con exito')
       } else {
         throw new Error(data.message || 'Error validating user');
       }
@@ -88,8 +89,8 @@ export const ValidateUser = () => {
             {loading ? 'Validando...' : 'Validar usuario'}
           </button>
         </form>
-        <Toastify />
       </div>
+        <Toastify />
     </motion.div>
   );
 };

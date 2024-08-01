@@ -29,7 +29,7 @@ const SalaDetail = () => {
         genero,
         direccion,
         capacidad,
-        avatar,
+        usuarioAvatar,
     
         comentarios,
         email,
@@ -39,15 +39,15 @@ const SalaDetail = () => {
         photos,
        
     } = entry;
-
+    console.log(entry);
     return entry ? (
         <>
             <Header txt={nombre} />
             <main className="max-w-6xl mx-auto flex flex-col p-6 gap-6 shadow-xl m-4 ">
                 <section className="flex flex-col place-items-center gap-6">
                     <img
-                        className=" max-w-40"
-                        src={avatar ? avatar : DefaultProfile}
+                        className=" max-w-40 rounded-xl"
+                        src={usuarioAvatar ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}` : DefaultProfile}
                         alt="Imagen de perfil del grupo"
                     />
                     <h2 className="text-4xl self-start">{nombre}</h2>

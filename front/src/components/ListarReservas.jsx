@@ -167,12 +167,15 @@ console.log(reservas);
               <div className='flex flex-col sm:flex-row  mt-4 gap-6'>
                 <button
                   onClick={() => handleConfirm(reserva.id)}
-                  hidden={type === 'grupo'}
+                  hidden={type === 'grupo' || reserva.confirmada === 1}
+                  disabled={type === 'grupo'}
                   className={`button ${type === 'grupo' ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500'} text-white p-2 rounded`}>
                   Confirmar
                 </button>
                 <button
                   onClick={() => handleDelete(reserva.id)}
+                  hidden={type === 'grupo' && reserva.confirmada === 1}
+                  disabled={type === 'grupo' && reserva.confirmada === 1}
                   className='button bg-red-500 text-white p-2 rounded'>
                   Cancelar
                 </button>
