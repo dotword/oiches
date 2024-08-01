@@ -9,11 +9,10 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
 
     const [voto, setVoto] = useState(0);
     const [comment, setComment] = useState('');
-    const [votosGrupo, setVotosGrupo] = useState([]);
+    // const [votosGrupo, setVotosGrupo] = useState([]);
     const [hasVoted, setHasVoted] = useState(false);
 
     useEffect(() => {
-        // /grupos/votos/:idGrupo
         const fetchVotos = async () => {
             try {
                 const url = `${VITE_API_URL_BASE}/grupos/votos/${idGrupo}`;
@@ -21,20 +20,19 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
                 const response = await fetch(url);
                 const votosData = await response.json();
 
-                if (votosData.status === 'error') {
-                    setVotosGrupo([]);
-                } else {
-                    setVotosGrupo(votosData.data.grupoVotos);
-                    // Verificar si ya ha votado para esta reserva y sala
+                // if (votosData.status === 'error') {
+                //     setVotosGrupo([]);
+                // } else {
+                // setVotosGrupo(votosData.data.grupoVotos);
+                // Verificar si ya ha votado para esta reserva y sala
 
-                    const votoExistente = votosData.data.grupoVotos.find(
-                        (voto) =>
-                            voto.reservaId === idReserva ||
-                            voto.salaVotada === idSala
-                    );
-                    if (votoExistente) {
-                        setHasVoted(true);
-                    }
+                const votoExistente = votosData.data.grupoVotos.find(
+                    (voto) =>
+                        voto.reservaId === idReserva ||
+                        voto.salaVotada === idSala
+                );
+                if (votoExistente) {
+                    setHasVoted(true);
                 }
             } catch (error) {
                 console.error(error.message);
@@ -65,32 +63,38 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
     }
 
     if (hasVoted) {
-        return <p>Ya has votado a esta sala</p>;
+        return (
+            <p className="text-center text-yellowOiches font-semibold">
+                Ya has votado a esta sala
+            </p>
+        );
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Comenta tu experiencia</h2>
-            <div>
-                <label>Puntuación:</label>
+        <form onSubmit={handleSubmit} className="mt-6">
+            <h2 className="text-center text-lg font-semibold mb-4">
+                Comenta tu experiencia
+            </h2>
+            <div className="mb-4">
+                <label className="font-semibold md:mr-4">Puntuación:</label>
                 <input
                     type="number"
                     name="voto"
                     placeholder="Puntuación del 1 al 5"
                     required
                     onChange={(e) => setVoto(e.target.value)}
-                    className="form-input"
+                    className="form-input md:max-w-48"
                 />
             </div>
             <div>
-                <label>Comentario:</label>
+                <label className="font-semibold">Comentario:</label>
                 <textarea
                     name="comment"
                     onChange={(e) => setComment(e.target.value)}
-                    className="form-textarea"
+                    className="form-textarea md:min-h-20"
                 ></textarea>
             </div>
-            <div className="my-12 max-w-80">
+            <div className="mt-3 max-w-56">
                 <input
                     type="submit"
                     value="Votar"
