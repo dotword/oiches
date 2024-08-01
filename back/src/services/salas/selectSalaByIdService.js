@@ -3,6 +3,7 @@ import getPool from '../../database/getPool.js';
 const selectSalaByIdService = async (idSala) => {
     const pool = await getPool();
 
+    // Consulta para obtener la sala y la información relacionada, incluyendo el avatar del usuario
     const [entry] = await pool.query(
         `
             SELECT 
@@ -21,6 +22,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.horaReservasStart,
                 S.horaReservasEnd,
                 (SELECT email FROM usuarios WHERE usuarios.id = S.usuario_id) AS email,
+                U.avatar AS usuarioAvatar, -- Agregamos el avatar del usuario aquí
                 S.createdAt,
                 AVG(IFNULL(V.voto, 0)) AS votos
             FROM Salas S
@@ -54,6 +56,7 @@ const selectSalaByIdService = async (idSala) => {
         `,
         [idSala]
     );
+
     // Agregamos el array de los media del grupo.
     entry[0].comentarios = comentarios;
 
