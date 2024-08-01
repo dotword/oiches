@@ -48,16 +48,6 @@ const GrupoCreacion = () => {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    // const handleMediaChange = (e) => {
-    //     const { name, value } = e.target;
-    //     console.log(value);
-    //     if (value.includes('youtube.com/watch')) {
-    //         // Convertir enlace de YouTube a formato embed
-    //         value.replace('watch?v=', 'embed/');
-    //     }
-    //     setFormValues({ ...formValues, [name]: value });
-    // };
-
     const handleFotoChange = (e, name) => {
         const file = e.target.files[0];
         setPhotos({ ...photos, [name]: file });
@@ -209,7 +199,6 @@ const GrupoCreacion = () => {
                                 name="mediaA"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaA}
-                                // onChange={handleMediaChange}
                                 className="form-input"
                                 onChange={(e) => {
                                     const { name, value } = e.target;
@@ -233,7 +222,22 @@ const GrupoCreacion = () => {
                                 name="mediaB"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaB}
-                                onChange={handleMediaChange}
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+
+                                    e.target.value.includes('youtube.com/watch')
+                                        ? setFormValues({
+                                              ...formValues,
+                                              [name]: value.replace(
+                                                  'watch?v=',
+                                                  'embed/'
+                                              ),
+                                          })
+                                        : setFormValues({
+                                              ...formValues,
+                                              [name]: value,
+                                          });
+                                }}
                                 className="form-input"
                             />
                             <input
@@ -241,7 +245,22 @@ const GrupoCreacion = () => {
                                 name="mediaC"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaC}
-                                onChange={handleMediaChange}
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+
+                                    e.target.value.includes('youtube.com/watch')
+                                        ? setFormValues({
+                                              ...formValues,
+                                              [name]: value.replace(
+                                                  'watch?v=',
+                                                  'embed/'
+                                              ),
+                                          })
+                                        : setFormValues({
+                                              ...formValues,
+                                              [name]: value,
+                                          });
+                                }}
                                 className="form-input"
                             />
                             <input
@@ -249,7 +268,22 @@ const GrupoCreacion = () => {
                                 name="mediaD"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaD}
-                                onChange={handleMediaChange}
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+
+                                    e.target.value.includes('youtube.com/watch')
+                                        ? setFormValues({
+                                              ...formValues,
+                                              [name]: value.replace(
+                                                  'watch?v=',
+                                                  'embed/'
+                                              ),
+                                          })
+                                        : setFormValues({
+                                              ...formValues,
+                                              [name]: value,
+                                          });
+                                }}
                                 className="form-input"
                             />
                         </section>
