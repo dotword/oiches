@@ -25,6 +25,7 @@ import {
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
+    getGrupoVotosController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -106,6 +107,9 @@ router.post(
     salaCanVote,
     voteGrupoController
 );
+
+// Endpoint votos hechos por un grupo
+router.get('/grupos/votos/:idGrupo', getGrupoVotosController);
 
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
 router.get('/grupos?', listGruposController);

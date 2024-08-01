@@ -60,7 +60,7 @@ const aprobarReservaService = async (reserva_id) => {
 
                     Entra en tu cuenta para ver todos los detalles.
   
-                    <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+                    <a href="${URL_FRONT}/login">Entrar en mi cuenta</a>
 
                     
 

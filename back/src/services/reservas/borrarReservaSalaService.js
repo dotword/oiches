@@ -48,7 +48,7 @@ const borrarReservaSalaService = async (reserva_id) => {
 
                     Ponte en contacto con la sala para saber más detalles.                    
         
-                    <a href="${URL_FRONT}/users/login">Entrar en mi cuenta</a>
+                    <a href="${URL_FRONT}/login">Entrar en mi cuenta</a>
 
                     
 

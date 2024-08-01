@@ -15,16 +15,25 @@ import {
     aprobarReservaController,
     borrarReservaSalaController,
     listReservaController,
-    listReservaGroups
+    listReservaGroups,
 } from '../controllers/reservas/index.js';
 
 const router = express.Router();
 
 // Endpoint para que el grupo cree una reserva
-router.post('/reservar-sala/:sala_id',authUser, checkIfGroup, crearReservaController);
+router.post(
+    '/reservar-sala/:sala_id',
+    authUser,
+    checkIfGroup,
+    crearReservaController
+);
 
 // Endpoint para que el grupo borre una reserva si no está confirmada
-router.delete('/cancelar-reserva/:reserva_id',authUser, cancelarReservaController);
+router.delete(
+    '/cancelar-reserva/:reserva_id',
+    authUser,
+    cancelarReservaController
+);
 
 // Endpoint para que la sala pueda aprobar una reserva
 router.put(
@@ -47,7 +56,7 @@ router.delete(
 );
 
 // Endpoint para listar reservas de una sala
-router.get('/reservas/salas/:sala_id', authUser,listReservaController);
-router.get('/reservas/grupos/:group_id', authUser,listReservaGroups);
+router.get('/reservas/salas/:sala_id', authUser, listReservaController);
+router.get('/reservas/grupos/:group_id', authUser, listReservaGroups);
 
 export default router;
