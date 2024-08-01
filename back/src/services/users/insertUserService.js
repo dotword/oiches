@@ -47,7 +47,7 @@ const insertUserService = async (
              ¡Bienvenid@ ${username}!
 
              Gracias por registrarte en Oiches. Para activar tu cuenta, haz clic en el siguiente enlace y introduzca este codigo:
-             ${registrationCode},
+             ${registrationCode}
              <a href="${URL_FRONT}/validateUser">Activar mi cuenta</a>
          `;
 
