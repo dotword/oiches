@@ -6,7 +6,7 @@ const canEditReserva = async (req, res, next) => {
     try {
         // Obtenemos el id de la reserva en la cuál tendra lugar el cambio.
         const { reserva_id } = req.params;
-        const userId = req.params.usuario_id || req.user?.id;
+        const userId = req.user.id || req.params.usuario_id;
 
         await canEditReservaService(reserva_id, userId);
 

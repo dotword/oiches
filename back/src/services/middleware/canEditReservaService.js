@@ -19,7 +19,7 @@ const canEditReservaService = async (reserva_id, userId) => {
         `SELECT id FROM salas WHERE usuario_id = ?`,
         [userId]
     );
-
+    console.log('salaO ', salaOwner);
     // Si no somos los propietarios lanzamos un error.
     if (salaOwner[0].id !== salaId[0].sala_id)
         throw generateErrorsUtil(

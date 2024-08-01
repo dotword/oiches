@@ -48,14 +48,15 @@ const GrupoCreacion = () => {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleMediaChange = (e) => {
-        const { name, value } = e.target;
-        if (value.includes('youtube.com/watch')) {
-            // Convertir enlace de YouTube a formato embed
-            value.replace('watch?v=', 'embed/');
-        }
-        setFormValues({ ...formValues, [name]: value });
-    };
+    // const handleMediaChange = (e) => {
+    //     const { name, value } = e.target;
+    //     console.log(value);
+    //     if (value.includes('youtube.com/watch')) {
+    //         // Convertir enlace de YouTube a formato embed
+    //         value.replace('watch?v=', 'embed/');
+    //     }
+    //     setFormValues({ ...formValues, [name]: value });
+    // };
 
     const handleFotoChange = (e, name) => {
         const file = e.target.files[0];
@@ -208,8 +209,24 @@ const GrupoCreacion = () => {
                                 name="mediaA"
                                 placeholder="Añade enlaces a tus videos"
                                 value={mediaA}
-                                onChange={handleMediaChange}
+                                // onChange={handleMediaChange}
                                 className="form-input"
+                                onChange={(e) => {
+                                    const { name, value } = e.target;
+
+                                    e.target.value.includes('youtube.com/watch')
+                                        ? setFormValues({
+                                              ...formValues,
+                                              [name]: value.replace(
+                                                  'watch?v=',
+                                                  'embed/'
+                                              ),
+                                          })
+                                        : setFormValues({
+                                              ...formValues,
+                                              [name]: value,
+                                          });
+                                }}
                             />
                             <input
                                 type="url"
