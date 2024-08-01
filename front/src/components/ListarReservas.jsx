@@ -116,7 +116,7 @@ export const ListarReservas = () => {
 
     fetchData();
   }, [token, VITE_API_URL_BASE, currentUser]);
-
+console.log(reservas);
   useEffect(() => {
     const fetchReservas = async () => {
       if (id && type) {
@@ -185,6 +185,7 @@ export const ListarReservas = () => {
           </div>
         )}
       </section>
+      <Toastify></Toastify>
     </>
   );
 };
