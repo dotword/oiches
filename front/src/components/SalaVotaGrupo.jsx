@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../context/auth/auth.context.jsx';
-import grupoVotaSalaService from '../services/grupoVotaSalaService';
+import salaVotaGrupoService from '../services/salaVotaGrupoService.js';
 
-const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
+const SalaVotaGrupo = ({ idReserva, idSala, idGrupo }) => {
     const { token, userLogged } = useContext(AuthContext);
     const { VITE_API_URL_BASE } = import.meta.env;
 
@@ -14,15 +14,16 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
     useEffect(() => {
         const fetchVotos = async () => {
             try {
-                const url = `${VITE_API_URL_BASE}/grupos/votos/${idGrupo}`;
+                const url = `${VITE_API_URL_BASE}/salas/votos/${idSala}`;
 
                 const response = await fetch(url);
                 const votosData = await response.json();
 
-                const votoExistente = votosData.data.grupoVotos.find(
+                console.log(votosData);
+                const votoExistente = votosData.data.salaVotos.find(
                     (voto) =>
                         voto.reservaId === idReserva ||
-                        voto.salaVotada === idSala
+                        voto.grupoVotado === idSala
                 );
                 if (votoExistente) {
                     setHasVoted(true);
@@ -42,8 +43,11 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
             const data = new FormData();
             data.append('voto', voto);
             data.append('comment', comment);
+            console.log('data ', data);
+            console.log('idReser ', idReserva);
+            console.log(token);
 
-            await grupoVotaSalaService({ data, idReserva, token });
+            await salaVotaGrupoService({ data, idReserva, token });
 
             toast.success('Tu voto a sido publicado');
         } catch (error) {
@@ -51,14 +55,14 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
         }
     };
 
-    if (!userLogged || userLogged.roles !== 'grupo') {
+    if (!userLogged || userLogged.roles !== 'sala') {
         return null;
     }
 
     if (hasVoted) {
         return (
             <p className="text-center text-yellowOiches font-semibold">
-                Ya has votado a esta sala
+                Ya has votado a este grupo
             </p>
         );
     }
@@ -97,4 +101,4 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
         </form>
     );
 };
-export default GrupoVotaSala;
+export default SalaVotaGrupo;

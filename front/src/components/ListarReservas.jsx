@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
 import GrupoVotaSala from './GrupoVotaSala';
+import SalaVotaGrupo from './SalaVotaGrupo';
 
 export const ListarReservas = () => {
     const [reservas, setReservas] = useState([]);
@@ -246,11 +247,18 @@ export const ListarReservas = () => {
                             </div>
                             {new Date(reserva.fecha) < new Date() &&
                             reserva.confirmada === 1 ? (
-                                <GrupoVotaSala
-                                    idReserva={reserva.id}
-                                    idGrupo={reserva.grupo_id}
-                                    idSala={reserva.sala_id}
-                                />
+                                <>
+                                    <GrupoVotaSala
+                                        idReserva={reserva.id}
+                                        idGrupo={reserva.grupo_id}
+                                        idSala={reserva.sala_id}
+                                    />
+                                    <SalaVotaGrupo
+                                        idReserva={reserva.id}
+                                        idGrupo={reserva.grupo_id}
+                                        idSala={reserva.sala_id}
+                                    />
+                                </>
                             ) : (
                                 ''
                             )}

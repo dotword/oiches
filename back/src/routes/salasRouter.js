@@ -21,6 +21,7 @@ import {
     voteSalaController,
     deletePhotoSalaController,
     insertPhotosSalaController,
+    getSalaVotosController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -78,5 +79,8 @@ router.post(
     grupoCanVote,
     voteSalaController
 );
+
+// Endpoint votos hechos por un grupo
+router.get('/salas/votos/:idSala', getSalaVotosController);
 
 export default router;

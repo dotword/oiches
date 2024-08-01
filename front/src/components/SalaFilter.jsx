@@ -71,6 +71,7 @@ const SalaFilter = ({ onFilterChange }) => {
                     </option>
                 ))}
             </select>
+
             <button type="submit" className="btn-buscar">
                 Buscar
             </button>
