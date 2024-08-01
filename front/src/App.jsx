@@ -20,6 +20,7 @@ import GrupoDetail from './components/GrupoDetail.jsx';
 import Grupos from './pages/Grupos.jsx';
 import NotFound from './pages/NotFound.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
+import { ValidateUser } from './pages/ValidateUser.jsx';
 
 function App() {
     return (
@@ -57,6 +58,10 @@ function App() {
                 <Route
                     path="/grupo/:idGrupo/reservas"
                     element={<CrearReservaPage type="grupo" />}
+                />
+                <Route
+                    path="/validateUser"
+                    element={<ValidateUser  />}
                 />
                 <Route path="*" element={<NotFound />} />
             </Routes>
