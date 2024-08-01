@@ -64,7 +64,7 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
 
     if (hasVoted) {
         return (
-            <p className="text-center mt-3 text-yellowOiches font-semibold">
+            <p className="text-center text-yellowOiches font-semibold">
                 Ya has votado a esta sala
             </p>
         );

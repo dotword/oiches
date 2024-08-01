@@ -3,6 +3,7 @@ import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
+import GrupoVotaSala from './GrupoVotaSala';
 
 export const ListarReservas = () => {
     const [reservas, setReservas] = useState([]);
@@ -132,7 +133,7 @@ export const ListarReservas = () => {
 
         fetchData();
     }, [token, VITE_API_URL_BASE, currentUser]);
-    console.log(reservas);
+
     useEffect(() => {
         const fetchReservas = async () => {
             if (id && type) {
@@ -163,46 +164,56 @@ export const ListarReservas = () => {
 
     return (
         <>
-            <h3 className="text-3xl text-center my-6">Historico Reservas:</h3>
-            <section>
+            <section className="max-w-3xl mx-auto">
+                <h3 className="text-3xl text-center my-6">
+                    Histórico Reservas:
+                </h3>
                 {reservas.length > 0 ? (
                     reservas.map((reserva) => (
-                        <React.Fragment key={reserva.id}>
+                        <div key={reserva.id} className="mb-8">
                             <div className="border p-4 my-2">
-                                <section className="grid grid-cols-1 sm:grid-cols-6 gap-4 sm:gap-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 sm:gap-6">
                                     <Link to={`/grupo/${reserva.grupo_id}`}>
-                                        <p>Grupo :</p>
+                                        <p className="font-semibold">Grupo :</p>
                                         {reserva.grupo_nombre}
                                     </Link>
                                     <Link to={`/sala/${reserva.sala_id}`}>
-                                        <p>Sala :</p>
+                                        <p className="font-semibold">Sala:</p>
                                         {reserva.sala_nombre}
                                     </Link>
-                                    <p>
-                                        Estado :
-                                        <span className="block">
-                                            {reserva.confirmada === 0
-                                                ? 'Reserva no confirmada.'
-                                                : 'Reserva confirmada'}
-                                        </span>
+                                    <p className="font-semibold">
+                                        Estado:
+                                        {reserva.confirmada === 0 ? (
+                                            <span className="block font-normal text-red-600">
+                                                Sin confirmar
+                                            </span>
+                                        ) : (
+                                            <span className="block font-normal text-green-600">
+                                                Confirmada
+                                            </span>
+                                        )}
                                     </p>
                                     <p>
-                                        <span className="block">Fecha:</span>
+                                        <span className="block font-semibold">
+                                            Fecha:
+                                        </span>
                                         {reserva.fecha}
                                     </p>
                                     <p>
-                                        <span className="block">
-                                            Hora Inicio
+                                        <span className="block font-semibold">
+                                            Hora Inicio:
                                         </span>
                                         {reserva.horaInicio}
                                     </p>
                                     <p>
-                                        <span className="block">Hora Fin</span>
+                                        <span className="block font-semibold">
+                                            Hora Fin:
+                                        </span>
                                         {reserva.horaFin}
                                     </p>
-                                </section>
+                                </div>
                             </div>
-                            <div className="flex flex-col sm:flex-row  mt-4 gap-6">
+                            <div className="flex flex-col sm:flex-row gap-6">
                                 <button
                                     onClick={() => handleConfirm(reserva.id)}
                                     hidden={
@@ -233,7 +244,17 @@ export const ListarReservas = () => {
                                     Cancelar
                                 </button>
                             </div>
-                        </React.Fragment>
+                            {new Date(reserva.fecha) < new Date() &&
+                            reserva.confirmada === 1 ? (
+                                <GrupoVotaSala
+                                    idReserva={reserva.id}
+                                    idGrupo={reserva.grupo_id}
+                                    idSala={reserva.sala_id}
+                                />
+                            ) : (
+                                ''
+                            )}
+                        </div>
                     ))
                 ) : (
                     <div className="flex col-span-6 max-w-6xl place-items-center gap-6 mx-auto">
@@ -241,7 +262,7 @@ export const ListarReservas = () => {
                     </div>
                 )}
             </section>
-            <Toastify></Toastify>
+            <Toastify />
         </>
     );
 };
