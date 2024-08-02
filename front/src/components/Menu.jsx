@@ -19,12 +19,12 @@ const Menu = () => {
             >
                 Músicos
             </NavLink>
-            <NavLink
+            {/* <NavLink
                 to="/sobre-nosotros" // Asegúrate de que la ruta sea correcta
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Sobre nosotros
-            </NavLink>
+            </NavLink> */}
             {!currentUser ? (
                 <>
                     <NavLink

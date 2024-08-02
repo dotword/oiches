@@ -10,7 +10,7 @@ const votosSchema = Joi.object({
         'number.min': 'El valor debe ser entre 1 y 5',
         'number.max': 'El valor debe ser entre 1 y 5',
     }),
-    comment: Joi.string().max(500).messages(joiErrorMessages),
+    comment: Joi.string().max(500).allow('').messages(joiErrorMessages),
 });
 
 export default votosSchema;

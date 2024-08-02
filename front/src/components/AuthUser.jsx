@@ -243,8 +243,8 @@ const AuthUser = () => {
                 </section>
             </div>
 
-            <ListarReservas />
             <UsersSalaGrupoList />
+            <ListarReservas />
 
             <Toastify />
         </>

@@ -124,17 +124,23 @@
     }
 }
 
-
-.slick-prev:before, 
+.active:not(.btn-account) {
+    color: #ffb500;
+    font-weight: 600;
+}
+.slick-prev:before,
 .slick-next:before {
-    color: #9333ff; 
-    font-size: 30px; 
+    color: #9333ff;
+    font-size: 30px;
     width: 30px;
-    height: 40px; 
+    height: 40px;
 }
 .slick-slide > div {
     margin: 0px 10px;
 }
-.slick-dots li button:before{
-    font-size: 10px;
+.slick-dots {
+    @apply -bottom-8;
+}
+.slick-dots li button:before {
+    @apply text-sm;
 }

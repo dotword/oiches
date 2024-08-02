@@ -6,7 +6,7 @@ const UsersSalaGrupoList = () => {
     const { userLogged } = useAuth();
 
     return (
-        <section className="mt-8 border-t-2 border-greyOiches-50 py-6  md:flex md:flex-col md:items-center">
+        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 md:flex md:flex-col md:items-center">
             {userLogged.roles === 'sala' ? (
                 <>
                     {userLogged.salas[0] ? (
@@ -18,14 +18,14 @@ const UsersSalaGrupoList = () => {
                                 {userLogged.salas.map((sala) => (
                                     <li
                                         key={sala.id}
-                                        className="flex items-center gap-2 mb-2"
+                                        className="flex items-center justify-center gap-2 mb-2"
                                     >
                                         <IoIosArrowForward />{' '}
                                         <a href={`/sala/${sala.id}/edit`}>
                                             {sala.nombre}
                                         </a>
                                         <a href={`/sala/${sala.id}/edit`}>
-                                            <FaPencil className="text-sm" />
+                                            <FaPencil className="text-sm text-purpleOiches" />
                                         </a>
                                     </li>
                                 ))}
@@ -52,14 +52,14 @@ const UsersSalaGrupoList = () => {
                                 {userLogged.grupos.map((grupo) => (
                                     <li
                                         key={grupo.id}
-                                        className="flex items-center gap-2 mb-2"
+                                        className="flex items-center justify-center gap-2 mb-2"
                                     >
                                         <IoIosArrowForward />{' '}
                                         <a href={`/grupos/${grupo.id}/edit`}>
                                             {grupo.nombre}
                                         </a>
                                         <a href={`/grupos/${grupo.id}/edit`}>
-                                            <FaPencil className="text-sm" />
+                                            <FaPencil className="text-sm text-purpleOiches" />
                                         </a>
                                     </li>
                                 ))}

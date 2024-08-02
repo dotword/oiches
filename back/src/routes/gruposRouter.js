@@ -98,7 +98,7 @@ router.delete(
 // Endpoint detalle grupo
 router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
-//Endpoint grupo votos y comentarios de una sala a un grupo
+//Endpoint  votos y comentarios de una sala a un grupo
 router.post(
     '/grupos/:idReserva/votes',
     authUser,

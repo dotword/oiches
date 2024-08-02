@@ -11,8 +11,8 @@ const Users = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header txt="Perfil de usuario" />
-            <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
-                <div className="p-6 bg-white rounded-lg shadow-md">
+            <main className="w-11/12 mx-auto mt-6 mb-10 md:max-w-7xl">
+                <div className="p-6 rounded-lg shadow-md">
                     <AuthUser />
                 </div>
             </main>
