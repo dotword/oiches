@@ -16,7 +16,7 @@ const GrupoCard = ({ grupo }) => {
     };
 
     return (
-        <div className="grupo-card" onClick={handleClick}>
+        <div className="card" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
