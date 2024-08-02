@@ -6,7 +6,7 @@ const grupoVotaSalaService = async ({ data, idReserva, token }) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: data,
     });

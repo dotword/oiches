@@ -5,7 +5,7 @@ export const DeleteGrupoMediaService = async (mediaDelete, idGrupo, token) => {
 
     const response = await fetch(url, {
         headers: {
-            token: token,
+            authorization: token,
         },
         method: 'DELETE',
     });
@@ -24,7 +24,7 @@ export const AddGrupoMediaService = async ({ token, idGrupo, dataForm }) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: dataForm,
     });

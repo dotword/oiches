@@ -7,7 +7,7 @@ export const modifyUserAvatarService = async ({ data, userId, token }) => {
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: data,
     });
@@ -25,7 +25,7 @@ export const modifyUserEmailService = async ({ data, userId, token }) => {
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: data,
     });
@@ -43,7 +43,7 @@ export const modifyUserPasswordService = async ({ data, token }) => {
     const response = await fetch(url, {
         method: 'PATCH',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: data,
     });

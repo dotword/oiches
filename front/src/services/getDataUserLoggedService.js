@@ -3,7 +3,7 @@ const getDataUserLoggedService = async ({ token }) => {
 
     const response = await fetch(url, {
         headers: {
-            token: token,
+            authorization: token,
         },
     });
 

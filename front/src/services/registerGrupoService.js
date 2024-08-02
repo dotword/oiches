@@ -4,7 +4,7 @@ const registerGrupoService = async ({ token, formData }) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: formData,
     });

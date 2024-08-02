@@ -4,9 +4,9 @@ import { JWT_SECRET } from '../../env.js';
 
 const authUser = async (req, res, next) => {
     try {
-        const { token } = req.headers;
+        const { authorization } = req.headers;
 
-        if (!token) {
+        if (!authorization) {
             throw generateErrorUtil(
                 'Se esperaba un token por el encabezado',
                 401
@@ -16,7 +16,7 @@ const authUser = async (req, res, next) => {
         let tokenInfo;
 
         try {
-            tokenInfo = jwt.verify(token, JWT_SECRET);
+            tokenInfo = jwt.verify(authorization, JWT_SECRET);
         } catch (err) {
             throw generateErrorUtil('Credenciales invalidas', 401);
         }

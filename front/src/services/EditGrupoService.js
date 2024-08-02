@@ -3,7 +3,7 @@ const EditGrupoService = async ({ token, idGrupo, dataForm }) => {
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: dataForm,
     });
