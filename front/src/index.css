@@ -91,7 +91,7 @@
 
     .sala-card,
     .grupo-card {
-        @apply bg-gray-900  text-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
+        @apply bg-gray-900  text-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
     }
 
     .sala-card-image,
