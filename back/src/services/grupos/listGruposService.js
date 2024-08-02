@@ -1,9 +1,10 @@
+import { log } from 'console';
 import getPool from '../../database/getPool.js';
 import path from 'path';
 
 export async function listGruposService(filters) {
     const pool = await getPool();
-
+console.log(filters);
     let query = `
     SELECT 
         g.id, 
@@ -39,9 +40,16 @@ export async function listGruposService(filters) {
     }
 
     query += ' GROUP BY g.id, g.nombre, g.usuario_id, p.provincia, gm.nombre';
-    
-    // Ordenamiento fijo por media de votos, de mayor a menor
-    query += ' ORDER BY media_votos DESC';
+
+    // Ordenamiento dinámico basado en el campo y dirección proporcionados
+    if (filters.order && filters.field) {
+        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'g.nombre'; // Example of sorting fields
+        const orderDirection = filters.order && filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        query += ` ORDER BY ${orderField} ${orderDirection}`;
+    } else {
+        // Ordenamiento fijo por defecto
+        query += ' ORDER BY media_votos DESC';
+    }
 
     const [rows] = await pool.query(query, queryParams);
 
@@ -70,6 +78,6 @@ export async function listGruposService(filters) {
         ...row,
         fotos: groupedPhotos[row.id] || [],
     }));
-
+console.log(rows);
     return result;
 }

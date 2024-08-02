@@ -9,6 +9,7 @@ const GrupoFilter = ({ onFilterChange }) => {
         nombre: '',
         provincia: '',
         generos: '',
+        order: '', // Add sort to filters state
     });
 
     useEffect(() => {
@@ -70,6 +71,16 @@ const GrupoFilter = ({ onFilterChange }) => {
                         {province.provincia}
                     </option>
                 ))}
+            </select>
+            <select
+                name="order"
+                value={filters.order} // Add value to sync with state
+                onChange={handleChange} // Use handleChange to update state
+                className="form-select"
+            >
+                <option value="">Order</option>
+                <option value="ASC">Rating ⬆</option>
+                <option value="DESC">Rating ⬇</option>
             </select>
             <button type="submit" className="btn-buscar">
                 Buscar

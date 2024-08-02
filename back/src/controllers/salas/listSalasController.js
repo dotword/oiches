@@ -2,18 +2,18 @@ import { listSalasService } from '../../services/salas/listSalasService.js';
 
 const listSalasController = async (req, res, next) => {
     try {
-        const filters = {};
-        for (const key in req.query) {
-            filters[key] = req.query[key];
-        }
-
-        const sort = {
-            field: req.query.sortField,
-            order: req.query.sortOrder,
+        const filters = {
+            nombre: req.query.nombre || '',
+            genero: req.query.genero || '',
+            provincia: req.query.provincia || '',
+            field: req.query.sortField || 'media_votos', // Default sort field
+            order: req.query.order || 'DESC',  
         };
 
-        const salas = await listSalasService(filters, sort);
-        res.status(200).json(salas);
+     
+
+        const salas = await listSalasService(filters);
+        res.status(200).send(salas);
     } catch (error) {
         next(error);
     }

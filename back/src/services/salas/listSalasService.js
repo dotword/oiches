@@ -1,7 +1,8 @@
 import getPool from '../../database/getPool.js';
 
-export async function listSalasService(filters, sort) {
+export async function listSalasService(filters) {
     const pool = await getPool();
+    console.log(filters);
 
     let query = `
     SELECT 
@@ -40,14 +41,17 @@ export async function listSalasService(filters, sort) {
     }
 
     // Ordenamiento por media de votos siempre
-    query += ' ORDER BY media_votos DESC';
-
-    // Puedes agregar ordenamientos adicionales aquí si es necesario
-    if (sort && sort.field && sort.order) {
-        query += `, ${sort.field} ${sort.order}`;
+   
+    if (filters.order && filters.field) {
+        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre'; // Example of filtersing fields
+        const orderDirection = filters.order && filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        query += ` ORDER BY ${orderField} ${orderDirection}`;
+    } else {
+        // Default order by media votes descending
+        query += ' ORDER BY media_votos DESC';
     }
 
     const [rows] = await pool.query(query, queryParams);
-
+  
     return rows;
 }
