@@ -78,9 +78,9 @@ const SalaFilter = ({ onFilterChange }) => {
                 onChange={handleChange} // Use handleChange to update state
                 className="form-select"
             >
-                <option value="">Order</option>
-                <option value="ASC">Rating ⬆</option>
-                <option value="DESC">Rating ⬇</option>
+                <option value="">Ordenar</option>
+                <option value="ASC">Puntuación ⬆</option>
+                <option value="DESC">Puntuación ⬇</option>
             </select>
             <button type="submit" className="btn-buscar">
                 Buscar
