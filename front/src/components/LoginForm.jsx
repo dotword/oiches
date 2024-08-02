@@ -4,7 +4,7 @@ import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
-import { loginUserService } from '../services/loginUserService.jsx';
+import { loginUserService } from '../services/loginUserService.js';
 
 export const LoginForm = () => {
     const [error, setError] = useState('');

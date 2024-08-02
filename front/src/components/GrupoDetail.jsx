@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useGrupo from '../hooks/useGrupo.jsx';
-import Live from '../assets/Live.jpg';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
@@ -13,7 +12,7 @@ const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
 
     const { idGrupo } = useParams();
-    const { currentUser} = useAuth()
+    const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
     const {
         nombre,
@@ -28,7 +27,7 @@ const GrupoDetail = () => {
         media,
         pdf,
     } = entry;
-    console.log(entry);
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -36,23 +35,30 @@ const GrupoDetail = () => {
                 <section className="flex flex-col place-items-center gap-6">
                     <img
                         className=" max-w-40 rounded-xl"
-                        src={avatar ? `${VITE_API_URL_BASE}/uploads/${avatar}` : DefaultProfile}
+                        src={
+                            avatar
+                                ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+                                : DefaultProfile
+                        }
                         alt="Imagen de perfil del grupo"
                     />
                     <h2 className="text-4xl self-start">{nombre}</h2>
                 </section>
                 <section className="grid grid-cols-2 gap-6 my-6">
-                    {nombre && <span>
-                        Nombre del Grupo/Artista{' '}
-                        <p className=" text-gray-400">{nombre}</p>
-                    </span>}
-                   {Genero && <span>
-                        Genero<p className=" text-gray-400">{Genero}</p>
-                    </span>}
+                    {nombre && (
+                        <span>
+                            Nombre del Grupo/Artista{' '}
+                            <p className=" text-gray-400">{nombre}</p>
+                        </span>
+                    )}
+                    {Genero && (
+                        <span>
+                            Genero<p className=" text-gray-400">{Genero}</p>
+                        </span>
+                    )}
                     {currentUser && (
                         <span>
-                            Contacto{' '}
-                            <p className=" text-gray-400">{email}</p>
+                            Contacto <p className=" text-gray-400">{email}</p>
                         </span>
                     )}
                     {honorarios && (
@@ -67,7 +73,6 @@ const GrupoDetail = () => {
                             <p className=" text-gray-400">{Provincia}</p>
                         </span>
                     )}
-                    
                 </section>
                 <section>
                     <h3 className="text-2xl">Biografia :</h3>
@@ -78,11 +83,15 @@ const GrupoDetail = () => {
                     </p>
                 </section>
                 {pdf.length > 0 && (
-                        <section>
-                            <h3 className='text-2xl'>Rider :</h3>
-                            <iframe className='my-6 w-80 h-80 rounded-3xl' src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}`} frameBorder="0"></iframe>
-                        </section>
-                    )}
+                    <section>
+                        <h3 className="text-2xl">Rider :</h3>
+                        <iframe
+                            className="my-6 w-80 h-80 rounded-3xl"
+                            src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}`}
+                            frameBorder="0"
+                        ></iframe>
+                    </section>
+                )}
                 {media.length > 0 && (
                     <section>
                         <h3 className="text-2xl">Videos :</h3>
@@ -104,13 +113,12 @@ const GrupoDetail = () => {
                         </div>
                     </section>
                 )}
-                
+
                 {comentarios.length > 0 && (
                     <section>
                         <h3 className="text-2xl">Comentarios :</h3>
 
                         {comentarios.map((comentario) => {
-                            console.log(comentario);
                             return (
                                 <div
                                     key={comentario.id}
@@ -126,9 +134,11 @@ const GrupoDetail = () => {
                                         className="flex place-items-center gap-2 hover:scale-105 transition-all"
                                         to={`/sala/${comentario.salaVotaId}`}
                                     >
-                                    <div>
-                                        <StarRating rating={comentario.voto}/>
-                                    </div>
+                                        <div>
+                                            <StarRating
+                                                rating={comentario.voto}
+                                            />
+                                        </div>
                                         <img
                                             className="w-10"
                                             src={

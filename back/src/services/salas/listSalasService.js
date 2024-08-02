@@ -20,7 +20,7 @@ export async function listSalasService(filters, sort) {
     WHERE 
         1=1
     `;
-    
+
     const queryParams = [];
 
     // Filtros específicos
@@ -48,10 +48,6 @@ export async function listSalasService(filters, sort) {
     }
 
     const [rows] = await pool.query(query, queryParams);
-
-    if (rows.length === 0) {
-        return 'No se encontró ninguna sala';
-    }
 
     return rows;
 }
