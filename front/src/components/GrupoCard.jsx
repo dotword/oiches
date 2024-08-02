@@ -20,7 +20,7 @@ const GrupoCard = ({ grupo }) => {
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
-                className="card-image w-full h-48 sm:h-48 object-cover rounded-lg mb-4"
+                className="grupo-card-image  w-full h-48 sm:h-48 object-cover rounded-lg mb-4"
             />
             <h2 className="card-title text-lg font-bold mt-2">
                 {grupo.nombre}

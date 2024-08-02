@@ -66,7 +66,7 @@ const GrupoFilter = ({ onFilterChange }) => {
             >
                 <option value="">Provincia</option>
                 {provinces.map((province) => (
-                    <option key={province.nombre} value={province.nombre}>
+                    <option key={province.id} value={province.nombre}>
                         {province.provincia}
                     </option>
                 ))}
