@@ -15,7 +15,7 @@ const SalaCard = ({ sala }) => {
     };
 
     return (
-        <div className="card" onClick={handleClick}>
+        <div className="sala-card" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={sala.nombre}
