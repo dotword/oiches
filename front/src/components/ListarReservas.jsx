@@ -22,7 +22,7 @@ export const ListarReservas = () => {
             const response = await fetch(endpoint, {
                 method: 'DELETE',
                 headers: {
-                    token: token,
+                    authorization: token,
                 },
             });
 
@@ -48,7 +48,7 @@ export const ListarReservas = () => {
                     {
                         method: 'PUT',
                         headers: {
-                            token: token,
+                            authorization: token,
                         },
                     }
                 );
@@ -81,7 +81,7 @@ export const ListarReservas = () => {
                         `${VITE_API_URL_BASE}/salas`,
                         {
                             headers: {
-                                token: token,
+                                authorization: token,
                             },
                         }
                     );
@@ -106,7 +106,7 @@ export const ListarReservas = () => {
                         `${VITE_API_URL_BASE}/grupos`,
                         {
                             headers: {
-                                token: token,
+                                authorization: token,
                             },
                         }
                     );
@@ -142,13 +142,15 @@ export const ListarReservas = () => {
                         `${VITE_API_URL_BASE}/reservas/${type}s/${id}`,
                         {
                             headers: {
-                                token: token,
+                                authorization: token,
                             },
                         }
                     );
 
                     if (!response.ok) {
-                        throw new Error(`Failed to fetch reservas for ${type}`);
+                        throw new Error(
+                            `No se encontraron reservas para ${type}`
+                        );
                     }
 
                     const reservasData = await response.json();

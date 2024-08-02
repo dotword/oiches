@@ -24,7 +24,7 @@ export const CrearReservaForm = () => {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    token: `${token}`,
+                    authorization: `${token}`,
                 },
                 body: formValues,
             });

@@ -13,8 +13,6 @@ const passwordChangeController = async (req, res, next) => {
         // Validamos el body con Joi.
         await validateSchemaUtil(editUserPassSchema, req.body);
 
-        console.log(email, password, newPassword);
-
         const [[user]] = await pool.query(
             'SELECT * FROM usuarios WHERE email LIKE ?',
             [email]

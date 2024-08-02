@@ -75,6 +75,8 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
                     type="number"
                     name="voto"
                     placeholder="Puntuación del 1 al 5"
+                    min="1"
+                    max="5"
                     required
                     onChange={(e) => setVoto(e.target.value)}
                     className="form-input md:max-w-48"

@@ -9,7 +9,7 @@ export const DeleteGrupoFilesService = async (
     }/grupos/${photoName}/${deletePhoto}`;
     const response = await fetch(url, {
         headers: {
-            token: token,
+            authorization: token,
         },
         method: 'DELETE',
     });
@@ -24,7 +24,7 @@ export const AddGrupoFilesService = async ({ token, idGrupo, dataForm }) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: dataForm,
     });
@@ -43,7 +43,7 @@ export const AddGrupoFotoService = async ({ token, idGrupo, dataForm }) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: dataForm,
     });

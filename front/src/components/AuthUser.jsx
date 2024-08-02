@@ -122,7 +122,7 @@ const AuthUser = () => {
                             </span>
                         </div>
                         {previewUrl ? (
-                            <div className="mt-3 max-w-80">
+                            <div className="mt-3 max-w-80 text-center">
                                 <input
                                     type="submit"
                                     value="Cambiar avatar"

@@ -6,7 +6,7 @@ const AddSalaPhotosService = async (props) => {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            token: props.token,
+            authorization: props.token,
         },
         body: props.formData,
     });
@@ -27,7 +27,7 @@ export const DeleteSalaPhotoService = async (photoName, deletePhoto, token) => {
 
     const response = await fetch(url, {
         headers: {
-            token: token,
+            authorization: token,
         },
         method: 'DELETE',
     });

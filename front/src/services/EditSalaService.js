@@ -4,7 +4,7 @@ const EditSalaService = async ({ token, idSala, dataForm }) => {
     const response = await fetch(url, {
         method: 'PUT',
         headers: {
-            token: token,
+            authorization: token,
         },
         body: dataForm,
     });
