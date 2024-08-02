@@ -43,9 +43,10 @@ const grupoCanVoteService = async (idReserva, userId) => {
 
     // Comprobar que el grupo no haya votado antes a la sala
     const [hasVoted] = await pool.query(
-        `SELECT salaVotada FROM votos_salas WHERE grupoVota = ?`,
-        [reserva[0].grupo_id]
+        `SELECT salaVotada FROM votos_salas WHERE grupoVota = ? AND salaVotada = ?`,
+        [reserva[0].grupo_id, reserva[0].sala_id]
     );
+    console.log('hasVoted[0] ', hasVoted[0]);
 
     if (hasVoted[0]) throw generateErrorsUtil('Ya has votado a esta sala', 409);
 };

@@ -24,6 +24,7 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
                         voto.reservaId === idReserva ||
                         voto.salaVotada === idSala
                 );
+
                 if (votoExistente) {
                     setHasVoted(true);
                 }
@@ -33,7 +34,7 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
         };
 
         fetchVotos();
-    }, [VITE_API_URL_BASE, idGrupo, idReserva, idSala]);
+    }, [VITE_API_URL_BASE, idGrupo, idReserva, idSala, voto.reservaId]);
 
     const handleSubmit = async (e) => {
         try {

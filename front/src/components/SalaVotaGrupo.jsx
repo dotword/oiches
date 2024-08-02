@@ -19,12 +19,12 @@ const SalaVotaGrupo = ({ idReserva, idSala, idGrupo }) => {
                 const response = await fetch(url);
                 const votosData = await response.json();
 
-                console.log(votosData);
                 const votoExistente = votosData.data.salaVotos.find(
                     (voto) =>
                         voto.reservaId === idReserva ||
-                        voto.grupoVotado === idSala
+                        voto.grupoVotado === idGrupo
                 );
+
                 if (votoExistente) {
                     setHasVoted(true);
                 }
@@ -43,9 +43,6 @@ const SalaVotaGrupo = ({ idReserva, idSala, idGrupo }) => {
             const data = new FormData();
             data.append('voto', voto);
             data.append('comment', comment);
-            console.log('data ', data);
-            console.log('idReser ', idReserva);
-            console.log(token);
 
             await salaVotaGrupoService({ data, idReserva, token });
 

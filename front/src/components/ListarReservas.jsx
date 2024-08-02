@@ -248,16 +248,19 @@ export const ListarReservas = () => {
                             {new Date(reserva.fecha) < new Date() &&
                             reserva.confirmada === 1 ? (
                                 <>
-                                    <GrupoVotaSala
-                                        idReserva={reserva.id}
-                                        idGrupo={reserva.grupo_id}
-                                        idSala={reserva.sala_id}
-                                    />
-                                    <SalaVotaGrupo
-                                        idReserva={reserva.id}
-                                        idGrupo={reserva.grupo_id}
-                                        idSala={reserva.sala_id}
-                                    />
+                                    {type === 'grupo' ? (
+                                        <GrupoVotaSala
+                                            idReserva={reserva.id}
+                                            idGrupo={reserva.grupo_id}
+                                            idSala={reserva.sala_id}
+                                        />
+                                    ) : (
+                                        <SalaVotaGrupo
+                                            idReserva={reserva.id}
+                                            idGrupo={reserva.grupo_id}
+                                            idSala={reserva.sala_id}
+                                        />
+                                    )}
                                 </>
                             ) : (
                                 ''
