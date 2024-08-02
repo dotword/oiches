@@ -102,7 +102,7 @@ const SalaCreacion = () => {
                 <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="nombre" className="font-semibold">
-                            Nombre de la Sala:
+                            Nombre de la Sala:*
                         </label>
                         <input
                             type="text"
@@ -135,7 +135,7 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="direccion" className="font-semibold">
-                            Dirección:
+                            Dirección:*
                         </label>
                         <input
                             type="text"
@@ -149,16 +149,17 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="provincia" className="font-semibold">
-                            Selecciona:
+                            Provincia:*
                         </label>
                         <select
                             id="provincia"
                             name="provincia"
+                            required
                             value={provincia}
                             className="form-select"
                             onChange={handleChange}
                         >
-                            <option value="">Provincia</option>
+                            <option value="">Selecciona</option>
                             {provinces.map((province) => (
                                 <option key={province.id} value={province.id}>
                                     {province.provincia}
@@ -168,12 +169,13 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
-                            Aforo:
+                            Aforo:*
                         </label>
                         <input
                             type="number"
                             name="capacidad"
                             placeholder="Aforo de la sala"
+                            required
                             value={capacidad}
                             onChange={handleChange}
                             className="form-input"
@@ -244,11 +246,12 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasStart"
                             className="font-semibold"
                         >
-                            Hora de inicio de reservas:
+                            Hora de inicio de reservas:*
                         </label>
                         <input
                             type="time"
                             name="horaReservasStart"
+                            required
                             value={horaReservasStart}
                             onChange={handleChange}
                             className="form-input"
@@ -259,11 +262,12 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasEnd"
                             className="font-semibold"
                         >
-                            Hora final de reservas:
+                            Hora final de reservas:*
                         </label>
                         <input
                             type="time"
                             name="horaReservasEnd"
+                            required
                             value={horaReservasEnd}
                             onChange={handleChange}
                             className="form-input"

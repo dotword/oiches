@@ -98,7 +98,7 @@ const GrupoCreacion = () => {
                     <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                             <label htmlFor="nombre" className="font-semibold">
-                                Nombre del Grupo:
+                                Nombre del Grupo:*
                             </label>
                             <input
                                 type="text"
@@ -134,7 +134,7 @@ const GrupoCreacion = () => {
                                 htmlFor="provincia"
                                 className="font-semibold"
                             >
-                                Selecciona:
+                                Provincia:*
                             </label>
                             <select
                                 id="provincia"
@@ -144,7 +144,7 @@ const GrupoCreacion = () => {
                                 className="form-select"
                                 onChange={handleChange}
                             >
-                                <option value="">Provincia</option>
+                                <option value="">Selecciona</option>
                                 {provinces.map((province) => (
                                     <option
                                         key={province.id}
