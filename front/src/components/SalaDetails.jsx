@@ -1,45 +1,35 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import useSala from '../hooks/useSala.jsx';
-import Live from '../assets/Live.jpg';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
-import { useEffect, useState } from 'react';
-import RatingForm from '../components/RatingForm';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
-    const [imagenes, setImagenes] = useState('');
     const { idSala } = useParams();
-    const url = VITE_API_URL_BASE;
     const { entry, error } = useSala(idSala);
-    const {currentUser } = useAuth()
-    
+    const { currentUser } = useAuth();
+
     const {
         nombre,
         provincia,
         equipamiento,
         descripcion,
-        
         condiciones,
         genero,
         direccion,
         capacidad,
         usuarioAvatar,
-    
         comentarios,
         email,
-       
         precios,
-        
         photos,
-       
     } = entry;
-    console.log(entry);
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -47,7 +37,11 @@ const SalaDetail = () => {
                 <section className="flex flex-col place-items-center gap-6">
                     <img
                         className=" max-w-40 rounded-xl"
-                        src={usuarioAvatar ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}` : DefaultProfile}
+                        src={
+                            usuarioAvatar
+                                ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
+                                : DefaultProfile
+                        }
                         alt="Imagen de perfil del grupo"
                     />
                     <h2 className="text-4xl self-start">{nombre}</h2>
@@ -71,11 +65,10 @@ const SalaDetail = () => {
                     )}
                     {precios && (
                         <span>
-                            Precio{' '}
-                            <p className=" text-gray-400">{precios}€</p>
+                            Precio <p className=" text-gray-400">{precios}€</p>
                         </span>
                     )}
-                    
+
                     {equipamiento && (
                         <span>
                             Equipamiento{' '}
@@ -102,11 +95,9 @@ const SalaDetail = () => {
                     )}
                     {currentUser && (
                         <span>
-                            Contacto{' '}
-                            <p className=" text-gray-400">{email}</p>
+                            Contacto <p className=" text-gray-400">{email}</p>
                         </span>
                     )}
-                   
                 </section>
                 <section>
                     <h3 className="text-2xl">Descripción :</h3>
@@ -121,7 +112,6 @@ const SalaDetail = () => {
                         <h3 className="text-2xl">Comentarios :</h3>
 
                         {comentarios.map((comentario) => {
-                            
                             return (
                                 <div
                                     key={comentario.id}
@@ -137,9 +127,11 @@ const SalaDetail = () => {
                                         className="flex place-items-center gap-2 transition-all"
                                         to={`/grupo/${comentario.grupoVotaId}`}
                                     >
-                                    <div>
-                                        <StarRating rating={comentario.voto}></StarRating>
-                                    </div>
+                                        <div>
+                                            <StarRating
+                                                rating={comentario.voto}
+                                            ></StarRating>
+                                        </div>
                                         <img
                                             className="w-10"
                                             src={
@@ -183,7 +175,6 @@ const SalaDetail = () => {
                 </section>
                 <section>
                     <div className=" flex justify-around my-8">
-                        
                         <Link
                             to={`/sala/${idSala}/reservas`}
                             className="p-4 shadow-lg rounded bg-purpleOiches text-white hover:scale-105 transition-all"

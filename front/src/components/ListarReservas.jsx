@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
-import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
 import GrupoVotaSala from './GrupoVotaSala';
 import SalaVotaGrupo from './SalaVotaGrupo';
@@ -165,9 +164,9 @@ export const ListarReservas = () => {
 
     return (
         <>
-            <section className="max-w-3xl mx-auto">
-                <h3 className="text-3xl text-center my-6">
-                    Histórico Reservas:
+            <section>
+                <h3 className="text-lg font-semibold text-center my-6">
+                    Histórico Reservas
                 </h3>
                 {reservas.length > 0 ? (
                     reservas.map((reserva) => (
@@ -230,20 +229,24 @@ export const ListarReservas = () => {
                                 >
                                     Confirmar
                                 </button>
-                                <button
-                                    onClick={() => handleDelete(reserva.id)}
-                                    hidden={
-                                        type === 'grupo' &&
-                                        reserva.confirmada === 1
-                                    }
-                                    disabled={
-                                        type === 'grupo' &&
-                                        reserva.confirmada === 1
-                                    }
-                                    className="button bg-red-500 text-white p-2 rounded"
-                                >
-                                    Cancelar
-                                </button>
+                                {new Date(reserva.fecha) < new Date() ? (
+                                    ''
+                                ) : (
+                                    <button
+                                        onClick={() => handleDelete(reserva.id)}
+                                        hidden={
+                                            type === 'grupo' &&
+                                            reserva.confirmada === 1
+                                        }
+                                        disabled={
+                                            type === 'grupo' &&
+                                            reserva.confirmada === 1
+                                        }
+                                        className="button bg-red-500 text-white p-2 rounded"
+                                    >
+                                        Cancelar
+                                    </button>
+                                )}
                             </div>
                             {new Date(reserva.fecha) < new Date() &&
                             reserva.confirmada === 1 ? (
@@ -268,12 +271,11 @@ export const ListarReservas = () => {
                         </div>
                     ))
                 ) : (
-                    <div className="flex col-span-6 max-w-6xl place-items-center gap-6 mx-auto">
-                        <p>No se han encontrado reservas.</p>
-                    </div>
+                    <p className="text-center">
+                        No se han encontrado reservas.
+                    </p>
                 )}
             </section>
-            <Toastify />
         </>
     );
 };

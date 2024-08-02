@@ -16,12 +16,12 @@ const canEditReservaService = async (reserva_id, userId) => {
 
     // Comprobamos que la sala pertenece al usuario
     const [salaOwner] = await pool.query(
-        `SELECT id FROM salas WHERE usuario_id = ?`,
-        [userId]
+        `SELECT usuario_id FROM salas WHERE id = ?`,
+        [salaId[0].sala_id]
     );
-    console.log('salaO ', salaOwner);
+
     // Si no somos los propietarios lanzamos un error.
-    if (salaOwner[0].id !== salaId[0].sala_id)
+    if (userId !== salaOwner[0].usuario_id)
         throw generateErrorsUtil(
             'El usuario no está autorizado para hacer esta operación',
             409

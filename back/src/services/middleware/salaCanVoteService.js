@@ -31,8 +31,8 @@ const salaCanVoteService = async (idReserva, userId) => {
 
     // Comprobar que el usuario tenga esa sala
     const [salaOwner] = await pool.query(
-        `SELECT id FROM salas WHERE usuario_id = ?`,
-        [userId]
+        `SELECT id FROM salas WHERE usuario_id = ? AND id = ?`,
+        [userId, reserva[0].sala_id]
     );
 
     if (salaOwner[0].id !== reserva[0].sala_id)
