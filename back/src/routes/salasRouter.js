@@ -18,6 +18,8 @@ import {
     editSalaController,
     deletePhotoSalaController,
     insertPhotosSalaController,
+    deleteSalaController,
+    
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -62,7 +64,7 @@ router.delete(
 
 // Endpoint detalle sala
 router.get('/salas/:idSala', salaExists, getSalaDetailController);
-
+router.delete('/salas/delete/:idSala',authUser,deleteSalaController)
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
 

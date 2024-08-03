@@ -22,6 +22,7 @@ import {
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
+    deleteGrupoController
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -55,6 +56,7 @@ router.delete(
     deleteGrupoMediaController
 );
 
+router.delete('/grupos/delete/:grupoId',authUser,deleteGrupoController)
 // Añadir media a un grupo
 router.post(
     '/grupos/media/:idGrupo',
@@ -96,5 +98,4 @@ router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
 router.get('/grupos?', listGruposController);
-
 export default router;
