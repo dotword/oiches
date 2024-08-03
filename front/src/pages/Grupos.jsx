@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import GrupoFilter from '../components/GrupoFilter';
 import GrupoList from '../components/GrupoList';
 import FetchGruposService from '../services/FetchGruposService';
-import Header from '../components/Header.jsx';
+import HeaderHero from '../components/HeaderHero.jsx';
 import Footer from '../components/Footer';
 
 const Grupos = () => {
@@ -32,8 +32,8 @@ const Grupos = () => {
             exit={{ opacity: 0, height: 0 }}
             className="container-grupos"
         >
-            <Header />
-            <div className="hero bg-hero-grupos bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+            <HeaderHero />
+            <div className="hero bg-hero-grupos bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                 <h1 className="hero-title text-white">
                     Encuentra tu Grupo Ideal
                 </h1>

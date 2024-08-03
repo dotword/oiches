@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-// import Header from '../components/Header';
 import HeaderHero from '../components/HeaderHero.jsx';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -53,7 +52,7 @@ const Home = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <HeaderHero />
-            <section className="hero bg-hero-home bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+            <section className="hero bg-hero-home bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
