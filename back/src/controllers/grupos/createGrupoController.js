@@ -4,6 +4,7 @@ import { uploadFiles } from '../../utils/uploadFiles.js';
 import insertGrupoService from '../../services/grupos/insertGrupoService.js';
 import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
 import { insertGrupoMediaService } from '../../services/grupos/insertGrupoMediaService.js';
+import { insertGrupoGenerosService } from '../../services/grupos/insertGrupoGenerosService.js';
 
 const createGrupoController = async (req, res, next) => {
     try {
@@ -22,20 +23,27 @@ const createGrupoController = async (req, res, next) => {
         const medias = [mediaA, mediaB, mediaC, mediaD].filter(Boolean); // Filtrar valores no nulos
 
         // Validamos el body con Joi.
-        await validateSchemaUtil(
-            createGrupoSchema,
-            Object.assign(req.body, req.files || {})
-        );
+        // await validateSchemaUtil(
+        //     createGrupoSchema,
+        //     Object.assign(req.body, req.files || {})
+        // );
 
         const grupoId = await insertGrupoService(
             nombre,
             provincia,
-            generos,
             honorarios,
             biografia,
             req.user.id
         );
 
+        // Insertamos los géneros
+        const generosList = [];
+        for (const genero of generos) {
+            await insertGrupoGenerosService(genero, grupoId);
+            generosList.push({ generoId: genero });
+        }
+
+        // Insertamos los videos
         const mediaUrls = [];
         for (const media of medias) {
             await insertGrupoMediaService(media, grupoId);
@@ -67,7 +75,7 @@ const createGrupoController = async (req, res, next) => {
                 grupo: {
                     id: grupoId,
                     usuario_id: req.user.id,
-                    generos: req.body.generos,
+                    generos: generosList,
                     nombre,
                     provincia,
                     honorarios,
