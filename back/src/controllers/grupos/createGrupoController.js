@@ -23,10 +23,10 @@ const createGrupoController = async (req, res, next) => {
         const medias = [mediaA, mediaB, mediaC, mediaD].filter(Boolean); // Filtrar valores no nulos
 
         // Validamos el body con Joi.
-        // await validateSchemaUtil(
-        //     createGrupoSchema,
-        //     Object.assign(req.body, req.files || {})
-        // );
+        await validateSchemaUtil(
+            createGrupoSchema,
+            Object.assign(req.body, req.files || {})
+        );
 
         const grupoId = await insertGrupoService(
             nombre,
@@ -38,9 +38,13 @@ const createGrupoController = async (req, res, next) => {
 
         // Insertamos los géneros
         const generosList = [];
-        for (const genero of generos) {
-            await insertGrupoGenerosService(genero, grupoId);
-            generosList.push({ generoId: genero });
+        const generosArray = Array.isArray(generos)
+            ? generos
+            : generos.split(',');
+
+        for (const genero of generosArray) {
+            await insertGrupoGenerosService(genero.trim(), grupoId);
+            generosList.push({ generoId: genero.trim() });
         }
 
         // Insertamos los videos
