@@ -1,6 +1,5 @@
 // Importamos joi.
 import Joi from 'joi';
-import fileSchema from '../fileSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -16,11 +15,6 @@ const createEditGrupoSchema = Joi.object({
         .messages(joiErrorMessages),
     honorarios: Joi.number().min(0).allow(null, '').messages(joiErrorMessages),
     biografia: Joi.string().max(2000).allow('').messages(joiErrorMessages),
-    // mediaName: Joi.string().uri().allow('').messages(joiErrorMessages),
-    // mediaDelete: Joi.string().uri().allow('').messages(joiErrorMessages),
-    photo: fileSchema.optional().allow(''),
-    // rider: fileSchema.optional().allow(''),
-    // deletePhoto: Joi.string().allow('').messages(joiErrorMessages),
 });
 
 export default createEditGrupoSchema;

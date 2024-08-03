@@ -7,8 +7,6 @@ import {
     grupoExists,
     canEditGrupo,
     hasOneGroup,
-    checkIfSala,
-    salaCanVote,
     checkIfGroup,
     canEditGrupoFiles,
 } from '../middleware/index.js';
@@ -19,13 +17,11 @@ import {
     getGrupoDetailController,
     createGrupoController,
     listGruposController,
-    voteGrupoController,
     deleteGrupoMediaController,
     addGrupoMediaController,
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
-    getGrupoVotosController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -97,19 +93,6 @@ router.delete(
 
 // Endpoint detalle grupo
 router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
-
-//Endpoint  votos y comentarios de una sala a un grupo
-router.post(
-    '/grupos/:idReserva/votes',
-    authUser,
-    userExists,
-    checkIfSala,
-    salaCanVote,
-    voteGrupoController
-);
-
-// Endpoint votos hechos por un grupo
-router.get('/grupos/votos/:idGrupo', getGrupoVotosController);
 
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
 router.get('/grupos?', listGruposController);

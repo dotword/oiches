@@ -179,7 +179,7 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS votos_grupos(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 voto TINYINT UNSIGNED NOT NULL,
-               comentario TEXT,
+                comentario TEXT,
                 reservaId CHAR(36) NOT NULL,
                 salaVota CHAR(36) NOT NULL,
                 grupoVotado CHAR(36) NOT NULL,
