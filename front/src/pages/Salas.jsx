@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import SalaFilter from '../components/SalaFilter';
 import SalaList from '../components/SalaList';
 import FetchSalasService from '../services/FetchSalasService';
-import Header from '../components/Header.jsx';
+import HeaderHero from '../components/HeaderHero.jsx';
 import Footer from '../components/Footer';
 
 const Salas = () => {
@@ -32,8 +32,8 @@ const Salas = () => {
             exit={{ opacity: 0, height: 0 }}
             className="container-salas"
         >
-            <Header />
-            <div className="hero bg-hero-salas bg-cover mt-2 relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full md:-mt-4">
+            <HeaderHero />
+            <div className="hero bg-hero-salas bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                 <h1 className="hero-title text-white">Encuentra tu Sala </h1>
                 <p className="hero-subtitle text-white">
                     Descubre y explora distintas salas, conecta con ellos y crea

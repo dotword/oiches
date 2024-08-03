@@ -8,7 +8,7 @@ const HeaderHero = () => {
 
     return (
         <header className="flex flex-col items-center justify-between pt-7 pb-4 px-6 md:max-w-7xl md:mx-auto">
-            <nav className="self-end md:flex md:justify-between md:mb-5 md:w-11/12 md:mx-auto">
+            <nav className="self-end md:flex md:justify-between md:mb-3 md:w-11/12 md:mx-auto">
                 <a href="/" className="max-md:hidden">
                     <img src={logoBlack} alt="logo" className="max-w-36" />
                 </a>
@@ -56,7 +56,6 @@ const HeaderHero = () => {
                     <Menu />
                 </div>
             </nav>
-            <hr className="w-full max-md:hidden" />
             <a href="/" className="mt-1 mb-4 md:hidden">
                 <img src={logoBlack} alt="logo" className="max-w-48" />
             </a>
