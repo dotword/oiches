@@ -7,8 +7,6 @@ import {
     salaExists,
     canEditSala,
     checkIfSala,
-    checkIfGroup,
-    grupoCanVote,
     canEditPhoto,
 } from '../middleware/index.js';
 
@@ -18,10 +16,8 @@ import {
     getSalaDetailController,
     listSalasController,
     editSalaController,
-    voteSalaController,
     deletePhotoSalaController,
     insertPhotosSalaController,
-    getSalaVotosController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -69,18 +65,5 @@ router.get('/salas/:idSala', salaExists, getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
-
-//Endpoint votacion y comentarios de un grupo a una sala
-router.post(
-    '/salas/:idReserva/votes',
-    authUser,
-    userExists,
-    checkIfGroup,
-    grupoCanVote,
-    voteSalaController
-);
-
-// Endpoint votos hechos por un grupo
-router.get('/salas/votos/:idSala', getSalaVotosController);
 
 export default router;

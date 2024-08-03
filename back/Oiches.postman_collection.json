@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f9fd8f19-20e8-4591-bf3e-ef9f036baa62",
+		"_postman_id": "61ae8cd8-912a-47f2-8034-f03975b4d3a6",
 		"name": "Oiches",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34350841"
+		"_exporter_id": "33783651"
 	},
 	"item": [
 		{
@@ -18,68 +18,14 @@
 								"method": "PATCH",
 								"header": [
 									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"name": "content-type",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "<calculated when request is sent>",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJncnVwbyIsImF2YXRhciI6bnVsbCwiaWF0IjoxNzIwMDkwMjM4LCJleHAiOjE3MjA2OTUwMzh9.o5Nax4kArCB7pm2DPbWzJ6nas-SkIawbQ6M-LlJxUvs",
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY1OTg3OSwiZXhwIjoxNzIzMjY0Njc5fQ.ceKYIj0tMQx2uKdK2e_k46AGxt8tLTRVFMEw6OYhaxU",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\":\"grupoprueba@gmail.com\",\r\n    \"password\":\"Password0?\",\r\n    \"newPassword\":\"Password09?\"\r\n}",
+									"raw": "{\r\n    \"email\":\"mail@das.es\",\r\n    \"password\":\"Golfinger07?\",\r\n    \"newPassword\":\"Password09?\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -105,70 +51,10 @@
 							"name": "Login",
 							"request": {
 								"method": "POST",
-								"header": [
-									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"name": "content-type",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "<calculated when request is sent>",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
-										"key": "",
-										"value": "",
-										"type": "text"
-									}
-								],
+								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \r\n    \"email\":\"emaildeprueba@gmail.com\",\r\n    \"password\":\"Password0?\"\r\n}",
+									"raw": "{\r\n    \"email\":\"mail@das.es\",\r\n    \"password\":\"Golfinger07?\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -197,7 +83,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"username\":\"Aitor\",\r\n    \"email\":\"emaildeprueba@gmail.com\",\r\n    \"password\":\"Password0?\",\r\n    \"roles\":\"sala\"\r\n}",
+									"raw": "{\r\n    \"username\":\"carmen2\",\r\n    \"email\":\"mail@das.es\",\r\n    \"password\":\"Golfinger07?\",\r\n    \"roles\":\"grupo\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -220,28 +106,204 @@
 							"response": []
 						},
 						{
-							"name": "Validar regsitro",
+							"name": "Validar registro",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/useres/validate/:registrationCode",
+									"raw": "http://localhost:3000/users/validate/IOgahnKiQZpH6D88DOFoCUfdwpyyzP",
 									"protocol": "http",
 									"host": [
 										"localhost"
 									],
 									"port": "3000",
 									"path": [
-										"useres",
+										"users",
 										"validate",
-										":registrationCode"
-									],
-									"variable": [
-										{
-											"key": "registrationCode",
-											"value": "",
-											"type": "string"
+										"IOgahnKiQZpH6D88DOFoCUfdwpyyzP"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Send Recover Pass",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"mail@das.es\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
 										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/password/recover",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"password",
+										"recover"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Edit User Pass",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token_user_1}}",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"mail@das.es\",\r\n    \"recoverPassCode\": \"inrt9dVp35\",\r\n    \"newPass\": \"Golfinger07?\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/password",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"password"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "edit User Email",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\":\"h@sun.com\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/email/a3c7e119-8012-40c8-ae7e-8393a719d2d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"email",
+										"a3c7e119-8012-40c8-ae7e-8393a719d2d4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "editUserAvatar",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "avatar",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180514_201013.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/avatar/a3c7e119-8012-40c8-ae7e-8393a719d2d4",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"avatar",
+										"a3c7e119-8012-40c8-ae7e-8393a719d2d4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserPrivate",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SalaList",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/users/salas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"salas"
 									]
 								}
 							},
@@ -267,6 +329,23 @@
 									"path": [
 										"salas",
 										""
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "Sala",
+											"disabled": true
+										},
+										{
+											"key": "provincia",
+											"value": "5",
+											"disabled": true
+										},
+										{
+											"key": "genero",
+											"value": "",
+											"disabled": true
+										}
 									]
 								}
 							},
@@ -278,73 +357,93 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"name": "content-type",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "<calculated when request is sent>",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBaXRvciIsImF2YXRhciI6bnVsbCwiaWF0IjoxNzIwMDkxMTg0LCJleHAiOjE3MjA2OTU5ODR9.FI4TjMVKgVvqdMZ07hhncBi9E0Hp4NHSzLBsziJOZOg",
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
 										"type": "text"
 									}
 								],
 								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"nombre\":\"Sala Thor\",\r\n    \"provincia\":\"Islas Baleares\",\r\n    \"capacidad\":\"100\",\r\n    \"descripcion\":\"Corta\",\r\n    \"precios\":\"100\",\r\n    \"direccion\":\"calle blanca\",\r\n    \"condiciones\":\"perfectas\",\r\n    \"equipamiento\":\"todos\",\r\n    \"email\":\"saladeprueba@gmail.com\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "Otra más",
+											"type": "text"
+										},
+										{
+											"key": "capacidad",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "descripcion",
+											"value": "Una sala",
+											"type": "text"
+										},
+										{
+											"key": "precios",
+											"value": "500",
+											"type": "text"
+										},
+										{
+											"key": "direccion",
+											"value": "asdfasdfa",
+											"type": "text"
+										},
+										{
+											"key": "condiciones",
+											"value": "fasdfa",
+											"type": "text"
+										},
+										{
+											"key": "equipamiento",
+											"value": "adsfasf",
+											"type": "text"
+										},
+										{
+											"key": "generos",
+											"value": "6",
+											"type": "text"
+										},
+										{
+											"key": "provincia",
+											"value": "15",
+											"type": "text"
+										},
+										{
+											"key": "horaReservasStart",
+											"value": "19:00",
+											"type": "text"
+										},
+										{
+											"key": "horaReservasEnd",
+											"value": "02:00",
+											"type": "text"
+										},
+										{
+											"key": "photoA",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180520_114935.jpg"
+										},
+										{
+											"key": "photoB",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "photoC",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "photoD",
+											"type": "file",
+											"src": [],
+											"disabled": true
 										}
-									}
+									]
 								},
 								"url": {
 									"raw": "http://localhost:3000/users/salas",
@@ -367,7 +466,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/salas/1",
+									"raw": "http://localhost:3000/salas/c83476b3-3294-419e-8a7f-289b44b11b9a",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -375,7 +474,186 @@
 									"port": "3000",
 									"path": [
 										"salas",
-										"1"
+										"c83476b3-3294-419e-8a7f-289b44b11b9a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Sala",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "Bola 8",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "provincia",
+											"value": "7",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "direccion",
+											"value": "Mi casas82",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "capacidad",
+											"value": "8000",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "equipamiento",
+											"value": "poca cosa",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "generos",
+											"value": "3",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "condiciones",
+											"value": "nuevas condiciones",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "descripcion",
+											"value": "Esta es una descripcion",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "precios",
+											"value": "20",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "horaReservasStart",
+											"value": "20:00",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "horaReservasEnd",
+											"value": "00:00",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/c83476b3-3294-419e-8a7f-289b44b11b9a/edit",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"c83476b3-3294-419e-8a7f-289b44b11b9a",
+										"edit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deletePhotoSala",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/salas/b499d6a9-a976-4056-a44e-283e54191697.jpg/51ec82db-c6a0-4bf6-9eac-531818e34976",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"b499d6a9-a976-4056-a44e-283e54191697.jpg",
+										"51ec82db-c6a0-4bf6-9eac-531818e34976"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "addSalaPhotos",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photoA",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180521_184205.jpg"
+										},
+										{
+											"key": "photoB",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180517_183533.jpg"
+										},
+										{
+											"key": "photoC",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										},
+										{
+											"key": "photoD",
+											"type": "file",
+											"src": [],
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/photos/c83476b3-3294-419e-8a7f-289b44b11b9a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"photos",
+										"c83476b3-3294-419e-8a7f-289b44b11b9a"
 									]
 								}
 							},
@@ -385,10 +663,404 @@
 				},
 				{
 					"name": "Grupos",
-					"item": []
+					"item": [
+						{
+							"name": "edit Grupo",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "The Nomads",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "provincia",
+											"value": "4",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "generos",
+											"value": "7",
+											"type": "text"
+										},
+										{
+											"key": "honorarios",
+											"value": "0",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "biografia",
+											"value": "nada",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/133d954c-df69-4ef6-8ab8-dae0c3402bd0/edit",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+										"edit"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CrearGrupo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "nombre",
+											"value": "Sonics",
+											"type": "text"
+										},
+										{
+											"key": "provincia",
+											"value": "14",
+											"type": "text"
+										},
+										{
+											"key": "generos",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "honorarios",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "biografia",
+											"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius lorem non ante porttitor ultrices. Integer mauris est, sagittis efficitur consequat sit amet, rhoncus non quam. Etiam risus justo, molestie nec laoreet lobortis, pulvinar non diam. Nullam id dui odio. Nulla quis laoreet sapien. In hac habitasse platea dictumst. In hac habitasse platea dictumst. Cras sed est lectus. Donec interdum eros quis gravida dictum. In velit quam, malesuada sed enim id, laoreet condimentum elit. Suspendisse urna felis, varius ac velit sed, iaculis interdum leo. Aenean eget justo et tellus interdum auctor vitae vitae felis. Integer ut facilisis quam, ut sagittis justo.\n\nSed commodo ornare sapien eu sollicitudin. Phasellus molestie pulvinar libero, nec laoreet enim egestas eu. Duis vitae elementum nisl. Curabitur tempor maximus dolor, eu viverra felis gravida et. Pellentesque semper quis nulla sed condimentum. Vestibulum hendrerit varius purus, at tempor ipsum faucibus vel. Integer ullamcorper, urna vel iaculis sollicitudin, erat neque commodo orci, sit amet mollis sapien est et nunc. Cras in dignissim ex. Etiam eleifend risus sed facilisis vulputate. Morbi facilisis nibh eu auctor semper. Aliquam faucibus iaculis erat quis viverra. Nulla eget risus sed ipsum bibendum tincidunt. Suspendisse accumsan ante quis ex faucibus pharetra. Morbi in feugiat est. Proin eget nibh placerat sem fringilla hendrerit non hendrerit mi. Nulla neque ipsum, semper a blandit commodo, porttitor eu mi.",
+											"type": "text"
+										},
+										{
+											"key": "photoA",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180517_180326.jpg"
+										},
+										{
+											"key": "photoB",
+											"type": "file",
+											"src": "/C:/Users/Carmen/Desktop/dead/dead-moon-the-book.jpg",
+											"disabled": true
+										},
+										{
+											"key": "photoC",
+											"type": "file",
+											"src": "/C:/Users/Carmen/Desktop/dead/1510348723548-gettyimages-110498796.webp",
+											"disabled": true
+										},
+										{
+											"key": "photoD",
+											"type": "file",
+											"src": "/C:/Users/Carmen/Desktop/dead/dead01.jpg",
+											"disabled": true
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Carmen/OneDrive/Documentos/github-git-cheat-sheet.pdf"
+										},
+										{
+											"key": "mediaA",
+											"value": "https://youtu.be/wcWpy8paa8c?si=YiUjXpXlRQRO2VH3",
+											"type": "text"
+										},
+										{
+											"key": "mediaB",
+											"value": "https://www.youtube.com/watch?v=Z5NCHNfQwoI",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "mediaC",
+											"value": "https://www.youtube.com/watch?v=_F7blgqoSOI",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "mediaD",
+											"value": "https://www.youtube.com/watch?v=Mays7OC6QtI",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/grupo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"grupo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetGrupoById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/grupos/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListGrupos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/grupos?generos=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos"
+									],
+									"query": [
+										{
+											"key": "nombre",
+											"value": "ilegales",
+											"disabled": true
+										},
+										{
+											"key": "provincia",
+											"value": null,
+											"disabled": true
+										},
+										{
+											"key": "generos",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "borrarMedia",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/grupos/media/9adb23e9-cb9f-453e-8f91-8f863ceac049/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"media",
+										"9adb23e9-cb9f-453e-8f91-8f863ceac049",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AddMediaGrupo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "mediaName",
+											"value": "https://www.youtube.com/watch?v=zquQfwrPAwQ",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/media/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"media",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteGrupoFile",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/b2cf0fcc-8ca6-46db-98ef-c79820677c73.jpg/bd67bd5e-f6d9-4778-bfca-cf4cdecb0a22",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"b2cf0fcc-8ca6-46db-98ef-c79820677c73.jpg",
+										"bd67bd5e-f6d9-4778-bfca-cf4cdecb0a22"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AddRider",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "rider",
+											"type": "file",
+											"src": "/C:/Users/Carmen/Desktop/z_anZKQBnDrkWctwMCi4O9R0dHqhm1suE86t1FcAYsw=.pdf"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/rider/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"rider",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AddPhotoGrupo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "/D:/Pictures/Fotos Ion 2018/20180517_175458.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/photos/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"photos",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
-					"name": "Generos",
+					"name": "Listas",
 					"item": [
 						{
 							"name": "Generos",
@@ -420,6 +1092,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Provincias",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/provincias",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"provincias"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -427,73 +1130,19 @@
 					"name": "Reservas",
 					"item": [
 						{
-							"name": "Cancelar Resrva",
+							"name": "Cancelar Reserva Grupo",
 							"request": {
 								"method": "DELETE",
 								"header": [
 									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"name": "content-type",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "<calculated when request is sent>",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
 										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJncnVwbyIsImF2YXRhciI6bnVsbCwiaWF0IjoxNzIwMDkwNDI5LCJleHAiOjE3MjA2OTUyMjl9.yCyknlXrCXzVQiMjUo78ZNITQkP9Cb8IttkynUL8AJU",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzIwNDIxMDQ4LCJleHAiOjE3MjEwMjU4NDh9.y6lGbuHd_sTtOIm2aQp-56KB8G7psh3BjbKO-QZNeok",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "\r\n{\r\n    \"nombre\":\"\"\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -521,68 +1170,14 @@
 								"method": "POST",
 								"header": [
 									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"name": "content-type",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "<calculated when request is sent>",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJncnVwbyIsImF2YXRhciI6bnVsbCwiaWF0IjoxNzIwMDkwNDI5LCJleHAiOjE3MjA2OTUyMjl9.yCyknlXrCXzVQiMjUo78ZNITQkP9Cb8IttkynUL8AJU",
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MzMzNSwiZXhwIjoxNzIzMjY4MTM1fQ.ibty--41Dy_YH3IIJVwbtDSHgJXoouiMKRIDNhdgbmo",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"nombre\":\"SalaThor\",\r\n    \"fecha\":\"2024-07-22\",\r\n    \"hora\":\"20:00\"\r\n}",
+									"raw": "{\r\n    \"fecha\":\"2024-09-10\",\r\n    \"horaInicio\":\"20:00\",\r\n    \"horaFin\":\"20:00\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -590,7 +1185,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:3000/reservar-sala/1",
+									"raw": "http://localhost:3000/reservar-sala/c83476b3-3294-419e-8a7f-289b44b11b9a",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -598,7 +1193,7 @@
 									"port": "3000",
 									"path": [
 										"reservar-sala",
-										"1"
+										"c83476b3-3294-419e-8a7f-289b44b11b9a"
 									]
 								}
 							},
@@ -610,61 +1205,13 @@
 								"method": "PUT",
 								"header": [
 									{
-										"key": "Cache-Control",
-										"value": "no-cache",
-										"name": "cache-control",
-										"type": "text"
-									},
-									{
-										"key": "Postman-Token",
-										"value": "<calculated when request is sent>",
-										"name": "postman-token",
-										"type": "text"
-									},
-									{
-										"key": "Content-Length",
-										"value": "0",
-										"name": "content-length",
-										"type": "text"
-									},
-									{
-										"key": "Host",
-										"value": "<calculated when request is sent>",
-										"name": "host",
-										"type": "text"
-									},
-									{
-										"key": "User-Agent",
-										"value": "PostmanRuntime/7.39.1",
-										"name": "user-agent",
-										"type": "text"
-									},
-									{
-										"key": "Accept",
-										"value": "*/*",
-										"name": "accept",
-										"type": "text"
-									},
-									{
-										"key": "Accept-Encoding",
-										"value": "gzip, deflate, br",
-										"name": "accept-encoding",
-										"type": "text"
-									},
-									{
-										"key": "Connection",
-										"value": "keep-alive",
-										"name": "connection",
-										"type": "text"
-									},
-									{
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJBaXRvciIsImF2YXRhciI6bnVsbCwiaWF0IjoxNzIwMDkyNzAyLCJleHAiOjE3MjA2OTc1MDJ9.zxxaGPDlOjEc4elYRF5fKO542v_EKV4IWGQj8u60gTM",
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2OTE0MiwiZXhwIjoxNzIzMjczOTQyfQ.PnVZx6vP1kacbpF-fmtdBvuYmvEnKibq_doHsUQW5Ws",
 										"type": "text"
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/aprobar-reserva/2",
+									"raw": "http://localhost:3000/aprobar-reserva/39e27fa7-ded0-4139-b956-d19c0bb5687a",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -672,7 +1219,226 @@
 									"port": "3000",
 									"path": [
 										"aprobar-reserva",
-										"2"
+										"39e27fa7-ded0-4139-b956-d19c0bb5687a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Borrar Reservar Sala",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzIwNDIxNzI2LCJleHAiOjE3MjEwMjY1MjZ9.JC15iQE2GweT5BKKLYuP6dQ7AYH5FdV03Yyxzv-AzdA",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/borrar-reserva/6",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"borrar-reserva",
+										"6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listado reservas sala",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2OTE0MiwiZXhwIjoxNzIzMjczOTQyfQ.PnVZx6vP1kacbpF-fmtdBvuYmvEnKibq_doHsUQW5Ws",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/reservas/salas/39e27fa7-ded0-4139-b956-d19c0bb5687a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reservas",
+										"salas",
+										"39e27fa7-ded0-4139-b956-d19c0bb5687a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listado reservas grupos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2OTQ4MywiZXhwIjoxNzIzMjc0MjgzfQ.5xHLs--tMgkPmDKVZYfiFoJX1urYOOEJzNpRndOk7eM",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/reservas/grupos/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"reservas",
+										"grupos",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Votos",
+					"item": [
+						{
+							"name": "GetGrupoVotos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/grupos/votos/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"votos",
+										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Voto sala a grupo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc5ZjNiYjhjLWE5OGMtNGVhYS05YmE5LWZiOWMxMDc3YjVlNSIsImlhdCI6MTcyMjY2MjQ2OCwiZXhwIjoxNzIzMjY3MjY4fQ._Myi-R5GLL8mRo4Hqq2-ltcsiXR-74IVvGFjpSuQHsI",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "voto",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "asdafsdfa asdj mlñasdf ñk dfp`ka fdaojiop fajpod jmasdgfgk opgfadjkgo jgjas pñmgsdfop jpadfg upjio pfgjgosdf j",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/39e27fa7-ded0-4139-b956-d19c0bb5687a/votes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"39e27fa7-ded0-4139-b956-d19c0bb5687a",
+										"votes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Voto grupo a sala",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2OTQ4MywiZXhwIjoxNzIzMjc0MjgzfQ.5xHLs--tMgkPmDKVZYfiFoJX1urYOOEJzNpRndOk7eM",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "voto",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "comment",
+											"value": "Todo genial",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/39e27fa7-ded0-4139-b956-d19c0bb5687a/votes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"39e27fa7-ded0-4139-b956-d19c0bb5687a",
+										"votes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetSalaVotos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/salas/c83476b3-3294-419e-8a7f-289b44b11b9a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"c83476b3-3294-419e-8a7f-289b44b11b9a"
 									]
 								}
 							},
