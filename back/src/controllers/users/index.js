@@ -7,6 +7,7 @@ import editUserPassController from './editUserPassController.js';
 import editUserEmailController from './editUserEmailController.js';
 import editUserAvatarController from './editUserAvatarController.js';
 import getOwnUserController from './getOwnUserController.js';
+import { deleteUserController } from './deleteUserController.js';
 
 export {
     registerUserController,
@@ -18,4 +19,5 @@ export {
     editUserEmailController,
     editUserAvatarController,
     getOwnUserController,
+    deleteUserController
 };
