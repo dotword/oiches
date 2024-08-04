@@ -14,7 +14,7 @@ const SalaCreacion = () => {
         nombre: '',
         direccion: '',
         provincia: '',
-        generos: '',
+        generos: [],
         capacidad: '',
         descripcion: '',
         precios: '',
@@ -48,7 +48,18 @@ const SalaCreacion = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
+        if (name === 'generos') {
+            const options = e.target.options;
+            const selectedGenres = [];
+            for (const option of options) {
+                if (option.selected) {
+                    selectedGenres.push(option.value);
+                }
+            }
+            setFormValues({ ...formValues, generos: selectedGenres });
+        } else {
+            setFormValues({ ...formValues, [name]: value });
+        }
     };
 
     const handleFileChange = (e, name) => {
@@ -66,7 +77,11 @@ const SalaCreacion = () => {
 
         const formData = new FormData();
         Object.entries(formValues).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
+            if (key === 'generos') {
+                value.forEach((genre) => formData.append('generos', genre));
+            } else {
+                if (value) formData.append(key, value);
+            }
         });
         Object.entries(photos).forEach(([key, value]) => {
             if (value) formData.append(key, value);
@@ -116,13 +131,14 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="generos" className="font-semibold">
-                            Género:
+                            Géneros:
                         </label>
                         <select
                             id="generos"
                             name="generos"
+                            multiple
                             value={generos}
-                            className="form-select"
+                            className="form-select h-auto"
                             onChange={handleChange}
                         >
                             <option value="">Todos</option>

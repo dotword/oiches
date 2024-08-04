@@ -33,4 +33,5 @@ export {
     getGrupoVotosController,
     deleteGrupoGeneroController,
     addGrupoGeneroController,
+    deleteGrupoController,
 };

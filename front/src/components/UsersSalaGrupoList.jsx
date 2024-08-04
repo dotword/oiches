@@ -18,12 +18,13 @@ const UsersSalaGrupoList = () => {
     const [deleteType, setDeleteType] = useState(null);
 
     const handleDelete = async (id, type) => {
-        const endpoint = type === 'sala' ? `/salas/delete/${id}` : `/grupos/delete/${id}`;
+        const endpoint =
+            type === 'sala' ? `/salas/delete/${id}` : `/grupos/delete/${id}`;
         try {
             const response = await fetch(`${VITE_API_URL_BASE}${endpoint}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `${token}`,
+                    Authorization: `${token}`,
                     'Content-Type': 'application/json',
                 },
             });
@@ -32,7 +33,9 @@ const UsersSalaGrupoList = () => {
                 if (type === 'sala') {
                     setSalas((prev) => prev.filter((sala) => sala.id !== id));
                 } else {
-                    setGrupos((prev) => prev.filter((grupo) => grupo.id !== id));
+                    setGrupos((prev) =>
+                        prev.filter((grupo) => grupo.id !== id)
+                    );
                 }
                 toast.success('Eliminado con éxito');
                 setModalOpen(false); // Cierra el modal después de eliminar
@@ -75,17 +78,21 @@ const UsersSalaGrupoList = () => {
                                 {salas.map((sala) => (
                                     <li
                                         key={sala.id}
-                                        className="flex items-center justify-center gap-2 mb-2"
+                                        className="flex items-center justify-center gap-4 mb-2"
                                     >
                                         <IoIosArrowForward />{' '}
                                         <a href={`/sala/${sala.id}/edit`}>
                                             {sala.nombre}
                                         </a>
                                         <a href={`/sala/${sala.id}/edit`}>
-                                            <FaPencil className="text-sm text-purpleOiches" />
+                                            <FaPencil className="text-lg text-purpleOiches" />
                                         </a>
-                                        <button onClick={() => openModal(sala.id, 'sala')}>
-                                            <FaTrashAlt className="text-sm text-purpleOiches" />
+                                        <button
+                                            onClick={() =>
+                                                openModal(sala.id, 'sala')
+                                            }
+                                        >
+                                            <FaTrashAlt className="text-lg text-purpleOiches" />
                                         </button>
                                     </li>
                                 ))}
@@ -121,7 +128,11 @@ const UsersSalaGrupoList = () => {
                                         <a href={`/grupos/${grupo.id}/edit`}>
                                             <FaPencil className="text-sm text-purpleOiches" />
                                         </a>
-                                        <button onClick={() => openModal(grupo.id, 'grupo')}>
+                                        <button
+                                            onClick={() =>
+                                                openModal(grupo.id, 'grupo')
+                                            }
+                                        >
                                             <FaTrashAlt className="text-sm text-purpleOiches" />
                                         </button>
                                     </li>
@@ -139,11 +150,15 @@ const UsersSalaGrupoList = () => {
                 </>
             )}
             {modalOpen && (
-                <ConfirmationModal 
+                <ConfirmationModal
                     isOpen={modalOpen}
-                    text={`¿Estás seguro de que deseas eliminar este ${deleteType === 'sala' ? 'sala' : 'grupo'}? Perderás todos los datos relacionados con este ${deleteType === 'sala' ? 'sala' : 'grupo'}, incluyendo imágenes, reservas, votos, etc.`}
-                    onConfirm={confirmDelete} 
-                    onCancel={cancelDelete} 
+                    text={`¿Estás seguro de que deseas eliminar este ${
+                        deleteType === 'sala' ? 'sala' : 'grupo'
+                    }? Perderás todos los datos relacionados con este ${
+                        deleteType === 'sala' ? 'sala' : 'grupo'
+                    }, incluyendo imágenes, reservas, votos, etc.`}
+                    onConfirm={confirmDelete}
+                    onCancel={cancelDelete}
                 />
             )}
             <Toastify />

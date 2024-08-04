@@ -134,7 +134,7 @@ const GrupoCreacion = () => {
                                 name="generos"
                                 multiple
                                 value={generos}
-                                className="form-select h-14"
+                                className="form-select h-auto"
                                 onChange={handleChange}
                             >
                                 <option value="">Todos</option>

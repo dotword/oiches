@@ -54,7 +54,7 @@ const GrupoDetail = () => {
                     )}
                     {genero && (
                         <span>
-                            Genero
+                            Género
                             {genero.map((gen) => {
                                 return (
                                     <div
@@ -67,7 +67,7 @@ const GrupoDetail = () => {
                             })}
                         </span>
                     )}
-                    Genero
+
                     {currentUser && (
                         <span>
                             Contacto <p className=" text-gray-400">{email}</p>

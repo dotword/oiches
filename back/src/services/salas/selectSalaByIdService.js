@@ -11,8 +11,6 @@ const selectSalaByIdService = async (idSala) => {
                 S.nombre,
                 (SELECT provincia FROM provincias WHERE provincias.id = S.provincia) AS provincia,
                 (SELECT id FROM provincias WHERE provincias.id = S.provincia) AS provinciaId,
-                (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = S.generos) AS genero,
-                (SELECT id FROM generos_musicales WHERE generos_musicales.id = S.generos) AS generoId,
                 S.direccion,
                 S.precios,
                 S.capacidad,
@@ -60,6 +58,18 @@ const selectSalaByIdService = async (idSala) => {
     // Agregamos el array de los media del grupo.
     entry[0].comentarios = comentarios;
 
+    // Obtenemos el array de los generos del grupo.
+    const [genero] = await pool.query(
+        `SELECT 
+                generoId,
+                (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = generos_salas.generoId) AS generoName
+            FROM generos_salas
+            WHERE salaId = ?`,
+        [idSala]
+    );
+    // Agregamos el array de los generos del grupo.
+    entry[0].genero = genero;
+
     // Fetch photos and reservations
     const [photos] = await pool.query(
         `SELECT id, name FROM sala_fotos WHERE salaId = ?`,
@@ -85,6 +95,7 @@ const selectSalaByIdService = async (idSala) => {
     return {
         ...entry[0],
         comentarios,
+        genero,
         photos,
         reservations,
     };

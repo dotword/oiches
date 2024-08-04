@@ -6,7 +6,6 @@ import getPool from '../../database/getPool.js';
 const insertSalaService = async (
     nombre,
     provincia,
-    generos,
     capacidad,
     descripcion,
     precios,
@@ -24,13 +23,12 @@ const insertSalaService = async (
 
     await pool.query(
         `
-            INSERT INTO salas (id, provincia, generos, usuario_id,nombre,capacidad,descripcion,precios,direccion,condiciones,equipamiento,horaReservasStart, horaReservasEnd)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)
+            INSERT INTO salas (id, provincia, usuario_id,nombre,capacidad,descripcion,precios,direccion,condiciones,equipamiento,horaReservasStart, horaReservasEnd)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
         `,
         [
             salaId,
             provincia,
-            generos,
             usuario_id,
             nombre,
             capacidad,

@@ -22,9 +22,7 @@ const SalaCard = ({ sala }) => {
                 className="sala-card-image w-full max-w-full h-48 max-h-48 object-cover rounded-lg mb-4"
             />
             <h2 className="card-title text-lg font-bold mt-2">{sala.nombre}</h2>
-            <p className="sala-card-genre text-gray-400">
-                <span className="sub_title_ficha">Género:</span> {sala.Genero}
-            </p>
+            <p className="card-genre text-gray-400">{sala.generoNombres}</p>
             <p className="sala-card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}
                 {sala.Provincia}
