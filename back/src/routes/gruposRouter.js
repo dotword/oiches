@@ -56,7 +56,7 @@ router.delete(
     deleteGrupoMediaController
 );
 
-router.delete('/grupos/delete/:grupoId',authUser,deleteGrupoController)
+router.delete('/grupos/delete/:grupoId',authUser,userExists,canEditGrupo,deleteGrupoController)
 // Añadir media a un grupo
 router.post(
     '/grupos/media/:idGrupo',

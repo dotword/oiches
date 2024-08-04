@@ -11,6 +11,7 @@ import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
+import {ConfirmationModal} from './ConfirmModal.jsx'; // Import without destructuring
 
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -23,12 +24,40 @@ const AuthUser = () => {
     const [password, setPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
     const [edit, setEdit] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const { VITE_API_URL_BASE } = import.meta.env;
+
+    const handleDelete = async () => {
+        try {
+            const response = await fetch(`${VITE_API_URL_BASE}/users/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `${token}`
+                }
+            });
+
+            if (response.ok) {
+                toast.success('Cuenta eliminada con éxito');
+                // Aquí deberías agregar la lógica para redirigir al usuario o cerrar sesión
+            } else {
+                toast.error('Error al eliminar la cuenta');
+            }
+        } catch (error) {
+            toast.error('Error al eliminar la cuenta');
+        }
+    };
+
+    const handleConfirm = () => {
+        handleDelete();
+        setModalOpen(false);
+    };
 
     const handleAvatarChange = (e) => {
         setAvatar(e.target.files[0]);
         setPreviewUrl(URL.createObjectURL(e.target.files[0]));
         setUserId(userLogged.id);
     };
+
     const handleAvatarSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -42,10 +71,12 @@ const AuthUser = () => {
             toast.error(error.message);
         }
     };
+
     const handleEmailChange = (e) => {
         setNewEmail(e.target.value);
         setUserId(userLogged.id);
     };
+
     const handleEmailSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -100,19 +131,13 @@ const AuthUser = () => {
                                     <img
                                         src={
                                             userLogged.avatar
-                                                ? `${
-                                                      import.meta.env
-                                                          .VITE_API_URL_BASE
-                                                  }/uploads/${
-                                                      userLogged.avatar
-                                                  }`
+                                                ? `${import.meta.env.VITE_API_URL_BASE}/uploads/${userLogged.avatar}`
                                                 : userIcon
                                         }
                                         alt="avatar"
                                         className="w-40 h-40 object-cover"
                                     />
                                 )}
-
                                 <input
                                     type="file"
                                     name="avatar"
@@ -144,7 +169,7 @@ const AuthUser = () => {
                 </section>
 
                 <section className="flex flex-col mb-4 items-center gap-2">
-                    {edit === true ? (
+                    {edit ? (
                         <div className="my-4 flex flex-wrap flex-col gap-8">
                             <form
                                 onSubmit={handleEmailSubmit}
@@ -234,11 +259,15 @@ const AuthUser = () => {
                     <button
                         type="button"
                         className="btn-account max-w-44 min-w-32"
-                        onClick={() => {
-                            edit === false ? setEdit(true) : setEdit(false);
-                        }}
+                        onClick={() => setEdit(!edit)}
                     >
-                        {edit === false ? 'Editar datos' : 'Cerrar'}
+                        {edit ? 'Cerrar' : 'Editar datos'}
+                    </button>
+                    <button
+                        onClick={() => setModalOpen(true)}
+                        className='btn-account max-w-44 min-w-32 bg-red-600'
+                    >
+                        Eliminar cuenta
                     </button>
                 </section>
             </div>
@@ -247,6 +276,14 @@ const AuthUser = () => {
             <ListarReservas />
 
             <Toastify />
+            {modalOpen && (
+                <ConfirmationModal
+                    isOpen={modalOpen}
+                    text="¿Estás seguro que quieres eliminar tu cuenta? Se borrarán todos los datos asociados a tu cuenta: Grupos, salas, imágenes, votos, etc..."
+                    onConfirm={handleConfirm}
+                    onCancel={() => setModalOpen(false)}
+                />
+            )}
         </>
     ) : (
         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
