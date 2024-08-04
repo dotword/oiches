@@ -1,9 +1,12 @@
-import useAuth from '../hooks/useAuth';
+import { useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
-import { FaTrashAlt } from "react-icons/fa";
-import { useState } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import useAuth from '../hooks/useAuth';
 import { ConfirmationModal } from './ConfirmModal.jsx'; // Asegúrate de que la ruta es correcta
+import 'react-toastify/dist/ReactToastify.css';
+import Toastify from './Toastify.jsx';
 
 const UsersSalaGrupoList = () => {
     const { userLogged, token } = useAuth();
@@ -18,24 +21,27 @@ const UsersSalaGrupoList = () => {
         const endpoint = type === 'sala' ? `/salas/delete/${id}` : `/grupos/delete/${id}`;
         try {
             const response = await fetch(`${VITE_API_URL_BASE}${endpoint}`, {
-                method: "DELETE",
+                method: 'DELETE',
                 headers: {
                     'Authorization': `${token}`,
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             });
 
             if (response.ok) {
                 if (type === 'sala') {
-                    setSalas(prev => prev.filter(sala => sala.id !== id));
+                    setSalas((prev) => prev.filter((sala) => sala.id !== id));
                 } else {
-                    setGrupos(prev => prev.filter(grupo => grupo.id !== id));
+                    setGrupos((prev) => prev.filter((grupo) => grupo.id !== id));
                 }
+                toast.success('Eliminado con éxito');
                 setModalOpen(false); // Cierra el modal después de eliminar
             } else {
+                toast.error('Error al eliminar');
                 console.error('Error eliminando:', response.statusText);
             }
         } catch (error) {
+            toast.error('Error al eliminar');
             console.error('Error eliminando:', error);
         }
     };
@@ -47,7 +53,6 @@ const UsersSalaGrupoList = () => {
     };
 
     const confirmDelete = () => {
-        console.log(itemToDelete,deleteType);
         handleDelete(itemToDelete, deleteType);
     };
 
@@ -141,6 +146,7 @@ const UsersSalaGrupoList = () => {
                     onCancel={cancelDelete} 
                 />
             )}
+            <Toastify />
         </section>
     );
 };
