@@ -3,7 +3,7 @@ import path from 'path';
 
 export async function listGruposService(filters) {
     const pool = await getPool();
-    console.log(filters);
+
     let query = `
     SELECT 
         g.id, 
@@ -12,10 +12,12 @@ export async function listGruposService(filters) {
         p.provincia AS provincia_nombre,
         COALESCE(SUM(v.voto), 0) AS votos,
         (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos,
-        (SELECT GROUP_CONCAT(generoId) FROM generos_grupos WHERE generos_grupos.grupoId = g.id) AS generos
+        (SELECT GROUP_CONCAT(generoId) FROM generos_grupos WHERE generos_grupos.grupoId = g.id) AS generos,
+        GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
     FROM grupos g
     JOIN provincias p ON g.provincia = p.id
-    JOIN generos_grupos ON generos_grupos.grupoId = g.id
+    JOIN generos_grupos gg ON gg.grupoId = g.id
+    JOIN generos_musicales gm ON gg.generoId = gm.id
     LEFT JOIN grupo_fotos gf ON g.id = gf.grupoId
     LEFT JOIN votos_grupos v ON g.id = v.grupoVotado
     WHERE 1=1
@@ -34,7 +36,7 @@ export async function listGruposService(filters) {
     }
 
     if (filters.generos) {
-        query += ' AND generos_grupos.generoId = ?'; // Filtramos por ID de género
+        query += ' AND gg.generoId = ?'; // Filtramos por ID de género
         queryParams.push(filters.generos);
     }
 

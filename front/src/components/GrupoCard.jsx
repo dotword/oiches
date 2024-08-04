@@ -14,6 +14,7 @@ const GrupoCard = ({ grupo }) => {
     const handleClick = () => {
         navigate(`/grupo/${grupo.id}`);
     };
+    console.log(grupo);
 
     return (
         <div className="card" onClick={handleClick}>
@@ -27,7 +28,7 @@ const GrupoCard = ({ grupo }) => {
             </h2>
             <p className="card-genre text-gray-400">
                 <span className="sub_title_ficha">Género:</span>{' '}
-                {grupo.genero_nombre}
+                {grupo.generoNombres}
             </p>
             <p className="card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}
