@@ -3,10 +3,10 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createEditGrupoSchema from '../../schemas/grupos/editGrupoSchema.js';
 import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
-import {
-    insertGrupoGenerosService,
-    deleteGrupoGenerosService,
-} from '../../services/grupos/insertGrupoGenerosService.js';
+// import {
+//     insertGrupoGenerosService,
+//     deleteGrupoGenerosService,
+// } from '../../services/grupos/insertGrupoGenerosService.js';
 
 const editGrupoController = async (req, res, next) => {
     try {
@@ -17,8 +17,8 @@ const editGrupoController = async (req, res, next) => {
             provincia,
             honorarios,
             biografia,
-            newGenero,
-            deleteGenero,
+            // newGenero,
+            // deleteGenero,
         } = req.body;
 
         // Validamos el body con Joi.
@@ -31,9 +31,7 @@ const editGrupoController = async (req, res, next) => {
             throw generateErrorsUtil('No se envió ninguna información', 400);
 
         // Obtenemos la información del grupo
-        const grupo = await selectGrupoByIdService(idGrupo);
-
-        console.log(grupo);
+        await selectGrupoByIdService(idGrupo);
 
         // Actualizar solo los campos que se proporcionan
         const updatedFields = {};
@@ -45,31 +43,31 @@ const editGrupoController = async (req, res, next) => {
 
         await editGrupoService(idGrupo, updatedFields);
 
-        // Añadir nuevos géneros al grupo
-        if (newGenero) {
-            const generosList = [];
-            const generosArray = Array.isArray(newGenero)
-                ? newGenero
-                : newGenero.split(',');
+        // // Añadir nuevos géneros al grupo
+        // if (newGenero) {
+        //     const generosList = [];
+        //     const generosArray = Array.isArray(newGenero)
+        //         ? newGenero
+        //         : newGenero.split(',');
 
-            for (const genero of generosArray) {
-                await insertGrupoGenerosService(genero.trim(), idGrupo);
-                generosList.push({ generoId: genero.trim() });
-            }
-        }
+        //     for (const genero of generosArray) {
+        //         await insertGrupoGenerosService(genero.trim(), idGrupo);
+        //         generosList.push({ generoId: genero.trim() });
+        //     }
+        // }
 
         // Borrar géneros
-        if (deleteGenero) {
-            const deleteGenerosList = [];
-            const generosArray = Array.isArray(deleteGenero)
-                ? deleteGenero
-                : deleteGenero.split(',');
+        // if (deleteGenero) {
+        //     const deleteGenerosList = [];
+        //     const generosArray = Array.isArray(deleteGenero)
+        //         ? deleteGenero
+        //         : deleteGenero.split(',');
 
-            for (const genero of generosArray) {
-                await deleteGrupoGenerosService(genero.trim(), idGrupo);
-                deleteGenerosList.push({ generoId: genero.trim() });
-            }
-        }
+        //     for (const genero of generosArray) {
+        //         await deleteGrupoGenerosService(genero.trim(), idGrupo);
+        //         deleteGenerosList.push({ generoId: genero.trim() });
+        //     }
+        // }
 
         res.send({
             status: 'ok',

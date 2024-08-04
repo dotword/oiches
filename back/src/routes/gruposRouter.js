@@ -19,6 +19,8 @@ import {
     listGruposController,
     deleteGrupoMediaController,
     addGrupoMediaController,
+    addGrupoGeneroController,
+    deleteGrupoGeneroController,
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
@@ -64,6 +66,24 @@ router.post(
     userExists,
     canEditGrupo,
     addGrupoMediaController
+);
+
+// Añadir generos a un grupo
+router.post(
+    '/grupos/generos/:idGrupo',
+    authUser,
+    userExists,
+    canEditGrupo,
+    addGrupoGeneroController
+);
+
+// Borrar generos de un grupo
+router.delete(
+    '/grupos/generos/:idGrupo',
+    authUser,
+    userExists,
+    canEditGrupo,
+    deleteGrupoGeneroController
 );
 
 // Añadir rider a un grupo

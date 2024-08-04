@@ -21,12 +21,17 @@ export const insertGrupoGenerosService = async (genero, idGrupo) => {
     return insertId;
 };
 
-export const deleteGrupoGenerosService = async (genero, idGrupo) => {
+export const deleteGrupoGenerosService = async (genreDelete, idGrupo) => {
     const pool = await getPool();
 
-    // Eliminamos la foto.
-    await pool.query(
-        `DELETE FROM generos_grupos WHERE generoId = ? AND grupoId = ?`,
-        [genero, idGrupo]
-    );
+    // Convertimos el array de géneros a una lista adecuada para la cláusula IN
+    const generosList = genreDelete.map((g) => `'${g}'`).join(', ');
+    // Eliminamos el género
+    const query = `
+    DELETE FROM generos_grupos
+    WHERE grupoId = ?
+    AND generoId IN (${generosList})
+`;
+
+    await pool.query(query, [idGrupo]);
 };

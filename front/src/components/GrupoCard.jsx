@@ -14,7 +14,6 @@ const GrupoCard = ({ grupo }) => {
     const handleClick = () => {
         navigate(`/grupo/${grupo.id}`);
     };
-    console.log(grupo);
 
     return (
         <div className="card" onClick={handleClick}>

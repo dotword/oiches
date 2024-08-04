@@ -8,6 +8,10 @@ import {
     addGrupoMediaController,
 } from './grupoMediaController.js';
 import {
+    deleteGrupoGeneroController,
+    addGrupoGeneroController,
+} from './grupoGeneroController.js';
+import {
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
@@ -27,5 +31,6 @@ export {
     addPdfGrupoController,
     addPhotosGrupoController,
     getGrupoVotosController,
-    deleteGrupoController
+    deleteGrupoGeneroController,
+    addGrupoGeneroController,
 };
