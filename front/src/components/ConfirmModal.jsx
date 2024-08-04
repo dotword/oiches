@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-export const ConfirmationModal = ({ isOpen, onConfirm, onCancel,horaInicio,horaFinal,fecha }) => {
+export const ConfirmationModal = ({ isOpen, onConfirm,text, onCancel,horaInicio,horaFinal,fecha }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-4 rounded shadow-lg">
         <h3 className="text-lg">Confirmación</h3>
-        <p>¿Estás seguro de que quieres enviar esta reserva?</p>
+        <p>{text}</p>
         <p>{horaInicio}</p>
         <p>{horaFinal}</p>
         <p>{fecha}</p>

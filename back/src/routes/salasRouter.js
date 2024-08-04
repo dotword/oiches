@@ -53,6 +53,7 @@ router.post(
     insertPhotosSalaController
 );
 
+router.delete('/salas/delete/:idSala',authUser,deleteSalaController)
 // Borrar foto de una sala
 router.delete(
     '/salas/:photoName/:deletePhoto',
@@ -64,7 +65,6 @@ router.delete(
 
 // Endpoint detalle sala
 router.get('/salas/:idSala', salaExists, getSalaDetailController);
-router.delete('/salas/delete/:idSala',authUser,deleteSalaController)
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
 

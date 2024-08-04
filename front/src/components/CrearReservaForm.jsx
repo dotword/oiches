@@ -96,6 +96,7 @@ export const CrearReservaForm = () => {
                 isOpen={isModalOpen}
                 onConfirm={handleConfirm}
                 onCancel={handleCancel}
+                text={'¿Estás seguro de que quieres enviar esta reserva?'}
             />
             <Toastify />
         </>
