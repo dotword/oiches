@@ -2,12 +2,16 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify';
+import { useNavigate } from 'react-router-dom';
+
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
 import registerGrupoService from '../services/registerGrupoService';
 
 const GrupoCreacion = () => {
-    const { userLogged, token } = useContext(AuthContext);
+    const { userLogged, setUserLogged, token } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
         nombre: '',
@@ -88,7 +92,16 @@ const GrupoCreacion = () => {
         try {
             const response = await registerGrupoService({ token, formData });
             setResp(response);
+            if (response.status === 'ok') {
+                const nuevoGrupo = response.data.grupo;
+                const updatedGrupos = [...userLogged.grupos, nuevoGrupo];
+                const updatedUser = { ...userLogged, grupos: updatedGrupos };
+
+                setUserLogged(updatedUser);
+            }
+
             toast.success('Has creado tu nuevo grupo con éxito');
+            navigate('/users');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

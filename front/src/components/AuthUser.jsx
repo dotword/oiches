@@ -15,7 +15,7 @@ import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx'; // Import without destructuring
 
 const AuthUser = () => {
-    const { userLogged, setUserLogged, token } = useContext(AuthContext);
+    const { userLogged, token } = useContext(AuthContext);
 
     const [userId, setUserId] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -28,14 +28,7 @@ const AuthUser = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
 
-    // pedir listado salas (fetch)
-    // let nuevoListadoSalas =
-    // actualizar las salas en el contexto
-    // let newUserLogged = { ...userLogged };
-    // // {name: "stefano", salas:[]}
-    // newUserLogged.salas = nuevoListadoSalas;
-    // // Actualizo el estado
-    // setUserLogged(newUserLogged);
+    console.log('userLogged, ', userLogged);
 
     const handleDelete = async () => {
         try {

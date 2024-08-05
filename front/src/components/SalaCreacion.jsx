@@ -2,13 +2,17 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
+import { useNavigate } from 'react-router-dom';
 
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
 import registerSalaService from '../services/registerSalaService.js';
 
 const SalaCreacion = () => {
-    const { currentUser, token } = useContext(AuthContext);
+    const { userLogged, setUserLogged, currentUser, token } =
+        useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
         nombre: '',
@@ -89,8 +93,18 @@ const SalaCreacion = () => {
 
         try {
             const response = await registerSalaService({ token, formData });
+
             setResp(response);
+            if (response.status === 'ok') {
+                const nuevaSala = response.data.sala;
+                const updatedSalas = [...userLogged.salas, nuevaSala];
+                const updatedUser = { ...userLogged, salas: updatedSalas };
+
+                setUserLogged(updatedUser);
+            }
+
             toast.success('Has creado tu nueva sala con éxito');
+            navigate('/users');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
