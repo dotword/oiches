@@ -64,9 +64,9 @@ const Grupos = () => {
                 ))}
             </div>
             <div className='flex gap-6 justify-center my-16'>
-                <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous ⬅</button>
+                <button disabled={page === 1} onClick={() => setPage(page - 1)}>Anterior ⬅</button>
                 <p>{page}/{totalPages}</p>
-                <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Next ➡</button>
+                <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Siguiente ➡</button>
             </div>
             <Footer />
         </motion.div>
