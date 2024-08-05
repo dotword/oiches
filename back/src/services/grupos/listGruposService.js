@@ -117,7 +117,6 @@ export async function listGruposService(filters) {
     const result = rows.map((row) => ({
         ...row,
         fotos: groupedPhotos[row.id] || [],
-    }));
-
+    }));   
     return { rows: result, total };
 }

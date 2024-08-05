@@ -22,6 +22,7 @@ const Grupos = () => {
 
             try {
                 const data = await FetchGruposService(filters, page, pageSize);
+                console.log(data);
                 setFilteredGrupos(data.rows);
                 setTotal(data.total);
             } catch (err) {
