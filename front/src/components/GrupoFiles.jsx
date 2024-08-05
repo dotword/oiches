@@ -280,7 +280,7 @@ export const DeleteGrupoPhotos = () => {
             )}
         </div>
     );
-    console.log('photos ', photos);
+
     return currentUser && photos.length > 0 ? (
         <div className="mb-6 flex flex-wrap gap-x-8">
             <p className="font-semibold mb-4 w-full">Borrar fotos:</p>

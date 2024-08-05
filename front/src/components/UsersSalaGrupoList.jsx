@@ -120,21 +120,21 @@ const UsersSalaGrupoList = () => {
                                 {grupos.map((grupo) => (
                                     <li
                                         key={grupo.id}
-                                        className="flex items-center justify-center gap-2 mb-2"
+                                        className="flex items-center justify-center gap-4 mb-2"
                                     >
                                         <IoIosArrowForward />{' '}
                                         <a href={`/grupos/${grupo.id}/edit`}>
                                             {grupo.nombre}
                                         </a>
                                         <a href={`/grupos/${grupo.id}/edit`}>
-                                            <FaPencil className="text-sm text-purpleOiches" />
+                                            <FaPencil className="text-lg text-purpleOiches" />
                                         </a>
                                         <button
                                             onClick={() =>
                                                 openModal(grupo.id, 'grupo')
                                             }
                                         >
-                                            <FaTrashAlt className="text-sm text-purpleOiches" />
+                                            <FaTrashAlt className="text-lg text-purpleOiches" />
                                         </button>
                                     </li>
                                 ))}
