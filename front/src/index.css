@@ -125,7 +125,6 @@
 }
 
 .active:not(.btn-account) {
-    color: #ffb500;
     font-weight: 600;
 }
 .slick-prev:before,

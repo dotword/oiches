@@ -1,9 +1,9 @@
 import { deleteFiles } from '../../utils/uploadFiles.js';
 import deleteGrupoPhotoService from '../../services/grupos/deleteGrupoPhotoService.js';
-import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
-import uploadFiles from '../../utils/uploadFiles.js';
 import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
+import uploadFiles from '../../utils/uploadFiles.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import addPdfSchema from '../../schemas/grupos/addPdfSchema.js';
 import addGrupoPhotoSchema from '../../schemas/grupos/addGrupoPhotoSchema.js';

@@ -19,10 +19,12 @@ import {
     listGruposController,
     deleteGrupoMediaController,
     addGrupoMediaController,
+    addGrupoGeneroController,
+    deleteGrupoGeneroController,
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
-    deleteGrupoController
+    deleteGrupoController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -56,7 +58,13 @@ router.delete(
     deleteGrupoMediaController
 );
 
-router.delete('/grupos/delete/:grupoId',authUser,userExists,canEditGrupo,deleteGrupoController)
+router.delete(
+    '/grupos/delete/:grupoId',
+    authUser,
+    userExists,
+    canEditGrupo,
+    deleteGrupoController
+);
 // Añadir media a un grupo
 router.post(
     '/grupos/media/:idGrupo',
@@ -64,6 +72,24 @@ router.post(
     userExists,
     canEditGrupo,
     addGrupoMediaController
+);
+
+// Añadir generos a un grupo
+router.post(
+    '/grupos/generos/:idGrupo',
+    authUser,
+    userExists,
+    canEditGrupo,
+    addGrupoGeneroController
+);
+
+// Borrar generos de un grupo
+router.delete(
+    '/grupos/generos/:idGrupo',
+    authUser,
+    userExists,
+    canEditGrupo,
+    deleteGrupoGeneroController
 );
 
 // Añadir rider a un grupo

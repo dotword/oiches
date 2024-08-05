@@ -19,7 +19,8 @@ import {
     deletePhotoSalaController,
     insertPhotosSalaController,
     deleteSalaController,
-    
+    addSalaGeneroController,
+    deleteSalaGeneroController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -43,6 +44,24 @@ router.put(
     editSalaController
 );
 
+// Añadir generos a una sala
+router.post(
+    '/salas/generos/:idSala',
+    authUser,
+    userExists,
+    canEditSala,
+    addSalaGeneroController
+);
+
+// Borrar generos de una sala
+router.delete(
+    '/salas/generos/:idSala',
+    authUser,
+    userExists,
+    canEditSala,
+    deleteSalaGeneroController
+);
+
 // Añadir fotos a una sala
 router.post(
     '/salas/photos/:idSala',
@@ -53,7 +72,7 @@ router.post(
     insertPhotosSalaController
 );
 
-router.delete('/salas/delete/:idSala',authUser,deleteSalaController)
+router.delete('/salas/delete/:idSala', authUser, deleteSalaController);
 // Borrar foto de una sala
 router.delete(
     '/salas/:photoName/:deletePhoto',

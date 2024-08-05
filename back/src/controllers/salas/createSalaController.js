@@ -3,6 +3,7 @@ import createSalaSchema from '../../schemas/salas/createSalaSchema.js';
 import { uploadFiles } from '../../utils/uploadFiles.js';
 import insertSalaService from '../../services/salas/insertSalaService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
+import { insertSalaGenerosService } from '../../services/salas/insertSalaGenerosService.js';
 
 const createSalaController = async (req, res, next) => {
     try {
@@ -29,7 +30,6 @@ const createSalaController = async (req, res, next) => {
         const salaId = await insertSalaService(
             nombre,
             provincia,
-            generos,
             capacidad,
             descripcion,
             precios,
@@ -40,6 +40,17 @@ const createSalaController = async (req, res, next) => {
             horaReservasEnd,
             req.user.id
         );
+
+        // Insertamos los géneros
+        const generosList = [];
+        const generosArray = Array.isArray(generos)
+            ? generos
+            : generos.split(',');
+
+        for (const genero of generosArray) {
+            await insertSalaGenerosService(genero.trim(), salaId);
+            generosList.push({ generoId: genero.trim() });
+        }
 
         // Array donde pushearemos las fotos (si hay).
         const photos = [];
@@ -66,7 +77,7 @@ const createSalaController = async (req, res, next) => {
                 sala: {
                     id: salaId,
                     usuario_id: req.user.id,
-                    generos: req.body.generos,
+                    generos: generosList,
                     nombre,
                     provincia,
                     capacidad,

@@ -6,7 +6,11 @@ import Toastify from './Toastify.jsx';
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
 import getGrupoByIdService from '../services/getGrupoByIdService.js';
-import EditGrupoService from '../services/EditGrupoService.js';
+import {
+    EditGrupoService,
+    DeleteGrupoGenerosService,
+    addGeneroGrupoService,
+} from '../services/EditGrupoService.js';
 import { DeleteGrupoMedia, AddGrupoMedia } from './GrupoMedia.jsx';
 import {
     DeleteGrupoFiles,
@@ -19,15 +23,19 @@ const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
-    const [nombre, setNombre] = useState('');
+    const [grupo, setGrupo] = useState({
+        nombre: '',
+        provincia: '',
+        honorarios: 0,
+        biografia: '',
+        activeGenres: [],
+        hasRider: 0,
+        hasPhotos: 0,
+    });
     const [provinces, setProvinces] = useState([]);
-    const [provincia, setProvincia] = useState('');
     const [genres, setGenres] = useState([]);
-    const [generos, setGeneros] = useState('');
-    const [honorarios, setHonorarios] = useState(0);
-    const [biografia, setBiografia] = useState('');
-    const [hasRider, setHasRider] = useState('');
-    const [hasPhotos, setHasPhotos] = useState('');
+    const [generos, setGeneros] = useState([]);
+    const [deleteGenres, setDeleteGenres] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -39,13 +47,15 @@ const GrupoEdit = () => {
         const fetchGrupo = async () => {
             try {
                 const { data } = await getGrupoByIdService(idGrupo);
-                setNombre(data.grupo.nombre || '');
-                setGeneros(data.grupo.generoId || '');
-                setProvincia(data.grupo.provinciaId || '');
-                setHonorarios(data.grupo.honorarios || '');
-                setBiografia(data.grupo.biografia || '');
-                setHasRider(data.grupo.pdf.length);
-                setHasPhotos(data.grupo.fotos.length);
+                setGrupo({
+                    nombre: data.grupo.nombre || '',
+                    provincia: data.grupo.provinciaId || '',
+                    honorarios: data.grupo.honorarios || 0,
+                    biografia: data.grupo.biografia || '',
+                    activeGenres: data.grupo.genero || [],
+                    hasRider: data.grupo.pdf.length,
+                    hasPhotos: data.grupo.fotos.length,
+                });
             } catch (error) {
                 setError(error.message);
                 toast.error(error.message);
@@ -54,16 +64,56 @@ const GrupoEdit = () => {
         fetchGrupo();
     }, [idGrupo]);
 
+    const handleDeleteGenreClick = (genreId) => {
+        setDeleteGenres((prevGenres) =>
+            prevGenres.includes(genreId)
+                ? prevGenres.filter((id) => id !== genreId)
+                : [...prevGenres, genreId]
+        );
+    };
+
+    const handleGenChange = (e) => {
+        const selectedGenres = Array.from(e.target.options)
+            .filter((option) => option.selected)
+            .map((option) => option.value);
+        setGeneros(selectedGenres);
+    };
+
+    const handleGenSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const dataForm = new FormData();
+            dataForm.append('newGenero', generos);
+            await addGeneroGrupoService(dataForm, idGrupo, token);
+            toast.success('Géneros añadidos');
+        } catch (err) {
+            toast.error(err.message);
+        }
+    };
+
+    const handleDelGenSubmit = async (e) => {
+        e.preventDefault();
+        if (deleteGenres.length === 0) {
+            toast.error('Selecciona al menos un género para eliminar');
+            return;
+        }
+        try {
+            await DeleteGrupoGenerosService(deleteGenres, idGrupo, token);
+
+            toast.success('Borraste los géneros seleccionados');
+        } catch (err) {
+            toast.error(err.message);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const dataForm = new FormData();
-
-            dataForm.append('nombre', nombre || '');
-            dataForm.append('provincia', provincia || '');
-            dataForm.append('generos', generos || '');
-            dataForm.append('honorarios', honorarios || 0);
-            dataForm.append('biografia', biografia || '');
+            dataForm.append('nombre', grupo.nombre || '');
+            dataForm.append('provincia', grupo.provincia || '');
+            dataForm.append('honorarios', grupo.honorarios || 0);
+            dataForm.append('biografia', grupo.biografia || '');
             await EditGrupoService({
                 token,
                 idGrupo,
@@ -78,11 +128,71 @@ const GrupoEdit = () => {
 
     return userLogged && userLogged.roles === 'grupo' ? (
         <>
+            <div className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl">
+                <div className="mb-6">
+                    <p className="font-semibold my-2">
+                        Selecciona los géneros que quieres eliminar:
+                    </p>
+                    <form onSubmit={handleDelGenSubmit}>
+                        <ul className="flex flex-wrap gap-2 my-4">
+                            {grupo.activeGenres.map((gen) => (
+                                <li key={gen.generoId}>
+                                    <span
+                                        className="bg-yellowOiches px-3 py-1 rounded-3xl"
+                                        onClick={() =>
+                                            handleDeleteGenreClick(gen.generoId)
+                                        }
+                                        style={{
+                                            textDecoration:
+                                                deleteGenres.includes(
+                                                    gen.generoId
+                                                )
+                                                    ? 'line-through'
+                                                    : 'none',
+                                        }}
+                                    >
+                                        {gen.generoName}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                        <input
+                            type="submit"
+                            value="Eliminar seleccionados"
+                            className="btn-account"
+                        />
+                    </form>
+                </div>
+                <div className="mb-6">
+                    <p className="font-semibold my-2">Añadir géneros:</p>
+                    <form onSubmit={handleGenSubmit} className="max-w-60">
+                        <select
+                            name="generos"
+                            multiple
+                            className="form-select h-auto mb-3"
+                            onChange={handleGenChange}
+                        >
+                            <option value="">Todos</option>
+                            {genres.map((genre) => (
+                                <option key={genre.id} value={genre.id}>
+                                    {genre.nombre}
+                                </option>
+                            ))}
+                        </select>
+                        <input
+                            type="submit"
+                            value="Añadir géneros"
+                            className="btn-account"
+                        />
+                    </form>
+                </div>
+            </div>
+
             <form
                 onSubmit={handleSubmit}
-                className="md:grid md:grid-cols-2 md:gap-x-8"
+                className="md:grid md:grid-cols-4 md:gap-x-8"
             >
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
                         Nombre del Grupo:
                     </label>
@@ -90,38 +200,25 @@ const GrupoEdit = () => {
                         type="text"
                         name="nombre"
                         placeholder="Nombre del grupo"
-                        value={nombre}
-                        onChange={(e) => setNombre(e.target.value)}
+                        value={grupo.nombre}
+                        onChange={(e) =>
+                            setGrupo({ ...grupo, nombre: e.target.value })
+                        }
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
-                    <label htmlFor="genre" className="font-semibold">
-                        Género:
-                    </label>
-                    <select
-                        name="generos"
-                        value={generos}
-                        className="form-select"
-                        onChange={(e) => setGeneros(e.target.value)}
-                    >
-                        <option value="">Todos</option>
-                        {genres.map((genre) => (
-                            <option key={genre.id} value={genre.id}>
-                                {genre.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-2">
-                    <label htmlFor="province" className="font-semibold">
+
+                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-4">
+                    <label htmlFor="provincia" className="font-semibold">
                         Provincia:
                     </label>
                     <select
                         name="provincia"
-                        value={provincia}
+                        value={grupo.provincia}
                         className="form-select"
-                        onChange={(e) => setProvincia(e.target.value)}
+                        onChange={(e) =>
+                            setGrupo({ ...grupo, provincia: e.target.value })
+                        }
                     >
                         <option value="">Selecciona</option>
                         {provinces.map((province) => (
@@ -131,7 +228,7 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-2 md:col-end-3">
+                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
                     <label htmlFor="honorarios" className="font-semibold">
                         Caché:
                     </label>
@@ -139,19 +236,23 @@ const GrupoEdit = () => {
                         type="number"
                         name="honorarios"
                         placeholder="Caché del grupo"
-                        value={honorarios}
-                        onChange={(e) => setHonorarios(e.target.value)}
+                        value={grupo.honorarios}
+                        onChange={(e) =>
+                            setGrupo({ ...grupo, honorarios: e.target.value })
+                        }
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
                     <label htmlFor="biografia" className="font-semibold">
                         Biografía:
                     </label>
                     <textarea
                         name="biografia"
-                        value={biografia}
-                        onChange={(e) => setBiografia(e.target.value)}
+                        value={grupo.biografia}
+                        onChange={(e) =>
+                            setGrupo({ ...grupo, biografia: e.target.value })
+                        }
                         className="form-textarea"
                     ></textarea>
                     <p className="mt-1 text-gray-500 text-sm">
@@ -166,14 +267,14 @@ const GrupoEdit = () => {
                         className="btn-account p-3 w-full"
                     />
                 </div>
-                <div>{error && <p>{error}</p>}</div>
+                {error && <div>{error}</div>}
             </form>
             <section className="mt-12">
                 <DeleteGrupoMedia idGrupo={idGrupo} />
                 <AddGrupoMedia idGrupo={idGrupo} />
             </section>
             <section className="mt-12">
-                {hasRider === 0 ? (
+                {grupo.hasRider === 0 ? (
                     <AddGrupoFiles idGrupo={idGrupo} />
                 ) : (
                     <DeleteGrupoFiles idGrupo={idGrupo} />
@@ -181,7 +282,7 @@ const GrupoEdit = () => {
             </section>
             <section className="mt-12">
                 <DeleteGrupoPhotos idGrupo={idGrupo} />
-                {hasPhotos < 4 ? <AddGrupoPhotos idGrupo={idGrupo} /> : ''}
+                {grupo.hasPhotos < 4 && <AddGrupoPhotos idGrupo={idGrupo} />}
             </section>
             <Toastify />
         </>

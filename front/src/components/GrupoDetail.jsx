@@ -14,10 +14,11 @@ const GrupoDetail = () => {
     const { idGrupo } = useParams();
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
+
     const {
         nombre,
         Provincia,
-        Genero,
+        genero,
         avatar,
         biografia,
         comentarios,
@@ -51,11 +52,22 @@ const GrupoDetail = () => {
                             <p className=" text-gray-400">{nombre}</p>
                         </span>
                     )}
-                    {Genero && (
+                    {genero && (
                         <span>
-                            Genero<p className=" text-gray-400">{Genero}</p>
+                            Género
+                            {genero.map((gen) => {
+                                return (
+                                    <div
+                                        key={gen.generoId}
+                                        className="text-gray-400"
+                                    >
+                                        {gen.generoName}
+                                    </div>
+                                );
+                            })}
                         </span>
                     )}
+
                     {currentUser && (
                         <span>
                             Contacto <p className=" text-gray-400">{email}</p>

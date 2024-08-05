@@ -3,14 +3,23 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import createEditGrupoSchema from '../../schemas/grupos/editGrupoSchema.js';
 import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
-import { uploadFiles } from '../../utils/uploadFiles.js';
-import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
+// import {
+//     insertGrupoGenerosService,
+//     deleteGrupoGenerosService,
+// } from '../../services/grupos/insertGrupoGenerosService.js';
 
 const editGrupoController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
 
-        const { nombre, provincia, generos, honorarios, biografia } = req.body;
+        const {
+            nombre,
+            provincia,
+            honorarios,
+            biografia,
+            // newGenero,
+            // deleteGenero,
+        } = req.body;
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
@@ -22,37 +31,43 @@ const editGrupoController = async (req, res, next) => {
             throw generateErrorsUtil('No se envió ninguna información', 400);
 
         // Obtenemos la información del grupo
-        const grupo = await selectGrupoByIdService(idGrupo);
+        await selectGrupoByIdService(idGrupo);
 
         // Actualizar solo los campos que se proporcionan
         const updatedFields = {};
 
         if (nombre !== undefined) updatedFields.nombre = nombre;
         if (provincia !== undefined) updatedFields.provincia = provincia;
-        if (generos !== undefined) updatedFields.generos = generos;
         if (honorarios !== undefined) updatedFields.honorarios = honorarios;
         if (biografia !== undefined) updatedFields.biografia = biografia;
 
         await editGrupoService(idGrupo, updatedFields);
 
-        // Subir archivo a grupo
-        // Si el grupo tiene más de 5 archivos lanzamos un error.
-        if (req.files !== null && grupo.photos.length > 4)
-            throw generateErrorsUtil(
-                'No se pueden subir más de 5 archivos al grupo',
-                409
-            );
+        // // Añadir nuevos géneros al grupo
+        // if (newGenero) {
+        //     const generosList = [];
+        //     const generosArray = Array.isArray(newGenero)
+        //         ? newGenero
+        //         : newGenero.split(',');
 
-        if (req.files !== null) {
-            // Recorremos las fotos.
-            for (const file of Object.values(req.files)) {
-                // Guardamos la foto en la carpeta uploads y obtenemos su nombre.
-                const photoName = await uploadFiles(file, 600);
+        //     for (const genero of generosArray) {
+        //         await insertGrupoGenerosService(genero.trim(), idGrupo);
+        //         generosList.push({ generoId: genero.trim() });
+        //     }
+        // }
 
-                // Guardamos la foto en la base de datos y obtenemos el id de la misma.
-                await insertGrupoPhotoService(photoName, idGrupo);
-            }
-        }
+        // Borrar géneros
+        // if (deleteGenero) {
+        //     const deleteGenerosList = [];
+        //     const generosArray = Array.isArray(deleteGenero)
+        //         ? deleteGenero
+        //         : deleteGenero.split(',');
+
+        //     for (const genero of generosArray) {
+        //         await deleteGrupoGenerosService(genero.trim(), idGrupo);
+        //         deleteGenerosList.push({ generoId: genero.trim() });
+        //     }
+        // }
 
         res.send({
             status: 'ok',

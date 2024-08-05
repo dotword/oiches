@@ -11,8 +11,6 @@ const selectGrupoByIdService = async (idGrupo) => {
                 G.nombre,
                 (SELECT provincia FROM provincias WHERE provincias.id = G.provincia) AS Provincia,
                 (SELECT id FROM provincias WHERE provincias.id = G.provincia) AS provinciaId,
-                (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = G.generos) AS Genero,
-                (SELECT id FROM generos_musicales WHERE generos_musicales.id = G.generos) AS generoId,
                 (SELECT email FROM usuarios WHERE usuarios.id = G.usuario_id) AS email,
                 (SELECT avatar FROM usuarios WHERE usuarios.id = G.usuario_id) AS avatar,
                 G.honorarios,
@@ -47,8 +45,20 @@ const selectGrupoByIdService = async (idGrupo) => {
         `,
         [idGrupo]
     );
-    // Agregamos el array de los media del grupo.
+    // Agregamos el array de los comentarios del grupo.
     entry[0].comentarios = comentarios;
+
+    // Obtenemos el array de los generos del grupo.
+    const [genero] = await pool.query(
+        `SELECT 
+            generoId,
+            (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = generos_grupos.generoId) AS generoName
+        FROM generos_grupos
+        WHERE grupoId = ?`,
+        [idGrupo]
+    );
+    // Agregamos el array de los generos del grupo.
+    entry[0].genero = genero;
 
     // Obtenemos el array de los media del grupo.
     const [media] = await pool.query(
@@ -104,6 +114,7 @@ const selectGrupoByIdService = async (idGrupo) => {
         photos,
         fotos,
         pdf,
+        genero,
         reservations,
     };
 };

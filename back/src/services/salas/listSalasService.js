@@ -11,13 +11,15 @@ export async function listSalasService(filters) {
         Salas.nombre, 
         Salas.createdAt,
         (SELECT provincia FROM provincias WHERE provincias.id = Salas.provincia) AS Provincia,
-        (SELECT nombre FROM generos_musicales WHERE generos_musicales.id = Salas.generos) AS Genero,
         (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
-        (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = Salas.id) AS media_votos
+        (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = Salas.id) AS media_votos,
+        (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.SalaId = Salas.id) AS generos,
+        GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
     FROM 
         Salas 
-    LEFT JOIN generos_musicales ON generos_musicales.id = Salas.generos
-    LEFT JOIN provincias ON provincias.id = Salas.provincia        
+    LEFT JOIN provincias ON provincias.id = Salas.provincia
+    JOIN generos_salas gs ON gs.salaId = Salas.id
+    JOIN generos_musicales gm ON gs.generoId = gm.id        
     WHERE 
         1=1
     `;
@@ -31,7 +33,7 @@ export async function listSalasService(filters) {
     }
 
     if (filters.genero) {
-        query += ' AND Salas.generos = ?';
+        query += ' AND gs.generoId = ?';
         queryParams.push(filters.genero);
     }
 
@@ -40,11 +42,18 @@ export async function listSalasService(filters) {
         queryParams.push(filters.provincia);
     }
 
+    query +=
+        ' GROUP BY Salas.id, Salas.nombre, Salas.usuario_id, provincias.provincia';
+
     // Ordenamiento por media de votos siempre
-   
+
     if (filters.order && filters.field) {
-        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre'; // Example of filtersing fields
-        const orderDirection = filters.order && filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        const orderField =
+            filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre'; // Example of filtersing fields
+        const orderDirection =
+            filters.order && filters.order.toUpperCase() === 'ASC'
+                ? 'ASC'
+                : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Default order by media votes descending
@@ -52,6 +61,6 @@ export async function listSalasService(filters) {
     }
 
     const [rows] = await pool.query(query, queryParams);
-  
+
     return rows;
 }

@@ -11,7 +11,7 @@ import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
-import {ConfirmationModal} from './ConfirmModal.jsx'; // Import without destructuring
+import { ConfirmationModal } from './ConfirmModal.jsx'; // Import without destructuring
 
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -32,8 +32,8 @@ const AuthUser = () => {
             const response = await fetch(`${VITE_API_URL_BASE}/users/delete`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `${token}`
-                }
+                    Authorization: `${token}`,
+                },
             });
 
             if (response.ok) {
@@ -131,7 +131,12 @@ const AuthUser = () => {
                                     <img
                                         src={
                                             userLogged.avatar
-                                                ? `${import.meta.env.VITE_API_URL_BASE}/uploads/${userLogged.avatar}`
+                                                ? `${
+                                                      import.meta.env
+                                                          .VITE_API_URL_BASE
+                                                  }/uploads/${
+                                                      userLogged.avatar
+                                                  }`
                                                 : userIcon
                                         }
                                         alt="avatar"
@@ -265,7 +270,7 @@ const AuthUser = () => {
                     </button>
                     <button
                         onClick={() => setModalOpen(true)}
-                        className='btn-account max-w-44 min-w-32 bg-red-600'
+                        className="btn-account max-w-44 min-w-32 bg-red-600"
                     >
                         Eliminar cuenta
                     </button>
@@ -279,7 +284,7 @@ const AuthUser = () => {
             {modalOpen && (
                 <ConfirmationModal
                     isOpen={modalOpen}
-                    text="¿Estás seguro que quieres eliminar tu cuenta? Se borrarán todos los datos asociados a tu cuenta: Grupos, salas, imágenes, votos, etc..."
+                    text="¿Estás seguro que quieres eliminar tu cuenta? Se borrarán todos los datos asociados a tu cuenta: grupos, salas, imágenes, votos, etc..."
                     onConfirm={handleConfirm}
                     onCancel={() => setModalOpen(false)}
                 />

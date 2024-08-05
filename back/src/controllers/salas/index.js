@@ -7,6 +7,10 @@ import deletePhotoSalaController from './deletePhotoSalaController.js';
 import insertPhotosSalaController from './insertPhotosSalasController.js';
 import getSalaVotosController from '../grupos/getSalaVotosController.js';
 import { deleteSalaController } from './deleteSalaController.js';
+import {
+    addSalaGeneroController,
+    deleteSalaGeneroController,
+} from './salaGeneroController.js';
 
 export {
     getSalaDetailController,
@@ -17,5 +21,7 @@ export {
     deletePhotoSalaController,
     insertPhotosSalaController,
     getSalaVotosController,
-    deleteSalaController
+    deleteSalaController,
+    addSalaGeneroController,
+    deleteSalaGeneroController,
 };

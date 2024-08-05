@@ -1,22 +1,23 @@
-import { log } from 'console';
 import getPool from '../../database/getPool.js';
 import path from 'path';
 
 export async function listGruposService(filters) {
     const pool = await getPool();
-console.log(filters);
+
     let query = `
     SELECT 
         g.id, 
         g.nombre, 
         g.usuario_id,
         p.provincia AS provincia_nombre,
-        gm.nombre AS genero_nombre,
         COALESCE(SUM(v.voto), 0) AS votos,
-        (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos
+        (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos,
+        (SELECT GROUP_CONCAT(generoId) FROM generos_grupos WHERE generos_grupos.grupoId = g.id) AS generos,
+        GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
     FROM grupos g
     JOIN provincias p ON g.provincia = p.id
-    JOIN generos_musicales gm ON g.generos = gm.id
+    JOIN generos_grupos gg ON gg.grupoId = g.id
+    JOIN generos_musicales gm ON gg.generoId = gm.id
     LEFT JOIN grupo_fotos gf ON g.id = gf.grupoId
     LEFT JOIN votos_grupos v ON g.id = v.grupoVotado
     WHERE 1=1
@@ -35,16 +36,20 @@ console.log(filters);
     }
 
     if (filters.generos) {
-        query += ' AND gm.id = ?'; // Filtramos por ID de género
+        query += ' AND gg.generoId = ?'; // Filtramos por ID de género
         queryParams.push(filters.generos);
     }
 
-    query += ' GROUP BY g.id, g.nombre, g.usuario_id, p.provincia, gm.nombre';
+    query += ' GROUP BY g.id, g.nombre, g.usuario_id, p.provincia';
 
     // Ordenamiento dinámico basado en el campo y dirección proporcionados
     if (filters.order && filters.field) {
-        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'g.nombre'; // Example of sorting fields
-        const orderDirection = filters.order && filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        const orderField =
+            filters.field === 'media_votos' ? 'media_votos' : 'g.nombre'; // Example of sorting fields
+        const orderDirection =
+            filters.order && filters.order.toUpperCase() === 'ASC'
+                ? 'ASC'
+                : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Ordenamiento fijo por defecto
@@ -78,6 +83,6 @@ console.log(filters);
         ...row,
         fotos: groupedPhotos[row.id] || [],
     }));
-console.log(rows);
+
     return result;
 }

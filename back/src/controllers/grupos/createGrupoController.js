@@ -4,6 +4,7 @@ import { uploadFiles } from '../../utils/uploadFiles.js';
 import insertGrupoService from '../../services/grupos/insertGrupoService.js';
 import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
 import { insertGrupoMediaService } from '../../services/grupos/insertGrupoMediaService.js';
+import { insertGrupoGenerosService } from '../../services/grupos/insertGrupoGenerosService.js';
 
 const createGrupoController = async (req, res, next) => {
     try {
@@ -30,12 +31,23 @@ const createGrupoController = async (req, res, next) => {
         const grupoId = await insertGrupoService(
             nombre,
             provincia,
-            generos,
             honorarios,
             biografia,
             req.user.id
         );
 
+        // Insertamos los géneros
+        const generosList = [];
+        const generosArray = Array.isArray(generos)
+            ? generos
+            : generos.split(',');
+
+        for (const genero of generosArray) {
+            await insertGrupoGenerosService(genero.trim(), grupoId);
+            generosList.push({ generoId: genero.trim() });
+        }
+
+        // Insertamos los videos
         const mediaUrls = [];
         for (const media of medias) {
             await insertGrupoMediaService(media, grupoId);
@@ -67,7 +79,7 @@ const createGrupoController = async (req, res, next) => {
                 grupo: {
                     id: grupoId,
                     usuario_id: req.user.id,
-                    generos: req.body.generos,
+                    generos: generosList,
                     nombre,
                     provincia,
                     honorarios,

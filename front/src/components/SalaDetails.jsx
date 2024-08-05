@@ -53,7 +53,17 @@ const SalaDetail = () => {
                     </span>
                     {genero && (
                         <span>
-                            Genero<p className=" text-gray-400">{genero}</p>
+                            Género
+                            {genero.map((gen) => {
+                                return (
+                                    <div
+                                        key={gen.generoId}
+                                        className="text-gray-400"
+                                    >
+                                        {gen.generoName}
+                                    </div>
+                                );
+                            })}
                         </span>
                     )}
 

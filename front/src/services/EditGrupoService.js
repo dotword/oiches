@@ -1,4 +1,4 @@
-const EditGrupoService = async ({ token, idGrupo, dataForm }) => {
+export const EditGrupoService = async ({ token, idGrupo, dataForm }) => {
     const url = `${import.meta.env.VITE_API_URL_BASE}/grupos/${idGrupo}/edit`;
     const response = await fetch(url, {
         method: 'PUT',
@@ -15,4 +15,48 @@ const EditGrupoService = async ({ token, idGrupo, dataForm }) => {
     return json;
 };
 
-export default EditGrupoService;
+export const addGeneroGrupoService = async (dataForm, idGrupo, token) => {
+    // /grupos/generos/:idGrupo
+    const url = `${
+        import.meta.env.VITE_API_URL_BASE
+    }/grupos/generos/${idGrupo}`;
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            authorization: token,
+        },
+        body: dataForm,
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) throw new Error(json.message);
+
+    return json;
+};
+
+export const DeleteGrupoGenerosService = async (
+    deleteGenres,
+    idGrupo,
+    token
+) => {
+    const url = `${
+        import.meta.env.VITE_API_URL_BASE
+    }/grupos/generos/${idGrupo}`;
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+        },
+        body: JSON.stringify({ genreDelete: deleteGenres }),
+    });
+
+    if (!response.ok) throw new Error(json.message);
+
+    const json = await response.json();
+
+    return json;
+};
