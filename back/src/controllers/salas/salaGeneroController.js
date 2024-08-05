@@ -64,9 +64,13 @@ export const addSalaGeneroController = async (req, res, next) => {
             }
         }
 
+        // Hacer una query para sacar los generos actuales
+        let newGeneros = [];
+
         res.send({
             status: 'ok',
             message: 'Géneros añadidos',
+            data: newGeneros,
         });
     } catch (error) {
         next(error);
