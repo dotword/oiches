@@ -28,8 +28,6 @@ const AuthUser = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
 
-    console.log('userLogged, ', userLogged);
-
     const handleDelete = async () => {
         try {
             const response = await fetch(`${VITE_API_URL_BASE}/users/delete`, {
