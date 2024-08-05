@@ -12,12 +12,10 @@ const Grupos = () => {
     const [pageSize, setPageSize] = useState(8);
     const [total, setTotal] = useState(null);
     const [filters, setFilters] = useState({});
-    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchGrupos = async () => {
-            setLoading(true);
             setError(null);
 
             try {
@@ -27,9 +25,7 @@ const Grupos = () => {
                 setTotal(data.total);
             } catch (err) {
                 setError('No se pudo cargar la información de los grupos.');
-            } finally {
-                setLoading(false);
-            }
+            } 
         };
 
         fetchGrupos();
@@ -60,9 +56,8 @@ const Grupos = () => {
                 <GrupoFilter onFilterChange={handleFilterChange} />
             </div>
             <div className="grupo-list-container">
-                {loading && <p>Cargando...</p>}
-                {error && <p>{error}</p>}
-                {!loading && !error && (filteredGrupos.length ? (
+               
+                {!error && (filteredGrupos.length ? (
                     <GrupoList grupos={filteredGrupos} />
                 ) : (
                     <p>No se encontraron grupos</p>
