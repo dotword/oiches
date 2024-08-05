@@ -49,8 +49,6 @@ const SalaEdit = () => {
             try {
                 const { data } = await getSalaService(idSala);
 
-                console.log(data);
-
                 setSala({
                     nombre: data.sala.nombre || '',
                     direccion: data.sala.direccion || '',
