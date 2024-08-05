@@ -36,7 +36,7 @@ const Home = () => {
             try {
                 const response = await fetch(`${VITE_API_URL_BASE}/grupos`);
                 const result = await response.json();
-                setGrupos(Array.isArray(result) ? result : []);
+                setGrupos(Array.isArray(result.rows) ? result.rows : []);
             } catch (error) {
                 console.error('Error fetching grupos:', error);
                 setGrupos([]);

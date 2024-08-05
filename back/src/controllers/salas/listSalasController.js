@@ -15,7 +15,6 @@ const listSalasController = async (req, res, next) => {
      
 
         const salas = await listSalasService(filters);
-        console.log(salas);
         res.status(200).send(salas);
     } catch (error) {
         next(error);

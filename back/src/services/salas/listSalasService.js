@@ -61,9 +61,6 @@ export async function listSalasService(filters) {
     query += ` LIMIT ? OFFSET ?`;
     queryParams.push(pageSize, offset);
 
-    console.log('Query:', query);
-    console.log('Query Params:', queryParams);
-
     // Ejecutar consulta para obtener las salas
     const [rows] = await pool.query(query, queryParams);
 
@@ -92,10 +89,9 @@ export async function listSalasService(filters) {
         countQuery += ' AND Salas.provincia = ?';
     }
 
-    console.log('Count Query:', countQuery);
-    console.log('Count Query Params:', queryParams.slice(0, -2)); // Remove LIMIT and OFFSET parameters
 
-    const [[countResult]] = await pool.query(countQuery, queryParams.slice(0, -2)); // Use the same params but remove LIMIT and OFFSET
+
+    const [[countResult]] = await pool.query(countQuery, queryParams.slice(0, -2)); 
 
     return {
         rows,
