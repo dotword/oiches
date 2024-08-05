@@ -26,6 +26,7 @@ export const deleteGrupoGenerosService = async (genreDelete, idGrupo) => {
 
     // Convertimos el array de géneros a una lista adecuada para la cláusula IN
     const generosList = genreDelete.map((g) => `'${g}'`).join(', ');
+
     // Eliminamos el género
     const query = `
     DELETE FROM generos_grupos
