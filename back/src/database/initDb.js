@@ -65,7 +65,6 @@ const main = async () => {
             horaReservasStart VARCHAR(255) NOT NULL,
             horaReservasEnd VARCHAR(255) NOT NULL,
             FOREIGN KEY(provincia) REFERENCES Provincias(id),
-            FOREIGN KEY(generos) REFERENCES generos_musicales(id),
             FOREIGN KEY(usuario_id) REFERENCES Usuarios(id),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -95,7 +94,6 @@ const main = async () => {
                 usuario_id CHAR(36) NOT NULL,
                 FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
                 FOREIGN KEY(provincia) REFERENCES Provincias(id),
-                FOREIGN KEY(generos) REFERENCES generos_musicales(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deletedAt DATETIME NULL
