@@ -3,6 +3,7 @@ import getPool from '../../database/getPool.js';
 export async function listSalasService(filters) {
     const pool = await getPool();
 
+    // Consulta para obtener las salas con paginación
     let query = `
     SELECT 
         Salas.id, 
@@ -17,8 +18,8 @@ export async function listSalasService(filters) {
     FROM 
         Salas 
     LEFT JOIN provincias ON provincias.id = Salas.provincia
-    JOIN generos_salas gs ON gs.salaId = Salas.id
-    JOIN generos_musicales gm ON gs.generoId = gm.id        
+    LEFT JOIN generos_salas gs ON gs.salaId = Salas.id
+    LEFT JOIN generos_musicales gm ON gs.generoId = gm.id        
     WHERE 
         1=1
     `;
@@ -41,25 +42,63 @@ export async function listSalasService(filters) {
         queryParams.push(filters.provincia);
     }
 
-    query +=
-        ' GROUP BY Salas.id, Salas.nombre, Salas.usuario_id, provincias.provincia';
+    query += ' GROUP BY Salas.id';
 
     // Ordenamiento por media de votos siempre
-
     if (filters.order && filters.field) {
-        const orderField =
-            filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre'; // Example of filtersing fields
-        const orderDirection =
-            filters.order && filters.order.toUpperCase() === 'ASC'
-                ? 'ASC'
-                : 'DESC';
+        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
+        const orderDirection = filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Default order by media votes descending
         query += ' ORDER BY media_votos DESC';
     }
 
+    // Agregar paginación
+    const page = filters.page ? parseInt(filters.page, 10) : 1;
+    const pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
+    const offset = (page - 1) * pageSize;
+    query += ` LIMIT ? OFFSET ?`;
+    queryParams.push(pageSize, offset);
+
+    console.log('Query:', query);
+    console.log('Query Params:', queryParams);
+
+    // Ejecutar consulta para obtener las salas
     const [rows] = await pool.query(query, queryParams);
 
-    return rows;
+    // Consulta para obtener el conteo total de salas
+    let countQuery = `
+    SELECT COUNT(*) AS total
+    FROM 
+        Salas 
+    LEFT JOIN provincias ON provincias.id = Salas.provincia
+    LEFT JOIN generos_salas gs ON gs.salaId = Salas.id
+    LEFT JOIN generos_musicales gm ON gs.generoId = gm.id        
+    WHERE 
+        1=1
+    `;
+
+    // Aplicar los mismos filtros a la consulta de conteo
+    if (filters.nombre) {
+        countQuery += ' AND Salas.nombre LIKE ?';
+    }
+
+    if (filters.genero) {
+        countQuery += ' AND gs.generoId = ?';
+    }
+
+    if (filters.provincia) {
+        countQuery += ' AND Salas.provincia = ?';
+    }
+
+    console.log('Count Query:', countQuery);
+    console.log('Count Query Params:', queryParams.slice(0, -2)); // Remove LIMIT and OFFSET parameters
+
+    const [[countResult]] = await pool.query(countQuery, queryParams.slice(0, -2)); // Use the same params but remove LIMIT and OFFSET
+
+    return {
+        rows,
+        total: countResult.total,
+    };
 }

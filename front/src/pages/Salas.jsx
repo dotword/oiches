@@ -7,22 +7,29 @@ import HeaderHero from '../components/HeaderHero.jsx';
 import Footer from '../components/Footer';
 
 const Salas = () => {
-    // const [salas, setSalas] = useState([]);
+    const [salas, setSalas] = useState([]);
+    const [page, setPage] = useState(1);
+    const [total,setTotal] = useState(null)
+    const [pageSize, setPageSize] = useState(8);
+    const [filters, setFilters] = useState({});
     const [filteredSalas, setFilteredSalas] = useState([]);
 
     useEffect(() => {
         const fetchSalas = async () => {
-            const initialSalas = await FetchSalasService();
-            // setSalas(initialSalas);
-            setFilteredSalas(initialSalas);
+            const initialSalas = await FetchSalasService(filters, page, pageSize);
+            setTotal(initialSalas.total)
+            setFilteredSalas( initialSalas.rows);
         };
 
         fetchSalas();
-    }, []);
+    }, [page, filters, pageSize]);
 
-    const handleFilterChange = async (filters) => {
-        const filtered = await FetchSalasService(filters);
-        setFilteredSalas(filtered);
+    const handleFilterChange = async (newFilters) => {
+        setFilters(newFilters);
+        setPage(1); // Reinicia la paginación cuando cambian los filtros
+        const filtered = await FetchSalasService(newFilters, 1, pageSize);
+        setTotal(filtered.total)
+        setFilteredSalas(filtered.rows);
     };
 
     return (
@@ -49,6 +56,11 @@ const Salas = () => {
                 ) : (
                     <p>No se encontraron salas</p>
                 )}
+            </div>
+            <div className='flex gap-6 justify-center my-16'>
+                <button hidden={page == 1} className='pointer' onClick={() => setPage(page > 1 ? page - 1 : 1)}>Previous ⬅</button>
+                <p>{page}/<span>{total / pageSize}</span></p>
+                <button hidden={page == total / pageSize} onClick={() => setPage(page + 1)}>Next ➡</button>
             </div>
             <Footer />
         </motion.div>
