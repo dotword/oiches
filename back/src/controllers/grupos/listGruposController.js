@@ -7,10 +7,8 @@ const listGruposController = async (req, res, next) => {
             provincia: req.query.provincia || '',
             generos: req.query.generos || '',
             field: req.query.sortField || 'media_votos', // Default sort field
-            order: req.query.order || 'DESC', 
+            order: req.query.order || 'DESC',
         };
-
-
 
         const grupos = await listGruposService(filters);
         res.status(200).send(grupos);

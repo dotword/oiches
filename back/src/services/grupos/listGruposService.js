@@ -9,11 +9,12 @@ export async function listGruposService(filters) {
         g.id, 
         g.nombre, 
         g.usuario_id,
+        g.createdAt,
         p.provincia AS provincia_nombre,
         COALESCE(SUM(v.voto), 0) AS votos,
         (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos,
         (SELECT GROUP_CONCAT(generoId) FROM generos_grupos WHERE generos_grupos.grupoId = g.id) AS generos,
-        GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
+        GROUP_CONCAT(DISTINCT gm.nombre SEPARATOR ', ') AS generoNombres
     FROM grupos g
     JOIN provincias p ON g.provincia = p.id
     JOIN generos_grupos gg ON gg.grupoId = g.id

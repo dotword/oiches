@@ -2,7 +2,6 @@ import getPool from '../../database/getPool.js';
 
 export async function listSalasService(filters) {
     const pool = await getPool();
-    console.log(filters);
 
     let query = `
     SELECT 
