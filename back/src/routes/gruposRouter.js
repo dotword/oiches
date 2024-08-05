@@ -59,7 +59,7 @@ router.delete(
 );
 
 router.delete(
-    '/grupos/delete/:grupoId',
+    '/grupos/delete/:idGrupo',
     authUser,
     userExists,
     canEditGrupo,
