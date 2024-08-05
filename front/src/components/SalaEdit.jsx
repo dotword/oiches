@@ -49,8 +49,6 @@ const SalaEdit = () => {
             try {
                 const { data } = await getSalaService(idSala);
 
-                console.log(data);
-
                 setSala({
                     nombre: data.sala.nombre || '',
                     direccion: data.sala.direccion || '',
@@ -380,7 +378,7 @@ const SalaEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="my-12 max-w-80">
+                <div className="my-12 max-w-80 md:col-start-1 md:col-end-3">
                     <input
                         type="submit"
                         value="Modificar Sala"
@@ -391,7 +389,7 @@ const SalaEdit = () => {
             </form>
 
             <div className="pt-4 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center md:col-start-3 md:col-end-4">
-                <p className="block font-medium mb-8 md:w-full text-center">
+                <p className="block font-semibold mb-2 md:w-full">
                     Fotos de la sala
                 </p>
                 <DeleteSalaPhotos />

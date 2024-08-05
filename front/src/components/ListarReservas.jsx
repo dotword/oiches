@@ -73,6 +73,7 @@ export const ListarReservas = () => {
     };
 
     useEffect(() => {
+        // FIXME
         const fetchData = async () => {
             if (currentUser) {
                 try {

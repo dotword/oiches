@@ -128,7 +128,7 @@ const GrupoEdit = () => {
 
     return userLogged && userLogged.roles === 'grupo' ? (
         <>
-            <div className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl">
+            <section className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl md:col-start-1 md:col-end-4 md:mb-12">
                 <div className="mb-6">
                     <p className="font-semibold my-2">
                         Selecciona los géneros que quieres eliminar:
@@ -186,11 +186,11 @@ const GrupoEdit = () => {
                         />
                     </form>
                 </div>
-            </div>
+            </section>
 
             <form
                 onSubmit={handleSubmit}
-                className="md:grid md:grid-cols-4 md:gap-x-8"
+                className="md:grid md:grid-cols-4 md:gap-x-8 md:col-start-1 md:col-end-3"
             >
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
@@ -217,7 +217,10 @@ const GrupoEdit = () => {
                         value={grupo.provincia}
                         className="form-select"
                         onChange={(e) =>
-                            setGrupo({ ...grupo, provincia: e.target.value })
+                            setGrupo({
+                                ...grupo,
+                                provincia: e.target.value,
+                            })
                         }
                     >
                         <option value="">Selecciona</option>
@@ -238,7 +241,10 @@ const GrupoEdit = () => {
                         placeholder="Caché del grupo"
                         value={grupo.honorarios}
                         onChange={(e) =>
-                            setGrupo({ ...grupo, honorarios: e.target.value })
+                            setGrupo({
+                                ...grupo,
+                                honorarios: e.target.value,
+                            })
                         }
                         className="form-input"
                     />
@@ -251,7 +257,10 @@ const GrupoEdit = () => {
                         name="biografia"
                         value={grupo.biografia}
                         onChange={(e) =>
-                            setGrupo({ ...grupo, biografia: e.target.value })
+                            setGrupo({
+                                ...grupo,
+                                biografia: e.target.value,
+                            })
                         }
                         className="form-textarea"
                     ></textarea>
@@ -260,7 +269,7 @@ const GrupoEdit = () => {
                     </p>
                 </div>
 
-                <div className="mt-4 max-w-80">
+                <div className="mt-4 max-w-80 md:col-start-1 md:col-end-3">
                     <input
                         type="submit"
                         value="Modificar Grupo"
@@ -269,18 +278,19 @@ const GrupoEdit = () => {
                 </div>
                 {error && <div>{error}</div>}
             </form>
-            <section className="mt-12">
+
+            <section className="mt-12 md:col-start-1 md:col-end-3">
                 <DeleteGrupoMedia idGrupo={idGrupo} />
                 <AddGrupoMedia idGrupo={idGrupo} />
             </section>
-            <section className="mt-12">
+            <section className="mt-12 md:mt-0 md:col-start-3 md:col-end-4 md:row-start-2">
                 {grupo.hasRider === 0 ? (
                     <AddGrupoFiles idGrupo={idGrupo} />
                 ) : (
                     <DeleteGrupoFiles idGrupo={idGrupo} />
                 )}
             </section>
-            <section className="mt-12">
+            <section className="mt-12 d:col-start-3 md:col-end-4 md:mt-0">
                 <DeleteGrupoPhotos idGrupo={idGrupo} />
                 {grupo.hasPhotos < 4 && <AddGrupoPhotos idGrupo={idGrupo} />}
             </section>

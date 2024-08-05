@@ -1,3 +1,4 @@
+// FIX
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
@@ -14,7 +15,7 @@ import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx'; // Import without destructuring
 
 const AuthUser = () => {
-    const { userLogged, token } = useContext(AuthContext);
+    const { userLogged, setUserLogged, token } = useContext(AuthContext);
 
     const [userId, setUserId] = useState('');
     const [avatar, setAvatar] = useState('');
@@ -26,6 +27,15 @@ const AuthUser = () => {
     const [edit, setEdit] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
+
+    // pedir listado salas (fetch)
+    // let nuevoListadoSalas =
+    // actualizar las salas en el contexto
+    // let newUserLogged = { ...userLogged };
+    // // {name: "stefano", salas:[]}
+    // newUserLogged.salas = nuevoListadoSalas;
+    // // Actualizo el estado
+    // setUserLogged(newUserLogged);
 
     const handleDelete = async () => {
         try {
@@ -278,8 +288,8 @@ const AuthUser = () => {
             </div>
 
             <UsersSalaGrupoList />
+            {/* poner la fetch de las salas en este file, no en ListarReservas*/}
             <ListarReservas />
-
             <Toastify />
             {modalOpen && (
                 <ConfirmationModal

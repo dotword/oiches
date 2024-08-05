@@ -37,9 +37,9 @@ const AddSalaPhotos = (idSala) => {
 
     return currentUser ? (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="w-full">
                 <div className="sect-photo">
-                    <span className="border-photos">
+                    <span className="border-photos w-full">
                         {previewUrlA ? (
                             <img src={previewUrlA} alt="Vista previa" />
                         ) : (

@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 
 const UsersSalaGrupoList = () => {
+    // FIXME devolver funcion para cambia listado salas
     const { userLogged, token } = useAuth();
     const { VITE_API_URL_BASE } = import.meta.env;
     const [salas, setSalas] = useState(userLogged.salas || []);

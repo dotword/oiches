@@ -45,8 +45,8 @@ export const AddGrupoPhotos = () => {
         <>
             <form onSubmit={handleSubmit}>
                 <p className="font-semibold mb-2">Subir fotos</p>
-                <div className="sect-photo md:w-5/12">
-                    <span className="border-photos w-80">
+                <div className="sect-photo md:w-full">
+                    <span className="border-photos w-80 md:w-full">
                         {previewFoto ? (
                             <img src={previewFoto} alt="Vista previa" />
                         ) : (
@@ -116,7 +116,7 @@ export const AddGrupoFiles = () => {
         <form onSubmit={handleSubmit}>
             <p className="font-semibold mb-2">Sube el Rider (.pdf)</p>
             <div className="sect-photo">
-                <span className="border-photos w-80">
+                <span className="border-photos w-80 md:w-full">
                     {rider ? (
                         <span className="text-xs p-1 overflow-hidden">
                             {rider.name}
@@ -185,7 +185,7 @@ export const DeleteGrupoFiles = () => {
         <>
             <p className="font-semibold mb-2">Borra tu Rider:</p>
             <div className="sect-photo">
-                <span className="border-photos w-80">
+                <span className="border-photos w-80 md:w-full">
                     <embed
                         src={`${urlUploads}/${rider.name}`}
                         type="application/pdf"
@@ -251,7 +251,7 @@ export const DeleteGrupoPhotos = () => {
     };
 
     const renderPhoto = (photo) => (
-        <div key={photo.id} className="md:w-5/12 mb-6">
+        <div key={photo.id} className="mb-6 md:w-full">
             <div className="sect-photo">
                 <div className="border-photos w-full">
                     <img
@@ -280,8 +280,8 @@ export const DeleteGrupoPhotos = () => {
             )}
         </div>
     );
-
-    return currentUser ? (
+    console.log('photos ', photos);
+    return currentUser && photos.length > 0 ? (
         <div className="mb-6 flex flex-wrap gap-x-8">
             <p className="font-semibold mb-4 w-full">Borrar fotos:</p>
             {photos.map(renderPhoto)}
