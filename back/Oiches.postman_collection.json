@@ -308,6 +308,41 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "DeleteUser",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQyODcyMTJkLTU4NmQtNDg2NC04MGZjLWY4NDlhNDNmZGYzZCIsImlhdCI6MTcyMjk0OTQ4NiwiZXhwIjoxNzIzNTU0Mjg2fQ.fWPnoB1PzEMK48yQJ0lWK1-tD2aDn4hqC1XtaqA8uJQ",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"mail@das.es\",\r\n    \"password\":\"Golfinger07?\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/users/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"users",
+										"delete"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -401,11 +436,6 @@
 											"type": "text"
 										},
 										{
-											"key": "generos",
-											"value": "6",
-											"type": "text"
-										},
-										{
 											"key": "provincia",
 											"value": "15",
 											"type": "text"
@@ -423,7 +453,8 @@
 										{
 											"key": "photoA",
 											"type": "file",
-											"src": "/D:/Pictures/Fotos Ion 2018/20180520_114935.jpg"
+											"src": "/D:/Pictures/Fotos Ion 2018/20180520_114935.jpg",
+											"disabled": true
 										},
 										{
 											"key": "photoB",
@@ -442,6 +473,16 @@
 											"type": "file",
 											"src": [],
 											"disabled": true
+										},
+										{
+											"key": "generos",
+											"value": "6",
+											"type": "text"
+										},
+										{
+											"key": "generos",
+											"value": "13",
+											"type": "text"
 										}
 									]
 								},
@@ -466,7 +507,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/salas/c83476b3-3294-419e-8a7f-289b44b11b9a",
+									"raw": "http://localhost:3000/salas/386bbc67-ea92-49df-8991-075084052118",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -474,7 +515,7 @@
 									"port": "3000",
 									"path": [
 										"salas",
-										"c83476b3-3294-419e-8a7f-289b44b11b9a"
+										"386bbc67-ea92-49df-8991-075084052118"
 									]
 								}
 							},
@@ -521,12 +562,6 @@
 										{
 											"key": "equipamiento",
 											"value": "poca cosa",
-											"type": "text",
-											"disabled": true
-										},
-										{
-											"key": "generos",
-											"value": "3",
 											"type": "text",
 											"disabled": true
 										},
@@ -658,6 +693,134 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "addSalaGeneros",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwODhlNGVjLWMxMzUtNGVjNy1hZDViLWQ1ZjVlZTg1YjkzMyIsImlhdCI6MTcyMjk1MDAyOCwiZXhwIjoxNzIzNTU0ODI4fQ.GpzNYJdRI-LCq5NqtotlZaBlu5scsWycy_J8KD5Qc1Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "newGenero",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "newGenero",
+											"value": "12",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/generos/386bbc67-ea92-49df-8991-075084052118",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"generos",
+										"386bbc67-ea92-49df-8991-075084052118"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteSalaGeneros",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwODhlNGVjLWMxMzUtNGVjNy1hZDViLWQ1ZjVlZTg1YjkzMyIsImlhdCI6MTcyMjk1MDAyOCwiZXhwIjoxNzIzNTU0ODI4fQ.GpzNYJdRI-LCq5NqtotlZaBlu5scsWycy_J8KD5Qc1Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "genreDelete",
+											"value": "hol",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "genreDelete",
+											"value": "12",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/generos/386bbc67-ea92-49df-8991-075084052118",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"generos",
+										"386bbc67-ea92-49df-8991-075084052118"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "deleteSala",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEwODhlNGVjLWMxMzUtNGVjNy1hZDViLWQ1ZjVlZTg1YjkzMyIsImlhdCI6MTcyMjk1MDAyOCwiZXhwIjoxNzIzNTU0ODI4fQ.GpzNYJdRI-LCq5NqtotlZaBlu5scsWycy_J8KD5Qc1Q",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "genreDelete",
+											"value": "hol",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "genreDelete",
+											"value": "12",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/salas/delete/386bbc67-ea92-49df-8991-075084052118",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"salas",
+										"delete",
+										"386bbc67-ea92-49df-8991-075084052118"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -686,14 +849,15 @@
 										},
 										{
 											"key": "provincia",
-											"value": "4",
+											"value": "19",
 											"type": "text",
 											"disabled": true
 										},
 										{
 											"key": "generos",
 											"value": "7",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "honorarios",
@@ -703,14 +867,35 @@
 										},
 										{
 											"key": "biografia",
-											"value": "nada",
+											"value": "nada de nada",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "newGenero",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "newGenero",
+											"value": "16",
+											"type": "text"
+										},
+										{
+											"key": "deleteGenero",
+											"value": "5",
+											"type": "text"
+										},
+										{
+											"key": "deleteGenero",
+											"value": "14",
 											"type": "text",
 											"disabled": true
 										}
 									]
 								},
 								"url": {
-									"raw": "http://localhost:3000/grupos/133d954c-df69-4ef6-8ab8-dae0c3402bd0/edit",
+									"raw": "http://localhost:3000/grupos/c2f2aad9-eef0-484e-aef0-725f35729391/edit",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -718,7 +903,7 @@
 									"port": "3000",
 									"path": [
 										"grupos",
-										"133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+										"c2f2aad9-eef0-484e-aef0-725f35729391",
 										"edit"
 									]
 								}
@@ -732,7 +917,7 @@
 								"header": [
 									{
 										"key": "Authorization",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY2MDI0MiwiZXhwIjoxNzIzMjY1MDQyfQ.f0ZDDv6Xgvrkxc392lbCRpHqZ3DHOvKSEd_3udTqT7U",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImEzYzdlMTE5LTgwMTItNDBjOC1hZTdlLTgzOTNhNzE5ZDJkNCIsImlhdCI6MTcyMjY5OTEyMCwiZXhwIjoxNzIzMzAzOTIwfQ.Hlw9LKyZ8rO8vxxQMgIT1ru3xszYEKlUYwYLE0wOgt0",
 										"type": "text"
 									}
 								],
@@ -750,11 +935,6 @@
 											"type": "text"
 										},
 										{
-											"key": "generos",
-											"value": "3",
-											"type": "text"
-										},
-										{
 											"key": "honorarios",
 											"value": "100",
 											"type": "text"
@@ -762,12 +942,14 @@
 										{
 											"key": "biografia",
 											"value": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius lorem non ante porttitor ultrices. Integer mauris est, sagittis efficitur consequat sit amet, rhoncus non quam. Etiam risus justo, molestie nec laoreet lobortis, pulvinar non diam. Nullam id dui odio. Nulla quis laoreet sapien. In hac habitasse platea dictumst. In hac habitasse platea dictumst. Cras sed est lectus. Donec interdum eros quis gravida dictum. In velit quam, malesuada sed enim id, laoreet condimentum elit. Suspendisse urna felis, varius ac velit sed, iaculis interdum leo. Aenean eget justo et tellus interdum auctor vitae vitae felis. Integer ut facilisis quam, ut sagittis justo.\n\nSed commodo ornare sapien eu sollicitudin. Phasellus molestie pulvinar libero, nec laoreet enim egestas eu. Duis vitae elementum nisl. Curabitur tempor maximus dolor, eu viverra felis gravida et. Pellentesque semper quis nulla sed condimentum. Vestibulum hendrerit varius purus, at tempor ipsum faucibus vel. Integer ullamcorper, urna vel iaculis sollicitudin, erat neque commodo orci, sit amet mollis sapien est et nunc. Cras in dignissim ex. Etiam eleifend risus sed facilisis vulputate. Morbi facilisis nibh eu auctor semper. Aliquam faucibus iaculis erat quis viverra. Nulla eget risus sed ipsum bibendum tincidunt. Suspendisse accumsan ante quis ex faucibus pharetra. Morbi in feugiat est. Proin eget nibh placerat sem fringilla hendrerit non hendrerit mi. Nulla neque ipsum, semper a blandit commodo, porttitor eu mi.",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "photoA",
 											"type": "file",
-											"src": "/D:/Pictures/Fotos Ion 2018/20180517_180326.jpg"
+											"src": "/D:/Pictures/Fotos Ion 2018/20180517_180326.jpg",
+											"disabled": true
 										},
 										{
 											"key": "photoB",
@@ -790,12 +972,14 @@
 										{
 											"key": "file",
 											"type": "file",
-											"src": "/C:/Users/Carmen/OneDrive/Documentos/github-git-cheat-sheet.pdf"
+											"src": "/C:/Users/Carmen/OneDrive/Documentos/github-git-cheat-sheet.pdf",
+											"disabled": true
 										},
 										{
 											"key": "mediaA",
 											"value": "https://youtu.be/wcWpy8paa8c?si=YiUjXpXlRQRO2VH3",
-											"type": "text"
+											"type": "text",
+											"disabled": true
 										},
 										{
 											"key": "mediaB",
@@ -814,6 +998,21 @@
 											"value": "https://www.youtube.com/watch?v=Mays7OC6QtI",
 											"type": "text",
 											"disabled": true
+										},
+										{
+											"key": "generos",
+											"value": "13",
+											"type": "text"
+										},
+										{
+											"key": "generos",
+											"value": "4",
+											"type": "text"
+										},
+										{
+											"key": "generos",
+											"value": "15",
+											"type": "text"
 										}
 									]
 								},
@@ -838,7 +1037,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/grupos/133d954c-df69-4ef6-8ab8-dae0c3402bd0",
+									"raw": "http://localhost:3000/grupos/c2f2aad9-eef0-484e-aef0-725f35729391",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -846,7 +1045,7 @@
 									"port": "3000",
 									"path": [
 										"grupos",
-										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+										"c2f2aad9-eef0-484e-aef0-725f35729391"
 									]
 								}
 							},
@@ -858,7 +1057,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://localhost:3000/grupos?generos=1",
+									"raw": "http://localhost:3000/grupos",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -875,12 +1074,13 @@
 										},
 										{
 											"key": "provincia",
-											"value": null,
+											"value": "",
 											"disabled": true
 										},
 										{
 											"key": "generos",
-											"value": "1"
+											"value": "7",
+											"disabled": true
 										}
 									]
 								}
@@ -947,6 +1147,53 @@
 										"grupos",
 										"media",
 										"133d954c-df69-4ef6-8ab8-dae0c3402bd0"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AddGenerosGrups",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1YTJjOGE4LWIzMTQtNGRlMC04ODU2LWE0YzNkZTY0NjQwZiIsImlhdCI6MTcyMjc0ODM5OSwiZXhwIjoxNzIzMzUzMTk5fQ.AdnNjoPKtgp3RjJSsGxHN9KNbiVVjo5LjFf18xliJ5o",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "newGenero",
+											"value": "13",
+											"type": "text"
+										},
+										{
+											"key": "newGenero",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "newGenero",
+											"value": "10",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:3000/grupos/generos/98a93549-b05f-4bd0-a7cc-9002b6c349dd",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"grupos",
+										"generos",
+										"98a93549-b05f-4bd0-a7cc-9002b6c349dd"
 									]
 								}
 							},
