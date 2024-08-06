@@ -16,13 +16,13 @@
         @apply py-2 px-6 bg-purple-600 rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer w-full md:w-auto;
     }
     .form-input {
-        @apply p-2 border border-gray-300 rounded-md mt-2 h-10 w-full focus:border-purple-600;
+        @apply p-3 border border-gray-300 rounded-lg mt-2 h-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
     }
     .form-select {
         @apply px-4 border border-gray-300 rounded-md mt-2 h-10 w-full bg-white focus:border-purple-600;
     }
     .form-textarea {
-        @apply px-4 py-2 border border-gray-300 rounded-md mt-2 min-h-40 w-full focus:border-purple-600;
+        @apply p-3 border border-gray-300 rounded-lg mt-2 min-h-40 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
     }
     .sect-photo {
         @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
@@ -47,7 +47,7 @@
     /* Contenedor del formulario de filtros */
     .sala-filter-form-container,
     .grupo-filter-form-container {
-        @apply w-full bg-gray-400 flex justify-center;
+        @apply w-full bg-gray-900 flex justify-center;
     }
 
     /* Filtros de salas */
@@ -121,6 +121,20 @@
 
     .sub_title_ficha {
         @apply text-white; /*Bold para texto como provincia genero etc... de las fichas*/
+    }
+
+    /* New classes for ProfileForm layout */
+    .form-section {
+        @apply grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6;
+    }
+    .profile-picture-container {
+        @apply flex flex-col items-center mb-8;
+    }
+    .profile-picture {
+        @apply w-32 h-32 mb-4 rounded-full border-4 border-dashed border-gray-300 flex items-center justify-center overflow-hidden;
+    }
+    .btn-reset {
+        @apply py-2 px-4 bg-red-500 rounded-lg text-white text-center hover:bg-red-600 transition-all;
     }
 }
 

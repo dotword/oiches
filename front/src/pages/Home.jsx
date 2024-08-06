@@ -52,7 +52,7 @@ const Home = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <HeaderHero />
-            <section className="hero bg-hero-home bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
+            <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 lg:h-[680px]">
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
