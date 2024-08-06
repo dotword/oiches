@@ -3,6 +3,9 @@ import { AuthContext } from '../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
+import Multiselect from 'multiselect-react-dropdown';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
+
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
 import getGrupoByIdService from '../services/getGrupoByIdService.js';
@@ -72,11 +75,8 @@ const GrupoEdit = () => {
         );
     };
 
-    const handleGenChange = (e) => {
-        const selectedGenres = Array.from(e.target.options)
-            .filter((option) => option.selected)
-            .map((option) => option.value);
-        setGeneros(selectedGenres);
+    const handleGenChange = (selectedList) => {
+        setGeneros(selectedList.map((genre) => genre.id));
     };
 
     const handleGenSubmit = async (e) => {
@@ -166,19 +166,29 @@ const GrupoEdit = () => {
                 <div className="mb-6">
                     <p className="font-semibold my-2">Añadir géneros:</p>
                     <form onSubmit={handleGenSubmit} className="max-w-60">
-                        <select
-                            name="generos"
-                            multiple
-                            className="form-select h-auto mb-3"
-                            onChange={handleGenChange}
-                        >
-                            <option value="">Todos</option>
-                            {genres.map((genre) => (
-                                <option key={genre.id} value={genre.id}>
-                                    {genre.nombre}
-                                </option>
-                            ))}
-                        </select>
+                        <Multiselect
+                            options={genres.map((genre) => ({
+                                id: genre.id,
+                                nombre: genre.nombre,
+                            }))}
+                            selectedValues={generos.map((genreId) =>
+                                genres.find((genre) => genre.id === genreId)
+                            )}
+                            onSelect={handleGenChange}
+                            onRemove={handleGenChange}
+                            displayValue="nombre"
+                            placeholder="Selecciona los géneros"
+                            customCloseIcon={
+                                <IoIosCloseCircleOutline className="ml-1" />
+                            }
+                            style={{
+                                chips: {
+                                    background: '#ffb500',
+                                    color: 'black',
+                                },
+                            }}
+                            className="form-multiselect mb-3"
+                        />
                         <input
                             type="submit"
                             value="Añadir géneros"

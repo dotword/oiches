@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Multiselect from 'multiselect-react-dropdown';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
+
 import Toastify from './Toastify.jsx';
 import DeleteSalaPhotos from './DeleteSalaPhotos.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
@@ -79,11 +82,8 @@ const SalaEdit = () => {
         );
     };
 
-    const handleGenChange = (e) => {
-        const selectedGenres = Array.from(e.target.options)
-            .filter((option) => option.selected)
-            .map((option) => option.value);
-        setGeneros(selectedGenres);
+    const handleGenChange = (selectedList) => {
+        setGeneros(selectedList.map((genre) => genre.id));
     };
 
     const handleGenSubmit = async (e) => {
@@ -181,19 +181,29 @@ const SalaEdit = () => {
                 <div className="mb-6">
                     <p className="font-semibold my-2">Añadir géneros:</p>
                     <form onSubmit={handleGenSubmit} className="max-w-60">
-                        <select
-                            name="generos"
-                            multiple
-                            className="form-select h-auto mb-3"
-                            onChange={handleGenChange}
-                        >
-                            <option value="">Todos</option>
-                            {genres.map((genre) => (
-                                <option key={genre.id} value={genre.id}>
-                                    {genre.nombre}
-                                </option>
-                            ))}
-                        </select>
+                        <Multiselect
+                            options={genres.map((genre) => ({
+                                id: genre.id,
+                                nombre: genre.nombre,
+                            }))}
+                            selectedValues={generos.map((genreId) =>
+                                genres.find((genre) => genre.id === genreId)
+                            )}
+                            onSelect={handleGenChange}
+                            onRemove={handleGenChange}
+                            displayValue="nombre"
+                            placeholder="Selecciona los géneros"
+                            customCloseIcon={
+                                <IoIosCloseCircleOutline className="ml-1" />
+                            }
+                            style={{
+                                chips: {
+                                    background: '#ffb500',
+                                    color: 'black',
+                                },
+                            }}
+                            className="form-multiselect mb-3"
+                        />
                         <input
                             type="submit"
                             value="Añadir géneros"
@@ -238,21 +248,18 @@ const SalaEdit = () => {
                         }
                     />
                 </div>
-
-                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
                     <label htmlFor="precios" className="font-semibold">
-                        Precios:{' '}
+                        Precios:
                     </label>
-                    <input
-                        type="number"
+                    <textarea
                         name="precios"
-                        placeholder="Tarifa para los grupos"
                         value={sala.precios}
                         onChange={(e) =>
                             setSala({ ...sala, precios: e.target.value })
                         }
-                        className="form-input"
-                    />
+                        className="form-textarea"
+                    ></textarea>
                 </div>
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
                     <label htmlFor="direccion" className="font-semibold">

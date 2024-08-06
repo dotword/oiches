@@ -46,8 +46,10 @@ export async function listSalasService(filters) {
 
     // Ordenamiento por media de votos siempre
     if (filters.order && filters.field) {
-        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
-        const orderDirection = filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        const orderField =
+            filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
+        const orderDirection =
+            filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Default order by media votes descending
@@ -89,9 +91,10 @@ export async function listSalasService(filters) {
         countQuery += ' AND Salas.provincia = ?';
     }
 
-
-
-    const [[countResult]] = await pool.query(countQuery, queryParams.slice(0, -2)); 
+    const [[countResult]] = await pool.query(
+        countQuery,
+        queryParams.slice(0, -2)
+    );
 
     return {
         rows,
