@@ -59,10 +59,14 @@ export async function listGruposService(filters) {
 
     // Paginación
     const page = filters.page ? parseInt(filters.page, 10) : 1;
-    const pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
-    const offset = (page - 1) * pageSize;
-    query += ` LIMIT ? OFFSET ?`;
-    queryParams.push(pageSize, offset);
+    let pageSize = filters.pageSize;
+
+    if (pageSize !== '*') {
+        pageSize = pageSize ? parseInt(pageSize, 10) : 10;
+        const offset = (page - 1) * pageSize;
+        query += ` LIMIT ? OFFSET ?`;
+        queryParams.push(pageSize, offset);
+    }
 
     // Consulta para obtener el total de grupos
     let countQuery = `
