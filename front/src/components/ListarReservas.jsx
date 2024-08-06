@@ -10,8 +10,8 @@ export const ListarReservas = () => {
     const [id, setId] = useState('');
     const [type, setType] = useState(''); // Either 'grupo' or 'sala'
     const { VITE_API_URL_BASE } = import.meta.env;
-    const { token, currentUser } = useAuth();
-
+    const { token, currentUser,userLogged } = useAuth();
+  
     const handleDelete = async (reservaId) => {
         try {
             const endpoint =
@@ -77,9 +77,10 @@ export const ListarReservas = () => {
         const fetchData = async () => {
             if (currentUser) {
                 try {
+                   
                     // Fetch Salas
                     const salasResponse = await fetch(
-                        `${VITE_API_URL_BASE}/salas`,
+                        `${VITE_API_URL_BASE}/salas?pageSize=*`,
                         {
                             headers: {
                                 authorization: token,
@@ -91,11 +92,11 @@ export const ListarReservas = () => {
                         throw new Error('Failed to fetch salas');
                     }
 
-                    const salasData = await salasResponse.json();
-                    const userSala = salasData.find(
+                    const {rows} = await salasResponse.json();
+                    
+                    const userSala = rows.find(
                         (sala) => sala.usuario_id === currentUser.id
                     );
-
                     if (userSala) {
                         setId(userSala.id);
                         setType('sala');
@@ -104,7 +105,7 @@ export const ListarReservas = () => {
 
                     // Fetch Grupos if no sala found
                     const gruposResponse = await fetch(
-                        `${VITE_API_URL_BASE}/grupos`,
+                        `${VITE_API_URL_BASE}/grupos?pageSize=*`,
                         {
                             headers: {
                                 authorization: token,
@@ -116,13 +117,11 @@ export const ListarReservas = () => {
                         throw new Error('Failed to fetch grupos');
                     }
 
-                    const gruposData = await gruposResponse.json();
-                    const userGrupo = gruposData.find(
-                        (grupo) => grupo.usuario_id === currentUser.id
-                    );
+                    const groupRows = await gruposResponse.json();
+                
 
-                    if (userGrupo) {
-                        setId(userGrupo.id);
+                    if (groupRows) {
+                        setId(userLogged.grupos[0].id);
                         setType('grupo');
                     }
                 } catch (error) {
@@ -153,8 +152,9 @@ export const ListarReservas = () => {
                             `No se encontraron reservas para ${type}`
                         );
                     }
-
+                    console.log(response);
                     const reservasData = await response.json();
+                    console.log(reservasData);
                     setReservas(reservasData.reservas);
                 } catch (error) {
                     console.error('Error fetching reservas:', error);
