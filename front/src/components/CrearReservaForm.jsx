@@ -53,37 +53,46 @@ export const CrearReservaForm = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-6 mx-auto max-w-6xl"
+                className="flex flex-col gap-2 md:items-center"
             >
-                <h2 className="text-2xl">Elija los datos para la reserva :</h2>
-                <label htmlFor="fecha">
-                    Elija una fecha para la reserva:
+                <h2 className="text-xl font-semibold mb-3">
+                    Datos de la reserva
+                </h2>
+                <div className="mb-2">
+                    <label htmlFor="fecha" className="font-semibold">
+                        Fecha de la reserva
+                    </label>
                     <input
-                        className="block"
+                        className="block md:mx-auto"
                         type="date"
                         name="fecha"
                         required
                     />
-                </label>
-                <label htmlFor="horaInicio">
-                    Elija una hora para el inicio de la reserva:
+                </div>
+
+                <div className="mb-2">
+                    <label htmlFor="horaInicio" className="font-semibold">
+                        Hora de inicio de la reserva
+                    </label>
                     <input
-                        className="block"
+                        className="block md:mx-auto"
                         type="time"
                         name="horaInicio"
                         required
                     />
-                </label>
-                <label htmlFor="horaFin">
-                    Elija una hora aproximada para el fin de la reserva:
+                </div>
+                <div className="mb-2">
+                    <label htmlFor="horaFin" className="font-semibold">
+                        Hora final de la reserva
+                    </label>
                     <input
-                        className="block"
+                        className="block md:mx-auto"
                         type="time"
                         name="horaFin"
                         required
                     />
-                </label>
-                <div className="flex justify-evenly">
+                </div>
+                <div className="flex justify-evenly mt-6 gap-6">
                     <button className="button" type="submit">
                         Crear Reserva
                     </button>
