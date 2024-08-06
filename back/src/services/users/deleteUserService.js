@@ -21,6 +21,7 @@ export const deleteUserService = async (id) => {
         // Eliminar media del grupo
         await pool.query(`DELETE FROM grupo_media WHERE grupo_id = ?`, [grupo.id]);
         await pool.query(`DELETE FROM grupo_fotos WHERE grupoId = ?`, [grupo.id]);
+        await pool.query(`DELETE FROM generos_grupos WHERE grupoId = ?`,[grupo.id])
 
         // Seleccionar reservas del grupo
         const [reservas] = await pool.query(`SELECT id FROM reservas WHERE grupo_id = ?`, [grupo.id]);
@@ -43,6 +44,7 @@ export const deleteUserService = async (id) => {
       for (const sala of salas) {
         // Eliminar media de la sala
         await pool.query(`DELETE FROM sala_fotos WHERE salaId = ?`, [sala.id]);
+        await pool.query(`DELETE FROM generos_salas WHERE salaId = ?`,[sala.id])
 
         // Seleccionar reservas de la sala
         const [reservas] = await pool.query(`SELECT id FROM reservas WHERE sala_id = ?`, [sala.id]);

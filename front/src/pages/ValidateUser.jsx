@@ -28,9 +28,11 @@ export const ValidateUser = () => {
 
       if (response.ok) {
         setSuccess(true);
-       
-        navigate('/')
         toast.success('Usuario validado con exito')
+        setTimeout(() => {
+          navigate('/');
+      }, 3000);
+        
       } else {
         throw new Error(data.message || 'Error validating user');
       }
@@ -78,9 +80,7 @@ export const ValidateUser = () => {
               />
             </label>
           </div>
-
           {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">Usuario validado con éxito</p>}
           <button
             type="submit"
             className="p-4 w-full text-white hover:text-black hover:bg-opacity-80 transition-all bg-purpleOiches text-xl justify-center rounded"
