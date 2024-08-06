@@ -93,6 +93,15 @@ const SalaEdit = () => {
             dataForm.append('newGenero', generos);
             await addGeneroSalaService(dataForm, idSala, token);
             toast.success('Géneros añadidos');
+
+            //Actualizar géneros activos
+            const { data } = await getSalaService(idSala);
+            setSala((prevSala) => ({
+                ...prevSala,
+                activeGenres: data.sala.genero,
+            }));
+
+            setGeneros([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -106,8 +115,15 @@ const SalaEdit = () => {
         }
         try {
             await DeleteSalaGenerosService(deleteGenres, idSala, token);
-
             toast.success('Borraste los géneros seleccionados');
+
+            // Actualizar géneros activos
+            const { data } = await getSalaService(idSala);
+            setSala((prevSala) => ({
+                ...prevSala,
+                activeGenres: data.sala.genero,
+            }));
+            setDeleteGenres([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -140,6 +156,14 @@ const SalaEdit = () => {
             toast.error(error.message);
         }
     };
+
+    // Filtrar géneros disponibles para agregar
+    const availableGenres = genres.filter(
+        (genre) =>
+            !sala.activeGenres.some(
+                (activeGenre) => activeGenre.generoId === genre.id
+            )
+    );
 
     return userLogged && userLogged.roles === 'sala' ? (
         <>
@@ -182,7 +206,7 @@ const SalaEdit = () => {
                     <p className="font-semibold my-2">Añadir géneros:</p>
                     <form onSubmit={handleGenSubmit} className="max-w-60">
                         <Multiselect
-                            options={genres.map((genre) => ({
+                            options={availableGenres.map((genre) => ({
                                 id: genre.id,
                                 nombre: genre.nombre,
                             }))}
@@ -215,7 +239,7 @@ const SalaEdit = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className="md:grid md:grid-cols-4 md:gap-x-8 md:col-start-1 md:col-end-3"
+                className="md:grid md:grid-cols-4 md:gap-x-6 md:col-start-1 md:col-end-3"
             >
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
@@ -248,18 +272,19 @@ const SalaEdit = () => {
                         }
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
+                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
                     <label htmlFor="precios" className="font-semibold">
                         Precios:
                     </label>
-                    <textarea
+                    <input
                         name="precios"
+                        type="number"
                         value={sala.precios}
                         onChange={(e) =>
                             setSala({ ...sala, precios: e.target.value })
                         }
-                        className="form-textarea"
-                    ></textarea>
+                        className="form-input"
+                    />
                 </div>
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
                     <label htmlFor="direccion" className="font-semibold">

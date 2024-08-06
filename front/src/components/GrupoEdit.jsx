@@ -86,6 +86,15 @@ const GrupoEdit = () => {
             dataForm.append('newGenero', generos);
             await addGeneroGrupoService(dataForm, idGrupo, token);
             toast.success('Géneros añadidos');
+
+            //Actualizar géneros activos
+            const { data } = await getGrupoByIdService(idGrupo);
+            setGrupo((prevGrupo) => ({
+                ...prevGrupo,
+                activeGenres: data.grupo.genero,
+            }));
+
+            setGeneros([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -99,8 +108,15 @@ const GrupoEdit = () => {
         }
         try {
             await DeleteGrupoGenerosService(deleteGenres, idGrupo, token);
-
             toast.success('Borraste los géneros seleccionados');
+
+            // Actualizar géneros activos
+            const { data } = await getGrupoByIdService(idGrupo);
+            setGrupo((prevGrupo) => ({
+                ...prevGrupo,
+                activeGenres: data.grupo.genero,
+            }));
+            setDeleteGenres([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -125,6 +141,14 @@ const GrupoEdit = () => {
             toast.error(error.message);
         }
     };
+
+    // Filtrar géneros disponibles para agregar
+    const availableGenres = genres.filter(
+        (genre) =>
+            !grupo.activeGenres.some(
+                (activeGenre) => activeGenre.generoId === genre.id
+            )
+    );
 
     return userLogged && userLogged.roles === 'grupo' ? (
         <>
@@ -167,7 +191,7 @@ const GrupoEdit = () => {
                     <p className="font-semibold my-2">Añadir géneros:</p>
                     <form onSubmit={handleGenSubmit} className="max-w-60">
                         <Multiselect
-                            options={genres.map((genre) => ({
+                            options={availableGenres.map((genre) => ({
                                 id: genre.id,
                                 nombre: genre.nombre,
                             }))}
