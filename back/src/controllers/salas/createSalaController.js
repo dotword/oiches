@@ -43,13 +43,15 @@ const createSalaController = async (req, res, next) => {
 
         // Insertamos los géneros
         const generosList = [];
-        const generosArray = Array.isArray(generos)
-            ? generos
-            : generos.split(',');
+        if (generos) {
+            const generosArray = Array.isArray(generos)
+                ? generos
+                : generos.split(',');
 
-        for (const genero of generosArray) {
-            await insertSalaGenerosService(genero.trim(), salaId);
-            generosList.push({ generoId: genero.trim() });
+            for (const genero of generosArray) {
+                await insertSalaGenerosService(genero.trim(), salaId);
+                generosList.push({ generoId: genero.trim() });
+            }
         }
 
         // Array donde pushearemos las fotos (si hay).
@@ -72,7 +74,7 @@ const createSalaController = async (req, res, next) => {
             }
         }
         res.send({
-            satus: 'ok',
+            status: 'ok',
             data: {
                 sala: {
                     id: salaId,

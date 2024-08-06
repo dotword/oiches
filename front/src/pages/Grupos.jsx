@@ -5,6 +5,8 @@ import GrupoList from '../components/GrupoList';
 import FetchGruposService from '../services/FetchGruposService';
 import HeaderHero from '../components/HeaderHero.jsx';
 import Footer from '../components/Footer';
+import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
+import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -25,7 +27,7 @@ const Grupos = () => {
                 setTotal(data.total);
             } catch (err) {
                 setError('No se pudo cargar la información de los grupos.');
-            } 
+            }
         };
 
         fetchGrupos();
@@ -47,27 +49,46 @@ const Grupos = () => {
         >
             <HeaderHero />
             <div className="hero bg-hero-grupos bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
-                <h1 className="hero-title text-white">Encuentra tu Grupo Ideal</h1>
+                <h1 className="hero-title text-white">
+                    Encuentra tu Grupo Ideal
+                </h1>
                 <p className="hero-subtitle text-white">
-                    Explora diversos grupos, conecta con ellos y crea música juntos.
+                    Explora diversos grupos, conecta con ellos y crea música
+                    juntos.
                 </p>
             </div>
             <div className="grupo-filter-form-container">
                 <GrupoFilter onFilterChange={handleFilterChange} />
             </div>
             <div className="grupo-list-container">
-               
-                {!error && (filteredGrupos.length ? (
-                    <GrupoList grupos={filteredGrupos} />
-                ) : (
-                    <p>No se encontraron grupos</p>
-                ))}
+                {!error &&
+                    (filteredGrupos.length ? (
+                        <GrupoList grupos={filteredGrupos} />
+                    ) : (
+                        <p>No se encontraron grupos</p>
+                    ))}
             </div>
-            <div className='flex gap-6 justify-center my-16'>
-                <button disabled={page === 1} onClick={() => setPage(page - 1)}>Anterior ⬅</button>
-                <p>{page}/{totalPages}</p>
-                <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Siguiente ➡</button>
-            </div>
+            {totalPages > 1 ? (
+                <div className="flex gap-3 justify-center my-16">
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        <MdKeyboardDoubleArrowLeft className="text-xl" />
+                    </button>
+                    <p>
+                        {page} de {totalPages}
+                    </p>
+                    <button
+                        disabled={page >= totalPages}
+                        onClick={() => setPage(page + 1)}
+                    >
+                        <MdKeyboardDoubleArrowRight className="text-xl" />
+                    </button>
+                </div>
+            ) : (
+                ''
+            )}
             <Footer />
         </motion.div>
     );
