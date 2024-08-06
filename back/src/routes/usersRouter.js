@@ -14,7 +14,7 @@ import {
     editUserEmailController,
     editUserAvatarController,
     getOwnUserController,
-    deleteUserController
+    deleteUserController,
 } from '../controllers/users/index.js';
 
 const router = express.Router();
@@ -33,7 +33,10 @@ router.patch('/users/password', authUser, passwordChangeController);
 
 // Enviar email de recuperación de contraseña.
 router.post('/users/password/recover', sendRecoverPassController);
-router.delete('/users/delete',authUser,deleteUserController)
+
+// Borrar usuario
+router.delete('/users/delete', authUser, deleteUserController);
+
 // Editar la contraseña de un usuario con un código de recuperación.
 router.put('/users/password', editUserPassController);
 
