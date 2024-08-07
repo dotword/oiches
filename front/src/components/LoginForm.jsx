@@ -39,7 +39,6 @@ export const LoginForm = () => {
                 className="flex justify-between md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 mt-14"
             >
                 <h1 className="text-4xl">Iniciar sesión</h1>
-                <p>Lorem ipsum dolor sit amet consectetur</p>
                 <hr />
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="email">
