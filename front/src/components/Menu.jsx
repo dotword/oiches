@@ -43,6 +43,12 @@ const Menu = () => {
             ) : (
                 <>
                     <NavLink
+                        to="/users"
+                        className="btn-account max-md:my-8 font-medium"
+                    >
+                        Mi perfil
+                    </NavLink>
+                    <NavLink
                         to="/login"
                         onClick={() => {
                             signOut();
@@ -50,12 +56,6 @@ const Menu = () => {
                         className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
                     >
                         Logout
-                    </NavLink>
-                    <NavLink
-                        to="/users"
-                        className="btn-account max-md:my-8 font-medium"
-                    >
-                        Mi perfil
                     </NavLink>
                 </>
             )}

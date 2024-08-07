@@ -37,7 +37,7 @@ export const CrearReservaForm = () => {
             }
 
             toast.success(
-                'Reserva creada con éxito espere a que la sala confirme su reserva.'
+                'Reserva creada con éxito. Espere a que la sala confirme su reserva.'
             );
         } catch (error) {
             setError(error.message);

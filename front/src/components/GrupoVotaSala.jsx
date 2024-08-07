@@ -46,7 +46,7 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
 
             await grupoVotaSalaService({ data, idReserva, token });
 
-            toast.success('Tu voto a sido publicado');
+            toast.success('Tu voto ha sido publicado');
         } catch (error) {
             toast.error(error.message);
         }
