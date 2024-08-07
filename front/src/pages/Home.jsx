@@ -56,9 +56,8 @@ const Home = () => {
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
-                <p className="hero-subtitle text-white">
-                    Et has minim elitr intellegat. Mea aeterno eleifend antiopam
-                    ad, nam no suscipit quaerendum.
+                <p className="text-xl md:text-2xl lg:text-3xl hero-subtitle text-white">
+                    Donde la música y el escenario se unen
                 </p>
             </section>
             <main className="flex flex-col gap-20 mb-8 max-w-screen-xl mx-auto p-8 md:my-12">
