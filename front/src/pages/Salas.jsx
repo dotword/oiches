@@ -5,9 +5,11 @@ import SalaList from '../components/SalaList';
 import FetchSalasService from '../services/FetchSalasService';
 import HeaderHero from '../components/HeaderHero.jsx';
 import Footer from '../components/Footer';
+import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
+import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 
 const Salas = () => {
-    const [salas, setSalas] = useState([]);
+    // const [salas, setSalas] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(null);
     const [pageSize, setPageSize] = useState(8);
@@ -56,11 +58,28 @@ const Salas = () => {
                     <p>No se encontraron salas</p>
                 )}
             </div>
-            <div className='flex gap-6 justify-center my-16'>
-                <button disabled={page === 1} onClick={() => setPage(page - 1)}>Anterior ⬅</button>
-                <p>{page}/{totalPages}</p>
-                <button disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Siguiente ➡</button>
-            </div>
+            {totalPages > 1 ? (
+                <div className="flex gap-3 justify-center my-16">
+                    <button
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                    >
+                        <MdKeyboardDoubleArrowLeft className="text-xl" />
+                    </button>
+                    <p>
+                        {page} de {totalPages}
+                    </p>
+                    <button
+                        disabled={page >= totalPages}
+                        onClick={() => setPage(page + 1)}
+                    >
+                        <MdKeyboardDoubleArrowRight className="text-xl" />
+                    </button>
+                </div>
+            ) : (
+                ''
+            )}
+
             <Footer />
         </motion.div>
     );

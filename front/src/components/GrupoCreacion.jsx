@@ -3,6 +3,8 @@ import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify';
 import { useNavigate } from 'react-router-dom';
+import Multiselect from 'multiselect-react-dropdown';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
@@ -16,7 +18,7 @@ const GrupoCreacion = () => {
     const [formValues, setFormValues] = useState({
         nombre: '',
         provincia: '',
-        generos: [],
+        // generos: [],
         honorarios: '',
         biografia: '',
         mediaA: '',
@@ -26,6 +28,7 @@ const GrupoCreacion = () => {
     });
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
+    const [generos, setGeneros] = useState([]);
     const [file, setFile] = useState(null);
     const [photos, setPhotos] = useState({
         photoA: null,
@@ -47,20 +50,15 @@ const GrupoCreacion = () => {
         FetchGenresService(setGenres);
     }, []);
 
+    const handleGenChange = (selectedList) => {
+        setGeneros(selectedList.map((genre) => genre.id));
+        setFormValues({ ...formValues, generos: generos });
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (name === 'generos') {
-            const options = e.target.options;
-            const selectedGenres = [];
-            for (const option of options) {
-                if (option.selected) {
-                    selectedGenres.push(option.value);
-                }
-            }
-            setFormValues({ ...formValues, generos: selectedGenres });
-        } else {
-            setFormValues({ ...formValues, [name]: value });
-        }
+
+        setFormValues({ ...formValues, [name]: value });
     };
 
     const handleFotoChange = (e, name) => {
@@ -110,7 +108,7 @@ const GrupoCreacion = () => {
     const {
         nombre,
         provincia,
-        generos,
+        // generos,
         honorarios,
         biografia,
         mediaA,
@@ -139,24 +137,34 @@ const GrupoCreacion = () => {
                             />
                         </div>
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                            <label htmlFor="generos" className="font-semibold">
+                            <label
+                                htmlFor="generos"
+                                className="font-semibold mb-2"
+                            >
                                 Géneros:
                             </label>
-                            <select
-                                id="generos"
-                                name="generos"
-                                multiple
-                                value={generos}
-                                className="form-select h-auto"
-                                onChange={handleChange}
-                            >
-                                <option value="">Todos</option>
-                                {genres.map((genre) => (
-                                    <option key={genre.id} value={genre.id}>
-                                        {genre.nombre}
-                                    </option>
-                                ))}
-                            </select>
+                            <Multiselect
+                                options={genres.map((genre) => ({
+                                    id: genre.id,
+                                    nombre: genre.nombre,
+                                }))}
+                                selectedValues={generos.map((genreId) =>
+                                    genres.find((genre) => genre.id === genreId)
+                                )}
+                                onSelect={handleGenChange}
+                                onRemove={handleGenChange}
+                                displayValue="nombre"
+                                placeholder="Selecciona los géneros"
+                                customCloseIcon={
+                                    <IoIosCloseCircleOutline className="ml-1" />
+                                }
+                                style={{
+                                    chips: {
+                                        background: '#ffb500',
+                                        color: 'black',
+                                    },
+                                }}
+                            />
                         </div>
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                             <label

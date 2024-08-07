@@ -2,14 +2,14 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const canEditGrupoService = async (idGrupo, userId) => {
+    console.log('idGrupo ', idGrupo);
+
     const pool = await getPool();
     const [grupoOwner] = await pool.query(
         `SELECT usuario_id FROM grupos WHERE id = ?`,
         [idGrupo]
     );
-    console.log('idGrup ', idGrupo);
-    console.log('userid ', userId);
-    console.log('grupOwner ', grupoOwner);
+
     // Si no somos los propietarios lanzamos un error.
     if (grupoOwner[0].usuario_id !== userId)
         throw generateErrorsUtil(

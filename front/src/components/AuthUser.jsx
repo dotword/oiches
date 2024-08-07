@@ -1,4 +1,3 @@
-// FIX
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
@@ -12,7 +11,9 @@ import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
-import { ConfirmationModal } from './ConfirmModal.jsx'; // Import without destructuring
+import { ConfirmationModal } from './ConfirmModal.jsx';
+import { useNavigate } from 'react-router-dom';
+
 
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -27,6 +28,7 @@ const AuthUser = () => {
     const [edit, setEdit] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
+    const navigate = useNavigate();
 
     const handleDelete = async () => {
         try {
@@ -38,8 +40,10 @@ const AuthUser = () => {
             });
 
             if (response.ok) {
-                toast.success('Cuenta eliminada con éxito');
-                // Aquí deberías agregar la lógica para redirigir al usuario o cerrar sesión
+                toast.success('Eliminando cuenta con éxito');
+                setTimeout(() => {
+                    navigate('/');
+                }, 3000);
             } else {
                 toast.error('Error al eliminar la cuenta');
             }
@@ -277,9 +281,7 @@ const AuthUser = () => {
                     </button>
                 </section>
             </div>
-
             <UsersSalaGrupoList />
-            {/* poner la fetch de las salas en este file, no en ListarReservas*/}
             <ListarReservas />
             <Toastify />
             {modalOpen && (

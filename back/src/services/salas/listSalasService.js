@@ -46,8 +46,10 @@ export async function listSalasService(filters) {
 
     // Ordenamiento por media de votos siempre
     if (filters.order && filters.field) {
-        const orderField = filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
-        const orderDirection = filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+        const orderField =
+            filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
+        const orderDirection =
+            filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Default order by media votes descending
@@ -56,10 +58,17 @@ export async function listSalasService(filters) {
 
     // Agregar paginación
     const page = filters.page ? parseInt(filters.page, 10) : 1;
-    const pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
-    const offset = (page - 1) * pageSize;
-    query += ` LIMIT ? OFFSET ?`;
-    queryParams.push(pageSize, offset);
+    let pageSize = filters.pageSize;
+
+    if (pageSize === '*') {
+        // Omitir paginación si pageSize es '*'
+        queryParams.push(); // Añadir un valor vacío para los parámetros
+    } else {
+        pageSize = pageSize ? parseInt(pageSize, 10) : 10;
+        const offset = (page - 1) * pageSize;
+        query += ` LIMIT ? OFFSET ?`;
+        queryParams.push(pageSize, offset);
+    }
 
     // Ejecutar consulta para obtener las salas
     const [rows] = await pool.query(query, queryParams);
@@ -89,9 +98,10 @@ export async function listSalasService(filters) {
         countQuery += ' AND Salas.provincia = ?';
     }
 
-
-
-    const [[countResult]] = await pool.query(countQuery, queryParams.slice(0, -2)); 
+    const [[countResult]] = await pool.query(
+        countQuery,
+        queryParams.slice(0, -2)
+    );
 
     return {
         rows,

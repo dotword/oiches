@@ -2,6 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Multiselect from 'multiselect-react-dropdown';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
+
 import Toastify from './Toastify.jsx';
 import DeleteSalaPhotos from './DeleteSalaPhotos.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
@@ -79,11 +82,8 @@ const SalaEdit = () => {
         );
     };
 
-    const handleGenChange = (e) => {
-        const selectedGenres = Array.from(e.target.options)
-            .filter((option) => option.selected)
-            .map((option) => option.value);
-        setGeneros(selectedGenres);
+    const handleGenChange = (selectedList) => {
+        setGeneros(selectedList.map((genre) => genre.id));
     };
 
     const handleGenSubmit = async (e) => {
@@ -93,6 +93,15 @@ const SalaEdit = () => {
             dataForm.append('newGenero', generos);
             await addGeneroSalaService(dataForm, idSala, token);
             toast.success('Géneros añadidos');
+
+            //Actualizar géneros activos
+            const { data } = await getSalaService(idSala);
+            setSala((prevSala) => ({
+                ...prevSala,
+                activeGenres: data.sala.genero,
+            }));
+
+            setGeneros([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -106,8 +115,15 @@ const SalaEdit = () => {
         }
         try {
             await DeleteSalaGenerosService(deleteGenres, idSala, token);
-
             toast.success('Borraste los géneros seleccionados');
+
+            // Actualizar géneros activos
+            const { data } = await getSalaService(idSala);
+            setSala((prevSala) => ({
+                ...prevSala,
+                activeGenres: data.sala.genero,
+            }));
+            setDeleteGenres([]); // Limpiar selección de géneros
         } catch (err) {
             toast.error(err.message);
         }
@@ -140,6 +156,14 @@ const SalaEdit = () => {
             toast.error(error.message);
         }
     };
+
+    // Filtrar géneros disponibles para agregar
+    const availableGenres = genres.filter(
+        (genre) =>
+            !sala.activeGenres.some(
+                (activeGenre) => activeGenre.generoId === genre.id
+            )
+    );
 
     return userLogged && userLogged.roles === 'sala' ? (
         <>
@@ -181,19 +205,29 @@ const SalaEdit = () => {
                 <div className="mb-6">
                     <p className="font-semibold my-2">Añadir géneros:</p>
                     <form onSubmit={handleGenSubmit} className="max-w-60">
-                        <select
-                            name="generos"
-                            multiple
-                            className="form-select h-auto mb-3"
-                            onChange={handleGenChange}
-                        >
-                            <option value="">Todos</option>
-                            {genres.map((genre) => (
-                                <option key={genre.id} value={genre.id}>
-                                    {genre.nombre}
-                                </option>
-                            ))}
-                        </select>
+                        <Multiselect
+                            options={availableGenres.map((genre) => ({
+                                id: genre.id,
+                                nombre: genre.nombre,
+                            }))}
+                            selectedValues={generos.map((genreId) =>
+                                genres.find((genre) => genre.id === genreId)
+                            )}
+                            onSelect={handleGenChange}
+                            onRemove={handleGenChange}
+                            displayValue="nombre"
+                            placeholder="Selecciona los géneros"
+                            customCloseIcon={
+                                <IoIosCloseCircleOutline className="ml-1" />
+                            }
+                            style={{
+                                chips: {
+                                    background: '#ffb500',
+                                    color: 'black',
+                                },
+                            }}
+                            className="form-multiselect mb-3"
+                        />
                         <input
                             type="submit"
                             value="Añadir géneros"
@@ -205,7 +239,7 @@ const SalaEdit = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className="md:grid md:grid-cols-4 md:gap-x-8 md:col-start-1 md:col-end-3"
+                className="md:grid md:grid-cols-4 md:gap-x-6 md:col-start-1 md:col-end-3"
             >
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
@@ -238,15 +272,13 @@ const SalaEdit = () => {
                         }
                     />
                 </div>
-
                 <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
                     <label htmlFor="precios" className="font-semibold">
-                        Precios:{' '}
+                        Precios:
                     </label>
                     <input
-                        type="number"
                         name="precios"
-                        placeholder="Tarifa para los grupos"
+                        type="number"
                         value={sala.precios}
                         onChange={(e) =>
                             setSala({ ...sala, precios: e.target.value })

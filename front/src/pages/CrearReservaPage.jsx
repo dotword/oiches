@@ -5,10 +5,9 @@ import useAuth from '../hooks/useAuth.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from '../components/Toastify.jsx';
-import { useEffect } from 'react';
 import noImage from '../assets/noimage.png';
 import Footer from '../components/Footer.jsx';
-export const CrearReservaPage = ({ type }) => {
+export const CrearReservaPage = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
     const { idSala } = useParams();
@@ -26,11 +25,11 @@ export const CrearReservaPage = ({ type }) => {
     return (
         <>
             <Header txt={`Reservar sala: ${entry.nombre}`} />
-            <main className="p-4 flex flex-col gap-10 max-w-6xl mx-auto shadow-xl">
-                <section className="flex flex-col place-items-center border rounded-lg mx-auto min-w-60 sm:flex-row sm:gap-6">
+            <main className="p-4 mt-6 flex flex-col gap-10 mx-auto shadow-xl w-11/12 md:max-w-1200">
+                <section className="flex flex-col border rounded-lg mx-auto gap-6 md:flex-wrap md:flex-row md:w-full">
                     {entry.photos.length > 0 ? (
                         <img
-                            className="max-w-md rounded-l-md"
+                            className="rounded-l-md"
                             src={`${VITE_API_URL_BASE}/uploads/${entry.photos[0].name}`}
                             alt={`Una imagen de la sala ${entry.nombre}`}
                         />
@@ -41,46 +40,41 @@ export const CrearReservaPage = ({ type }) => {
                             alt="Imagen Default"
                         />
                     )}
-                    <div className="flex flex-col  gap-2 px-6 min-w-26">
-                        <span>
-                            Dirección :<p>{entry.direccion}</p>
-                        </span>
-                        <span>
-                            Provincia :<p>{entry.provincia}</p>
-                        </span>
+                    <div className="flex flex-col gap-2 px-6 mb-6 md:mt-6 md:px-0">
+                        <p className="flex flex-col">
+                            <span className="font-semibold">Dirección</span>
+                            {entry.direccion}
+                        </p>
+                        <p className="flex flex-col">
+                            <span className="font-semibold">Provincia</span>
+                            {entry.provincia}
+                        </p>
+
                         {entry.genero && (
-                            <span>
-                                Género
+                            <p className="flex flex-col">
+                                <span className="font-semibold">Géneros</span>
+
                                 {entry.genero.map((gen) => {
                                     return (
-                                        <div
-                                            key={gen.generoId}
-                                            className="text-gray-400"
-                                        >
+                                        <span key={gen.generoId}>
                                             {gen.generoName}
-                                        </div>
+                                        </span>
                                     );
                                 })}
-                            </span>
+                            </p>
                         )}
-
-                        {entry.honorarios && (
-                            <span>
-                                Honorarios :<p>{entry.honorarios}</p>
+                        <p className="flex flex-col">
+                            <span className="font-semibold">
+                                Hora inicio reservas
                             </span>
-                        )}
-                        {entry.horaReservasStart && (
-                            <span>
-                                Hora inicio reservas :
-                                <p>{entry.horaReservasStart}</p>
+                            {entry.horaReservasStart}
+                        </p>
+                        <p className="flex flex-col">
+                            <span className="font-semibold">
+                                Hora final reservas
                             </span>
-                        )}
-                        {entry.horaReservasEnd && (
-                            <span>
-                                Hora final reservas :
-                                <p>{entry.horaReservasEnd}</p>
-                            </span>
-                        )}
+                            {entry.horaReservasEnd}
+                        </p>
                     </div>
                 </section>
                 <CrearReservaForm />
