@@ -32,10 +32,10 @@ const GrupoDetail = () => {
     return entry ? (
         <>
             <Header txt={nombre} />
-            <main className="max-w-6xl mx-auto flex flex-col p-6 gap-6 m-4 rounded-3xl">
-                <section className="flex flex-col lg:flex-row items-center gap-6">
+            <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
+                <section className="flex flex-col mx-auto md:flex-row items-center gap-6">
                     <img
-                        className="w-32 h-32 rounded-full"
+                        className="w-40 h-40 rounded-full object-cover"
                         src={
                             avatar
                                 ? `${VITE_API_URL_BASE}/uploads/${avatar}`
@@ -44,7 +44,7 @@ const GrupoDetail = () => {
                         alt="Imagen de perfil del grupo"
                     />
                 </section>
-                <section className="grid grid-cols-1 lg:grid-cols-[1fr_1.618fr] gap-6 my-6">
+                <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
                     {genero && (
                         <span>
                             <span className="text-lg font-semibold">
@@ -55,15 +55,6 @@ const GrupoDetail = () => {
                                     {gen.generoName}
                                 </div>
                             ))}
-                        </span>
-                    )}
-
-                    {currentUser && (
-                        <span>
-                            <span className="text-lg font-semibold">
-                                Contacto
-                            </span>{' '}
-                            <p className="text-black">{email}</p>
                         </span>
                     )}
                     {honorarios && (
@@ -80,10 +71,18 @@ const GrupoDetail = () => {
                             <p className="text-black">{Provincia}</p>
                         </span>
                     )}
+                    {currentUser && (
+                        <span>
+                            <span className="text-lg font-semibold">
+                                Contacto
+                            </span>{' '}
+                            <p className="text-black">{email}</p>
+                        </span>
+                    )}
                 </section>
                 <section>
                     <h3 className="text-lg font-semibold">Biografía</h3>
-                    <p className="my-6">
+                    <p className="mb-6 mt-3">
                         {biografia
                             ? biografia
                             : 'El grupo tiene que añadir la biografía.'}
@@ -93,7 +92,7 @@ const GrupoDetail = () => {
                     <section>
                         <h3 className="text-lg font-semibold">Rider </h3>
                         <iframe
-                            className="my-6 w-full lg:w-2/3 h-80 rounded-3xl"
+                            className="my-6 w-full md:w-2/3 h-80 rounded-3xl"
                             src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
                             frameBorder="0"
                             title="PDF Viewer"
@@ -103,7 +102,7 @@ const GrupoDetail = () => {
                 {media.length > 0 && (
                     <section>
                         <h3 className="text-lg font-semibold">Videos</h3>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 my-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                             {media.map((media) => (
                                 <iframe
                                     className="w-full min-h-60 rounded-3xl"
@@ -119,9 +118,34 @@ const GrupoDetail = () => {
                         </div>
                     </section>
                 )}
+                <section>
+                    <h3 className="text-lg font-semibold">Fotos</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 place-items-center">
+                        {fotos.length > 0 ? (
+                            <>
+                                {fotos.map((photo) => (
+                                    <img
+                                        key={photo.id}
+                                        src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
+                                        className="rounded-3xl max-h-80 shadow-xl"
+                                        alt=""
+                                    />
+                                ))}
+                            </>
+                        ) : (
+                            <>
+                                <img
+                                    className="col-span-1 md:col-span-2 rounded-3xl"
+                                    src={Noimage}
+                                    alt="No image"
+                                />
+                            </>
+                        )}
+                    </div>
+                </section>
 
                 {comentarios.length > 0 && (
-                    <section>
+                    <section className="mb-10">
                         <h3 className="text-lg font-semibold">Comentarios</h3>
 
                         {comentarios.map((comentario) => (
@@ -157,33 +181,8 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
-                <section>
-                    <h3 className="text-lg font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-6 place-items-center">
-                        {fotos.length > 0 ? (
-                            <>
-                                {fotos.map((photo) => (
-                                    <img
-                                        key={photo.id}
-                                        src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-3xl max-h-80 shadow-xl"
-                                        alt=""
-                                    />
-                                ))}
-                            </>
-                        ) : (
-                            <>
-                                <img
-                                    className="col-span-1 lg:col-span-2 rounded-3xl"
-                                    src={Noimage}
-                                    alt="No image"
-                                />
-                            </>
-                        )}
-                    </div>
-                </section>
             </main>
-            <Footer></Footer>
+            <Footer />
         </>
     ) : (
         <p>{error}</p>

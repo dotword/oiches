@@ -29,7 +29,7 @@ export const CrearReservaPage = () => {
                 <section className="flex flex-col border rounded-lg mx-auto gap-6 md:flex-wrap md:flex-row md:w-full">
                     {entry.photos.length > 0 ? (
                         <img
-                            className="rounded-l-md"
+                            className="rounded-l-md object-cover"
                             src={`${VITE_API_URL_BASE}/uploads/${entry.photos[0].name}`}
                             alt={`Una imagen de la sala ${entry.nombre}`}
                         />
