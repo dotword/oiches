@@ -14,7 +14,6 @@ import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 
-
 const AuthUser = () => {
     const { userLogged, token } = useContext(AuthContext);
 

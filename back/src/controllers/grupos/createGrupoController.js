@@ -38,13 +38,15 @@ const createGrupoController = async (req, res, next) => {
 
         // Insertamos los géneros
         const generosList = [];
-        const generosArray = Array.isArray(generos)
-            ? generos
-            : generos.split(',');
+        if (generos) {
+            const generosArray = Array.isArray(generos)
+                ? generos
+                : generos.split(',');
 
-        for (const genero of generosArray) {
-            await insertGrupoGenerosService(genero.trim(), grupoId);
-            generosList.push({ generoId: genero.trim() });
+            for (const genero of generosArray) {
+                await insertGrupoGenerosService(genero.trim(), grupoId);
+                generosList.push({ generoId: genero.trim() });
+            }
         }
 
         // Insertamos los videos
