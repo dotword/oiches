@@ -33,10 +33,11 @@ const SalaDetail = () => {
     return entry ? (
         <>
             <Header txt={nombre} />
+
             <main className="max-w-6xl mx-auto flex flex-col p-6 gap-6 m-4 rounded-3xl">
                 <section className="flex flex-col lg:flex-row items-center gap-6">
                     <img
-                        className="w-32 h-32 rounded-xl"
+                        className="w-32 h-32 rounded-full"
                         src={
                             usuarioAvatar
                                 ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
@@ -44,23 +45,15 @@ const SalaDetail = () => {
                         }
                         alt="Imagen de perfil de la sala"
                     />
-                    <div className="text-center lg:text-left">
-                        <h2 className="text-4xl">{nombre}</h2>
-                    </div>
                 </section>
                 <section className="grid grid-cols-1 lg:grid-cols-[1fr_1.618fr] gap-6 my-6">
-                    <span>
-                        Nombre de la Sala{' '}
-                        <p className="text-gray-400">{nombre}</p>
-                    </span>
                     {genero && (
                         <span>
-                            Género
+                            <span className="text-lg font-semibold">
+                                Géneros
+                            </span>
                             {genero.map((gen) => (
-                                <div
-                                    key={gen.generoId}
-                                    className="text-gray-400"
-                                >
+                                <div key={gen.generoId} className="text-black">
                                     {gen.generoName}
                                 </div>
                             ))}
@@ -68,47 +61,61 @@ const SalaDetail = () => {
                     )}
                     {capacidad && (
                         <span>
-                            Capacidad{' '}
-                            <p className="text-gray-400">{capacidad}</p>
+                            <span className="text-lg font-semibold">Aforo</span>{' '}
+                            <p className="text-black">{capacidad}</p>
                         </span>
                     )}
                     {precios && (
                         <span>
-                            Precio <p className="text-gray-400">{precios}€</p>
+                            <span className="text-lg font-semibold">
+                                Precio
+                            </span>{' '}
+                            <p className="text-black">{precios}€</p>
                         </span>
                     )}
                     {equipamiento && (
                         <span>
-                            Equipamiento{' '}
-                            <p className="text-gray-400">{equipamiento}</p>
+                            <span className="text-lg font-semibold">
+                                Equipamiento
+                            </span>{' '}
+                            <p className="text-black">{equipamiento}</p>
                         </span>
                     )}
                     {direccion && (
                         <span>
-                            Dirección{' '}
-                            <p className="text-gray-400">{direccion}</p>
+                            <span className="text-lg font-semibold">
+                                Dirección
+                            </span>{' '}
+                            <p className="text-black">{direccion}</p>
                         </span>
                     )}
                     {condiciones && (
                         <span>
-                            Condiciones{' '}
-                            <p className="text-gray-400">{condiciones}</p>
+                            <span className="text-lg font-semibold">
+                                Condiciones
+                            </span>{' '}
+                            <p className="text-black">{condiciones}</p>
                         </span>
                     )}
                     {provincia && (
                         <span>
-                            Provincia{' '}
-                            <p className="text-gray-400">{provincia}</p>
+                            <span className="text-lg font-semibold">
+                                Provincia
+                            </span>{' '}
+                            <p className="text-black">{provincia}</p>
                         </span>
                     )}
                     {currentUser && (
                         <span>
-                            Contacto <p className="text-gray-400">{email}</p>
+                            <span className="text-lg font-semibold">
+                                Contacto
+                            </span>{' '}
+                            <p className="text-black">{email}</p>
                         </span>
                     )}
                 </section>
                 <section>
-                    <h3 className="text-2xl">Descripción :</h3>
+                    <h3 className="text-lg font-semibold">Descripción </h3>
                     <p className="my-6">
                         {descripcion
                             ? descripcion
@@ -117,7 +124,7 @@ const SalaDetail = () => {
                 </section>
                 {comentarios.length > 0 && (
                     <section>
-                        <h3 className="text-2xl">Comentarios :</h3>
+                        <h3 className="text-lg font-semibold">Comentarios</h3>
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
@@ -125,7 +132,7 @@ const SalaDetail = () => {
                             >
                                 <span>
                                     {comentario.comentario}
-                                    <p className="text-gray-400">
+                                    <p className="text-black">
                                         {comentario.createdAt.slice(0, 10)}
                                     </p>
                                 </span>
@@ -152,7 +159,7 @@ const SalaDetail = () => {
                     </section>
                 )}
                 <section>
-                    <h3 className="text-2xl">Fotos:</h3>
+                    <h3 className="text-lg font-semibold">Fotos</h3>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
                             <>
