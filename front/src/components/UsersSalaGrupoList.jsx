@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -12,11 +12,18 @@ const UsersSalaGrupoList = () => {
     // FIXME devolver funcion para cambia listado salas
     const { userLogged, token } = useAuth();
     const { VITE_API_URL_BASE } = import.meta.env;
-    const [salas, setSalas] = useState(userLogged.salas || []);
-    const [grupos, setGrupos] = useState(userLogged.grupos || []);
+    const [salas, setSalas] = useState('');
+    const [grupos, setGrupos] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(null);
+
+        useEffect(() => {
+        if (userLogged) {
+            setSalas(userLogged.salas || []);
+            setGrupos(userLogged.grupos || []);
+        }
+    }, [userLogged]);
 
     const handleDelete = async (id, type) => {
         const endpoint =
