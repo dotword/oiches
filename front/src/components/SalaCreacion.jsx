@@ -20,7 +20,7 @@ const SalaCreacion = () => {
         nombre: '',
         direccion: '',
         provincia: '',
-        // generos: [],
+        generos: [],
         capacidad: '',
         descripcion: '',
         precios: '',
@@ -54,8 +54,12 @@ const SalaCreacion = () => {
     }, []);
 
     const handleGenChange = (selectedList) => {
-        setGeneros(selectedList.map((genre) => genre.id));
-        setFormValues({ ...formValues, generos: generos });
+        const selectedGenres = selectedList.map((genre) => genre.id);
+        setGeneros(selectedGenres);
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            generos: selectedGenres,
+        }));
     };
 
     const handleChange = (e) => {
