@@ -45,12 +45,12 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row my-2 mt-10 items-start">
-                        <NavLink
+                        {/* <NavLink
                             to={'/'}
                             className="hover:text-yellowOiches mx-2 md:mx-2"
                         >
                             Sobre nosotros
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
                             to={'/'}
                             className="hover:text-yellowOiches mx-2 md:mx-2"
@@ -76,8 +76,8 @@ const Footer = () => {
                 <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-10">
                     <p className="font-semibold mb-2">Newsletter</p>
                     <p className="max-w-96">
-                        Be the first one to know about discounts, offers, and
-                        events. Unsubscribe whenever you like.
+                        Sé el primero en enterarte de nuestros eventos y
+                        novedades. Date de baja cuando quieras.
                     </p>
                     <div className="relative mt-4 w-full">
                         <input
