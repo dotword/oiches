@@ -62,7 +62,7 @@ const Grupos = () => {
             </div>
             <div className="grupo-list-container">
                 {!error &&
-                    (filteredGrupos.length ? (
+                    (filteredGrupos ? (
                         <GrupoList grupos={filteredGrupos} />
                     ) : (
                         <p>No se encontraron grupos</p>
