@@ -12,7 +12,7 @@ const Salas = () => {
     // const [salas, setSalas] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(null);
-    const [pageSize, setPageSize] = useState(8);
+    const pageSize = 8;
     const [filters, setFilters] = useState({});
     const [filteredSalas, setFilteredSalas] = useState([]);
 
