@@ -11,7 +11,7 @@ import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(8);
+    const pageSize = 8;
     const [total, setTotal] = useState(null);
     const [filters, setFilters] = useState({});
     const [error, setError] = useState(null);
