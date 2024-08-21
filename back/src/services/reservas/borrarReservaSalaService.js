@@ -62,7 +62,7 @@ const borrarReservaSalaService = async (reserva_id) => {
             return;
         }
 
-        await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
+        await pool.query('DELETE FROM reservas WHERE id = ?', [reserva_id]);
     } catch (error) {
         console.log(error);
         throw error;

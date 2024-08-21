@@ -5,7 +5,7 @@ const checkIfSalaService = async (userId) => {
     const pool = await getPool();
 
     const [userResults] = await pool.query(
-        'SELECT roles FROM Usuarios WHERE id = ?',
+        'SELECT roles FROM usuarios WHERE id = ?',
         [userId]
     );
 

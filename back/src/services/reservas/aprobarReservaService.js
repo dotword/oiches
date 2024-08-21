@@ -74,7 +74,7 @@ const aprobarReservaService = async (reserva_id) => {
             return;
         }
 
-        await pool.query('UPDATE Reservas SET confirmada = 1 WHERE id = ?', [
+        await pool.query('UPDATE reservas SET confirmada = 1 WHERE id = ?', [
             reserva_id,
         ]);
     } catch (error) {

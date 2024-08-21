@@ -5,7 +5,7 @@ export const cancelarReservaService = async (id, reserva_id) => {
         const pool = await getPool();
 
         const [grupoResults] = await pool.query(
-            'SELECT id FROM Grupos WHERE usuario_id = ?',
+            'SELECT id FROM grupos WHERE usuario_id = ?',
             [id]
         );
         if (grupoResults.length === 0) {
@@ -33,7 +33,7 @@ export const cancelarReservaService = async (id, reserva_id) => {
             );
         }
 
-        await pool.query('DELETE FROM Reservas WHERE id = ?', [reserva_id]);
+        await pool.query('DELETE FROM reservas WHERE id = ?', [reserva_id]);
         return {
             reserva: {
                 grupoResults,

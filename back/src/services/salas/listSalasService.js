@@ -6,19 +6,19 @@ export async function listSalasService(filters) {
     // Consulta para obtener las salas con paginación
     let query = `
     SELECT 
-        Salas.id, 
-        Salas.usuario_id, 
-        Salas.nombre, 
-        Salas.createdAt,
-        (SELECT provincia FROM provincias WHERE provincias.id = Salas.provincia) AS Provincia,
-        (SELECT name FROM Sala_fotos WHERE Sala_fotos.salaId = Salas.id LIMIT 1) AS primera_foto,
-        (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = Salas.id) AS media_votos,
-        (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.SalaId = Salas.id) AS generos,
+        salas.id, 
+        salas.usuario_id, 
+        salas.nombre, 
+        salas.createdAt,
+        (SELECT provincia FROM provincias WHERE provincias.id = salas.provincia) AS provincia,
+        (SELECT name FROM sala_fotos WHERE sala_fotos.salaId = salas.id LIMIT 1) AS primera_foto,
+        (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = salas.id) AS media_votos,
+        (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.SalaId = salas.id) AS generos,
         GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
     FROM 
-        Salas 
-    LEFT JOIN provincias ON provincias.id = Salas.provincia
-    LEFT JOIN generos_salas gs ON gs.salaId = Salas.id
+        salas 
+    LEFT JOIN provincias ON provincias.id = salas.provincia
+    LEFT JOIN generos_salas gs ON gs.salaId = salas.id
     LEFT JOIN generos_musicales gm ON gs.generoId = gm.id        
     WHERE 
         1=1
@@ -28,7 +28,7 @@ export async function listSalasService(filters) {
 
     // Filtros específicos
     if (filters.nombre) {
-        query += ' AND Salas.nombre LIKE ?';
+        query += ' AND salas.nombre LIKE ?';
         queryParams.push(`%${filters.nombre}%`);
     }
 
@@ -38,16 +38,16 @@ export async function listSalasService(filters) {
     }
 
     if (filters.provincia) {
-        query += ' AND Salas.provincia = ?';
+        query += ' AND salas.provincia = ?';
         queryParams.push(filters.provincia);
     }
 
-    query += ' GROUP BY Salas.id';
+    query += ' GROUP BY salas.id';
 
     // Ordenamiento por media de votos siempre
     if (filters.order && filters.field) {
         const orderField =
-            filters.field === 'media_votos' ? 'media_votos' : 'Salas.nombre';
+            filters.field === 'media_votos' ? 'media_votos' : 'salas.nombre';
         const orderDirection =
             filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
@@ -77,9 +77,9 @@ export async function listSalasService(filters) {
     let countQuery = `
     SELECT COUNT(*) AS total
     FROM 
-        Salas 
-    LEFT JOIN provincias ON provincias.id = Salas.provincia
-    LEFT JOIN generos_salas gs ON gs.salaId = Salas.id
+        salas 
+    LEFT JOIN provincias ON provincias.id = salas.provincia
+    LEFT JOIN generos_salas gs ON gs.salaId = salas.id
     LEFT JOIN generos_musicales gm ON gs.generoId = gm.id        
     WHERE 
         1=1
@@ -87,7 +87,7 @@ export async function listSalasService(filters) {
 
     // Aplicar los mismos filtros a la consulta de conteo
     if (filters.nombre) {
-        countQuery += ' AND Salas.nombre LIKE ?';
+        countQuery += ' AND salas.nombre LIKE ?';
     }
 
     if (filters.genero) {
@@ -95,7 +95,7 @@ export async function listSalasService(filters) {
     }
 
     if (filters.provincia) {
-        countQuery += ' AND Salas.provincia = ?';
+        countQuery += ' AND salas.provincia = ?';
     }
 
     const [[countResult]] = await pool.query(
