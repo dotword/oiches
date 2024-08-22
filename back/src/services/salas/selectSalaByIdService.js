@@ -23,7 +23,7 @@ const selectSalaByIdService = async (idSala) => {
                 U.avatar AS usuarioAvatar,
                 S.createdAt,
                 AVG(IFNULL(V.voto, 0)) AS votos
-            FROM Salas S
+            FROM salas S
             LEFT JOIN votos_salas V ON V.salaVotada = S.id           
             INNER JOIN usuarios U ON U.id = S.usuario_id
             WHERE S.id = ?
