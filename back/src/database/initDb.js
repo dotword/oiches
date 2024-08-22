@@ -16,7 +16,7 @@ const main = async () => {
 
         // Creando tablas Usuarios
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Usuarios(
+            CREATE TABLE IF NOT EXISTS usuarios(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 username VARCHAR(50) NOT NULL UNIQUE,
                 email VARCHAR(100) NOT NULL UNIQUE,
@@ -33,7 +33,7 @@ const main = async () => {
     `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Generos_musicales(
+            CREATE TABLE IF NOT EXISTS generos_musicales(
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -42,7 +42,7 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Provincias(
+            CREATE TABLE IF NOT EXISTS provincias(
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 provincia VARCHAR(255) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -51,7 +51,7 @@ const main = async () => {
         `);
 
         await pool.query(`
-        CREATE TABLE IF NOT EXISTS Salas(
+        CREATE TABLE IF NOT EXISTS salas(
             id CHAR(36) PRIMARY KEY NOT NULL,
             usuario_id CHAR(36) NOT NULL,
             nombre VARCHAR(100) NOT NULL,
@@ -64,8 +64,8 @@ const main = async () => {
             equipamiento TEXT,
             horaReservasStart VARCHAR(255) NOT NULL,
             horaReservasEnd VARCHAR(255) NOT NULL,
-            FOREIGN KEY(provincia) REFERENCES Provincias(id),
-            FOREIGN KEY(usuario_id) REFERENCES Usuarios(id),
+            FOREIGN KEY(provincia) REFERENCES provincias(id),
+            FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             deletedAt DATETIME NULL
@@ -73,27 +73,27 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Generos_salas(
+            CREATE TABLE IF NOT EXISTS generos_salas(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 salaId CHAR(36) NOT NULL,
                 generoId INT NOT NULL,
-                FOREIGN KEY (salaId) REFERENCES Salas(id),
-                FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
+                FOREIGN KEY (salaId) REFERENCES salas(id),
+                FOREIGN KEY (generoId) REFERENCES generos_musicales(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Grupos(
+            CREATE TABLE IF NOT EXISTS grupos(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50) NOT NULL UNIQUE,
                 provincia INT NOT NULL,
                 honorarios INT,
                 biografia TEXT,
                 usuario_id CHAR(36) NOT NULL,
-                FOREIGN KEY (usuario_id) REFERENCES Usuarios(id),
-                FOREIGN KEY(provincia) REFERENCES Provincias(id),
+                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+                FOREIGN KEY(provincia) REFERENCES provincias(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 deletedAt DATETIME NULL
@@ -101,48 +101,48 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Generos_grupos(
+            CREATE TABLE IF NOT EXISTS generos_grupos(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 grupoId CHAR(36) NOT NULL,
                 generoId INT NOT NULL,
-                FOREIGN KEY (grupoId) REFERENCES Grupos(id),
-                FOREIGN KEY (generoId) REFERENCES Generos_musicales(id),
+                FOREIGN KEY (grupoId) REFERENCES grupos(id),
+                FOREIGN KEY (generoId) REFERENCES generos_musicales(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Sala_fotos(
+            CREATE TABLE IF NOT EXISTS sala_fotos(
                     id CHAR(36) PRIMARY KEY NOT NULL,
                     name VARCHAR(100) NOT NULL,
                     salaId CHAR(36) NOT NULL,
-                    FOREIGN KEY (salaId) REFERENCES Salas(id),
+                    FOREIGN KEY (salaId) REFERENCES salas(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Grupo_fotos(
+            CREATE TABLE IF NOT EXISTS grupo_fotos(
                     id CHAR(36) PRIMARY KEY NOT NULL,
                     name VARCHAR(100) NOT NULL,
                     grupoId CHAR(36) NOT NULL,
-                    FOREIGN KEY (grupoId) REFERENCES Grupos(id),
+                    FOREIGN KEY (grupoId) REFERENCES grupos(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Grupo_media(
+            CREATE TABLE IF NOT EXISTS grupo_media(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 grupo_id CHAR(36) NOT NULL,
                 url VARCHAR(255) NOT NULL,
-                FOREIGN KEY (grupo_id) REFERENCES Grupos(id),
+                FOREIGN KEY (grupo_id) REFERENCES grupos(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
         `);
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Reservas(
+            CREATE TABLE IF NOT EXISTS reservas(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 sala_id CHAR(36) NOT NULL,
                 grupo_id CHAR(36) NOT NULL,
@@ -150,8 +150,8 @@ const main = async () => {
                 fecha VARCHAR(15),
                 horaInicio VARCHAR(15),
                 horaFin VARCHAR(15),
-                FOREIGN KEY(sala_id) REFERENCES Salas(id),
-                FOREIGN KEY(grupo_id) REFERENCES Grupos(id),
+                FOREIGN KEY(sala_id) REFERENCES salas(id),
+                FOREIGN KEY(grupo_id) REFERENCES grupos(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
@@ -165,9 +165,9 @@ const main = async () => {
                 grupoVota CHAR(36) NOT NULL,
                 salaVotada CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (reservaId) REFERENCES Reservas(id),
-                FOREIGN KEY (grupoVota) REFERENCES Grupos(id),
-                FOREIGN KEY (salaVotada) REFERENCES Salas(id)
+                FOREIGN KEY (reservaId) REFERENCES reservas(id),
+                FOREIGN KEY (grupoVota) REFERENCES grupos(id),
+                FOREIGN KEY (salaVotada) REFERENCES salas(id)
             );
         `);
 
@@ -180,14 +180,14 @@ const main = async () => {
                 salaVota CHAR(36) NOT NULL,
                 grupoVotado CHAR(36) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (reservaId) REFERENCES Reservas(id),
-                FOREIGN KEY (grupoVotado) REFERENCES Grupos(id),
-                FOREIGN KEY (salaVota) REFERENCES Salas(id)
+                FOREIGN KEY (reservaId) REFERENCES reservas(id),
+                FOREIGN KEY (grupoVotado) REFERENCES grupos(id),
+                FOREIGN KEY (salaVota) REFERENCES salas(id)
             );
         `);
 
         await pool.query(`
-            INSERT INTO Generos_musicales (nombre) VALUES
+            INSERT INTO generos_musicales (nombre) VALUES
                 ('Rock'),
                 ('Pop'),
                 ('Metal'),
@@ -209,7 +209,7 @@ const main = async () => {
         `);
 
         await pool.query(`
-            INSERT INTO Provincias (provincia) VALUES
+            INSERT INTO provincias (provincia) VALUES
             ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
         
         `);

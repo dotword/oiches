@@ -15,30 +15,31 @@ export const crearReservaService = async (
         // Generamos el id de la entrada.
         const reservaId = uuid();
 
-        const today = new Date()
+        const today = new Date();
         today.setHours(0, 0, 0, 0);
-        const reservaFecha = new Date(fecha)
-        reservaFecha.setHours(0, 0, 0, 0)
+        const reservaFecha = new Date(fecha);
+        reservaFecha.setHours(0, 0, 0, 0);
 
         if (reservaFecha < today) {
-            throw generateErrorsUtil('No se puede reservar una fecha anterior a hoy.',404)
-              
-            
+            throw generateErrorsUtil(
+                'No se puede reservar una fecha anterior a hoy.',
+                404
+            );
         }
-       
+
         const [grupoResults] = await pool.query(
-            'SELECT id FROM Grupos WHERE usuario_id = ?',
+            'SELECT id FROM grupos WHERE usuario_id = ?',
             [id]
         );
         const grupo_id = grupoResults[0].id;
 
         const [salaResults] = await pool.query(
-            'SELECT id FROM Salas WHERE id = ?',
+            'SELECT id FROM salas WHERE id = ?',
             [sala_id]
         );
         await pool.query(
-            'INSERT INTO Reservas(id, fecha, horaInicio,horaFin, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
-            [reservaId, fecha, horaInicio , horaFin, sala_id, grupo_id]
+            'INSERT INTO reservas(id, fecha, horaInicio, horaFin, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
+            [reservaId, fecha, horaInicio, horaFin, sala_id, grupo_id]
         );
 
         const [reservaResults] = await pool.query(
@@ -47,8 +48,10 @@ export const crearReservaService = async (
         );
         reservaResults.forEach((result) => {
             if (fecha === result.fecha && horaInicio === result.horaInicio) {
-               throw generateErrorsUtil('Ya hay una reserva para esta fecha y hora.',402) 
-                     
+                throw generateErrorsUtil(
+                    'Ya hay una reserva para esta fecha y hora.',
+                    402
+                );
             }
         });
         return {

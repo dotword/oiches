@@ -20,7 +20,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.horaReservasStart,
                 S.horaReservasEnd,
                 (SELECT email FROM usuarios WHERE usuarios.id = S.usuario_id) AS email,
-                U.avatar AS usuarioAvatar, -- Agregamos el avatar del usuario aquí
+                U.avatar AS usuarioAvatar,
                 S.createdAt,
                 AVG(IFNULL(V.voto, 0)) AS votos
             FROM Salas S
@@ -85,8 +85,8 @@ const selectSalaByIdService = async (idSala) => {
                 R.horaInicio,
                 R.horaFin,
                 R.confirmada
-            FROM Reservas R
-            LEFT JOIN Grupos G ON G.id = R.grupo_id
+            FROM reservas R
+            LEFT JOIN grupos G ON G.id = R.grupo_id
             WHERE R.sala_id = ?
         `,
         [idSala]

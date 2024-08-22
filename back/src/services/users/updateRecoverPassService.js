@@ -6,7 +6,7 @@ const updateRecoverPassService = async (email, recoverPassCode) => {
     const pool = await getPool();
 
     await pool.query(
-        `UPDATE Usuarios SET recoverPassCode = ? WHERE email = ?`,
+        `UPDATE usuarios SET recoverPassCode = ? WHERE email = ?`,
         [recoverPassCode, email]
     );
 
