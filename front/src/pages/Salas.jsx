@@ -12,7 +12,7 @@ const Salas = () => {
     // const [salas, setSalas] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(null);
-    const [pageSize, setPageSize] = useState(8);
+    const pageSize = 8;
     const [filters, setFilters] = useState({});
     const [filteredSalas, setFilteredSalas] = useState([]);
 
@@ -52,13 +52,13 @@ const Salas = () => {
                 <SalaFilter onFilterChange={handleFilterChange} />
             </div>
             <div className="sala-list-container">
-                {filteredSalas.length ? (
+                {filteredSalas ? (
                     <SalaList salas={filteredSalas} />
                 ) : (
                     <p>No se encontraron salas</p>
                 )}
             </div>
-            {totalPages > 1 ? (
+            {totalPages > 1 & (
                 <div className="flex gap-3 justify-center my-16">
                     <button
                         disabled={page === 1}
@@ -76,8 +76,6 @@ const Salas = () => {
                         <MdKeyboardDoubleArrowRight className="text-xl" />
                     </button>
                 </div>
-            ) : (
-                ''
             )}
 
             <Footer />
