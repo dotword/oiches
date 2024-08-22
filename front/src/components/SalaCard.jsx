@@ -25,7 +25,7 @@ const SalaCard = ({ sala }) => {
             <p className="card-genre text-gray-400">{sala.generoNombres}</p>
             <p className="sala-card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}
-                {sala.Provincia}
+                {sala.provincia}
             </p>
             <div className="mt-2">
                 <StarRating rating={sala.media_votos} />
