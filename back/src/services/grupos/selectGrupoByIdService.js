@@ -98,8 +98,8 @@ const selectGrupoByIdService = async (idGrupo) => {
         R.horaInicio,
         R.horaFin,
         R.confirmada
-        FROM Reservas R
-        LEFT JOIN Salas S ON S.id= R.sala_id 
+        FROM reservas R
+        LEFT JOIN salas S ON S.id= R.sala_id 
         WHERE grupo_id = ?
         `,
         [idGrupo]

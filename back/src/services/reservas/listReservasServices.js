@@ -21,10 +21,10 @@ export const listReservaService = async (id) => {
 
         const [reservas] = await pool.query(
             `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre
-    FROM reservas
-    LEFT JOIN grupos ON reservas.grupo_id = grupos.id
-    LEFT JOIN salas ON reservas.sala_id = salas.id
-    WHERE reservas.sala_id IN (?)`,
+                FROM reservas
+                LEFT JOIN grupos ON reservas.grupo_id = grupos.id
+                LEFT JOIN salas ON reservas.sala_id = salas.id
+                WHERE reservas.sala_id IN (?)`,
             [salasId]
         );
         if (reservas.length === 0) {
