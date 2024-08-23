@@ -18,7 +18,7 @@ const selectGrupoByIdService = async (idGrupo) => {
                 G.usuario_id,
                 AVG(IFNULL(V.voto, 0)) AS votes,
                 G.createdAt
-            FROM Grupos G
+            FROM grupos G
             LEFT JOIN votos_grupos V ON V.grupoVotado = G.id           
             INNER JOIN usuarios U ON U.id = G.usuario_id
             WHERE G.id = ?
