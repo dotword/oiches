@@ -19,6 +19,7 @@ const Salas = () => {
     useEffect(() => {
         const fetchSalas = async () => {
             const data = await FetchSalasService(filters, page, pageSize);
+            console.log(data);
             setTotal(data.total);
             setFilteredSalas(data.rows);
         };
@@ -58,7 +59,7 @@ const Salas = () => {
                     <p>No se encontraron salas</p>
                 )}
             </div>
-            {(totalPages > 1) &
+            {(totalPages > 1) &&
             (
                 <div className="flex gap-3 justify-center my-16">
                     <button
