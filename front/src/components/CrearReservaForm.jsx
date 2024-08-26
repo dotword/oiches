@@ -9,7 +9,6 @@ export const CrearReservaForm = () => {
     const { idSala } = useParams();
     const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`;
     const { token } = useAuth();
-    const [error, setError] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formValues, setFormValues] = useState('');
 
@@ -18,6 +17,7 @@ export const CrearReservaForm = () => {
         setFormValues(new FormData(e.target));
         setIsModalOpen(true);
     };
+
     const handleConfirm = async () => {
         setIsModalOpen(false);
         try {
@@ -40,8 +40,7 @@ export const CrearReservaForm = () => {
                 'Reserva creada con éxito. Espere a que la sala confirme su reserva.'
             );
         } catch (error) {
-            setError(error.message);
-            toast.error(error.message);
+            toast.error(error.message); // mostramos error con Toastify
         }
     };
 
