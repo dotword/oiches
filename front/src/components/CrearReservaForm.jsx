@@ -6,46 +6,58 @@ import { toast } from 'react-toastify';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 
 export const CrearReservaForm = () => {
+<<<<<<< HEAD
     const { idSala } = useParams();
     const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`;
     const { token } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [formValues, setFormValues] = useState('');
+=======
+    const { idSala } = useParams(); // Obtén el idSala de los parámetros de la URL
+    const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`; // Construye la URL con el idSala
+    const { token } = useAuth(); // Obtén el token de autenticación
+    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para manejar el modal de confirmación
+    const [formValues, setFormValues] = useState(null); // Estado para almacenar los valores del formulario
+>>>>>>> origin/main
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormValues(new FormData(e.target));
-        setIsModalOpen(true);
+        const formData = new FormData(e.target);
+        setFormValues(formData); // Almacena los valores del formulario en el estado
+        setIsModalOpen(true); // Abre el modal de confirmación
     };
 
     const handleConfirm = async () => {
-        setIsModalOpen(false);
+        setIsModalOpen(false); // Cierra el modal
         try {
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    authorization: `${token}`,
+                    Authorization: `${token}`,
                 },
-                body: formValues,
+                body: formValues, // Envía los valores del formulario
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                console.log(response);
-                throw new Error(`${data.message} `);
+                throw new Error(data.message || 'Error al crear la reserva'); // Maneja posibles errores del servidor
             }
 
             toast.success(
                 'Reserva creada con éxito. Espere a que la sala confirme su reserva.'
-            );
+            ); // Notificación de éxito
         } catch (error) {
+<<<<<<< HEAD
             toast.error(error.message); // mostramos error con Toastify
+=======
+            toast.error(error.message); // Notificación de error
+>>>>>>> origin/main
         }
     };
 
     const handleCancel = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(false); // Cierra el modal si el usuario cancela
     };
 
     return (

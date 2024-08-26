@@ -4,10 +4,6 @@ export const deleteSalaService = async (salaId) => {
     const pool = await getPool();
 
     try {
-        // Seleccionar el usuario
-
-        // Seleccionar salas asociadas al usuario
-
         // Eliminar media de la sala
         await pool.query(`DELETE FROM sala_fotos WHERE salaId = ?`, [salaId]);
 
@@ -25,6 +21,9 @@ export const deleteSalaService = async (salaId) => {
         for (const reserva of reservas) {
             // Eliminar votos, comentarios y reservas asociadas
             await pool.query(`DELETE FROM votos_salas WHERE reservaId = ?`, [
+                reserva.id,
+            ]);
+            await pool.query(`DELETE FROM votos_grupos WHERE reservaId = ?`, [
                 reserva.id,
             ]);
             await pool.query(`DELETE FROM reservas WHERE id = ?`, [reserva.id]);

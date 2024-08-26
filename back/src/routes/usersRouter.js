@@ -15,6 +15,7 @@ import {
     editUserAvatarController,
     getOwnUserController,
     deleteUserController,
+    getUserOwnerController,
 } from '../controllers/users/index.js';
 
 const router = express.Router();
@@ -42,6 +43,9 @@ router.put('/users/password', editUserPassController);
 
 // Perfil privado del usuario
 router.get('/users', authUser, getOwnUserController);
+
+// Listado de salas o grupos del usuario
+router.get('/users/owner', authUser, userExists, getUserOwnerController);
 
 //Editar email del perfil usuario
 router.put(

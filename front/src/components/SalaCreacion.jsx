@@ -11,8 +11,7 @@ import FetchGenresService from '../services/FetchGenresService.js';
 import registerSalaService from '../services/registerSalaService.js';
 
 const SalaCreacion = () => {
-    const { userLogged, setUserLogged, currentUser, token } =
-        useContext(AuthContext);
+    const { currentUser, token } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
@@ -46,7 +45,6 @@ const SalaCreacion = () => {
         previewUrlD: null,
     });
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -94,16 +92,7 @@ const SalaCreacion = () => {
         });
 
         try {
-            const response = await registerSalaService({ token, formData });
-
-            setResp(response);
-            if (response.status === 'ok') {
-                const nuevaSala = response.data.sala;
-                const updatedSalas = [...userLogged.salas, nuevaSala];
-                const updatedUser = { ...userLogged, salas: updatedSalas };
-
-                setUserLogged(updatedUser);
-            }
+            await registerSalaService({ token, formData });
 
             toast.success('Has creado tu nueva sala con éxito');
             navigate('/users');
@@ -117,7 +106,6 @@ const SalaCreacion = () => {
         nombre,
         direccion,
         provincia,
-        // generos,
         capacidad,
         descripcion,
         precios,
@@ -350,10 +338,7 @@ const SalaCreacion = () => {
                         className="btn-account p-3 w-full"
                     />
                 </div>
-                <div>
-                    {error && <p>{error}</p>}
-                    {resp.status === 'ok' && <p>{resp.message}</p>}
-                </div>
+                <div>{error && <p>{error}</p>}</div>
             </form>
             <Toastify />
         </>

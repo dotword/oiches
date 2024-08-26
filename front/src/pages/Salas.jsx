@@ -9,7 +9,6 @@ import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 
 const Salas = () => {
-    // const [salas, setSalas] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(null);
     const pageSize = 8;
@@ -19,7 +18,6 @@ const Salas = () => {
     useEffect(() => {
         const fetchSalas = async () => {
             const data = await FetchSalasService(filters, page, pageSize);
-            console.log(data);
             setTotal(data.total);
             setFilteredSalas(data.rows);
         };
@@ -53,14 +51,13 @@ const Salas = () => {
                 <SalaFilter onFilterChange={handleFilterChange} />
             </div>
             <div className="sala-list-container">
-                {filteredSalas ? (
+                {filteredSalas.length > 0 ? (
                     <SalaList salas={filteredSalas} />
                 ) : (
                     <p>No se encontraron salas</p>
                 )}
             </div>
-            {(totalPages > 1) &&
-            (
+            {totalPages > 1 && (
                 <div className="flex gap-3 justify-center my-16">
                     <button
                         disabled={page === 1}

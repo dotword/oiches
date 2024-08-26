@@ -17,7 +17,7 @@ const GrupoDetail = () => {
 
     const {
         nombre,
-        Provincia,
+        provincia,
         genero,
         avatar,
         biografia,
@@ -47,9 +47,7 @@ const GrupoDetail = () => {
                 <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
                     {genero && (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Géneros
-                            </span>
+                            <span className="font-semibold">Géneros</span>
                             {genero.map((gen) => (
                                 <div key={gen.generoId} className="text-black">
                                     {gen.generoName}
@@ -57,51 +55,37 @@ const GrupoDetail = () => {
                             ))}
                         </span>
                     )}
-                    {honorarios && (
+
+                    <span>
+                        <span className="font-semibold">Caché</span>{' '}
+                        <p className="text-black">{honorarios}€</p>
+                    </span>
+
+                    {provincia && (
                         <span>
-                            <span className="text-lg font-semibold">Caché</span>{' '}
-                            <p className="text-black">{honorarios}€</p>
-                        </span>
-                    )}
-                    {Provincia && (
-                        <span>
-                            <span className="text-lg font-semibold">
-                                Provincia
-                            </span>{' '}
-                            <p className="text-black">{Provincia}</p>
+                            <span className="font-semibold">Provincia</span>{' '}
+                            <p className="text-black">{provincia}</p>
                         </span>
                     )}
                     {currentUser && (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Contacto
-                            </span>{' '}
+                            <span className="font-semibold">Contacto</span>{' '}
                             <p className="text-black">{email}</p>
                         </span>
                     )}
                 </section>
                 <section>
-                    <h3 className="text-lg font-semibold">Biografía</h3>
+                    <h3 className="font-semibold">Biografía</h3>
                     <p className="mb-6 mt-3">
                         {biografia
                             ? biografia
                             : 'El grupo tiene que añadir la biografía.'}
                     </p>
                 </section>
-                {pdf.length > 0 && (
-                    <section>
-                        <h3 className="text-lg font-semibold">Rider </h3>
-                        <iframe
-                            className="my-6 w-full md:w-2/3 h-80 rounded-3xl"
-                            src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
-                            frameBorder="0"
-                            title="PDF Viewer"
-                        ></iframe>
-                    </section>
-                )}
+
                 {media.length > 0 && (
                     <section>
-                        <h3 className="text-lg font-semibold">Videos</h3>
+                        <h3 className="font-semibold">Videos</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                             {media.map((media) => (
                                 <iframe
@@ -109,7 +93,6 @@ const GrupoDetail = () => {
                                     key={media.id}
                                     src={media.url}
                                     title="YouTube video player"
-                                    frameBorder="1"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     referrerPolicy="strict-origin-when-cross-origin"
                                     allowFullScreen
@@ -119,7 +102,7 @@ const GrupoDetail = () => {
                     </section>
                 )}
                 <section>
-                    <h3 className="text-lg font-semibold">Fotos</h3>
+                    <h3 className="font-semibold">Fotos</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 place-items-center">
                         {fotos.length > 0 ? (
                             <>
@@ -143,10 +126,19 @@ const GrupoDetail = () => {
                         )}
                     </div>
                 </section>
-
+                {pdf.length > 0 && (
+                    <section>
+                        <h3 className="font-semibold">Rider </h3>
+                        <iframe
+                            className="my-6 w-full md:w-2/3 h-80 rounded-3xl"
+                            src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
+                            title="PDF Viewer"
+                        ></iframe>
+                    </section>
+                )}
                 {comentarios.length > 0 && (
                     <section className="mb-10">
-                        <h3 className="text-lg font-semibold">Comentarios</h3>
+                        <h3 className="font-semibold">Comentarios</h3>
 
                         {comentarios.map((comentario) => (
                             <div
