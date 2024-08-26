@@ -11,8 +11,7 @@ import FetchGenresService from '../services/FetchGenresService';
 import registerGrupoService from '../services/registerGrupoService';
 
 const GrupoCreacion = () => {
-    const { userLogged, setUserLogged, token } = useContext(AuthContext);
-
+    const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
@@ -43,7 +42,6 @@ const GrupoCreacion = () => {
         previewUrlD: null,
     });
     const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -92,15 +90,7 @@ const GrupoCreacion = () => {
         if (file) formData.append('file', file);
 
         try {
-            const response = await registerGrupoService({ token, formData });
-            setResp(response);
-            if (response.status === 'ok') {
-                const nuevoGrupo = response.data.grupo;
-                const updatedGrupos = [...userLogged.grupos, nuevoGrupo];
-                const updatedUser = { ...userLogged, grupos: updatedGrupos };
-
-                setUserLogged(updatedUser);
-            }
+            await registerGrupoService({ token, formData });
 
             toast.success('Has creado tu nuevo grupo con éxito');
             navigate('/users');
@@ -112,7 +102,6 @@ const GrupoCreacion = () => {
     const {
         nombre,
         provincia,
-        // generos,
         honorarios,
         biografia,
         mediaA,
@@ -404,10 +393,7 @@ const GrupoCreacion = () => {
                             className="btn-account p-3 w-full"
                         />
                     </div>
-                    <div>
-                        {error && <p>{error}</p>}
-                        {resp.status === 'ok' && <p>{resp.message}</p>}
-                    </div>
+                    <div>{error && <p>{error}</p>}</div>
                 </form>
             ) : (
                 <h1 className="text-center text-xl">

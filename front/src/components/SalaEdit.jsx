@@ -28,7 +28,7 @@ const SalaEdit = () => {
         provincia: '',
         capacidad: '',
         descripcion: '',
-        precios: '',
+        precios: 0,
         condiciones: '',
         equipamiento: '',
         horaReservasStart: '',
@@ -58,7 +58,7 @@ const SalaEdit = () => {
                     provincia: data.sala.provinciaId || '',
                     capacidad: data.sala.capacidad || '',
                     descripcion: data.sala.descripcion || '',
-                    precios: data.sala.precios || '',
+                    precios: data.sala.precios || 0,
                     condiciones: data.sala.condiciones || '',
                     equipamiento: data.sala.equipamiento || '',
                     horaReservasStart: data.sala.horaReservasStart || '',
@@ -138,7 +138,7 @@ const SalaEdit = () => {
             dataForm.append('direccion', sala.direccion || '');
             dataForm.append('provincia', sala.provincia || '');
             dataForm.append('capacidad', sala.capacidad || '');
-            dataForm.append('precios', sala.precios || '');
+            dataForm.append('precios', sala.precios || 0);
             dataForm.append('descripcion', sala.descripcion || '');
             dataForm.append('condiciones', sala.condiciones || '');
             dataForm.append('equipamiento', sala.equipamiento || '');

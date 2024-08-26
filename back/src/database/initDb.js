@@ -58,7 +58,7 @@ const main = async () => {
             provincia INT NOT NULL,
             capacidad INT NOT NULL,
             descripcion TEXT,
-            precios DECIMAL(10,2),
+            precios INT,
             direccion VARCHAR(255) NOT NULL,
             condiciones TEXT,
             equipamiento TEXT,

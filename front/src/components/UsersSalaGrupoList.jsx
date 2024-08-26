@@ -1,31 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
 import { FaTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
-import { ConfirmationModal } from './ConfirmModal.jsx'; // Asegúrate de que la ruta es correcta
+import { ConfirmationModal } from './ConfirmModal.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
+import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
 
 const UsersSalaGrupoList = () => {
-    // FIXME devolver funcion para cambia listado salas
     const { userLogged, token } = useAuth();
     const { VITE_API_URL_BASE } = import.meta.env;
-    const [salas, setSalas] = useState('');
-    const [grupos, setGrupos] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(null);
 
-        useEffect(() => {
-        if (userLogged) {
-            setSalas(userLogged.salas || []);
-            setGrupos(userLogged.grupos || []);
-        }
-    }, [userLogged]);
+    const { entries, setEntries } = useListSalasGrupoUser(token);
 
-    const handleDelete = async (id, type) => {
+    const type = userLogged.roles;
+
+    const handleDelete = async (id) => {
         const endpoint =
             type === 'sala' ? `/salas/delete/${id}` : `/grupos/delete/${id}`;
         try {
@@ -38,22 +33,18 @@ const UsersSalaGrupoList = () => {
             });
 
             if (response.ok) {
-                if (type === 'sala') {
-                    setSalas((prev) => prev.filter((sala) => sala.id !== id));
-                } else {
-                    setGrupos((prev) =>
-                        prev.filter((grupo) => grupo.id !== id)
-                    );
-                }
                 toast.success('Eliminado con éxito');
-                setModalOpen(false); // Cierra el modal después de eliminar
+                setModalOpen(false);
+
+                // Filtrar la entrada eliminada de las entradas actuales
+                setEntries((prevEntries) =>
+                    prevEntries.filter((entry) => entry.id !== id)
+                );
             } else {
                 toast.error('Error al eliminar');
-                console.error('Error eliminando:', response.statusText);
             }
         } catch (error) {
             toast.error('Error al eliminar');
-            console.error('Error eliminando:', error);
         }
     };
 
@@ -74,89 +65,70 @@ const UsersSalaGrupoList = () => {
     };
 
     return (
-        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 md:flex md:flex-col md:items-center">
-            {userLogged.roles === 'sala' ? (
+        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 flex md:flex-col md:items-center">
+            {entries.length > 0 ? (
                 <>
-                    {salas.length > 0 ? (
-                        <>
-                            <h2 className="text-center font-semibold text-lg mb-6">
-                                Gestiona tus salas
-                            </h2>
-                            <ul className="mb-4">
-                                {salas.map((sala) => (
-                                    <li
-                                        key={sala.id}
-                                        className="flex items-center justify-center gap-4 mb-2"
-                                    >
-                                        <IoIosArrowForward />{' '}
-                                        <a href={`/sala/${sala.id}/edit`}>
-                                            {sala.nombre}
-                                        </a>
-                                        <a href={`/sala/${sala.id}/edit`}>
-                                            <FaPencil className="text-lg text-purpleOiches" />
-                                        </a>
-                                        <button
-                                            onClick={() =>
-                                                openModal(sala.id, 'sala')
-                                            }
-                                        >
-                                            <FaTrashAlt className="text-lg text-purpleOiches" />
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    ) : (
-                        ''
-                    )}
-                    <a
-                        href="/creacion-sala"
-                        className="btn-account max-w-44 min-w-32"
-                    >
-                        Crea una sala
-                    </a>
+                    <h2 className="text-center font-semibold text-lg mb-6">
+                        Gestiona {type === 'sala' ? ' tus salas' : ' tu grupo'}
+                    </h2>
+                    <ul className="mb-4">
+                        {entries.map((entry) => (
+                            <li
+                                key={entry.id}
+                                className="flex items-center justify-center gap-4 mb-2"
+                            >
+                                <IoIosArrowForward /> {entry.nombre}
+                                <a
+                                    href={
+                                        type === 'sala'
+                                            ? `/sala/${entry.id}/edit`
+                                            : `/grupos/${entry.id}/edit`
+                                    }
+                                >
+                                    <FaPencil className="text-lg text-purpleOiches" />
+                                </a>
+                                <button
+                                    onClick={() =>
+                                        openModal(
+                                            entry.id,
+                                            type === 'salas'
+                                                ? 'salas'
+                                                : 'grupos'
+                                        )
+                                    }
+                                >
+                                    <FaTrashAlt className="text-lg text-purpleOiches" />
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
                 </>
             ) : (
-                <>
-                    {grupos.length > 0 ? (
-                        <>
-                            <h2 className="text-center font-semibold text-lg mb-6">
-                                Gestiona tu grupo
-                            </h2>
-                            <ul className="mb-4">
-                                {grupos.map((grupo) => (
-                                    <li
-                                        key={grupo.id}
-                                        className="flex items-center justify-center gap-4 mb-2"
-                                    >
-                                        <IoIosArrowForward />{' '}
-                                        <a href={`/grupos/${grupo.id}/edit`}>
-                                            {grupo.nombre}
-                                        </a>
-                                        <a href={`/grupos/${grupo.id}/edit`}>
-                                            <FaPencil className="text-lg text-purpleOiches" />
-                                        </a>
-                                        <button
-                                            onClick={() =>
-                                                openModal(grupo.id, 'grupo')
-                                            }
-                                        >
-                                            <FaTrashAlt className="text-lg text-purpleOiches" />
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    ) : (
-                        <a
-                            href="/creacion-grupo"
-                            className="btn-account max-w-44 min-w-32"
-                        >
-                            Crea un grupo
-                        </a>
-                    )}
-                </>
+                ''
             )}
+
+            {type === 'grupo' && entries.length === 0 ? (
+                <a
+                    href="/creacion-grupo"
+                    className="btn-account max-w-44 min-w-32 mx-auto"
+                >
+                    Crea un grupo
+                </a>
+            ) : (
+                ''
+            )}
+
+            {type === 'sala' ? (
+                <a
+                    href="/creacion-sala"
+                    className="btn-account max-w-44 min-w-32 mx-auto"
+                >
+                    Crea una sala
+                </a>
+            ) : (
+                ''
+            )}
+
             {modalOpen && (
                 <ConfirmationModal
                     isOpen={modalOpen}
