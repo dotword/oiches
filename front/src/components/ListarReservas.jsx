@@ -7,10 +7,11 @@ import SalaVotaGrupo from './SalaVotaGrupo';
 
 export const ListarReservas = () => {
     const [reservas, setReservas] = useState([]);
-    const [id, setId] = useState('');
-    const [type, setType] = useState(''); // Either 'grupo' or 'sala'
     const { VITE_API_URL_BASE } = import.meta.env;
     const { token, currentUser, userLogged } = useAuth();
+
+    const id = userLogged.id;
+    const type = userLogged.roles;
 
     const handleDelete = async (reservaId) => {
         try {
@@ -70,66 +71,6 @@ export const ListarReservas = () => {
             }
         }
     };
-
-    useEffect(() => {
-        // FIXME
-        const fetchData = async () => {
-            if (currentUser) {
-                try {
-                    // Fetch Salas
-                    const salasResponse = await fetch(
-                        `${VITE_API_URL_BASE}/salas?pageSize=*`,
-                        {
-                            headers: {
-                                authorization: token,
-                            },
-                        }
-                    );
-
-                    if (!salasResponse.ok) {
-                        throw new Error('Failed to fetch salas');
-                    }
-
-                    const { rows } = await salasResponse.json();
-
-                    const userSala = rows.find(
-                        (sala) => sala.usuario_id === currentUser.id
-                    );
-                    if (userSala) {
-                        setId(userSala.id);
-                        setType('sala');
-                        return;
-                    }
-
-                    // Fetch Grupos if no sala found
-                    const gruposResponse = await fetch(
-                        `${VITE_API_URL_BASE}/grupos?pageSize=*`,
-                        {
-                            headers: {
-                                authorization: token,
-                            },
-                        }
-                    );
-
-                    if (!gruposResponse.ok) {
-                        throw new Error('Failed to fetch grupos');
-                    }
-
-                    const groupRows = await gruposResponse.json();
-
-                    if (groupRows) {
-                        setId(userLogged.grupos[0].id);
-                        setType('grupo');
-                    }
-                } catch (error) {
-                    toast.error(error);
-                    console.error('Error fetching data:', error);
-                }
-            }
-        };
-
-        fetchData();
-    }, [token, VITE_API_URL_BASE, currentUser]);
 
     useEffect(() => {
         const fetchReservas = async () => {

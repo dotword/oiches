@@ -83,7 +83,6 @@ export function AuthContextProvider({ children }) {
 
         getDateUserLogged();
     }, [token]);
-    // retornar el context con su provider
 
     return (
         <AuthContext.Provider

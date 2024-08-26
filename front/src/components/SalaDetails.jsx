@@ -12,7 +12,9 @@ const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
     const { entry, error } = useSala(idSala);
-    const { currentUser } = useAuth();
+    const { userLogged } = useAuth();
+
+    const userType = userLogged.roles;
 
     const {
         nombre,
@@ -49,9 +51,7 @@ const SalaDetail = () => {
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
                     {genero && (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Géneros
-                            </span>
+                            <span className="font-semibold">Géneros</span>
                             {genero.map((gen) => (
                                 <div key={gen.generoId} className="text-black">
                                     {gen.generoName}
@@ -61,62 +61,52 @@ const SalaDetail = () => {
                     )}
                     {capacidad && (
                         <span>
-                            <span className="text-lg font-semibold">Aforo</span>{' '}
+                            <span className="font-semibold">Aforo</span>{' '}
                             <p className="text-black">{capacidad}</p>
                         </span>
                     )}
-                    {precios && (
-                        <span>
-                            <span className="text-lg font-semibold">
-                                Precio
-                            </span>{' '}
-                            <p className="text-black">{precios}€</p>
-                        </span>
-                    )}
+
+                    <span>
+                        <span className="font-semibold">Precio</span>{' '}
+                        <p className="text-black">{precios}€</p>
+                    </span>
+
                     {direccion && (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Dirección
-                            </span>{' '}
+                            <span className="font-semibold">Dirección</span>{' '}
                             <p className="text-black">{direccion}</p>
                         </span>
                     )}
                     {provincia && (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Provincia
-                            </span>{' '}
+                            <span className="font-semibold">Provincia</span>{' '}
                             <p className="text-black">{provincia}</p>
                         </span>
                     )}
-                    {currentUser && (
+                    {userType === 'grupo' ? (
                         <span>
-                            <span className="text-lg font-semibold">
-                                Contacto
-                            </span>{' '}
+                            <span className="font-semibold">Contacto</span>{' '}
                             <p className="text-black">{email}</p>
                         </span>
+                    ) : (
+                        ''
                     )}
                     {equipamiento && (
                         <span className="md:col-start-1 md:col-end-4">
-                            <span className="text-lg font-semibold">
-                                Equipamiento
-                            </span>{' '}
+                            <span className="font-semibold">Equipamiento</span>{' '}
                             <p className="text-black">{equipamiento}</p>
                         </span>
                     )}
 
                     {condiciones && (
                         <span className="md:col-start-1 md:col-end-4">
-                            <span className="text-lg font-semibold">
-                                Condiciones
-                            </span>{' '}
+                            <span className="font-semibold">Condiciones</span>{' '}
                             <p className="text-black">{condiciones}</p>
                         </span>
                     )}
                 </section>
                 <section>
-                    <h3 className="text-lg font-semibold">Descripción </h3>
+                    <h3 className="font-semibold">Descripción </h3>
                     <p className="mb-6 mt-3">
                         {descripcion
                             ? descripcion
@@ -125,7 +115,7 @@ const SalaDetail = () => {
                 </section>
 
                 <section>
-                    <h3 className="text-lg font-semibold">Fotos</h3>
+                    <h3 className="font-semibold">Fotos</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
                             <>
@@ -151,7 +141,7 @@ const SalaDetail = () => {
                 </section>
                 {comentarios.length > 0 && (
                     <section>
-                        <h3 className="text-lg font-semibold">Comentarios</h3>
+                        <h3 className="font-semibold">Comentarios</h3>
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
@@ -185,16 +175,21 @@ const SalaDetail = () => {
                         ))}
                     </section>
                 )}
-                <section>
-                    <div className="flex justify-around mt-8 mb-12">
-                        <Link
-                            to={`/sala/${idSala}/reservas`}
-                            className="p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all"
-                        >
-                            Reservar
-                        </Link>
-                    </div>
-                </section>
+
+                {userType === 'grupo' ? (
+                    <section>
+                        <div className="flex justify-around mt-8 mb-12">
+                            <Link
+                                to={`/sala/${idSala}/reservas`}
+                                className="p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all"
+                            >
+                                Reservar
+                            </Link>
+                        </div>
+                    </section>
+                ) : (
+                    ''
+                )}
             </main>
             <Footer />
         </>

@@ -11,7 +11,7 @@ const getDataUserLoggedService = async ({ token }) => {
 
     if (!response.ok) throw new Error(json.message);
 
-    return json.data.user;
+    return json.data.user[0];
 };
 
 export default getDataUserLoggedService;

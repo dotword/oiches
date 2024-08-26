@@ -9,6 +9,7 @@ import editUserAvatarController from './editUserAvatarController.js';
 import getOwnUserController from './getOwnUserController.js';
 import { deleteUserController } from './deleteUserController.js';
 import { deleteSalaController } from '../salas/deleteSalaController.js';
+import getUserOwnerController from './getUserOwnerController.js';
 export {
     registerUserController,
     validateUserController,
@@ -20,5 +21,6 @@ export {
     editUserAvatarController,
     getOwnUserController,
     deleteUserController,
-    deleteSalaController
+    deleteSalaController,
+    getUserOwnerController,
 };
