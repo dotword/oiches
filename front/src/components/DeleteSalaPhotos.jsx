@@ -13,7 +13,6 @@ const DeleteSalaPhotos = () => {
     const [photos, setPhotos] = useState([]);
     const [deletePhoto, setDeletePhoto] = useState(null);
     const [photoName, setPhotoName] = useState('');
-    const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchSalaPhotos = async () => {
@@ -21,8 +20,7 @@ const DeleteSalaPhotos = () => {
                 const { data } = await getSalaService(idSala);
                 setPhotos(data.sala.photos);
             } catch (error) {
-                setError(error.message);
-                toast.error(error.message);
+                toast.error(error.message); // Muestra el error directamente sin usar setError
             }
         };
 
@@ -38,8 +36,7 @@ const DeleteSalaPhotos = () => {
             setDeletePhoto(null);
             setPhotoName('');
         } catch (err) {
-            setError(err.message);
-            toast.error(err.message);
+            toast.error(err.message); // Mostramos error con toastify
         }
     };
 
