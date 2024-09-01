@@ -12,9 +12,7 @@ const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
     const { entry, error } = useSala(idSala);
-    const { userLogged } = useAuth();
-
-    const userType = userLogged.roles;
+    const { currentUser } = useAuth();
 
     const {
         nombre,
@@ -83,13 +81,11 @@ const SalaDetail = () => {
                             <p className="text-black">{provincia}</p>
                         </span>
                     )}
-                    {userType === 'grupo' ? (
+                    {currentUser && (
                         <span>
                             <span className="font-semibold">Contacto</span>{' '}
                             <p className="text-black">{email}</p>
                         </span>
-                    ) : (
-                        ''
                     )}
                     {equipamiento && (
                         <span className="md:col-start-1 md:col-end-4">
@@ -176,7 +172,7 @@ const SalaDetail = () => {
                     </section>
                 )}
 
-                {userType === 'grupo' ? (
+                {currentUser && (
                     <section>
                         <div className="flex justify-around mt-8 mb-12">
                             <Link
@@ -187,8 +183,6 @@ const SalaDetail = () => {
                             </Link>
                         </div>
                     </section>
-                ) : (
-                    ''
                 )}
             </main>
             <Footer />
