@@ -3,7 +3,6 @@ import selectSalasVotosService from '../../services/salas/selectSalasVotosServic
 const getSalaVotosController = async (req, res, next) => {
     try {
         const { idSala } = req.params;
-        console.log('controlleId ', idSala);
 
         const salaVotos = await selectSalasVotosService(idSala, req.user?.id);
 

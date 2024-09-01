@@ -2,7 +2,6 @@
 import Joi from 'joi';
 import imgSchema from '../imgSchema.js';
 import fileSchema from '../fileSchema.js';
-// import urlSchema from '../urlSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';

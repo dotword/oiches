@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import Toastify from './Toastify';
 import { useNavigate } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
+
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import FetchProvinciasService from '../services/FetchProvinciasService';
@@ -41,6 +42,12 @@ const GrupoCreacion = () => {
         previewUrlC: null,
         previewUrlD: null,
     });
+    const [mediaLinks, setMediaLinks] = useState({
+        mediaA: '',
+        mediaB: '',
+        mediaC: '',
+        mediaD: '',
+    });
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -73,6 +80,29 @@ const GrupoCreacion = () => {
         });
     };
 
+    const extractYouTubeId = (url) => {
+        try {
+            const urlObj = new URL(url);
+            return urlObj.searchParams.get('v');
+        } catch (e) {
+            return null; // Manejo de casos donde el URL no es válido
+        }
+    };
+    const handleMediaChange = (e) => {
+        const { name, value } = e.target;
+        setMediaLinks((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        const youTubeId = extractYouTubeId(value);
+        if (youTubeId) {
+            setFormValues((prev) => ({
+                ...prev,
+                [name]: youTubeId,
+            }));
+        }
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,6 +119,14 @@ const GrupoCreacion = () => {
         });
         if (file) formData.append('file', file);
 
+        // Extraer el ID de YouTube para cada campo de medios
+        ['mediaA', 'mediaB', 'mediaC', 'mediaD'].forEach((media) => {
+            const youTubeId = extractYouTubeId(formValues[media]);
+            if (youTubeId) {
+                formData.append(media, youTubeId); // Guardar solo el ID
+            }
+        });
+
         try {
             await registerGrupoService({ token, formData });
 
@@ -99,16 +137,7 @@ const GrupoCreacion = () => {
             toast.error(error.message);
         }
     };
-    const {
-        nombre,
-        provincia,
-        honorarios,
-        biografia,
-        mediaA,
-        mediaB,
-        mediaC,
-        mediaD,
-    } = formValues;
+    const { nombre, provincia, honorarios, biografia } = formValues;
 
     return (
         <>
@@ -224,98 +253,19 @@ const GrupoCreacion = () => {
                             <p className="font-semibold mb-2">
                                 Enlaza tus videos:
                             </p>
-                            <input
-                                type="url"
-                                name="mediaA"
-                                placeholder="Añade enlaces a tus videos"
-                                value={mediaA}
-                                className="form-input"
-                                onChange={(e) => {
-                                    const { name, value } = e.target;
-
-                                    e.target.value.includes('youtube.com/watch')
-                                        ? setFormValues({
-                                              ...formValues,
-                                              [name]: value.replace(
-                                                  'watch?v=',
-                                                  'embed/'
-                                              ),
-                                          })
-                                        : setFormValues({
-                                              ...formValues,
-                                              [name]: value,
-                                          });
-                                }}
-                            />
-                            <input
-                                type="url"
-                                name="mediaB"
-                                placeholder="Añade enlaces a tus videos"
-                                value={mediaB}
-                                onChange={(e) => {
-                                    const { name, value } = e.target;
-
-                                    e.target.value.includes('youtube.com/watch')
-                                        ? setFormValues({
-                                              ...formValues,
-                                              [name]: value.replace(
-                                                  'watch?v=',
-                                                  'embed/'
-                                              ),
-                                          })
-                                        : setFormValues({
-                                              ...formValues,
-                                              [name]: value,
-                                          });
-                                }}
-                                className="form-input"
-                            />
-                            <input
-                                type="url"
-                                name="mediaC"
-                                placeholder="Añade enlaces a tus videos"
-                                value={mediaC}
-                                onChange={(e) => {
-                                    const { name, value } = e.target;
-
-                                    e.target.value.includes('youtube.com/watch')
-                                        ? setFormValues({
-                                              ...formValues,
-                                              [name]: value.replace(
-                                                  'watch?v=',
-                                                  'embed/'
-                                              ),
-                                          })
-                                        : setFormValues({
-                                              ...formValues,
-                                              [name]: value,
-                                          });
-                                }}
-                                className="form-input"
-                            />
-                            <input
-                                type="url"
-                                name="mediaD"
-                                placeholder="Añade enlaces a tus videos"
-                                value={mediaD}
-                                onChange={(e) => {
-                                    const { name, value } = e.target;
-
-                                    e.target.value.includes('youtube.com/watch')
-                                        ? setFormValues({
-                                              ...formValues,
-                                              [name]: value.replace(
-                                                  'watch?v=',
-                                                  'embed/'
-                                              ),
-                                          })
-                                        : setFormValues({
-                                              ...formValues,
-                                              [name]: value,
-                                          });
-                                }}
-                                className="form-input"
-                            />
+                            {['mediaA', 'mediaB', 'mediaC', 'mediaD'].map(
+                                (media) => (
+                                    <input
+                                        key={media}
+                                        type="text"
+                                        name={media}
+                                        placeholder="Añade enlaces a tus videos de YouTube"
+                                        value={mediaLinks[media]}
+                                        className="form-input"
+                                        onChange={handleMediaChange}
+                                    />
+                                )
+                            )}
                         </section>
                     </div>
                     <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-col">

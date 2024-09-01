@@ -8,8 +8,6 @@ const getUserOwnerService = async (userId) => {
     const [role] = await pool.query(`SELECT roles FROM usuarios WHERE id = ?`, [
         userId,
     ]);
-    // role[0].roles = role;
-    // console.log(role);
 
     if (role[0].roles === 'grupo') {
         // Comprobamos los grupos del usuarios

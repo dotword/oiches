@@ -2,7 +2,6 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 export const listReservaService = async (id) => {
-    console.log(id);
     try {
         const pool = await getPool();
 
