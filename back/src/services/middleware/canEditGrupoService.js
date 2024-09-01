@@ -2,8 +2,6 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const canEditGrupoService = async (idGrupo, userId) => {
-    console.log('idGrupo ', idGrupo);
-
     const pool = await getPool();
     const [grupoOwner] = await pool.query(
         `SELECT usuario_id FROM grupos WHERE id = ?`,

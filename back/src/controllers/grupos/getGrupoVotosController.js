@@ -3,7 +3,6 @@ import selectGruposVotosService from '../../services/grupos/selectGruposVotosSer
 const getGrupoVotosController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
-        console.log('controlleId ', idGrupo);
 
         const grupoVotos = await selectGruposVotosService(
             idGrupo,

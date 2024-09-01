@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import LiteYouTubeEmbed from 'react-lite-youtube-embed';
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import useGrupo from '../hooks/useGrupo.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -88,15 +90,12 @@ const GrupoDetail = () => {
                         <h3 className="font-semibold">Videos</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                             {media.map((media) => (
-                                <iframe
-                                    className="w-full min-h-60 rounded-3xl"
+                                <LiteYouTubeEmbed
                                     key={media.id}
-                                    src={media.url}
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerPolicy="strict-origin-when-cross-origin"
-                                    allowFullScreen
-                                ></iframe>
+                                    id={media.url}
+                                    title="YouTube Video"
+                                    playlist={false}
+                                />
                             ))}
                         </div>
                     </section>
