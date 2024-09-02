@@ -1,13 +1,17 @@
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth/auth.context';
 import logoWhite from '../assets/Horizontal_blanco.webp';
 import { FaEnvelope } from 'react-icons/fa6';
-import { FaPhoneVolume } from 'react-icons/fa6';
-import { FaFacebook } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
-import { FaInstagram } from 'react-icons/fa';
-import { FaYoutube } from 'react-icons/fa';
+// import { FaPhoneVolume } from 'react-icons/fa6';
+// import { FaFacebook } from 'react-icons/fa';
+// import { FaXTwitter } from 'react-icons/fa6';
+// import { FaInstagram } from 'react-icons/fa';
+// import { FaYoutube } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
 const Footer = () => {
+    const { currentUser } = useContext(AuthContext);
+
     return (
         <footer className="bg-black text-white pt-10 pb-6">
             <div className="max-w-7xl mx-auto px-10 flex flex-col md:grid md:grid-cols-2 gap-x-20 gap-y-10 text-sm">
@@ -20,12 +24,12 @@ const Footer = () => {
                         <b>Oiches</b> es una innovadora plataforma diseñada para
                         facilitar la conexión entre salas de conciertos y grupos
                         musicales...{' '}
-                        <a href="/" className="text-yellowOiches">
+                        <a href="/sobre-oiches" className="text-yellowOiches">
                             Saber más
                         </a>
                     </p>
                     <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 items-start md:flex-row">
-                        <div className="flex gap-4 items-center">
+                        {/* <div className="flex gap-4 items-center">
                             <FaPhoneVolume className="text-lg" />
                             <p className="flex flex-col gap-1">
                                 <span>¿Hablamos?</span>
@@ -33,7 +37,7 @@ const Footer = () => {
                                     555-437-2766
                                 </span>
                             </p>
-                        </div>
+                        </div> */}
                         <div className="flex gap-4 items-center">
                             <FaEnvelope className="text-lg" />
                             <p className="flex flex-col gap-1">
@@ -44,13 +48,7 @@ const Footer = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row my-2 mt-10 items-start">
-                        {/* <NavLink
-                            to={'/'}
-                            className="hover:text-yellowOiches mx-2 md:mx-2"
-                        >
-                            Sobre nosotros
-                        </NavLink> */}
+                    {/* <div className="flex flex-col md:flex-row my-2 mt-10 items-start">
                         <NavLink
                             to={'/'}
                             className="hover:text-yellowOiches mx-2 md:mx-2"
@@ -69,12 +67,48 @@ const Footer = () => {
                         >
                             Mi cuenta
                         </NavLink>
-                    </div>
+                        <NavLink
+                            to={'/sobre-oiches'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Sobre Oiches
+                        </NavLink>
+                    </div> */}
                 </div>
 
                 {/* Columna derecha */}
-                <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-10">
-                    <p className="font-semibold mb-2">Newsletter</p>
+                <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-14">
+                    <div className="flex flex-col md:flex-row my-2 items-start">
+                        <NavLink
+                            to={'/'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Músicos
+                        </NavLink>
+                        <NavLink
+                            to={'/salas'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Salas
+                        </NavLink>
+                        {currentUser ? (
+                            <NavLink
+                                to={'/users'}
+                                className="hover:text-yellowOiches mx-2 md:mx-2"
+                            >
+                                Mi cuenta
+                            </NavLink>
+                        ) : (
+                            ''
+                        )}
+                        <NavLink
+                            to={'/sobre-oiches'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Sobre Oiches
+                        </NavLink>
+                    </div>
+                    {/* <p className="font-semibold mb-2">Newsletter</p>
                     <p className="max-w-96">
                         Sé el primero en enterarte de nuestros eventos y
                         novedades. Date de baja cuando quieras.
@@ -97,7 +131,7 @@ const Footer = () => {
                         <FaXTwitter />
                         <FaInstagram />
                         <FaYoutube />
-                    </div>
+                    </div> */}
                     <p className="flex items-start justify-start gap-2 mt-8">
                         <FaRegCopyright /> 2024 - Todos los derechos reservados
                     </p>

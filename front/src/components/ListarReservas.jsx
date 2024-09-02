@@ -102,6 +102,15 @@ export const ListarReservas = () => {
         fetchReservas();
     }, [token, VITE_API_URL_BASE, id, type]);
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+    };
+
     return (
         <>
             <section>
@@ -137,7 +146,7 @@ export const ListarReservas = () => {
                                         <span className="block font-semibold">
                                             Fecha:
                                         </span>
-                                        {reserva.fecha}
+                                        {formatDate(reserva.fecha)}
                                     </p>
                                     <p>
                                         <span className="block font-semibold">

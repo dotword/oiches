@@ -15,6 +15,7 @@ export default {
                 'hero-grupos': "url('/bandas-hero.jpg')",
                 'hero-salas': "url('/salas-hero.jpg')",
                 'hero-home': "url('/hero-home.jpg')",
+                'hero-oiches': "url('/hero-oiches.webp')",
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",

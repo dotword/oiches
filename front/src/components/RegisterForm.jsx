@@ -119,7 +119,7 @@ export const RegisterForm = () => {
                         />
                     </label>
                 </div>
-                <p>
+                {/* <p>
                     <input
                         className=" accent-purpleOiches"
                         type="checkbox"
@@ -127,7 +127,7 @@ export const RegisterForm = () => {
                         required
                     />{' '}
                     Acepto los términos y condiciones
-                </p>
+                </p> */}
                 {error && <p className="text-red-500">{error}</p>}
                 <button
                     type="submit"
