@@ -14,17 +14,17 @@ const Menu = () => {
                 Salas
             </NavLink>
             <NavLink
-                to="/grupos" // Enlace corregido
+                to="/grupos"
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
                 Músicos
             </NavLink>
-            {/* <NavLink
-                to="/sobre-nosotros" // Asegúrate de que la ruta sea correcta
+            <NavLink
+                to="/sobre-oiches"
                 className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
             >
-                Sobre nosotros
-            </NavLink> */}
+                Sobre Oiches
+            </NavLink>
             {!currentUser ? (
                 <>
                     <NavLink

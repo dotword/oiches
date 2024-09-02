@@ -30,6 +30,10 @@
     .border-photos {
         @apply flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-md relative overflow-clip;
     }
+    .image-shadow,
+    article.yt-lite {
+        @apply rounded-2xl shadow-[3px_3px_6px_2px_rgba(0,0,0,0.3)];
+    }
 
     /* Zona de héroe */
     .hero {

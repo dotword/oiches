@@ -88,7 +88,7 @@ const GrupoDetail = () => {
                 {media.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Videos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6 ">
                             {media.map((media) => (
                                 <LiteYouTubeEmbed
                                     key={media.id}
@@ -109,15 +109,15 @@ const GrupoDetail = () => {
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-3xl max-h-80 shadow-xl"
-                                        alt=""
+                                        className="image-shadow max-h-80 "
+                                        alt={nombre}
                                     />
                                 ))}
                             </>
                         ) : (
                             <>
                                 <img
-                                    className="col-span-1 md:col-span-2 rounded-3xl"
+                                    className="col-span-1 md:col-span-2 rounded-2xl"
                                     src={Noimage}
                                     alt="No image"
                                 />
@@ -129,7 +129,7 @@ const GrupoDetail = () => {
                     <section>
                         <h3 className="font-semibold">Rider </h3>
                         <iframe
-                            className="my-6 w-full md:w-2/3 h-80 rounded-3xl"
+                            className="my-6 w-full md:w-2/3 h-80 image-shadow"
                             src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
                             title="PDF Viewer"
                         ></iframe>
@@ -142,7 +142,7 @@ const GrupoDetail = () => {
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
-                                className="my-6 border p-3 rounded-3xl flex flex-col w-fit justify-between"
+                                className="my-6 border p-3 rounded-2xl flex flex-col w-fit justify-between"
                             >
                                 <span>
                                     {comentario.comentario}

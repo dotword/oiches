@@ -119,7 +119,7 @@ const SalaDetail = () => {
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-3xl max-h-80 shadow-xl"
+                                        className="image-shadow max-h-80"
                                         alt="Foto de la sala"
                                     />
                                 ))}
