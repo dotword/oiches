@@ -22,6 +22,9 @@ import NotFound from './pages/NotFound.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
 import { ValidateUser } from './pages/ValidateUser.jsx';
 import SobreOiches from './pages/SobreOiches.jsx';
+import AvisoLegal from './pages/AvisoLegal.jsx';
+import PoliticaPrivacidad from './pages/PoliticaPrivacidad.jsx';
+import PoliticaCookies from './pages/PoliticaCookies.jsx';
 
 function App() {
     return (
@@ -61,6 +64,12 @@ function App() {
                     element={<CrearReservaPage type="grupo" />}
                 />
                 <Route path="/validateUser" element={<ValidateUser />} />
+                <Route path="/aviso-legal" element={<AvisoLegal />} />
+                <Route
+                    path="/politica-privacidad"
+                    element={<PoliticaPrivacidad />}
+                />
+                <Route path="/politica-cookies" element={<PoliticaCookies />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </AnimatePresence>

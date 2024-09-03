@@ -31,6 +31,15 @@ const GrupoDetail = () => {
         pdf,
     } = entry;
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+    };
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -144,29 +153,35 @@ const GrupoDetail = () => {
                                 key={comentario.id}
                                 className="my-6 border p-3 rounded-2xl flex flex-col w-fit justify-between"
                             >
-                                <span>
-                                    {comentario.comentario}
-                                    <p className="text-gray-400">
-                                        {comentario.createdAt.slice(0, 10)}
+                                <div className="flex items-baseline justify-between mb-2 gap-4">
+                                    <span>
+                                        <StarRating rating={comentario.voto} />
+                                    </span>
+                                    <p className="text-xs">
+                                        {formatDate(
+                                            comentario.createdAt.slice(0, 10)
+                                        )}
                                     </p>
+                                </div>
+                                <span className="text-sm">
+                                    {comentario.comentario}
                                 </span>
                                 <Link
-                                    className="flex place-items-center gap-2 hover:scale-105 transition-all"
+                                    className="flex justify-end items-center gap-2 mt-3"
                                     to={`/sala/${comentario.salaVotaId}`}
                                 >
-                                    <div>
-                                        <StarRating rating={comentario.voto} />
-                                    </div>
                                     <img
-                                        className="w-10"
+                                        className="w-8 rounded-full"
                                         src={
                                             comentario.salaAvatar
-                                                ? comentario.salaAvatar
+                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.salaAvatar}`
                                                 : DefaultProfile
                                         }
-                                        alt=""
+                                        alt="Avatar sala"
                                     />
-                                    <p>{comentario.salaVotaNombre}</p>
+                                    <p className="italic">
+                                        {comentario.salaVotaNombre}
+                                    </p>
                                 </Link>
                             </div>
                         ))}
