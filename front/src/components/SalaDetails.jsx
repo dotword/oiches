@@ -30,6 +30,15 @@ const SalaDetail = () => {
         photos,
     } = entry;
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+    };
+
     return entry ? (
         <>
             <Header txt={nombre} />
@@ -141,31 +150,38 @@ const SalaDetail = () => {
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
-                                className="my-6 border p-3 rounded-3xl flex flex-col w-fit justify-between"
+                                className="my-6 border p-3 rounded-2xl flex flex-col w-fit justify-between"
                             >
-                                <span>
-                                    {comentario.comentario}
-                                    <p className="text-black">
-                                        {comentario.createdAt.slice(0, 10)}
+                                <div className="flex items-baseline justify-between mb-2 gap-4">
+                                    <span>
+                                        <StarRating rating={comentario.voto} />
+                                    </span>
+
+                                    <p className="text-xs">
+                                        {formatDate(
+                                            comentario.createdAt.slice(0, 10)
+                                        )}
                                     </p>
+                                </div>
+                                <span className="text-sm">
+                                    {comentario.comentario}
                                 </span>
                                 <Link
-                                    className="flex place-items-center gap-2 hover:scale-105 transition-all"
+                                    className="flex justify-end items-center gap-2 mt-3"
                                     to={`/grupo/${comentario.grupoVotaId}`}
                                 >
-                                    <div>
-                                        <StarRating rating={comentario.voto} />
-                                    </div>
                                     <img
-                                        className="w-10"
+                                        className="w-8 rounded-full"
                                         src={
                                             comentario.grupoAvatar
-                                                ? comentario.grupoAvatar
+                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.grupoAvatar}`
                                                 : DefaultProfile
                                         }
-                                        alt=""
+                                        alt="Avatar grupo"
                                     />
-                                    <p>{comentario.grupoVotaName}</p>
+                                    <p className="italic">
+                                        {comentario.grupoVotaName}
+                                    </p>
                                 </Link>
                             </div>
                         ))}

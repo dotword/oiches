@@ -43,7 +43,7 @@ const Footer = () => {
                             <p className="flex flex-col gap-1">
                                 <span>Contacta con nosotros</span>
                                 <span className="italic font-semibold">
-                                    hola@oiches.es
+                                    hola@oiches.com
                                 </span>
                             </p>
                         </div>
@@ -76,7 +76,6 @@ const Footer = () => {
                     </div> */}
                 </div>
 
-                {/* Columna derecha */}
                 <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-14">
                     <div className="flex flex-col md:flex-row my-2 items-start">
                         <NavLink
@@ -106,6 +105,26 @@ const Footer = () => {
                             className="hover:text-yellowOiches mx-2 md:mx-2"
                         >
                             Sobre Oiches
+                        </NavLink>
+                    </div>
+                    <div className="flex flex-col md:flex-row my-2 items-start">
+                        <NavLink
+                            to={'/aviso-legal'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Aviso Legal
+                        </NavLink>
+                        <NavLink
+                            to={'/politica-privacidad'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Política de privacidad
+                        </NavLink>
+                        <NavLink
+                            to={'/politica-cookies'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Política de cookies
                         </NavLink>
                     </div>
                     {/* <p className="font-semibold mb-2">Newsletter</p>

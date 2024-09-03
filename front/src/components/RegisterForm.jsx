@@ -119,15 +119,22 @@ export const RegisterForm = () => {
                         />
                     </label>
                 </div>
-                {/* <p>
+                <p>
                     <input
                         className=" accent-purpleOiches"
                         type="checkbox"
                         name="terms"
                         required
                     />{' '}
-                    Acepto los términos y condiciones
-                </p> */}
+                    Acepto la{' '}
+                    <a
+                        href="/politica-privacidad"
+                        target="blank"
+                        className="text-yellowOiches"
+                    >
+                        política de privacidad
+                    </a>
+                </p>
                 {error && <p className="text-red-500">{error}</p>}
                 <button
                     type="submit"
