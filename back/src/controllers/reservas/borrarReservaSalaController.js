@@ -7,7 +7,7 @@ const borrarReservaSalaController = async (req, res, next) => {
         await borrarReservaSalaService(reserva_id);
 
         res.status(200).json({
-            message: 'Se ha borrado la reserva con exito ',
+            message: 'Se ha borrado la reserva con éxito ',
         });
     } catch (error) {
         next(error);

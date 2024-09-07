@@ -1,4 +1,6 @@
 import getPool from '../../database/getPool.js';
+import sendMailUtil from '../../utils/sendMailUtil.js';
+import { URL_FRONT } from '../../../env.js';
 import { v4 as uuid } from 'uuid';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
@@ -28,15 +30,51 @@ export const crearReservaService = async (
         }
 
         const [grupoResults] = await pool.query(
-            'SELECT id FROM grupos WHERE usuario_id = ?',
+            'SELECT id, nombre FROM grupos WHERE usuario_id = ?',
             [id]
         );
         const grupo_id = grupoResults[0].id;
+        const grupoNombre = grupoResults[0].nombre;
 
         const [salaResults] = await pool.query(
-            'SELECT id FROM salas WHERE id = ?',
+            'SELECT id, nombre, usuario_id FROM salas WHERE id = ?',
             [sala_id]
         );
+        const salaUserId = salaResults[0].usuario_id;
+        const salaNombre = salaResults[0].nombre;
+
+        const [emailSala] = await pool.query(
+            'SELECT email, username FROM usuarios WHERE id = ?',
+            [salaUserId]
+        );
+        const salaEmail = emailSala[0].email;
+        const salaUsername = emailSala[0].username;
+
+        // Creamos el asunto del email de verificación.
+        const emailSubject = `Has recibido una reserva para tu sala ${salaNombre}, en Oiches.`;
+
+        // Creamos el contenido del email
+        const emailBody = `
+                    <p>Hola, ${salaUsername}!</p>
+        
+                    <p>El grupo <b>${grupoNombre}</b> ha realizado una reserva para la sala ${salaNombre}, el día ${fecha}.</p>
+
+                   <p> Entra en tu cuenta para confirmar o rechazar la reserva, o para contactar con el grupo.</p>
+  
+                    <p><a href="${URL_FRONT}/login">Entrar en mi cuenta</a></p> <br />
+
+                    
+
+                    <p>Saludos del equipo de Oiches.</p>
+                 `;
+
+        // Enviamos el email de verificación al usuario.
+        try {
+            await sendMailUtil(salaEmail, emailSubject, emailBody);
+        } catch (error) {
+            return;
+        }
+
         await pool.query(
             'INSERT INTO reservas(id, fecha, horaInicio, horaFin, sala_id, grupo_id) VALUES (?, ?, ?, ?, ?, ?)',
             [reservaId, fecha, horaInicio, horaFin, sala_id, grupo_id]
