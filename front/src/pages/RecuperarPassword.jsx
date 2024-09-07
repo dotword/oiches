@@ -17,7 +17,7 @@ export const RecuperarPassword = () => {
                         <p className="max-[360px]:hidden">¿Ya tienes cuenta?</p>
                         <Link
                             to="/login"
-                            className="hover:text-purpleOiches text-yellowOiches ml-2"
+                            className="hover:text-purpleOiches md:text-yellowOiches ml-2"
                         >
                             Login
                         </Link>

@@ -33,7 +33,7 @@ export const ListarReservas = () => {
             }
 
             setReservas(reservas.filter((reserva) => reserva.id !== reservaId));
-            toast.success('Su reserva se ha eliminado con exito');
+            toast.success('Su reserva se ha eliminado con éxito');
         } catch (error) {
             toast.error(error);
             console.error('Fallo al eliminar la reserva:', error);
@@ -64,7 +64,7 @@ export const ListarReservas = () => {
                             : reserva
                     )
                 );
-                toast.success('Su reserva se ha confirmado con exito');
+                toast.success('Su reserva se ha confirmado con éxito');
             } catch (error) {
                 toast.error(error);
                 console.error('Error confirming reserva:', error);

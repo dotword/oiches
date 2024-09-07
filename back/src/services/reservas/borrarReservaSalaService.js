@@ -38,21 +38,19 @@ const borrarReservaSalaService = async (reserva_id) => {
         const grupoEmail = emailGrupo[0].email;
 
         // Creamos el asunto del email de verificación.
-        const emailSubject = `Tu reserva para el "${dateReserva}", en Oiches ha sido cancelada.`;
+        const emailSubject = `Tu reserva para el ${dateReserva} en Oiches ha sido cancelada.`;
 
         // Creamos el contenido del email
         const emailBody = `
-                    Hola ${grupoNombre}!
+                    <p>Hola, ${grupoNombre}!</p>
         
-                    Tu reserva para el "${dateReserva}" ha sido cancelada.
+                    <p>Tu reserva para el "${dateReserva}" ha sido cancelada.</p>
 
-                    Ponte en contacto con la sala para saber más detalles.                    
+                    <p>Ponte en contacto con la sala para saber más detalles.</p>                
         
-                    <a href="${URL_FRONT}/login">Entrar en mi cuenta</a>
+                    <p><a href="${URL_FRONT}/login">Entrar en mi cuenta</a></p><br />      
 
-                    
-
-                    Saludos del equipo de Oiches.
+                    <p>Saludos del equipo de Oiches.</p>
                  `;
 
         // Enviamos el email de verificación al usuario.

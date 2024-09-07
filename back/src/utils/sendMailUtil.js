@@ -22,6 +22,7 @@ const sendMailUtil = async (email, subject, body) => {
             to: email,
             subject,
             text: body,
+            html: `<p>${body}</p>`,
         };
 
         await transport.sendMail(mailOptions);

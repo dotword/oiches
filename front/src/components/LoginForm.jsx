@@ -72,7 +72,7 @@ export const LoginForm = () => {
                 <p className="mt-4 text-center">
                     <Link
                         to="/users/password/recover"
-                        className="hover:text-purpleOiches text-yellowOiches"
+                        className="hover:text-purpleOiches font-semibold text-yellowOiches"
                     >
                         Recuperar contraseña
                     </Link>
