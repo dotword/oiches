@@ -20,27 +20,27 @@
 //     }
 // };
 
-// export default FetchSalasService;
-
 import apiRequest from '../utils/apiRequest';
 
 const FetchSalasService = async (filters = {}, page = 1, pageSize = 10) => {
     try {
+        // Crear los parámetros de la consulta
         const queryParams = new URLSearchParams({
-            ...filters,
-            page,
-            pageSize,
+            ...filters, // Incluye los filtros
+            page, // Número de página
+            limit: pageSize, // Tamaño de página
         }).toString();
 
+        // MOntamos la URL para la solicitud
         const url = `${import.meta.env.VITE_API_URL_BASE}/salas?${queryParams}`;
 
-        // Usar apiRequest para hacer la solicitud
+        // Peticion a la API usando apiRequest
         const data = await apiRequest({ url });
 
         return data;
     } catch (error) {
         console.error('Hubo un error al obtener las salas:', error);
-        return [];
+        return { total: 0, rows: [] }; // Devolver el formato correcto incluso en caso de error
     }
 };
 

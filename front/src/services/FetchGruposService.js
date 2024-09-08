@@ -38,7 +38,7 @@ const FetchGruposService = async (filters = {}, page = 1, pageSize = 10) => {
         const queryParams = new URLSearchParams({
             ...filters,
             page,
-            pageSize,
+            limit: pageSize, // Usa 'limit' en lugar de 'pageSize' si la API lo requiere
         }).toString();
 
         // Construir la URL con los parámetros de consulta
@@ -53,7 +53,7 @@ const FetchGruposService = async (filters = {}, page = 1, pageSize = 10) => {
     } catch (error) {
         // Manejar errores
         console.error('Hubo un error al obtener los grupos:', error);
-        return [];
+        return { total: 0, rows: [] }; // Asegúrate de devolver un formato coherente
     }
 };
 
