@@ -30,7 +30,7 @@ export const loginUserService = async (dataForm) => {
         url,
         method: 'POST',
         headers: {
-            'constent-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(dataForm),
     });

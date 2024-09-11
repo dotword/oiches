@@ -161,3 +161,7 @@
 .slick-dots li button:before {
     @apply text-sm;
 }
+/*Avatar perfil cuadrado esquinas redondeadas a la par que lso video e imagenes*/
+.avatar-square {
+    @apply w-40 h-40 rounded-lg object-cover;
+}

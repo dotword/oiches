@@ -1,40 +1,32 @@
-// const FetchSalasService = async (filters = {}, page = 1, pageSize = 10) => {
-//     try {
-//         const queryParams = new URLSearchParams({
-//             ...filters,
-//             page,
-//             pageSize,
-//         }).toString();
-//         const url = `${import.meta.env.VITE_API_URL_BASE}/salas?${queryParams}`;
-
-//         const response = await fetch(url);
-//         if (!response.ok) {
-//             throw new Error('Error al obtener las salas');
-//         }
-
-//         const data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.error('Hubo un error al obtener las salas:', error);
-//         return [];
-//     }
-// };
-
 import apiRequest from '../utils/apiRequest';
 
 const FetchSalasService = async (filters = {}, page = 1, pageSize = 10) => {
     try {
-        // Crear los parámetros de la consulta
-        const queryParams = new URLSearchParams({
-            ...filters, // Incluye los filtros
-            page, // Número de página
-            limit: pageSize, // Tamaño de página
-        }).toString();
+        // Crear un nuevo objeto con los filtros que tienen valores
+        const queryParamsObj = {
+            page,
+            limit: pageSize,
+        };
 
-        // MOntamos la URL para la solicitud
+        // Agregar solo los filtros que no estén vacíos
+        if (filters.nombre) queryParamsObj.nombre = filters.nombre;
+        if (filters.provincia) queryParamsObj.provincia = filters.provincia;
+        if (filters.generos) queryParamsObj.generos = filters.generos;
+        if (filters.order) queryParamsObj.order = filters.order;
+
+        // Crear los parámetros de consulta
+        const queryParams = new URLSearchParams(queryParamsObj).toString();
+
+        // Imprimir la URL generada para depurar
+        console.log(
+            'URL generada:',
+            `${import.meta.env.VITE_API_URL_BASE}/salas?${queryParams}`
+        );
+
+        // Montamos la URL para la solicitud
         const url = `${import.meta.env.VITE_API_URL_BASE}/salas?${queryParams}`;
 
-        // Peticion a la API usando apiRequest
+        // Petición a la API usando apiRequest
         const data = await apiRequest({ url });
 
         return data;
