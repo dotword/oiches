@@ -41,12 +41,11 @@ const SalaDetail = () => {
 
     return entry ? (
         <>
-            <Header txt={nombre} />
-
+            <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col mx-auto md:flex-row items-center gap-6">
+                <section className="flex flex-col items-center md:items-start gap-6 p-4">
                     <img
-                        className="w-40 h-40 rounded-full object-cover"
+                        className="w-32 h-32 rounded-full object-cover shadow-lg"
                         src={
                             usuarioAvatar
                                 ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
@@ -54,65 +53,67 @@ const SalaDetail = () => {
                         }
                         alt="Imagen de perfil de la sala"
                     />
+                    <h2 className="text-2xl font-bold text-center md:text-left">
+                        {nombre}
+                    </h2>
                 </section>
+
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
                     {genero && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
                             {genero.map((gen) => (
                                 <div key={gen.generoId} className="text-black">
                                     {gen.generoName}
                                 </div>
                             ))}
-                        </span>
+                        </div>
                     )}
                     {capacidad && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Aforo</span>{' '}
                             <p className="text-black">{capacidad}</p>
-                        </span>
+                        </div>
                     )}
-
-                    <span>
+                    <div className="border-t border-gray-300 pt-4">
                         <span className="font-semibold">Precio</span>{' '}
                         <p className="text-black">{precios}€</p>
-                    </span>
-
+                    </div>
                     {direccion && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Dirección</span>{' '}
                             <p className="text-black">{direccion}</p>
-                        </span>
+                        </div>
                     )}
                     {provincia && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Provincia</span>{' '}
                             <p className="text-black">{provincia}</p>
-                        </span>
+                        </div>
                     )}
                     {currentUser && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Contacto</span>{' '}
                             <p className="text-black">{email}</p>
-                        </span>
+                        </div>
                     )}
                     {equipamiento && (
-                        <span className="md:col-start-1 md:col-end-4">
+                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Equipamiento</span>{' '}
                             <p className="text-black">{equipamiento}</p>
-                        </span>
+                        </div>
                     )}
-
                     {condiciones && (
-                        <span className="md:col-start-1 md:col-end-4">
+                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Condiciones</span>{' '}
                             <p className="text-black">{condiciones}</p>
-                        </span>
+                        </div>
                     )}
                 </section>
+
                 <section>
-                    <h3 className="font-semibold">Descripción </h3>
-                    <p className="mb-6 mt-3">
+                    <h3 className="font-semibold">Descripción</h3>
+                    <p className="mb-6 mt-3 text-gray-600">
                         {descripcion
                             ? descripcion
                             : 'La Sala tiene que añadir la descripción.'}
@@ -121,51 +122,71 @@ const SalaDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-6 place-items-center">
                         {photos.length > 0 ? (
-                            <>
-                                {photos.map((photo) => (
+                            photos.map((photo) => (
+                                <div
+                                    key={photo.id}
+                                    className="rounded-lg overflow-hidden shadow-lg"
+                                >
                                     <img
-                                        key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="image-shadow max-h-80"
+                                        className="w-full h-full object-cover"
                                         alt="Foto de la sala"
                                     />
-                                ))}
-                            </>
+                                </div>
+                            ))
                         ) : (
-                            <>
-                                <img
-                                    className="col-span-1 md:col-span-2 rounded-3xl"
-                                    src={Noimage}
-                                    alt="No image"
-                                />
-                            </>
+                            <img
+                                className="col-span-1 md:col-span-2 rounded-3xl"
+                                src={Noimage}
+                                alt="No image"
+                            />
                         )}
                     </div>
                 </section>
+
                 {comentarios.length > 0 && (
-                    <section>
-                        <h3 className="font-semibold">Comentarios</h3>
+                    <section className="mb-10">
+                        <h3 className="font-semibold text-lg">Comentarios</h3>
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
-                                className="my-6 border p-3 rounded-2xl flex flex-col w-fit justify-between"
+                                className="my-6 p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-4"
                             >
-                                <div className="flex items-baseline justify-between mb-2 gap-4">
-                                    <span>
-                                        <StarRating rating={comentario.voto} />
-                                    </span>
-
-                                    <p className="text-xs">
-                                        {formatDate(
-                                            comentario.createdAt.slice(0, 10)
-                                        )}
-                                    </p>
+                                <div className="flex items-center gap-4 mb-2">
+                                    <img
+                                        className="w-10 h-10 rounded-full object-cover"
+                                        src={
+                                            comentario.grupoAvatar
+                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.grupoAvatar}`
+                                                : DefaultProfile
+                                        }
+                                        alt="Avatar grupo"
+                                    />
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-sm">
+                                            {comentario.grupoVotaName}
+                                        </span>
+                                        <p className="text-xs text-gray-500">
+                                            {formatDate(
+                                                comentario.createdAt.slice(
+                                                    0,
+                                                    10
+                                                )
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
-                                <span className="text-sm">
+
+                                <div className="flex flex-row gap-1">
+                                    <StarRating rating={comentario.voto} />
+                                </div>
+
+                                <p className="text-sm text-gray-700">
                                     {comentario.comentario}
-                                </span>
+                                </p>
+
                                 <Link
                                     className="flex justify-end items-center gap-2 mt-3"
                                     to={`/grupo/${comentario.grupoVotaId}`}
@@ -179,7 +200,7 @@ const SalaDetail = () => {
                                         }
                                         alt="Avatar grupo"
                                     />
-                                    <p className="italic">
+                                    <p className="italic text-sm text-gray-500">
                                         {comentario.grupoVotaName}
                                     </p>
                                 </Link>
