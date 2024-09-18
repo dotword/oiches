@@ -46,6 +46,12 @@ const SobreOiches = () => {
                         disponibilidad de fechas.
                     </p>
                     <p className="mb-4">
+                        Como sala de conciertos, podrás dar con el grupo que más
+                        se ajuste a tu estilo musical y a tus fechas
+                        disponibles, y dar a conocer a los músicos las
+                        características de tu sala.
+                    </p>
+                    <p className="mb-4">
                         No más correos interminables o llamadas perdidas; ahora
                         puedes contactar directamente con los responsables de
                         las salas y gestionar todas las reservas en un solo
