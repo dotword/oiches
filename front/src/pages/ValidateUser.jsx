@@ -20,7 +20,7 @@ export const ValidateUser = () => {
 
         const formData = new FormData(e.target);
         const code = formData.get('code');
-        console.log(code);
+
         try {
             const response = await fetch(
                 `${VITE_API_URL_BASE}/users/validate/${code}`
