@@ -1,0 +1,29 @@
+# Bloquea bots de acceso a partes privadas, administrativas y de configuración
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /node_modules/
+Disallow: /scripts/
+Disallow: /src/
+Disallow: /uploads/
+Disallow: /server.js
+Disallow: /env.js
+Disallow: /Oiches.postman_collection.json
+
+# Bloquea archivos específicos que no deberían ser rastreados
+Disallow: /*.json$
+Disallow: /*.md$
+Disallow: /*.env$
+Disallow: /*.log$
+
+# Bloquea páginas de edición y rutas con parámetros dinámicos que no aportan valor SEO
+Disallow: /sala/:idSala/edit
+Disallow: /grupos/:idGrupo/edit
+Disallow: /users/validate/:registrationCode
+
+# Permitir el acceso al resto del sitio
+Allow: /
+
+# Indica la ubicación del sitemap
+Sitemap: https://www.oiches.com/sitemap.xml
