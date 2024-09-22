@@ -25,6 +25,7 @@ import SobreOiches from './pages/SobreOiches.jsx';
 import AvisoLegal from './pages/AvisoLegal.jsx';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
+import { Chat } from './pages/Chat.jsx';
 
 function App() {
     return (
@@ -70,6 +71,7 @@ function App() {
                     element={<PoliticaPrivacidad />}
                 />
                 <Route path="/politica-cookies" element={<PoliticaCookies />} />
+                <Route path="/chat" element={<Chat />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </AnimatePresence>
