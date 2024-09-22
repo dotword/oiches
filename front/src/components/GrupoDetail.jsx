@@ -42,11 +42,13 @@ const GrupoDetail = () => {
 
     return entry ? (
         <>
-            <Header txt={nombre} />
+            <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col mx-auto md:flex-row items-center gap-6">
+                <section className="flex flex-col items-center md:items-start gap-4 p-4">
+                    {' '}
+                    {/* flex-col para móvil, items-start en escritorio */}
                     <img
-                        className="w-40 h-40 rounded-full object-cover"
+                        className="avatar-square"
                         src={
                             avatar
                                 ? `${VITE_API_URL_BASE}/uploads/${avatar}`
@@ -54,40 +56,48 @@ const GrupoDetail = () => {
                         }
                         alt="Imagen de perfil del grupo"
                     />
+                    <h2 className="text-2xl font-bold mt-2 text-center md:text-left">
+                        {' '}
+                        {/* Centramos en móvil, alineado a la izquierda en escritorio */}
+                        {nombre}
+                    </h2>
                 </section>
+
                 <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
                     {genero && (
-                        <span>
+                        <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
                             {genero.map((gen) => (
                                 <div key={gen.generoId} className="text-black">
                                     {gen.generoName}
                                 </div>
                             ))}
-                        </span>
+                        </div>
                     )}
 
-                    <span>
-                        <span className="font-semibold">Caché</span>{' '}
+                    <div className="border-t border-gray-300 pt-4">
+                        <span className="font-semibold">Caché</span>
                         <p className="text-black">{honorarios}€</p>
-                    </span>
+                    </div>
 
                     {provincia && (
-                        <span>
-                            <span className="font-semibold">Provincia</span>{' '}
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Provincia</span>
                             <p className="text-black">{provincia}</p>
-                        </span>
+                        </div>
                     )}
+
                     {currentUser && (
-                        <span>
-                            <span className="font-semibold">Contacto</span>{' '}
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Contacto</span>
                             <p className="text-black">{email}</p>
-                        </span>
+                        </div>
                     )}
                 </section>
+
                 <section>
                     <h3 className="font-semibold">Biografía</h3>
-                    <p className="mb-6 mt-3">
+                    <p className="mb-6 mt-3 text-gray-600">
                         {biografia
                             ? biografia
                             : 'El grupo tiene que añadir la biografía.'}
@@ -97,7 +107,7 @@ const GrupoDetail = () => {
                 {media.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Videos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6 ">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6 ">
                             {media.map((media) => (
                                 <LiteYouTubeEmbed
                                     key={media.id}
@@ -109,63 +119,83 @@ const GrupoDetail = () => {
                         </div>
                     </section>
                 )}
+
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-6 place-items-center">
                         {fotos.length > 0 ? (
                             <>
                                 {fotos.map((photo) => (
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="image-shadow max-h-80 "
+                                        className="rounded-lg shadow-lg max-h-80 object-cover"
                                         alt={nombre}
                                     />
                                 ))}
                             </>
                         ) : (
-                            <>
-                                <img
-                                    className="col-span-1 md:col-span-2 rounded-2xl"
-                                    src={Noimage}
-                                    alt="No image"
-                                />
-                            </>
+                            <img
+                                className="col-span-1 md:col-span-2 rounded-2xl"
+                                src={Noimage}
+                                alt="No image"
+                            />
                         )}
                     </div>
                 </section>
+
                 {pdf.length > 0 && (
                     <section>
-                        <h3 className="font-semibold">Rider </h3>
+                        <h3 className="font-semibold">Rider</h3>
                         <iframe
-                            className="my-6 w-full md:w-2/3 h-80 image-shadow"
+                            className="my-6 w-full md:w-2/3 h-80 rounded-lg shadow-lg"
                             src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
                             title="PDF Viewer"
                         ></iframe>
                     </section>
                 )}
+
                 {comentarios.length > 0 && (
                     <section className="mb-10">
-                        <h3 className="font-semibold">Comentarios</h3>
+                        <h3 className="font-semibold text-lg">Comentarios</h3>
 
                         {comentarios.map((comentario) => (
                             <div
                                 key={comentario.id}
-                                className="my-6 border p-3 rounded-2xl flex flex-col w-fit justify-between"
+                                className="my-6 p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-4"
                             >
-                                <div className="flex items-baseline justify-between mb-2 gap-4">
-                                    <span>
-                                        <StarRating rating={comentario.voto} />
-                                    </span>
-                                    <p className="text-xs">
-                                        {formatDate(
-                                            comentario.createdAt.slice(0, 10)
-                                        )}
-                                    </p>
+                                <div className="flex items-center gap-4">
+                                    <img
+                                        className="w-10 h-10 rounded-full object-cover"
+                                        src={
+                                            comentario.salaAvatar
+                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.salaAvatar}`
+                                                : DefaultProfile
+                                        }
+                                        alt="Avatar sala"
+                                    />
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold text-sm">
+                                            {comentario.salaVotaNombre}
+                                        </span>
+                                        <p className="text-xs text-gray-500">
+                                            {formatDate(
+                                                comentario.createdAt.slice(
+                                                    0,
+                                                    10
+                                                )
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
-                                <span className="text-sm">
+                                <div className="flex flex-row gap-1">
+                                    <StarRating rating={comentario.voto} />
+                                </div>
+
+                                <p className="text-sm text-gray-700">
                                     {comentario.comentario}
-                                </span>
+                                </p>
+
                                 <Link
                                     className="flex justify-end items-center gap-2 mt-3"
                                     to={`/sala/${comentario.salaVotaId}`}
@@ -179,7 +209,7 @@ const GrupoDetail = () => {
                                         }
                                         alt="Avatar sala"
                                     />
-                                    <p className="italic">
+                                    <p className="italic text-sm text-gray-500">
                                         {comentario.salaVotaNombre}
                                     </p>
                                 </Link>

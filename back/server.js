@@ -36,7 +36,7 @@ io.on('connection', async (socket) => {
 
   const user_id = socket.handshake.query.token;
   let decoded;
-
+console.log(user_id);
   try {
     decoded = jwtDecode(user_id);
   } catch (error) {
@@ -50,17 +50,29 @@ io.on('connection', async (socket) => {
 
   // Update the user's socket ID in the database
   await pool.query('UPDATE usuarios SET socket = ? WHERE id = ?', [socket_id, decoded.id]);
-
+  socket.on('joinRoom', ({ idConversacion }) => {
+    socket.join(idConversacion); // El usuario se une a una sala basada en idConversacion
+    console.log(`Usuario con ID ${socket.id} se unió a la conversación ${idConversacion}`);
+  });
   // Handle incoming messages
   socket.on('mensaje', async (data) => {
     try {
+        console.log('DATA',data);
       const { idConversacion, texto, idDestinatario } = data;
-      const mensaje = await crearMensajeService(user_id, idConversacion, texto, idDestinatario);
+      
+      // Guardar el mensaje en la base de datos
+      const mensaje = await crearMensajeService(decoded.id, idConversacion, texto, idDestinatario);
 
-      // Emit the message to the specific conversation
-      io.to(mensaje.conversacion).emit('mensaje', mensaje);
+      // Emitir el mensaje solo a la sala específica de la conversación
+      console.log(`Enviando mensaje a la conversación ${idConversacion}: ${texto}`);
+      io.to(idConversacion).emit('mensaje', {
+        idConversacion,
+        mensaje: texto,
+        usuario: socket.user_id,
+        destinatario: idDestinatario
+      });
     } catch (error) {
-      console.error('Error al enviar mensaje:', error);
+      console.error('Error al enviar el mensaje:', error);
     }
   });
 

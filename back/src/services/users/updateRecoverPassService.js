@@ -13,14 +13,14 @@ const updateRecoverPassService = async (email, recoverPassCode) => {
     const subject = 'Recuperación de contraseña de Oiches ;-)';
 
     const body = `
-         Se ha solicitado la recuperación de contraseña para este email en Oiches. 
+         <p>Se ha solicitado la recuperación de contraseña para este email en Oiches. </p>
                     
-                Utiliza el este código para crear una nueva contraseña: ${recoverPassCode}
-                en el siguiente enlace <a href="${URL_FRONT}/users/password">Cambiar contraseña</a>
+               <p> Utiliza este código para crear una nueva contraseña: ${recoverPassCode}<br />
+                en el siguiente enlace: <a href="${URL_FRONT}/users/password">Cambiar contraseña</a></p>
 
-                Si no has sido tú ignora este email.
+                <p>Si no has sido tú, ignora este email.</p><br />
 
-                Saludos del equipo de Oiches.
+                <p>Saludos del equipo de Oiches.</p>
                 `;
 
     await sendMailUtil(email, subject, body);

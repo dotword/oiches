@@ -5,7 +5,7 @@ export const deleteGrupoController = async (req, res, next) => {
         const { idGrupo } = req.params;
         await deleteGrupoService(idGrupo);
         res.status(200).json({
-            message: 'El grupo se ha eliminado con exito.',
+            message: 'El grupo se ha eliminado con éxito.',
         });
     } catch (error) {
         next(error);

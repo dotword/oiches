@@ -19,7 +19,7 @@ export const LoginPage = () => {
                         </p>
                         <Link
                             to="/register"
-                            className="hover:text-purpleOiches text-yellowOiches ml-2"
+                            className="hover:text-purpleOiches md:text-yellowOiches ml-2"
                         >
                             Regístrate
                         </Link>

@@ -3,7 +3,7 @@ import getPool from '../../database/getPool.js';
 export async function listSalasService(filters) {
     const pool = await getPool();
 
-    // Consulta para obtener las salas con paginación
+    // Consulta principal para obtener las salas con filtros y paginación
     let query = `
     SELECT 
         salas.id, 
@@ -14,7 +14,7 @@ export async function listSalasService(filters) {
         (SELECT name FROM sala_fotos WHERE sala_fotos.salaId = salas.id LIMIT 1) AS primera_foto,
         (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = salas.id) AS media_votos,
         (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.salaId = salas.id) AS generos,
-        GROUP_CONCAT(gm.nombre SEPARATOR ', ') AS generoNombres
+        GROUP_CONCAT(DISTINCT gm.nombre SEPARATOR ', ') AS generoNombres
     FROM 
         salas 
     LEFT JOIN provincias ON provincias.id = salas.provincia
@@ -27,16 +27,20 @@ export async function listSalasService(filters) {
     const queryParams = [];
 
     // Filtros específicos
-    if (filters.nombre) {
+
+    // Filtro por nombre (si está presente)
+    if (filters.nombre && filters.nombre.trim() !== '') {
         query += ' AND salas.nombre LIKE ?';
         queryParams.push(`%${filters.nombre}%`);
     }
 
+    // Filtro por género (si está presente)
     if (filters.genero) {
         query += ' AND gs.generoId = ?';
         queryParams.push(filters.genero);
     }
 
+    // Filtro por provincia (si está presente)
     if (filters.provincia) {
         query += ' AND salas.provincia = ?';
         queryParams.push(filters.provincia);
@@ -44,7 +48,7 @@ export async function listSalasService(filters) {
 
     query += ' GROUP BY salas.id';
 
-    // Ordenamiento por media de votos siempre
+    // Ordenamiento por media de votos o nombre, dependiendo del filtro
     if (filters.order && filters.field) {
         const orderField =
             filters.field === 'media_votos' ? 'media_votos' : 'salas.nombre';
@@ -52,30 +56,23 @@ export async function listSalasService(filters) {
             filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
-        // Default order by media votes descending
+        // Orden por defecto (por media de votos descendente)
         query += ' ORDER BY media_votos DESC';
     }
 
-    // Agregar paginación
+    // Paginación
     const page = filters.page ? parseInt(filters.page, 10) : 1;
-    let pageSize = filters.pageSize;
+    let pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
+    const offset = (page - 1) * pageSize;
+    query += ` LIMIT ? OFFSET ?`;
+    queryParams.push(pageSize, offset);
 
-    if (pageSize === '*') {
-        // Omitir paginación si pageSize es '*'
-        queryParams.push(); // Añadir un valor vacío para los parámetros
-    } else {
-        pageSize = pageSize ? parseInt(pageSize, 10) : 10;
-        const offset = (page - 1) * pageSize;
-        query += ` LIMIT ? OFFSET ?`;
-        queryParams.push(pageSize, offset);
-    }
-
-    // Ejecutar consulta para obtener las salas
+    // Ejecutar consulta principal
     const [rows] = await pool.query(query, queryParams);
 
-    // Consulta para obtener el conteo total de salas
+    // Consulta para obtener el conteo total de salas sin paginación
     let countQuery = `
-    SELECT COUNT(*) AS total
+    SELECT COUNT(DISTINCT salas.id) AS total
     FROM 
         salas 
     LEFT JOIN provincias ON provincias.id = salas.provincia
@@ -86,22 +83,23 @@ export async function listSalasService(filters) {
     `;
 
     // Aplicar los mismos filtros a la consulta de conteo
-    if (filters.nombre) {
+    const countQueryParams = [];
+    if (filters.nombre && filters.nombre.trim() !== '') {
         countQuery += ' AND salas.nombre LIKE ?';
+        countQueryParams.push(`%${filters.nombre}%`);
     }
 
     if (filters.genero) {
         countQuery += ' AND gs.generoId = ?';
+        countQueryParams.push(filters.genero);
     }
 
     if (filters.provincia) {
         countQuery += ' AND salas.provincia = ?';
+        countQueryParams.push(filters.provincia);
     }
 
-    const [[countResult]] = await pool.query(
-        countQuery,
-        queryParams.slice(0, -2)
-    );
+    const [[countResult]] = await pool.query(countQuery, countQueryParams);
 
     return {
         rows,
