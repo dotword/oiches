@@ -8,6 +8,7 @@ export const Chat = () => {
   const API = `http://localhost:3000`;
   const [selectedConversation, setSelectedConversation] = useState('');
   const [messages, setMessages] = useState([]);
+  const [searchedUsers, setSearchedUsers] = useState([]);
   const [conversaciones, setConversaciones] = useState([]);
 const { currentUser } = useContext(AuthContext);
   useEffect(() => {
@@ -90,6 +91,22 @@ const { currentUser } = useContext(AuthContext);
     }
   };
 
+  const handleChange = async (e) => {
+    e.preventDefault();
+    const value = e.target.value.toLowerCase();
+    
+    const fetchUsers = await fetch(`${API}/users/${value}`,{
+      method: 'GET',
+      headers: {
+        'authorization': `${localStorage.getItem('AUTH_TOKEN')}`,
+      },
+    })
+
+    const response = await fetchUsers;
+    const data = await response.json();
+    console.log(data);
+    setSearchedUsers(data.data);
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
     const message = e.target.elements.message.value;
@@ -112,17 +129,28 @@ const { currentUser } = useContext(AuthContext);
         idDestinatario: idDestinatario,
       });
   
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          mensaje: message,
-          incomming: false, // Marca el mensaje como saliente
-        },
-      ]);
+  
   
       e.target.elements.message.value = ''; // Limpia el input
     }
   };
+ const handleIniciateConversacion = async (id) => {
+    const response = await fetch(`${API}/conversaciones`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': `${localStorage.getItem('AUTH_TOKEN')}`
+      },
+    body: JSON.stringify({idUsuarioDestino: id})
+    })
+    const data = await response.json();
+    if(data.status === 'ok'){
+      setConversaciones([...conversaciones, data.data]);
+      setSelectedConversation(data.data);
+    }
+    console.log(data);
+    }
+
 
   return (
     <>
@@ -130,12 +158,28 @@ const { currentUser } = useContext(AuthContext);
       <main className="mx-auto max-w-6xl flex h-screen">
         <div className="w-[300px] flex flex-col gap-2 px-4 bg-[#93F]/40 border rounded">
           <h2 className="text-2xl text-center my-4">Chats</h2>
-          <input type="text" placeholder="Buscar usuario" className="form-input self-start m-0" />
-          <button className="btn-buscar self-start mx-auto">Buscar</button>
+          <input onChange={handleChange} type="search" placeholder="Buscar usuario" className="form-input self-start m-0" />
+          {
+            searchedUsers.length > 0 && (
+              <ul className="list-none my-4">
+                {searchedUsers.map((user) => (
+                  <li
+                    key={user.id}
+                    className="flex gap-2 items-center p-2 rounded-lg bg-[#93F]/20 cursor-pointer"
+                    onClick={() => handleIniciateConversacion(user.id)}
+                  >
+                    <img src={user.img} alt={user.name} className="w-10 h-10 rounded-full" />
+                    <h3>{user.username}</h3>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
           <ul className="list-none my-4">
-            {conversaciones.map((conversacion) => (
+            {conversaciones.length > 0 &&
+            conversaciones.map((conversacion,index) => (
               <li
-                key={conversacion.id}
+                key={conversacion.id || index}
                 className="flex gap-2 items-center p-2 rounded-lg bg-[#93F]/20 cursor-pointer"
                 onClick={() => handleSelectUser(conversacion)}
               >
