@@ -16,7 +16,7 @@ const UsersSalaGrupoList = () => {
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(null);
 
-    const { entries, setEntries } = useListSalasGrupoUser(token);
+    const { entries = [], setEntries } = useListSalasGrupoUser(token);
 
     const type = userLogged.roles;
 
