@@ -215,7 +215,7 @@ const SalaCreacion = () => {
                         <input
                             type="number"
                             name="precios"
-                            placeholder="Tarifa para los grupos"
+                            placeholder="Tarifa para los músicos"
                             value={precios}
                             onChange={handleChange}
                             className="form-input"

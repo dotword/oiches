@@ -14,11 +14,11 @@ const updateUserRegCodeService = async (registrationCode) => {
         [registrationCode]
     );
 
-     if(!user.length) throw generateErrorsUtil('Codigo de registro incorrecto', 403);
+    if (!user.length)
+        throw generateErrorsUtil('Código de registro incorrecto', 403);
 
     // Actualizamos el usuario.
-    if(user){
-
+    if (user) {
         await pool.query(
             `UPDATE usuarios SET active = true, registrationCode = null WHERE registrationCode = ?`,
             [registrationCode]

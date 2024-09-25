@@ -34,7 +34,7 @@ const SobreOiches = () => {
                         con música en vivo emocionante.
                     </p>
                     <p className="mb-4">
-                        Sin embargo, conectarse con los grupos adecuados y
+                        Sin embargo, conectarse con los músicos adecuados y
                         gestionar todas las reservas es un desafío constante
                         para los administradores de las salas.
                     </p>

@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS votos_salas, votos_grupos, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS mensajes,conversaciones, votos_salas, votos_grupos, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -25,6 +25,7 @@ const main = async () => {
                 registrationCode CHAR(30),
                 roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
                 active BOOLEAN DEFAULT false,
+                socket CHAR(36),
                 recoverPassCode CHAR(10),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -213,6 +214,31 @@ const main = async () => {
             ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
         
         `);
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS conversaciones (
+            id CHAR(36) PRIMARY KEY NOT NULL,
+            usuario1 CHAR(36) NOT NULL,
+            usuario2 CHAR(36) NOT NULL,
+            FOREIGN KEY (usuario1) REFERENCES usuarios(id),
+            FOREIGN KEY (usuario2) REFERENCES usuarios(id),
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+        `)
+        await pool.query(`
+        CREATE TABLE IF NOT EXISTS mensajes (
+            id CHAR(36) PRIMARY KEY NOT NULL,
+            conversacion CHAR(36) NOT NULL,
+            usuario CHAR(36) NOT NULL,
+            mensaje TEXT NOT NULL,
+            status BOOLEAN DEFAULT false,
+            destinatario CHAR(36) NOT NULL,
+            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (conversacion) REFERENCES conversaciones(id),
+            FOREIGN KEY (usuario) REFERENCES usuarios(id),
+            FOREIGN KEY (destinatario) REFERENCES usuarios(id)
+        );`)
+
+       
 
         console.log('¡Tablas creadas!');
     } catch (err) {
