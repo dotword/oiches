@@ -24,7 +24,7 @@ import AvisoLegal from './pages/AvisoLegal.jsx';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx'; // Importar el banner de cookies
-import { Chat } from './pages/Chat.jsx';
+//import { Chat } from './pages/Chat.jsx';
 
 function App() {
     return (
@@ -81,6 +81,7 @@ function App() {
                         element={<PoliticaCookies />}
                     />
                     <Route path="*" element={<NotFound />} />
+                    {/* <Route path="/chat" element={<Chat />} />  */}
                 </Routes>
             </AnimatePresence>
             <CookieConsentBanner /> {/* Añade el banner de cookies */}
