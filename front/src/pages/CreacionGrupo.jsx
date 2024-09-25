@@ -10,7 +10,7 @@ const CreacionGrupo = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Crea tu Grupo" />
+            <Header txt="Publica tu proyecto musical" />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
                 <div className="p-6 bg-white rounded-lg shadow-md">
                     <GrupoCreacion />

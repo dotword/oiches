@@ -228,12 +228,12 @@ const GrupoEdit = () => {
             >
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
-                        Nombre del Grupo:
+                        Nombre del artista/grupo:
                     </label>
                     <input
                         type="text"
                         name="nombre"
-                        placeholder="Nombre del grupo"
+                        placeholder="Nombre del artista/grupo"
                         value={grupo.nombre}
                         onChange={(e) =>
                             setGrupo({ ...grupo, nombre: e.target.value })

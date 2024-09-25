@@ -13,11 +13,15 @@ const newUserSchema = Joi.object({
         .required()
         .messages(joiErrorMessages),
     password: Joi.string()
-        .pattern(
-            /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[¡!$%^&*()_+|~=`{}:";'<>¿?,.])[a-zA-Z0-9¡!$%^&*()_+|~=`{}:";'<>¿?,.]{8,}$/
-        )
+        .min(6) // Al menos 6 caracteres
+        .pattern(new RegExp('^(?=.*[A-Za-z])(?=.*[0-9]).{6,}$')) // Al menos una letra y un número
         .required()
-        .messages(joiErrorMessages),
+        .messages({
+            'string.min': 'La contraseña debe tener al menos 6 caracteres.',
+            'string.pattern.base':
+                'La contraseña debe contener al menos una letra y un número.',
+            'any.required': 'La contraseña es un campo obligatorio.',
+        }),
     email: Joi.string().email().required().messages(joiErrorMessages),
     roles: Joi.required(),
 });

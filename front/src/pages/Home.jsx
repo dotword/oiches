@@ -74,7 +74,7 @@ const Home = () => {
                             ))}
                         </SliderMulti>
                     ) : (
-                        <p>Grupos no encontrados</p>
+                        <p>Músicos no encontrados</p>
                     )}
                 </section>
                 <section className="grid gap-6">
