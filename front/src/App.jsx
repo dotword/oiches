@@ -72,6 +72,7 @@ function App() {
                 />
                 <Route path="/politica-cookies" element={<PoliticaCookies />} />
                 {/* <Route path="/chat" element={<Chat />} /> */}
+
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </AnimatePresence>
