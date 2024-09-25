@@ -130,7 +130,7 @@ const GrupoCreacion = () => {
         try {
             await registerGrupoService({ token, formData });
 
-            toast.success('Has creado tu nuevo grupo con éxito');
+            toast.success('Has creado tu nuevo artista/grupo con éxito');
             navigate('/users');
         } catch (error) {
             setError(error.message);
@@ -146,12 +146,12 @@ const GrupoCreacion = () => {
                     <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                             <label htmlFor="nombre" className="font-semibold">
-                                Nombre del Grupo:*
+                                Nombre del artista/grupo:*
                             </label>
                             <input
                                 type="text"
                                 name="nombre"
-                                placeholder="Nombre del grupo"
+                                placeholder="Nombre del artista/grupo"
                                 value={nombre}
                                 required
                                 onChange={handleChange}
@@ -224,7 +224,7 @@ const GrupoCreacion = () => {
                             <input
                                 type="number"
                                 name="honorarios"
-                                placeholder="Caché del grupo"
+                                placeholder="Caché del artista/grupo"
                                 value={honorarios}
                                 onChange={handleChange}
                                 className="form-input"
@@ -297,7 +297,7 @@ const GrupoCreacion = () => {
 
                         <section className="mb-8 gap-2 flex flex-wrap">
                             <p className="mb-2 font-semibold w-full">
-                                Fotos del grupo
+                                Fotos del artista/grupo
                             </p>
                             {['A', 'B', 'C', 'D'].map((key) => (
                                 <div
@@ -339,7 +339,7 @@ const GrupoCreacion = () => {
                     <div className="my-12 max-w-80">
                         <input
                             type="submit"
-                            value="Crear Grupo"
+                            value="Publicar artista/grupo"
                             className="btn-account p-3 w-full"
                         />
                     </div>
