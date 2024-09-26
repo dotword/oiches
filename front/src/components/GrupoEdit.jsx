@@ -272,7 +272,7 @@ const GrupoEdit = () => {
                     <input
                         type="number"
                         name="honorarios"
-                        placeholder="Caché del grupo"
+                        placeholder="Caché del artista"
                         value={grupo.honorarios}
                         onChange={(e) =>
                             setGrupo({

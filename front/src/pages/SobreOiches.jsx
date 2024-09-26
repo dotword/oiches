@@ -39,9 +39,9 @@ const SobreOiches = () => {
                         para los administradores de las salas.
                     </p>
                     <p className="mb-4">
-                        Con Oiches, como grupo musical, puedes explorar una
-                        amplia variedad de salas de conciertos, desde locales
-                        íntimos hasta grandes escenarios, viendo de antemano la
+                        Con Oiches, como músico, puedes explorar una amplia
+                        variedad de salas de conciertos, desde locales íntimos
+                        hasta grandes escenarios, viendo de antemano la
                         ubicación, capacidad, equipamiento técnico y
                         disponibilidad de fechas.
                     </p>

@@ -44,7 +44,9 @@ export const RegisterForm = () => {
             }
         } catch (err) {
             toast.error(err.message);
-            setError('Error durante el registro. Porfavor intentalo de nuevo.');
+            setError(
+                'Error durante el registro. Por favor, inténtalo de nuevo.'
+            );
         }
     };
 
@@ -58,7 +60,7 @@ export const RegisterForm = () => {
                 <hr />
                 <div className="flex gap-4">
                     <label>
-                        Grupo{' '}
+                        Artista{' '}
                         <input
                             className="accent-purpleOiches"
                             type="radio"
