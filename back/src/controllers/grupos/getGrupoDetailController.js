@@ -6,7 +6,6 @@ const getGrupoDetailController = async (req, res, next) => {
         // Dado que queremos permitir que un usuario no logeado acceda a este controlador,
         // habrá momentos en los que no exista "req.sala".
         const grupo = await selectGrupoByIdService(idGrupo, req.user?.id);
-        console.log(grupo);
 
         res.send({
             status: 'ok',
