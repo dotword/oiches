@@ -22,8 +22,8 @@ const Footer = () => {
                     </a>
                     <p className="mb-6">
                         <b>Oiches</b> es una innovadora plataforma diseñada para
-                        facilitar la conexión entre salas de conciertos y grupos
-                        musicales...{' '}
+                        facilitar la conexión entre salas de conciertos y
+                        músicos...{' '}
                         <a href="/sobre-oiches" className="text-yellowOiches">
                             Saber más
                         </a>

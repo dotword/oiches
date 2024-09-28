@@ -67,7 +67,7 @@ export const ValidateUser = () => {
             <div className="flex justify-between md:justify-evenly max-w-md flex-col gap-y-5 lg:w-1/3 mx-auto lg:mt-20 my-14 p-4">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <h1 className="text-4xl">
-                        Introduzca su código de validación de usuario:
+                        Introduce tu código de validación de usuario:
                     </h1>
                     <hr />
 

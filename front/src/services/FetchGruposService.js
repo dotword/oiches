@@ -33,7 +33,7 @@ const FetchGruposService = async (filters = {}, page = 1, pageSize = 10) => {
 
         return data;
     } catch (error) {
-        console.error('Hubo un error al obtener los grupos:', error);
+        console.error('Hubo un error al obtener los músicos:', error);
         return { total: 0, rows: [] };
     }
 };

@@ -138,8 +138,8 @@ const Salas = () => {
             <div className="hero bg-hero-salas bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                 <h1 className="hero-title text-white">Encuentra tu Sala</h1>
                 <p className="hero-subtitle text-white">
-                    Descubre y explora distintas salas, conecta con ellos y crea
-                    música juntos.
+                    Descubre y explora distintas salas, conéctate con ellas y
+                    lleva tu música en vivo a nuevos escenarios
                 </p>
             </div>
             <div className="sala-filter-form-container">

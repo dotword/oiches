@@ -110,9 +110,9 @@ const UsersSalaGrupoList = () => {
             {type === 'grupo' && entries.length === 0 ? (
                 <a
                     href="/creacion-grupo"
-                    className="btn-account max-w-44 min-w-32 mx-auto"
+                    className="btn-account max-w-56 min-w-32 mx-auto p-4"
                 >
-                    Crea un grupo
+                    Publica tu proyecto musical
                 </a>
             ) : (
                 ''
@@ -121,9 +121,9 @@ const UsersSalaGrupoList = () => {
             {type === 'sala' ? (
                 <a
                     href="/creacion-sala"
-                    className="btn-account max-w-44 min-w-32 mx-auto"
+                    className="btn-account max-w-56 min-w-32 mx-auto p-4"
                 >
-                    Crea una sala
+                    Publica tu sala
                 </a>
             ) : (
                 ''
