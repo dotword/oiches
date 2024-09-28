@@ -1,19 +1,17 @@
-import selectUserByNameService from "../../services/users/selectUsersByNameService.js";
+import selectUserByNameService from '../../services/users/selectUsersByNameService.js';
 
+const selectUserByNameController = async (req, res, next) => {
+    try {
+        const { name } = req.params;
 
-const selectUserByNameController = async (req, res,next) => {
-  try {
-    
-    const { name } = req.params;
-    
-    const user = await selectUserByNameService(name);
-    
-    res.send({
-      status: 'ok',
-      data: user,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
+        const user = await selectUserByNameService(name);
+
+        res.send({
+            statusaa: 'ok',
+            data: user,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 export default selectUserByNameController;
