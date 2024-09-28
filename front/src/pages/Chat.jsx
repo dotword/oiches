@@ -136,15 +136,18 @@ const { currentUser } = useContext(AuthContext);
   
       // Obtener el ID del usuario logueado
       const userId = currentUser.id; // Asegúrate de que `currentUser` contenga el ID
-  
+      console.log(selectedConversation,'selectedConversation');
       // Determina el destinatario
       const idDestinatario =
         selectedConversation.usuario1 === userId
           ? selectedConversation.usuario2
           : selectedConversation.usuario1;
-  
+      if(!idDestinatario){
+        console.error('No se puede enviar mensajes si no hay un destinatario');
+        return
+      }
       socket.emit('mensaje', {
-        idConversacion: selectedConversation.id,
+        idConversacion: selectedConversation.conversacion_id,
         texto: message,
         idDestinatario: idDestinatario,
       });
@@ -152,25 +155,35 @@ const { currentUser } = useContext(AuthContext);
   
   
       e.target.elements.message.value = ''; // Limpia el input
+      setMessages((prev) => [ ...prev, { mensaje: message, incomming: false } ]);
     }
   };
- const handleIniciateConversacion = async (id) => {
+  const handleIniciateConversacion = async (id) => {
     const response = await fetch(`${API}/conversaciones`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': `${localStorage.getItem('AUTH_TOKEN')}`
-      },
-    body: JSON.stringify({idUsuarioDestino: id})
-    })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': `${localStorage.getItem('AUTH_TOKEN')}`,
+        },
+        body: JSON.stringify({ idUsuarioDestino: id }),
+    });
+
     const data = await response.json();
-   
-    if(data.status === 'ok'){
-      setConversaciones([...conversaciones, data.data.conversaciones]);
-      setSelectedConversation(data.data.conversaciones);
+    console.log("Respuesta de la creación de la conversación:", data);
+
+    // Verifica si la conversación fue creada exitosamente
+    if (data.status === 'ok' && data.data) {
+        // Usar data.data directamente ya que ahora contiene la conversación completa
+        setConversaciones((prev) => [...prev, data.data]);
+        setSelectedConversation(data.data); // Esto selecciona la nueva conversación
+        setSearchedUsers([]); // Limpiar la lista de usuarios buscados
+    } else {
+        console.error("La conversación no es válida:", data);
     }
-   
-    }
+};
+
+
+
 
 
   return (

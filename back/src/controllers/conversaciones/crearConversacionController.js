@@ -3,23 +3,24 @@ import { crearConversacionService } from "../../services/conversaciones/crearCon
 
 const crearConversacionController = async (req, res, next) => {
   try {
-    // Extraer datos
-    const { id } = req.user;
-    console.log(req.user);
+    const { id } = req.user;  // ID del usuario logueado
     const { idUsuarioDestino } = req.body;
 
     // Crear conversación
     const conversacion = await crearConversacionService(id, idUsuarioDestino);
 
+    console.log("Conversación creada:", conversacion);
+
     // Enviar respuesta
     res.send({
       status: 'ok',
       message: 'Conversación creada',
-      data: conversacion,
+      data: conversacion,  // Aquí enviamos la conversación completa
     });
   } catch (error) {
     next(error);
   }
-}
+};
+
 
 export default crearConversacionController;
