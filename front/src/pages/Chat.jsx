@@ -22,17 +22,18 @@ const { currentUser } = useContext(AuthContext);
     console.log('Configurando evento mensaje...');
     socketConnection.on('mensaje', (mensaje) => {
       console.log('Mensaje recibido del servidor:', mensaje);
-      
-      // Agregar el mensaje recibido al estado de messages
-      if (mensaje.idDestinatario !== currentUser.id) {
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-            mensaje: mensaje.texto,
-            incomming: true,
-          },
-        ]);
+      if(!currentUser){
+        console.error('No se puede recibir mensajes si no hay un usuario logueado');
+        return
       }
+      // Agregar el mensaje recibido al estado de messages
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+            mensaje: mensaje.mensaje,
+            incomming: mensaje.destinatario !== currentUser.id, // Determina si es un mensaje entrante
+        },
+    ]);
     });
     // Recepción de mensajes del servidor
     
@@ -41,7 +42,7 @@ const { currentUser } = useContext(AuthContext);
     return () => {
       socketConnection.disconnect();
     };
-  }, [API]);
+  }, [API,currentUser]);
 
   useEffect(() => {
     const fetchConversaciones = async () => {
