@@ -24,13 +24,15 @@ const { currentUser } = useContext(AuthContext);
       console.log('Mensaje recibido del servidor:', mensaje);
       
       // Agregar el mensaje recibido al estado de messages
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          mensaje: mensaje.mensaje,
-          incomming: true, // o false, dependiendo de quién envió el mensaje
-        },
-      ]);
+      if (mensaje.idDestinatario !== currentUser.id) {
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          {
+            mensaje: mensaje.texto,
+            incomming: true,
+          },
+        ]);
+      }
     });
     // Recepción de mensajes del servidor
     
