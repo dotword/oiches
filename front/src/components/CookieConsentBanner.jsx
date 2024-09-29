@@ -31,7 +31,27 @@ const CookieConsentBanner = () => {
             setConsent(savedConsent);
             setPreferences(JSON.parse(savedPreferences));
         }
+        // Cargar GTM si ya se aceptaron las cookies
+        if (savedConsent === 'accepted') {
+            loadGTM();
+        }
     }, []);
+
+    const loadGTM = () => {
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js',
+            });
+            const f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NS82WX8K');
+    };
 
     const handleAcceptAll = () => {
         const newPreferences = {
@@ -46,6 +66,7 @@ const CookieConsentBanner = () => {
         );
         setPreferences(newPreferences);
         setConsent('accepted');
+        loadGTM(); // Cargar GTM tras aceptar todas las cookies
         window.location.reload(); // Recargar para activar las cookies.
     };
 
@@ -55,6 +76,10 @@ const CookieConsentBanner = () => {
         setConsent('accepted');
         setSnackbarOpen(true);
         setShowPreferences(false);
+        // Cargar GTM si el usuario ha aceptado cookies analíticas
+        if (preferences.analytics || preferences.marketing) {
+            loadGTM();
+        }
     };
 
     const handleDeclineAll = () => {
@@ -69,7 +94,7 @@ const CookieConsentBanner = () => {
             JSON.stringify(declinedPreferences)
         );
         setConsent('declined');
-        window.location.reload();
+        window.location.reload(); // Recargar para no activar las cookies
     };
 
     const togglePreferenceView = () => setShowPreferences(!showPreferences);
