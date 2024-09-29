@@ -5,6 +5,7 @@ const insertGrupoService = async (
     nombre,
     provincia,
     honorarios,
+    honorarios_to,
     biografia,
     usuario_id
 ) => {
@@ -13,8 +14,16 @@ const insertGrupoService = async (
     const newGrupoId = uuidv4();
 
     await pool.query(
-        `INSERT INTO grupos (id, nombre, provincia, honorarios, biografia, usuario_id) VALUES (?, ?, ?, ?, ?, ?)`,
-        [newGrupoId, nombre, provincia, honorarios, biografia, usuario_id]
+        `INSERT INTO grupos (id, nombre, provincia, honorarios, honorarios_to, biografia, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [
+            newGrupoId,
+            nombre,
+            provincia,
+            honorarios,
+            honorarios_to,
+            biografia,
+            usuario_id,
+        ]
     );
 
     return newGrupoId;

@@ -30,6 +30,7 @@ const GrupoEdit = () => {
         nombre: '',
         provincia: '',
         honorarios: 0,
+        honorarios_to: 0,
         biografia: '',
         activeGenres: [],
         hasRider: 0,
@@ -54,6 +55,7 @@ const GrupoEdit = () => {
                     nombre: data.grupo.nombre || '',
                     provincia: data.grupo.provinciaId || '',
                     honorarios: data.grupo.honorarios || 0,
+                    honorarios_to: data.grupo.honorarios_to || 0,
                     biografia: data.grupo.biografia || '',
                     activeGenres: data.grupo.genero || [],
                     hasRider: data.grupo.pdf.length,
@@ -129,6 +131,7 @@ const GrupoEdit = () => {
             dataForm.append('nombre', grupo.nombre || '');
             dataForm.append('provincia', grupo.provincia || '');
             dataForm.append('honorarios', grupo.honorarios || 0);
+            dataForm.append('honorarios_to', grupo.honorarios_to || 0);
             dataForm.append('biografia', grupo.biografia || '');
             await EditGrupoService({
                 token,
@@ -242,7 +245,7 @@ const GrupoEdit = () => {
                     />
                 </div>
 
-                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-4">
+                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-5">
                     <label htmlFor="provincia" className="font-semibold">
                         Provincia:
                     </label>
@@ -265,23 +268,44 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
-                    <label htmlFor="honorarios" className="font-semibold">
-                        Caché:
-                    </label>
-                    <input
-                        type="number"
-                        name="honorarios"
-                        placeholder="Caché del artista"
-                        value={grupo.honorarios}
-                        onChange={(e) =>
-                            setGrupo({
-                                ...grupo,
-                                honorarios: e.target.value,
-                            })
-                        }
-                        className="form-input"
-                    />
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                    <div className="flex gap-4">
+                        <label htmlFor="honorarios" className="font-semibold">
+                            Caché desde:
+                            <input
+                                type="number"
+                                name="honorarios"
+                                placeholder="Caché desde"
+                                value={grupo.honorarios}
+                                onChange={(e) =>
+                                    setGrupo({
+                                        ...grupo,
+                                        honorarios: e.target.value,
+                                    })
+                                }
+                                className="form-input font-normal"
+                            />
+                        </label>
+                        <label
+                            htmlFor="honorarios_to"
+                            className="font-semibold"
+                        >
+                            Caché hasta:
+                            <input
+                                type="number"
+                                name="honorarios_to"
+                                placeholder="Caché hasta"
+                                value={grupo.honorarios_to}
+                                onChange={(e) =>
+                                    setGrupo({
+                                        ...grupo,
+                                        honorarios_to: e.target.value,
+                                    })
+                                }
+                                className="form-input font-normal"
+                            />
+                        </label>
+                    </div>
                 </div>
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
                     <label htmlFor="biografia" className="font-semibold">

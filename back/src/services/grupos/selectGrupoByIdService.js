@@ -14,6 +14,7 @@ const selectGrupoByIdService = async (idGrupo) => {
                 (SELECT email FROM usuarios WHERE usuarios.id = G.usuario_id) AS email,
                 (SELECT avatar FROM usuarios WHERE usuarios.id = G.usuario_id) AS avatar,
                 G.honorarios,
+                G.honorarios_to,
                 G.biografia,
                 G.usuario_id,
                 AVG(IFNULL(V.voto, 0)) AS votes,
