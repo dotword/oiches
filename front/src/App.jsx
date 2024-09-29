@@ -81,7 +81,7 @@ function App() {
                         element={<PoliticaCookies />}
                     />
                     <Route path="*" element={<NotFound />} />
-                 <Route path="/chat" element={<Chat />} /> 
+                    {/* <Route path="/chat" element={<Chat />} />  */}
                 </Routes>
             </AnimatePresence>
             <CookieConsentBanner /> {/* Añade el banner de cookies */}
