@@ -122,12 +122,12 @@ const SalaDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 place-items-center">
                         {photos.length > 0 ? (
                             photos.map((photo) => (
                                 <div
                                     key={photo.id}
-                                    className="rounded-lg overflow-hidden shadow-lg"
+                                    className="rounded-lg overflow-hidden image-shadow"
                                 >
                                     <img
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}

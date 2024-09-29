@@ -27,6 +27,7 @@ const GrupoDetail = () => {
         email,
         fotos,
         honorarios,
+        honorarios_to,
         media,
         pdf,
     } = entry;
@@ -77,7 +78,9 @@ const GrupoDetail = () => {
 
                     <div className="border-t border-gray-300 pt-4">
                         <span className="font-semibold">Caché</span>
-                        <p className="text-black">{honorarios}€</p>
+                        <p className="text-black">
+                            {honorarios}€ - {honorarios_to}€
+                        </p>
                     </div>
 
                     {provincia && (
@@ -107,7 +110,7 @@ const GrupoDetail = () => {
                 {media.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Videos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6 ">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
                             {media.map((media) => (
                                 <LiteYouTubeEmbed
                                     key={media.id}
@@ -122,14 +125,14 @@ const GrupoDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-6 place-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6 place-items-center">
                         {fotos.length > 0 ? (
                             <>
                                 {fotos.map((photo) => (
                                     <img
                                         key={photo.id}
                                         src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-lg shadow-lg max-h-80 object-cover"
+                                        className="rounded-lg image-shadow max-h-80 object-cover"
                                         alt={nombre}
                                     />
                                 ))}
@@ -148,7 +151,7 @@ const GrupoDetail = () => {
                     <section>
                         <h3 className="font-semibold">Rider</h3>
                         <iframe
-                            className="my-6 w-full md:w-2/3 h-80 rounded-lg shadow-lg"
+                            className="my-6 w-full md:w-2/3 h-80 rounded-lg image-shadow"
                             src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
                             title="PDF Viewer"
                         ></iframe>

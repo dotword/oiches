@@ -44,7 +44,9 @@ router.put('/users/password', editUserPassController);
 
 // Perfil privado del usuario
 router.get('/users', authUser, getOwnUserController);
-// router.get('/users/:name',authUser,selectUserByNameController)
+
+router.get('/users/chat/:name', authUser, selectUserByNameController);
+
 // Listado de salas o grupos del usuario
 router.get('/users/owner', authUser, userExists, getUserOwnerController);
 

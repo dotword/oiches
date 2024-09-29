@@ -91,6 +91,7 @@ const main = async () => {
                 nombre VARCHAR(50) NOT NULL UNIQUE,
                 provincia INT NOT NULL,
                 honorarios INT,
+                honorarios_to INT,
                 biografia TEXT,
                 usuario_id CHAR(36) NOT NULL,
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
@@ -223,7 +224,7 @@ const main = async () => {
             FOREIGN KEY (usuario2) REFERENCES usuarios(id),
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         );
-        `)
+        `);
         await pool.query(`
         CREATE TABLE IF NOT EXISTS mensajes (
             id CHAR(36) PRIMARY KEY NOT NULL,
@@ -236,9 +237,7 @@ const main = async () => {
             FOREIGN KEY (conversacion) REFERENCES conversaciones(id),
             FOREIGN KEY (usuario) REFERENCES usuarios(id),
             FOREIGN KEY (destinatario) REFERENCES usuarios(id)
-        );`)
-
-       
+        );`);
 
         console.log('¡Tablas creadas!');
     } catch (err) {

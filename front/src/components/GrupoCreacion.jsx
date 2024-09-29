@@ -20,6 +20,7 @@ const GrupoCreacion = () => {
         provincia: '',
         generos: [],
         honorarios: '',
+        honorarios_to: '',
         biografia: '',
         mediaA: '',
         mediaB: '',
@@ -137,7 +138,8 @@ const GrupoCreacion = () => {
             toast.error(error.message);
         }
     };
-    const { nombre, provincia, honorarios, biografia } = formValues;
+    const { nombre, provincia, honorarios, honorarios_to, biografia } =
+        formValues;
 
     return (
         <>
@@ -214,21 +216,35 @@ const GrupoCreacion = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                        <div className="flex gap-4 b-4 md:w-[calc(50%-0.5rem)]">
                             <label
                                 htmlFor="honorarios"
                                 className="font-semibold"
                             >
-                                Caché:
+                                Caché desde:
+                                <input
+                                    type="number"
+                                    name="honorarios"
+                                    placeholder="Caché del artista/grupo"
+                                    value={honorarios}
+                                    onChange={handleChange}
+                                    className="form-input font-normal"
+                                />
                             </label>
-                            <input
-                                type="number"
-                                name="honorarios"
-                                placeholder="Caché del artista/grupo"
-                                value={honorarios}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
+                            <label
+                                htmlFor="honorarios_to"
+                                className="font-semibold"
+                            >
+                                Caché hasta:
+                                <input
+                                    type="number"
+                                    name="honorarios_to"
+                                    placeholder="Caché del artista/grupo"
+                                    value={honorarios_to}
+                                    onChange={handleChange}
+                                    className="form-input font-normal"
+                                />
+                            </label>
                         </div>
 
                         <div className="flex flex-col mb-4 md:w-full">

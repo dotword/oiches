@@ -7,7 +7,7 @@ const selectUserByNameController = async (req, res, next) => {
         const user = await selectUserByNameService(name);
 
         res.send({
-            statusaa: 'ok',
+            status: 'ok',
             data: user,
         });
     } catch (error) {
