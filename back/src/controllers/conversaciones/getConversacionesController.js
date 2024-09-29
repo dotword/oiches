@@ -4,11 +4,11 @@ const getConversacionesController = async (req, res,next) => {
     // Extraer datos
     const { id } = req.user;
     // Obtener conversaciones
-    const conversaciones = await getConversacionesService(id);
+    const {conversaciones,usuarios} = await getConversacionesService(id);
     // Enviar respuesta
     res.send({
       status: 'ok',
-      data: conversaciones,
+      data: {conversaciones,usuarios},
     });
   }
   catch (error) {
