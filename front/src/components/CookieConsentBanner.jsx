@@ -31,11 +31,15 @@ const CookieConsentBanner = () => {
             setConsent(savedConsent);
             setPreferences(JSON.parse(savedPreferences));
         }
-        // Cargar GTM si ya se aceptaron las cookies
-        if (savedConsent === 'accepted') {
+
+        // Solo cargar GTM si se aceptaron cookies analíticas o de marketing
+        if (
+            savedConsent === 'accepted' &&
+            (preferences.analytics || preferences.marketing)
+        ) {
             loadGTM();
         }
-    }, []);
+    }, [preferences]);
 
     const loadGTM = () => {
         (function (w, d, s, l, i) {
@@ -76,7 +80,8 @@ const CookieConsentBanner = () => {
         setConsent('accepted');
         setSnackbarOpen(true);
         setShowPreferences(false);
-        // Cargar GTM si el usuario ha aceptado cookies analíticas
+
+        // Cargar GTM si el usuario ha aceptado cookies analíticas o de marketing
         if (preferences.analytics || preferences.marketing) {
             loadGTM();
         }
@@ -94,7 +99,7 @@ const CookieConsentBanner = () => {
             JSON.stringify(declinedPreferences)
         );
         setConsent('declined');
-        window.location.reload(); // Recargar para no activar las cookies
+        window.location.reload(); // Recargar para no activar las cookies no esenciales.
     };
 
     const togglePreferenceView = () => setShowPreferences(!showPreferences);
@@ -108,9 +113,9 @@ const CookieConsentBanner = () => {
                 <DialogContent sx={{ paddingBottom: '16px' }}>
                     <DialogContentText
                         sx={{
-                            fontSize: '1rem', // Tamaño de texto normal para pantallas grandes
+                            fontSize: '1rem',
                             '@media (max-width:600px)': {
-                                fontSize: '0.875rem', // Texto más pequeño en móviles
+                                fontSize: '0.875rem',
                             },
                         }}
                     >
@@ -136,7 +141,7 @@ const CookieConsentBanner = () => {
                                 sx={{
                                     fontSize: '1rem',
                                     '@media (max-width:600px)': {
-                                        fontSize: '0.875rem', // Texto más pequeño en móviles
+                                        fontSize: '0.875rem',
                                     },
                                 }}
                             />
@@ -156,7 +161,7 @@ const CookieConsentBanner = () => {
                                 sx={{
                                     fontSize: '1rem',
                                     '@media (max-width:600px)': {
-                                        fontSize: '0.875rem', // Texto más pequeño en móviles
+                                        fontSize: '0.875rem',
                                     },
                                 }}
                             />
@@ -166,7 +171,7 @@ const CookieConsentBanner = () => {
                         sx={{
                             fontSize: '1rem',
                             '@media (max-width:600px)': {
-                                fontSize: '0.875rem', // Texto más pequeño en móviles
+                                fontSize: '0.875rem',
                             },
                         }}
                         className="mt-4"
@@ -218,7 +223,7 @@ const CookieConsentBanner = () => {
                     )}
                 </DialogActions>
             </Dialog>
-            {/* Cofirmar la elección */}
+            {/* Confirmar la elección */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}

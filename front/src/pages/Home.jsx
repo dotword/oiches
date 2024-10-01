@@ -11,6 +11,7 @@ import GrupoCard from '../components/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
+import { Helmet } from 'react-helmet'; // Importar Helmet para las metaetiquetas dinámicas
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -51,6 +52,15 @@ const Home = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
+            {/* SEO - Meta Tags dinámicas */}
+            <Helmet>
+                <title>Oiches - Conecta Músicos y Salas de Conciertos</title>
+                <meta
+                    name="description"
+                    content="Descubre los músicos más votados y las salas de conciertos más populares en Oiches. Conéctate con la música en vivo y organiza eventos musicales únicos."
+                />
+            </Helmet>
+
             <HeaderHero />
             <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 lg:h-[680px]">
                 <h1 className="hero-title text-white">
@@ -101,7 +111,7 @@ const Home = () => {
                         <img
                             className="w-96 lg:w-auto rounded-2xl"
                             src={GruposImg}
-                            alt=""
+                            alt="Grupo musical destacado en Oiches"
                         />
                         <span className="absolute bottom-3 px-4 z-50 text-3xl w-full text-white bg-black bg-opacity-65">
                             Músicos
@@ -114,7 +124,7 @@ const Home = () => {
                         <img
                             className="w-96 lg:w-auto h-full rounded-2xl"
                             src={SalasImg}
-                            alt=""
+                            alt="Salas de conciertos destacadas en Oiches"
                         />
                         <span className="absolute bottom-3 px-4 z-50 text-3xl text-white w-full bg-black bg-opacity-65">
                             Salas
