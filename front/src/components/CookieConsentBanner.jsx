@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
     Dialog,
     DialogActions,
@@ -153,6 +153,7 @@ const CookieConsentBanner = () => {
                         Puedes leer más en nuestra{' '}
                         <Link
                             to="/politica-cookies"
+                            target="_blank"
                             style={{ color: '#1976d2', textDecoration: 'none' }}
                         >
                             Política de Cookies

@@ -196,7 +196,7 @@ const PoliticaCookies = () => {
                         </tr>
                         <tr>
                             <td className="border-solid border-2 border-slate-200 p-2">
-                                _gat_UA-70363379-1
+                                _ga_MWHD27PJKY
                             </td>
                             <td className="border-solid border-2 border-slate-200 p-2">
                                 oiches.com
