@@ -16,10 +16,12 @@ import {
 } from '../services/EditGrupoService.js';
 import { DeleteGrupoMedia, AddGrupoMedia } from './GrupoMedia.jsx';
 import {
-    DeleteGrupoFiles,
-    AddGrupoFiles,
-    AddGrupoPhotos,
-    DeleteGrupoPhotos,
+    // DeleteGrupoFiles,
+    // AddGrupoFiles,
+    // AddGrupoPhotos,
+    // DeleteGrupoPhotos,
+    AddRiderForm,
+    AddFotosForm,
 } from './GrupoFiles.jsx';
 
 const GrupoEdit = () => {
@@ -342,15 +344,17 @@ const GrupoEdit = () => {
                 <AddGrupoMedia idGrupo={idGrupo} />
             </section>
             <section className="mt-12 md:mt-0 md:col-start-3 md:col-end-4 md:row-start-2">
-                {grupo.hasRider === 0 ? (
+                <AddRiderForm />
+                {/* {grupo.hasRider === 0 ? (
                     <AddGrupoFiles idGrupo={idGrupo} />
                 ) : (
                     <DeleteGrupoFiles idGrupo={idGrupo} />
-                )}
+                )} */}
             </section>
             <section className="mt-12 d:col-start-3 md:col-end-4 md:mt-0">
-                <DeleteGrupoPhotos idGrupo={idGrupo} />
-                {grupo.hasPhotos < 4 && <AddGrupoPhotos idGrupo={idGrupo} />}
+                {/* <AddFotosForm /> */}
+                {/* <DeleteGrupoPhotos idGrupo={idGrupo} />
+                {grupo.hasPhotos < 4 && <AddGrupoPhotos idGrupo={idGrupo} />} */}
             </section>
             <Toastify />
         </>

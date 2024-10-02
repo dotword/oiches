@@ -112,10 +112,10 @@ router.post(
 
 // Borrar files de un grupo
 router.delete(
-    '/grupos/:photoName/:deletePhoto',
+    '/grupos/:photoName/:deletePhoto/:idGrupo',
     authUser,
     userExists,
-    canEditGrupoFiles,
+    canEditGrupo,
     deleteFileGrupoController
 );
 

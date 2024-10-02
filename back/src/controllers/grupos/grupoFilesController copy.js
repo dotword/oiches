@@ -10,12 +10,12 @@ import addGrupoPhotoSchema from '../../schemas/grupos/addGrupoPhotoSchema.js';
 
 export const deleteFileGrupoController = async (req, res, next) => {
     try {
-        const { photoName, deletePhoto, idGrupo } = req.params;
+        const { photoName, deletePhoto } = req.params;
 
         const deleted = photoName;
-        await selectGrupoByIdService(idGrupo);
+
         await deleteFiles(deleted);
-        await deleteGrupoPhotoService(deletePhoto, idGrupo);
+        await deleteGrupoPhotoService(deletePhoto);
 
         res.send({
             status: 'ok',
@@ -30,34 +30,42 @@ export const addPdfGrupoController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
 
-        // Validamos el body con Joi para el rider (PDF).
+        // Validamos el body con Joi.
         await validateSchemaUtil(addPdfSchema, Object.assign(req.files || {}));
 
         const grupo = await selectGrupoByIdService(idGrupo);
 
-        if (!req.files || !req.files.rider) {
+        // Array donde pushearemos las fotos (si hay).
+        const photos = [];
+
+        if (!req.files)
             throw generateErrorsUtil(
-                'No se ha proporcionado ningún archivo PDF',
+                'No se ha proporcionado ningún archivo',
                 400
             );
+
+        if (req.files) {
+            // Comprobar que no hay otro pdf subido
+            if (grupo.pdf.length > 0)
+                throw generateErrorsUtil('Solo se puede subir un pdf', 400);
+
+            for (const rider of Object.values(req.files)) {
+                // Guardamos el archivo y obtenemos su nombre.
+                const photoName = await uploadFiles(rider);
+
+                // Insertamos la foto en la tabla de fotos.
+                await insertGrupoPhotoService(photoName, idGrupo);
+
+                // Pusheamos la foto al array de sala_fotos.
+                photos.push({
+                    name: photoName,
+                });
+            }
         }
-
-        // // Comprobar que no hay otro PDF subido
-        // if (grupo.pdf.length > 0) {
-        //     throw generateErrorsUtil('Solo se puede subir un PDF', 400);
-        // }
-
-        const rider = req.files.rider;
-
-        // Guardamos el archivo y obtenemos su nombre.
-        const riderName = await uploadFiles(rider);
-
-        // Insertamos el rider en la tabla de fotos.
-        await insertGrupoPhotoService(riderName, idGrupo);
 
         res.send({
             status: 'ok',
-            message: 'Rider subido con éxito',
+            message: 'Rider Subido',
         });
     } catch (error) {
         next(error);

@@ -3,11 +3,12 @@ import apiRequest from '../utils/apiRequest';
 export const DeleteGrupoFilesService = async (
     photoName,
     deletePhoto,
-    token
+    token,
+    idGrupo
 ) => {
     const url = `${
         import.meta.env.VITE_API_URL_BASE
-    }/grupos/${photoName}/${deletePhoto}`;
+    }/grupos/${photoName}/${deletePhoto}/${idGrupo}`;
 
     return apiRequest({
         url,

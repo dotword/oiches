@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -20,7 +20,7 @@ const AuthUser = () => {
     const [userId, setUserId] = useState('');
     const [avatar, setAvatar] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
-    const [newEmail, setNewEmail] = useState('');
+    const [newEmail, setNewEmail] = useState(userLogged.email || '');
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
@@ -29,7 +29,11 @@ const AuthUser = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
 
-    console.log('newEmail ', newEmail.length);
+    // useEffect(() => {
+    //     if (edit) {
+    //         setNewEmail(userLogged.email); // Cargar el email actual al iniciar la edición
+    //     }
+    // }, [edit, userLogged.email]);
 
     const handleDelete = async () => {
         try {
@@ -169,13 +173,14 @@ const AuthUser = () => {
                             ''
                         )}
                     </form>
+
                     <p>
                         <span className="font-semibold">Usuario: </span>
                         {userLogged.username}
                     </p>
                     <p>
                         <span className="font-semibold">Email: </span>
-                        {newEmail.length > 0 ? newEmail : userLogged.email}
+                        {newEmail}
                     </p>
                 </section>
 

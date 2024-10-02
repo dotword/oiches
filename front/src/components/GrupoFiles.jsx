@@ -11,282 +11,336 @@ import {
 
 const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
 
-export const AddGrupoPhotos = () => {
-    const { token } = useContext(AuthContext);
+export const AddRiderForm = () => {
     const { idGrupo } = useParams();
-    const [photo, setPhoto] = useState(null);
-    const [previewFoto, setPreviewFoto] = useState(null);
-    const [error, setError] = useState('');
-    const [resp, setResp] = useState('');
+    const { token } = useContext(AuthContext);
 
-    const handleSubmit = async (e) => {
+    const [rider, setRider] = useState(null);
+    const [deletePhoto, setDeletePhoto] = useState(null);
+    const [photoName, setPhotoName] = useState(null);
+    const [riderError, setRiderError] = useState('');
+    const [uploadedRider, setUploadedRider] = useState(null); // Para mostrar el PDF subido
+
+    // Cargar el rider existente desde el backend
+    useEffect(() => {
+        const fetchRider = async () => {
+            try {
+                const { data } = await getGrupoByIdService(idGrupo);
+
+                // Verificar si hay un rider subido
+                if (data.grupo.pdf && data.grupo.pdf.length > 0) {
+                    const riderData = data.grupo.pdf[0];
+                    setUploadedRider(`${urlUploads}/${riderData.name}`);
+                    setDeletePhoto(riderData.id); // Guardar el ID del rider para la eliminación
+                    setPhotoName(riderData.name); // Guardar el nombre del rider
+                }
+            } catch (error) {
+                toast.error('Error al cargar el Rider');
+            }
+        };
+
+        fetchRider();
+    }, [idGrupo]);
+
+    // Manejar el envío del rider
+    const handleRiderSubmit = async (e) => {
         e.preventDefault();
-        if (!photo) {
-            setResp('Selecciona una foto');
+
+        if (!rider) {
+            setRiderError('Selecciona un rider en formato PDF.');
             return;
         }
-        try {
-            const dataForm = new FormData();
-            dataForm.append('photo', photo);
-
-            const response = await AddGrupoFotoService({
-                token,
-                idGrupo,
-                dataForm,
-            });
-            setResp(response);
-            toast.success('Has subido tu foto con éxito');
-        } catch (error) {
-            setError(error.message);
-            toast.error(error.message);
-        }
-    };
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <p className="font-semibold mb-2">Subir fotos</p>
-                <div className="sect-photo md:w-full">
-                    <span className="border-photos w-80 md:w-full">
-                        {previewFoto ? (
-                            <img src={previewFoto} alt="Vista previa" />
-                        ) : (
-                            <span>Sube una foto</span>
-                        )}
-
-                        <input
-                            type="file"
-                            name="photoA"
-                            className="absolute w-full h-full opacity-0 cursor-pointer"
-                            onChange={(e) => {
-                                setPhoto(e.target.files[0]);
-                                setPreviewFoto(
-                                    URL.createObjectURL(e.target.files[0])
-                                );
-                            }}
-                        />
-                    </span>
-                </div>
-                {previewFoto ? (
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir fotos"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
-                ) : (
-                    ''
-                )}
-
-                <div>
-                    {error && <p>{error}</p>}
-                    {resp.status === 'ok' && <p>{resp.message}</p>}
-                </div>
-            </form>
-        </>
-    );
-};
-
-export const AddGrupoFiles = () => {
-    const { token } = useContext(AuthContext);
-    const { idGrupo } = useParams();
-    const [rider, setFile] = useState(null);
-    const [error, setError] = useState('');
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
         try {
             const dataForm = new FormData();
             dataForm.append('rider', rider);
 
-            await AddGrupoFilesService({
+            const response = await AddGrupoFilesService({
                 token,
                 idGrupo,
                 dataForm,
             });
 
-            toast.success('Has subido tu rider con éxito');
+            // Si la subida fue exitosa, actualiza la previsualización
+            if (response.status === 'ok') {
+                toast.success('Has subido el rider con éxito.');
+                setUploadedRider(URL.createObjectURL(rider));
+                setRider(null); // Resetea el input
+                setRiderError(''); // Limpiar el mensaje de error
+            }
         } catch (error) {
-            setError(error.message);
             toast.error(error.message);
         }
     };
+
+    // Manejar la selección de un rider (PDF)
+    const handleRiderChange = (e) => {
+        const file = e.target.files[0];
+        if (file && file.type === 'application/pdf') {
+            setRider(file);
+            setRiderError('');
+        } else {
+            setRiderError('Solo se permiten archivos PDF para el rider.');
+        }
+    };
+
+    // Manejar el borrado del rider
+    const handleDeleteRider = async () => {
+        try {
+            // Asegúrate de tener el `photoName` y `deletePhoto` definidos correctamente.
+            await DeleteGrupoFilesService(
+                photoName,
+                deletePhoto,
+                token,
+                idGrupo
+            );
+
+            // Si la eliminación es exitosa, actualiza el estado para reflejarlo en la UI.
+            setUploadedRider(null); // Limpiar la vista del PDF
+            setRider(null); // Limpiar el input
+            setRiderError(''); // Limpiar el mensaje de error
+            toast.success('Rider borrado con éxito');
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleRiderSubmit}>
             <p className="font-semibold mb-2">Sube el Rider (.pdf)</p>
-            <div className="sect-photo">
-                <span className="border-photos w-80 md:w-full">
-                    {rider ? (
-                        <span className="text-xs p-1 overflow-hidden">
-                            {rider.name}
-                        </span>
-                    ) : (
-                        <span>Sube tu archivo</span>
-                    )}
 
-                    <input
-                        type="file"
-                        name={rider}
-                        className="absolute w-full h-full opacity-0 cursor-pointer"
-                        onChange={(e) => setFile(e.target.files[0])}
+            {/* Previsualización del Rider ya subido */}
+            {uploadedRider && (
+                <div className="sect-photo mb-4">
+                    <p className="font-semibold">Rider Actual:</p>
+                    <embed
+                        src={uploadedRider}
+                        type="application/pdf"
+                        width="100%"
+                        height="400px"
+                        className="border-photos w-full"
                     />
-                </span>
-            </div>
+                    <button
+                        type="button"
+                        onClick={handleDeleteRider}
+                        className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
+                    >
+                        Borrar Rider
+                    </button>
+                </div>
+            )}
 
-            <div className="mt-3 max-w-80">
-                <input
-                    type="submit"
-                    value="Guardar Rider"
-                    className="btn-account max-w-44"
-                />
-            </div>
-            <div>{error && <p>{error}</p>}</div>
+            {/* Input para subir un nuevo Rider */}
+            {!uploadedRider && (
+                <>
+                    <div className="sect-photo">
+                        <span className="border-photos w-80 md:w-full">
+                            {rider ? (
+                                <span className="text-xs p-1 overflow-hidden">
+                                    {rider.name}
+                                </span>
+                            ) : (
+                                <span>Sube tu Rider (PDF)</span>
+                            )}
+
+                            <input
+                                type="file"
+                                accept=".pdf"
+                                className="absolute w-full h-full opacity-0 cursor-pointer"
+                                onChange={handleRiderChange}
+                            />
+                        </span>
+                        {riderError && (
+                            <p className="text-red-500">{riderError}</p>
+                        )}
+                    </div>
+                    <div className="mt-3 max-w-80">
+                        <input
+                            type="submit"
+                            value="Subir Rider"
+                            className="btn-account max-w-44"
+                        />
+                    </div>
+                </>
+            )}
         </form>
     );
 };
 
-export const DeleteGrupoFiles = () => {
-    const { currentUser, token } = useContext(AuthContext);
+export const AddFotosForm = () => {
+    const { token } = useContext(AuthContext);
     const { idGrupo } = useParams();
+    const [photos, setPhotos] = useState([]);
+    const [photoPreviews, setPhotoPreviews] = useState([]);
+    const [photoError, setPhotoError] = useState('');
+    const [uploadedPhotos, setUploadedPhotos] = useState([]); // Para las fotos subidas desde la API
 
-    const [rider, setRider] = useState([]);
-    const [deletePhoto, setDeletePhoto] = useState(null);
-    const [photoName, setPhotoName] = useState(null);
-    const [error, setError] = useState('');
+    // Manejar el envío de las fotos
+    const handleFotosSubmit = async (e) => {
+        e.preventDefault();
 
-    useEffect(() => {
-        const fetchGrupoMedia = async () => {
-            try {
-                const { data } = await getGrupoByIdService(idGrupo);
-                setRider(data.grupo.pdf[0] || '');
-            } catch (error) {
-                setError(error.message);
-                toast.error('Error al cargar los archivos');
-            }
-        };
+        if (photos.length === 0) {
+            setPhotoError('Selecciona al menos una foto.');
+            return;
+        }
+        if (photos.length > 4) {
+            setPhotoError('No puedes subir más de 4 fotos.');
+            return;
+        }
 
-        fetchGrupoMedia();
-    }, [idGrupo]);
-
-    const handleClick = async (e) => {
         try {
-            e.preventDefault();
+            const dataForm = new FormData();
+            photos.forEach((photo) => {
+                dataForm.append('photo', photo);
+            });
 
-            DeleteGrupoFilesService(photoName, deletePhoto, token);
-            toast.success('Borrado con éxito');
-        } catch (err) {
-            setError(error.message);
+            // Aquí llamamos a la API para subir las fotos
+            const response = await AddGrupoFotoService({
+                token,
+                idGrupo,
+                dataForm,
+            });
+
+            // Asegúrate de que la API devuelva algo en response
+            if (response.status === 'ok') {
+                toast.success('Has subido las fotos con éxito.');
+
+                const uploadedPhotos = response.photos;
+
+                setPhotos([]); // Limpiamos las fotos seleccionadas
+                setPhotoPreviews([]); // Limpiamos las previsualizaciones
+
+                // Actualizamos el estado con las nuevas fotos subidas
+                setUploadedPhotos((prevPhotos) => [
+                    ...prevPhotos,
+                    ...uploadedPhotos,
+                ]);
+            } else {
+                toast.error('Hubo un problema al subir las fotos.');
+            }
+        } catch (error) {
             toast.error(error.message);
         }
     };
 
-    return currentUser && rider ? (
-        <>
-            <p className="font-semibold mb-2">Borra tu Rider:</p>
-            <div className="sect-photo">
-                <span className="border-photos w-80 md:w-full">
-                    <embed
-                        src={`${urlUploads}/${rider.name}`}
-                        type="application/pdf"
-                        width="100%"
-                    />
-                </span>
-            </div>
-            {deletePhoto === null ? (
-                <button
-                    id="buttonDelete"
-                    onClick={() => {
-                        setDeletePhoto(rider.id);
-                        setPhotoName(rider.name);
-                    }}
-                    className="btn-account my-3"
-                >
-                    Borrar rider
-                </button>
-            ) : (
-                <button
-                    id="buttonConfirm"
-                    onClick={handleClick}
-                    className="btn-account my-3"
-                >
-                    Confirmar borrado
-                </button>
-            )}
-        </>
-    ) : (
-        ''
-    );
-};
+    // Manejar la selección de fotos (máximo 4)
+    const handlePhotoChange = (e) => {
+        const selectedPhotos = Array.from(e.target.files);
+        const totalPhotos = photos.length + selectedPhotos.length;
 
-export const DeleteGrupoPhotos = () => {
-    const { currentUser, token } = useContext(AuthContext);
-    const { idGrupo } = useParams();
-    const [photos, setPhotos] = useState([]);
-    const [deletePhoto, setDeletePhoto] = useState('');
-    const [photoName, setPhotoName] = useState('');
+        if (totalPhotos > 4) {
+            setPhotoError('No puedes subir más de 4 fotos.');
+            return;
+        }
 
-    useEffect(() => {
-        const fetchGrupoPhotos = async () => {
-            try {
-                const { data } = await getGrupoByIdService(idGrupo);
-                setPhotos(data.grupo.fotos);
-            } catch (error) {
-                toast.error(error.message);
-            }
-        };
+        setPhotos((prevPhotos) => [...prevPhotos, ...selectedPhotos]);
+        setPhotoPreviews((prevPreviews) => [
+            ...prevPreviews,
+            ...selectedPhotos.map((photo) => URL.createObjectURL(photo)),
+        ]);
+        setPhotoError('');
+    };
 
-        fetchGrupoPhotos();
-    }, [idGrupo]);
+    // Eliminar una foto seleccionada
+    const removePhoto = (index) => {
+        setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+        setPhotoPreviews((prevPreviews) =>
+            prevPreviews.filter((_, i) => i !== index)
+        );
+    };
 
-    const handleClick = async (e) => {
+    // Eliminar una foto subida
+    const handleDeleteUploadedPhoto = async (photoUrl, index) => {
         try {
-            e.preventDefault();
-            await DeleteGrupoFilesService(photoName, deletePhoto, token);
-            toast.success('Borrado con éxito');
-            setPhotos(photos.filter((photo) => photo.id !== deletePhoto));
-        } catch (err) {
-            toast.error(err.message);
+            // Llamada al servicio para eliminar la foto
+            await DeleteGrupoFilesService(photoUrl, token, idGrupo);
+
+            // Si la eliminación fue exitosa, actualiza el estado para reflejarlo en la UI
+            setUploadedPhotos((prevPhotos) =>
+                prevPhotos.filter((_, i) => i !== index)
+            );
+            toast.success('Foto eliminada con éxito');
+        } catch (error) {
+            toast.error(error.message);
         }
     };
 
-    const renderPhoto = (photo) => (
-        <div key={photo.id} className="mb-6 md:w-full">
+    return (
+        <form onSubmit={handleFotosSubmit}>
+            <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
             <div className="sect-photo">
-                <div className="border-photos w-full">
-                    <img
-                        src={`${urlUploads}/${photo.name}`}
-                        alt="Vista previa"
-                    />
-                </div>
-            </div>
-            {photo.id === deletePhoto ? (
-                <button
-                    onClick={handleClick}
-                    className="btn-account max-w-44 mt-3"
-                >
-                    Confirmar borrado
-                </button>
-            ) : (
-                <button
-                    onClick={() => {
-                        setDeletePhoto(photo.id);
-                        setPhotoName(photo.name);
-                    }}
-                    className="btn-account max-w-44 mt-3"
-                >
-                    Borrar foto
-                </button>
-            )}
-        </div>
-    );
+                <span className="border-photos w-80 md:w-full">
+                    {photos.length > 0 ? (
+                        <div className="flex flex-wrap gap-2">
+                            {photoPreviews.map((preview, index) => (
+                                <div key={index} className="relative">
+                                    <img
+                                        src={preview}
+                                        alt={`Foto ${index + 1}`}
+                                        className="h-16 w-16 object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1"
+                                        onClick={() => removePhoto(index)}
+                                    >
+                                        X
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <span>Sube tus fotos (máximo 4)</span>
+                    )}
 
-    return currentUser && photos.length > 0 ? (
-        <div className="mb-6 flex flex-wrap gap-x-8">
-            <p className="font-semibold mb-4 w-full">Borrar fotos:</p>
-            {photos.map(renderPhoto)}
-        </div>
-    ) : (
-        ''
+                    <input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        className="absolute w-full h-full opacity-0 cursor-pointer"
+                        onChange={handlePhotoChange}
+                    />
+                </span>
+                {photoError && <p className="text-red-500">{photoError}</p>}
+            </div>
+
+            {/* Mostrar las fotos ya subidas con opción para borrarlas */}
+            {uploadedPhotos.length > 0 && (
+                <div className="mt-4">
+                    <p className="font-semibold mb-2">Fotos Subidas</p>
+                    <div className="flex flex-wrap gap-2">
+                        {uploadedPhotos.map((photoUrl, index) => (
+                            <div key={index} className="relative">
+                                <img
+                                    src={photoUrl}
+                                    alt={`Foto subida ${index + 1}`}
+                                    className="h-16 w-16 object-cover"
+                                />
+                                <button
+                                    type="button"
+                                    className="absolute top-0 right-0 bg-red-600 text-white rounded-full p-1"
+                                    onClick={() =>
+                                        handleDeleteUploadedPhoto(
+                                            photoUrl,
+                                            index
+                                        )
+                                    }
+                                >
+                                    X
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            <div className="mt-3 max-w-80">
+                <input
+                    type="submit"
+                    value="Subir Fotos"
+                    className="btn-account max-w-44"
+                />
+            </div>
+        </form>
     );
 };
