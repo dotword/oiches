@@ -8,7 +8,6 @@ import {
     canEditGrupo,
     hasOneGroup,
     checkIfGroup,
-    canEditGrupoFiles,
 } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.

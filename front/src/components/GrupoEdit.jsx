@@ -344,17 +344,10 @@ const GrupoEdit = () => {
                 <AddGrupoMedia idGrupo={idGrupo} />
             </section>
             <section className="mt-12 md:mt-0 md:col-start-3 md:col-end-4 md:row-start-2">
-                <AddRiderForm />
-                {/* {grupo.hasRider === 0 ? (
-                    <AddGrupoFiles idGrupo={idGrupo} />
-                ) : (
-                    <DeleteGrupoFiles idGrupo={idGrupo} />
-                )} */}
+                <AddFotosForm />
             </section>
             <section className="mt-12 d:col-start-3 md:col-end-4 md:mt-0">
-                {/* <AddFotosForm /> */}
-                {/* <DeleteGrupoPhotos idGrupo={idGrupo} />
-                {grupo.hasPhotos < 4 && <AddGrupoPhotos idGrupo={idGrupo} />} */}
+                <AddRiderForm />
             </section>
             <Toastify />
         </>

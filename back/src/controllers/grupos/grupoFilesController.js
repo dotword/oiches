@@ -43,9 +43,9 @@ export const addPdfGrupoController = async (req, res, next) => {
         }
 
         // // Comprobar que no hay otro PDF subido
-        // if (grupo.pdf.length > 0) {
-        //     throw generateErrorsUtil('Solo se puede subir un PDF', 400);
-        // }
+        if (grupo.pdf.length > 0) {
+            throw generateErrorsUtil('Solo se puede subir un PDF', 400);
+        }
 
         const rider = req.files.rider;
 
@@ -66,6 +66,8 @@ export const addPdfGrupoController = async (req, res, next) => {
 
 export const addPhotosGrupoController = async (req, res, next) => {
     try {
+        console.log('re.files ', req.files); // <-- Verifica qué está llegando en req.files
+
         const { idGrupo } = req.params;
 
         // Validamos el body con Joi.
@@ -93,9 +95,9 @@ export const addPhotosGrupoController = async (req, res, next) => {
                     400
                 );
 
-            for (const photo of Object.values(req.files)) {
+            for (const foto of Object.values(req.files)) {
                 // Guardamos el archivo y obtenemos su nombre.
-                const photoName = await uploadFiles(photo);
+                const photoName = await uploadFiles(foto);
                 // Insertamos la foto en la tabla de fotos.
                 await insertGrupoPhotoService(photoName, idGrupo);
                 // Pusheamos la foto al array grupo_fotos.

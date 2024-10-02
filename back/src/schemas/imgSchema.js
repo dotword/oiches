@@ -13,8 +13,13 @@ const imgSchema = joi
             .string()
             .valid('image/jpeg', 'image/jpg', 'image/png', 'image/webp')
             .required()
-            .messages(joiErrorMessages),
-        size: joi.number().max(3000000).required().messages(joiErrorMessages),
+            .messages({
+                'any.only':
+                    'El tipo de archivo debe ser uno de los siguientes: jpeg, jpg, png, webp',
+            }),
+        size: joi.number().max(3000000).required().messages({
+            'number.max': 'El tamaño del archivo no debe exceder 3 MB',
+        }),
     })
     .unknown(true);
 
