@@ -1,67 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Oiches</title>
+        <title>Oiches - Conecta Músicos y Salas de Conciertos</title>
+        <!-- Meta Description -->
+        <meta
+            name="description"
+            content="Oiches conecta músicos y salas de conciertos, facilitando la organización de eventos en vivo. Optimiza tu gestión musical y encuentra nuevas oportunidades fácilmente con nuestra plataforma."
+        />
 
-        <!-- Banner de consentimiento y lógica de GTM -->
-        <script>
-            // Función para verificar si el usuario ha dado su consentimiento
-            function checkConsent() {
-                return localStorage.getItem('userConsent') === 'true';
-            }
-
-            // Función para establecer el consentimiento del usuario
-            function setConsent() {
-                localStorage.setItem('userConsent', 'true');
-                loadGTM(); // Cargar GTM cuando el consentimiento es aceptado
-            }
-
-            // Función para cargar Google Tag Manager dinámicamente
-            function loadGTM() {
-                (function (w, d, s, l, i) {
-                    w[l] = w[l] || [];
-                    w[l].push({
-                        'gtm.start': new Date().getTime(),
-                        event: 'gtm.js',
-                    });
-                    var f = d.getElementsByTagName(s)[0],
-                        j = d.createElement(s),
-                        dl = l != 'dataLayer' ? '&l=' + l : '';
-                    j.async = true;
-                    j.src =
-                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-                    f.parentNode.insertBefore(j, f);
-                })(window, document, 'script', 'dataLayer', 'GTM-NS82WX8K');
-            }
-
-            // Verificar si el consentimiento ya ha sido dado y cargar el banner si no
-            window.onload = function () {
-                if (checkConsent()) {
-                    loadGTM(); // Si ya ha dado el consentimiento, carga GTM
-                } else {
-                    // Mostrar el banner de consentimiento
-                    var consentBanner = document.createElement('div');
-                    consentBanner.innerHTML = `
-                        <div style="background: #000; color: #fff; padding: 10px; position: fixed; bottom: 0; width: 100%; text-align: center;">
-                            Este sitio utiliza cookies para mejorar la experiencia. <button id="acceptCookies">Aceptar</button>
-                        </div>`;
-                    document.body.appendChild(consentBanner);
-
-                    // Escuchar el clic en "Aceptar" para dar consentimiento
-                    document.getElementById('acceptCookies').onclick =
-                        function () {
-                            setConsent();
-                            consentBanner.style.display = 'none'; // Ocultar el banner
-                        };
+        <!-- Schema Markup for Organization -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Organization",
+                "name": "Oiches",
+                "url": "https://oiches.com",
+                "contactPoint": {
+                    "@type": "ContactPoint",
+                    "email": "hola@oiches.com",
+                    "contactType": "Customer Service"
                 }
-            };
+            }
         </script>
     </head>
     <body>
-        <!-- Google Tag Manager (noscript) -->
+        <!-- Google Tag Manager (noscript) para compatibilidad sin JS -->
         <noscript>
             <iframe
                 src="https://www.googletagmanager.com/ns.html?id=GTM-NS82WX8K"
