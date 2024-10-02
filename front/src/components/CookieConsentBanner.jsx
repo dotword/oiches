@@ -11,80 +11,66 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
-import { Link } from 'react-router-dom'; // Importa el componente Link de React Router
+import { Link } from 'react-router-dom';
 
 const CookieConsentBanner = () => {
     const [consent, setConsent] = useState(null);
     const [preferences, setPreferences] = useState({
         necessary: true, // Siempre habilitadas por ser necesarias
-        analytics: false,
-        marketing: false,
+        analytics: false, // Analiticas GMT
+        marketing: false, // las de marketing, cuando implementemos sendmail (lsitas de correo) ads etc...
     });
-    const [showPreferences, setShowPreferences] = useState(false);
+    const [showPreferences, setShowPreferences] = useState(false); // mostrar preferencias avanzadas
     const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+    // useEffect para cargar preferencias y consentimiento desde localStorage al montar el componente evitamso el bucle
     useEffect(() => {
-        // Obtener el consentimiento y preferencias desde localStorage si están guardados
         const savedConsent = localStorage.getItem('cookieConsent');
-        const savedPreferences = localStorage.getItem('cookiePreferences');
+        const savedPreferences = JSON.parse(
+            localStorage.getItem('cookiePreferences')
+        ) || {
+            necessary: true,
+            analytics: false,
+            marketing: false,
+        };
+        // Cargar Google Tag Manager si el consentimiento fue dado para cookies analíticas o de marketing
+
         if (savedConsent) {
             setConsent(savedConsent);
-            setPreferences(JSON.parse(savedPreferences));
+            setPreferences(savedPreferences);
         }
 
-        // Solo cargar GTM si se aceptaron cookies analíticas o de marketing
         if (
             savedConsent === 'accepted' &&
-            (preferences.analytics || preferences.marketing)
+            (savedPreferences.analytics || savedPreferences.marketing)
         ) {
             loadGTM();
         }
-    }, [preferences]);
+    }, []); // Solo se ejecuta una vez al montar el componente
 
     const loadGTM = () => {
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js',
-            });
-            const f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-NS82WX8K');
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-NS82WX8K';
+        document.head.appendChild(script);
     };
 
     const handleAcceptAll = () => {
-        const newPreferences = {
+        const allPreferences = {
             necessary: true,
             analytics: true,
             marketing: true,
         };
-        localStorage.setItem('cookieConsent', 'accepted');
-        localStorage.setItem(
-            'cookiePreferences',
-            JSON.stringify(newPreferences)
-        );
-        setPreferences(newPreferences);
-        setConsent('accepted');
-        loadGTM(); // Cargar GTM tras aceptar todas las cookies
-        window.location.reload(); // Recargar para activar las cookies.
+        saveConsent('accepted', allPreferences);
+        loadGTM();
+        window.location.reload();
     };
-
+    // Guardar preferencias seleccionadas por el usuario
     const handleSavePreferences = () => {
-        localStorage.setItem('cookieConsent', 'accepted');
-        localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
-        setConsent('accepted');
+        saveConsent('accepted', preferences);
+        if (preferences.analytics || preferences.marketing) loadGTM();
         setSnackbarOpen(true);
         setShowPreferences(false);
-
-        // Cargar GTM si el usuario ha aceptado cookies analíticas o de marketing
-        if (preferences.analytics || preferences.marketing) {
-            loadGTM();
-        }
     };
 
     const handleDeclineAll = () => {
@@ -93,18 +79,18 @@ const CookieConsentBanner = () => {
             analytics: false,
             marketing: false,
         };
-        localStorage.setItem('cookieConsent', 'declined');
-        localStorage.setItem(
-            'cookiePreferences',
-            JSON.stringify(declinedPreferences)
-        );
-        setConsent('declined');
-        window.location.reload(); // Recargar para no activar las cookies no esenciales.
+        saveConsent('declined', declinedPreferences);
+        window.location.reload();
     };
 
-    const togglePreferenceView = () => setShowPreferences(!showPreferences);
+    const saveConsent = (status, prefs) => {
+        localStorage.setItem('cookieConsent', status);
+        localStorage.setItem('cookiePreferences', JSON.stringify(prefs));
+        setPreferences(prefs);
+        setConsent(status);
+    };
 
-    if (consent !== null) return null; // No mostrar si ya se dio consentimiento.
+    if (consent !== null) return null;
 
     return (
         <>
@@ -138,12 +124,6 @@ const CookieConsentBanner = () => {
                                     />
                                 }
                                 label="Cookies Analíticas"
-                                sx={{
-                                    fontSize: '1rem',
-                                    '@media (max-width:600px)': {
-                                        fontSize: '0.875rem',
-                                    },
-                                }}
                             />
                             <FormControlLabel
                                 control={
@@ -158,12 +138,6 @@ const CookieConsentBanner = () => {
                                     />
                                 }
                                 label="Cookies de Marketing"
-                                sx={{
-                                    fontSize: '1rem',
-                                    '@media (max-width:600px)': {
-                                        fontSize: '0.875rem',
-                                    },
-                                }}
                             />
                         </>
                     )}
@@ -186,9 +160,7 @@ const CookieConsentBanner = () => {
                         .
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions
-                    sx={{ justifyContent: 'center', paddingBottom: '24px' }}
-                >
+                <DialogActions>
                     {showPreferences ? (
                         <Button
                             onClick={handleSavePreferences}
@@ -207,7 +179,7 @@ const CookieConsentBanner = () => {
                                 Aceptar
                             </Button>
                             <Button
-                                onClick={togglePreferenceView}
+                                onClick={() => setShowPreferences(true)}
                                 variant="outlined"
                             >
                                 Preferencias
@@ -223,7 +195,6 @@ const CookieConsentBanner = () => {
                     )}
                 </DialogActions>
             </Dialog>
-            {/* Confirmar la elección */}
             <Snackbar
                 open={snackbarOpen}
                 autoHideDuration={6000}
@@ -232,7 +203,6 @@ const CookieConsentBanner = () => {
                 <Alert
                     onClose={() => setSnackbarOpen(false)}
                     severity="success"
-                    sx={{ width: '100%' }}
                 >
                     Preferencias de cookies guardadas.
                 </Alert>
