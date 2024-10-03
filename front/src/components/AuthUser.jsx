@@ -29,8 +29,6 @@ const AuthUser = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
 
-    console.log('newEmail ', newEmail.length);
-
     const handleDelete = async () => {
         try {
             const response = await fetch(`${VITE_API_URL_BASE}/users/delete`, {

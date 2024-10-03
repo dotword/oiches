@@ -134,29 +134,16 @@ const AddSalaPhotos = ({ idSala }) => {
         <form onSubmit={handleFotosSubmit}>
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
 
-            {/* Previsualización de las fotos seleccionadas antes de subir */}
-            {previews.length > 0 && (
-                <div className="sect-photo mb-4">
-                    {previews.map((previewUrl, index) => (
-                        <div key={index} className="mb-4">
-                            <img
-                                src={previewUrl}
-                                alt={`Preview Foto ${index + 1}`}
-                                width="100%"
-                                height="400px"
-                                className="border-photos w-full"
-                            />
-                        </div>
-                    ))}
-                </div>
-            )}
-
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
                 <div className="flex flex-wrap gap-8 mb-8">
                     {uploadedFotos.map((fotoUrl, index) => (
                         <div key={index} className="sect-photo max-w-72">
-                            <img src={fotoUrl} alt="fotos grupo" />
+                            <img
+                                src={fotoUrl}
+                                alt="fotos grupo"
+                                className="image-shadow"
+                            />
 
                             <button
                                 type="button"

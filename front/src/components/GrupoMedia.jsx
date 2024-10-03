@@ -14,10 +14,25 @@ export const AddGrupoMedia = () => {
     const { token } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
-    // Estado para la URL completa ingresada por el usuario
-    const [videoUrl, setVideoUrl] = useState('');
-    const [error, setError] = useState('');
+    const [media, setMedia] = useState([]); // Videos ya subidos
+    const [videoUrls, setVideoUrls] = useState([]); // Nuevos videos
+    const [currentVideoUrl, setCurrentVideoUrl] = useState(''); // URL temporal
 
+    // Obtener los videos existentes del backend cuando se monta el componente
+    useEffect(() => {
+        const fetchGrupoMedia = async () => {
+            try {
+                const { data } = await getGrupoByIdService(idGrupo);
+                setMedia(data.grupo.media); // Cargar los videos ya subidos
+            } catch (error) {
+                toast.error(`Error al cargar los videos: ${error.message}`);
+            }
+        };
+
+        fetchGrupoMedia();
+    }, [idGrupo]);
+
+    // Función para extraer el ID de YouTube de la URL
     const extractYouTubeId = (url) => {
         try {
             const urlObj = new URL(url);
@@ -27,120 +42,131 @@ export const AddGrupoMedia = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // Extrae el ID del video de la URL al enviar el formulario
-            const videoId = extractYouTubeId(videoUrl);
+    // Agregar un nuevo video a la lista temporal
+    const handleAddVideo = async () => {
+        const totalVideos = media.length + videoUrls.length;
 
-            // Crea el FormData con el ID del video
-            const dataForm = new FormData();
-            if (videoId) {
-                dataForm.append('mediaName', videoId); // Usa el ID extraído como mediaName
-            }
-
-            await AddGrupoMediaService({
-                token,
-                idGrupo,
-                dataForm,
-            });
-
-            toast.success('Has modificado tu grupo con éxito');
-            // Restablece los campos del formulario
-            setVideoUrl(''); // Limpia el campo de URL
-        } catch (error) {
-            setError(error.message);
-            toast.error(error.message);
+        if (totalVideos >= 4) {
+            toast.error('No puedes agregar más de 4 videos.');
+            return;
         }
+
+        const videoId = extractYouTubeId(currentVideoUrl);
+        if (videoId && !videoUrls.some((video) => video.id === videoId)) {
+            try {
+                const dataForm = new FormData();
+                dataForm.append('mediaName', videoId);
+
+                // Añadir el video al backend
+                await AddGrupoMediaService({
+                    token,
+                    idGrupo,
+                    dataForm,
+                });
+
+                // Si todo va bien, actualizamos la lista visualmente
+                setVideoUrls([
+                    ...videoUrls,
+                    { id: videoId, url: currentVideoUrl },
+                ]);
+                setCurrentVideoUrl(''); // Limpiar el input después de agregar
+                toast.success('Video añadido con éxito');
+            } catch (error) {
+                toast.error(`Error al añadir el video: ${error.message}`);
+            }
+        } else {
+            toast.error('URL no válida o ya agregada.');
+        }
+    };
+
+    // Función para eliminar un video subido del backend
+    const handleDeleteVideo = async (videoId) => {
+        try {
+            await DeleteGrupoMediaService(videoId, idGrupo, token);
+            setMedia(media.filter((item) => item.id !== videoId)); // Actualizar la lista visual
+            toast.success('Video eliminado con éxito');
+        } catch (error) {
+            toast.error(`Error al eliminar el video: ${error.message}`);
+        }
+    };
+
+    // Eliminar un video nuevo antes de guardarlo
+    const handleDeleteNewVideo = (videoId) => {
+        setVideoUrls(videoUrls.filter((video) => video.id !== videoId));
+        toast.success('Nuevo video eliminado con éxito');
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <p className="font-semibold mb-2">Enlaza un video:</p>
-            <input
-                type="url"
-                name="videoUrl"
-                placeholder="Añade enlaces a tus videos de YouTube"
-                value={videoUrl} // Muestra la URL completa en el input
-                onChange={(e) => setVideoUrl(e.target.value)} // Mantiene la URL completa
-                className="form-input"
-            />
-
-            <div className="mt-3 max-w-80">
+        <form onSubmit={(e) => e.preventDefault()}>
+            <p className="font-semibold mb-6">
+                Enlaza videos de YouTube (hasta 4 videos):
+            </p>
+            <div className="flex flex-wrap gap-2 mb-8">
                 <input
-                    type="submit"
-                    value="Guardar video"
-                    className="btn-account max-w-44"
+                    type="url"
+                    name="videoUrl"
+                    placeholder="Añade enlaces a tus videos de YouTube"
+                    value={currentVideoUrl} // Muestra la URL actual en el input
+                    onChange={(e) => setCurrentVideoUrl(e.target.value)} // Actualiza la URL actual
+                    className="form-input mt-0 max-w-96"
                 />
+                <button
+                    type="button"
+                    onClick={handleAddVideo}
+                    className="btn-account min-w-32"
+                >
+                    Añadir video
+                </button>
             </div>
-            <div>{error && <p>{error}</p>}</div>
-        </form>
-    );
-};
 
-export const DeleteGrupoMedia = () => {
-    const { currentUser, token } = useContext(AuthContext);
-    const { idGrupo } = useParams();
-
-    const [media, setMedia] = useState([]);
-    const [mediaDelete, setMediaDelete] = useState(null);
-
-    useEffect(() => {
-        const fetchGrupoMedia = async () => {
-            try {
-                const { data } = await getGrupoByIdService(idGrupo);
-                setMedia(data.grupo.media);
-            } catch (error) {
-                toast.error(error.message);
-            }
-        };
-
-        fetchGrupoMedia();
-    }, [idGrupo]);
-
-    const handleClick = async (e) => {
-        try {
-            e.preventDefault();
-            await DeleteGrupoMediaService(mediaDelete, idGrupo, token);
-            setMedia(media.filter((item) => item.id !== mediaDelete));
-            toast.success('Borraste el video');
-        } catch (err) {
-            toast.error(err.message);
-        }
-    };
-
-    return currentUser ? (
-        <>
+            {/* Mostrar los videos ya subidos desde el backend */}
             {media.length > 0 && (
-                <div className="mb-6 flex flex-wrap gap-x-8">
-                    <p className="font-semibold mb-4 w-full">Borrar videos:</p>
-                    {media.map((item, index) => (
-                        <div key={index} className="md:w-5/12 mb-6">
-                            <LiteYouTubeEmbed
-                                id={item.url}
-                                title="YouTube Video"
-                                playlist={false}
-                            />
-                            {item.id === mediaDelete ? (
+                <div className="mb-4">
+                    <ul className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">
+                        {media.map((video, index) => (
+                            <li key={index} className="w-full">
+                                <LiteYouTubeEmbed
+                                    id={video.url}
+                                    title="Video subido"
+                                    playlist={false}
+                                />
                                 <button
-                                    id="buttonConfirm"
-                                    onClick={handleClick}
-                                    className="btn-account max-w-44 mt-3"
+                                    onClick={() => handleDeleteVideo(video.id)}
+                                    className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
                                 >
-                                    Confirmar borrado
+                                    Borrar video
                                 </button>
-                            ) : (
-                                <button
-                                    onClick={() => setMediaDelete(item.id)}
-                                    className="btn-account max-w-44 mt-3"
-                                >
-                                    Borrar Video
-                                </button>
-                            )}
-                        </div>
-                    ))}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             )}
-        </>
-    ) : null;
+
+            {/* Mostrar los videos añadidos en esta sesión */}
+            {videoUrls.length > 0 && (
+                <div className="mb-4">
+                    <p className="font-semibold">Nuevos videos añadidos:</p>
+                    <ul>
+                        {videoUrls.map((video, index) => (
+                            <li key={index} className="mb-4">
+                                <LiteYouTubeEmbed
+                                    id={video.id}
+                                    title="Nuevo video"
+                                    playlist={false}
+                                />
+                                <button
+                                    onClick={() =>
+                                        handleDeleteNewVideo(video.id)
+                                    }
+                                    className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
+                                >
+                                    Borrar video
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </form>
+    );
 };

@@ -110,18 +110,17 @@ export const AddRiderForm = () => {
 
             {/* Previsualización del Rider ya subido */}
             {uploadedRider && (
-                <div className="sect-photo mb-4">
+                <div className="sect-photo mb-4 flex justify-between max-w-2xl">
                     <embed
                         src={uploadedRider}
                         type="application/pdf"
-                        width="100%"
-                        height="400px"
-                        className="border-photos w-full"
+                        height="300px"
+                        className="w-2/3"
                     />
                     <button
                         type="button"
                         onClick={handleDeleteRider}
-                        className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
+                        className="btn-account mt-3 bg-red-500 hover:bg-red-700 w-1/4 h-9 self-end"
                     >
                         Borrar Rider
                     </button>
@@ -132,7 +131,7 @@ export const AddRiderForm = () => {
             {!uploadedRider && (
                 <>
                     <div className="sect-photo">
-                        <span className="border-photos w-80 md:w-full">
+                        <span className="border-photos w-80 max-w-2xl">
                             {rider ? (
                                 <span className="text-xs p-1 overflow-hidden">
                                     {rider.name}
@@ -293,29 +292,16 @@ export const AddFotosForm = () => {
         <form onSubmit={handleFotosSubmit}>
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
 
-            {/* Previsualización de las fotos seleccionadas antes de subir */}
-            {previews.length > 0 && (
-                <div className="sect-photo mb-4">
-                    {previews.map((previewUrl, index) => (
-                        <div key={index} className="mb-4">
-                            <img
-                                src={previewUrl}
-                                alt={`Preview Foto ${index + 1}`}
-                                width="100%"
-                                height="400px"
-                                className="border-photos w-full"
-                            />
-                        </div>
-                    ))}
-                </div>
-            )}
-
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
-                <div className="flex flex-wrap gap-8 mb-8">
+                <div className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">
                     {uploadedFotos.map((fotoUrl, index) => (
-                        <div key={index} className="sect-photo max-w-72">
-                            <img src={fotoUrl} alt="fotos grupo" />
+                        <div key={index} className="sect-photo w-full">
+                            <img
+                                src={fotoUrl}
+                                alt="fotos grupo"
+                                className="image-shadow"
+                            />
 
                             <button
                                 type="button"
