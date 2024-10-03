@@ -171,10 +171,10 @@ export const AddFotosForm = () => {
 
     const [fotos, setFotos] = useState([]);
     const [previews, setPreviews] = useState([]);
-    const [photoNames, setPhotoNames] = useState([]); // Guardar los nombres de las fotos
-    const [deletePhotos, setDeletePhotos] = useState([]); // Guardar los IDs de las fotos para eliminarlas
-    const [fotoErrors, setFotoErrors] = useState(''); // Para mostrar errores
-    const [uploadedFotos, setUploadedFotos] = useState([]); // Para mostrar las fotos subidas
+    const [photoNames, setPhotoNames] = useState([]);
+    const [deletePhotos, setDeletePhotos] = useState([]);
+    const [fotoErrors, setFotoErrors] = useState('');
+    const [uploadedFotos, setUploadedFotos] = useState([]);
 
     // Función para cargar las fotos existentes desde el backend
     const fetchFotos = useCallback(async () => {
