@@ -6,7 +6,6 @@ import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import Toastify from './Toastify.jsx';
-import DeleteSalaPhotos from './DeleteSalaPhotos.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
@@ -421,10 +420,6 @@ const SalaEdit = () => {
             </form>
 
             <div className="pt-4 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center md:col-start-3 md:col-end-4">
-                <p className="block font-semibold mb-2 md:w-full">
-                    Fotos de la sala
-                </p>
-                <DeleteSalaPhotos />
                 <AddSalaPhotos idSala={idSala} />
             </div>
 

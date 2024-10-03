@@ -173,7 +173,7 @@ const AuthUser = () => {
                     </p>
                     <p>
                         <span className="font-semibold">Email: </span>
-                        {userLogged.email}
+                        {newEmail.length > 0 ? newEmail : userLogged.email}
                     </p>
                 </section>
 

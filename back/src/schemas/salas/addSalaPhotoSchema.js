@@ -6,10 +6,7 @@ import imgSchema from '../imgSchema.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const addSalaPhotoSchema = joi.object({
-    photoA: imgSchema.optional(),
-    photoB: imgSchema.optional(),
-    photoC: imgSchema.optional(),
-    photoD: imgSchema.optional(),
+    foto: imgSchema.required(),
 });
 
 export default addSalaPhotoSchema;

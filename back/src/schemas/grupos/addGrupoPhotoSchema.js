@@ -6,7 +6,7 @@ import imgSchema from '../imgSchema.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const addGrupoPhotoSchema = joi.object({
-    photo: imgSchema.required(),
+    foto: imgSchema.required(),
 });
 
 export default addGrupoPhotoSchema;

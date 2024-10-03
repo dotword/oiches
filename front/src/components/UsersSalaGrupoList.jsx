@@ -65,7 +65,7 @@ const UsersSalaGrupoList = () => {
     };
 
     return (
-        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 flex md:flex-col md:items-center">
+        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 flex flex-col items-center">
             {entries.length > 0 ? (
                 <>
                     <h2 className="text-center font-semibold text-lg mb-6">
