@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import SalaCard from '../components/SalaCard.jsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import SalasImg from '../assets/pexels-teddy-2263436.jpg';
-import GruposImg from '../assets/pexels-jibarofoto-2091383.jpg';
+import SalasImg from '../assets/salas-de-conciertos.webp';
+import GruposImg from '../assets/musicos.jpg';
 import GrupoCard from '../components/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
@@ -62,11 +62,11 @@ const Home = () => {
             </Helmet>
 
             <HeaderHero />
-            <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 lg:h-[680px]">
+            <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 md:h-[680px]">
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
-                <p className="text-xl md:text-2xl lg:text-3xl hero-subtitle text-white">
+                <p className="text-xl md:text-2xl md:text-3xl hero-subtitle text-white">
                     Donde la música y el escenario se unen
                 </p>
             </section>
@@ -103,15 +103,15 @@ const Home = () => {
                         <p>Salas no encontradas</p>
                     )}
                 </section>
-                <section className="flex flex-col lg:grid lg:grid-cols-2 mx-auto gap-8 md:justify-around md:mx-auto md:my-6 xl:w-1200">
+                <section className="flex flex-col md:grid md:grid-cols-2 mx-auto gap-8 md:justify-around md:mx-auto md:my-6 xl:w-1200">
                     <Link
                         className="relative hover:scale-105 transition-all"
                         to={'/grupos'}
                     >
                         <img
-                            className="w-96 lg:w-auto rounded-2xl"
+                            className="w-96 md:w-auto rounded-2xl"
                             src={GruposImg}
-                            alt="Grupo musical destacado en Oiches"
+                            alt="Músicos en Oiches"
                         />
                         <span className="absolute bottom-3 px-4 z-50 text-3xl w-full text-white bg-black bg-opacity-65">
                             Músicos
@@ -122,9 +122,9 @@ const Home = () => {
                         to={'/salas'}
                     >
                         <img
-                            className="w-96 lg:w-auto h-full rounded-2xl"
+                            className="w-96 md:w-auto h-full rounded-2xl"
                             src={SalasImg}
-                            alt="Salas de conciertos destacadas en Oiches"
+                            alt="Salas de conciertos  en Oiches"
                         />
                         <span className="absolute bottom-3 px-4 z-50 text-3xl text-white w-full bg-black bg-opacity-65">
                             Salas

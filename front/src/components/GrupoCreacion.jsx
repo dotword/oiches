@@ -165,7 +165,7 @@ const GrupoCreacion = () => {
                                 htmlFor="generos"
                                 className="font-semibold mb-2"
                             >
-                                Géneros:
+                                Géneros *:
                             </label>
                             <Multiselect
                                 options={genres.map((genre) => ({
@@ -178,7 +178,8 @@ const GrupoCreacion = () => {
                                 onSelect={handleGenChange}
                                 onRemove={handleGenChange}
                                 displayValue="nombre"
-                                placeholder="Selecciona los géneros"
+                                placeholder="Selecciona los géneros musicales"
+                                required
                                 customCloseIcon={
                                     <IoIosCloseCircleOutline className="ml-1" />
                                 }

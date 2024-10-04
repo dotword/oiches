@@ -125,7 +125,7 @@ const GrupoDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6 place-items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
                         {fotos.length > 0 ? (
                             <>
                                 {fotos.map((photo) => (

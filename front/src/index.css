@@ -165,3 +165,7 @@
 .avatar-square {
     @apply w-40 h-40 rounded-lg object-cover;
 }
+
+.multiSelectContainer input {
+    @apply w-full;
+}
