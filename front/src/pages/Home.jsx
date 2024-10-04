@@ -66,7 +66,7 @@ const Home = () => {
                 <h1 className="hero-title text-white">
                     Encuentra tu Banda Sonora
                 </h1>
-                <p className="text-xl md:text-2xl md:text-3xl hero-subtitle text-white">
+                <p className="text-xl md:text-3xl hero-subtitle text-white">
                     Donde la música y el escenario se unen
                 </p>
             </section>
