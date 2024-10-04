@@ -135,7 +135,7 @@ const Salas = () => {
             className="container-salas"
         >
             <HeaderHero />
-            <div className="hero bg-hero-salas bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
+            <div className="hero bg-hero-salas bg-cover bg-center relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                 <h1 className="hero-title text-white">Encuentra tu Sala</h1>
                 <p className="hero-subtitle text-white">
                     Descubre y explora distintas salas, conéctate con ellas y

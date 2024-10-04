@@ -13,7 +13,7 @@ export default {
                 'oiches-live': "url('/oiches/front/src/assets/Live.jpg')",
                 'hero-image': "url('/Live.jpg')",
                 'hero-grupos': "url('/bandas-hero.jpg')",
-                'hero-salas': "url('/salas-hero.jpg')",
+                'hero-salas': "url('/salas-hero.webp')",
                 'hero-home': "url('/hero-home.jpg')",
                 'hero-oiches': "url('/hero-oiches.webp')",
             },
