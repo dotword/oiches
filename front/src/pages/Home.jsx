@@ -11,7 +11,7 @@ import GrupoCard from '../components/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
-import { Helmet } from 'react-helmet'; // Importar Helmet para las metaetiquetas dinámicas
+// import { Helmet } from 'react-helmet'; // Importar Helmet para las metaetiquetas dinámicas
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -53,13 +53,14 @@ const Home = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             {/* SEO - Meta Tags dinámicas */}
-            <Helmet>
+            {/* <Helmet>
                 <title>Oiches - Conecta Músicos y Salas de Conciertos</title>
                 <meta
                     name="description"
                     content="Descubre los músicos más votados y las salas de conciertos más populares en Oiches. Conéctate con la música en vivo y organiza eventos musicales únicos."
                 />
-            </Helmet>
+            </Helmet> */}
+
 
             <HeaderHero />
             <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 md:h-[680px]">
