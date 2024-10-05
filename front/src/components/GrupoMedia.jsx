@@ -145,10 +145,12 @@ export const AddGrupoMedia = () => {
             {/* Mostrar los videos añadidos en esta sesión */}
             {videoUrls.length > 0 && (
                 <div className="mb-4">
-                    <p className="font-semibold">Nuevos videos añadidos:</p>
+                    <p className="font-semibold mb-4">
+                        Nuevos videos añadidos:
+                    </p>
                     <ul>
                         {videoUrls.map((video, index) => (
-                            <li key={index} className="mb-4">
+                            <li key={index} className="mb-4 max-w-80">
                                 <LiteYouTubeEmbed
                                     id={video.id}
                                     title="Nuevo video"

@@ -66,8 +66,6 @@ export const addPdfGrupoController = async (req, res, next) => {
 
 export const addPhotosGrupoController = async (req, res, next) => {
     try {
-        console.log('re.files ', req.files); // <-- Verifica qué está llegando en req.files
-
         const { idGrupo } = req.params;
 
         // Validamos el body con Joi.

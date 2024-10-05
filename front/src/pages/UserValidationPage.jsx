@@ -27,8 +27,6 @@ const UserValidationPage = () => {
 
                 const result = await response.json();
 
-                console.log('response ', response);
-
                 if (response.status === 200) {
                     setStatus(result.status);
                     setMessage(result.message);
