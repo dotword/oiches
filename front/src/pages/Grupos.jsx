@@ -25,7 +25,6 @@ const Grupos = () => {
                 const data = await FetchGruposService(filters, page, pageSize);
                 setFilteredGrupos(data.rows); // Grupos filtrados
                 setTotal(data.total); // Total de grupos disponibles
-                console.log('data ', data);
             } catch (err) {
                 setError('No se pudo cargar la información de los músicos.');
             }

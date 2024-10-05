@@ -17,12 +17,6 @@ const FetchGruposService = async (filters = {}, page = 1, pageSize = 10) => {
         // Crear los parámetros de consulta
         const queryParams = new URLSearchParams(queryParamsObj).toString();
 
-        // Imprimir la URL generada para depurar
-        console.log(
-            'URL generada:',
-            `${import.meta.env.VITE_API_URL_BASE}/grupos?${queryParams}`
-        );
-
         // Construir la URL con los parámetros de consulta
         const url = `${
             import.meta.env.VITE_API_URL_BASE
