@@ -5,15 +5,18 @@ import './index.css';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/auth/auth.context.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
+import { HelmetProvider } from 'react-helmet-async'; //importacion de HelmetProvider
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <BrowserRouter>
-            <AuthContextProvider>
-                <ErrorBoundary>
-                    <App />
-                </ErrorBoundary>
-            </AuthContextProvider>
-        </BrowserRouter>
+        <HelmetProvider>
+            <BrowserRouter>
+                <AuthContextProvider>
+                    <ErrorBoundary>
+                        <App />
+                    </ErrorBoundary>
+                </AuthContextProvider>
+            </BrowserRouter>
+        </HelmetProvider>
     </React.StrictMode>
 );
