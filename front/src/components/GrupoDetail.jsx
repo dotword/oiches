@@ -9,10 +9,10 @@ import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
+import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
-
     const { idGrupo } = useParams();
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
@@ -30,7 +30,7 @@ const GrupoDetail = () => {
         honorarios_to,
         media,
         pdf,
-    } = entry;
+    } = entry || {}; // Desestructuramos `entry`
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -43,11 +43,30 @@ const GrupoDetail = () => {
 
     return entry ? (
         <>
+            {/* Integración de SEO dinámico con los datos del grupo */}
+            <Seo
+                title={`${nombre} - Grupo Musical en Oiches`}
+                description={`Descubre a ${nombre}, un grupo musical destacado en ${provincia}. Género: ${
+                    genero?.map((g) => g.generoName).join(', ') || 'Desconocido'
+                }. ${
+                    biografia
+                        ? biografia
+                        : 'Conoce más sobre su música en vivo.'
+                }`}
+                keywords={`grupo musical, ${nombre}, ${genero
+                    ?.map((g) => g.generoName)
+                    .join(', ')}, música en vivo, conciertos`}
+                url={`https://oiches.com/grupo/${idGrupo}`}
+                image={
+                    avatar
+                        ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+                        : DefaultProfile
+                }
+            />
+
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                 <section className="flex flex-col items-center md:items-start gap-4 p-4">
-                    {' '}
-                    {/* flex-col para móvil, items-start en escritorio */}
                     <img
                         className="avatar-square"
                         src={
@@ -58,8 +77,6 @@ const GrupoDetail = () => {
                         alt="Imagen de perfil del grupo"
                     />
                     <h2 className="text-2xl font-bold mt-2 text-center md:text-left">
-                        {' '}
-                        {/* Centramos en móvil, alineado a la izquierda en escritorio */}
                         {nombre}
                     </h2>
                 </section>

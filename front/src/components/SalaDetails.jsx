@@ -7,6 +7,7 @@ import DefaultProfile from '/DefaultProfile2.png';
 import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
+import Seo from '../components/SEO/Seo.jsx'; // Seo
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -28,7 +29,7 @@ const SalaDetail = () => {
         email,
         precios,
         photos,
-    } = entry;
+    } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -41,6 +42,19 @@ const SalaDetail = () => {
 
     return entry ? (
         <>
+            {/* Integración del componente Seo con datos dinámicos */}
+            <Seo
+                title={`${nombre} - Sala de Conciertos en ${provincia}`}
+                description={`Descubre la sala ${nombre} en ${provincia}. Capacidad: ${capacidad} personas. Equipamiento: ${equipamiento}. Reserva tu evento hoy.`}
+                keywords={`sala de conciertos, ${nombre}, ${provincia}, música en vivo, eventos`}
+                url={`https://oiches.com/sala/${idSala}`}
+                image={
+                    usuarioAvatar
+                        ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
+                        : DefaultProfile
+                }
+            />
+
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                 <section className="flex flex-col items-center md:items-start gap-6 p-4">
@@ -71,41 +85,41 @@ const SalaDetail = () => {
                     )}
                     {capacidad && (
                         <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Aforo</span>{' '}
+                            <span className="font-semibold">Aforo</span>
                             <p className="text-black">{capacidad}</p>
                         </div>
                     )}
                     <div className="border-t border-gray-300 pt-4">
-                        <span className="font-semibold">Precio</span>{' '}
+                        <span className="font-semibold">Precio</span>
                         <p className="text-black">{precios}€</p>
                     </div>
                     {direccion && (
                         <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Dirección</span>{' '}
+                            <span className="font-semibold">Dirección</span>
                             <p className="text-black">{direccion}</p>
                         </div>
                     )}
                     {provincia && (
                         <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Provincia</span>{' '}
+                            <span className="font-semibold">Provincia</span>
                             <p className="text-black">{provincia}</p>
                         </div>
                     )}
                     {currentUser && (
                         <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Contacto</span>{' '}
+                            <span className="font-semibold">Contacto</span>
                             <p className="text-black">{email}</p>
                         </div>
                     )}
                     {equipamiento && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Equipamiento</span>{' '}
+                            <span className="font-semibold">Equipamiento</span>
                             <p className="text-black">{equipamiento}</p>
                         </div>
                     )}
                     {condiciones && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Condiciones</span>{' '}
+                            <span className="font-semibold">Condiciones</span>
                             <p className="text-black">{condiciones}</p>
                         </div>
                     )}
