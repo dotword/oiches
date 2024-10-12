@@ -48,38 +48,12 @@ const Footer = () => {
                             </p>
                         </div>
                     </div>
-                    {/* <div className="flex flex-col md:flex-row my-2 mt-10 items-start">
-                        <NavLink
-                            to={'/'}
-                            className="hover:text-yellowOiches mx-2 md:mx-2"
-                        >
-                            Músicos
-                        </NavLink>
-                        <NavLink
-                            to={'/salas'}
-                            className="hover:text-yellowOiches mx-2 md:mx-2"
-                        >
-                            Salas
-                        </NavLink>
-                        <NavLink
-                            to={'/users'}
-                            className="hover:text-yellowOiches mx-2 md:mx-2"
-                        >
-                            Mi cuenta
-                        </NavLink>
-                        <NavLink
-                            to={'/sobre-oiches'}
-                            className="hover:text-yellowOiches mx-2 md:mx-2"
-                        >
-                            Sobre Oiches
-                        </NavLink>
-                    </div> */}
                 </div>
 
                 <div className="flex flex-col md:text-right items-start md:items-end mt-0 md:mt-14">
                     <div className="flex flex-col md:flex-row my-2 items-start">
                         <NavLink
-                            to={'/'}
+                            to={'/grupos'}
                             className="hover:text-yellowOiches mx-2 md:mx-2"
                         >
                             Músicos
