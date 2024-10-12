@@ -85,20 +85,27 @@ const GrupoDetail = () => {
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
-                            {genero.map((gen) => (
-                                <div key={gen.generoId} className="text-black">
-                                    {gen.generoName}
-                                </div>
-                            ))}
+                            <ul className="flex flex-wrap mt-2">
+                                {genero.map((gen) => (
+                                    <li
+                                        key={gen.generoId}
+                                        className="mr-3 leading-5"
+                                    >
+                                        {gen.generoName}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     )}
 
-                    <div className="border-t border-gray-300 pt-4">
-                        <span className="font-semibold">Caché</span>
-                        <p className="text-black">
-                            {honorarios}€ - {honorarios_to}€
-                        </p>
-                    </div>
+                    {honorarios && (
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Caché</span>
+                            <p className="text-black">
+                                {honorarios}€ - {honorarios_to}€
+                            </p>
+                        </div>
+                    )}
 
                     {provincia && (
                         <div className="border-t border-gray-300 pt-4">
@@ -117,7 +124,7 @@ const GrupoDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Biografía</h3>
-                    <p className="mb-6 mt-3 text-gray-600">
+                    <p className="mb-6 mt-3">
                         {biografia
                             ? biografia
                             : 'El grupo tiene que añadir la biografía.'}

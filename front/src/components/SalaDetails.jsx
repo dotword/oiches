@@ -76,11 +76,16 @@ const SalaDetail = () => {
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
-                            {genero.map((gen) => (
-                                <div key={gen.generoId} className="text-black">
-                                    {gen.generoName}
-                                </div>
-                            ))}
+                            <ul className="flex flex-wrap mt-2">
+                                {genero.map((gen) => (
+                                    <li
+                                        key={gen.generoId}
+                                        className="mr-3 leading-5"
+                                    >
+                                        {gen.generoName}
+                                    </li>
+                                ))}
+                            </ul>
                         </div>
                     )}
                     {capacidad && (
@@ -89,10 +94,12 @@ const SalaDetail = () => {
                             <p className="text-black">{capacidad}</p>
                         </div>
                     )}
-                    <div className="border-t border-gray-300 pt-4">
-                        <span className="font-semibold">Precio</span>
-                        <p className="text-black">{precios}€</p>
-                    </div>
+                    {precios && (
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Precio</span>
+                            <p className="text-black">{precios}€</p>
+                        </div>
+                    )}
                     {direccion && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Dirección</span>
@@ -114,7 +121,7 @@ const SalaDetail = () => {
                     {equipamiento && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Equipamiento</span>
-                            <p className="text-black">{equipamiento}</p>
+                            <p className="truncate">{equipamiento}</p>
                         </div>
                     )}
                     {condiciones && (
@@ -127,7 +134,7 @@ const SalaDetail = () => {
 
                 <section>
                     <h3 className="font-semibold">Descripción</h3>
-                    <p className="mb-6 mt-3 text-gray-600">
+                    <p className="mb-6 mt-3">
                         {descripcion
                             ? descripcion
                             : 'La Sala tiene que añadir la descripción.'}
