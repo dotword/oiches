@@ -19,6 +19,7 @@ const SalaDetail = () => {
         nombre,
         provincia,
         equipamiento,
+        web,
         descripcion,
         condiciones,
         genero,
@@ -112,10 +113,30 @@ const SalaDetail = () => {
                             <p className="text-black">{provincia}</p>
                         </div>
                     )}
+                    {web && (
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Web</span>
+                            <p>
+                                <a
+                                    href={web}
+                                    target="_blank"
+                                    className="underline"
+                                >
+                                    Web de {nombre}
+                                </a>
+                            </p>
+                        </div>
+                    )}
                     {currentUser && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Contacto</span>
                             <p className="text-black">{email}</p>
+                        </div>
+                    )}
+                    {descripcion && (
+                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Descripción</span>
+                            <p>{descripcion}</p>
                         </div>
                     )}
                     {equipamiento && (
@@ -130,15 +151,6 @@ const SalaDetail = () => {
                             <p className="text-black">{condiciones}</p>
                         </div>
                     )}
-                </section>
-
-                <section>
-                    <h3 className="font-semibold">Descripción</h3>
-                    <p className="mb-6 mt-3">
-                        {descripcion
-                            ? descripcion
-                            : 'La Sala tiene que añadir la descripción.'}
-                    </p>
                 </section>
 
                 <section>

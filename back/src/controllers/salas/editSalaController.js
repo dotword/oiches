@@ -17,6 +17,7 @@ const editSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
+            web,
             horaReservasStart,
             horaReservasEnd,
         } = req.body;
@@ -39,6 +40,7 @@ const editSalaController = async (req, res, next) => {
         if (condiciones !== undefined) updatedFields.condiciones = condiciones;
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;
+        if (web !== undefined) updatedFields.web = web;
         if (horaReservasStart !== undefined)
             updatedFields.horaReservasStart = horaReservasStart;
         if (horaReservasEnd !== undefined)

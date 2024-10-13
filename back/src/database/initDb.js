@@ -63,6 +63,7 @@ const main = async () => {
             direccion VARCHAR(255) NOT NULL,
             condiciones TEXT,
             equipamiento TEXT,
+            web VARCHAR(255),
             horaReservasStart VARCHAR(255),
             horaReservasEnd VARCHAR(255),
             FOREIGN KEY(provincia) REFERENCES provincias(id),
