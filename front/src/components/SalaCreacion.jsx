@@ -273,12 +273,11 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasStart"
                             className="font-semibold"
                         >
-                            Hora de inicio de reservas:*
+                            Hora de inicio de reservas:
                         </label>
                         <input
                             type="time"
                             name="horaReservasStart"
-                            required
                             value={horaReservasStart}
                             onChange={handleChange}
                             className="form-input"
@@ -289,12 +288,11 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasEnd"
                             className="font-semibold"
                         >
-                            Hora final de reservas:*
+                            Hora final de reservas:
                         </label>
                         <input
                             type="time"
                             name="horaReservasEnd"
-                            required
                             value={horaReservasEnd}
                             onChange={handleChange}
                             className="form-input"

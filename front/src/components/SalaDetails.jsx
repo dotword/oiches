@@ -94,7 +94,7 @@ const SalaDetail = () => {
                             <p className="text-black">{capacidad}</p>
                         </div>
                     )}
-                    {precios && (
+                    {precios > 0 && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Precio</span>
                             <p className="text-black">{precios}€</p>
