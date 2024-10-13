@@ -1,76 +1,15 @@
 import { useEffect, useState } from 'react';
-import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import GrupoVotaSala from './GrupoVotaSala';
 import SalaVotaGrupo from './SalaVotaGrupo';
 
-export const ListarReservas = () => {
+export const ListarReservas = ({ userLogged, token }) => {
     const [reservas, setReservas] = useState([]);
     const { VITE_API_URL_BASE } = import.meta.env;
-    const { token, currentUser, userLogged } = useAuth();
 
     const id = userLogged.id;
     const type = userLogged.roles;
-
-    const handleDelete = async (reservaId) => {
-        try {
-            const endpoint =
-                type === 'grupo'
-                    ? `${VITE_API_URL_BASE}/cancelar-reserva/${reservaId}`
-                    : `${VITE_API_URL_BASE}/borrar-reserva/${reservaId}`;
-
-            const response = await fetch(endpoint, {
-                method: 'DELETE',
-                headers: {
-                    authorization: token,
-                },
-            });
-
-            if (!response.ok) {
-                toast.error('Fallo al eliminar la reserva');
-                throw new Error('Fallo al eliminar la reserva');
-            }
-
-            setReservas(reservas.filter((reserva) => reserva.id !== reservaId));
-            toast.success('Su reserva se ha eliminado con éxito');
-        } catch (error) {
-            toast.error(error);
-            console.error('Fallo al eliminar la reserva:', error);
-        }
-    };
-
-    const handleConfirm = async (reservaId) => {
-        if (currentUser) {
-            try {
-                const response = await fetch(
-                    `${VITE_API_URL_BASE}/aprobar-reserva/${reservaId}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            authorization: token,
-                        },
-                    }
-                );
-
-                if (!response.ok) {
-                    throw new Error('Failed to confirm reserva');
-                }
-
-                setReservas(
-                    reservas.map((reserva) =>
-                        reserva.id === reservaId
-                            ? { ...reserva, confirmada: 1 }
-                            : reserva
-                    )
-                );
-                toast.success('Su reserva se ha confirmado con éxito');
-            } catch (error) {
-                toast.error(error);
-                console.error('Error confirming reserva:', error);
-            }
-        }
-    };
 
     useEffect(() => {
         const fetchReservas = async () => {
@@ -101,6 +40,65 @@ export const ListarReservas = () => {
 
         fetchReservas();
     }, [token, VITE_API_URL_BASE, id, type]);
+
+    const handleDelete = async (reservaId) => {
+        try {
+            const endpoint =
+                type === 'grupo'
+                    ? `${VITE_API_URL_BASE}/cancelar-reserva/${reservaId}`
+                    : `${VITE_API_URL_BASE}/borrar-reserva/${reservaId}`;
+
+            const response = await fetch(endpoint, {
+                method: 'DELETE',
+                headers: {
+                    authorization: token,
+                },
+            });
+
+            if (!response.ok) {
+                toast.error('Fallo al eliminar la reserva');
+                throw new Error('Fallo al eliminar la reserva');
+            }
+
+            setReservas(reservas.filter((reserva) => reserva.id !== reservaId));
+            toast.success('Su reserva se ha eliminado con éxito');
+        } catch (error) {
+            toast.error(error);
+            console.error('Fallo al eliminar la reserva:', error);
+        }
+    };
+
+    const handleConfirm = async (reservaId) => {
+        if (userLogged) {
+            try {
+                const response = await fetch(
+                    `${VITE_API_URL_BASE}/aprobar-reserva/${reservaId}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            authorization: token,
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error('Failed to confirm reserva');
+                }
+
+                setReservas(
+                    reservas.map((reserva) =>
+                        reserva.id === reservaId
+                            ? { ...reserva, confirmada: 1 }
+                            : reserva
+                    )
+                );
+                toast.success('Su reserva se ha confirmado con éxito');
+            } catch (error) {
+                toast.error(error);
+                console.error('Error confirming reserva:', error);
+            }
+        }
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

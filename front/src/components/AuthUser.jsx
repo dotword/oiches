@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -15,12 +15,13 @@ import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const AuthUser = () => {
-    const { userLogged, token } = useContext(AuthContext);
-
+    const { userLogged, token, loading } = useContext(AuthContext);
     const [userId, setUserId] = useState('');
     const [avatar, setAvatar] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
     const [newEmail, setNewEmail] = useState('');
+    const [editEmail, setEditEmail] = useState(false);
+    const emailInputRef = useRef(null); // Referencia para el input de email
     const [newPassword, setNewPassword] = useState('');
     const [password, setPassword] = useState('');
     const [repeatNewPassword, setRepeatNewPassword] = useState('');
@@ -28,6 +29,30 @@ const AuthUser = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
+
+    // Manejador del clic fuera del input y del botón
+    const handleOutsideClick = (event) => {
+        // Asegurarnos de que el clic sea fuera del input
+        if (
+            emailInputRef.current &&
+            !emailInputRef.current.contains(event.target) &&
+            editEmail
+        ) {
+            setEditEmail(false); // Desactivar el modo de edición
+            setNewEmail(userLogged.email); // Restaurar el email original
+        }
+    };
+
+    useEffect(() => {
+        if (userLogged) {
+            setNewEmail(userLogged.email || ''); // Actualiza el estado del email si existe
+            setUserId(userLogged.id); // Actualiza el ID del usuario
+        }
+    }, [userLogged]);
+
+    if (loading) {
+        return <h2 className="text-center text-xl">Cargando...</h2>;
+    }
 
     const handleDelete = async () => {
         try {
@@ -59,12 +84,11 @@ const AuthUser = () => {
     const handleAvatarChange = (e) => {
         setAvatar(e.target.files[0]);
         setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-        setUserId(userLogged.id);
     };
 
     const handleAvatarSubmit = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
             const data = new FormData();
             data.append('avatar', avatar);
 
@@ -78,27 +102,42 @@ const AuthUser = () => {
 
     const handleEmailChange = (e) => {
         setNewEmail(e.target.value);
-        setUserId(userLogged.id);
+    };
+    // Función para vaciar el input de email al hacer clic
+    const handleEmailInputClick = () => {
+        if (editEmail) {
+            setNewEmail(''); // Vaciar el input si está en modo de edición
+        }
     };
 
-    const handleEmailSubmit = async (e) => {
-        try {
-            e.preventDefault();
-            const data = new FormData();
-            data.append('email', newEmail);
+    const handleEmailButtonClick = async (e) => {
+        e.preventDefault();
 
-            await modifyUserEmailService({ data, userId, token });
+        if (!editEmail) {
+            // Activar el modo de edición
+            setEditEmail(true);
+            setTimeout(() => {
+                emailInputRef.current.focus(); // Poner el foco en el input de email
+            }, 0); // Asegúrate de que el setEditEmail se complete antes de poner el foco
+        } else {
+            // Guardar el nuevo email
+            try {
+                const data = new FormData();
+                data.append('email', newEmail);
 
-            toast.success('Email cambiado con éxito');
-        } catch (error) {
-            toast.error(error.message);
+                await modifyUserEmailService({ data, userId, token });
+
+                toast.success('Email cambiado con éxito');
+                setEditEmail(false); // Desactivar el modo de edición
+            } catch (error) {
+                toast.error(error.message);
+            }
         }
     };
 
     const handlePasswordSubmit = async (e) => {
+        e.preventDefault();
         try {
-            e.preventDefault();
-
             const data = new FormData();
             data.append('email', userLogged.email);
             data.append('password', password);
@@ -121,6 +160,9 @@ const AuthUser = () => {
         <>
             <div className="md:max-w-3xl md:mx-auto mb-12">
                 <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
+                    <p className="font-semibold text-lg">
+                        {userLogged.username}
+                    </p>
                     <form onSubmit={handleAvatarSubmit}>
                         <div className="sect-photo w-40 h-40">
                             <FaPencilAlt className="absolute right-4 text-greyOiches text-2xl z-10" />
@@ -155,7 +197,7 @@ const AuthUser = () => {
                                 />
                             </span>
                         </div>
-                        {previewUrl ? (
+                        {previewUrl && (
                             <div className="mt-3 max-w-80 text-center">
                                 <input
                                     type="submit"
@@ -163,53 +205,47 @@ const AuthUser = () => {
                                     className="btn-account max-w-44"
                                 />
                             </div>
-                        ) : (
-                            ''
                         )}
                     </form>
-                    <p>
-                        <span className="font-semibold">Usuario: </span>
-                        {userLogged.username}
-                    </p>
-                    <p>
-                        <span className="font-semibold">Email: </span>
-                        {newEmail.length > 0 ? newEmail : userLogged.email}
-                    </p>
                 </section>
 
-                <section className="flex flex-col mb-4 items-center gap-2">
+                <UsersSalaGrupoList userLogged={userLogged} token={token} />
+                <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
+                    <form className="flex flex-col justify-center gap-2">
+                        <input
+                            type="email"
+                            name="email"
+                            value={newEmail}
+                            placeholder="Introduce tu nuevo email"
+                            onChange={handleEmailChange}
+                            onClick={handleEmailInputClick}
+                            disabled={!editEmail}
+                            ref={emailInputRef}
+                            className="bg-transparent text-center"
+                        />
+                        <button
+                            onClick={handleEmailButtonClick}
+                            className="btn-account"
+                        >
+                            {editEmail
+                                ? 'Guardar nuevo email'
+                                : 'Cambiar email'}
+                        </button>
+                        {editEmail && (
+                            <button
+                                onClick={handleOutsideClick}
+                                className="btn-account bg-red-600"
+                            >
+                                Cancelar
+                            </button>
+                        )}
+                    </form>
                     {edit ? (
                         <div className="my-4 flex flex-wrap flex-col gap-8">
-                            <form
-                                onSubmit={handleEmailSubmit}
-                                className="flex flex-col gap-2"
-                            >
-                                <label className="font-semibold">
-                                    Cambiar email
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={newEmail}
-                                    placeholder="Introduce tu nuevo email"
-                                    onChange={handleEmailChange}
-                                    className="form-input mt-0"
-                                />
-
-                                <input
-                                    type="submit"
-                                    value="Guardar"
-                                    className="btn-account max-w-44 mx-auto"
-                                />
-                            </form>
-
                             <form
                                 onSubmit={handlePasswordSubmit}
                                 className="flex flex-col gap-2"
                             >
-                                <span className="font-semibold">
-                                    Cambiar contraseña
-                                </span>
                                 <div>
                                     <label>Contraseña actual:</label>
                                     <input
@@ -246,6 +282,7 @@ const AuthUser = () => {
                                     <input
                                         type="password"
                                         name="password2"
+                                        value={repeatNewPassword}
                                         placeholder="Repite la nueva contraseña"
                                         onChange={(e) =>
                                             setRepeatNewPassword(e.target.value)
@@ -267,11 +304,18 @@ const AuthUser = () => {
                     )}
                     <button
                         type="button"
-                        className="btn-account max-w-44 min-w-32"
+                        className="btn-account max-w-44 min-w-32 "
                         onClick={() => setEdit(!edit)}
                     >
-                        {edit ? 'Cerrar' : 'Editar datos'}
+                        {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
+                </section>
+                <ListarReservas
+                    userLogged={userLogged}
+                    token={token}
+                    loading={loading}
+                />
+                <section className="flex justify-end mt-28">
                     <button
                         onClick={() => setModalOpen(true)}
                         className="btn-account max-w-44 min-w-32 bg-red-600"
@@ -280,8 +324,6 @@ const AuthUser = () => {
                     </button>
                 </section>
             </div>
-            <UsersSalaGrupoList />
-            <ListarReservas />
             <Toastify />
             {modalOpen && (
                 <ConfirmationModal

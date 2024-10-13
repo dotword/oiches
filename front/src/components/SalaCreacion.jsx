@@ -25,6 +25,7 @@ const SalaCreacion = () => {
         precios: '',
         condiciones: '',
         equipamiento: '',
+        web: '',
         horaReservasStart: '',
         horaReservasEnd: '',
     });
@@ -111,6 +112,7 @@ const SalaCreacion = () => {
         precios,
         condiciones,
         equipamiento,
+        web,
         horaReservasStart,
         horaReservasEnd,
     } = formValues;
@@ -160,7 +162,7 @@ const SalaCreacion = () => {
                             }}
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
+                    <div className="flex flex-col mb-4 md:w-[calc(75%-0.5rem)]">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:*
                         </label>
@@ -174,7 +176,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(25%)]">
                         <label htmlFor="provincia" className="font-semibold">
                             Provincia:*
                         </label>
@@ -210,7 +212,20 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
                         <label htmlFor="precios" className="font-semibold">
-                            Precios:
+                            Web:
+                        </label>
+                        <input
+                            type="url"
+                            name="web"
+                            placeholder="https://www.tusala.com"
+                            value={web}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
+                        <label htmlFor="precios" className="font-semibold">
+                            Tarifa:
                         </label>
                         <input
                             type="number"
@@ -254,7 +269,7 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="equipamiento" className="font-semibold">
-                            Equipamiento:
+                            Rider:
                         </label>
                         <textarea
                             type="text"
@@ -273,12 +288,11 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasStart"
                             className="font-semibold"
                         >
-                            Hora de inicio de reservas:*
+                            Hora de inicio de reservas:
                         </label>
                         <input
                             type="time"
                             name="horaReservasStart"
-                            required
                             value={horaReservasStart}
                             onChange={handleChange}
                             className="form-input"
@@ -289,12 +303,11 @@ const SalaCreacion = () => {
                             htmlFor="horaReservasEnd"
                             className="font-semibold"
                         >
-                            Hora final de reservas:*
+                            Hora final de reservas:
                         </label>
                         <input
                             type="time"
                             name="horaReservasEnd"
-                            required
                             value={horaReservasEnd}
                             onChange={handleChange}
                             className="form-input"

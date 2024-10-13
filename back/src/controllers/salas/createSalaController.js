@@ -17,6 +17,7 @@ const createSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
+            web,
             horaReservasStart,
             horaReservasEnd,
         } = req.body;
@@ -36,6 +37,7 @@ const createSalaController = async (req, res, next) => {
             direccion,
             condiciones,
             equipamiento,
+            web,
             horaReservasStart,
             horaReservasEnd,
             req.user.id
@@ -88,6 +90,7 @@ const createSalaController = async (req, res, next) => {
                     direccion,
                     condiciones,
                     equipamiento,
+                    web,
                     horaReservasStart,
                     horaReservasEnd,
                     photos,

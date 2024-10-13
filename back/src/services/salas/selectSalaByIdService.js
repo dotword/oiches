@@ -16,6 +16,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.capacidad,
                 S.descripcion,
                 S.equipamiento,
+                S.web,
                 S.condiciones,
                 S.horaReservasStart,
                 S.horaReservasEnd,

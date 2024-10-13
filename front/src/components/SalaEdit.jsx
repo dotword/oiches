@@ -30,6 +30,7 @@ const SalaEdit = () => {
         precios: 0,
         condiciones: '',
         equipamiento: '',
+        web: '',
         horaReservasStart: '',
         horaReservasEnd: '',
         activeGenres: [],
@@ -50,7 +51,6 @@ const SalaEdit = () => {
         const fetchSala = async () => {
             try {
                 const { data } = await getSalaService(idSala);
-
                 setSala({
                     nombre: data.sala.nombre || '',
                     direccion: data.sala.direccion || '',
@@ -60,6 +60,7 @@ const SalaEdit = () => {
                     precios: data.sala.precios || 0,
                     condiciones: data.sala.condiciones || '',
                     equipamiento: data.sala.equipamiento || '',
+                    web: data.sala.web || '',
                     horaReservasStart: data.sala.horaReservasStart || '',
                     horaReservasEnd: data.sala.horaReservasEnd || '',
                     activeGenres: data.sala.genero || [],
@@ -141,6 +142,7 @@ const SalaEdit = () => {
             dataForm.append('descripcion', sala.descripcion || '');
             dataForm.append('condiciones', sala.condiciones || '');
             dataForm.append('equipamiento', sala.equipamiento || '');
+            dataForm.append('web', sala.web || '');
             dataForm.append('horaReservasStart', sala.horaReservasStart || '');
             dataForm.append('horaReservasEnd', sala.horaReservasEnd || '');
 
@@ -238,9 +240,9 @@ const SalaEdit = () => {
 
             <form
                 onSubmit={handleSubmit}
-                className="md:grid md:grid-cols-4 md:gap-x-6 md:col-start-1 md:col-end-3"
+                className="md:grid md:grid-cols-6 md:gap-x-6 md:col-start-1 md:col-end-3"
             >
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
                     <label htmlFor="nombre" className="font-semibold">
                         Nombre de la Sala:
                     </label>
@@ -256,7 +258,7 @@ const SalaEdit = () => {
                     />
                 </div>
 
-                <div className="flex flex-col md:col-start-3 md:col-end-4">
+                <div className="flex flex-col md:col-start-5 md:col-end-7">
                     <label htmlFor="capacidad" className="font-semibold">
                         Aforo:{' '}
                     </label>
@@ -271,9 +273,10 @@ const SalaEdit = () => {
                         }
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
+
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
                     <label htmlFor="precios" className="font-semibold">
-                        Precios:
+                        Tarifas:
                     </label>
                     <input
                         name="precios"
@@ -285,24 +288,25 @@ const SalaEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
-                    <label htmlFor="direccion" className="font-semibold">
-                        Dirección:
+                <div className="flex flex-col md:col-start-3 md:col-end-5">
+                    <label htmlFor="web" className="font-semibold">
+                        Web:
                     </label>
                     <input
-                        type="text"
-                        name="direccion"
-                        placeholder="Dirección de la sala"
-                        value={sala.direccion}
-                        onChange={(e) =>
-                            setSala({ ...sala, direccion: e.target.value })
-                        }
+                        type="url"
+                        name="web"
+                        placeholder="https://www.tusala.com"
+                        value={sala.web}
                         className="form-input"
+                        onChange={(e) =>
+                            setSala({ ...sala, web: e.target.value })
+                        }
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-5">
+
+                <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
                     <label htmlFor="province" className="font-semibold">
-                        Selecciona:
+                        Provincia:
                     </label>
                     <select
                         name="provincia"
@@ -321,7 +325,23 @@ const SalaEdit = () => {
                     </select>
                 </div>
 
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
+                    <label htmlFor="direccion" className="font-semibold">
+                        Dirección:
+                    </label>
+                    <input
+                        type="text"
+                        name="direccion"
+                        placeholder="Dirección de la sala"
+                        value={sala.direccion}
+                        onChange={(e) =>
+                            setSala({ ...sala, direccion: e.target.value })
+                        }
+                        className="form-input"
+                    />
+                </div>
+
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
                     <label htmlFor="descripcion" className="font-semibold">
                         Descripción:
                     </label>
@@ -338,7 +358,7 @@ const SalaEdit = () => {
                     </p>
                 </div>
 
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
                     <label htmlFor="condiciones" className="font-semibold">
                         Condiciones:
                     </label>
@@ -355,9 +375,9 @@ const SalaEdit = () => {
                         2000 caracteres como máximo
                     </p>
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
                     <label htmlFor="equipamiento" className="font-semibold">
-                        Equipamiento:
+                        Rider:
                     </label>
                     <textarea
                         type="text"
@@ -372,7 +392,7 @@ const SalaEdit = () => {
                         2000 caracteres como máximo
                     </p>
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
                     <label
                         htmlFor="horaReservasStart"
                         className="font-semibold"
@@ -392,7 +412,7 @@ const SalaEdit = () => {
                         className="form-input"
                     />
                 </div>
-                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-5">
+                <div className="flex flex-col mb-4 md:col-start-4 md:col-end-7">
                     <label htmlFor="horaReservasEnd" className="font-semibold">
                         Hora final de reservas:
                     </label>
