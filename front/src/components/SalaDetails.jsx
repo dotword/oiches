@@ -121,7 +121,7 @@ const SalaDetail = () => {
                     {equipamiento && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Equipamiento</span>
-                            <p className="truncate">{equipamiento}</p>
+                            <p>{equipamiento}</p>
                         </div>
                     )}
                     {condiciones && (

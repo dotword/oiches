@@ -2,7 +2,7 @@ import { listReservaService } from '../../services/reservas/listReservasServices
 
 export const listReservaController = async (req, res, next) => {
     try {
-        const {id} =req.user
+        const { id } = req.user;
         const reservas = await listReservaService(id);
         return res.status(200).json({
             reservas,
