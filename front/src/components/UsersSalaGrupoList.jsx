@@ -106,10 +106,7 @@ const UsersSalaGrupoList = ({ userLogged, token }) => {
             )}
 
             {type === 'grupo' && entries.length === 0 ? (
-                <a
-                    href="/creacion-grupo"
-                    className="btn-account max-w-56 min-w-32 mx-auto p-4"
-                >
+                <a href="/creacion-grupo" className="btn-account text-xl">
                     Publica tu proyecto musical
                 </a>
             ) : (

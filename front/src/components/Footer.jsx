@@ -6,7 +6,7 @@ import { FaEnvelope } from 'react-icons/fa6';
 // import { FaPhoneVolume } from 'react-icons/fa6';
 // import { FaFacebook } from 'react-icons/fa';
 // import { FaXTwitter } from 'react-icons/fa6';
-// import { FaInstagram } from 'react-icons/fa';
+import { FaInstagram } from 'react-icons/fa';
 // import { FaYoutube } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
 const Footer = () => {
@@ -28,7 +28,7 @@ const Footer = () => {
                             Saber más
                         </a>
                     </p>
-                    <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 items-start md:flex-row">
+                    <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 md:items-center md:flex-row">
                         {/* <div className="flex gap-4 items-center">
                             <FaPhoneVolume className="text-lg" />
                             <p className="flex flex-col gap-1">
@@ -43,7 +43,28 @@ const Footer = () => {
                             <p className="flex flex-col gap-1">
                                 <span>Contacta con nosotros</span>
                                 <span className="italic font-semibold">
-                                    hola@oiches.com
+                                    <a
+                                        href="mailto:hola@oiches.com"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        hola@oiches.com
+                                    </a>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div className="flex gap-4 items-center">
+                            <FaInstagram className="text-lg" />
+                            <p className="flex flex-col gap-1">
+                                <span className="italic font-semibold">
+                                    <a
+                                        href="https://www.instagram.com/oiches_musica/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        @oiches_musica
+                                    </a>
                                 </span>
                             </p>
                         </div>

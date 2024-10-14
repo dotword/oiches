@@ -24,6 +24,7 @@ const GrupoEdit = () => {
     const [grupo, setGrupo] = useState({
         nombre: '',
         provincia: '',
+        web: '',
         honorarios: 0,
         honorarios_to: 0,
         biografia: '',
@@ -49,6 +50,7 @@ const GrupoEdit = () => {
                 setGrupo({
                     nombre: data.grupo.nombre || '',
                     provincia: data.grupo.provinciaId || '',
+                    web: data.grupo.web || '',
                     honorarios: data.grupo.honorarios || 0,
                     honorarios_to: data.grupo.honorarios_to || 0,
                     biografia: data.grupo.biografia || '',
@@ -125,6 +127,7 @@ const GrupoEdit = () => {
             const dataForm = new FormData();
             dataForm.append('nombre', grupo.nombre || '');
             dataForm.append('provincia', grupo.provincia || '');
+            dataForm.append('web', grupo.web || '');
             dataForm.append('honorarios', grupo.honorarios || 0);
             dataForm.append('honorarios_to', grupo.honorarios_to || 0);
             dataForm.append('biografia', grupo.biografia || '');
@@ -224,7 +227,7 @@ const GrupoEdit = () => {
                 onSubmit={handleSubmit}
                 className="md:grid md:grid-cols-4 md:gap-4"
             >
-                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3 md:mb-0 lg:col-start-1 lg:col-end-2">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5 md:mb-0 lg:col-end-3">
                     <label htmlFor="nombre" className="font-semibold">
                         Nombre del artista/grupo:
                     </label>
@@ -240,7 +243,7 @@ const GrupoEdit = () => {
                     />
                 </div>
 
-                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-5 md:mb-0 lg:col-start-2 lg:col-end-3">
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3 md:mb-0 lg:col-start-3 lg:col-end-5">
                     <label htmlFor="provincia" className="font-semibold">
                         Provincia:
                     </label>
@@ -263,6 +266,26 @@ const GrupoEdit = () => {
                         ))}
                     </select>
                 </div>
+
+                <div className="flex flex-col mb-4 md:col-start-3 md:col-end-5 md:mb-0 lg:col-start-1 lg:col-end-3">
+                    <label htmlFor="web" className="font-semibold">
+                        Web:
+                    </label>
+                    <input
+                        type="url"
+                        name="web"
+                        placeholder="https://www.tugrupo.com"
+                        value={grupo.web}
+                        onChange={(e) =>
+                            setGrupo({
+                                ...grupo,
+                                web: e.target.value,
+                            })
+                        }
+                        className="form-input"
+                    />
+                </div>
+
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3 md:mb-0 lg:col-start-3 lg:col-end-4">
                     <label htmlFor="honorarios" className="font-semibold">
                         Caché desde:

@@ -21,6 +21,7 @@ import {
     deleteSalaController,
     addSalaGeneroController,
     deleteSalaGeneroController,
+    addRiderController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -70,6 +71,15 @@ router.post(
     salaExists,
     canEditSala,
     insertPhotosSalaController
+);
+
+// Añadir rider a una sala
+router.post(
+    '/salas/rider/:idSala',
+    authUser,
+    userExists,
+    canEditSala,
+    addRiderController
 );
 
 // Borrar una sala

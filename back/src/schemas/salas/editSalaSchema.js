@@ -14,7 +14,7 @@ const editSalaSchema = Joi.object({
     generos: Joi.number().allow('').messages(joiErrorMessages),
     condiciones: Joi.string().max(2000).allow('').messages(joiErrorMessages),
     descripcion: Joi.string().max(2000).allow('').messages(joiErrorMessages),
-    web: Joi.string().uri().messages(joiErrorMessages),
+    web: Joi.string().uri().allow(null, '').messages(joiErrorMessages),
     precios: Joi.number().min(0).allow(null, '').messages(joiErrorMessages),
     horaReservasStart: Joi.string()
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)$/)

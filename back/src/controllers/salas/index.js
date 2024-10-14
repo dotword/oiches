@@ -11,6 +11,7 @@ import {
     addSalaGeneroController,
     deleteSalaGeneroController,
 } from './salaGeneroController.js';
+import { addRiderController } from './salaRiderController.js';
 
 export {
     getSalaDetailController,
@@ -24,4 +25,5 @@ export {
     deleteSalaController,
     addSalaGeneroController,
     deleteSalaGeneroController,
+    addRiderController,
 };

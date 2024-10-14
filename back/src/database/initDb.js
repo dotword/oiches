@@ -91,6 +91,7 @@ const main = async () => {
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 nombre VARCHAR(50) NOT NULL UNIQUE,
                 provincia INT NOT NULL,
+                web VARCHAR(255),
                 honorarios INT,
                 honorarios_to INT,
                 biografia TEXT,

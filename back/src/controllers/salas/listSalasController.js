@@ -6,7 +6,7 @@ const listSalasController = async (req, res, next) => {
             nombre: req.query.nombre || '',
             genero: req.query.genero || '',
             provincia: req.query.provincia || '',
-            field: req.query.sortField || 'media_votos', // Default sort field
+            field: ['media_votos', 'updatedAt'],
             order: req.query.order || 'DESC',
             page: req.query.page || 1,
             pageSize: req.query.pageSize || 8,

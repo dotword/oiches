@@ -11,6 +11,7 @@ const createGrupoController = async (req, res, next) => {
         const {
             nombre,
             provincia,
+            web,
             generos,
             honorarios,
             honorarios_to,
@@ -32,6 +33,7 @@ const createGrupoController = async (req, res, next) => {
         const grupoId = await insertGrupoService(
             nombre,
             provincia,
+            web,
             honorarios,
             honorarios_to,
             biografia,
@@ -86,6 +88,7 @@ const createGrupoController = async (req, res, next) => {
                     generos: generosList,
                     nombre,
                     provincia,
+                    web,
                     honorarios,
                     honorarios_to,
                     biografia,
