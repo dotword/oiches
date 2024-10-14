@@ -3,12 +3,14 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
 import { FaTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import useAuth from '../hooks/useAuth';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
 
-const UsersSalaGrupoList = ({ userLogged, token }) => {
+const UsersSalaGrupoList = () => {
+    const { userLogged, token } = useAuth();
     const { VITE_API_URL_BASE } = import.meta.env;
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -63,7 +65,7 @@ const UsersSalaGrupoList = ({ userLogged, token }) => {
     };
 
     return (
-        <section className="py-6 flex border-b-2 border-greyOiches-50 flex-col items-center">
+        <section className="mt-8 border-y-2 border-greyOiches-50 py-6 flex md:flex-col md:items-center">
             {entries.length > 0 ? (
                 <>
                     <h2 className="text-center font-semibold text-lg mb-6">
@@ -117,7 +119,10 @@ const UsersSalaGrupoList = ({ userLogged, token }) => {
             )}
 
             {type === 'sala' ? (
-                <a href="/creacion-sala" className="btn-account text-xl">
+                <a
+                    href="/creacion-sala"
+                    className="btn-account max-w-56 min-w-32 mx-auto p-4"
+                >
                     Publica tu sala
                 </a>
             ) : (
