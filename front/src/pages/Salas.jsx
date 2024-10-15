@@ -10,6 +10,8 @@ import {
     MdKeyboardDoubleArrowLeft,
 } from 'react-icons/md';
 import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
+import FeatureGridSalas from '../components/FeatureGridSalas.jsx'; // Importar el componente FeatureGrid
+import Conectate from '../components/Conectate.jsx'; // Importar el componente FeatureGrid
 
 const Salas = () => {
     const [page, setPage] = useState(1); // Estado para la página actual
@@ -68,9 +70,11 @@ const Salas = () => {
                         y lleva tu música en vivo a nuevos escenarios
                     </p>
                 </div>
+
                 <div className="sala-filter-form-container">
                     <SalaFilter onFilterChange={handleFilterChange} />
                 </div>
+
                 <div className="sala-list-container">
                     {filteredSalas.length > 0 ? (
                         <SalaList salas={filteredSalas} />
@@ -100,6 +104,10 @@ const Salas = () => {
                     </div>
                 )}
 
+                <section className="flex flex-col gap-8 mx-auto mt-12 mb-24">
+                    <FeatureGridSalas />
+                </section>
+                <Conectate />
                 <Footer />
             </motion.div>
         </>

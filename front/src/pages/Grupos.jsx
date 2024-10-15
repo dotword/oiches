@@ -8,6 +8,8 @@ import Footer from '../components/Footer';
 import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import Seo from '../components/SEO/Seo.jsx'; // Importar el componente SEO
+import FeatureGridMusicos from '../components/FeatureGridMusicos.jsx';
+import Conectate from '../components/Conectate.jsx'; // Importar el componente FeatureGrid
 
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -66,14 +68,29 @@ const Grupos = () => {
                 className="container-grupos"
             >
                 <HeaderHero />
-                <div className="hero bg-hero-grupos bg-cover relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
-                    <h1 className="hero-title text-white">
-                        Encuentra a los músicos ideales para tu sala
-                    </h1>
-                    <p className="hero-subtitle text-white">
-                        Explora diversos talentos, conecta con ellos y llena tu
-                        espacio con música en vivo.
-                    </p>
+                <div className="hero relative flex flex-col justify-center items-start bg-hero-grupos bg-cover bg-center h-96 md:h-[680px] px-8 md:px-16">
+                    {/* <div className="text-left max-w-lg mr-auto">
+                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
+                            Encuentra a los músicos ideales para tu sala
+                        </h1>
+                        <p className="text-white text-lg md:text-xl mt-4 mb-8">
+                            Explora diversos talentos, conecta con ellos y llena
+                            tu espacio con música en vivo.
+                        </p>
+                    </div> */}
+
+                    <div className="text-left max-w-lg mr-auto">
+                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
+                            Encuentra a los músicos ideales para tu sala
+                        </h1>
+                        <p className="text-white text-lg md:text-xl mt-4 mb-8">
+                            Explora diversos talentos, conecta con ellos y llena
+                            tu espacio con música en vivo.
+                        </p>
+                        <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
+                            ¡Vive la música en cada rincón!
+                        </p>
+                    </div>
                 </div>
                 <div className="grupo-filter-form-container">
                     <GrupoFilter onFilterChange={handleFilterChange} />
@@ -107,6 +124,15 @@ const Grupos = () => {
                         </button>
                     </div>
                 )}
+
+                {/* Sección de características para músicos*/}
+                <section className="flex flex-col gap-8 mx-auto mt-12 mb-24">
+                    <FeatureGridMusicos />
+                </section>
+
+                {/* Sección de Conectate */}
+                <Conectate />
+
                 <Footer />
             </motion.div>
         </>
