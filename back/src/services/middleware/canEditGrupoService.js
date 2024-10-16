@@ -7,14 +7,7 @@ const canEditGrupoService = async (idGrupo, userId) => {
         `SELECT usuario_id FROM grupos WHERE id = ?`,
         [idGrupo]
     );
-    const [user] = await pool.query(
-        `SELECT id,roles FROM usuarios WHERE id = ?`,
-        [userId]
-    )
- 
-    if(user[0].roles === 'admin') {
-        return;
-    }
+
     // Si no somos los propietarios lanzamos un error.
     if (grupoOwner[0].usuario_id !== userId)
         throw generateErrorsUtil(

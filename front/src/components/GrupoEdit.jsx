@@ -148,7 +148,7 @@ const GrupoEdit = () => {
             )
     );
 
-    return userLogged && userLogged.roles === 'grupo' || userLogged.roles === 'admin' ? (
+    return userLogged && userLogged.roles === 'grupo' ? (
         <>
             <section className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl md:mb-12">
                 <div className="mb-6">
