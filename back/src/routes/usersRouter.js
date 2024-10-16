@@ -16,11 +16,8 @@ import {
     getOwnUserController,
     deleteUserController,
     getUserOwnerController,
-    getUserGrupoSalaController
+    selectUserByNameController,
 } from '../controllers/users/index.js';
-import getUserByIdController from '../controllers/users/getUserByIdController.js';
-
-
 
 const router = express.Router();
 
@@ -29,7 +26,7 @@ router.post('/users/registro', registerUserController);
 
 //Endpoint validación de usuarios
 router.get('/users/validate/:registrationCode', validateUserController);
-router.get('/users/info/:userId',getUserByIdController)
+
 // Login de usuario.
 router.post('/users/login', loginUserController);
 
@@ -47,10 +44,12 @@ router.put('/users/password', editUserPassController);
 
 // Perfil privado del usuario
 router.get('/users', authUser, getOwnUserController);
+
+router.get('/users/chat/:name', authUser, selectUserByNameController);
+
 // Listado de salas o grupos del usuario
 router.get('/users/owner', authUser, userExists, getUserOwnerController);
 
-router.get('/users/:name',authUser,getUserGrupoSalaController)
 //Editar email del perfil usuario
 router.put(
     '/users/email/:userId',

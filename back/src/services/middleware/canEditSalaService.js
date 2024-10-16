@@ -8,14 +8,7 @@ const canEditSalaService = async (idSala, userId) => {
         `SELECT usuario_id FROM salas WHERE id = ?`,
         [idSala]
     );
-    const [user] = await pool.query(
-        `SELECT id,roles FROM usuarios WHERE id = ?`,
-        [userId]
-    );
-   
-    if(user[0].roles === 'admin') {
-        return;
-    }
+
     // Si no somos los propietarios lanzamos un error.
     if (salaOwner[0].usuario_id !== userId)
         throw generateErrorsUtil(
