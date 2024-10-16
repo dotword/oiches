@@ -17,6 +17,8 @@ const insertPhotosSalaController = async (req, res, next) => {
 
         const sala = await selectSalaByIdService(idSala);
 
+        console.log('sal ', sala.fotos.length);
+
         // Array donde pushearemos las fotos (si hay).
         const photos = [];
 
@@ -28,7 +30,7 @@ const insertPhotosSalaController = async (req, res, next) => {
         // Si "req.files" existe quiere decir que hay algún archivo en la petición.
         if (req.files) {
             // Comprobar que no hay más de 4 fotos en la sala
-            if (sala.photos.length > 3)
+            if (sala.fotos.length > 3)
                 throw generateErrorsUtil(
                     'No se pueden subir más de 4 fotos a la sala.',
                     400

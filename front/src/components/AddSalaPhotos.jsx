@@ -24,8 +24,8 @@ const AddSalaPhotos = ({ idSala }) => {
             const { data } = await getSalasServices(idSala);
 
             // Verificar si hay fotos subidas
-            if (data.sala.photos && data.sala.photos.length > 0) {
-                const fotosData = data.sala.photos.slice(0, 4); // Limitar a 4 fotos
+            if (data.sala.fotos && data.sala.fotos.length > 0) {
+                const fotosData = data.sala.fotos.slice(0, 4); // Limitar a 4 fotos
                 const uploadedFotosUrls = fotosData.map(
                     (foto) => `${urlUploads}/${foto.name}`
                 );
@@ -131,7 +131,7 @@ const AddSalaPhotos = ({ idSala }) => {
     };
 
     return currentUser ? (
-        <form onSubmit={handleFotosSubmit}>
+        <form onSubmit={handleFotosSubmit} className="w-full">
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
 
             {/* Previsualización de las Fotos ya subidas */}

@@ -1,4 +1,5 @@
 import getPool from '../../database/getPool.js';
+import path from 'path';
 
 export async function listSalasService(filters) {
     const pool = await getPool();
@@ -11,7 +12,6 @@ export async function listSalasService(filters) {
         salas.nombre, 
         salas.createdAt,
         (SELECT provincia FROM provincias WHERE provincias.id = salas.provincia) AS provincia,
-        (SELECT name FROM sala_fotos WHERE sala_fotos.salaId = salas.id LIMIT 1) AS primera_foto,
         (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = salas.id) AS media_votos,
         (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.salaId = salas.id) AS generos,
         GROUP_CONCAT(DISTINCT gm.nombre SEPARATOR ', ') AS generoNombres
@@ -101,8 +101,34 @@ export async function listSalasService(filters) {
 
     const [[countResult]] = await pool.query(countQuery, countQueryParams);
 
+    // Consulta para obtener las fotos agrupadas por sala
+    const [photos] = await pool.query(`
+            SELECT id, name, salaId 
+            FROM sala_fotos
+        `);
+
+    // Agrupar las fotos por sala excluyendo los archivos PDF
+    const groupedPhotos = photos.reduce((acc, photo) => {
+        if (path.extname(photo.name).toLowerCase() !== '.pdf') {
+            if (!acc[photo.salaId]) {
+                acc[photo.salaId] = [];
+            }
+            acc[photo.salaId].push({
+                id: photo.id,
+                name: photo.name,
+            });
+        }
+        return acc;
+    }, {});
+
+    // Añadir las fotos correspondientes a cada grupo
+    const result = rows.map((row) => ({
+        ...row,
+        fotos: groupedPhotos[row.id] || [],
+    }));
+
     return {
-        rows,
+        result,
         total: countResult.total,
     };
 }

@@ -85,7 +85,7 @@ router.post(
 // Borrar una sala
 router.delete('/salas/delete/:idSala', authUser, deleteSalaController);
 
-// Borrar foto de una sala
+// Borrar files de una sala
 router.delete(
     '/salas/:photoName/:deletePhoto',
     authUser,
