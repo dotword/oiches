@@ -15,6 +15,7 @@ import {
     addGeneroSalaService,
     DeleteSalaGenerosService,
 } from '../services/EditSalaService.js';
+import { AddSalaRiderForm } from './SalaFiles.jsx';
 
 const SalaEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -440,6 +441,7 @@ const SalaEdit = () => {
             </form>
 
             <div className="pt-4 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center md:col-start-3 md:col-end-4">
+                <AddSalaRiderForm />
                 <AddSalaPhotos idSala={idSala} />
             </div>
 

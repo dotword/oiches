@@ -6,9 +6,10 @@ const SalaCard = ({ sala }) => {
     const navigate = useNavigate();
     const { VITE_API_URL_BASE } = import.meta.env;
 
-    const imageUrl = sala.primera_foto
-        ? `${VITE_API_URL_BASE}/uploads/${sala.primera_foto}`
-        : DefaultProfile;
+    const imageUrl =
+        sala.fotos && sala.fotos.length > 0 && sala.fotos[0].name
+            ? `${VITE_API_URL_BASE}/uploads/${sala.fotos[0].name}`
+            : DefaultProfile;
 
     const handleClick = () => {
         navigate(`/sala/${sala.id}`);

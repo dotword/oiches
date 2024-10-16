@@ -20,6 +20,7 @@ const GrupoDetail = () => {
     const {
         nombre,
         provincia,
+        web,
         genero,
         avatar,
         biografia,
@@ -66,7 +67,7 @@ const GrupoDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-4 p-4">
+                <section className="flex flex-col items-center md:items-start gap-4 py-4">
                     <img
                         className="avatar-square"
                         src={
@@ -82,10 +83,15 @@ const GrupoDetail = () => {
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
+                    {biografia && (
+                        <div className="md:col-span-4 pb-4">
+                            <p className="text-lg">{biografia}</p>
+                        </div>
+                    )}
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
-                            <ul className="flex flex-wrap mt-2">
+                            <ul className="flex flex-wrap">
                                 {genero.map((gen) => (
                                     <li
                                         key={gen.generoId}
@@ -98,11 +104,14 @@ const GrupoDetail = () => {
                         </div>
                     )}
 
-                    {honorarios && (
+                    {honorarios > 0 && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Caché</span>
                             <p className="text-black">
-                                {honorarios}€ - {honorarios_to}€
+                                {honorarios}€
+                                {honorarios_to > 0
+                                    ? ` - ${honorarios_to} €`
+                                    : ''}
                             </p>
                         </div>
                     )}
@@ -113,22 +122,35 @@ const GrupoDetail = () => {
                             <p className="text-black">{provincia}</p>
                         </div>
                     )}
-
+                    {web && (
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Web</span>
+                            <p>
+                                <a
+                                    href={web}
+                                    target="_blank"
+                                    className="underline"
+                                >
+                                    Web de {nombre}
+                                </a>
+                            </p>
+                        </div>
+                    )}
                     {currentUser && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Contacto</span>
-                            <p className="text-black">{email}</p>
+                            <p>
+                                <a
+                                    href={`mailto:${email}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline"
+                                >
+                                    {email}
+                                </a>
+                            </p>
                         </div>
                     )}
-                </section>
-
-                <section>
-                    <h3 className="font-semibold">Biografía</h3>
-                    <p className="mb-6 mt-3">
-                        {biografia
-                            ? biografia
-                            : 'El grupo tiene que añadir la biografía.'}
-                    </p>
                 </section>
 
                 {media.length > 0 && (
