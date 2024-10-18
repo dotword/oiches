@@ -7,10 +7,13 @@ import { ConfirmationModal } from './ConfirmModal.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
-import useAuth from '../hooks/useAuth';
+// import useAuth from '../hooks/useAuth';
 
-const UsersSalaGrupoList = () => {
-    const { userLogged, token } = useAuth();
+const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
+    // const { userLogged, token } = useAuth();
+    console.log('userLogged ', userLogged);
+    console.log('userOwner ', userOwner);
+
     const { VITE_API_URL_BASE } = import.meta.env;
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -107,7 +110,7 @@ const UsersSalaGrupoList = () => {
                 ''
             )}
 
-            {type === 'grupo' && entries.length === 0 ? (
+            {(type === 'grupo' && entries.length === 0) || type === 'admin' ? (
                 <a href="/creacion-grupo" className="btn-account text-xl">
                     Publica tu proyecto musical
                 </a>
@@ -115,7 +118,7 @@ const UsersSalaGrupoList = () => {
                 ''
             )}
 
-            {type === 'sala' ? (
+            {type === 'sala' || type === 'admin' ? (
                 <a href="/creacion-sala" className="btn-account text-xl">
                     Publica tu sala
                 </a>

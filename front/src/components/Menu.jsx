@@ -3,7 +3,7 @@ import { AuthContext } from '../context/auth/auth.context';
 import { NavLink } from 'react-router-dom';
 
 const Menu = () => {
-    const { currentUser, signOut } = useContext(AuthContext);
+    const { signOut, userLogged } = useContext(AuthContext);
 
     return (
         <>
@@ -25,7 +25,7 @@ const Menu = () => {
             >
                 Sobre Oiches
             </NavLink>
-            {!currentUser ? (
+            {!userLogged ? (
                 <>
                     <NavLink
                         to="/login"
@@ -43,7 +43,7 @@ const Menu = () => {
             ) : (
                 <>
                     <NavLink
-                        to="/users"
+                        to={`/users/account/${userLogged.id}`}
                         className="btn-account max-md:my-8 font-medium"
                     >
                         Mi perfil

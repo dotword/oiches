@@ -47,7 +47,8 @@ function App() {
                         path="/users/password"
                         element={<ChangePassword />}
                     />
-                    <Route path="/users" element={<Users />} />
+                    <Route path="/users/account/:userId" element={<Users />} />
+
                     <Route path="/creacion-sala" element={<CreacionSala />} />
                     <Route
                         path="/sala/:idSala/edit"

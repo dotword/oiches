@@ -8,7 +8,7 @@ const insertGrupoService = async (
     honorarios,
     honorarios_to,
     biografia,
-    usuario_id
+    userId
 ) => {
     const pool = await getPool();
 
@@ -24,7 +24,7 @@ const insertGrupoService = async (
             honorarios,
             honorarios_to,
             biografia,
-            usuario_id,
+            userId,
         ]
     );
 

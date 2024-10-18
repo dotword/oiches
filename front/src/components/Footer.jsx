@@ -10,7 +10,7 @@ import { FaInstagram } from 'react-icons/fa';
 // import { FaYoutube } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
 const Footer = () => {
-    const { currentUser } = useContext(AuthContext);
+    const { userLogged } = useContext(AuthContext);
 
     return (
         <footer className="bg-black text-white pt-10 pb-6">
@@ -85,9 +85,9 @@ const Footer = () => {
                         >
                             Salas
                         </NavLink>
-                        {currentUser ? (
+                        {userLogged ? (
                             <NavLink
-                                to={'/users'}
+                                to={`/users/account/${userLogged.id}`}
                                 className="hover:text-yellowOiches mx-2 md:mx-2"
                             >
                                 Mi cuenta

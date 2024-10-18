@@ -133,7 +133,7 @@ const GrupoCreacion = () => {
             await registerGrupoService({ token, formData });
 
             toast.success('Has creado tu nuevo artista/grupo con éxito');
-            navigate('/users');
+            // navigate('/users');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

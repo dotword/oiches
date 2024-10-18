@@ -9,6 +9,10 @@ const checkIfGroupService = async (currentUser) => {
         [currentUser.id]
     );
 
+    if (userResults[0].roles === 'admin') {
+        return;
+    }
+
     if (userResults.length === 0 || userResults[0].roles !== 'grupo') {
         throw generateErrorsUtil(
             'Acceso denegado. No es un usuario de tipo grupo.',

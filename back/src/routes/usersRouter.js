@@ -18,6 +18,7 @@ import {
     getUserOwnerController,
     getUserGrupoSalaController,
     getUserByIdController,
+    accountUserController,
     // selectUserByNameController
 } from '../controllers/users/index.js';
 
@@ -46,6 +47,14 @@ router.put('/users/password', editUserPassController);
 
 // Perfil privado del usuario
 router.get('/users', authUser, getOwnUserController);
+
+// Cuenta de usuario
+router.get(
+    '/users/account/:userId',
+    authUser,
+    canEditUser,
+    accountUserController
+);
 
 // Perfil de cada usuario
 router.get('/users/info/:userId', getUserByIdController);

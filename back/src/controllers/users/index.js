@@ -13,6 +13,7 @@ import getUserOwnerController from './getUserOwnerController.js';
 import selectUserByNameController from './selectUserByNameController.js';
 import getUserGrupoSalaController from './getUserGrupoSalaController .js';
 import getUserByIdController from './getUserByIdController .js';
+import accountUserController from './accountUserController.js';
 
 export {
     registerUserController,
@@ -30,4 +31,5 @@ export {
     selectUserByNameController,
     getUserGrupoSalaController,
     getUserByIdController,
+    accountUserController,
 };
