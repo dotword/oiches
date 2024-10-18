@@ -7,10 +7,8 @@ import { ConfirmationModal } from './ConfirmModal.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
-import useAuth from '../hooks/useAuth';
 
-const UsersSalaGrupoList = () => {
-    const { userLogged, token } = useAuth();
+const UsersSalaGrupoList = ({ userLogged, token }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);

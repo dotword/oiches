@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { FaPencilAlt } from 'react-icons/fa';
+
 import useSala from '../hooks/useSala.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -14,6 +17,8 @@ const SalaDetail = () => {
     const { idSala } = useParams();
     const { entry, error } = useSala(idSala);
     const { currentUser } = useAuth();
+
+    const [actualUser, setActualUser] = useState('');
 
     const {
         nombre,
@@ -32,6 +37,18 @@ const SalaDetail = () => {
         fotos,
         pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!currentUser) return;
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/users/info/${currentUser.id}`
+            );
+            const data = await response.json();
+            setActualUser(data[0]);
+        };
+        fetchData();
+    }, [currentUser, VITE_API_URL_BASE]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -275,6 +292,16 @@ const SalaDetail = () => {
                             </Link>
                         </div>
                     </section>
+                )}
+                {actualUser.roles === 'admin' && (
+                    <a
+                        href={`/sala/${idSala}/edit`}
+                        className="flex justify-end gap-4 mb-16"
+                    >
+                        {' '}
+                        <FaPencilAlt className=" text-2xl" />
+                        Editar
+                    </a>
                 )}
             </main>
             <Footer />

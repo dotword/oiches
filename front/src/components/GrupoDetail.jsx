@@ -1,7 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
+import { FaPencilAlt } from 'react-icons/fa';
+
 import useGrupo from '../hooks/useGrupo.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -16,6 +19,20 @@ const GrupoDetail = () => {
     const { idGrupo } = useParams();
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
+
+    const [actualUser, setActualUser] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!currentUser) return;
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/users/info/${currentUser.id}`
+            );
+            const data = await response.json();
+            setActualUser(data[0]);
+        };
+        fetchData();
+    }, [currentUser, VITE_API_URL_BASE]);
 
     const {
         nombre,
@@ -265,6 +282,15 @@ const GrupoDetail = () => {
                             </div>
                         ))}
                     </section>
+                )}
+                {actualUser.roles === 'admin' && (
+                    <a
+                        href={`/grupos/${idGrupo}/edit`}
+                        className="flex justify-end gap-4 mb-16"
+                    >
+                        <FaPencilAlt className=" text-2xl" />
+                        Editar
+                    </a>
                 )}
             </main>
             <Footer />

@@ -167,7 +167,8 @@ const SalaEdit = () => {
             )
     );
 
-    return userLogged && userLogged.roles === 'sala' ? (
+    return (userLogged && userLogged.roles === 'sala') ||
+        (userLogged && userLogged.roles === 'admin') ? (
         <>
             <div className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl md:col-start-1 md:col-end-4">
                 <div className="mb-6">
