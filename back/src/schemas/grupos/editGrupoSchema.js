@@ -8,6 +8,7 @@ import joiErrorMessages from '../joiErrorMessages.js';
 const createEditGrupoSchema = Joi.object({
     nombre: Joi.string().messages(joiErrorMessages),
     provincia: Joi.number().max(50).messages(joiErrorMessages),
+    web: Joi.string().uri().allow(null, '').messages(joiErrorMessages),
     honorarios: Joi.number().min(0).allow(null, '').messages(joiErrorMessages),
     honorarios_to: Joi.number()
         .min(0)

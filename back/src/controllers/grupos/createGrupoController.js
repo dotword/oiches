@@ -5,12 +5,19 @@ import insertGrupoService from '../../services/grupos/insertGrupoService.js';
 import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
 import { insertGrupoMediaService } from '../../services/grupos/insertGrupoMediaService.js';
 import { insertGrupoGenerosService } from '../../services/grupos/insertGrupoGenerosService.js';
+import selectUserByIdService from '../../services/users/selectUserByIdService.js';
+import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const createGrupoController = async (req, res, next) => {
     try {
+        const { userId } = req.params;
+
+        const adminUser = await selectUserByIdService(req.user.id);
+
         const {
             nombre,
             provincia,
+            web,
             generos,
             honorarios,
             honorarios_to,
@@ -29,13 +36,17 @@ const createGrupoController = async (req, res, next) => {
             Object.assign(req.body, req.files || {})
         );
 
+        if (req.user.id !== userId && adminUser[0].roles !== 'admin')
+            throw generateErrorsUtil('No puedes crear este proyecto', 400);
+
         const grupoId = await insertGrupoService(
             nombre,
             provincia,
+            web,
             honorarios,
             honorarios_to,
             biografia,
-            req.user.id
+            userId
         );
 
         // Insertamos los géneros
@@ -82,10 +93,11 @@ const createGrupoController = async (req, res, next) => {
             data: {
                 grupo: {
                     id: grupoId,
-                    usuario_id: req.user.id,
+                    userId,
                     generos: generosList,
                     nombre,
                     provincia,
+                    web,
                     honorarios,
                     honorarios_to,
                     biografia,

@@ -1,6 +1,7 @@
 // Importamos joi.
 import Joi from 'joi';
 import imgSchema from '../imgSchema.js';
+import fileSchema from '../fileSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -45,6 +46,7 @@ const createSalaSchema = Joi.object({
     photoB: imgSchema.optional(),
     photoC: imgSchema.optional(),
     photoD: imgSchema.optional(),
+    file: fileSchema.optional(),
 });
 
 export default createSalaSchema;

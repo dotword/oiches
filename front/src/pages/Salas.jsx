@@ -24,8 +24,9 @@ const Salas = () => {
     useEffect(() => {
         const fetchSalas = async () => {
             const data = await FetchSalasService(filters, page, pageSize);
+
             setTotal(data.total); // Total de salas disponibles
-            setFilteredSalas(data.rows); // Salas filtradas
+            setFilteredSalas(data.result); // Salas filtradas
         };
 
         fetchSalas();

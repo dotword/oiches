@@ -30,7 +30,7 @@ const router = express.Router();
 
 // Crear un nuevo grupo
 router.post(
-    '/users/grupo',
+    '/users/grupo/:userId',
     authUser,
     userExists,
     checkIfGroup,

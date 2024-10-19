@@ -15,7 +15,7 @@ const insertSalaService = async (
     web,
     horaReservasStart,
     horaReservasEnd,
-    usuario_id
+    userId
 ) => {
     const pool = await getPool();
 
@@ -30,7 +30,7 @@ const insertSalaService = async (
         [
             salaId,
             provincia,
-            usuario_id,
+            userId,
             nombre,
             capacidad,
             descripcion,

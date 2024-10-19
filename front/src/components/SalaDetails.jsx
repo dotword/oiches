@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import { FaPencilAlt } from 'react-icons/fa';
+
 import useSala from '../hooks/useSala.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -15,6 +18,8 @@ const SalaDetail = () => {
     const { entry, error } = useSala(idSala);
     const { currentUser } = useAuth();
 
+    const [actualUser, setActualUser] = useState('');
+
     const {
         nombre,
         provincia,
@@ -29,8 +34,21 @@ const SalaDetail = () => {
         comentarios,
         email,
         precios,
-        photos,
+        fotos,
+        pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!currentUser) return;
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/users/info/${currentUser.id}`
+            );
+            const data = await response.json();
+            setActualUser(data[0]);
+        };
+        fetchData();
+    }, [currentUser, VITE_API_URL_BASE]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -58,7 +76,7 @@ const SalaDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-6 p-4">
+                <section className="flex flex-col items-center md:items-start gap-6 py-4">
                     <img
                         className="w-32 h-32 rounded-full object-cover shadow-lg"
                         src={
@@ -74,6 +92,11 @@ const SalaDetail = () => {
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
+                    {descripcion && (
+                        <div className="md:col-span-3 pb-4">
+                            <p className="text-lg">{descripcion}</p>
+                        </div>
+                    )}
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
@@ -130,40 +153,50 @@ const SalaDetail = () => {
                     {currentUser && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Contacto</span>
-                            <p className="text-black">{email}</p>
-                        </div>
-                    )}
-                    {descripcion && (
-                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Descripción</span>
-                            <p style={{ whiteSpace: 'pre-line' }}>
-                                {descripcion}
+                            <p>
+                                <a
+                                    href={`mailto:${email}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="underline"
+                                >
+                                    {email}
+                                </a>
                             </p>
                         </div>
                     )}
-                    {equipamiento && (
-                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Equipamiento</span>
-                            <p style={{ whiteSpace: 'pre-line' }}>
-                                {equipamiento}
-                            </p>
-                        </div>
-                    )}
+
                     {condiciones && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Condiciones</span>
-                            <p style={{ whiteSpace: 'pre-line' }}>
-                                {condiciones}
-                            </p>
+                            <p className="text-black">{condiciones}</p>
+                        </div>
+                    )}
+
+                    {pdf.length > 0 && (
+                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
+                            <p className="font-semibold">Rider</p>
+                            <iframe
+                                className="my-4 w-full md:w-2/3 h-80 rounded-lg image-shadow"
+                                src={`${VITE_API_URL_BASE}/uploads/${pdf[0].name}#zoom=90`}
+                                title="PDF Viewer"
+                            ></iframe>
+                        </div>
+                    )}
+
+                    {equipamiento && (
+                        <div className="md:col-span-3 border-t border-gray-300 pt-4">
+                            <span className="font-semibold">Equipamiento</span>
+                            <p>{equipamiento}</p>
                         </div>
                     )}
                 </section>
 
                 <section>
                     <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 place-items-center">
-                        {photos.length > 0 ? (
-                            photos.map((photo) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 items-start">
+                        {fotos.length > 0 ? (
+                            fotos.map((photo) => (
                                 <div
                                     key={photo.id}
                                     className="rounded-lg overflow-hidden image-shadow"
@@ -259,6 +292,16 @@ const SalaDetail = () => {
                             </Link>
                         </div>
                     </section>
+                )}
+                {actualUser.roles === 'admin' && (
+                    <a
+                        href={`/sala/${idSala}/edit`}
+                        className="flex justify-end gap-4 mb-16"
+                    >
+                        {' '}
+                        <FaPencilAlt className=" text-2xl" />
+                        Editar
+                    </a>
                 )}
             </main>
             <Footer />

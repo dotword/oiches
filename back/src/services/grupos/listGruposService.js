@@ -52,11 +52,6 @@ export async function listGruposService(filters) {
         const orderDirection =
             filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
 
-        // const orderField =
-        //     filters.field === 'media_votos' ? 'media_votos' : 'g.nombre';
-
-        // query += ` ORDER BY ${orderField} ${orderDirection}`;
-
         query += ` ORDER BY media_votos ${orderDirection}, updatedAt ${orderDirection}`;
     } else {
         query += ' ORDER BY media_votos DESC, updatedAt DESC'; // Ordenamiento por defecto

@@ -26,6 +26,7 @@ const createGrupoSchema = Joi.object({
                 return generosArray;
             }, 'Géneros validados')
         ),
+    web: Joi.string().uri().messages(joiErrorMessages),
     honorarios: Joi.number().min(0).messages(joiErrorMessages),
     honorarios_to: Joi.number().min(0).messages(joiErrorMessages),
     biografia: Joi.string().max(2000).messages(joiErrorMessages),

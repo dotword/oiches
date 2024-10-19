@@ -386,7 +386,8 @@ const Home = () => {
             try {
                 const response = await fetch(`${VITE_API_URL_BASE}/salas`);
                 const result = await response.json();
-                setSalas(Array.isArray(result.rows) ? result.rows : []);
+
+                setSalas(Array.isArray(result.result) ? result.result : []);
             } catch (error) {
                 console.error('Error fetching salas:', error);
                 setSalas([]);

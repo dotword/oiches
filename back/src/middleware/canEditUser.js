@@ -1,12 +1,19 @@
+import getPool from '../database/getPool.js';
 import generateErrorsUtil from '../utils/generateErrorsUtil.js';
 
 // Función controladora intermedia que comprueba si un usuario tiene permiso para editar una sala.
 const canEditUser = async (req, res, next) => {
     try {
-        // Intentamos obtener el id de usuario de los path params.
         const { userId } = req.params;
 
-        if (req.user.id !== userId)
+        const pool = await getPool();
+
+        const [users] = await pool.query(
+            `SELECT roles FROM usuarios WHERE id = ?`,
+            [req.user.id]
+        );
+
+        if (req.user.id !== userId && users[0].roles !== 'admin')
             throw generateErrorsUtil(
                 'El usuario no está autorizado para hacer esta operación',
                 409

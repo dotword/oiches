@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 
 import { IoIosCloseCircleOutline } from 'react-icons/io';
@@ -15,9 +15,12 @@ const GrupoCreacion = () => {
     const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
 
+    const { userId } = useParams();
+
     const [formValues, setFormValues] = useState({
         nombre: '',
         provincia: '',
+        web: '',
         generos: [],
         honorarios: '',
         honorarios_to: '',
@@ -129,10 +132,14 @@ const GrupoCreacion = () => {
         });
 
         try {
-            await registerGrupoService({ token, formData });
+            await registerGrupoService({
+                token,
+                userId,
+                formData,
+            });
 
             toast.success('Has creado tu nuevo artista/grupo con éxito');
-            navigate('/users');
+            navigate(`/users/account/${userId}`);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

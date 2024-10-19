@@ -8,7 +8,7 @@ const editGrupoController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
 
-        const { nombre, provincia, honorarios, honorarios_to, biografia } =
+        const { nombre, provincia, web, honorarios, honorarios_to, biografia } =
             req.body;
 
         // Validamos el body con Joi.
@@ -28,6 +28,7 @@ const editGrupoController = async (req, res, next) => {
 
         if (nombre !== undefined) updatedFields.nombre = nombre;
         if (provincia !== undefined) updatedFields.provincia = provincia;
+        if (web !== undefined) updatedFields.web = web;
         if (honorarios !== undefined) updatedFields.honorarios = honorarios;
         if (honorarios_to !== undefined)
             updatedFields.honorarios_to = honorarios_to;

@@ -21,13 +21,14 @@ import {
     deleteSalaController,
     addSalaGeneroController,
     deleteSalaGeneroController,
+    addRiderController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
 router.post(
-    '/users/salas',
+    '/users/salas/:userId',
     authUser,
     userExists,
     checkIfSala,
@@ -72,10 +73,19 @@ router.post(
     insertPhotosSalaController
 );
 
+// Añadir rider a una sala
+router.post(
+    '/salas/rider/:idSala',
+    authUser,
+    userExists,
+    canEditSala,
+    addRiderController
+);
+
 // Borrar una sala
 router.delete('/salas/delete/:idSala', authUser, deleteSalaController);
 
-// Borrar foto de una sala
+// Borrar files de una sala
 router.delete(
     '/salas/:photoName/:deletePhoto',
     authUser,

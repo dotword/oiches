@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
@@ -14,6 +14,8 @@ const SalaCreacion = () => {
     const { currentUser, token } = useContext(AuthContext);
 
     const navigate = useNavigate();
+
+    const { userId } = useParams();
 
     const [formValues, setFormValues] = useState({
         nombre: '',
@@ -33,6 +35,7 @@ const SalaCreacion = () => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
     const [generos, setGeneros] = useState([]);
+    const [file, setFile] = useState(null);
     const [photos, setPhotos] = useState({
         photoA: null,
         photoB: null,
@@ -91,12 +94,13 @@ const SalaCreacion = () => {
         Object.entries(photos).forEach(([key, value]) => {
             if (value) formData.append(key, value);
         });
+        if (file) formData.append('file', file);
 
         try {
-            await registerSalaService({ token, formData });
+            await registerSalaService({ token, userId, formData });
 
             toast.success('Has creado tu nueva sala con éxito');
-            navigate('/users');
+            navigate(`/users/account/${userId}`);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -211,7 +215,7 @@ const SalaCreacion = () => {
                         />
                     </div>
                     <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
-                        <label htmlFor="precios" className="font-semibold">
+                        <label htmlFor="web" className="font-semibold">
                             Web:
                         </label>
                         <input
@@ -267,9 +271,34 @@ const SalaCreacion = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
+
+                    <div className="flex flex-col mb-4 md:w-full">
+                        <p className="font-semibold mb-2">
+                            Sube el Rider (.pdf)
+                        </p>
+                        <div className="sect-photo">
+                            <span className="border-photos w-full h-20">
+                                {file ? (
+                                    <span className="text-xs p-1 overflow-hidden">
+                                        {file.name}
+                                    </span>
+                                ) : (
+                                    <span>Sube tu archivo</span>
+                                )}
+
+                                <input
+                                    type="file"
+                                    name={file}
+                                    className="absolute w-full h-full opacity-0 cursor-pointer"
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                />
+                            </span>
+                        </div>
+                    </div>
+
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="equipamiento" className="font-semibold">
-                            Rider:
+                            Rider Texto:
                         </label>
                         <textarea
                             type="text"
@@ -283,6 +312,7 @@ const SalaCreacion = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
+
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label
                             htmlFor="horaReservasStart"

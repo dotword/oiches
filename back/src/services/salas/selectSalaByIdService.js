@@ -1,3 +1,4 @@
+import path from 'path';
 import getPool from '../../database/getPool.js';
 
 const selectSalaByIdService = async (idSala) => {
@@ -8,6 +9,7 @@ const selectSalaByIdService = async (idSala) => {
         `
             SELECT 
                 S.id,
+                S.usuario_id,
                 S.nombre,
                 (SELECT provincia FROM provincias WHERE provincias.id = S.provincia) AS provincia,
                 (SELECT id FROM provincias WHERE provincias.id = S.provincia) AS provinciaId,
@@ -71,11 +73,25 @@ const selectSalaByIdService = async (idSala) => {
     // Agregamos el array de los generos del grupo.
     entry[0].genero = genero;
 
-    // Fetch photos and reservations
+    // Obtenemos el array de los archivos de la sala.
     const [photos] = await pool.query(
         `SELECT id, name FROM sala_fotos WHERE salaId = ?`,
         [idSala]
     );
+    const fotos = [];
+    const pdf = [];
+
+    for (const photo of photos) {
+        path.extname(photo.name) === '.pdf'
+            ? pdf.push({
+                  name: photo.name,
+                  id: photo.id,
+              })
+            : fotos.push({
+                  name: photo.name,
+                  id: photo.id,
+              });
+    }
 
     const [reservations] = await pool.query(
         `
@@ -97,7 +113,8 @@ const selectSalaByIdService = async (idSala) => {
         ...entry[0],
         comentarios,
         genero,
-        photos,
+        fotos,
+        pdf,
         reservations,
     };
 };
