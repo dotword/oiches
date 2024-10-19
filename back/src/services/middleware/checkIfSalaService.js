@@ -2,12 +2,18 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const checkIfSalaService = async (userId) => {
+    console.log('userid ', userId);
+
     const pool = await getPool();
 
     const [userResults] = await pool.query(
         'SELECT roles FROM usuarios WHERE id = ?',
         [userId]
     );
+
+    if (userResults[0].roles === 'admin') {
+        return;
+    }
 
     if (userResults.length === 0 || userResults[0].roles !== 'sala') {
         throw generateErrorsUtil(

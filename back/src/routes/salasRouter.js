@@ -28,7 +28,7 @@ const router = express.Router();
 
 //Endpoint crear nueva sala por usuario tipo sala
 router.post(
-    '/users/salas',
+    '/users/salas/:userId',
     authUser,
     userExists,
     checkIfSala,

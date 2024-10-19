@@ -23,8 +23,14 @@ const canEditPhotoService = async (deletePhoto, userId) => {
         [photoOwnerId]
     );
 
+    // Comprobar que es user admin
+    const [userAdmin] = await pool.query(
+        `SELECT roles FROM usuarios WHERE id = ?`,
+        [userId]
+    );
+
     // // Si no somos los propietarios lanzamos un error.
-    if (salaOwner[0].usuario_id !== userId)
+    if (salaOwner[0].usuario_id !== userId && userAdmin[0].roles !== 'admin')
         throw generateErrorsUtil(
             'El usuario no está autorizado para borrar esta foto',
             409
