@@ -319,11 +319,16 @@ const AuthUser = () => {
                         {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
                 </section>
-                <ListarReservas
-                    userLogged={userLogged}
-                    token={token}
-                    loading={loading}
-                />
+                {userLogged && userLogged.roles !== 'admin' ? (
+                    <ListarReservas
+                        userLogged={userLogged}
+                        token={token}
+                        loading={loading}
+                    />
+                ) : (
+                    ''
+                )}
+
                 <section className="flex justify-end mt-28">
                     <button
                         onClick={() => setModalOpen(true)}
