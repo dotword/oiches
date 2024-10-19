@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -13,10 +14,14 @@ import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
+import useUser from '../hooks/useUser.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading } = useContext(AuthContext);
-    const [userId, setUserId] = useState('');
+    const { userId } = useParams();
+
+    const userData = useUser(userId);
+
     const [avatar, setAvatar] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
     const [newEmail, setNewEmail] = useState('');
@@ -45,10 +50,10 @@ const AuthUser = () => {
 
     useEffect(() => {
         if (userLogged) {
-            setNewEmail(userLogged.email || ''); // Actualiza el estado del email si existe
-            setUserId(userLogged.id); // Actualiza el ID del usuario
+            setNewEmail(userData.user.email || ''); // Actualiza el estado del email si existe
+            // setUserId(userLogged.id); // Actualiza el ID del usuario
         }
-    }, [userLogged]);
+    }, [userLogged, userData.user.email]);
 
     if (loading) {
         return <h2 className="text-center text-xl">Cargando...</h2>;
@@ -139,7 +144,7 @@ const AuthUser = () => {
         e.preventDefault();
         try {
             const data = new FormData();
-            data.append('email', userLogged.email);
+            data.append('email', userData.user.email);
             data.append('password', password);
             data.append('newPassword', newPassword);
 
@@ -161,7 +166,7 @@ const AuthUser = () => {
             <div className="md:max-w-3xl md:mx-auto mb-12">
                 <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
                     <p className="font-semibold text-lg">
-                        {userLogged.username}
+                        {userData.user.username}
                     </p>
                     <form onSubmit={handleAvatarSubmit}>
                         <div className="sect-photo w-40 h-40">
@@ -176,12 +181,12 @@ const AuthUser = () => {
                                 ) : (
                                     <img
                                         src={
-                                            userLogged.avatar
+                                            userData.user.avatar
                                                 ? `${
                                                       import.meta.env
                                                           .VITE_API_URL_BASE
                                                   }/uploads/${
-                                                      userLogged.avatar
+                                                      userData.user.avatar
                                                   }`
                                                 : userIcon
                                         }
@@ -209,7 +214,11 @@ const AuthUser = () => {
                     </form>
                 </section>
 
-                <UsersSalaGrupoList userLogged={userLogged} token={token} />
+                <UsersSalaGrupoList
+                    userLogged={userLogged}
+                    token={token}
+                    userOwner={userData}
+                />
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
                     <form className="flex flex-col justify-center gap-2">
                         <input
@@ -310,11 +319,16 @@ const AuthUser = () => {
                         {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
                 </section>
-                <ListarReservas
-                    userLogged={userLogged}
-                    token={token}
-                    loading={loading}
-                />
+                {userLogged && userLogged.roles !== 'admin' ? (
+                    <ListarReservas
+                        userLogged={userLogged}
+                        token={token}
+                        loading={loading}
+                    />
+                ) : (
+                    ''
+                )}
+
                 <section className="flex justify-end mt-28">
                     <button
                         onClick={() => setModalOpen(true)}

@@ -8,6 +8,7 @@ const selectGrupoByIdService = async (idGrupo) => {
         `
             SELECT 
                 G.id,
+                G.usuario_id,
                 G.nombre,
                 (SELECT provincia FROM provincias WHERE provincias.id = G.provincia) AS provincia,
                 (SELECT id FROM provincias WHERE provincias.id = G.provincia) AS provinciaId,

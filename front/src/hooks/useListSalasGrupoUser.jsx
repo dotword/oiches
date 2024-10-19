@@ -1,23 +1,27 @@
 import { useState, useEffect } from 'react';
 import getListSalasGrupoService from '../services/getListSalasGrupoService';
 
-const useListSalasGrupoUser = (token) => {
+const useListSalasGrupoUser = ({ token, idUserOwner }) => {
     const [entries, setEntries] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
         const getEntry = async () => {
             try {
-                const json = await getListSalasGrupoService(token);
-
-                setEntries(json.data.ownerList);
+                if (idUserOwner) {
+                    const json = await getListSalasGrupoService({
+                        token,
+                        idUserOwner,
+                    });
+                    setEntries(json.data.ownerList);
+                }
             } catch (error) {
                 setError(error);
             }
         };
 
         getEntry();
-    }, [token]);
+    }, [token, idUserOwner]);
 
     return { entries, setEntries, error };
 };

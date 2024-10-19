@@ -47,15 +47,22 @@ function App() {
                         path="/users/password"
                         element={<ChangePassword />}
                     />
-                    <Route path="/users" element={<Users />} />
-                    <Route path="/creacion-sala" element={<CreacionSala />} />
+                    <Route path="/users/account/:userId" element={<Users />} />
+
+                    <Route
+                        path="/creacion-sala/:userId"
+                        element={<CreacionSala />}
+                    />
                     <Route
                         path="/sala/:idSala/edit"
                         element={<EdicionSala />}
                     />
                     <Route path="/salas" element={<Salas />} />
                     <Route path="/sala/:idSala" element={<SalaPage />} />
-                    <Route path="/creacion-grupo" element={<CreacionGrupo />} />
+                    <Route
+                        path="/creacion-grupo/:userId"
+                        element={<CreacionGrupo />}
+                    />
                     <Route
                         path="/grupos/:idGrupo/edit"
                         element={<EdicionGrupo />}

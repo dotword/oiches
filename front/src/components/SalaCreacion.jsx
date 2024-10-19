@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
@@ -14,6 +14,8 @@ const SalaCreacion = () => {
     const { currentUser, token } = useContext(AuthContext);
 
     const navigate = useNavigate();
+
+    const { userId } = useParams();
 
     const [formValues, setFormValues] = useState({
         nombre: '',
@@ -95,10 +97,10 @@ const SalaCreacion = () => {
         if (file) formData.append('file', file);
 
         try {
-            await registerSalaService({ token, formData });
+            await registerSalaService({ token, userId, formData });
 
             toast.success('Has creado tu nueva sala con éxito');
-            navigate('/users');
+            navigate(`/users/account/${userId}`);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

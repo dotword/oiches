@@ -53,6 +53,7 @@ const loginUserController = async (req, res, next) => {
             status: 'ok',
             data: {
                 token,
+                tokenInfo,
             },
         });
     } catch (error) {

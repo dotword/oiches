@@ -57,6 +57,7 @@ const GrupoEdit = () => {
                     activeGenres: data.grupo.genero || [],
                     hasRider: data.grupo.pdf.length,
                     hasPhotos: data.grupo.fotos.length,
+                    owner: data.grupo.usuario_id,
                 });
             } catch (error) {
                 setError(error.message);
@@ -151,8 +152,9 @@ const GrupoEdit = () => {
             )
     );
 
-    return userLogged && userLogged.roles === 'grupo' ? (
-        <>
+    return (userLogged && grupo.owner === userLogged.id) ||
+        (userLogged && userLogged.roles === 'admin') ? (
+        <div className="px-6 pt-3 pb-6 md:px-12 bg-white rounded-lg shadow-md md:gap-x-12">
             <section className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl md:mb-12">
                 <div className="mb-6">
                     <p className="font-semibold my-2">
@@ -364,7 +366,7 @@ const GrupoEdit = () => {
                 <AddRiderForm />
             </section>
             <Toastify />
-        </>
+        </div>
     ) : (
         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );
