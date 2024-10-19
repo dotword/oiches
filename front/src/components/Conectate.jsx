@@ -1,6 +1,6 @@
 // Importando imágenes locales
 import { Link } from 'react-router-dom';
-import img1 from '../assets/bajo.jpg';
+import img1 from '../assets/Bajo.jpg';
 import img2 from '../assets/Oiches_conectamos.jpg';
 import img3 from '../assets/Oiches_salas_publico.jpg';
 import img4 from '../assets/Oiches_escenario.jpg';

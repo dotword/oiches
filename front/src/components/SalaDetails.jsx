@@ -136,19 +136,25 @@ const SalaDetail = () => {
                     {descripcion && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Descripción</span>
-                            <p>{descripcion}</p>
+                            <p style={{ whiteSpace: 'pre-line' }}>
+                                {descripcion}
+                            </p>
                         </div>
                     )}
                     {equipamiento && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Equipamiento</span>
-                            <p>{equipamiento}</p>
+                            <p style={{ whiteSpace: 'pre-line' }}>
+                                {equipamiento}
+                            </p>
                         </div>
                     )}
                     {condiciones && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Condiciones</span>
-                            <p className="text-black">{condiciones}</p>
+                            <p style={{ whiteSpace: 'pre-line' }}>
+                                {condiciones}
+                            </p>
                         </div>
                     )}
                 </section>

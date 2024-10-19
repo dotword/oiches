@@ -138,7 +138,7 @@ const GrupoCreacion = () => {
             toast.error(error.message);
         }
     };
-    const { nombre, provincia, honorarios, honorarios_to, biografia } =
+    const { nombre, provincia, web, honorarios, honorarios_to, biografia } =
         formValues;
 
     return (
@@ -217,7 +217,22 @@ const GrupoCreacion = () => {
                                 ))}
                             </select>
                         </div>
-                        <div className="flex gap-4 b-4 md:w-[calc(50%-0.5rem)]">
+
+                        <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                            <label htmlFor="web" className="font-semibold">
+                                Web:
+                            </label>
+                            <input
+                                type="url"
+                                name="web"
+                                placeholder="https://www.tugrupo.com"
+                                value={web}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="flex gap-4 mb-4">
                             <label
                                 htmlFor="honorarios"
                                 className="font-semibold"
