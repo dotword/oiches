@@ -56,7 +56,10 @@ function App() {
                     />
                     <Route path="/salas" element={<Salas />} />
                     <Route path="/sala/:idSala" element={<SalaPage />} />
-                    <Route path="/creacion-grupo" element={<CreacionGrupo />} />
+                    <Route
+                        path="/creacion-grupo/:userId"
+                        element={<CreacionGrupo />}
+                    />
                     <Route
                         path="/grupos/:idGrupo/edit"
                         element={<EdicionGrupo />}

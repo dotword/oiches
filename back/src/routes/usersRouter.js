@@ -62,7 +62,12 @@ router.get('/users/info/:userId', getUserByIdController);
 // router.get('/users/chat/:name', authUser, selectUserByNameController);
 
 // Listado de salas o grupos del usuario
-router.get('/users/owner', authUser, userExists, getUserOwnerController);
+router.get(
+    '/users/owner/:userId',
+    authUser,
+    userExists,
+    getUserOwnerController
+);
 
 router.get('/users/:name', authUser, getUserGrupoSalaController);
 

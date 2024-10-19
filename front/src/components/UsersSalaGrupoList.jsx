@@ -7,19 +7,18 @@ import { ConfirmationModal } from './ConfirmModal.jsx';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
-// import useAuth from '../hooks/useAuth';
 
 const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
-    // const { userLogged, token } = useAuth();
-    console.log('userLogged ', userLogged);
-    console.log('userOwner ', userOwner);
-
     const { VITE_API_URL_BASE } = import.meta.env;
     const [modalOpen, setModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [deleteType, setDeleteType] = useState(null);
+    const idUserOwner = userOwner.user.id;
 
-    const { entries = [], setEntries } = useListSalasGrupoUser(token);
+    const { entries = [], setEntries } = useListSalasGrupoUser({
+        token,
+        idUserOwner,
+    });
 
     const type = userLogged.roles;
 
@@ -110,15 +109,23 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                 ''
             )}
 
-            {(type === 'grupo' && entries.length === 0) || type === 'admin' ? (
-                <a href="/creacion-grupo" className="btn-account text-xl">
+            {(type === 'grupo' && entries.length === 0) ||
+            (type === 'admin' && entries.length === 0) ||
+            (type === 'admin' &&
+                userOwner.user.roles === 'grupo' &&
+                entries.length === 0) ? (
+                <a
+                    href={`/creacion-grupo/${userOwner.user.id}`}
+                    className="btn-account text-xl"
+                >
                     Publica tu proyecto musical
                 </a>
             ) : (
                 ''
             )}
 
-            {type === 'sala' || type === 'admin' ? (
+            {type === 'sala' ||
+            (type === 'admin' && userOwner.user.roles == 'sala') ? (
                 <a href="/creacion-sala" className="btn-account text-xl">
                     Publica tu sala
                 </a>

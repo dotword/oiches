@@ -14,8 +14,6 @@ const createGrupoController = async (req, res, next) => {
 
         const adminUser = await selectUserByIdService(req.user.id);
 
-        console.log(adminUser[0].roles);
-
         const {
             nombre,
             provincia,

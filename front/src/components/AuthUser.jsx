@@ -217,7 +217,7 @@ const AuthUser = () => {
                 <UsersSalaGrupoList
                     userLogged={userLogged}
                     token={token}
-                    userOwner={userData.user.id}
+                    userOwner={userData}
                 />
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
                     <form className="flex flex-col justify-center gap-2">
