@@ -1,4 +1,4 @@
-import { Music, Calendar, MapPin, Star } from 'lucide-react';
+import { FiMusic, FiCalendar, FiMapPin, FiStar } from 'react-icons/fi';
 
 const FeatureGridSalas = () => {
     return (
@@ -14,8 +14,7 @@ const FeatureGridSalas = () => {
                 {/* Tarjeta 1 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all">
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2">
-                        {/* Reduje mb-4 a mb-2 */}
-                        <MapPin className="w-6 h-6 text-white" />
+                        <FiMapPin className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold">Más visibilidad:</h3>
                     <p className="text-gray-600 mt-2">
@@ -27,7 +26,7 @@ const FeatureGridSalas = () => {
                 {/* Tarjeta 2 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all">
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2">
-                        <Calendar className="w-6 h-6 text-white" />
+                        <FiCalendar className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold">
                         Nuevos descubrimientos
@@ -41,7 +40,7 @@ const FeatureGridSalas = () => {
                 {/* Tarjeta 3 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all">
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2">
-                        <Music className="w-6 h-6 text-white" />
+                        <FiMusic className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold">Control total:</h3>
                     <p className="text-gray-600 mt-2">
@@ -54,7 +53,7 @@ const FeatureGridSalas = () => {
                 {/* Tarjeta 4 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all">
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2">
-                        <Star className="w-6 h-6 text-white" />
+                        <FiStar className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold">Crecimiento</h3>
                     <p className="text-gray-600 mt-2">
