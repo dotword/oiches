@@ -13,6 +13,7 @@ import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
+import TextFormat from '../components/TextFormato.jsx'; // Importamos el componente TextFormat
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -102,7 +103,7 @@ const GrupoDetail = () => {
                 <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
                     {biografia && (
                         <div className="md:col-span-4 pb-4">
-                            <p className="text-lg">{biografia}</p>
+                            <TextFormat text={biografia} />
                         </div>
                     )}
                     {genero && (

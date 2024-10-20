@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import SalaCard from '../components/SalaCard.jsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import SalasImg from '../assets/salas-de-conciertos.webp';
-import GruposImg from '../assets/musicos.jpg';
 import GrupoCard from '../components/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Importar el componente Seo
+import Steps from '../components/Steps.jsx';
+import Conectate from '../components/Conectate.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -66,18 +66,44 @@ const Home = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <HeaderHero />
-                <section className="hero relative flex flex-col justify-center items-center bg-hero-home bg-cover bg-center h-96 md:h-[680px]">
-                    <h1 className="hero-title text-white">
-                        Encuentra tu Banda Sonora
-                    </h1>
-                    <p className="text-xl md:text-3xl hero-subtitle text-white">
-                        Donde la música y el escenario se unen
-                    </p>
+
+                {/* Hero Section */}
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center h-96 md:h-[680px] px-8 md:px-16">
+                    <div className="text-left max-w-lg mr-auto">
+                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
+                            Encuentra tu Banda Sonora
+                        </h1>
+                        <p className="text-white text-lg md:text-xl mt-4 mb-3">
+                            Encuentra el escenario perfecto o la banda ideal sin
+                            complicaciones.
+                        </p>
+                        <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
+                            ¡Vive la música en cada rincón!
+                        </p>
+
+                        <div className="flex gap-4">
+                            <Link
+                                to="/salas"
+                                className="bg-purpleOiches hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
+                            >
+                                Salas
+                            </Link>
+                            <Link
+                                to="/grupos"
+                                className="bg-orange-500 hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded"
+                            >
+                                Músicos
+                            </Link>
+                        </div>
+                    </div>
                 </section>
-                <main className="flex flex-col gap-20 mb-8 max-w-screen-xl mx-auto p-8 md:my-12">
-                    <section className="grid gap-6">
+
+                {/* Sliders de músicos y salas */}
+                <main className="flex flex-col gap-8 mb-8 max-w-screen-xl mx-auto p-8 md:my-8">
+                    {/* Músicos más votados */}
+                    <section className="grid gap-4">
                         <div className="flex justify-between place-items-center">
-                            <h2 className="text-2xl text-center font-semibold mx-auto md:mb-4 md:text-3xl">
+                            <h2 className="text-2xl text-center font-semibold mx-auto md:mb-2 md:text-3xl">
                                 Músicos más votados
                             </h2>
                         </div>
@@ -90,10 +116,22 @@ const Home = () => {
                         ) : (
                             <p>Músicos no encontrados</p>
                         )}
+                        <div className="flex justify-center mt-8">
+                            <Link
+                                to="/grupos"
+                                className="bg-purpleClaro hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
+                            >
+                                Todos los músicos
+                            </Link>
+                        </div>
                     </section>
-                    <section className="grid gap-6">
+
+                    {/* Salas más votadas */}
+                    <section className="grid gap-4 mt-16">
+                        {' '}
+                        {/* Ajusté mt-16 para más espacio */}
                         <div className="flex justify-between place-items-center">
-                            <h2 className="text-2xl text-center font-semibold mx-auto md:mb-4 md:text-3xl">
+                            <h2 className="text-2xl text-center font-semibold mx-auto md:mb-2 md:text-3xl">
                                 Salas más votadas
                             </h2>
                         </div>
@@ -106,36 +144,25 @@ const Home = () => {
                         ) : (
                             <p>Salas no encontradas</p>
                         )}
+                        <div className="flex justify-center mt-8">
+                            <Link
+                                to="/salas"
+                                className="bg-orange-500 hover:bg-purpleClaro text-white font-bold py-2 px-6 rounded"
+                            >
+                                Todas las salas
+                            </Link>
+                        </div>
                     </section>
-                    <section className="flex flex-col md:grid md:grid-cols-2 mx-auto gap-8 md:justify-around md:mx-auto md:my-6 xl:w-1200">
-                        <Link
-                            className="relative hover:scale-105 transition-all"
-                            to={'/grupos'}
-                        >
-                            <img
-                                className="w-96 md:w-auto rounded-2xl"
-                                src={GruposImg}
-                                alt="Músicos en Oiches"
-                            />
-                            <span className="absolute bottom-3 px-4 z-50 text-3xl w-full text-white bg-black bg-opacity-65">
-                                Músicos
-                            </span>
-                        </Link>
-                        <Link
-                            className="relative hover:scale-105 transition-all"
-                            to={'/salas'}
-                        >
-                            <img
-                                className="w-96 md:w-auto h-full rounded-2xl"
-                                src={SalasImg}
-                                alt="Salas de conciertos en Oiches"
-                            />
-                            <span className="absolute bottom-3 px-4 z-50 text-3xl text-white w-full bg-black bg-opacity-65">
-                                Salas
-                            </span>
-                        </Link>
+
+                    {/* Sección de Steps */}
+                    <section className="flex flex-col gap-4 mx-auto">
+                        <Steps />
                     </section>
+
+                    {/* Sección de Conectate */}
+                    <Conectate />
                 </main>
+
                 <Footer />
                 <Toastify />
             </motion.div>
