@@ -4,6 +4,7 @@ import SalaFilter from '../components/SalaFilter';
 import SalaList from '../components/SalaList';
 import FetchSalasService from '../services/FetchSalasService';
 import HeaderHero from '../components/HeaderHero.jsx';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import {
     MdKeyboardDoubleArrowRight,
@@ -64,13 +65,36 @@ const Salas = () => {
                 className="container-salas"
             >
                 <HeaderHero />
-                <div className="hero bg-hero-salas bg-cover bg-center relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
+                {/* <div className="hero bg-hero-salas bg-cover bg-center relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
                     <h1 className="hero-title text-white">Encuentra tu Sala</h1>
                     <p className="hero-subtitle text-white">
                         Descubre y explora distintas salas, conéctate con ellas
                         y lleva tu música en vivo a nuevos escenarios
                     </p>
-                </div>
+                </div> */}
+
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-salas bg-cover bg-center h-96 md:h-[680px] px-8 md:px-16">
+                    <div className="text-left max-w-lg mr-auto">
+                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
+                            Encuentra tu Sala
+                        </h1>
+                        <p className="text-white text-lg md:text-xl mt-4 mb-3">
+                            Descubre y explora distintas salas, conéctate con
+                            ellas y lleva tu música en vivo a nuevos escenarios
+                        </p>
+                        <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
+                            ¡Vive la música en cada rincón!
+                        </p>
+                        <div className="flex gap-4">
+                            <Link
+                                to="/register"
+                                className="bg-purpleOiches hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
+                            >
+                                Registrate
+                            </Link>
+                        </div>
+                    </div>
+                </section>
 
                 <div className="sala-filter-form-container">
                     <SalaFilter onFilterChange={handleFilterChange} />
