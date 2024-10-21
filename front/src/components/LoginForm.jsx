@@ -5,9 +5,11 @@ import { toast } from 'react-toastify';
 import { Input } from './Input.jsx';
 import { AuthContext } from '../context/auth/auth.context.jsx';
 import { loginUserService } from '../services/loginUserService.js';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Iconos ojos
 
 export const LoginForm = () => {
     const [error, setError] = useState('');
+    const [showPassword, setShowPassword] = useState(false); // Estado para controlar visibilidad
 
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
@@ -52,15 +54,29 @@ export const LoginForm = () => {
                             className="form-input"
                         />
                     </label>
-                    <label htmlFor="password">
+                    <label htmlFor="password" className="relative">
                         Contraseña*
-                        <Input
-                            type="password"
-                            name="password"
-                            placeholder="Introduce tu contraseña"
-                            required
-                            className="form-input"
-                        />
+                        <div className="relative">
+                            <Input
+                                type={showPassword ? 'text' : 'password'}
+                                name="password"
+                                placeholder="Introduce tu contraseña"
+                                required
+                                className="form-input pr-10" // Agrega padding para el botón de ojo
+                            />
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600"
+                                style={{ top: '7px ' }}
+                                onClick={() => setShowPassword(!showPassword)} // Alternar visibilidad
+                            >
+                                {showPassword ? (
+                                    <FaEye className="text-purpleOiches" /> // Ícono de ojo cerrado
+                                ) : (
+                                    <FaEyeSlash className="text-purpleOiches" /> // Ícono de ojo abierto
+                                )}
+                            </button>
+                        </div>
                     </label>
                 </div>
                 {error && <p className="text-red-500">{error}</p>}

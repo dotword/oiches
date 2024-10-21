@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { Input } from './Input.jsx';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importar íconos de ojo
 
 export const RegisterForm = () => {
     const [error, setError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false); // Estado para la visibilidad de la contraseña
+    const [showPassword2, setShowPassword2] = useState(false); // Estado para la visibilidad de repetir contraseña
 
     const handleSubmit = async (e) => {
         try {
@@ -50,14 +53,24 @@ export const RegisterForm = () => {
         }
     };
 
+    // Función para cambiar la visibilidad de la contraseña
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    // Función para cambiar la visibilidad de repetir contraseña
+    const togglePassword2Visibility = () => {
+        setShowPassword2(!showPassword2);
+    };
+
     return (
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex justify-between md:justify-evenly max-w-md flex-col gap-y-5 lg:w-1/3 mx-auto lg:mt-20 my-14 p-4"
+                className="flex justify-between md:justify-evenly w-full sm:max-w-md flex-col gap-y-3 lg:w-1/3 ml-2 mr-4 md:ml-6 md:mr-6 lg:mx-auto lg:mt-20 my-14 px-2 pr-4 md:px-4 lg:px-8"
             >
                 <h1 className="text-4xl">Registro</h1>
-                <hr />
+                <hr className="mb-4 md:-mb-1" />
                 <div className="flex gap-4">
                     <label>
                         Artista{' '}
@@ -100,30 +113,54 @@ export const RegisterForm = () => {
                             className="form-input"
                         />
                     </label>
-                    <label htmlFor="password">
+
+                    {/* Campo de contraseña con funcionalidad de mostrar/ocultar */}
+                    <label htmlFor="password" className="relative w-full">
                         Contraseña*
                         <Input
-                            type="password"
+                            type={showPassword ? 'text' : 'password'} // Cambia el tipo según el estado
                             name="password"
                             placeholder="Yourpassword0?"
                             required
-                            className="form-input"
+                            className="form-input w-full pr-10" // Añadir padding-right para que el ícono no cubra el texto
                         />
+                        <span
+                            onClick={togglePasswordVisibility} // Al hacer clic, cambia la visibilidad
+                            className="absolute right-3 top-[70%] transform -translate-y-1/2 cursor-pointer" //centramos el icono a la linea de texto
+                        >
+                            {showPassword ? (
+                                <FaEye className="text-purpleOiches" /> // Ícono de ojo Abierto
+                            ) : (
+                                <FaEyeSlash className="text-purpleOiches" /> // Ícono de ojo Cerrado
+                            )}
+                        </span>
                     </label>
-                    <label htmlFor="password2">
+
+                    {/* Campo de repetir contraseña con funcionalidad de mostrar/ocultar */}
+                    <label htmlFor="password2" className="relative w-full">
                         Repetir contraseña*
                         <Input
-                            type="password"
+                            type={showPassword2 ? 'text' : 'password'} // Cambia el tipo según el estado
                             name="password2"
                             placeholder="Yourpassword0?"
                             required
-                            className="form-input"
+                            className="form-input w-full pr-10" // Añadir padding-right para que el ícono no tape lo escrito
                         />
+                        <span
+                            onClick={togglePassword2Visibility} // Al hacer clic, cambia la visibilidad
+                            className="absolute right-3 top-[70%] transform -translate-y-1/2 cursor-pointer" //centramos el icono a la linea de texto
+                        >
+                            {showPassword2 ? (
+                                <FaEye className="text-purpleOiches" /> // Ícono de ojo cerrado
+                            ) : (
+                                <FaEyeSlash className="text-purpleOiches" /> // Ícono de ojo abierto
+                            )}
+                        </span>
                     </label>
                 </div>
                 <p>
                     <input
-                        className=" accent-purpleOiches"
+                        className="accent-purpleOiches"
                         type="checkbox"
                         name="terms"
                         required
