@@ -11,6 +11,7 @@ export async function listSalasService(filters) {
         salas.usuario_id, 
         salas.nombre, 
         salas.createdAt,
+        salas.updatedAt,
         (SELECT provincia FROM provincias WHERE provincias.id = salas.provincia) AS provincia,
         (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = salas.id) AS media_votos,
         (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.salaId = salas.id) AS generos,
@@ -46,18 +47,21 @@ export async function listSalasService(filters) {
         queryParams.push(filters.provincia);
     }
 
-    query += ' GROUP BY salas.id';
+    query +=
+        ' GROUP BY salas.id, salas.nombre, salas.usuario_id, salas.provincia';
 
     // Ordenamiento por media de votos o nombre, dependiendo del filtro
     if (filters.order && filters.field) {
         const orderField =
-            filters.field === 'media_votos' ? 'media_votos' : 'salas.nombre';
+            filters.field === 'media_votos' ? 'media_votos' : 'salas.updatedAt';
+
         const orderDirection =
             filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
         query += ` ORDER BY ${orderField} ${orderDirection}`;
     } else {
         // Orden por defecto (por media de votos descendente)
-        query += ' ORDER BY media_votos DESC';
+        query += ' ORDER BY media_votos DESC, updatedAt DESC';
     }
 
     // Paginación
