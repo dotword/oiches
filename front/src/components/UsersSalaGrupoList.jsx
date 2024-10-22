@@ -24,7 +24,9 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
 
     const handleDelete = async (id) => {
         const endpoint =
-            type === 'sala' ? `/salas/delete/${id}` : `/grupos/delete/${id}`;
+            type === 'sala' || type === 'admin'
+                ? `/salas/delete/${id}`
+                : `/grupos/delete/${id}`;
         try {
             const response = await fetch(`${VITE_API_URL_BASE}${endpoint}`, {
                 method: 'DELETE',

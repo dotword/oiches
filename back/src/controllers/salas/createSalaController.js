@@ -73,7 +73,7 @@ const createSalaController = async (req, res, next) => {
             // Recorremos las fotos. Para evitar que tenga más de 4 fotos aplicamos slice.
             for (const photo of Object.values(req.files).slice(0, 4)) {
                 // Guardamos la foto y obtenemos su nombre. Redimensionamos a un ancho de 600px.
-                const photoName = await uploadFiles(photo, 600);
+                const photoName = await uploadFiles(photo, 1000);
 
                 // Insertamos la foto en la tabla de fotos.
                 await insertSalaPhotoService(photoName, salaId);

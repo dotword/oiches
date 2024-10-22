@@ -22,7 +22,9 @@ const fileSchema = joi
             .messages({
                 'any.only': 'Solo se permiten archivos jpeg, png, webp o pdf',
             }),
-        size: joi.number().max(3000000).required().messages(joiErrorMessages),
+        size: joi.number().max(4000000).required().messages({
+            'number.max': 'El tamaño del archivo no debe exceder 4 MB',
+        }),
     })
     .unknown(true);
 
