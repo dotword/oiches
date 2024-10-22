@@ -13,7 +13,7 @@ const Footer = () => {
     const { userLogged } = useContext(AuthContext);
 
     return (
-        <footer className="bg-black text-white pt-10 pb-6">
+        <footer className="bg-footercolor text-white pt-10 pb-6">
             <div className="max-w-7xl mx-auto px-10 flex flex-col md:grid md:grid-cols-2 gap-x-20 gap-y-10 text-sm">
                 {/* Columna izquierda */}
                 <div className="flex flex-col items-start">

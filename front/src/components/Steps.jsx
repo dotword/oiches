@@ -1,4 +1,4 @@
-import StepsImg from '../assets/Steps.jpg'; // Asegúrate de que la ruta de la imagen sea correcta
+import StepsImg from '../assets/Steps.jpg';
 
 const Steps = () => {
     return (

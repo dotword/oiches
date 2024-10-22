@@ -24,7 +24,7 @@ const MenuForms = ({ signInLogin }) => {
                     />
                 </NavLink>
             </div>
-            <div className="flex bg-hero-image bg-cover flex-col w-full gap-10 pt-5 h-screen gap-y-60 max-md:hidden">
+            <div className="flex bg-hero-image bg-cover flex-col w-full gap-10 pt-5 min-h-screen gap-y-60 max-md:hidden">
                 <div className="flex place-content-center">
                     <NavLink to={'/'}>
                         <img

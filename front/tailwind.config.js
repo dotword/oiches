@@ -11,6 +11,8 @@ export default {
                 purpleClaro: '#A775F7',
                 greyOiches: '#8591A5',
                 orangecolor: '#FFBC8E',
+                moradoOiches: '#A33ABD',
+                footercolor: '#1f2937',
             },
 
             backgroundImage: {

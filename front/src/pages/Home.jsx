@@ -83,16 +83,16 @@ const Home = () => {
 
                         <div className="flex gap-4">
                             <Link
-                                to="/salas"
-                                className="bg-purpleOiches hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
-                            >
-                                Salas
-                            </Link>
-                            <Link
                                 to="/grupos"
-                                className="bg-orange-500 hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded"
+                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded"
                             >
                                 Músicos
+                            </Link>
+                            <Link
+                                to="/salas"
+                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded"
+                            >
+                                Salas
                             </Link>
                         </div>
                     </div>
@@ -119,7 +119,7 @@ const Home = () => {
                         <div className="flex justify-center mt-8">
                             <Link
                                 to="/grupos"
-                                className="bg-purpleClaro hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
+                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded"
                             >
                                 Todos los músicos
                             </Link>
@@ -147,7 +147,7 @@ const Home = () => {
                         <div className="flex justify-center mt-8">
                             <Link
                                 to="/salas"
-                                className="bg-orange-500 hover:bg-purpleClaro text-white font-bold py-2 px-6 rounded"
+                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded"
                             >
                                 Todas las salas
                             </Link>
