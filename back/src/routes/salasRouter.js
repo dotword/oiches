@@ -83,7 +83,14 @@ router.post(
 );
 
 // Borrar una sala
-router.delete('/salas/delete/:idSala', authUser, deleteSalaController);
+router.delete(
+    '/salas/delete/:idSala',
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+    deleteSalaController
+);
 
 // Borrar files de una sala
 router.delete(

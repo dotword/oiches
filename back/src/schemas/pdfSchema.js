@@ -12,7 +12,9 @@ const pdfSchema = joi
         mimetype: joi.string().valid('application/pdf').required().messages({
             'any.only': 'Solo se permiten archivos pdf',
         }),
-        size: joi.number().max(3000000).required().messages(joiErrorMessages),
+        size: joi.number().max(4000000).required().messages({
+            'number.max': 'El tamaño del archivo no debe exceder 4 MB',
+        }),
     })
     .unknown(true);
 

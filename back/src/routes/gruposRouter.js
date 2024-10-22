@@ -56,7 +56,7 @@ router.delete(
     canEditGrupo,
     deleteGrupoMediaController
 );
-
+// Borrar grupo
 router.delete(
     '/grupos/delete/:idGrupo',
     authUser,

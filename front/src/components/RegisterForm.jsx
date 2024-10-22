@@ -67,7 +67,7 @@ export const RegisterForm = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex justify-between md:justify-evenly w-full sm:max-w-md flex-col gap-y-3 lg:w-1/3 ml-2 mr-4 md:ml-6 md:mr-6 lg:mx-auto lg:mt-20 my-14 px-2 pr-4 md:px-4 lg:px-8"
+                className="flex justify-between mb-16 marker:md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 mt-14"
             >
                 <h1 className="text-4xl">Registro</h1>
                 <hr className="mb-4 md:-mb-1" />

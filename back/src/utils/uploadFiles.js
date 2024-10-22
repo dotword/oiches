@@ -39,7 +39,7 @@ export const uploadFiles = async (img, width) => {
         // crear un objeto de tipo sharp
         const sharpImg = sharp(img.data);
 
-        sharpImg.resize(!width ? 600 : width);
+        sharpImg.resize(!width ? 1000 : width);
         await sharpImg.toFile(outputFilePath); // Guardando el foto en el  disco
 
         return imgName;
