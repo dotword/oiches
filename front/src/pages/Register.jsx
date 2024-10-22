@@ -9,7 +9,7 @@ export const RegisterPage = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
-            className="h-screen md:flex md:w-screen"
+            className="md:flex"
         >
             <MenuForms
                 signInLogin={
