@@ -25,17 +25,16 @@ export const ListarReservas = ({ userLogged, token }) => {
                     );
 
                     if (!response.ok) {
-                        throw new Error(
-                            `No se encontraron reservas para ${type}`
-                        );
+                        
+                        return
                     }
                     const reservasData = await response.json();
 
                     setReservas(reservasData.reservas);
                 } catch (error) {
-                    console.error('Error fetching reservas:', error);
-                }
-            }
+                  
+                console.error('Error fetching reservas:', error);
+            }}
         };
 
         fetchReservas();
