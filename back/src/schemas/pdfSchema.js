@@ -10,10 +10,10 @@ const pdfSchema = joi
     .object({
         name: joi.string().required().messages(joiErrorMessages),
         mimetype: joi.string().valid('application/pdf').required().messages({
-            'any.only': 'Solo se permiten archivos pdf',
+            'any.only': 'Solo se permiten archivos .pdf',
         }),
-        size: joi.number().max(4000000).required().messages({
-            'number.max': 'El tamaño del archivo no debe exceder 4 MB',
+        size: joi.number().max(3000000).required().messages({
+            'number.max': 'El tamaño del archivo no debe exceder 3Mb',
         }),
     })
     .unknown(true);

@@ -107,7 +107,9 @@ export const AddRiderForm = () => {
     return (
         <form onSubmit={handleRiderSubmit}>
             <p className="font-semibold mb-2">Sube el Rider (.pdf)</p>
-
+            <p className="text-xs mb-3">
+                (*) El tamaño del archivo no debe exceder 3Mb
+            </p>
             {/* Previsualización del Rider ya subido */}
             {uploadedRider && (
                 <div className="sect-photo mb-4 flex justify-between max-w-2xl">
@@ -291,7 +293,9 @@ export const AddFotosForm = () => {
     return (
         <form onSubmit={handleFotosSubmit}>
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
-
+            <p className="text-xs mb-3">
+                (*) El tamaño del archivo no debe exceder 3Mb
+            </p>
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
                 <div className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">

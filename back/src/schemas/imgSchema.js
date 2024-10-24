@@ -17,8 +17,8 @@ const imgSchema = joi
                 'any.only':
                     'El tipo de archivo debe ser uno de los siguientes: jpeg, jpg, png, webp',
             }),
-        size: joi.number().max(4000000).required().messages({
-            'number.max': 'El tamaño del archivo no debe exceder 4 MB',
+        size: joi.number().max(3000000).required().messages({
+            'number.max': 'El tamaño del archivo no debe exceder 3Mb',
         }),
     })
     .unknown(true);

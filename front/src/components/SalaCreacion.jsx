@@ -273,8 +273,11 @@ const SalaCreacion = () => {
                     </div>
 
                     <div className="flex flex-col mb-4 md:w-full">
-                        <p className="font-semibold mb-2">
+                        <p className="font-semibold mb-1">
                             Sube el Rider (.pdf)
+                        </p>
+                        <p className="text-xs mb-3">
+                            (*) El tamaño del archivo no debe exceder 3Mb
                         </p>
                         <div className="sect-photo">
                             <span className="border-photos w-full h-20">
@@ -347,6 +350,10 @@ const SalaCreacion = () => {
                 <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center">
                     <p className="block font-medium mb-4 md:w-full text-center">
                         Fotos de la sala
+                    </p>
+                    <p className="text-xs mb-3">
+                        (*) Archivos .jpeg, .png, .webp o .pdf con un tamaño
+                        máximo de 3Mb
                     </p>
                     {['A', 'B', 'C', 'D'].map((key) => (
                         <div className="mb-4 flex flex-wrap gap-4" key={key}>
