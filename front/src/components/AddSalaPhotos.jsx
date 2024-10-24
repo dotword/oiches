@@ -133,7 +133,9 @@ const AddSalaPhotos = ({ idSala }) => {
     return currentUser ? (
         <form onSubmit={handleFotosSubmit} className="w-full">
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
-
+            <p className="text-xs mb-3">
+                (*) El tamaño del archivo no debe exceder 3Mb
+            </p>
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
                 <div className="flex flex-wrap gap-8 mb-8">
