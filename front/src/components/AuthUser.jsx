@@ -220,7 +220,7 @@ const AuthUser = () => {
                     userOwner={userData}
                 />
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
-                    <form className="flex flex-col justify-center gap-2">
+                    <form className="flex flex-col justify-center gap-2 w-full">
                         <input
                             type="email"
                             name="email"
@@ -230,11 +230,11 @@ const AuthUser = () => {
                             onClick={handleEmailInputClick}
                             disabled={!editEmail}
                             ref={emailInputRef}
-                            className="bg-transparent text-center"
+                            className="form-input max-w-96 m-auto bg-transparent text-center"
                         />
                         <button
                             onClick={handleEmailButtonClick}
-                            className="btn-account"
+                            className="btn-account m-auto"
                         >
                             {editEmail
                                 ? 'Guardar nuevo email'
@@ -243,7 +243,7 @@ const AuthUser = () => {
                         {editEmail && (
                             <button
                                 onClick={handleOutsideClick}
-                                className="btn-account bg-red-600"
+                                className="btn-account bg-red-600 m-auto"
                             >
                                 Cancelar
                             </button>
