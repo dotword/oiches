@@ -31,8 +31,8 @@ export const ValidateUser = () => {
             if (response.ok) {
                 toast.success('Usuario validado con éxito');
                 setTimeout(() => {
-                    navigate('/');
-                }, 3000);
+                    navigate('/login');
+                }, 2000);
             } else {
                 throw new Error(data.message || 'Error validating user');
             }

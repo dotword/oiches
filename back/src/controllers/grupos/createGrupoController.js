@@ -21,6 +21,7 @@ const createGrupoController = async (req, res, next) => {
             generos,
             honorarios,
             honorarios_to,
+            condiciones,
             biografia,
             mediaA,
             mediaB,
@@ -45,6 +46,7 @@ const createGrupoController = async (req, res, next) => {
             web,
             honorarios,
             honorarios_to,
+            condiciones,
             biografia,
             userId
         );
@@ -100,6 +102,7 @@ const createGrupoController = async (req, res, next) => {
                     web,
                     honorarios,
                     honorarios_to,
+                    condiciones,
                     biografia,
                     photos,
                     medias: mediaUrls,

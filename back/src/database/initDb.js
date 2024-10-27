@@ -94,6 +94,7 @@ const main = async () => {
                 web VARCHAR(255),
                 honorarios INT,
                 honorarios_to INT,
+                condiciones TEXT,
                 biografia TEXT,
                 usuario_id CHAR(36) NOT NULL,
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(id),

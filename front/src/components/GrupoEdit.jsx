@@ -27,6 +27,7 @@ const GrupoEdit = () => {
         web: '',
         honorarios: 0,
         honorarios_to: 0,
+        condiciones: '',
         biografia: '',
         activeGenres: [],
         hasRider: 0,
@@ -53,6 +54,7 @@ const GrupoEdit = () => {
                     web: data.grupo.web || '',
                     honorarios: data.grupo.honorarios || 0,
                     honorarios_to: data.grupo.honorarios_to || 0,
+                    condiciones: data.grupo.condiciones || '',
                     biografia: data.grupo.biografia || '',
                     activeGenres: data.grupo.genero || [],
                     hasRider: data.grupo.pdf.length,
@@ -131,7 +133,11 @@ const GrupoEdit = () => {
             dataForm.append('web', grupo.web || '');
             dataForm.append('honorarios', grupo.honorarios || 0);
             dataForm.append('honorarios_to', grupo.honorarios_to || 0);
+            dataForm.append('condiciones', grupo.condiciones || '');
             dataForm.append('biografia', grupo.biografia || '');
+
+            console.log(dataForm);
+
             await EditGrupoService({
                 token,
                 idGrupo,
@@ -324,6 +330,26 @@ const GrupoEdit = () => {
                         }
                         className="form-input font-normal"
                     />
+                </div>
+
+                <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                    <label htmlFor="condiciones" className="font-semibold">
+                        Condiciones:
+                    </label>
+                    <textarea
+                        name="condiciones"
+                        value={grupo.condiciones}
+                        onChange={(e) =>
+                            setGrupo({
+                                ...grupo,
+                                condiciones: e.target.value,
+                            })
+                        }
+                        className="form-textarea"
+                    ></textarea>
+                    <p className="mt-1 text-gray-500 text-sm">
+                        2000 caracteres como máximo
+                    </p>
                 </div>
 
                 <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">

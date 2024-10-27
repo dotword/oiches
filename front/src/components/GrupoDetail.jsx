@@ -47,6 +47,7 @@ const GrupoDetail = () => {
         fotos,
         honorarios,
         honorarios_to,
+        condiciones,
         media,
         pdf,
     } = entry || {}; // Desestructuramos `entry`
@@ -167,6 +168,13 @@ const GrupoDetail = () => {
                                     {email}
                                 </a>
                             </p>
+                        </div>
+                    )}
+
+                    {condiciones && (
+                        <div className="border-t border-gray-300 pt-4 md:col-span-4">
+                            <span className="font-semibold">Condiciones</span>
+                            <TextFormat text={condiciones} />
                         </div>
                     )}
                 </section>
