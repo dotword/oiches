@@ -9,7 +9,7 @@ const listGruposController = async (req, res, next) => {
             field: ['media_votos', 'updatedAt'],
             order: req.query.order || 'DESC',
             page: req.query.page || 1,
-            pageSize: req.query.pageSize || 8,
+            pageSize: req.query.pageSize || 12,
         };
 
         const grupos = await listGruposService(filters);
