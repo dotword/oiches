@@ -10,8 +10,6 @@ import { IoIosCloseCircleOutline } from 'react-icons/io';
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
 import registerGrupoService from '../services/registerGrupoService';
-import TextFormato from '../components/TextFormato';
-
 const GrupoCreacion = () => {
     const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -24,6 +22,7 @@ const GrupoCreacion = () => {
         generos: [],
         honorarios: '',
         honorarios_to: '',
+        condiciones: '',
         biografia: '',
         mediaA: '',
         mediaB: '',
@@ -144,8 +143,15 @@ const GrupoCreacion = () => {
             toast.error(error.message);
         }
     };
-    const { nombre, provincia, web, honorarios, honorarios_to, biografia } =
-        formValues;
+    const {
+        nombre,
+        provincia,
+        web,
+        honorarios,
+        honorarios_to,
+        condiciones,
+        biografia,
+    } = formValues;
 
     return (
         <>
@@ -268,14 +274,43 @@ const GrupoCreacion = () => {
                                 />
                             </label>
                         </div>
+                        <div className="flex flex-col mb-4 md:w-full">
+                            <label
+                                htmlFor="biografia"
+                                className="font-semibold"
+                            >
+                                Condiciones:
+                            </label>
+                            <textarea
+                                name="condiciones"
+                                value={condiciones}
+                                onChange={handleChange}
+                                className="form-textarea"
+                                maxLength="2000"
+                            ></textarea>
+                            <p className="mt-1 text-gray-500 text-sm">
+                                2000 caracteres como máximo
+                            </p>
+                        </div>
 
-                        <TextFormato
-                            label="Biografía:"
-                            name="biografia"
-                            value={biografia}
-                            onChange={handleChange}
-                            maxLength={2000}
-                        />
+                        <div className="flex flex-col mb-4 md:w-full">
+                            <label
+                                htmlFor="biografia"
+                                className="font-semibold"
+                            >
+                                Biografía:
+                            </label>
+                            <textarea
+                                name="biografia"
+                                value={biografia}
+                                onChange={handleChange}
+                                className="form-textarea"
+                                maxLength="2000"
+                            ></textarea>
+                            <p className="mt-1 text-gray-500 text-sm">
+                                2000 caracteres como máximo
+                            </p>
+                        </div>
 
                         <section className="mb-8">
                             <p className="font-semibold mb-2">

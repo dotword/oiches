@@ -14,6 +14,7 @@ const createEditGrupoSchema = Joi.object({
         .min(0)
         .allow(null, '')
         .messages(joiErrorMessages),
+    condiciones: Joi.string().max(2000).allow('').messages(joiErrorMessages),
     biografia: Joi.string().max(2000).allow('').messages(joiErrorMessages),
 });
 

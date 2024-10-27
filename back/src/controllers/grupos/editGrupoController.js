@@ -8,8 +8,15 @@ const editGrupoController = async (req, res, next) => {
     try {
         const { idGrupo } = req.params;
 
-        const { nombre, provincia, web, honorarios, honorarios_to, biografia } =
-            req.body;
+        const {
+            nombre,
+            provincia,
+            web,
+            honorarios,
+            honorarios_to,
+            condiciones,
+            biografia,
+        } = req.body;
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
@@ -32,6 +39,7 @@ const editGrupoController = async (req, res, next) => {
         if (honorarios !== undefined) updatedFields.honorarios = honorarios;
         if (honorarios_to !== undefined)
             updatedFields.honorarios_to = honorarios_to;
+        if (condiciones !== undefined) updatedFields.condiciones = condiciones;
         if (biografia !== undefined) updatedFields.biografia = biografia;
 
         await editGrupoService(idGrupo, updatedFields);

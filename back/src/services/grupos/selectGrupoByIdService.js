@@ -17,6 +17,7 @@ const selectGrupoByIdService = async (idGrupo) => {
                 (SELECT avatar FROM usuarios WHERE usuarios.id = G.usuario_id) AS avatar,
                 G.honorarios,
                 G.honorarios_to,
+                G.condiciones,
                 G.biografia,
                 G.usuario_id,
                 AVG(IFNULL(V.voto, 0)) AS votes,
