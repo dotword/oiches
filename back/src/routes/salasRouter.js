@@ -18,6 +18,7 @@ import {
     editSalaController,
     deletePhotoSalaController,
     insertPhotosSalaController,
+    setMainPhotoController,
     deleteSalaController,
     addSalaGeneroController,
     deleteSalaGeneroController,
@@ -71,6 +72,16 @@ router.post(
     salaExists,
     canEditSala,
     insertPhotosSalaController
+);
+
+// Seleccionar una foto como principal
+router.put(
+    '/salas/:idSala/fotos/:photoId/main',
+    authUser,
+    userExists,
+    salaExists,
+    canEditSala,
+    setMainPhotoController
 );
 
 // Añadir rider a una sala

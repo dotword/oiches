@@ -44,3 +44,17 @@ export const AddGrupoFotoService = async ({ token, idGrupo, dataForm }) => {
         body: dataForm,
     });
 };
+
+export const SetMainGrupoPhotoService = async ({ token, idGrupo, photoId }) => {
+    const url = `${
+        import.meta.env.VITE_API_URL_BASE
+    }/grupos/${idGrupo}/fotos/${photoId}/main`;
+
+    return apiRequest({
+        url,
+        method: 'PUT',
+        headers: {
+            authorization: token,
+        },
+    });
+};

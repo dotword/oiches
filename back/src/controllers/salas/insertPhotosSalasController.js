@@ -1,11 +1,12 @@
 import selectSalaByIdService from '../../services/salas/selectSalaByIdService.js';
 import insertSalaPhotoService from '../../services/salas/insertSalaPhotoService.js';
+import { updateMainSalaPhotoService } from '../../services/salas/insertSalaPhotoService.js';
 import { uploadFiles } from '../../utils/uploadFiles.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import addSalaPhotoSchema from '../../schemas/salas/addSalaPhotoSchema.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-const insertPhotosSalaController = async (req, res, next) => {
+export const insertPhotosSalaController = async (req, res, next) => {
     try {
         const { idSala } = req.params;
 
@@ -51,11 +52,25 @@ const insertPhotosSalaController = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Foto Subida',
+            message: 'Foto subida',
         });
     } catch (error) {
         next(error);
     }
 };
 
-export default insertPhotosSalaController;
+export const setMainPhotoController = async (req, res, next) => {
+    try {
+        const { idSala, photoId } = req.params;
+
+        // Llama al servicio para actualizar la foto principal.
+        await updateMainSalaPhotoService(photoId, idSala);
+
+        res.send({
+            status: 'ok',
+            message: 'Foto principal actualizada correctamente',
+        });
+    } catch (error) {
+        next(error);
+    }
+};

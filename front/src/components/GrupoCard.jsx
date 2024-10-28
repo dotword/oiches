@@ -7,8 +7,11 @@ const GrupoCard = ({ grupo }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
 
     const imageUrl =
-        grupo.fotos && grupo.fotos.length > 0 && grupo.fotos[0].name
-            ? `${VITE_API_URL_BASE}/uploads/${grupo.fotos[0].name}`
+        grupo.fotos && grupo.fotos.length > 0
+            ? `${VITE_API_URL_BASE}/uploads/${
+                  grupo.fotos.find((foto) => foto.main === 1)?.name ||
+                  grupo.fotos[0].name
+              }`
             : DefaultProfile;
 
     const handleClick = () => {
