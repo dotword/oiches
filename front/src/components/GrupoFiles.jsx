@@ -154,13 +154,15 @@ export const AddRiderForm = () => {
                             <p className="text-red-500">{riderError}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir Rider"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {rider && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir Rider"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>
@@ -323,7 +325,7 @@ export const AddFotosForm = () => {
             </p>
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
-                <div className="grid max-[600px]:grid-cols-1 grid-cols-2 gap-12 my-6 place-items-center">
+                <div className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">
                     {uploadedFotos.map((fotoUrl, index) => (
                         <div key={index} className="sect-photo w-full">
                             <img
@@ -394,13 +396,15 @@ export const AddFotosForm = () => {
                             <p className="text-red-500">{fotoErrors}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir fotos"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {fotos.length > 0 && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir fotos"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>

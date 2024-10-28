@@ -234,13 +234,15 @@ const AddSalaPhotos = ({ idSala }) => {
                             <p className="text-red-500">{fotoErrors}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir fotos"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {fotos.length > 0 && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir fotos"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>
