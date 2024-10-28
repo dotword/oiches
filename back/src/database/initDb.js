@@ -122,6 +122,7 @@ const main = async () => {
                     id CHAR(36) PRIMARY KEY NOT NULL,
                     name VARCHAR(100) NOT NULL,
                     salaId CHAR(36) NOT NULL,
+                    es_principal BOOLEAN DEFAULT FALSE,
                     FOREIGN KEY (salaId) REFERENCES salas(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );
@@ -132,6 +133,7 @@ const main = async () => {
                     id CHAR(36) PRIMARY KEY NOT NULL,
                     name VARCHAR(100) NOT NULL,
                     grupoId CHAR(36) NOT NULL,
+                    es_principal BOOLEAN DEFAULT FALSE,
                     FOREIGN KEY (grupoId) REFERENCES grupos(id),
                     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             );

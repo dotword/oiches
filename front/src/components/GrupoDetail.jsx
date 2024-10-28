@@ -20,7 +20,6 @@ const GrupoDetail = () => {
     const { idGrupo } = useParams();
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
-
     const [actualUser, setActualUser] = useState('');
 
     useEffect(() => {
@@ -87,21 +86,26 @@ const GrupoDetail = () => {
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                 <section className="flex flex-col items-center md:items-start gap-4 py-4">
-                    <img
-                        className="avatar-square"
-                        src={
-                            avatar
-                                ? `${VITE_API_URL_BASE}/uploads/${avatar}`
-                                : DefaultProfile
-                        }
-                        alt="Imagen de perfil del grupo"
-                    />
-                    <h2 className="text-2xl font-bold mt-2 text-center md:text-left">
+                    {(avatar || fotos.length > 0) && (
+                        <img
+                            className="avatar-square"
+                            src={
+                                avatar
+                                    ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+                                    : `${VITE_API_URL_BASE}/uploads/${
+                                          fotos.find((foto) => foto.main === 1)
+                                              ?.name || fotos[0]?.name
+                                      }`
+                            }
+                            alt="Imagen de perfil del grupo"
+                        />
+                    )}
+                    <h2 className="text-3xl font-bold mt-2 text-center md:text-left">
                         {nombre}
                     </h2>
                 </section>
 
-                <section className="grid grid-cols-1 md:grid-cols-4 gap-6 my-6">
+                <section className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
                     {biografia && (
                         <div className="md:col-span-4 pb-4">
                             <TextFormat text={biografia} />

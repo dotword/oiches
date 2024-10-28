@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { IoIosArrowForward } from 'react-icons/io';
 import { FaPencil } from 'react-icons/fa6';
 import { FaTrashAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -84,15 +83,16 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 key={entry.id}
                                 className="flex items-center justify-center gap-4 mb-2"
                             >
-                                <IoIosArrowForward /> {entry.nombre}
                                 <a
                                     href={
                                         userOwner.user.roles === 'sala'
                                             ? `/sala/${entry.id}/edit`
                                             : `/grupos/${entry.id}/edit`
                                     }
+                                    className="text-lg flex gap-2 items-center underline"
                                 >
-                                    <FaPencil className="text-lg text-purpleOiches" />
+                                    <FaPencil className="text-purpleOiches" />
+                                    {entry.nombre}
                                 </a>
                                 <button
                                     onClick={() =>
@@ -104,7 +104,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         )
                                     }
                                 >
-                                    <FaTrashAlt className="text-lg text-purpleOiches" />
+                                    <FaTrashAlt className="text-red-600 ml-4 text-sm" />
                                 </button>
                             </li>
                         ))}

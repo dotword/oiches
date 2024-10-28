@@ -17,7 +17,7 @@ import Conectate from '../components/Conectate.jsx'; // Importar el componente F
 const Salas = () => {
     const [page, setPage] = useState(1); // Estado para la página actual
     const [total, setTotal] = useState(null); // Total de elementos
-    const pageSize = 8; // Tamaño de cada página
+    const pageSize = 12; // Tamaño de cada página
     const [filters, setFilters] = useState({}); // Filtros activos
     const [filteredSalas, setFilteredSalas] = useState([]); // Salas filtradas
 
@@ -65,13 +65,6 @@ const Salas = () => {
                 className="container-salas"
             >
                 <HeaderHero />
-                {/* <div className="hero bg-hero-salas bg-cover bg-center relative before:content-[''] before:bg-white/[.10] before:absolute before:w-full before:h-full">
-                    <h1 className="hero-title text-white">Encuentra tu Sala</h1>
-                    <p className="hero-subtitle text-white">
-                        Descubre y explora distintas salas, conéctate con ellas
-                        y lleva tu música en vivo a nuevos escenarios
-                    </p>
-                </div> */}
 
                 <section className="hero relative flex flex-col justify-center items-start bg-hero-salas bg-cover bg-center h-96 md:h-[680px] px-8 md:px-16">
                     <div className="text-left max-w-lg mr-auto">

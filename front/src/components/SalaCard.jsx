@@ -7,8 +7,12 @@ const SalaCard = ({ sala }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
 
     const imageUrl =
-        sala.fotos && sala.fotos.length > 0 && sala.fotos[0].name
-            ? `${VITE_API_URL_BASE}/uploads/${sala.fotos[0].name}`
+        sala.fotos && sala.fotos.length > 0
+            ? // Buscar la foto principal con main === 1
+              `${VITE_API_URL_BASE}/uploads/${
+                  sala.fotos.find((foto) => foto.main === 1)?.name ||
+                  sala.fotos[0].name
+              }`
             : DefaultProfile;
 
     const handleClick = () => {

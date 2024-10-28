@@ -136,8 +136,10 @@ const GrupoCreacion = () => {
                 formData,
             });
 
-            toast.success('Has creado tu nuevo artista/grupo con éxito');
-            navigate(`/users/account/${userId}`);
+            toast.success('Has creado tu nuevo proyecto musical con éxito');
+            setTimeout(() => {
+                navigate(`/users/account/${userId}`);
+            }, 3000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

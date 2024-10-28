@@ -13,6 +13,20 @@ export const AddSalaPhotosService = async ({ token, idSala, dataForm }) => {
     });
 };
 
+export const SetMainSalaPhotoService = async ({ token, idSala, photoId }) => {
+    const url = `${
+        import.meta.env.VITE_API_URL_BASE
+    }/salas/${idSala}/fotos/${photoId}/main`;
+
+    return apiRequest({
+        url,
+        method: 'PUT',
+        headers: {
+            authorization: token,
+        },
+    });
+};
+
 export const DeleteSalaPhotoService = async (photoName, deletePhoto, token) => {
     const url = `${
         import.meta.env.VITE_API_URL_BASE

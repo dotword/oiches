@@ -15,6 +15,7 @@ import {
     deleteFileGrupoController,
     addPdfGrupoController,
     addPhotosGrupoController,
+    setMainPhotoController,
 } from './grupoFilesController.js';
 import getGrupoVotosController from './getGrupoVotosController.js';
 import { deleteGrupoController } from './deleteGrupoController.js';
@@ -34,4 +35,5 @@ export {
     deleteGrupoGeneroController,
     addGrupoGeneroController,
     deleteGrupoController,
+    setMainPhotoController,
 };

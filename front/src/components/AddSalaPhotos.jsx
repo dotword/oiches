@@ -3,6 +3,7 @@ import { AuthContext } from '../context/auth/auth.context.jsx';
 import { toast } from 'react-toastify';
 import {
     AddSalaPhotosService,
+    SetMainSalaPhotoService,
     DeleteSalaPhotoService,
 } from '../services/AddSalaPhotosService.js';
 import getSalasServices from '../services/getSalaService.js';
@@ -15,6 +16,7 @@ const AddSalaPhotos = ({ idSala }) => {
     const [previews, setPreviews] = useState([]);
     const [photoNames, setPhotoNames] = useState([]);
     const [deletePhotos, setDeletePhotos] = useState([]);
+    const [mainPhotoId, setMainPhotoId] = useState(null);
     const [fotoErrors, setFotoErrors] = useState('');
     const [uploadedFotos, setUploadedFotos] = useState([]);
 
@@ -31,6 +33,10 @@ const AddSalaPhotos = ({ idSala }) => {
                 );
                 const deleteIds = fotosData.map((foto) => foto.id);
                 const names = fotosData.map((foto) => foto.name);
+
+                // Establece la foto principal al cargar
+                const mainPhoto = fotosData.find((foto) => foto.main);
+                setMainPhotoId(mainPhoto ? mainPhoto.id : null);
 
                 setUploadedFotos(uploadedFotosUrls); // URLs para previsualizar
                 setDeletePhotos(deleteIds); // Guardar los IDs de las fotos para la eliminación
@@ -130,6 +136,26 @@ const AddSalaPhotos = ({ idSala }) => {
         }
     };
 
+    // función para manejar la selección de la foto principal
+    const handleSetMainPhoto = async (index) => {
+        const photoId = deletePhotos[index];
+        try {
+            const response = await SetMainSalaPhotoService({
+                token,
+                idSala,
+                photoId,
+            });
+
+            if (response.status === 'ok') {
+                setMainPhotoId(photoId); // Actualiza el estado de la foto principal
+                toast.success('Foto establecida como principal');
+                await fetchFotos(); // Actualiza las fotos
+            }
+        } catch (error) {
+            toast.error('Error al establecer la foto principal');
+        }
+    };
+
     return currentUser ? (
         <form onSubmit={handleFotosSubmit} className="w-full">
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
@@ -143,17 +169,34 @@ const AddSalaPhotos = ({ idSala }) => {
                         <div key={index} className="sect-photo max-w-72">
                             <img
                                 src={fotoUrl}
-                                alt="fotos grupo"
+                                alt="fotos sala"
                                 className="image-shadow"
                             />
-
-                            <button
-                                type="button"
-                                onClick={() => handleDeleteFoto(index)}
-                                className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
-                            >
-                                Borrar foto
-                            </button>
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() => handleSetMainPhoto(index)}
+                                    className={`btn-account max-w-44 mt-3 mr-4 ${
+                                        mainPhotoId === deletePhotos[index]
+                                            ? 'bg-yellowOiches text-black'
+                                            : ''
+                                    }`}
+                                    disabled={
+                                        mainPhotoId === deletePhotos[index]
+                                    }
+                                >
+                                    {mainPhotoId === deletePhotos[index]
+                                        ? 'Principal'
+                                        : 'Hacer principal'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteFoto(index)}
+                                    className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
+                                >
+                                    Borrar foto
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -191,13 +234,15 @@ const AddSalaPhotos = ({ idSala }) => {
                             <p className="text-red-500">{fotoErrors}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir fotos"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {fotos.length > 0 && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir fotos"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>

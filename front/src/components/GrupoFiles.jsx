@@ -7,6 +7,7 @@ import {
     AddGrupoFilesService,
     DeleteGrupoFilesService,
     AddGrupoFotoService,
+    SetMainGrupoPhotoService,
 } from '../services/GrupoFilesService.js';
 
 const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
@@ -153,13 +154,15 @@ export const AddRiderForm = () => {
                             <p className="text-red-500">{riderError}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir Rider"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {rider && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir Rider"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>
@@ -169,11 +172,11 @@ export const AddRiderForm = () => {
 export const AddFotosForm = () => {
     const { idGrupo } = useParams();
     const { token } = useContext(AuthContext);
-
     const [fotos, setFotos] = useState([]);
     const [previews, setPreviews] = useState([]);
     const [photoNames, setPhotoNames] = useState([]);
     const [deletePhotos, setDeletePhotos] = useState([]);
+    const [mainPhotoId, setMainPhotoId] = useState(null);
     const [fotoErrors, setFotoErrors] = useState('');
     const [uploadedFotos, setUploadedFotos] = useState([]);
 
@@ -190,6 +193,10 @@ export const AddFotosForm = () => {
                 );
                 const deleteIds = fotosData.map((foto) => foto.id);
                 const names = fotosData.map((foto) => foto.name);
+
+                // Establece la foto principal al cargar
+                const mainPhoto = fotosData.find((foto) => foto.main);
+                setMainPhotoId(mainPhoto ? mainPhoto.id : null);
 
                 setUploadedFotos(uploadedFotosUrls); // URLs para previsualizar
                 setDeletePhotos(deleteIds); // Guardar los IDs de las fotos para la eliminación
@@ -290,6 +297,26 @@ export const AddFotosForm = () => {
         }
     };
 
+    // función para manejar la selección de la foto principal
+    const handleSetMainPhoto = async (index) => {
+        const photoId = deletePhotos[index];
+        try {
+            const response = await SetMainGrupoPhotoService({
+                token,
+                idGrupo,
+                photoId,
+            });
+
+            if (response.status === 'ok') {
+                setMainPhotoId(photoId); // Actualiza el estado de la foto principal
+                toast.success('Foto establecida como principal');
+                await fetchFotos(); // Actualiza las fotos
+            }
+        } catch (error) {
+            toast.error('Error al establecer la foto principal');
+        }
+    };
+
     return (
         <form onSubmit={handleFotosSubmit}>
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
@@ -307,13 +334,31 @@ export const AddFotosForm = () => {
                                 className="image-shadow"
                             />
 
-                            <button
-                                type="button"
-                                onClick={() => handleDeleteFoto(index)}
-                                className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
-                            >
-                                Borrar foto
-                            </button>
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() => handleSetMainPhoto(index)}
+                                    className={`btn-account max-w-44 mt-3 mr-4 ${
+                                        mainPhotoId === deletePhotos[index]
+                                            ? 'bg-yellowOiches text-black'
+                                            : ''
+                                    }`}
+                                    disabled={
+                                        mainPhotoId === deletePhotos[index]
+                                    }
+                                >
+                                    {mainPhotoId === deletePhotos[index]
+                                        ? 'Principal'
+                                        : 'Hacer principal'}
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDeleteFoto(index)}
+                                    className="btn-account max-w-44 mt-3 bg-red-500 hover:bg-red-700"
+                                >
+                                    Borrar foto
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -351,13 +396,15 @@ export const AddFotosForm = () => {
                             <p className="text-red-500">{fotoErrors}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir fotos"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {fotos.length > 0 && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir fotos"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>

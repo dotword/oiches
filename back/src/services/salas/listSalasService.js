@@ -107,7 +107,7 @@ export async function listSalasService(filters) {
 
     // Consulta para obtener las fotos agrupadas por sala
     const [photos] = await pool.query(`
-            SELECT id, name, salaId 
+            SELECT id, name, salaId, es_principal
             FROM sala_fotos
         `);
 
@@ -120,6 +120,7 @@ export async function listSalasService(filters) {
             acc[photo.salaId].push({
                 id: photo.id,
                 name: photo.name,
+                main: photo.es_principal,
             });
         }
         return acc;

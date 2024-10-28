@@ -24,6 +24,7 @@ import {
     addPdfGrupoController,
     addPhotosGrupoController,
     deleteGrupoController,
+    setMainPhotoController,
 } from '../controllers/grupos/index.js';
 
 const router = express.Router();
@@ -107,6 +108,15 @@ router.post(
     userExists,
     canEditGrupo,
     addPhotosGrupoController
+);
+
+// Seleccionar una foto como principal
+router.put(
+    '/grupos/:idGrupo/fotos/:photoId/main',
+    authUser,
+    userExists,
+    canEditGrupo,
+    setMainPhotoController
 );
 
 // Borrar files de un grupo

@@ -102,7 +102,7 @@ export async function listGruposService(filters) {
 
     // Consulta para obtener las fotos agrupadas por grupo
     const [photos] = await pool.query(`
-        SELECT id, name, grupoId 
+        SELECT id, name, grupoId, es_principal 
         FROM grupo_fotos
     `);
 
@@ -115,6 +115,7 @@ export async function listGruposService(filters) {
             acc[photo.grupoId].push({
                 id: photo.id,
                 name: photo.name,
+                main: photo.es_principal,
             });
         }
         return acc;

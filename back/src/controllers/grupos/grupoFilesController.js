@@ -1,7 +1,10 @@
 import { deleteFiles } from '../../utils/uploadFiles.js';
 import deleteGrupoPhotoService from '../../services/grupos/deleteGrupoPhotoService.js';
 import selectGrupoByIdService from '../../services/grupos/selectGrupoByIdService.js';
-import { insertGrupoPhotoService } from '../../services/grupos/insertGrupoPhotoService.js';
+import {
+    insertGrupoPhotoService,
+    updateMainGrupoPhotoService,
+} from '../../services/grupos/insertGrupoPhotoService.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 import uploadFiles from '../../utils/uploadFiles.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
@@ -108,6 +111,22 @@ export const addPhotosGrupoController = async (req, res, next) => {
         res.send({
             status: 'ok',
             message: 'Foto subida con éxito',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const setMainPhotoController = async (req, res, next) => {
+    try {
+        const { idGrupo, photoId } = req.params;
+
+        // Llama al servicio para actualizar la foto principal.
+        await updateMainGrupoPhotoService(photoId, idGrupo);
+
+        res.send({
+            status: 'ok',
+            message: 'Foto principal actualizada correctamente',
         });
     } catch (error) {
         next(error);

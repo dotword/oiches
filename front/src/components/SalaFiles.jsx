@@ -20,6 +20,8 @@ export const AddSalaRiderForm = () => {
     const [riderError, setRiderError] = useState('');
     const [uploadedRider, setUploadedRider] = useState(null); // Para mostrar el PDF subido
 
+    console.log('reider ', rider);
+
     const fetchRider = useCallback(async () => {
         try {
             const { data } = await getSalasServices(idSala);
@@ -147,13 +149,15 @@ export const AddSalaRiderForm = () => {
                             <p className="text-red-500">{riderError}</p>
                         )}
                     </div>
-                    <div className="mt-3 max-w-80">
-                        <input
-                            type="submit"
-                            value="Subir Rider"
-                            className="btn-account max-w-44"
-                        />
-                    </div>
+                    {rider && (
+                        <div className="mt-3 max-w-80">
+                            <input
+                                type="submit"
+                                value="Subir Rider"
+                                className="btn-account max-w-44"
+                            />
+                        </div>
+                    )}
                 </>
             )}
         </form>

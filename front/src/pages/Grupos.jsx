@@ -15,7 +15,7 @@ import Conectate from '../components/Conectate.jsx'; // Importar el componente F
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
     const [page, setPage] = useState(1); // Estado para la página actual
-    const pageSize = 8; // Tamaño de página
+    const pageSize = 12; // Tamaño de página
     const [total, setTotal] = useState(null); // Total de resultados
     const [filters, setFilters] = useState({}); // Filtros activos
     const [error, setError] = useState(null);
