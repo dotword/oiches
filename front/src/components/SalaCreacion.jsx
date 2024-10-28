@@ -100,7 +100,9 @@ const SalaCreacion = () => {
             await registerSalaService({ token, userId, formData });
 
             toast.success('Has creado tu nueva sala con éxito');
-            navigate(`/users/account/${userId}`);
+            setTimeout(() => {
+                navigate(`/users/account/${userId}`);
+            }, 3000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
