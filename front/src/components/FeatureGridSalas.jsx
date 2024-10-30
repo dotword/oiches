@@ -5,8 +5,7 @@ const FeatureGridSalas = () => {
         <div className="max-w-screen-xl mx-auto px-4 pt-6 pb-0">
             {/* Título */}
             <h2 className="text-2xl text-center font-semibold mx-auto md:mb-16  md:text-3xl">
-                ¿Qué te ofrece Oiches si eres una Sala de conciertos o Bar con
-                música en directo?
+                ¿Qué te ofrece Oiches si tienes un local con música en directo?
             </h2>
 
             {/* Grid con dos columnas y distribución solicitada */}
