@@ -81,7 +81,7 @@ const Salas = () => {
                         <div className="flex gap-4">
                             <Link
                                 to="/register"
-                                className="bg-purpleOiches hover:bg-orange-500 text-white font-bold py-2 px-6 rounded"
+                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
                             >
                                 Registrate
                             </Link>

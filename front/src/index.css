@@ -12,9 +12,14 @@
     .btn-account {
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;
     }
-    .btn-buscar {
+    /* .btn-buscar {
         @apply py-2 px-6 bg-purple-600 rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer w-full md:w-auto;
+    } */
+
+    .btn-buscar {
+        @apply py-2 px-6 bg-purpleOiches hover:bg-moradoOiches rounded-md text-white text-center font-bold transition-all cursor-pointer w-full md:w-auto;
     }
+
     .form-input {
         @apply p-3 border border-gray-300 rounded-lg mt-2 h-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
     }
@@ -51,7 +56,7 @@
     /* Contenedor del formulario de filtros */
     .sala-filter-form-container,
     .grupo-filter-form-container {
-        @apply w-full bg-gray-900 flex justify-center;
+        @apply w-full bg-footercolor flex justify-center;
     }
 
     /* Filtros de salas */
@@ -155,12 +160,28 @@
 .slick-slide > div {
     margin: 0px 10px;
 }
+/* Ajustar los dots para que siempre estén visibles y alineados correctamente */
 .slick-dots {
-    @apply -bottom-8;
+    @apply flex justify-center mt-4; /* Flex para centrar y añadir margen superior */
+    width: 100%; /* Asegura que los dots ocupen todo el ancho del contenedor */
+    position: relative; /* Los dots se quedan en su espacio sin causar desbordamiento */
+    margin: 0 auto;
+    z-index: 2; /* Asegura que los dots se muestren sobre el slider */
 }
+
+/* Ajustar el tamaño y color de los dots */
 .slick-dots li button:before {
-    @apply text-sm;
+    @apply text-base; /* Tamaño adecuado para pantallas pequeñas y grandes */
+    color: #9333ff; /* Cambia el color para contraste */
 }
+
+/* Ajustes específicos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .slick-dots {
+        @apply mt-2; /* Ajusta el margen en pantallas pequeñas */
+    }
+}
+
 /*Avatar perfil cuadrado esquinas redondeadas a la par que lso video e imagenes*/
 .avatar-square {
     @apply w-40 h-40 rounded-lg object-cover;
