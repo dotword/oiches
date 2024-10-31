@@ -6,10 +6,7 @@ import FetchSalasService from '../services/FetchSalasService';
 import HeaderHero from '../components/HeaderHero.jsx';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-import {
-    MdKeyboardDoubleArrowRight,
-    MdKeyboardDoubleArrowLeft,
-} from 'react-icons/md';
+import Paginator from '../components/Paginator.jsx';
 import Seo from '../components/SEO/Seo.jsx';
 import FeatureGridSalas from '../components/FeatureGridSalas.jsx';
 import Conectate from '../components/Conectate.jsx';
@@ -42,13 +39,6 @@ const Salas = () => {
             setPage(1); // Reinicia la paginación cuando cambian los filtros
         }
     };
-
-    // Manejo de la paginación sin interferir con los filtros
-    const handlePageChange = (newPage) => {
-        setPage(newPage);
-    };
-
-    const totalPages = total ? Math.ceil(total / pageSize) : 0; // Calcula las páginas totales
 
     return (
         <>
@@ -119,26 +109,12 @@ const Salas = () => {
                             </p>
                         )}
 
-                        {/* Controles de paginación */}
-                        {totalPages > 1 && (
-                            <div className="flex gap-3 justify-center mt-8">
-                                <button
-                                    disabled={page === 1}
-                                    onClick={() => handlePageChange(page - 1)} // Cambia de página sin interferir con los filtros
-                                >
-                                    <MdKeyboardDoubleArrowLeft className="text-xl" />
-                                </button>
-                                <p>
-                                    {page} de {totalPages}
-                                </p>
-                                <button
-                                    disabled={page >= totalPages}
-                                    onClick={() => handlePageChange(page + 1)} // Cambia de página sin interferir con los filtros
-                                >
-                                    <MdKeyboardDoubleArrowRight className="text-xl" />
-                                </button>
-                            </div>
-                        )}
+                        <Paginator
+                            setPage={setPage}
+                            page={page}
+                            total={total}
+                            pageSize={pageSize}
+                        />
                     </section>
 
                     <section className="flex flex-col gap-8 mt-20 mx-4 md:mt-28">

@@ -6,12 +6,11 @@ import FetchGruposService from '../services/FetchGruposService';
 import HeaderHero from '../components/HeaderHero.jsx';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
-import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 import Seo from '../components/SEO/Seo.jsx'; // Importar el componente SEO
 import FeatureGridMusicos from '../components/FeatureGridMusicos.jsx';
 import Conectate from '../components/Conectate.jsx';
 import { IoFilter } from 'react-icons/io5';
+import Paginator from '../components/Paginator.jsx';
 
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -47,12 +46,12 @@ const Grupos = () => {
         }
     };
 
-    // Cambiar de página sin afectar los filtros
-    const handlePageChange = (newPage) => {
-        setPage(newPage); // Actualiza la página actual
-    };
+    // // Cambiar de página sin afectar los filtros
+    // const handlePageChange = (newPage) => {
+    //     setPage(newPage); // Actualiza la página actual
+    // };
 
-    const totalPages = total ? Math.ceil(total / pageSize) : 0; // Calcula el total de páginas
+    // const totalPages = total ? Math.ceil(total / pageSize) : 0; // Calcula el total de páginas
 
     return (
         <>
@@ -122,26 +121,13 @@ const Grupos = () => {
                                     No se encontraron músicos
                                 </p>
                             ))}
-                        {/* Controles de paginación */}
-                        {totalPages > 1 && (
-                            <div className="flex gap-3 justify-center mt-8">
-                                <button
-                                    disabled={page === 1}
-                                    onClick={() => handlePageChange(page - 1)} // Cambiar de página sin modificar los filtros
-                                >
-                                    <MdKeyboardDoubleArrowLeft className="text-xl" />
-                                </button>
-                                <p>
-                                    {page} de {totalPages}
-                                </p>
-                                <button
-                                    disabled={page >= totalPages}
-                                    onClick={() => handlePageChange(page + 1)} // Cambiar de página sin modificar los filtros
-                                >
-                                    <MdKeyboardDoubleArrowRight className="text-xl" />
-                                </button>
-                            </div>
-                        )}
+
+                        <Paginator
+                            setPage={setPage}
+                            page={page}
+                            total={total}
+                            pageSize={pageSize}
+                        />
                     </section>
 
                     {/* Sección de características para músicos*/}
