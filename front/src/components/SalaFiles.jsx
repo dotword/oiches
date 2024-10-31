@@ -20,8 +20,6 @@ export const AddSalaRiderForm = () => {
     const [riderError, setRiderError] = useState('');
     const [uploadedRider, setUploadedRider] = useState(null); // Para mostrar el PDF subido
 
-    console.log('reider ', rider);
-
     const fetchRider = useCallback(async () => {
         try {
             const { data } = await getSalasServices(idSala);

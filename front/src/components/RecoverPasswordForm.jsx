@@ -33,7 +33,7 @@ const RecoverPasswordForm = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex justify-between md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 mt-14"
+                className="flex justify-between md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:my-20 my-16"
             >
                 <h1 className="text-4xl">Recupera tu acceso</h1>
                 <p>
@@ -41,15 +41,17 @@ const RecoverPasswordForm = () => {
                     enviaremos un link para resetearla
                 </p>
                 <div className="flex flex-col gap-5 justify-center">
-                    <label htmlFor="email">Email*</label>
-                    <Input
-                        type="email"
-                        name="email"
-                        value={email}
-                        required
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="form-input"
-                    />
+                    <label htmlFor="email">
+                        Email*
+                        <Input
+                            type="email"
+                            name="email"
+                            value={email}
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="form-input"
+                        />
+                    </label>
                     <button
                         type="submit"
                         className="p-4 w-full text-white hover:text-black hover:bg-opacity-80 transition-all bg-purpleOiches text-xl justify-center rounded"

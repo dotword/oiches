@@ -10,14 +10,16 @@ import {
     MdKeyboardDoubleArrowRight,
     MdKeyboardDoubleArrowLeft,
 } from 'react-icons/md';
-import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
-import FeatureGridSalas from '../components/FeatureGridSalas.jsx'; // Importar el componente FeatureGrid
-import Conectate from '../components/Conectate.jsx'; // Importar el componente FeatureGrid
+import Seo from '../components/SEO/Seo.jsx';
+import FeatureGridSalas from '../components/FeatureGridSalas.jsx';
+import Conectate from '../components/Conectate.jsx';
+import { IoFilter } from 'react-icons/io5';
 
 const Salas = () => {
     const [page, setPage] = useState(1); // Estado para la página actual
     const [total, setTotal] = useState(null); // Total de elementos
     const pageSize = 12; // Tamaño de cada página
+    const [isNavOpen, setIsNavOpen] = useState(false);
     const [filters, setFilters] = useState({}); // Filtros activos
     const [filteredSalas, setFilteredSalas] = useState([]); // Salas filtradas
 
@@ -62,16 +64,15 @@ const Salas = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: '100%' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="container-salas"
             >
                 <HeaderHero />
 
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-salas bg-cover bg-center h-96 md:h-[680px] px-8 md:px-16">
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-salas bg-cover bg-center md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu Sala
                         </h1>
-                        <p className="text-white text-lg md:text-xl mt-4 mb-3">
+                        <p className="text-white text-lg md:text-xl mt-4 mb-3 max-[600px]:hidden">
                             Descubre y explora distintas salas, conéctate con
                             ellas y lleva tu música en vivo a nuevos escenarios
                         </p>
@@ -89,43 +90,65 @@ const Salas = () => {
                     </div>
                 </section>
 
-                <div className="sala-filter-form-container">
-                    <SalaFilter onFilterChange={handleFilterChange} />
-                </div>
-
-                <div className="sala-list-container">
-                    {filteredSalas.length > 0 ? (
-                        <SalaList salas={filteredSalas} />
-                    ) : (
-                        <p>No se encontraron salas</p>
-                    )}
-                </div>
-
-                {/* Controles de paginación */}
-                {totalPages > 1 && (
-                    <div className="flex gap-3 justify-center my-16">
-                        <button
-                            disabled={page === 1}
-                            onClick={() => handlePageChange(page - 1)} // Cambia de página sin interferir con los filtros
-                        >
-                            <MdKeyboardDoubleArrowLeft className="text-xl" />
-                        </button>
-                        <p>
-                            {page} de {totalPages}
-                        </p>
-                        <button
-                            disabled={page >= totalPages}
-                            onClick={() => handlePageChange(page + 1)} // Cambia de página sin interferir con los filtros
-                        >
-                            <MdKeyboardDoubleArrowRight className="text-xl" />
-                        </button>
+                <section>
+                    <div
+                        className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
+                        onClick={() => setIsNavOpen((prev) => !prev)}
+                    >
+                        FILTRAR
+                        <IoFilter className="text-2xl cursor-pointer" />
                     </div>
-                )}
-
-                <section className="flex flex-col gap-8 mx-auto mt-12 mb-24">
-                    <FeatureGridSalas />
+                    <div
+                        className={`bg-footercolor flex-col items-center justify-evenly ${
+                            isNavOpen ? 'flex' : 'hidden md:flex'
+                        }`}
+                    >
+                        <div className="flex flex-col items-center justify-between w-4/5">
+                            <SalaFilter onFilterChange={handleFilterChange} />
+                        </div>
+                    </div>
                 </section>
-                <Conectate />
+
+                <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
+                    <section className="sala-list-container">
+                        {filteredSalas.length > 0 ? (
+                            <SalaList salas={filteredSalas} />
+                        ) : (
+                            <p className="text-center">
+                                No se encontraron salas
+                            </p>
+                        )}
+
+                        {/* Controles de paginación */}
+                        {totalPages > 1 && (
+                            <div className="flex gap-3 justify-center mt-8">
+                                <button
+                                    disabled={page === 1}
+                                    onClick={() => handlePageChange(page - 1)} // Cambia de página sin interferir con los filtros
+                                >
+                                    <MdKeyboardDoubleArrowLeft className="text-xl" />
+                                </button>
+                                <p>
+                                    {page} de {totalPages}
+                                </p>
+                                <button
+                                    disabled={page >= totalPages}
+                                    onClick={() => handlePageChange(page + 1)} // Cambia de página sin interferir con los filtros
+                                >
+                                    <MdKeyboardDoubleArrowRight className="text-xl" />
+                                </button>
+                            </div>
+                        )}
+                    </section>
+
+                    <section className="flex flex-col gap-8 mt-20 mx-4 md:mt-28">
+                        <FeatureGridSalas />
+                    </section>
+
+                    <section className="mt-20 mx-4 flex flex-col justify-between items-center gap-16 md:flex-row md:mt-28">
+                        <Conectate />
+                    </section>
+                </main>
                 <Footer />
             </motion.div>
         </>

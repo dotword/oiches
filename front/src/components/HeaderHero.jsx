@@ -1,5 +1,6 @@
 import { useState } from 'react';
-
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
 import logoBlack from '../assets/Horizontal_negro.webp';
 import Menu from './Menu';
 
@@ -17,9 +18,7 @@ const HeaderHero = () => {
                         className="HAMBURGER-ICON space-y-1.5"
                         onClick={() => setIsNavOpen((prev) => !prev)}
                     >
-                        <span className="block h-0.5 w-7 bg-black"></span>
-                        <span className="block h-0.5 w-7 bg-black"></span>
-                        <span className="block h-0.5 w-7 bg-black"></span>
+                        <RxHamburgerMenu className="text-3xl cursor-pointer" />
                     </div>
 
                     <div
@@ -33,18 +32,7 @@ const HeaderHero = () => {
                             className="absolute top-0 right-0 px-8 py-8"
                             onClick={() => setIsNavOpen(false)}
                         >
-                            <svg
-                                className="h-8 w-8"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18" />
-                                <line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
+                            <IoClose className="text-3xl cursor-pointer" />
                         </div>
                         <div className="flex flex-col items-center justify-between min-h-[250px]">
                             <Menu />

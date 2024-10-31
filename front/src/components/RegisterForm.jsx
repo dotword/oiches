@@ -73,7 +73,7 @@ export const RegisterForm = () => {
                 <hr className="mb-4 md:-mb-1" />
                 <div className="flex gap-4">
                     <label>
-                        Artista{' '}
+                        Artista
                         <input
                             className="accent-purpleOiches"
                             type="radio"

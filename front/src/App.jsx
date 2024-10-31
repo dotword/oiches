@@ -14,7 +14,7 @@ import { SalaPage } from './pages/SalaPage.jsx';
 import Salas from './pages/Salas.jsx';
 import CreacionGrupo from './pages/CreacionGrupo.jsx';
 import EdicionGrupo from './pages/EdicionGrupo.jsx';
-import GrupoDetail from './components/GrupoDetail.jsx';
+import { GrupoPage } from './pages/GrupoPage.jsx';
 import Grupos from './pages/Grupos.jsx';
 import NotFound from './pages/NotFound.jsx';
 import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
@@ -67,7 +67,7 @@ function App() {
                         path="/grupos/:idGrupo/edit"
                         element={<EdicionGrupo />}
                     />
-                    <Route path="/grupo/:idGrupo" element={<GrupoDetail />} />
+                    <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
                     <Route path="/grupos" element={<Grupos />} />
                     <Route
                         path="/sala/:idSala/reservas"
