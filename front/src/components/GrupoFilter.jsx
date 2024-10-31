@@ -39,14 +39,8 @@ const GrupoFilter = ({ onFilterChange }) => {
         setAutoSearch(true); // Activa búsqueda automática cuando se cambian los filtros
     };
 
-    // Búsqueda manual con el botón "Buscar"
-    const handleSearch = () => {
-        setAutoSearch(false); // Evitar búsqueda automática
-        onFilterChange(filters); // Ejecutar la búsqueda manualmente
-    };
-
     return (
-        <form className="grupo-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4">
+        <form className="grupo-filter-form mx-auto md:flex md:w-4/5 md:flex-row md:space-x-4">
             <input
                 type="text"
                 name="nombre"
@@ -91,9 +85,6 @@ const GrupoFilter = ({ onFilterChange }) => {
                 <option value="ASC">Puntuación ⬆</option>
                 <option value="DESC">Puntuación ⬇</option>
             </select>
-            <button type="button" onClick={handleSearch} className="btn-buscar">
-                Buscar
-            </button>
         </form>
     );
 };

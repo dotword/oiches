@@ -2,14 +2,13 @@ import { FiMusic, FiCalendar, FiMapPin, FiStar } from 'react-icons/fi';
 
 const FeatureGridSalas = () => {
     return (
-        <div className="max-w-screen-xl mx-auto px-4 pt-6 pb-0">
-            {/* Título */}
-            <h2 className="text-2xl text-center font-semibold mx-auto md:mb-16  md:text-3xl">
+        <>
+            <h2 className="text-3xl text-center font-bold mb-8 mx-auto max-w-700 md:text-4xl md:mb-12">
                 ¿Qué te ofrece Oiches si tienes un local con música en directo?
             </h2>
 
             {/* Grid con dos columnas y distribución solicitada */}
-            <section className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-4 mx-auto gap-4 md:justify-around md:mx-auto xl:w-1200">
+            <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-4 mx-auto gap-4 md:justify-around md:mx-auto xl:w-1200">
                 {/* Tarjeta 1 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all text-center md:text-left">
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0">
@@ -66,8 +65,8 @@ const FeatureGridSalas = () => {
                         crecer tu sala.
                     </p>
                 </div>
-            </section>
-        </div>
+            </div>
+        </>
     );
 };
 

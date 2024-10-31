@@ -86,7 +86,7 @@ export const LoginForm = () => {
                 >
                     Iniciar sesión
                 </button>
-                <p className="mt-4 text-center">
+                <p className="mb-4 text-center">
                     <Link
                         to="/users/password/recover"
                         className="hover:text-purpleOiches font-semibold text-yellowOiches"
