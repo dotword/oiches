@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-
 import useSala from '../hooks/useSala.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -13,7 +12,7 @@ import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Seo
 import TextFormat from './TextFormato.jsx';
 import MapComponent from './MapComponent.jsx';
-import { div } from 'framer-motion/m';
+
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
