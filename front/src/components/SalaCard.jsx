@@ -5,7 +5,6 @@ import DefaultProfile from '/Horizontal_blanco.webp';
 const SalaCard = ({ sala }) => {
     const navigate = useNavigate();
     const { VITE_API_URL_BASE } = import.meta.env;
-    console.log(sala);
 
     const imageUrl =
         sala.fotos && sala.fotos.length > 0

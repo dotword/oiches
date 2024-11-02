@@ -136,8 +136,6 @@ const GrupoEdit = () => {
             dataForm.append('condiciones', grupo.condiciones || '');
             dataForm.append('biografia', grupo.biografia || '');
 
-            console.log(dataForm);
-
             await EditGrupoService({
                 token,
                 idGrupo,

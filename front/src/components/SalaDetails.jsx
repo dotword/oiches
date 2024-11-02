@@ -39,7 +39,6 @@ const SalaDetail = () => {
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
 
     const wholeAddress = `${direccion}, ${ciudad}, ${provincia}`;
-    console.log(genero);
 
     useEffect(() => {
         const fetchData = async () => {
