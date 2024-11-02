@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import './App.css';
+import useAuth from './hooks/useAuth.jsx';
 import Home from './pages/Home.jsx';
 import { RegisterPage } from './pages/Register.jsx';
 import { LoginPage } from './pages/Login.jsx';
@@ -23,74 +24,91 @@ import SobreOiches from './pages/SobreOiches.jsx';
 import AvisoLegal from './pages/AvisoLegal.jsx';
 import PoliticaPrivacidad from './pages/PoliticaPrivacidad.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
-import CookieConsentBanner from './components/CookieConsentBanner.jsx'; // Importar el banner de cookies
-// import { Chat } from './pages/Chat.jsx';
+import CookieConsentBanner from './components/CookieConsentBanner.jsx';
+import Maintenance from './components/Maintenance.jsx';
 
 function App() {
+    // Verificar el modo de mantenimiento
+    const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === 'true';
+    const { userLogged } = useAuth();
+
     return (
         <>
-            <AnimatePresence>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                    <Route
-                        path="/users/validate/:registrationCode"
-                        element={<UserValidationPage />}
-                    />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/sobre-oiches" element={<SobreOiches />} />
-                    <Route
-                        path="/users/password/recover"
-                        element={<RecuperarPassword />}
-                    />
-                    <Route
-                        path="/users/password"
-                        element={<ChangePassword />}
-                    />
-                    <Route path="/users/account/:userId" element={<Users />} />
+            <Routes>
+                {/* Ruta de login siempre accesible */}
+                <Route path="/login" element={<LoginPage />} />
+            </Routes>
+            {isMaintenanceMode &&
+            (!userLogged || userLogged.roles !== 'admin') ? (
+                <Maintenance />
+            ) : (
+                <AnimatePresence>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                        <Route
+                            path="/users/validate/:registrationCode"
+                            element={<UserValidationPage />}
+                        />
 
-                    <Route
-                        path="/creacion-sala/:userId"
-                        element={<CreacionSala />}
-                    />
-                    <Route
-                        path="/sala/:idSala/edit"
-                        element={<EdicionSala />}
-                    />
-                    <Route path="/salas" element={<Salas />} />
-                    <Route path="/sala/:idSala" element={<SalaPage />} />
-                    <Route
-                        path="/creacion-grupo/:userId"
-                        element={<CreacionGrupo />}
-                    />
-                    <Route
-                        path="/grupos/:idGrupo/edit"
-                        element={<EdicionGrupo />}
-                    />
-                    <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
-                    <Route path="/grupos" element={<Grupos />} />
-                    <Route
-                        path="/sala/:idSala/reservas"
-                        element={<CrearReservaPage type="sala" />}
-                    />
-                    <Route
-                        path="/grupo/:idGrupo/reservas"
-                        element={<CrearReservaPage type="grupo" />}
-                    />
-                    <Route path="/validateUser" element={<ValidateUser />} />
-                    <Route path="/aviso-legal" element={<AvisoLegal />} />
-                    <Route
-                        path="/politica-privacidad"
-                        element={<PoliticaPrivacidad />}
-                    />
-                    <Route
-                        path="/politica-cookies"
-                        element={<PoliticaCookies />}
-                    />
-                    <Route path="*" element={<NotFound />} />
-                    {/* <Route path="/chat" element={<Chat />} /> */}
-                </Routes>
-            </AnimatePresence>
+                        <Route path="/sobre-oiches" element={<SobreOiches />} />
+                        <Route
+                            path="/users/password/recover"
+                            element={<RecuperarPassword />}
+                        />
+                        <Route
+                            path="/users/password"
+                            element={<ChangePassword />}
+                        />
+                        <Route
+                            path="/users/account/:userId"
+                            element={<Users />}
+                        />
+                        <Route
+                            path="/creacion-sala/:userId"
+                            element={<CreacionSala />}
+                        />
+                        <Route
+                            path="/sala/:idSala/edit"
+                            element={<EdicionSala />}
+                        />
+                        <Route path="/salas" element={<Salas />} />
+                        <Route path="/sala/:idSala" element={<SalaPage />} />
+                        <Route
+                            path="/creacion-grupo/:userId"
+                            element={<CreacionGrupo />}
+                        />
+                        <Route
+                            path="/grupos/:idGrupo/edit"
+                            element={<EdicionGrupo />}
+                        />
+                        <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
+                        <Route path="/grupos" element={<Grupos />} />
+                        <Route
+                            path="/sala/:idSala/reservas"
+                            element={<CrearReservaPage type="sala" />}
+                        />
+                        <Route
+                            path="/grupo/:idGrupo/reservas"
+                            element={<CrearReservaPage type="grupo" />}
+                        />
+                        <Route
+                            path="/validateUser"
+                            element={<ValidateUser />}
+                        />
+                        <Route path="/aviso-legal" element={<AvisoLegal />} />
+                        <Route
+                            path="/politica-privacidad"
+                            element={<PoliticaPrivacidad />}
+                        />
+                        <Route
+                            path="/politica-cookies"
+                            element={<PoliticaCookies />}
+                        />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </AnimatePresence>
+            )}
             <CookieConsentBanner /> {/* Añade el banner de cookies */}
         </>
     );
