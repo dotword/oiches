@@ -18,7 +18,6 @@ const SalaDetail = () => {
     const { idSala } = useParams();
     const { entry, error } = useSala(idSala);
     const { currentUser } = useAuth();
-
     const [actualUser, setActualUser] = useState('');
 
     const {
@@ -80,25 +79,50 @@ const SalaDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-2 py-2">
-                    {(usuarioAvatar || fotos.length > 0) && (
-                        <img
-                            className="avatar-square"
-                            src={
-                                usuarioAvatar
-                                    ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
-                                    : `${VITE_API_URL_BASE}/uploads/${
-                                          fotos.find((foto) => foto.main === 1)
-                                              ?.name || fotos[0]?.name
-                                      }`
-                            }
-                            alt="Imagen de perfil de la sala"
-                        />
+                <section className="py-2 flex flex-wrap gap-8 justify-between items-end">
+                    <div>
+                        {(usuarioAvatar || fotos.length > 0) && (
+                            <img
+                                className="avatar-square"
+                                src={
+                                    usuarioAvatar
+                                        ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
+                                        : `${VITE_API_URL_BASE}/uploads/${
+                                              fotos.find(
+                                                  (foto) => foto.main === 1
+                                              )?.name || fotos[0]?.name
+                                          }`
+                                }
+                                alt="Imagen de perfil de la sala"
+                            />
+                        )}
+                        <h2 className="text-3xl font-bold text-center my-4 md:text-left">
+                            {nombre}
+                        </h2>
+
+                        {direccion && (
+                            <p className="text-black flex">
+                                {wholeAddress}
+                                <a
+                                    className="btn-account ml-4 text-sm font-semibold"
+                                    href="#map"
+                                >
+                                    Ver en mapa
+                                </a>
+                            </p>
+                        )}
+                    </div>
+
+                    {currentUser && (
+                        <div className="flex">
+                            <Link
+                                to={`/sala/${idSala}/reservas`}
+                                className="btn-account font-semibold p-3 text-lg"
+                            >
+                                Reservar
+                            </Link>
+                        </div>
                     )}
-                    <h2 className="text-3xl font-bold text-center mt-4 md:text-left">
-                        {nombre}
-                    </h2>
-                    {direccion && <p className="text-black">{wholeAddress}</p>}
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -210,6 +234,9 @@ const SalaDetail = () => {
                         )}
                     </div>
                 </section>
+                <section id="map" className="mt-8">
+                    {direccion && <MapComponent wholeAddress={wholeAddress} />}
+                </section>
 
                 {comentarios.length > 0 && (
                     <section className="mb-10">
@@ -271,19 +298,6 @@ const SalaDetail = () => {
                                 </Link>
                             </div>
                         ))}
-                    </section>
-                )}
-
-                {currentUser && (
-                    <section>
-                        <div className="flex justify-around mt-8 mb-12">
-                            <Link
-                                to={`/sala/${idSala}/reservas`}
-                                className="p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all"
-                            >
-                                Reservar
-                            </Link>
-                        </div>
                     </section>
                 )}
                 {actualUser.roles === 'admin' && (
