@@ -14,6 +14,7 @@ const selectSalaByIdService = async (idSala) => {
                 (SELECT provincia FROM provincias WHERE provincias.id = S.provincia) AS provincia,
                 (SELECT id FROM provincias WHERE provincias.id = S.provincia) AS provinciaId,
                 S.direccion,
+                S.ciudad,
                 S.precios,
                 S.capacidad,
                 S.descripcion,

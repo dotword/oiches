@@ -9,6 +9,7 @@ const editSalaSchema = Joi.object({
     nombre: Joi.string().messages(joiErrorMessages),
     provincia: Joi.number().max(50).messages(joiErrorMessages),
     direccion: Joi.string().messages(joiErrorMessages),
+    ciudad: Joi.string().messages(joiErrorMessages),
     capacidad: Joi.number().min(0).allow(null, '').messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).allow('').messages(joiErrorMessages),
     generos: Joi.number().allow('').messages(joiErrorMessages),

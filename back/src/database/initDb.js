@@ -61,6 +61,7 @@ const main = async () => {
             descripcion TEXT,
             precios INT,
             direccion VARCHAR(255) NOT NULL,
+            ciudad VARCHAR(255) NOT NULL,
             condiciones TEXT,
             equipamiento TEXT,
             web VARCHAR(255),

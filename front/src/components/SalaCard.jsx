@@ -5,6 +5,7 @@ import DefaultProfile from '/Horizontal_blanco.webp';
 const SalaCard = ({ sala }) => {
     const navigate = useNavigate();
     const { VITE_API_URL_BASE } = import.meta.env;
+    console.log(sala);
 
     const imageUrl =
         sala.fotos && sala.fotos.length > 0
@@ -28,9 +29,8 @@ const SalaCard = ({ sala }) => {
             />
             <h2 className="card-title text-lg font-bold mt-2">{sala.nombre}</h2>
             <p className="card-genre text-gray-400">{sala.generoNombres}</p>
-            <p className="sala-card-province text-gray-400">
-                <span className="sub_title_ficha">Provincia:</span>{' '}
-                {sala.provincia}
+            <p>
+                {sala.ciudad}, {sala.provincia}
             </p>
             <div className="mt-2">
                 <StarRating rating={sala.media_votos} />

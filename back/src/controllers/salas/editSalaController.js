@@ -15,6 +15,7 @@ const editSalaController = async (req, res, next) => {
             descripcion,
             precios,
             direccion,
+            ciudad,
             condiciones,
             equipamiento,
             web,
@@ -37,6 +38,7 @@ const editSalaController = async (req, res, next) => {
         if (descripcion !== undefined) updatedFields.descripcion = descripcion;
         if (precios !== undefined) updatedFields.precios = precios;
         if (direccion !== undefined) updatedFields.direccion = direccion;
+        if (ciudad !== undefined) updatedFields.ciudad = ciudad;
         if (condiciones !== undefined) updatedFields.condiciones = condiciones;
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;

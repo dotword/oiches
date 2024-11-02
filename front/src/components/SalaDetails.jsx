@@ -30,14 +30,17 @@ const SalaDetail = () => {
         condiciones,
         genero,
         direccion,
+        ciudad,
         capacidad,
         usuarioAvatar,
         comentarios,
         email,
-        precios,
         fotos,
         pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
+
+    const wholeAddress = `${direccion}, ${ciudad}, ${provincia}`;
+    console.log(genero);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,7 +80,7 @@ const SalaDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-6 py-4">
+                <section className="flex flex-col items-center md:items-start gap-2 py-2">
                     {(usuarioAvatar || fotos.length > 0) && (
                         <img
                             className="avatar-square"
@@ -92,27 +95,28 @@ const SalaDetail = () => {
                             alt="Imagen de perfil de la sala"
                         />
                     )}
-                    <h2 className="text-3xl font-bold text-center md:text-left">
+                    <h2 className="text-3xl font-bold text-center mt-4 md:text-left">
                         {nombre}
                     </h2>
+                    {direccion && <p className="text-black">{wholeAddress}</p>}
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     {descripcion && (
-                        <div className="md:col-span-3 pb-4">
+                        <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
                             <TextFormat text={descripcion} />
                         </div>
                     )}
-                    {genero && (
+                    {genero.length > 0 && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
                             <ul className="flex flex-wrap mt-2">
-                                {genero.map((gen) => (
-                                    <li
-                                        key={gen.generoId}
-                                        className="mr-3 leading-5"
-                                    >
+                                {genero.map((gen, index) => (
+                                    <li key={gen.generoId}>
                                         {gen.generoName}
+                                        {index < genero.length - 1 && (
+                                            <span>,&nbsp;</span>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -124,24 +128,7 @@ const SalaDetail = () => {
                             <p className="text-black">{capacidad}</p>
                         </div>
                     )}
-                    {precios > 0 && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Precio</span>
-                            <p className="text-black">{precios}€</p>
-                        </div>
-                    )}
-                    {direccion && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Dirección</span>
-                            <p className="text-black">{direccion}</p>
-                        </div>
-                    )}
-                    {provincia && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Provincia</span>
-                            <p className="text-black">{provincia}</p>
-                        </div>
-                    )}
+
                     {web && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Web</span>

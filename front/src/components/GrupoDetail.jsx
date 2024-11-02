@@ -114,13 +114,13 @@ const GrupoDetail = () => {
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
-                            <ul className="flex flex-wrap">
-                                {genero.map((gen) => (
-                                    <li
-                                        key={gen.generoId}
-                                        className="mr-3 leading-5"
-                                    >
+                            <ul className="flex flex-wrap mt-2">
+                                {genero.map((gen, index) => (
+                                    <li key={gen.generoId}>
                                         {gen.generoName}
+                                        {index < genero.length - 1 && (
+                                            <span>,&nbsp;</span>
+                                        )}
                                     </li>
                                 ))}
                             </ul>

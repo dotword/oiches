@@ -10,6 +10,7 @@ export async function listSalasService(filters) {
         salas.id, 
         salas.usuario_id, 
         salas.nombre, 
+        salas.ciudad,
         salas.createdAt,
         salas.updatedAt,
         (SELECT provincia FROM provincias WHERE provincias.id = salas.provincia) AS provincia,
