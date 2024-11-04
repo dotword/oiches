@@ -88,7 +88,7 @@ const GrupoDetail = () => {
                 <section className="flex flex-col items-center md:items-start gap-4 py-4">
                     {(avatar || fotos.length > 0) && (
                         <img
-                            className="avatar-square"
+                            className="w-40 h-40 rounded-full object-cover shadow-lg"
                             src={
                                 avatar
                                     ? `${VITE_API_URL_BASE}/uploads/${avatar}`
