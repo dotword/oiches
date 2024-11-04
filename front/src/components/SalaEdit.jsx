@@ -25,10 +25,10 @@ const SalaEdit = () => {
     const [sala, setSala] = useState({
         nombre: '',
         direccion: '',
+        ciudad: '',
         provincia: '',
         capacidad: '',
         descripcion: '',
-        precios: 0,
         condiciones: '',
         equipamiento: '',
         web: '',
@@ -56,10 +56,10 @@ const SalaEdit = () => {
                 setSala({
                     nombre: data.sala.nombre || '',
                     direccion: data.sala.direccion || '',
+                    ciudad: data.sala.ciudad || '',
                     provincia: data.sala.provinciaId || '',
                     capacidad: data.sala.capacidad || '',
                     descripcion: data.sala.descripcion || '',
-                    precios: data.sala.precios || 0,
                     condiciones: data.sala.condiciones || '',
                     equipamiento: data.sala.equipamiento || '',
                     web: data.sala.web || '',
@@ -139,9 +139,9 @@ const SalaEdit = () => {
             const dataForm = new FormData();
             dataForm.append('nombre', sala.nombre || '');
             dataForm.append('direccion', sala.direccion || '');
+            dataForm.append('ciudad', sala.ciudad || '');
             dataForm.append('provincia', sala.provincia || '');
             dataForm.append('capacidad', sala.capacidad || '');
-            dataForm.append('precios', sala.precios || 0);
             dataForm.append('descripcion', sala.descripcion || '');
             dataForm.append('condiciones', sala.condiciones || '');
             dataForm.append('equipamiento', sala.equipamiento || '');
@@ -249,6 +249,7 @@ const SalaEdit = () => {
                     onSubmit={handleSubmit}
                     className="md:grid md:grid-cols-6 md:gap-x-6 md:col-start-1 md:col-end-3"
                 >
+                    {/* Nombre */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
                         <label htmlFor="nombre" className="font-semibold">
                             Nombre de la Sala:
@@ -264,53 +265,7 @@ const SalaEdit = () => {
                             className="form-input"
                         />
                     </div>
-
-                    <div className="flex flex-col md:col-start-5 md:col-end-7">
-                        <label htmlFor="capacidad" className="font-semibold">
-                            Aforo:{' '}
-                        </label>
-                        <input
-                            type="number"
-                            name="capacidad"
-                            placeholder="Aforo de la sala"
-                            value={sala.capacidad}
-                            className="form-input"
-                            onChange={(e) =>
-                                setSala({ ...sala, capacidad: e.target.value })
-                            }
-                        />
-                    </div>
-
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-3">
-                        <label htmlFor="precios" className="font-semibold">
-                            Tarifas:
-                        </label>
-                        <input
-                            name="precios"
-                            type="number"
-                            value={sala.precios}
-                            onChange={(e) =>
-                                setSala({ ...sala, precios: e.target.value })
-                            }
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="flex flex-col md:col-start-3 md:col-end-5">
-                        <label htmlFor="web" className="font-semibold">
-                            Web:
-                        </label>
-                        <input
-                            type="url"
-                            name="web"
-                            placeholder="https://www.tusala.com"
-                            value={sala.web}
-                            className="form-input"
-                            onChange={(e) =>
-                                setSala({ ...sala, web: e.target.value })
-                            }
-                        />
-                    </div>
-
+                    {/* Provincia */}
                     <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
                         <label htmlFor="province" className="font-semibold">
                             Provincia:
@@ -331,8 +286,8 @@ const SalaEdit = () => {
                             ))}
                         </select>
                     </div>
-
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
+                    {/* Dirección */}
+                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:
                         </label>
@@ -345,6 +300,56 @@ const SalaEdit = () => {
                                 setSala({ ...sala, direccion: e.target.value })
                             }
                             className="form-input"
+                        />
+                    </div>
+
+                    {/* Ciudad */}
+                    <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
+                        <label htmlFor="ciudad" className="font-semibold">
+                            Ciudad:
+                        </label>
+                        <input
+                            type="text"
+                            name="ciudad"
+                            placeholder="Ciudad de la sala"
+                            value={sala.ciudad}
+                            onChange={(e) =>
+                                setSala({ ...sala, ciudad: e.target.value })
+                            }
+                            className="form-input"
+                        />
+                    </div>
+                    {/* Web */}
+                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                        <label htmlFor="web" className="font-semibold">
+                            Web:
+                        </label>
+                        <input
+                            type="url"
+                            name="web"
+                            placeholder="https://www.tusala.com"
+                            value={sala.web}
+                            className="form-input"
+                            onChange={(e) =>
+                                setSala({ ...sala, web: e.target.value })
+                            }
+                        />
+                    </div>
+
+                    {/* Aforo */}
+                    <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
+                        <label htmlFor="capacidad" className="font-semibold">
+                            Aforo:
+                        </label>
+                        <input
+                            type="number"
+                            name="capacidad"
+                            placeholder="Aforo de la sala"
+                            value={sala.capacidad}
+                            className="form-input"
+                            onChange={(e) =>
+                                setSala({ ...sala, capacidad: e.target.value })
+                            }
                         />
                     </div>
 

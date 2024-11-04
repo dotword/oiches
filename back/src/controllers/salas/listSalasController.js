@@ -5,6 +5,7 @@ const listSalasController = async (req, res, next) => {
         const filters = {
             nombre: req.query.nombre || '',
             genero: req.query.genero || '',
+            ciudad: req.query.ciudad || '',
             provincia: req.query.provincia || '',
             field: ['media_votos', 'updatedAt'],
             order: req.query.order || 'DESC',

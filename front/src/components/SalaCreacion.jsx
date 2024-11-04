@@ -20,11 +20,11 @@ const SalaCreacion = () => {
     const [formValues, setFormValues] = useState({
         nombre: '',
         direccion: '',
+        ciudad: '',
         provincia: '',
         generos: [],
         capacidad: '',
         descripcion: '',
-        precios: '',
         condiciones: '',
         equipamiento: '',
         web: '',
@@ -112,10 +112,10 @@ const SalaCreacion = () => {
     const {
         nombre,
         direccion,
+        ciudad,
         provincia,
         capacidad,
         descripcion,
-        precios,
         condiciones,
         equipamiento,
         web,
@@ -168,7 +168,7 @@ const SalaCreacion = () => {
                             }}
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(75%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:*
                         </label>
@@ -182,7 +182,21 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(25%)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(25%-0.5rem)]">
+                        <label htmlFor="ciudad" className="font-semibold">
+                            Ciudad:*
+                        </label>
+                        <input
+                            type="text"
+                            name="ciudad"
+                            placeholder="Ciudad de la sala"
+                            value={ciudad}
+                            required
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                    </div>
+                    <div className="flex flex-col mb-4 md:w-[calc(25%-0.5rem)]">
                         <label htmlFor="provincia" className="font-semibold">
                             Provincia:*
                         </label>
@@ -202,7 +216,7 @@ const SalaCreacion = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(40%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
                             Aforo:*
                         </label>
@@ -216,7 +230,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(60%-0.5rem)]">
                         <label htmlFor="web" className="font-semibold">
                             Web:
                         </label>
@@ -229,19 +243,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(33%-0.5rem)]">
-                        <label htmlFor="precios" className="font-semibold">
-                            Tarifa:
-                        </label>
-                        <input
-                            type="number"
-                            name="precios"
-                            placeholder="Tarifa para los músicos"
-                            value={precios}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
-                    </div>
+
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="descripcion" className="font-semibold">
                             Descripción:

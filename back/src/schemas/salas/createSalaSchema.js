@@ -26,6 +26,7 @@ const createSalaSchema = Joi.object({
     descripcion: Joi.string().max(2000).messages(joiErrorMessages),
     precios: Joi.number().min(0).messages(joiErrorMessages),
     direccion: Joi.string().required().messages(joiErrorMessages),
+    ciudad: Joi.string().required().messages(joiErrorMessages),
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),

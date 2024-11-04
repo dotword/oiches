@@ -1,5 +1,3 @@
-import { purple } from '@mui/material/colors';
-
 /** @type {import('tailwindcss').Config} */
 export default {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -22,6 +20,7 @@ export default {
                 'hero-salas': "url('/salas-hero.webp')",
                 'hero-home': "url('/hero-home.jpg')",
                 'hero-oiches': "url('/hero-oiches.webp')",
+                'hero-maintenance': "url('/oiches-maintenance.jpg')",
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",

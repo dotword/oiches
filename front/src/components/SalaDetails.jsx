@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
-
 import useSala from '../hooks/useSala.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
@@ -12,13 +11,13 @@ import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Seo
 import TextFormat from './TextFormato.jsx';
+import MapComponent from './MapComponent.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
     const { entry, error } = useSala(idSala);
     const { currentUser } = useAuth();
-
     const [actualUser, setActualUser] = useState('');
 
     const {
@@ -30,14 +29,16 @@ const SalaDetail = () => {
         condiciones,
         genero,
         direccion,
+        ciudad,
         capacidad,
         usuarioAvatar,
         comentarios,
         email,
-        precios,
         fotos,
         pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
+
+    const wholeAddress = `${direccion}, ${ciudad}, ${provincia}`;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -77,10 +78,10 @@ const SalaDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-6 py-4">
+                <section className="mb-6">
                     {(usuarioAvatar || fotos.length > 0) && (
                         <img
-                            className="avatar-square"
+                            className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"
                             src={
                                 usuarioAvatar
                                     ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
@@ -92,27 +93,53 @@ const SalaDetail = () => {
                             alt="Imagen de perfil de la sala"
                         />
                     )}
-                    <h2 className="text-3xl font-bold text-center md:text-left">
+                    <h2 className="text-3xl font-bold mt-6 text-left mb-2">
                         {nombre}
                     </h2>
+                    <div className="flex flex-wrap gap-6">
+                        {direccion && (
+                            <>
+                                <p className="text-black">{wholeAddress}</p>
+                                <p>
+                                    <a
+                                        className="font-semibold underline"
+                                        href="#map"
+                                    >
+                                        Ver en mapa
+                                    </a>
+                                </p>
+                            </>
+                        )}
+
+                        {currentUser && (
+                            <p className="ml-auto">
+                                <Link
+                                    to={`/sala/${idSala}/reservas`}
+                                    className="btn-account font-semibold px-4 py-2"
+                                >
+                                    Reservar
+                                </Link>
+                            </p>
+                        )}
+                    </div>
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     {descripcion && (
-                        <div className="md:col-span-3 pb-4">
+                        <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
                             <TextFormat text={descripcion} />
                         </div>
                     )}
-                    {genero && (
+                    {genero.length > 0 && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
                             <ul className="flex flex-wrap mt-2">
-                                {genero.map((gen) => (
-                                    <li
-                                        key={gen.generoId}
-                                        className="mr-3 leading-5"
-                                    >
+                                {genero.map((gen, index) => (
+                                    <li key={gen.generoId}>
                                         {gen.generoName}
+                                        {index < genero.length - 1 && (
+                                            <span>,&nbsp;</span>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
@@ -124,24 +151,7 @@ const SalaDetail = () => {
                             <p className="text-black">{capacidad}</p>
                         </div>
                     )}
-                    {precios > 0 && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Precio</span>
-                            <p className="text-black">{precios}€</p>
-                        </div>
-                    )}
-                    {direccion && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Dirección</span>
-                            <p className="text-black">{direccion}</p>
-                        </div>
-                    )}
-                    {provincia && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Provincia</span>
-                            <p className="text-black">{provincia}</p>
-                        </div>
-                    )}
+
                     {web && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Web</span>
@@ -223,6 +233,9 @@ const SalaDetail = () => {
                         )}
                     </div>
                 </section>
+                <section id="map" className="mt-8">
+                    {direccion && <MapComponent wholeAddress={wholeAddress} />}
+                </section>
 
                 {comentarios.length > 0 && (
                     <section className="mb-10">
@@ -284,19 +297,6 @@ const SalaDetail = () => {
                                 </Link>
                             </div>
                         ))}
-                    </section>
-                )}
-
-                {currentUser && (
-                    <section>
-                        <div className="flex justify-around mt-8 mb-12">
-                            <Link
-                                to={`/sala/${idSala}/reservas`}
-                                className="p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all"
-                            >
-                                Reservar
-                            </Link>
-                        </div>
                     </section>
                 )}
                 {actualUser.roles === 'admin' && (
