@@ -3,11 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
 import logoWhite from '../assets/Horizontal_blanco.webp';
 import { FaEnvelope } from 'react-icons/fa6';
-// import { FaPhoneVolume } from 'react-icons/fa6';
-// import { FaFacebook } from 'react-icons/fa';
-// import { FaXTwitter } from 'react-icons/fa6';
 import { FaInstagram } from 'react-icons/fa';
-// import { FaYoutube } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
 const Footer = () => {
     const { userLogged } = useContext(AuthContext);
@@ -29,15 +25,6 @@ const Footer = () => {
                         </a>
                     </p>
                     <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 md:items-center md:flex-row">
-                        {/* <div className="flex gap-4 items-center">
-                            <FaPhoneVolume className="text-lg" />
-                            <p className="flex flex-col gap-1">
-                                <span>¿Hablamos?</span>
-                                <span className="italic font-semibold">
-                                    555-437-2766
-                                </span>
-                            </p>
-                        </div> */}
                         <div className="flex gap-4 items-center">
                             <FaEnvelope className="text-lg" />
                             <p className="flex flex-col gap-1">
@@ -122,30 +109,6 @@ const Footer = () => {
                             Política de cookies
                         </NavLink>
                     </div>
-                    {/* <p className="font-semibold mb-2">Newsletter</p>
-                    <p className="max-w-96">
-                        Sé el primero en enterarte de nuestros eventos y
-                        novedades. Date de baja cuando quieras.
-                    </p>
-                    <div className="relative mt-4 w-full">
-                        <input
-                            type="email"
-                            placeholder="Tu email"
-                            className="bg-greyOiches/[.5] w-full px-3 py-2 rounded-2xl text-white h-10"
-                        />
-                        <button
-                            type="submit"
-                            className="bg-purpleOiches text-white px-8 py-2 rounded-2xl absolute right-0 top-0 font-semibold"
-                        >
-                            Enviar
-                        </button>
-                    </div>
-                    <div className="flex gap-4 mt-8 text-xl">
-                        <FaFacebook />
-                        <FaXTwitter />
-                        <FaInstagram />
-                        <FaYoutube />
-                    </div> */}
                     <p className="flex items-start justify-start gap-2 mt-8">
                         <FaRegCopyright /> 2024 - Todos los derechos reservados
                     </p>
