@@ -67,7 +67,7 @@ const Home = () => {
                 <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
-                            Encuentra tu Banda Sonora
+                            Encuentra tu banda sonora
                         </h1>
                         <p className="text-white text-lg md:text-xl mt-4 mb-3 max-[600px]:hidden">
                             Encuentra el escenario perfecto o la banda ideal sin

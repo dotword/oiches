@@ -26,6 +26,7 @@ import PoliticaPrivacidad from './pages/PoliticaPrivacidad.jsx';
 import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
+import Contacto from './pages/Contacto.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -34,16 +35,18 @@ function App() {
 
     return (
         <>
-            <Routes>
-                {/* Ruta de login siempre accesible */}
-                <Route path="/login" element={<LoginPage />} />
-            </Routes>
             {isMaintenanceMode &&
             (!userLogged || userLogged.roles !== 'admin') ? (
-                <Maintenance />
+                <>
+                    <Routes>
+                        <Route path="/login" element={<LoginPage />} />
+                    </Routes>
+                    <Maintenance />
+                </>
             ) : (
                 <AnimatePresence>
                     <Routes>
+                        <Route path="/login" element={<LoginPage />} />
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route
@@ -101,6 +104,8 @@ function App() {
                             path="/politica-privacidad"
                             element={<PoliticaPrivacidad />}
                         />
+                        <Route path="/contacto" element={<Contacto />} />
+
                         <Route
                             path="/politica-cookies"
                             element={<PoliticaCookies />}

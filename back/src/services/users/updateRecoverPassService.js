@@ -15,7 +15,7 @@ const updateRecoverPassService = async (email, recoverPassCode) => {
     const body = `
          <p>Se ha solicitado la recuperación de contraseña para este email en Oiches. </p>
                     
-               <p> Utiliza este código para crear una nueva contraseña: ${recoverPassCode}<br />
+               <p>Utiliza este código para crear una nueva contraseña: ${recoverPassCode}<br />
                 en el siguiente enlace: <a href="${URL_FRONT}/users/password">Cambiar contraseña</a></p>
 
                 <p>Si no has sido tú, ignora este email.</p><br />
