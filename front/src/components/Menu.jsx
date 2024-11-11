@@ -25,6 +25,12 @@ const Menu = () => {
             >
                 Sobre Oiches
             </NavLink>
+            <NavLink
+                to="/contacto"
+                className="max-md:my-8 font-medium hover:text-purpleOiches active:text-purpleOiches"
+            >
+                Contacto
+            </NavLink>
             {!userLogged ? (
                 <>
                     <NavLink

@@ -35,16 +35,18 @@ function App() {
 
     return (
         <>
-            <Routes>
-                {/* Ruta de login siempre accesible */}
-                <Route path="/login" element={<LoginPage />} />
-            </Routes>
             {isMaintenanceMode &&
             (!userLogged || userLogged.roles !== 'admin') ? (
-                <Maintenance />
+                <>
+                    <Routes>
+                        <Route path="/login" element={<LoginPage />} />
+                    </Routes>
+                    <Maintenance />
+                </>
             ) : (
                 <AnimatePresence>
                     <Routes>
+                        <Route path="/login" element={<LoginPage />} />
                         <Route path="/" element={<Home />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route

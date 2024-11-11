@@ -40,7 +40,7 @@ const HeaderHero = () => {
                     </div>
                 </section>
 
-                <div className="DESKTOP-MENU hidden space-x-8 md:flex md:items-baseline">
+                <div className="DESKTOP-MENU hidden space-x-6 md:flex md:items-baseline lg:space-x-10">
                     <Menu />
                 </div>
             </nav>

@@ -45,7 +45,7 @@ export const Contacto = () => {
                                 alt="Logo"
                                 className="w-48 my-4"
                             />
-                            <div className="flex gap-6 items-center mb-4">
+                            <div className="flex flex-wrap justify-center gap-6 items-center mb-4">
                                 <a
                                     href="mailto:hola@oiches.com"
                                     target="_blank"
