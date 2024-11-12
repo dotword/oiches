@@ -12,6 +12,7 @@ export async function listGruposService(filters) {
         g.usuario_id,
         g.createdAt,
         g.updatedAt,
+        (SELECT avatar FROM usuarios WHERE usuarios.id = g.usuario_id) AS avatar,
         p.provincia AS provincia_nombre,
         COALESCE(SUM(v.voto), 0) AS votos,
         (SELECT AVG(voto) FROM votos_grupos WHERE votos_grupos.grupoVotado = g.id) AS media_votos,

@@ -13,6 +13,8 @@ const SalaCard = ({ sala }) => {
                   sala.fotos.find((foto) => foto.main === 1)?.name ||
                   sala.fotos[0].name
               }`
+            : sala.avatar
+            ? `${VITE_API_URL_BASE}/uploads/${sala.avatar}`
             : DefaultProfile;
 
     const handleClick = () => {

@@ -9,7 +9,6 @@ import useGrupo from '../hooks/useGrupo.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
-import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
@@ -85,24 +84,44 @@ const GrupoDetail = () => {
 
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
-                <section className="flex flex-col items-center md:items-start gap-4 py-4">
-                    {(avatar || fotos.length > 0) && (
-                        <img
-                            className="w-40 h-40 rounded-full object-cover shadow-lg"
-                            src={
-                                avatar
-                                    ? `${VITE_API_URL_BASE}/uploads/${avatar}`
-                                    : `${VITE_API_URL_BASE}/uploads/${
-                                          fotos.find((foto) => foto.main === 1)
-                                              ?.name || fotos[0]?.name
-                                      }`
-                            }
-                            alt="Imagen de perfil del grupo"
-                        />
+                <section className="flex flex-wrap gap-4 py-4">
+                    <div>
+                        {(avatar || fotos.length > 0) && (
+                            <img
+                                className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"
+                                src={
+                                    avatar
+                                        ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+                                        : `${VITE_API_URL_BASE}/uploads/${
+                                              fotos.find(
+                                                  (foto) => foto.main === 1
+                                              )?.name || fotos[0]?.name
+                                          }`
+                                }
+                                alt="Imagen de perfil del grupo"
+                            />
+                        )}
+
+                        <h2 className="text-3xl font-bold mt-4 text-center md:text-left">
+                            {nombre}
+                        </h2>
+                    </div>
+                    {currentUser && (
+                        <div className="m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:max-w-80">
+                            <p className="text-center">
+                                ¿Quieres que {nombre} toque en tu sala?
+                            </p>
+
+                            <a
+                                href={`mailto:${email}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                            >
+                                Contactar
+                            </a>
+                        </div>
                     )}
-                    <h2 className="text-3xl font-bold mt-2 text-center md:text-left">
-                        {nombre}
-                    </h2>
                 </section>
 
                 <section className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
@@ -159,21 +178,6 @@ const GrupoDetail = () => {
                             </p>
                         </div>
                     )}
-                    {currentUser && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Contacto</span>
-                            <p>
-                                <a
-                                    href={`mailto:${email}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="underline"
-                                >
-                                    {email}
-                                </a>
-                            </p>
-                        </div>
-                    )}
 
                     {condiciones && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-4">
@@ -199,29 +203,21 @@ const GrupoDetail = () => {
                     </section>
                 )}
 
-                <section>
-                    <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
-                        {fotos.length > 0 ? (
-                            <>
-                                {fotos.map((photo) => (
-                                    <img
-                                        key={photo.id}
-                                        src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
-                                        className="rounded-lg image-shadow max-h-80 object-cover"
-                                        alt={nombre}
-                                    />
-                                ))}
-                            </>
-                        ) : (
-                            <img
-                                className="col-span-1 md:col-span-2 rounded-2xl"
-                                src={Noimage}
-                                alt="No image"
-                            />
-                        )}
-                    </div>
-                </section>
+                {fotos.length > 0 && (
+                    <section>
+                        <h3 className="font-semibold">Fotos</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+                            {fotos.map((photo) => (
+                                <img
+                                    key={photo.id}
+                                    src={`${VITE_API_URL_BASE}/uploads/${photo.name}`}
+                                    className="rounded-lg image-shadow max-h-80 object-cover"
+                                    alt={nombre}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {pdf.length > 0 && (
                     <section>

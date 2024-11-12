@@ -5,7 +5,7 @@ import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 
-export const CrearReservaForm = () => {
+export const CrearReservaForm = ({ nombreSala }) => {
     const { idSala } = useParams(); // Obtén el idSala de los parámetros de la URL
     const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`; // Construye la URL con el idSala
     const { token } = useAuth(); // Obtén el token de autenticación
@@ -52,14 +52,18 @@ export const CrearReservaForm = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-2 md:items-center"
+                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 md:py-10 md:items-center"
             >
-                <h2 className="text-xl font-semibold mb-3">
-                    Datos de la reserva
+                <h2 className="text-2xl font-semibold mb-3">
+                    Contacta con {nombreSala}
                 </h2>
-                <div className="mb-2">
+                <p>
+                    Rellena el siguiente formulario y {nombreSala} recibirá un
+                    email con tu solicitud.
+                </p>
+                <div className="mt-2">
                     <label htmlFor="fecha" className="font-semibold">
-                        Fecha de la reserva
+                        Fecha en la que quieres tocar*
                     </label>
                     <input
                         className="block md:mx-auto"
@@ -69,9 +73,9 @@ export const CrearReservaForm = () => {
                     />
                 </div>
 
-                <div className="mb-2">
+                <div className="mt-2">
                     <label htmlFor="horaInicio" className="font-semibold">
-                        Hora de inicio de la reserva
+                        Hora de inicio estimada*
                     </label>
                     <input
                         className="block md:mx-auto"
@@ -80,9 +84,9 @@ export const CrearReservaForm = () => {
                         required
                     />
                 </div>
-                <div className="mb-2">
+                <div className="mt-2">
                     <label htmlFor="horaFin" className="font-semibold">
-                        Hora final de la reserva
+                        Hora final estimada*
                     </label>
                     <input
                         className="block md:mx-auto"
@@ -91,11 +95,17 @@ export const CrearReservaForm = () => {
                         required
                     />
                 </div>
-                <div className="flex justify-evenly mt-6 gap-6">
-                    <button className="button" type="submit">
-                        Crear Reserva
+                <div className="flex flex-wrap gap-8 mt-8 justify-center">
+                    <button
+                        className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                        type="submit"
+                    >
+                        Enviar solicitud
                     </button>
-                    <button className="button bg-red-500" type="reset">
+                    <button
+                        className="button bg-red-500 py-2 px-8"
+                        type="reset"
+                    >
                         Borrar
                     </button>
                 </div>

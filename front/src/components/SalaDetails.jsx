@@ -6,7 +6,6 @@ import useSala from '../hooks/useSala.jsx';
 import StarRating from './StartRating.jsx';
 import Header from './Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
-import Noimage from '../../src/assets/noimage.png';
 import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Seo
@@ -112,12 +111,12 @@ const SalaDetail = () => {
                         )}
 
                         {currentUser && (
-                            <p className="ml-auto">
+                            <p className="m-auto md:mr-0">
                                 <Link
                                     to={`/sala/${idSala}/reservas`}
-                                    className="btn-account font-semibold px-4 py-2"
+                                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
                                 >
-                                    Reservar
+                                    Quiero tocar aquí
                                 </Link>
                             </p>
                         )}
@@ -208,11 +207,11 @@ const SalaDetail = () => {
                     )}
                 </section>
 
-                <section>
-                    <h3 className="font-semibold">Fotos</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 items-start">
-                        {fotos.length > 0 ? (
-                            fotos.map((photo) => (
+                {fotos.length > 0 && (
+                    <section>
+                        <h3 className="font-semibold">Fotos</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 items-start">
+                            {fotos.map((photo) => (
                                 <div
                                     key={photo.id}
                                     className="rounded-lg overflow-hidden image-shadow"
@@ -223,16 +222,11 @@ const SalaDetail = () => {
                                         alt="Foto de la sala"
                                     />
                                 </div>
-                            ))
-                        ) : (
-                            <img
-                                className="col-span-1 md:col-span-2 rounded-3xl"
-                                src={Noimage}
-                                alt="No image"
-                            />
-                        )}
-                    </div>
-                </section>
+                            ))}
+                        </div>
+                    </section>
+                )}
+
                 <section id="map" className="mt-8">
                     {direccion && <MapComponent wholeAddress={wholeAddress} />}
                 </section>

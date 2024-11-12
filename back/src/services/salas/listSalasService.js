@@ -13,6 +13,7 @@ export async function listSalasService(filters) {
         salas.ciudad,
         salas.createdAt,
         salas.updatedAt,
+        (SELECT avatar FROM usuarios WHERE usuarios.id = salas.usuario_id) AS avatar,
         (SELECT provincia FROM provincias WHERE provincias.id = salas.provincia) AS provincia,
         (SELECT AVG(voto) FROM votos_salas WHERE votos_salas.salaVotada = salas.id) AS media_votos,
         (SELECT GROUP_CONCAT(generoId) FROM generos_salas WHERE generos_salas.salaId = salas.id) AS generos,
@@ -21,7 +22,7 @@ export async function listSalasService(filters) {
         salas 
     LEFT JOIN provincias ON provincias.id = salas.provincia
     LEFT JOIN generos_salas gs ON gs.salaId = salas.id
-    LEFT JOIN generos_musicales gm ON gs.generoId = gm.id        
+    LEFT JOIN generos_musicales gm ON gs.generoId = gm.id     
     WHERE 
         1=1
     `;
