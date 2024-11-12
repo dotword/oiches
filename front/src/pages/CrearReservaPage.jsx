@@ -21,63 +21,71 @@ export const CrearReservaPage = () => {
         navigate('/login', toast.error('Error'));
     }
     if (!entry) return <p>Cargando...</p>;
+    const imageUrl =
+        entry.fotos && entry.fotos.length > 0
+            ? // Buscar la foto principal con main === 1
+              `${VITE_API_URL_BASE}/uploads/${
+                  entry.fotos.find((foto) => foto.main === 1)?.name ||
+                  entry.fotos[0].name
+              }`
+            : entry.usuarioAvatar
+            ? `${VITE_API_URL_BASE}/uploads/${entry.usuarioAvatar}`
+            : noImage;
 
     return (
         <>
-            <Header txt={`Reservar sala: ${entry.nombre}`} />
-            <main className="p-4 mt-6 flex flex-col gap-10 mx-auto shadow-xl w-11/12 md:max-w-1200">
-                <section className="flex flex-col border rounded-lg mx-auto gap-6 md:flex-wrap md:flex-row md:w-full">
-                    {entry.fotos.length > 0 ? (
-                        <img
-                            className="rounded-l-md object-cover"
-                            src={`${VITE_API_URL_BASE}/uploads/${entry.fotos[0].name}`}
-                            alt={`Una imagen de la sala ${entry.nombre}`}
-                        />
-                    ) : (
-                        <img
-                            className="w-full sm:w-auto h-full rounded-l-md"
-                            src={noImage}
-                            alt="Imagen Default"
-                        />
-                    )}
-                    <div className="flex flex-col gap-2 px-6 mb-6 md:mt-6 md:px-0">
-                        <p className="flex flex-col">
-                            <span className="font-semibold">Dirección</span>
-                            {entry.direccion}
-                        </p>
-                        <p className="flex flex-col">
-                            <span className="font-semibold">Provincia</span>
-                            {entry.provincia}
+            <Header txt={`Quiero tocar en ${entry.nombre}`} />
+            <main className="p-4 mt-6 flex flex-col mx-auto shadow-xl w-11/12 md:max-w-1200">
+                <section className="mb-6 md:flex md:gap-24 md:justify-center md:items-center md:mb-14">
+                    <img
+                        src={imageUrl}
+                        alt={entry.nombre}
+                        className="w-52 h-52 rounded-full object-cover shadow-lg mx-auto md:mx-4"
+                    />
+
+                    <div className="flex flex-col my-6 md:mt-0">
+                        <h2 className="font-semibold">{entry.nombre}</h2>
+                        <p className="mb-4">
+                            {entry.direccion}, {entry.ciudad} ({entry.provincia}
+                            )
                         </p>
 
-                        {entry.genero && (
-                            <p className="flex flex-col">
+                        {entry.genero.length > 0 && (
+                            <div className="mb-4">
                                 <span className="font-semibold">Géneros</span>
-
-                                {entry.genero.map((gen) => {
-                                    return (
-                                        <span key={gen.generoId}>
+                                <ul className="flex flex-wrap">
+                                    {entry.genero.map((gen, index) => (
+                                        <li key={gen.generoId}>
                                             {gen.generoName}
-                                        </span>
-                                    );
-                                })}
+                                            {index <
+                                                entry.genero.length - 1 && (
+                                                <span>,&nbsp;</span>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        {entry.horaReservasStart && (
+                            <p>
+                                <span className="font-semibold">
+                                    Hora inicio reservas:
+                                </span>{' '}
+                                {entry.horaReservasStart}
                             </p>
                         )}
-                        <p className="flex flex-col">
-                            <span className="font-semibold">
-                                Hora inicio reservas
-                            </span>
-                            {entry.horaReservasStart}
-                        </p>
-                        <p className="flex flex-col">
-                            <span className="font-semibold">
-                                Hora final reservas
-                            </span>
-                            {entry.horaReservasEnd}
-                        </p>
+                        {entry.horaReservasEnd && (
+                            <p>
+                                <span className="font-semibold">
+                                    Hora final reservas:
+                                </span>{' '}
+                                {entry.horaReservasEnd}
+                            </p>
+                        )}
                     </div>
                 </section>
-                <CrearReservaForm />
+                <CrearReservaForm nombreSala={entry.nombre} />
             </main>
             <Footer />
             <Toastify />

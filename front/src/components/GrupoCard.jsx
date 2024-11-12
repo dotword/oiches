@@ -12,6 +12,8 @@ const GrupoCard = ({ grupo }) => {
                   grupo.fotos.find((foto) => foto.main === 1)?.name ||
                   grupo.fotos[0].name
               }`
+            : grupo.avatar
+            ? `${VITE_API_URL_BASE}/uploads/${grupo.avatar}`
             : DefaultProfile;
 
     const handleClick = () => {
