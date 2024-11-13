@@ -10,7 +10,7 @@ import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Seo
 import TextFormat from './TextFormato.jsx';
-import MapComponent from './MapComponent.jsx';
+import MapShow from './MapShow.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -28,7 +28,6 @@ const SalaDetail = () => {
         condiciones,
         genero,
         direccion,
-        ciudad,
         capacidad,
         usuarioAvatar,
         comentarios,
@@ -36,8 +35,6 @@ const SalaDetail = () => {
         fotos,
         pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
-
-    const wholeAddress = `${direccion}, ${ciudad}, ${provincia}`;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -98,7 +95,9 @@ const SalaDetail = () => {
                     <div className="flex flex-wrap gap-6">
                         {direccion && (
                             <>
-                                <p className="text-black">{wholeAddress}</p>
+                                <p className="text-black">
+                                    {direccion} ({provincia})
+                                </p>
                                 <p>
                                     <a
                                         className="font-semibold underline"
@@ -122,7 +121,6 @@ const SalaDetail = () => {
                         )}
                     </div>
                 </section>
-
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     {descripcion && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
@@ -206,7 +204,6 @@ const SalaDetail = () => {
                         </div>
                     )}
                 </section>
-
                 {fotos.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Fotos</h3>
@@ -228,9 +225,8 @@ const SalaDetail = () => {
                 )}
 
                 <section id="map" className="mt-8">
-                    {direccion && <MapComponent wholeAddress={wholeAddress} />}
+                    {direccion && <MapShow direccion={direccion} />}
                 </section>
-
                 {comentarios.length > 0 && (
                     <section className="mb-10">
                         <h3 className="font-semibold text-lg">Comentarios</h3>
