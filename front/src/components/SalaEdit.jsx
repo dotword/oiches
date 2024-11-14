@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
-
+import MapComponent from './MapComponent.jsx';
 import Toastify from './Toastify.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
@@ -169,47 +169,57 @@ const SalaEdit = () => {
             )
     );
 
+    const handleLocationSelect = (location) => {
+        setSala((prevSala) => ({
+            ...prevSala,
+            direccion: location.direccion,
+            ciudad: location.ciudad,
+        }));
+    };
+
     return (userLogged && sala.owner === userLogged.id) ||
         (userLogged && userLogged.roles === 'admin') ? (
         <>
             <div className="px-6 pt-3 pb-6 md:px-12 bg-white rounded-lg shadow-md md:grid md:grid-cols-3 md:gap-x-12">
-                <div className="flex flex-col mb-4 md:flex-row md:justify-between md:max-w-3xl md:col-start-1 md:col-end-4">
-                    <div className="mb-6">
-                        <p className="font-semibold my-2">
-                            Selecciona los géneros que quieres eliminar:
-                        </p>
-                        <form onSubmit={handleDelGenSubmit}>
-                            <ul className="flex flex-wrap gap-2 my-4">
-                                {sala.activeGenres.map((gen) => (
-                                    <li key={gen.generoId}>
-                                        <span
-                                            className="bg-yellowOiches px-3 py-1 rounded-3xl"
-                                            onClick={() =>
-                                                handleDeleteGenreClick(
-                                                    gen.generoId
-                                                )
-                                            }
-                                            style={{
-                                                textDecoration:
-                                                    deleteGenres.includes(
+                <div className="flex flex-col mb-4 md:flex-row md:gap-12 md:col-start-1 md:col-end-4">
+                    {sala.activeGenres && sala.activeGenres.length > 0 && (
+                        <div className="mb-6 w-2/3">
+                            <p className="font-semibold my-2">
+                                Selecciona los géneros que quieres eliminar:
+                            </p>
+                            <form onSubmit={handleDelGenSubmit}>
+                                <ul className="flex flex-wrap gap-2 my-4">
+                                    {sala.activeGenres.map((gen) => (
+                                        <li key={gen.generoId}>
+                                            <span
+                                                className="bg-yellowOiches px-3 py-1 rounded-3xl"
+                                                onClick={() =>
+                                                    handleDeleteGenreClick(
                                                         gen.generoId
                                                     )
-                                                        ? 'line-through'
-                                                        : 'none',
-                                            }}
-                                        >
-                                            {gen.generoName}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-                            <input
-                                type="submit"
-                                value="Eliminar seleccionados"
-                                className="btn-account"
-                            />
-                        </form>
-                    </div>
+                                                }
+                                                style={{
+                                                    textDecoration:
+                                                        deleteGenres.includes(
+                                                            gen.generoId
+                                                        )
+                                                            ? 'line-through'
+                                                            : 'none',
+                                                }}
+                                            >
+                                                {gen.generoName}
+                                            </span>
+                                        </li>
+                                    ))}
+                                </ul>
+                                <input
+                                    type="submit"
+                                    value="Eliminar seleccionados"
+                                    className="btn-account"
+                                />
+                            </form>
+                        </div>
+                    )}
                     <div className="mb-6">
                         <p className="font-semibold my-2">Añadir géneros:</p>
                         <form onSubmit={handleGenSubmit} className="max-w-60">
@@ -251,20 +261,24 @@ const SalaEdit = () => {
                 >
                     {/* Nombre */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
-                        <label htmlFor="nombre" className="font-semibold">
-                            Nombre de la Sala:
+                        <label htmlFor="nombre">
+                            <span className="font-semibold">
+                                Nombre de la Sala:
+                            </span>
+
+                            <input
+                                type="text"
+                                name="nombre"
+                                placeholder="Nombre de la sala"
+                                value={sala.nombre}
+                                onChange={(e) =>
+                                    setSala({ ...sala, nombre: e.target.value })
+                                }
+                                className="form-input"
+                            />
                         </label>
-                        <input
-                            type="text"
-                            name="nombre"
-                            placeholder="Nombre de la sala"
-                            value={sala.nombre}
-                            onChange={(e) =>
-                                setSala({ ...sala, nombre: e.target.value })
-                            }
-                            className="form-input"
-                        />
                     </div>
+
                     {/* Provincia */}
                     <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
                         <label htmlFor="province" className="font-semibold">
@@ -287,37 +301,36 @@ const SalaEdit = () => {
                         </select>
                     </div>
                     {/* Dirección */}
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
+                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:
                         </label>
-                        <input
-                            type="text"
-                            name="direccion"
-                            placeholder="Dirección de la sala"
-                            value={sala.direccion}
-                            onChange={(e) =>
-                                setSala({ ...sala, direccion: e.target.value })
-                            }
-                            className="form-input"
-                        />
-                    </div>
-
-                    {/* Ciudad */}
-                    <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
-                        <label htmlFor="ciudad" className="font-semibold">
-                            Ciudad:
-                        </label>
-                        <input
-                            type="text"
-                            name="ciudad"
-                            placeholder="Ciudad de la sala"
-                            value={sala.ciudad}
-                            onChange={(e) =>
-                                setSala({ ...sala, ciudad: e.target.value })
-                            }
-                            className="form-input"
-                        />
+                        <MapComponent onLocationSelect={handleLocationSelect} />
+                        <span className="hidden">
+                            <input
+                                type="text"
+                                name="direccion"
+                                placeholder="Dirección de la sala"
+                                value={sala.direccion || ''}
+                                onChange={(e) =>
+                                    setSala({
+                                        ...sala,
+                                        direccion: e.target.value,
+                                    })
+                                }
+                                className="form-input"
+                            />
+                            <input
+                                type="text"
+                                name="ciudad"
+                                placeholder="Ciudad de la sala"
+                                value={sala.ciudad || ''}
+                                onChange={(e) =>
+                                    setSala({ ...sala, ciudad: e.target.value })
+                                }
+                                className="form-input"
+                            />
+                        </span>
                     </div>
                     {/* Web */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">

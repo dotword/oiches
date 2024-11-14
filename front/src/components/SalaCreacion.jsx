@@ -5,6 +5,7 @@ import Toastify from './Toastify.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
+import MapComponent from './MapComponent.jsx';
 
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
 import FetchGenresService from '../services/FetchGenresService.js';
@@ -123,6 +124,14 @@ const SalaCreacion = () => {
         horaReservasEnd,
     } = formValues;
 
+    // Esta función actualizará los valores en el formulario con los datos seleccionados en el mapa
+    const onLocationSelect = (location) => {
+        setFormValues((prevValues) => ({
+            ...prevValues,
+            direccion: location.direccion,
+            ciudad: location.ciudad,
+        }));
+    };
     return currentUser ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
@@ -168,35 +177,33 @@ const SalaCreacion = () => {
                             }}
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+
+                    <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:*
                         </label>
-                        <input
-                            type="text"
-                            name="direccion"
-                            placeholder="Dirección de la sala"
-                            value={direccion}
-                            required
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                        <MapComponent onLocationSelect={onLocationSelect} />
+                        <span className="hidden">
+                            <input
+                                type="text"
+                                name="direccion"
+                                placeholder="Dirección de la sala"
+                                value={direccion}
+                                required
+                                onChange={handleChange}
+                            />
+                            <input
+                                type="text"
+                                name="ciudad"
+                                placeholder="Ciudad de la sala"
+                                value={ciudad}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </span>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(25%-0.5rem)]">
-                        <label htmlFor="ciudad" className="font-semibold">
-                            Ciudad:*
-                        </label>
-                        <input
-                            type="text"
-                            name="ciudad"
-                            placeholder="Ciudad de la sala"
-                            value={ciudad}
-                            required
-                            onChange={handleChange}
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(25%-0.5rem)]">
+
+                    <div className="flex flex-col mb-4 md:w-[calc(30%-0.5rem)]">
                         <label htmlFor="provincia" className="font-semibold">
                             Provincia:*
                         </label>
@@ -216,7 +223,8 @@ const SalaCreacion = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(40%-0.5rem)]">
+
+                    <div className="flex flex-col mb-4 md:w-[calc(15%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
                             Aforo:*
                         </label>
@@ -230,7 +238,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(60%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(55%-0.5rem)]">
                         <label htmlFor="web" className="font-semibold">
                             Web:
                         </label>

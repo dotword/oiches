@@ -1,73 +1,122 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: markerIcon2x,
-    iconUrl: markerIcon,
-    shadowUrl: markerShadow,
-});
-
-const SetMapView = ({ position }) => {
+function ChangeMapView({ coords }) {
     const map = useMap();
-    useEffect(() => {
-        map.setView(position, 13);
-    }, [position, map]);
-
+    map.setView(coords, 13);
     return null;
-};
+}
 
-const MapComponent = ({ wholeAddress }) => {
-    const { VITE_LEAFLET_APIKEY } = import.meta.env;
+const MapComponent = ({ onLocationSelect }) => {
+    const [address, setAddress] = useState('');
+    const [foundAddress, setFoundAddress] = useState('');
+    const [location, setLocation] = useState({ lat: 40.463667, lng: -3.74922 });
+    const [debouncedAddress, setDebouncedAddress] = useState('');
+    const [suggestions, setSuggestions] = useState([]);
 
-    const [position, setPosition] = useState([40.463667, -3.74922]);
-    const [error, setError] = useState('');
-
+    // Debounce: Retrasar la búsqueda para evitar demasiadas solicitudes rápidas
     useEffect(() => {
-        const fetchCoordinates = async () => {
-            // const leafletApiKey = 'c77ef10bb94940318ca3502e8587633a';
-            try {
-                const response = await fetch(
-                    `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
-                        wholeAddress
-                    )}&key=${VITE_LEAFLET_APIKEY}`
-                );
-                const data = await response.json();
+        const timer = setTimeout(() => {
+            setDebouncedAddress(address);
+        }, 1000);
 
-                if (data.results.length > 0) {
-                    const { lat, lng } = data.results[0].geometry;
-                    setPosition([lat, lng]);
-                } else {
-                    setError('No se encontraron resultados para la dirección.');
-                }
-            } catch (err) {
-                setError('Error al obtener la ubicación.');
-            }
+        return () => {
+            clearTimeout(timer);
         };
+    }, [address]);
 
-        fetchCoordinates();
-    }, [wholeAddress, VITE_LEAFLET_APIKEY]);
+    // Realizar la búsqueda después de que la dirección haya cambiado
+    useEffect(() => {
+        if (debouncedAddress) {
+            fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${debouncedAddress}&countrycodes=ES&addressdetails=1`
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.length > 0) {
+                        setSuggestions(data); // Almacenar las sugerencias
+                    } else {
+                        setSuggestions([]); // Si no hay resultados, limpiar las sugerencias
+                    }
+                })
+                .catch((error) =>
+                    console.error('Error buscando la dirección:', error)
+                );
+        }
+    }, [debouncedAddress]);
+
+    const handleSuggestionClick = (suggestion) => {
+        const { lat, lon, display_name, address } = suggestion;
+        setLocation({ lat: parseFloat(lat), lng: parseFloat(lon) });
+        setFoundAddress(display_name);
+
+        // Llamar la función onLocationSelect con los datos seleccionados
+        onLocationSelect({
+            direccion: [
+                address?.road || '',
+                address?.house_number || '',
+                address?.village || address?.town || address?.city || '',
+            ]
+                .filter(Boolean)
+                .join(', '),
+            ciudad:
+                address?.village ||
+                address?.village ||
+                address?.town ||
+                address?.city ||
+                '',
+            lat: parseFloat(lat),
+            lon: parseFloat(lon),
+        });
+        setAddress(display_name); // Actualizar el campo de dirección con la sugerencia seleccionada
+        setSuggestions([]); // Limpiar las sugerencias después de seleccionar
+    };
 
     return (
-        <>
-            {error && <p>{error}</p>}
+        <div>
+            <input
+                type="text"
+                placeholder="Buscar dirección..."
+                value={address || ''}
+                onChange={(e) => setAddress(e.target.value)}
+                className="form-input mb-2"
+            />
+
+            {/* Mostrar sugerencias debajo del campo de texto */}
+            {suggestions.length > 0 && (
+                <ul className="my-2">
+                    {suggestions.map((suggestion, index) => (
+                        <li
+                            key={index}
+                            className="p-1 cursor-pointer text-neutral-500 hover:text-black"
+                            onClick={() => handleSuggestionClick(suggestion)} // Llamar cuando se hace clic
+                        >
+                            {suggestion.display_name}
+                        </li>
+                    ))}
+                </ul>
+            )}
+
             <MapContainer
-                center={position}
-                zoom={20}
-                style={{ height: '300px', width: '100%' }}
+                center={[location.lat, location.lng]}
+                zoom={13}
+                className="z-0 h-56 w-full"
             >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <SetMapView position={position} />
-                <Marker position={position}>
-                    <Popup>{wholeAddress}</Popup>
+                <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                />
+                <Marker position={[location.lat, location.lng]}>
+                    <Popup>
+                        {foundAddress
+                            ? `${foundAddress} )`
+                            : 'Ubicación seleccionada'}
+                    </Popup>
                 </Marker>
+                <ChangeMapView coords={[location.lat, location.lng]} />
             </MapContainer>
-        </>
+        </div>
     );
 };
 
