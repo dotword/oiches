@@ -101,7 +101,7 @@ const MapComponent = ({ onLocationSelect }) => {
             <MapContainer
                 center={[location.lat, location.lng]}
                 zoom={13}
-                style={{ height: '200px', width: '100%' }}
+                className="z-0 h-56 w-full"
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
