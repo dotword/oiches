@@ -22,7 +22,7 @@ const SetMapView = ({ position }) => {
     return null;
 };
 
-const MapShow = ({ direccion }) => {
+const MapShow = ({ direccion, onAddressChange }) => {
     const { VITE_LEAFLET_APIKEY } = import.meta.env;
 
     const [position, setPosition] = useState([40.463667, -3.74922]);
@@ -38,15 +38,33 @@ const MapShow = ({ direccion }) => {
                     )}&key=${VITE_LEAFLET_APIKEY}`
                 );
                 const data = await response.json();
-                const formattedComponents = data.results[0].components;
-                console.log('data ', formattedComponents);
 
                 if (data.results.length > 0) {
                     const { lat, lng } = data.results[0].geometry;
+                    const formattedComponents = data.results[0].components;
+
                     setPosition([lat, lng]);
-                    setFormattedAddress(
-                        `${formattedComponents.neighbourhood}, ${formattedComponents.house_number}, ${formattedComponents.city}, ${formattedComponents.state}`
-                    );
+                    const newAddress = [
+                        formattedComponents.square || '',
+                        formattedComponents.road || '',
+                        formattedComponents.house_number || '',
+                        formattedComponents.village ||
+                            formattedComponents.town ||
+                            formattedComponents.city ||
+                            formattedComponents._normalized_city ||
+                            '',
+                        formattedComponents.municipality || '',
+                        formattedComponents.province || '',
+                    ]
+                        .filter(Boolean) // Filtra valores que sean falsy (null, undefined, '', etc.)
+                        .join(', '); // Une los valores con comas
+
+                    setFormattedAddress(newAddress);
+
+                    // Llama a la callback con la dirección formateada
+                    if (onAddressChange) {
+                        onAddressChange(newAddress);
+                    }
                 } else {
                     setError('No se encontraron resultados para la dirección.');
                 }
@@ -56,8 +74,7 @@ const MapShow = ({ direccion }) => {
         };
 
         fetchCoordinates();
-    }, [direccion, VITE_LEAFLET_APIKEY]);
-    console.log(formattedAddress);
+    }, [direccion, VITE_LEAFLET_APIKEY, onAddressChange]);
 
     return (
         <>
@@ -70,7 +87,7 @@ const MapShow = ({ direccion }) => {
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <SetMapView position={position} />
                 <Marker position={position}>
-                    <Popup>{direccion}</Popup>
+                    <Popup>{formattedAddress}</Popup>
                 </Marker>
             </MapContainer>
         </>

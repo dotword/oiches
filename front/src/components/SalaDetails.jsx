@@ -18,6 +18,7 @@ const SalaDetail = () => {
     const { entry, error } = useSala(idSala);
     const { currentUser } = useAuth();
     const [actualUser, setActualUser] = useState('');
+    const [formattedAddress, setFormattedAddress] = useState('');
 
     const {
         nombre,
@@ -35,6 +36,10 @@ const SalaDetail = () => {
         fotos,
         pdf,
     } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
+
+    const handleAddressChange = (newAddress) => {
+        setFormattedAddress(newAddress);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -96,7 +101,7 @@ const SalaDetail = () => {
                         {direccion && (
                             <>
                                 <p className="text-black">
-                                    {direccion} ({provincia})
+                                    {formattedAddress || direccion}
                                 </p>
                                 <p>
                                     <a
@@ -225,7 +230,12 @@ const SalaDetail = () => {
                 )}
 
                 <section id="map" className="mt-8">
-                    {direccion && <MapShow direccion={direccion} />}
+                    {direccion && (
+                        <MapShow
+                            direccion={direccion}
+                            onAddressChange={handleAddressChange}
+                        />
+                    )}
                 </section>
                 {comentarios.length > 0 && (
                     <section className="mb-10">

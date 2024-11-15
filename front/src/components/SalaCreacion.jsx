@@ -125,13 +125,14 @@ const SalaCreacion = () => {
     } = formValues;
 
     // Esta función actualizará los valores en el formulario con los datos seleccionados en el mapa
-    const onLocationSelect = (location) => {
+    const handleLocationSelect = (location) => {
         setFormValues((prevValues) => ({
             ...prevValues,
             direccion: location.direccion,
             ciudad: location.ciudad,
         }));
     };
+
     return currentUser ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
@@ -182,7 +183,7 @@ const SalaCreacion = () => {
                         <label htmlFor="direccion" className="font-semibold">
                             Dirección:*
                         </label>
-                        <MapComponent onLocationSelect={onLocationSelect} />
+                        <MapComponent onLocationSelect={handleLocationSelect} />
                         <span className="hidden">
                             <input
                                 type="text"

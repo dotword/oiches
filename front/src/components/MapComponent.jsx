@@ -53,16 +53,10 @@ const MapComponent = ({ onLocationSelect }) => {
 
         // Llamar la función onLocationSelect con los datos seleccionados
         onLocationSelect({
-            direccion: [
-                address?.road || '',
-                address?.house_number || '',
-                address?.village || address?.town || address?.city || '',
-            ]
-                .filter(Boolean)
-                .join(', '),
+            direccion: [display_name].filter(Boolean).join(', '),
             ciudad:
                 address?.village ||
-                address?.village ||
+                address?.municipality ||
                 address?.town ||
                 address?.city ||
                 '',
