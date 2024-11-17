@@ -213,7 +213,14 @@ const main = async () => {
                 ('Latina'),
                 ('Reaggeton'),
                 ('Hip-Hop'),
-                ('Blues');
+                ('Blues'),
+                ('Punk'),
+                ('Ska'),
+                ('Rap'),
+                ('Hardcore'),
+                ('Heavy'),
+                ('Ópera'),
+                ('Versiones');
         `);
 
         await pool.query(`
