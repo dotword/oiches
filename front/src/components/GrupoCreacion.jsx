@@ -249,7 +249,7 @@ const GrupoCreacion = () => {
                         <div className="flex gap-4 mb-4">
                             <label
                                 htmlFor="honorarios"
-                                className="font-semibold"
+                                className="font-semibold md:w-[calc(50%-0.5rem)]"
                             >
                                 Caché desde:
                                 <input
@@ -263,7 +263,7 @@ const GrupoCreacion = () => {
                             </label>
                             <label
                                 htmlFor="honorarios_to"
-                                className="font-semibold"
+                                className="font-semibold md:w-[calc(50%-0.5rem)]"
                             >
                                 Caché hasta:
                                 <input
@@ -276,16 +276,17 @@ const GrupoCreacion = () => {
                                 />
                             </label>
                         </div>
+
                         <div className="flex flex-col mb-4 md:w-full">
                             <label
                                 htmlFor="biografia"
                                 className="font-semibold"
                             >
-                                Condiciones:
+                                Biografía:
                             </label>
                             <textarea
-                                name="condiciones"
-                                value={condiciones}
+                                name="biografia"
+                                value={biografia}
                                 onChange={handleChange}
                                 className="form-textarea"
                                 maxLength="2000"
@@ -300,11 +301,11 @@ const GrupoCreacion = () => {
                                 htmlFor="biografia"
                                 className="font-semibold"
                             >
-                                Biografía:
+                                Condiciones:
                             </label>
                             <textarea
-                                name="biografia"
-                                value={biografia}
+                                name="condiciones"
+                                value={condiciones}
                                 onChange={handleChange}
                                 className="form-textarea"
                                 maxLength="2000"
