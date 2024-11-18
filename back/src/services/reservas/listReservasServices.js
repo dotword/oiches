@@ -1,15 +1,15 @@
 import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-export const listReservaService = async (id) => {
+export const listReservaService = async (sala_id, adminUser) => {
     try {
         const pool = await getPool();
 
         const [salaResults] = await pool.query(
             'SELECT id, nombre FROM salas WHERE usuario_id = ?',
-            [id]
+            [sala_id]
         );
-        if (salaResults.length === 0) {
+        if (salaResults.length === 0 && adminUser[0].roles !== 'admin') {
             throw generateErrorsUtil(
                 'No se han encontrado salas para el usuario con el que estás logueado.',
                 400

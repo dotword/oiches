@@ -19,7 +19,6 @@ import useUser from '../hooks/useUser.jsx';
 const AuthUser = () => {
     const { userLogged, token, loading } = useContext(AuthContext);
     const { userId } = useParams();
-
     const userData = useUser(userId);
 
     const [avatar, setAvatar] = useState('');
@@ -161,7 +160,8 @@ const AuthUser = () => {
         }
     };
 
-    return userLogged ? (
+    return (userLogged && userLogged.id === userId) ||
+        (userLogged && userLogged.roles === 'admin') ? (
         <>
             <div className="md:max-w-3xl md:mx-auto mb-12">
                 <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
@@ -319,14 +319,14 @@ const AuthUser = () => {
                         {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
                 </section>
-                {userLogged && userLogged.roles !== 'admin' ? (
+
+                {userLogged && (
                     <ListarReservas
                         userLogged={userLogged}
+                        userData={userData}
                         token={token}
                         loading={loading}
                     />
-                ) : (
-                    ''
                 )}
 
                 <section className="flex justify-end mt-28">

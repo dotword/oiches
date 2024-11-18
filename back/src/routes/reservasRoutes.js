@@ -57,6 +57,7 @@ router.delete(
 
 // Endpoint para listar reservas de una sala
 router.get('/reservas/salas/:sala_id', authUser, listReservaController);
+
 // Endpoint para listar reservas de un grupo
 router.get('/reservas/grupos/:group_id', authUser, listReservaGroups);
 
