@@ -17,13 +17,26 @@ Disallow: /*.md$
 Disallow: /*.env$
 Disallow: /*.log$
 
-# Bloquea páginas de edición y rutas con parámetros dinámicos que no aportan valor SEO
-Disallow: /sala/:idSala/edit
-Disallow: /grupos/:idGrupo/edit
-Disallow: /users/validate/:registrationCode
+# Bloquea páginas legales irrelevantes para SEO
+Disallow: /politica-privacidad
+Disallow: /politica-cookies
+Disallow: /aviso-legal
 
-# Permitir el acceso al resto del sitio
-Allow: /
+# Bloquea rutas irrelevantes para SEO y parámetros dinámicos
+Disallow: /sala/*/edit
+Disallow: /grupos/*/edit
+Disallow: /users/validate/*
+
+# Permite acceso explícito a las rutas importantes para SEO
+Allow: /salas
+Allow: /grupos
+Allow: /grupo/*
+Allow: /sala/*
+Allow: /sobre-oiches
+Allow: /contacto
+
+# Permite acceso a las imágenes
+Allow: /images/
 
 # Indica la ubicación del sitemap
 Sitemap: https://www.oiches.com/sitemap.xml

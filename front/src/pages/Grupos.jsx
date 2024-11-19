@@ -54,6 +54,9 @@ const Grupos = () => {
                 description="Encuentra músicos ideales para tu sala y llena tu espacio con la mejor música en vivo. Conéctate con bandas y organiza eventos únicos."
                 url="https://oiches.com/grupos"
                 keywords="músicos, bandas emergentes, grupos musicales,músicos para eventos, eventos, salas de conciertos"
+                image="https://oiches.com/Oiches-Conectamos-musicos-y-salas.jpg"
+                type="website"
+                imageType="image/jpg"
             />
 
             <motion.div
