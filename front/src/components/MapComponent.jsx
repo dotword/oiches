@@ -53,16 +53,10 @@ const MapComponent = ({ onLocationSelect }) => {
 
         // Llamar la función onLocationSelect con los datos seleccionados
         onLocationSelect({
-            direccion: [
-                address?.road || '',
-                address?.house_number || '',
-                address?.village || address?.town || address?.city || '',
-            ]
-                .filter(Boolean)
-                .join(', '),
+            direccion: [display_name].filter(Boolean).join(', '),
             ciudad:
                 address?.village ||
-                address?.village ||
+                address?.municipality ||
                 address?.town ||
                 address?.city ||
                 '',
@@ -101,7 +95,7 @@ const MapComponent = ({ onLocationSelect }) => {
             <MapContainer
                 center={[location.lat, location.lng]}
                 zoom={13}
-                style={{ height: '200px', width: '100%' }}
+                className="z-0 h-56 w-full"
             >
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

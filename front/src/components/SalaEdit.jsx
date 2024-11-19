@@ -303,34 +303,29 @@ const SalaEdit = () => {
                     {/* Dirección */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
                         <label htmlFor="direccion" className="font-semibold">
-                            Dirección:
+                            Cambiar dirección:
                         </label>
+                        <input
+                            type="text"
+                            name="direccion"
+                            placeholder="Dirección de la sala"
+                            value={sala.direccion || ''}
+                            onChange={(e) =>
+                                setSala({ ...sala, direccion: e.target.value })
+                            }
+                            className="hidden"
+                        />
+                        <input
+                            type="text"
+                            name="ciudad"
+                            placeholder="Ciudad de la sala"
+                            value={sala.ciudad || ''}
+                            onChange={(e) =>
+                                setSala({ ...sala, ciudad: e.target.value })
+                            }
+                            className="hidden"
+                        />
                         <MapComponent onLocationSelect={handleLocationSelect} />
-                        <span className="hidden">
-                            <input
-                                type="text"
-                                name="direccion"
-                                placeholder="Dirección de la sala"
-                                value={sala.direccion || ''}
-                                onChange={(e) =>
-                                    setSala({
-                                        ...sala,
-                                        direccion: e.target.value,
-                                    })
-                                }
-                                className="form-input"
-                            />
-                            <input
-                                type="text"
-                                name="ciudad"
-                                placeholder="Ciudad de la sala"
-                                value={sala.ciudad || ''}
-                                onChange={(e) =>
-                                    setSala({ ...sala, ciudad: e.target.value })
-                                }
-                                className="form-input"
-                            />
-                        </span>
                     </div>
                     {/* Web */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
