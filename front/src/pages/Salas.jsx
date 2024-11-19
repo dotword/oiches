@@ -44,10 +44,13 @@ const Salas = () => {
         <>
             {/* Componente SEO dinámico para la página de Salas */}
             <Seo
-                title="Oiches | Encuentra Salas de Conciertos para Eventos en Vivo "
+                title="Oiches | Encuentra Salas de Conciertos para Eventos en Vivo"
                 description="Explora y reserva salas de conciertos perfectas para tus eventos en vivo. Conéctate directamente con las mejores opciones a través de Oiches."
-                keywords="salas de conciertos, música en vivo, reservas de salas, eventos musicales"
+                keywords="salas de conciertos, música en vivo, reservas de salas, eventos musicales, donde tocar, conciertos en vivo"
                 url="https://oiches.com/salas"
+                image="https://oiches.com/Oiches-musica-vivo.jpg"
+                type="website"
+                imageType="image/jpg"
             />
 
             <motion.div

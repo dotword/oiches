@@ -46,13 +46,6 @@ const Grupos = () => {
         }
     };
 
-    // // Cambiar de página sin afectar los filtros
-    // const handlePageChange = (newPage) => {
-    //     setPage(newPage); // Actualiza la página actual
-    // };
-
-    // const totalPages = total ? Math.ceil(total / pageSize) : 0; // Calcula el total de páginas
-
     return (
         <>
             {/* Componente SEO dinámico */}
