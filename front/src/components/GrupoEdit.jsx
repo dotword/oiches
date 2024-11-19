@@ -16,10 +16,13 @@ import {
 } from '../services/EditGrupoService.js';
 import { AddGrupoMedia } from './GrupoMedia.jsx';
 import { AddRiderForm, AddFotosForm } from './GrupoFiles.jsx';
+import DeleteUserSalaGrupo from './DeleteUserSalaGrupo.jsx';
 
 const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);
     const { idGrupo } = useParams();
+
+    console.log(idGrupo);
 
     const [grupo, setGrupo] = useState({
         nombre: '',
@@ -388,6 +391,20 @@ const GrupoEdit = () => {
             </section>
             <section className="mt-12">
                 <AddRiderForm />
+            </section>
+            <section className="flex justify-end my-8">
+                <DeleteUserSalaGrupo
+                    userLogged={userLogged}
+                    token={token}
+                    id={idGrupo}
+                    type="grupo"
+                />
+                <button
+                    // onClick={() => setModalOpen(true)}
+                    className="btn-account max-w-44 min-w-32 bg-red-600"
+                >
+                    Eliminar {grupo.nombre}
+                </button>
             </section>
             <Toastify />
         </div>

@@ -11,7 +11,7 @@ import {
 import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
-import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
+import UsersSalaGrupoList from './DeleteUserSalaGrupo.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser.jsx';

@@ -115,7 +115,6 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
             )}
 
             {(type === 'grupo' && entries.length === 0) ||
-            // (type === 'admin' && entries.length === 0) ||
             (type === 'admin' &&
                 userOwner.user.roles === 'grupo' &&
                 entries.length === 0) ? (
