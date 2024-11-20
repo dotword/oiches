@@ -22,8 +22,6 @@ const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);
     const { idGrupo } = useParams();
 
-    console.log(idGrupo);
-
     const [grupo, setGrupo] = useState({
         nombre: '',
         provincia: '',
@@ -376,7 +374,7 @@ const GrupoEdit = () => {
                 <div className="mt-4 max-w-80 md:col-start-1 md:col-end-3">
                     <input
                         type="submit"
-                        value="Modificar Grupo"
+                        value="Modificar datos"
                         className="btn-account p-3 w-full"
                     />
                 </div>
@@ -399,12 +397,6 @@ const GrupoEdit = () => {
                     id={idGrupo}
                     type="grupo"
                 />
-                <button
-                    // onClick={() => setModalOpen(true)}
-                    className="btn-account max-w-44 min-w-32 bg-red-600"
-                >
-                    Eliminar {grupo.nombre}
-                </button>
             </section>
             <Toastify />
         </div>

@@ -16,6 +16,7 @@ import {
     DeleteSalaGenerosService,
 } from '../services/EditSalaService.js';
 import { AddSalaRiderForm } from './SalaFiles.jsx';
+import DeleteUserSalaGrupo from './DeleteUserSalaGrupo.jsx';
 
 const SalaEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -476,6 +477,14 @@ const SalaEdit = () => {
                     <AddSalaPhotos idSala={idSala} />
                 </div>
             </div>
+            <section className="flex justify-end my-8">
+                <DeleteUserSalaGrupo
+                    userLogged={userLogged}
+                    token={token}
+                    id={idSala}
+                    type="sala"
+                />
+            </section>
             <Toastify />
         </>
     ) : (
