@@ -12,6 +12,9 @@ const SobreOiches = () => {
                 description="Descubre cómo Oiches conecta a músicos emergentes con salas de concierto, facilitando reservas y oportunidades únicas para música en vivo."
                 keywords="Oiches, músicos, salas de concierto, música en vivo, reservas, gestión de eventos"
                 url="https://oiches.com/sobre-oiches"
+                image="https://oiches.com/Oiches-musica-vivo.jpg"
+                type="website"
+                imageType="image/jpg"
             />
 
             <motion.div

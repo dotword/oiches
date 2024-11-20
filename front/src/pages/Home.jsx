@@ -53,8 +53,9 @@ const Home = () => {
                 description="Descubre los músicos mejor valorados y las salas de conciertos más populares en Oiches. Vive la mejor música en vivo y organiza eventos musicales inolvidables."
                 keywords="músicos, salas de conciertos, música en vivo, eventos musicales"
                 url="https://oiches.com"
-                image="https://oiches.com/assets/Oiches-Conectamos-musicos-y-salas.jpg"
+                image="https://oiches.com/Oiches-logo-vertical.png"
                 type="website"
+                imageType="image/png"
             />
             <motion.div
                 initial={{ opacity: 0, y: 20 }}

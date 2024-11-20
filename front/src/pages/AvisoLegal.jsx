@@ -12,6 +12,7 @@ const AvisoLegal = () => {
                 description="Lee nuestro aviso legal para entender los términos y condiciones del uso de la plataforma Oiches."
                 url="https://oiches.com/aviso-legal"
                 keywords="aviso legal, términos y condiciones, Oiches"
+                noIndex // Nueva propiedad para evitar la indexación
             />
 
             <motion.div
