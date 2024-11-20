@@ -2,6 +2,7 @@ import { FaPencil } from 'react-icons/fa6';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
+import { FaEye } from 'react-icons/fa';
 
 const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
     const idUserOwner = userOwner.user.id;
@@ -32,13 +33,23 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 <a
                                     href={
                                         userOwner.user.roles === 'sala'
+                                            ? `/sala/${entry.id}`
+                                            : `/grupo/${entry.id}`
+                                    }
+                                    target="_blank"
+                                >
+                                    <FaEye className="text-green-900 text-xl" />
+                                </a>
+                                <a
+                                    href={
+                                        userOwner.user.roles === 'sala'
                                             ? `/sala/${entry.id}/edit`
                                             : `/grupos/${entry.id}/edit`
                                     }
-                                    className="text-lg flex gap-2 items-center underline"
+                                    className="text-lg flex gap-3 items-center underline"
                                 >
-                                    <FaPencil className="text-purpleOiches" />
                                     {entry.nombre}
+                                    <FaPencil className="text-purpleOiches" />
                                 </a>
                             </li>
                         ))}
