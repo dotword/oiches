@@ -14,6 +14,7 @@ import salaCanVote from './salaCanVote.js';
 import canEditReserva from './canEditReserva.js';
 import canEditPhoto from './canEditPhoto.js';
 import canEditGrupoFiles from './canEditGrupoFiles.js';
+import isAdmin from './isAdmin.js';
 
 export {
     authUser,
@@ -32,4 +33,5 @@ export {
     canEditReserva,
     canEditPhoto,
     canEditGrupoFiles,
+    isAdmin,
 };

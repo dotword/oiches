@@ -16,6 +16,7 @@ import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser.jsx';
+import UsersList from './UsersList.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading } = useContext(AuthContext);
@@ -34,6 +35,11 @@ const AuthUser = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
+
+    console.log('userId ', userId);
+    console.log('userData ', userData);
+
+    userLogged && console.log('UserLogged.id ', userLogged.id);
 
     // Manejador del clic fuera del input y del botón
     const handleOutsideClick = (event) => {
@@ -220,6 +226,13 @@ const AuthUser = () => {
                     token={token}
                     userOwner={userData}
                 />
+                {userLogged &&
+                userLogged.roles === 'admin' &&
+                userLogged.id === userId ? (
+                    <UsersList token={token} />
+                ) : (
+                    ''
+                )}
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
                     <form className="flex flex-col justify-center gap-2 w-full">
                         <input
