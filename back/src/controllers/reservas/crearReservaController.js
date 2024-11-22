@@ -11,10 +11,6 @@ const crearReservaController = async (req, res, next) => {
 
         const { id } = req.user;
 
-        console.log('idd ', id);
-
-        console.log();
-
         const { sala_id } = req.params;
         if (!sala_id) {
             throw generateErrorsUtil(

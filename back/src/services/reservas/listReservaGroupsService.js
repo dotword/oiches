@@ -19,8 +19,6 @@ export const listReservaGroupsService = async (group_id, adminUser) => {
 
         const grupoIds = grupoResults.map((grupo) => grupo.id);
 
-        console.log(grupoIds);
-
         // Fetch reservations along with group names
         const [reservas] = await pool.query(
             `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre

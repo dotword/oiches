@@ -6,6 +6,11 @@
     html {
         font-family: 'Encode Sans', sans-serif;
     }
+    p,
+    li,
+    h2 {
+        margin-bottom: 0.5rem;
+    }
 }
 
 @layer components {

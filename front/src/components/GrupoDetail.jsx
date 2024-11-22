@@ -133,9 +133,9 @@ const GrupoDetail = () => {
                     {genero && (
                         <div className="border-t border-gray-300 pt-4">
                             <span className="font-semibold">Géneros</span>
-                            <ul className="flex flex-wrap mt-2">
+                            <ul className="flex flex-wrap">
                                 {genero.map((gen, index) => (
-                                    <li key={gen.generoId}>
+                                    <li key={gen.generoId} className="mb-0">
                                         {gen.generoName}
                                         {index < genero.length - 1 && (
                                             <span>,&nbsp;</span>

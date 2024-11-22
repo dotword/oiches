@@ -36,11 +36,6 @@ const AuthUser = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
 
-    console.log('userId ', userId);
-    console.log('userData ', userData);
-
-    userLogged && console.log('UserLogged.id ', userLogged.id);
-
     // Manejador del clic fuera del input y del botón
     const handleOutsideClick = (event) => {
         // Asegurarnos de que el clic sea fuera del input

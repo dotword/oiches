@@ -64,8 +64,6 @@ const UsersList = ({ token }) => {
         });
     };
 
-    console.log('filteredUsers ', filteredUsers);
-
     return (
         <section className="py-6 border-b-2 border-greyOiches-50">
             <h2 className="text-center font-semibold text-lg mb-4">

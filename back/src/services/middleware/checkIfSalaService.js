@@ -2,8 +2,6 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const checkIfSalaService = async (userId) => {
-    console.log('userid ', userId);
-
     const pool = await getPool();
 
     const [userResults] = await pool.query(

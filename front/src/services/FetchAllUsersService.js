@@ -38,7 +38,6 @@ const FetchAllUsersService = async (
             },
         });
 
-        // console.log(data.data.user.rows);
         return data;
     } catch (error) {
         console.error('Hubo un error al obtener los usuarios:', error);
