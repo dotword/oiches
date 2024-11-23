@@ -12,14 +12,15 @@ import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
+// import UsersSalaGrupoList from './DeleteUserSalaGrupo.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser.jsx';
+import UsersList from './UsersList.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading } = useContext(AuthContext);
     const { userId } = useParams();
-
     const userData = useUser(userId);
 
     const [avatar, setAvatar] = useState('');
@@ -161,7 +162,8 @@ const AuthUser = () => {
         }
     };
 
-    return userLogged ? (
+    return (userLogged && userLogged.id === userId) ||
+        (userLogged && userLogged.roles === 'admin') ? (
         <>
             <div className="md:max-w-3xl md:mx-auto mb-12">
                 <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
@@ -219,6 +221,13 @@ const AuthUser = () => {
                     token={token}
                     userOwner={userData}
                 />
+                {userLogged &&
+                userLogged.roles === 'admin' &&
+                userLogged.id === userId ? (
+                    <UsersList token={token} />
+                ) : (
+                    ''
+                )}
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
                     <form className="flex flex-col justify-center gap-2 w-full">
                         <input
@@ -319,14 +328,14 @@ const AuthUser = () => {
                         {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
                 </section>
-                {userLogged && userLogged.roles !== 'admin' ? (
+
+                {userLogged && (
                     <ListarReservas
                         userLogged={userLogged}
+                        userData={userData}
                         token={token}
                         loading={loading}
                     />
-                ) : (
-                    ''
                 )}
 
                 <section className="flex justify-end mt-28">

@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FiExternalLink } from 'react-icons/fi';
 import GrupoVotaSala from './GrupoVotaSala';
 import SalaVotaGrupo from './SalaVotaGrupo';
+import { ConfirmationModal } from './ConfirmModal.jsx';
 
-export const ListarReservas = ({ userLogged, token }) => {
+export const ListarReservas = ({ userData, token, userLogged }) => {
     const [reservas, setReservas] = useState([]);
+    const [cancelModalOpen, setCancelModalOpen] = useState(false);
+    const [reservaAEliminar, setReservaAEliminar] = useState(null);
+
     const { VITE_API_URL_BASE } = import.meta.env;
 
-    const id = userLogged.id;
-    const type = userLogged.roles;
+    const id = userData.user.id;
+    const type = userData.user.roles;
 
     useEffect(() => {
         const fetchReservas = async () => {
@@ -25,27 +30,32 @@ export const ListarReservas = ({ userLogged, token }) => {
                     );
 
                     if (!response.ok) {
-                        
-                        return
+                        return;
                     }
                     const reservasData = await response.json();
 
                     setReservas(reservasData.reservas);
                 } catch (error) {
-                  
-                console.error('Error fetching reservas:', error);
-            }}
+                    console.error('Error fetching reservas:', error);
+                }
+            }
         };
 
         fetchReservas();
     }, [token, VITE_API_URL_BASE, id, type]);
 
-    const handleDelete = async (reservaId) => {
+    // const handleConfirmDelete = () => {
+    //     handleDelete();
+    //     setCancelModalOpen(false);
+    // };
+
+    const handleConfirmDelete = async () => {
+        if (!reservaAEliminar) return; // Verificar que hay una reserva seleccionada
         try {
             const endpoint =
                 type === 'grupo'
-                    ? `${VITE_API_URL_BASE}/cancelar-reserva/${reservaId}`
-                    : `${VITE_API_URL_BASE}/borrar-reserva/${reservaId}`;
+                    ? `${VITE_API_URL_BASE}/cancelar-reserva/${reservaAEliminar}`
+                    : `${VITE_API_URL_BASE}/borrar-reserva/${reservaAEliminar}`;
 
             const response = await fetch(endpoint, {
                 method: 'DELETE',
@@ -59,11 +69,18 @@ export const ListarReservas = ({ userLogged, token }) => {
                 throw new Error('Fallo al eliminar la reserva');
             }
 
-            setReservas(reservas.filter((reserva) => reserva.id !== reservaId));
+            // Actualizar el estado de reservas
+            setReservas(
+                reservas.filter((reserva) => reserva.id !== reservaAEliminar)
+            );
             toast.success('Su reserva se ha eliminado con éxito');
         } catch (error) {
-            toast.error(error);
+            toast.error('Error eliminando la reserva');
             console.error('Fallo al eliminar la reserva:', error);
+        } finally {
+            // Cerrar el modal y limpiar el estado
+            setCancelModalOpen(false);
+            setReservaAEliminar(null);
         }
     };
 
@@ -119,13 +136,25 @@ export const ListarReservas = ({ userLogged, token }) => {
                         <div key={reserva.id} className="mb-8">
                             <div className="border p-4 my-2">
                                 <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 sm:gap-6">
-                                    <Link to={`/grupo/${reserva.grupo_id}`}>
+                                    <Link
+                                        to={`/grupo/${reserva.grupo_id}`}
+                                        target="_blank"
+                                    >
                                         <p className="font-semibold">Grupo :</p>
-                                        {reserva.grupo_nombre}
+                                        <span className="flex gap-1 items-center">
+                                            {reserva.grupo_nombre}
+                                            <FiExternalLink />
+                                        </span>
                                     </Link>
-                                    <Link to={`/sala/${reserva.sala_id}`}>
+                                    <Link
+                                        to={`/sala/${reserva.sala_id}`}
+                                        target="_blank"
+                                    >
                                         <p className="font-semibold">Sala:</p>
-                                        {reserva.sala_nombre}
+                                        <span className="flex gap-1 items-center">
+                                            {reserva.sala_nombre}
+                                            <FiExternalLink />
+                                        </span>
                                     </Link>
                                     <p className="font-semibold">
                                         Estado:
@@ -179,7 +208,10 @@ export const ListarReservas = ({ userLogged, token }) => {
                                     ''
                                 ) : (
                                     <button
-                                        onClick={() => handleDelete(reserva.id)}
+                                        onClick={() => {
+                                            setCancelModalOpen(true);
+                                            setReservaAEliminar(reserva.id); // Guardar la reserva seleccionada
+                                        }}
                                         hidden={
                                             type === 'grupo' &&
                                             reserva.confirmada === 1
@@ -194,6 +226,17 @@ export const ListarReservas = ({ userLogged, token }) => {
                                     </button>
                                 )}
                             </div>
+                            {cancelModalOpen && (
+                                <ConfirmationModal
+                                    isOpen={cancelModalOpen}
+                                    text="¿Estás seguro que quieres eliminar esta reserva?"
+                                    onConfirm={handleConfirmDelete} // Pasar la referencia correcta
+                                    onCancel={() => {
+                                        setCancelModalOpen(false);
+                                        setReservaAEliminar(null); // Limpiar la reserva seleccionada al cancelar
+                                    }}
+                                />
+                            )}
                             {new Date(reserva.fecha) < new Date() &&
                             reserva.confirmada === 1 ? (
                                 <>

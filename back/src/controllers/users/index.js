@@ -14,6 +14,7 @@ import selectUserByNameController from './selectUserByNameController.js';
 import getUserGrupoSalaController from './getUserGrupoSalaController .js';
 import getUserByIdController from './getUserByIdController .js';
 import accountUserController from './accountUserController.js';
+import getAllUsersListController from './getAllUsersListController.js';
 
 export {
     registerUserController,
@@ -32,4 +33,5 @@ export {
     getUserGrupoSalaController,
     getUserByIdController,
     accountUserController,
+    getAllUsersListController,
 };

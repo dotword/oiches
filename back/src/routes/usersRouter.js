@@ -1,7 +1,12 @@
 import express from 'express';
 
 // Importamos las funciones controladoras intermedias.
-import { authUser, userExists, canEditUser } from '../middleware/index.js';
+import {
+    authUser,
+    userExists,
+    canEditUser,
+    isAdmin,
+} from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
 import {
@@ -19,6 +24,7 @@ import {
     getUserGrupoSalaController,
     getUserByIdController,
     accountUserController,
+    getAllUsersListController,
     // selectUserByNameController
 } from '../controllers/users/index.js';
 
@@ -88,5 +94,8 @@ router.put(
     canEditUser,
     editUserAvatarController
 );
+
+// Listar todos los usuarios
+router.get('/dashboard/users?', authUser, isAdmin, getAllUsersListController);
 
 export default router;

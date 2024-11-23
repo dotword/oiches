@@ -28,12 +28,19 @@ export const crearReservaService = async (
                 404
             );
         }
-
         const [grupoResults] = await pool.query(
             'SELECT id, nombre FROM grupos WHERE usuario_id = ?',
             [id]
         );
+        if (grupoResults[0] === undefined) {
+            throw generateErrorsUtil(
+                'Tienes que publicar tu proyecto musical para poder reservar',
+                404
+            );
+        }
+
         const grupo_id = grupoResults[0].id;
+
         const grupoNombre = grupoResults[0].nombre;
 
         const [salaResults] = await pool.query(

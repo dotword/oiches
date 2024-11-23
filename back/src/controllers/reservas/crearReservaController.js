@@ -10,6 +10,7 @@ const crearReservaController = async (req, res, next) => {
         await validateSchemaUtil(createReservaSchema, req.body);
 
         const { id } = req.user;
+
         const { sala_id } = req.params;
         if (!sala_id) {
             throw generateErrorsUtil(

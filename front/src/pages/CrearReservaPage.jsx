@@ -45,10 +45,7 @@ export const CrearReservaPage = () => {
 
                     <div className="flex flex-col my-6 md:mt-0">
                         <h2 className="font-semibold">{entry.nombre}</h2>
-                        <p className="mb-4">
-                            {entry.direccion}, {entry.ciudad} ({entry.provincia}
-                            )
-                        </p>
+                        <p className="mb-4">{entry.direccion}</p>
 
                         {entry.genero.length > 0 && (
                             <div className="mb-4">

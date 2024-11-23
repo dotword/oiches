@@ -51,7 +51,6 @@ const getUserGrupoSalaService = async (name) => {
         // Convertir el Map a un array y obtener el primer grupo
         if (gruposMap.size > 0) {
             const resultado = Array.from(gruposMap.values())[0]; // Obtiene el primer grupo
-            console.log(resultado);
             return resultado;
         }
         // Si no se encontró un grupo, consulta para salas

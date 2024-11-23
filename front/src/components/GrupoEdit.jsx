@@ -16,6 +16,7 @@ import {
 } from '../services/EditGrupoService.js';
 import { AddGrupoMedia } from './GrupoMedia.jsx';
 import { AddRiderForm, AddFotosForm } from './GrupoFiles.jsx';
+import DeleteUserSalaGrupo from './DeleteUserSalaGrupo.jsx';
 
 const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);
@@ -373,7 +374,7 @@ const GrupoEdit = () => {
                 <div className="mt-4 max-w-80 md:col-start-1 md:col-end-3">
                     <input
                         type="submit"
-                        value="Modificar Grupo"
+                        value="Modificar datos"
                         className="btn-account p-3 w-full"
                     />
                 </div>
@@ -388,6 +389,14 @@ const GrupoEdit = () => {
             </section>
             <section className="mt-12">
                 <AddRiderForm />
+            </section>
+            <section className="flex justify-end my-8">
+                <DeleteUserSalaGrupo
+                    userLogged={userLogged}
+                    token={token}
+                    id={idGrupo}
+                    type="grupo"
+                />
             </section>
             <Toastify />
         </div>
