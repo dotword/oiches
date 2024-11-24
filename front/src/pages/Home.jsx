@@ -49,13 +49,30 @@ const Home = () => {
     return (
         <>
             <Seo
-                title="Oiches - Conecta Músicos y Salas de Conciertos"
-                description="Descubre los músicos mejor valorados y las salas de conciertos más populares en Oiches. Vive la mejor música en vivo y organiza eventos musicales inolvidables."
-                keywords="músicos, salas de conciertos, música en vivo, eventos musicales"
+                title="Oiches - Músicos y Salas de Conciertos Destacados"
+                description="Explora los músicos mejor valorados y las salas más votadas en Oiches. Conecta con talentos y escenarios perfectos para disfrutar la mejor música en vivo."
+                keywords="músicos, bandas, salas de conciertos, eventos musicales"
                 url="https://oiches.com"
-                image="https://oiches.com/Oiches-logo-vertical.png"
+                image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
                 type="website"
-                imageType="image/png"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'ItemList',
+                    itemListElement: [
+                        ...grupos.map((grupo, index) => ({
+                            '@type': 'ListItem',
+                            position: index + 1,
+                            name: grupo.nombre,
+                            url: `https://oiches.com/grupos/${grupo.id}`,
+                        })),
+                        ...salas.map((sala, index) => ({
+                            '@type': 'ListItem',
+                            position: grupos.length + index + 1,
+                            name: sala.nombre,
+                            url: `https://oiches.com/salas/${sala.id}`,
+                        })),
+                    ],
+                }}
             />
             <motion.div
                 initial={{ opacity: 0, y: 20 }}

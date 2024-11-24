@@ -9,10 +9,26 @@ const AvisoLegal = () => {
             {/* SEO dinámico para esta página */}
             <Seo
                 title="Aviso Legal - Oiches"
-                description="Lee nuestro aviso legal para entender los términos y condiciones del uso de la plataforma Oiches."
+                description="Consulta los términos legales de uso de la plataforma Oiches. Información sobre privacidad, derechos y responsabilidades."
                 url="https://oiches.com/aviso-legal"
-                keywords="aviso legal, términos y condiciones, Oiches"
-                noIndex // Nueva propiedad para evitar la indexación
+                keywords="aviso legal, términos legales, condiciones de uso, Oiches"
+                noIndex={true} // Evitamos la indexación pagina poco relevante en SEO
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'Aviso Legal - Oiches',
+                    description:
+                        'Consulta los términos legales de uso de la plataforma Oiches. Información sobre privacidad, derechos y responsabilidades.',
+                    url: 'https://oiches.com/aviso-legal',
+                    publisher: {
+                        '@type': 'Organization',
+                        name: 'Oiches',
+                        logo: {
+                            '@type': 'ImageObject',
+                            url: 'https://oiches.com/logo.png',
+                        },
+                    },
+                }}
             />
 
             <motion.div

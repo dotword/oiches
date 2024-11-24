@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import backgroundImage from '../assets/Live.jpg';
 import { motion } from 'framer-motion';
+import Seo from '../components/SEO/Seo.jsx';
 
 const UserValidationPage = () => {
     const [status, setStatus] = useState(null);
@@ -63,35 +64,45 @@ const UserValidationPage = () => {
     if (status === null) return <p>Validando usuario...</p>;
 
     return (
-        <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: '100%' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-0 flex items-center justify-center bg-gradient-to-t bg-opacity-50 z-50"
-            style={{
-                backgroundImage: `url(${backgroundImage})`,
-                backgroundSize: 'cover',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                opacity: '0.9',
-            }}
-        >
-            <ToastContainer />
-            <div className="bg-white p-6 rounded shadow-lg">
-                <h2 className="text-xl mb-4">
-                    {status === 'ok'
-                        ? 'Validación Exitosa'
-                        : 'Validación Fallida'}
-                </h2>
-                <p className="mb-4">{message}</p>
-                <button
-                    onClick={handleRedirect}
-                    className="bg-purple-600 text-white px-4 py-2 rounded"
-                >
-                    {status === 'ok' ? 'Ir al Login' : 'Intentar de Nuevo'}
-                </button>
-            </div>
-        </motion.div>
+        <>
+            {/* SEO Configuración */}
+            <Seo
+                title="Validación de Usuario - Oiches"
+                description="Completa la validación de tu cuenta en Oiches y accede a una experiencia personalizada en la plataforma."
+                url={`https://oiches.com/validar-usuario/${registrationCode}`}
+                keywords="validación de usuario, Oiches, activación de cuenta"
+                noIndex={true} // Evitamos indexar una página temporal
+            />
+            <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: '100%' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="fixed inset-0 flex items-center justify-center bg-gradient-to-t bg-opacity-50 z-50"
+                style={{
+                    backgroundImage: `url(${backgroundImage})`,
+                    backgroundSize: 'cover',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
+                    opacity: '0.9',
+                }}
+            >
+                <ToastContainer />
+                <div className="bg-white p-6 rounded shadow-lg">
+                    <h2 className="text-xl mb-4">
+                        {status === 'ok'
+                            ? 'Validación Exitosa'
+                            : 'Validación Fallida'}
+                    </h2>
+                    <p className="mb-4">{message}</p>
+                    <button
+                        onClick={handleRedirect}
+                        className="bg-purple-600 text-white px-4 py-2 rounded"
+                    >
+                        {status === 'ok' ? 'Ir al Login' : 'Intentar de Nuevo'}
+                    </button>
+                </div>
+            </motion.div>
+        </>
     );
 };
 

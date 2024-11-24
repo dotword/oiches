@@ -13,6 +13,14 @@ const PoliticaCookies = () => {
                 url="https://oiches.com/politica-cookies"
                 keywords="política de cookies, cookies, Oiches"
                 noIndex={true} // Evitar indexación para SEO
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'Política de Cookies - Oiches',
+                    description:
+                        'Consulta nuestra política de cookies para entender cómo se utilizan en la plataforma Oiches.',
+                    url: 'https://oiches.com/politica-cookies',
+                }}
             />
             <motion.div
                 initial={{ opacity: 0, height: 0 }}
