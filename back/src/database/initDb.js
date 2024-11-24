@@ -220,7 +220,9 @@ const main = async () => {
                 ('Hardcore'),
                 ('Heavy'),
                 ('Ópera'),
-                ('Versiones');
+                ('Versiones'),
+                ('Fado'),
+                ('Rancheras');
         `);
 
         await pool.query(`
