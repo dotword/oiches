@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import Toastify from './Toastify.jsx';
+import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
-import FetchAllUsersService from '../services/FetchAllUsersService.js';
+import FetchAllUsersService from '../../services/FetchAllUsersService.js';
 import { FiExternalLink } from 'react-icons/fi';
-import Paginator from '../components/Paginator.jsx';
+import Paginator from '../Paginator.jsx';
 
 const UsersList = ({ token }) => {
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -131,9 +131,9 @@ const UsersList = ({ token }) => {
                     className="form-select w-1/2"
                 />
             </form>
-            <div className="mb-4">
+            <div className="mb-4 flex flex-col">
                 {filteredUsers.length > 0 ? (
-                    <table className="w-full block overflow-x-auto border-collapse mx-0 my-1 text-left">
+                    <table className="w-full block overflow-x-auto border-collapse mx-0 my-1 text-left justify-items-center">
                         <thead>
                             <tr>
                                 <th className="p-1 border border-zinc-700 bg-neutral-300">

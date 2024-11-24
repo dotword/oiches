@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { AuthContext } from '../context/auth/auth.context';
 import { toast } from 'react-toastify';
 import Toastify from './Toastify.jsx';
@@ -16,7 +16,6 @@ import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser.jsx';
-import UsersList from './UsersList.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading } = useContext(AuthContext);
@@ -214,6 +213,18 @@ const AuthUser = () => {
                             </div>
                         )}
                     </form>
+                    {userLogged &&
+                    userLogged.roles === 'admin' &&
+                    userLogged.id === userId ? (
+                        <Link
+                            to="/admin-dashboard"
+                            className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                        >
+                            Admin Dashboard
+                        </Link>
+                    ) : (
+                        ''
+                    )}
                 </section>
 
                 <UsersSalaGrupoList
@@ -221,13 +232,7 @@ const AuthUser = () => {
                     token={token}
                     userOwner={userData}
                 />
-                {userLogged &&
-                userLogged.roles === 'admin' &&
-                userLogged.id === userId ? (
-                    <UsersList token={token} />
-                ) : (
-                    ''
-                )}
+
                 <section className="flex flex-col mb-4 py-6 items-center gap-2 border-b-2 border-greyOiches-50">
                     <form className="flex flex-col justify-center gap-2 w-full">
                         <input
