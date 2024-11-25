@@ -2,7 +2,16 @@ import listAllReservaService from '../../services/reservas/listAllReservaService
 
 const listAllReservas = async (req, res, next) => {
     try {
-        const reservas = await listAllReservaService();
+        const filters = {
+            salaname: req.query.salaname || '',
+            gruponame: req.query.gruponame || '',
+            confirm: req.query.confirm || '',
+            order: req.query.order || 'DESC',
+            page: req.query.page || 1,
+            pageSize: req.query.pageSize || 25,
+        };
+
+        const reservas = await listAllReservaService(filters);
 
         res.send({
             status: 'ok',

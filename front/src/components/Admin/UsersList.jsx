@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
-import FetchAllUsersService from '../../services/FetchAllUsersService.js';
+import FetchAllUsersService from '../../services/Admin/FetchAllUsersService.js';
 import { FiExternalLink } from 'react-icons/fi';
 import Paginator from '../Paginator.jsx';
 
@@ -133,59 +133,45 @@ const UsersList = ({ token }) => {
             </form>
             <div className="mb-4 flex flex-col">
                 {filteredUsers.length > 0 ? (
-                    <table className="w-full block overflow-x-auto border-collapse mx-0 my-1 text-left justify-items-center">
+                    <table className="max-w-5xl mx-auto">
                         <thead>
                             <tr>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Usuario
-                                </th>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Activo
-                                </th>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Role
-                                </th>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Fecha alta
-                                </th>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Sala/Músico
-                                </th>
-                                <th className="p-1 border border-zinc-700 bg-neutral-300">
-                                    Provincia
-                                </th>
+                                <th>Usuario</th>
+                                <th>Activo</th>
+                                <th>Role</th>
+                                <th>Fecha alta</th>
+                                <th>Sala/Músico</th>
+                                <th>Provincia</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredUsers.map((filteredUsers) => (
-                                <tr key={filteredUsers.usuario_id} className="">
-                                    <td className="p-2 border border-zinc-700">
+                                <tr
+                                    key={`${filteredUsers.usuario_id}${filteredUsers.sala_id}`}
+                                >
+                                    <td>
                                         <Link
                                             to={`/users/account/${filteredUsers.usuario_id}`}
                                             target="_blank"
                                         >
-                                            <span className="flex gap-1 items-center">
+                                            <span className="flex gap-1 items-center justify-center md:justify-start">
                                                 {filteredUsers.username}
                                                 <FiExternalLink />
                                             </span>
                                         </Link>
                                     </td>
-                                    <td className="p-2 border border-zinc-700">
-                                        {filteredUsers.active}
-                                    </td>
-                                    <td className="p-2 border border-zinc-700">
-                                        {filteredUsers.roles}
-                                    </td>
-                                    <td className="p-2 border border-zinc-700">
+                                    <td>{filteredUsers.active}</td>
+                                    <td>{filteredUsers.roles}</td>
+                                    <td>
                                         {formatDate(filteredUsers.createdAt)}
                                     </td>
-                                    <td className="p-2 border border-zinc-700">
+                                    <td>
                                         {filteredUsers.sala_id !== null && (
                                             <Link
                                                 to={`/sala/${filteredUsers.sala_id}`}
                                                 target="_blank"
                                             >
-                                                <span className="flex gap-1 items-center">
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
                                                     {filteredUsers.sala_nombre}
                                                     <FiExternalLink />
                                                 </span>
@@ -196,14 +182,14 @@ const UsersList = ({ token }) => {
                                                 to={`/grupo/${filteredUsers.grupo_id}`}
                                                 target="_blank"
                                             >
-                                                <span className="flex gap-1 items-center">
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
                                                     {filteredUsers.grupo_nombre}
                                                     <FiExternalLink />
                                                 </span>
                                             </Link>
                                         )}
                                     </td>
-                                    <td className="p-2 border border-zinc-700">
+                                    <td>
                                         {filteredUsers.provincia_grupo_nombre ||
                                             filteredUsers.provincia_sala_nombre}
                                     </td>
