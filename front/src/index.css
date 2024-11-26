@@ -11,6 +11,52 @@
     h2 {
         margin-bottom: 0.5rem;
     }
+    table {
+        width: 100%;
+        overflow-x: auto;
+    }
+    table thead th {
+        color: #fff;
+        background-color: #424242;
+    }
+    table th,
+    table td {
+        padding: 8px;
+        text-align: left;
+        border-top: 1px solid #ddd;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+
+    @media (max-width: 767px) {
+        table thead {
+            display: none; /* Oculta los encabezados en dispositivos móviles */
+        }
+
+        table tr {
+            margin-bottom: 0.625em;
+            display: block;
+            border-bottom: 2px solid #ddd;
+        }
+
+        table td {
+            display: block;
+            position: relative;
+            text-align: center;
+        }
+
+        table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50%;
+            padding-left: 15px;
+            font-weight: bold;
+            text-align: left;
+        }
+    }
 }
 
 @layer components {

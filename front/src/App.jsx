@@ -27,6 +27,7 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
+import AdminDashboard from './pages/AdminDashboard.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -110,6 +111,12 @@ function App() {
                             path="/politica-cookies"
                             element={<PoliticaCookies />}
                         />
+
+                        <Route
+                            path="/admin-dashboard"
+                            element={<AdminDashboard />}
+                        />
+
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </AnimatePresence>
