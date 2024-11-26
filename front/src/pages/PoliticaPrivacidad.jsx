@@ -12,7 +12,15 @@ const PoliticaPrivacidad = () => {
                 description="Consulta nuestra política de privacidad para conocer cómo tratamos tus datos personales en Oiches."
                 url="https://oiches.com/politica-privacidad"
                 keywords="política de privacidad, protección de datos, Oiches"
-                noIndex={true} // Indica que no se debe indexar esta página
+                noIndex={true}
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'WebPage',
+                    name: 'Política de Privacidad - Oiches',
+                    description:
+                        'Consulta nuestra política de privacidad para conocer cómo tratamos tus datos personales en Oiches.',
+                    url: 'https://oiches.com/politica-privacidad',
+                }}
             />
 
             <motion.div

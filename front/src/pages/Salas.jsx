@@ -42,15 +42,25 @@ const Salas = () => {
 
     return (
         <>
-            {/* Componente SEO dinámico para la página de Salas */}
+            {/* Componente SEO dinámico */}
             <Seo
                 title="Oiches | Encuentra Salas de Conciertos para Eventos en Vivo"
                 description="Explora y reserva salas de conciertos perfectas para tus eventos en vivo. Conéctate directamente con las mejores opciones a través de Oiches."
                 keywords="salas de conciertos, música en vivo, reservas de salas, eventos musicales, donde tocar, conciertos en vivo"
                 url="https://oiches.com/salas"
-                image="https://oiches.com/Oiches-musica-vivo.jpg"
+                image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
                 type="website"
                 imageType="image/jpg"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'ItemList',
+                    itemListElement: filteredSalas.map((sala, index) => ({
+                        '@type': 'ListItem',
+                        position: index + 1,
+                        name: sala.nombre,
+                        url: `https://oiches.com/salas/${sala.id}`,
+                    })),
+                }}
             />
 
             <motion.div

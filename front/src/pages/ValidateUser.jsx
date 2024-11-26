@@ -5,6 +5,7 @@ import Toastify from '../components/Toastify.jsx';
 import { useState } from 'react';
 import { Input } from '../components/Input.jsx';
 import { toast } from 'react-toastify';
+import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente SEO
 
 export const ValidateUser = () => {
     const [error, setError] = useState('');
@@ -45,54 +46,69 @@ export const ValidateUser = () => {
     };
 
     return (
-        <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: '100%' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="h-screen md:flex md:w-screen"
-        >
-            <MenuForms
-                signInLogin={
-                    <>
-                        <p className="max-[360px]:hidden">¿Ya tienes cuenta?</p>
-                        <Link
-                            to="/login"
-                            className="hover:text-purpleOiches md:text-yellowOiches ml-2"
-                        >
-                            Login
-                        </Link>
-                    </>
-                }
+        <>
+            {/* SEO para esta página */}
+            <Seo
+                title="Validar Usuario - Oiches"
+                description="Valida tu usuario en Oiches para disfrutar de todas las funcionalidades de la plataforma."
+                url="https://oiches.com/validate-user"
+                keywords="validar usuario, Oiches, activación de cuenta"
+                noIndex={true} // No indexar esta página
             />
-            <div className="flex justify-between md:justify-evenly max-w-md flex-col gap-y-5 lg:w-1/3 mx-auto lg:mt-20 my-14 p-4">
-                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-                    <h1 className="text-4xl">
-                        Introduce tu código de validación de usuario:
-                    </h1>
-                    <hr />
-
-                    <div className="flex flex-col gap-5 justify-center">
-                        <label htmlFor="code">
-                            <Input
-                                type="text"
-                                name="code"
-                                placeholder="Código de validación"
-                                required
-                                className="form-input"
-                            />
-                        </label>
-                    </div>
-                    {error && <p className="text-red-500">{error}</p>}
-                    <button
-                        type="submit"
-                        className="p-4 w-full text-white hover:text-black hover:bg-opacity-80 transition-all bg-purpleOiches text-xl justify-center rounded"
-                        disabled={loading}
+            <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: '100%' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="h-screen md:flex md:w-screen"
+            >
+                <MenuForms
+                    signInLogin={
+                        <>
+                            <p className="max-[360px]:hidden">
+                                ¿Ya tienes cuenta?
+                            </p>
+                            <Link
+                                to="/login"
+                                className="hover:text-purpleOiches md:text-yellowOiches ml-2"
+                            >
+                                Login
+                            </Link>
+                        </>
+                    }
+                />
+                <div className="flex justify-between md:justify-evenly max-w-md flex-col gap-y-5 lg:w-1/3 mx-auto lg:mt-20 my-14 p-4">
+                    <form
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-5"
                     >
-                        {loading ? 'Validando...' : 'Validar usuario'}
-                    </button>
-                </form>
-            </div>
-            <Toastify />
-        </motion.div>
+                        <h1 className="text-4xl">
+                            Introduce tu código de validación de usuario:
+                        </h1>
+                        <hr />
+
+                        <div className="flex flex-col gap-5 justify-center">
+                            <label htmlFor="code">
+                                <Input
+                                    type="text"
+                                    name="code"
+                                    placeholder="Código de validación"
+                                    required
+                                    className="form-input"
+                                />
+                            </label>
+                        </div>
+                        {error && <p className="text-red-500">{error}</p>}
+                        <button
+                            type="submit"
+                            className="p-4 w-full text-white hover:text-black hover:bg-opacity-80 transition-all bg-purpleOiches text-xl justify-center rounded"
+                            disabled={loading}
+                        >
+                            {loading ? 'Validando...' : 'Validar usuario'}
+                        </button>
+                    </form>
+                </div>
+                <Toastify />
+            </motion.div>
+        </>
     );
 };

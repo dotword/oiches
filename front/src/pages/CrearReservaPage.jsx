@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import Toastify from '../components/Toastify.jsx';
 import noImage from '../assets/noimage.png';
 import Footer from '../components/Footer.jsx';
+import Seo from '../components/SEO/Seo.jsx';
+
 export const CrearReservaPage = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
@@ -34,6 +36,32 @@ export const CrearReservaPage = () => {
 
     return (
         <>
+            {/* SEO dinámico para la página de reservas */}
+            <Seo
+                title={`Reserva en ${entry.nombre} - Oiches`}
+                description={`Reserva un espacio en la sala ${entry.nombre}, ubicada en ${entry.direccion}. Conoce sus horarios y géneros musicales.`}
+                url={`https://oiches.com/crear-reserva/${idSala}`}
+                image={imageUrl}
+                noIndex={true}
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'EventReservation',
+                    reservationFor: {
+                        '@type': 'EventVenue',
+                        name: entry.nombre,
+                        address: {
+                            '@type': 'PostalAddress',
+                            streetAddress: entry.direccion,
+                            addressLocality: entry.ciudad || '',
+                            addressRegion: entry.provincia || '',
+                            postalCode: entry.codigoPostal || '',
+                            addressCountry: 'ES',
+                        },
+                    },
+                    startTime: entry.horaReservasStart || '00:00',
+                    endTime: entry.horaReservasEnd || '23:59',
+                }}
+            />
             <Header txt={`Quiero tocar en ${entry.nombre}`} />
             <main className="p-4 mt-6 flex flex-col mx-auto shadow-xl w-11/12 md:max-w-1200">
                 <section className="mb-6 md:flex md:gap-24 md:justify-center md:items-center md:mb-14">

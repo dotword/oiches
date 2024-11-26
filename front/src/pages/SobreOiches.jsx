@@ -10,11 +10,26 @@ const SobreOiches = () => {
             <Seo
                 title="Sobre Oiches - Plataforma para Músicos y Salas de Concierto"
                 description="Descubre cómo Oiches conecta a músicos emergentes con salas de concierto, facilitando reservas y oportunidades únicas para música en vivo."
-                keywords="Oiches, músicos, salas de concierto, música en vivo, reservas, gestión de eventos"
+                keywords="Oiches, músicos emergentes, salas de concierto, música en vivo, reservas de conciertos, gestión de eventos, conectar músicos y salas"
                 url="https://oiches.com/sobre-oiches"
-                image="https://oiches.com/Oiches-musica-vivo.jpg"
+                image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
                 type="website"
-                imageType="image/jpg"
+                structuredData={{
+                    '@context': 'https://schema.org',
+                    '@type': 'AboutPage',
+                    name: 'Sobre Oiches',
+                    description:
+                        'Página sobre Oiches, una plataforma que conecta a músicos emergentes con salas de concierto para facilitar reservas y oportunidades únicas en música en vivo.',
+                    url: 'https://oiches.com/sobre-oiches',
+                    publisher: {
+                        '@type': 'Organization',
+                        name: 'Oiches',
+                        logo: {
+                            '@type': 'ImageObject',
+                            url: 'https://oiches.com/Oiches-logo-vertical.png',
+                        },
+                    },
+                }}
             />
 
             <motion.div
