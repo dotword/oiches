@@ -19,7 +19,7 @@ const MapComponent = ({ onLocationSelect }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setDebouncedAddress(address);
-        }, 1000);
+        }, 500);
 
         return () => {
             clearTimeout(timer);
@@ -40,8 +40,10 @@ const MapComponent = ({ onLocationSelect }) => {
                         setSuggestions([]); // Si no hay resultados, limpiar las sugerencias
                     }
                 })
-                .catch((error) =>
-                    console.error('Error buscando la dirección:', error)
+                .catch(
+                    (error) =>
+                        console.error('Error buscando la dirección:', error)
+                    // toast.error('Error de toast')
                 );
         }
     }, [debouncedAddress]);

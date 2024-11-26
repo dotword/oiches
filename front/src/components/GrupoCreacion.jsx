@@ -416,6 +416,20 @@ const GrupoCreacion = () => {
                             className="btn-account p-3 w-full"
                         />
                     </div>
+                    <div className="m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:max-w-80">
+                        <p className="text-center">
+                            ¿Necesitas ayuda con la publicación?
+                        </p>
+
+                        <a
+                            href="mailto:hola@oiches.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                        >
+                            Escríbenos
+                        </a>
+                    </div>
                     <div>{error && <p>{error}</p>}</div>
                 </form>
             ) : (
