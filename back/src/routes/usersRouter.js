@@ -95,7 +95,7 @@ router.put(
     editUserAvatarController
 );
 
-// Listar todos los usuarios
+// Listar todos los usuarios para el Admin
 router.get('/dashboard/users?', authUser, isAdmin, getAllUsersListController);
 
 export default router;

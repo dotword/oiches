@@ -12,6 +12,7 @@ const selectAllUsersService = async (filters) => {
             u.active, 
             u.roles, 
             u.createdAt,
+            u.deletedAt,
             salas.id AS sala_id,
             salas.nombre AS sala_nombre,
             salas.updatedAt AS sala_updatedAt,
