@@ -73,7 +73,7 @@ export const RegisterForm = () => {
                 <hr className="mb-4 md:-mb-1" />
                 <div className="flex gap-4">
                     <label>
-                        Artista
+                        Artista{' '}
                         <input
                             className="accent-purpleOiches"
                             type="radio"
@@ -94,11 +94,11 @@ export const RegisterForm = () => {
                 </div>
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="name">
-                        Username*
+                        Nombre de usuario*
                         <Input
                             type="text"
                             name="name"
-                            placeholder="miusername"
+                            placeholder="minombredeusuario"
                             required
                             className="form-input"
                         />
@@ -108,7 +108,7 @@ export const RegisterForm = () => {
                         <Input
                             type="email"
                             name="email"
-                            placeholder="Youremail@example.com"
+                            placeholder="miemail@mail.com"
                             required
                             className="form-input"
                         />
@@ -120,7 +120,7 @@ export const RegisterForm = () => {
                         <Input
                             type={showPassword ? 'text' : 'password'} // Cambia el tipo según el estado
                             name="password"
-                            placeholder="Yourpassword0?"
+                            placeholder="MiPassword0?"
                             required
                             className="form-input w-full pr-10" // Añadir padding-right para que el ícono no cubra el texto
                         />
@@ -142,7 +142,7 @@ export const RegisterForm = () => {
                         <Input
                             type={showPassword2 ? 'text' : 'password'} // Cambia el tipo según el estado
                             name="password2"
-                            placeholder="Yourpassword0?"
+                            placeholder="MiPassword0?"
                             required
                             className="form-input w-full pr-10" // Añadir padding-right para que el ícono no tape lo escrito
                         />
