@@ -12,13 +12,12 @@ import { ListarReservas } from '../components/ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
-// import UsersSalaGrupoList from './DeleteUserSalaGrupo.jsx';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../hooks/useUser.jsx';
 
 const AuthUser = () => {
-    const { userLogged, token, loading } = useContext(AuthContext);
+    const { userLogged, token, loading, signOut } = useContext(AuthContext);
     const { userId } = useParams();
     const userData = useUser(userId);
 
@@ -71,6 +70,7 @@ const AuthUser = () => {
             if (response.ok) {
                 toast.success('Eliminando cuenta con éxito');
                 setTimeout(() => {
+                    signOut();
                     navigate('/');
                 }, 3000);
             } else {
