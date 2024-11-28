@@ -1,5 +1,4 @@
 import getPool from '../../database/getPool.js';
-import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const listAllReservaService = async (filters) => {
     try {
@@ -49,9 +48,6 @@ const listAllReservaService = async (filters) => {
 
         // Ejecutar la consulta principal con los filtros y paginación
         const [rows] = await pool.query(query, queryParams);
-        if (rows.length === 0) {
-            throw generateErrorsUtil('No se han encontrado reservas.', 400);
-        }
 
         // Consulta para obtener el total de grupos sin paginación
         let countQuery = `
