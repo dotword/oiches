@@ -4,12 +4,12 @@ import { toast } from 'react-toastify';
 import Toastify from './Toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
-
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 import FetchProvinciasService from '../services/FetchProvinciasService';
 import FetchGenresService from '../services/FetchGenresService';
 import registerGrupoService from '../services/registerGrupoService';
+
 const GrupoCreacion = () => {
     const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -120,14 +120,6 @@ const GrupoCreacion = () => {
             if (value) formData.append(key, value);
         });
         if (file) formData.append('file', file);
-
-        // Extraer el ID de YouTube para cada campo de medios
-        ['mediaA', 'mediaB', 'mediaC', 'mediaD'].forEach((media) => {
-            const youTubeId = extractYouTubeId(formValues[media]);
-            if (youTubeId) {
-                formData.append(media, youTubeId); // Guardar solo el ID
-            }
-        });
 
         try {
             await registerGrupoService({
@@ -246,35 +238,39 @@ const GrupoCreacion = () => {
                             />
                         </div>
 
-                        <div className="flex gap-4 mb-4">
-                            <label
-                                htmlFor="honorarios"
-                                className="font-semibold md:w-[calc(50%-0.5rem)]"
-                            >
-                                Caché desde:
+                        <div className="flex gap-4 mb-4 md:w-full">
+                            <div className="flex flex-col w-1/2">
+                                <label
+                                    htmlFor="honorarios"
+                                    className="font-semibold mb-1"
+                                >
+                                    Caché desde:
+                                </label>
                                 <input
                                     type="number"
                                     name="honorarios"
                                     placeholder="Caché del artista/grupo"
                                     value={honorarios}
                                     onChange={handleChange}
-                                    className="form-input font-normal"
+                                    className="form-input font-normal w-full"
                                 />
-                            </label>
-                            <label
-                                htmlFor="honorarios_to"
-                                className="font-semibold md:w-[calc(50%-0.5rem)]"
-                            >
-                                Caché hasta:
+                            </div>
+                            <div className="flex flex-col w-1/2">
+                                <label
+                                    htmlFor="honorarios_to"
+                                    className="font-semibold mb-1"
+                                >
+                                    Caché hasta:
+                                </label>
                                 <input
                                     type="number"
                                     name="honorarios_to"
                                     placeholder="Caché del artista/grupo"
                                     value={honorarios_to}
                                     onChange={handleChange}
-                                    className="form-input font-normal"
+                                    className="form-input font-normal w-full"
                                 />
-                            </label>
+                            </div>
                         </div>
 
                         <div className="flex flex-col mb-4 md:w-full">
@@ -327,7 +323,7 @@ const GrupoCreacion = () => {
                                         name={media}
                                         placeholder="Añade enlaces a tus videos de YouTube"
                                         value={mediaLinks[media]}
-                                        className="form-input"
+                                        className="form-input mb-4" //Se amplia el espacio entre imputs tambien en movil acilita el uso con los dedos
                                         onChange={handleMediaChange}
                                     />
                                 )
@@ -342,7 +338,7 @@ const GrupoCreacion = () => {
                             <p className="text-xs mb-3">
                                 (*) El tamaño del archivo no debe exceder 3Mb
                             </p>
-                            <div className="sect-photo">
+                            <div className="sect-photo w-full">
                                 <span className="border-photos w-full h-20">
                                     {file ? (
                                         <span className="text-xs p-1 overflow-hidden">
@@ -372,13 +368,13 @@ const GrupoCreacion = () => {
                                 (*) Archivos .jpeg, .png, .webp o .pdf con un
                                 tamaño máximo de 3Mb
                             </p>
-                            {['A', 'B', 'C', 'D'].map((key) => (
-                                <div
-                                    className="mb-4 flex flex-wrap gap-4"
-                                    key={key}
-                                >
-                                    <section className="sect-photo">
-                                        <span className="border-photos">
+                            <div className="w-full grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
+                                {['A', 'B', 'C', 'D'].map((key) => (
+                                    <section
+                                        className="sect-photo w-full"
+                                        key={key}
+                                    >
+                                        <span className="border-photos w-full">
                                             {previews[`previewUrl${key}`] ? (
                                                 <img
                                                     src={
@@ -387,7 +383,7 @@ const GrupoCreacion = () => {
                                                         ]
                                                     }
                                                     alt="Vista previa"
-                                                    width={'200px'}
+                                                    className="w-full"
                                                 />
                                             ) : (
                                                 <span>Sube una foto</span>
@@ -405,9 +401,27 @@ const GrupoCreacion = () => {
                                             />
                                         </span>
                                     </section>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </section>
+
+                        {/* Botón de ayuda justo después de las fotos */}
+                        <div className="sticky top-0 my-8 max-w-full">
+                            <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
+                                <p className="text-center">
+                                    ¿Necesitas ayuda con la publicación?
+                                </p>
+
+                                <a
+                                    href="mailto:hola@oiches.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                                >
+                                    Escríbenos
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <div className="my-12 max-w-80">
                         <input
@@ -415,20 +429,6 @@ const GrupoCreacion = () => {
                             value="Publicar artista/grupo"
                             className="btn-account p-3 w-full"
                         />
-                    </div>
-                    <div className="m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:max-w-80">
-                        <p className="text-center">
-                            ¿Necesitas ayuda con la publicación?
-                        </p>
-
-                        <a
-                            href="mailto:hola@oiches.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
-                        >
-                            Escríbenos
-                        </a>
                     </div>
                     <div>{error && <p>{error}</p>}</div>
                 </form>
