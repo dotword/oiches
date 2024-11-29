@@ -1,8 +1,8 @@
-import { FaPencil } from 'react-icons/fa6';
 import 'react-toastify/dist/ReactToastify.css';
 import Toastify from './Toastify.jsx';
 import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
 import { FaEye } from 'react-icons/fa';
+import { FaPencil } from 'react-icons/fa6';
 
 const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
     const idUserOwner = userOwner.user.id;

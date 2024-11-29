@@ -359,6 +359,7 @@ const AuthUser = () => {
                     text="¿Estás seguro que quieres eliminar tu cuenta? Se borrarán todos los datos asociados a tu cuenta: grupos, salas, imágenes, votos, etc..."
                     onConfirm={handleConfirm}
                     onCancel={() => setModalOpen(false)}
+                    classConfirm={'bg-red-500'}
                 />
             )}
         </>

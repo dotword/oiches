@@ -29,8 +29,6 @@ const SalaCreacion = () => {
         condiciones: '',
         equipamiento: '',
         web: '',
-        horaReservasStart: '',
-        horaReservasEnd: '',
     });
 
     const [provinces, setProvinces] = useState([]);
@@ -126,8 +124,6 @@ const SalaCreacion = () => {
         condiciones,
         equipamiento,
         web,
-        horaReservasStart,
-        horaReservasEnd,
     } = formValues;
 
     // Esta función actualizará los valores en el formulario con los datos seleccionados en el mapa
@@ -332,37 +328,6 @@ const SalaCreacion = () => {
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
-                    </div>
-
-                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                        <label
-                            htmlFor="horaReservasStart"
-                            className="font-semibold"
-                        >
-                            Hora de inicio de reservas:
-                        </label>
-                        <input
-                            type="time"
-                            name="horaReservasStart"
-                            value={horaReservasStart}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                        <label
-                            htmlFor="horaReservasEnd"
-                            className="font-semibold"
-                        >
-                            Hora final de reservas:
-                        </label>
-                        <input
-                            type="time"
-                            name="horaReservasEnd"
-                            value={horaReservasEnd}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
                     </div>
                 </div>
                 <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-col">

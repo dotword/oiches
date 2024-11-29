@@ -1,7 +1,8 @@
+import React from 'react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FiExternalLink } from 'react-icons/fi';
+import { FiExternalLink, FiMail } from 'react-icons/fi';
 import GrupoVotaSala from './GrupoVotaSala';
 import SalaVotaGrupo from './SalaVotaGrupo';
 import { ConfirmationModal } from './ConfirmModal.jsx';
@@ -36,18 +37,13 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
 
                     setReservas(reservasData.reservas);
                 } catch (error) {
-                    console.error('Error fetching reservas:', error);
+                    toast.error(error);
                 }
             }
         };
 
         fetchReservas();
     }, [token, VITE_API_URL_BASE, id, type]);
-
-    // const handleConfirmDelete = () => {
-    //     handleDelete();
-    //     setCancelModalOpen(false);
-    // };
 
     const handleConfirmDelete = async () => {
         if (!reservaAEliminar) return; // Verificar que hay una reserva seleccionada
@@ -66,7 +62,6 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
 
             if (!response.ok) {
                 toast.error('Fallo al eliminar la reserva');
-                throw new Error('Fallo al eliminar la reserva');
             }
 
             // Actualizar el estado de reservas
@@ -76,7 +71,6 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
             toast.success('Su reserva se ha eliminado con éxito');
         } catch (error) {
             toast.error('Error eliminando la reserva');
-            console.error('Fallo al eliminar la reserva:', error);
         } finally {
             // Cerrar el modal y limpiar el estado
             setCancelModalOpen(false);
@@ -111,7 +105,6 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                 toast.success('Su reserva se ha confirmado con éxito');
             } catch (error) {
                 toast.error(error);
-                console.error('Error confirming reserva:', error);
             }
         }
     };
@@ -132,133 +125,181 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                     Histórico Reservas
                 </h3>
                 {reservas.length > 0 ? (
-                    reservas.map((reserva) => (
-                        <div key={reserva.id} className="mb-8">
-                            <div className="border p-4 my-2">
-                                <div className="grid grid-cols-1 sm:grid-cols-6 gap-4 sm:gap-6">
-                                    <Link
-                                        to={`/grupo/${reserva.grupo_id}`}
-                                        target="_blank"
-                                    >
-                                        <p className="font-semibold">Grupo :</p>
-                                        <span className="flex gap-1 items-center">
-                                            {reserva.grupo_nombre}
-                                            <FiExternalLink />
-                                        </span>
-                                    </Link>
-                                    <Link
-                                        to={`/sala/${reserva.sala_id}`}
-                                        target="_blank"
-                                    >
-                                        <p className="font-semibold">Sala:</p>
-                                        <span className="flex gap-1 items-center">
-                                            {reserva.sala_nombre}
-                                            <FiExternalLink />
-                                        </span>
-                                    </Link>
-                                    <p className="font-semibold">
-                                        Estado:
-                                        {reserva.confirmada === 0 ? (
-                                            <span className="block font-normal text-red-600">
-                                                Sin confirmar
+                    <table className="max-w-5xl mx-auto">
+                        <thead>
+                            <tr>
+                                <th>
+                                    {type === 'sala' && 'Artista'}
+                                    {type === 'grupo' && 'Sala'}
+                                </th>
+
+                                <th>Estado</th>
+                                <th>Fecha concierto</th>
+                                <th>Fecha solicitud</th>
+                                <th>Cancelar</th>
+                                {type === 'sala' && <th>Confirmar</th>}
+                                <th>Contactar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {reservas.map((reserva) => (
+                                <React.Fragment key={reserva.id}>
+                                    <tr className="mt-10 md:mt-0">
+                                        <td>
+                                            {type === 'sala' && (
+                                                <Link
+                                                    to={`/grupo/${reserva.grupo_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                        {reserva.grupo_nombre}
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                            {type === 'grupo' && (
+                                                <Link
+                                                    to={`/sala/${reserva.sala_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                        {reserva.sala_nombre}
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        </td>
+
+                                        <td>
+                                            {reserva.confirmada === 0 ? (
+                                                <span className="block font-normal text-red-600">
+                                                    Sin confirmar
+                                                </span>
+                                            ) : (
+                                                <span className="block font-normal text-green-600">
+                                                    Confirmada
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td>
+                                            <span className="md:hidden text-sm">
+                                                Fecha concierto:{' '}
                                             </span>
-                                        ) : (
-                                            <span className="block font-normal text-green-600">
-                                                Confirmada
+                                            {formatDate(reserva.fecha)}
+                                        </td>
+                                        <td>
+                                            <span className="md:hidden text-sm">
+                                                Fecha solicitud:{' '}
                                             </span>
+                                            {formatDate(reserva.createdAt)}
+                                        </td>
+                                        <td>
+                                            {new Date(reserva.fecha) <
+                                            new Date() ? (
+                                                ''
+                                            ) : (
+                                                <button
+                                                    onClick={() => {
+                                                        setCancelModalOpen(
+                                                            true
+                                                        );
+                                                        setReservaAEliminar(
+                                                            reserva.id
+                                                        ); // Guardar la reserva seleccionada
+                                                    }}
+                                                    hidden={
+                                                        type === 'grupo' &&
+                                                        reserva.confirmada === 1
+                                                    }
+                                                    disabled={
+                                                        type === 'grupo' &&
+                                                        reserva.confirmada === 1
+                                                    }
+                                                    className="button bg-red-500 text-white p-1 text-sm rounded"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                            )}
+                                            {cancelModalOpen && (
+                                                <ConfirmationModal
+                                                    isOpen={cancelModalOpen}
+                                                    text="¿Estás seguro que quieres eliminar esta reserva?"
+                                                    onConfirm={
+                                                        handleConfirmDelete
+                                                    } // Pasar la referencia correcta
+                                                    onCancel={() => {
+                                                        setCancelModalOpen(
+                                                            false
+                                                        );
+                                                        setReservaAEliminar(
+                                                            null
+                                                        ); // Limpiar la reserva seleccionada al cancelar
+                                                    }}
+                                                    classConfirm={'bg-red-600'}
+                                                    textConfirm="Eliminar reserva"
+                                                    textCancel="No eliminar"
+                                                    classCancel={'bg-green-600'}
+                                                />
+                                            )}
+                                        </td>
+
+                                        {type === 'sala' && (
+                                            <td>
+                                                <button
+                                                    onClick={() =>
+                                                        handleConfirm(
+                                                            reserva.id
+                                                        )
+                                                    }
+                                                    hidden={
+                                                        type === 'grupo' ||
+                                                        reserva.confirmada === 1
+                                                    }
+                                                    disabled={type === 'grupo'}
+                                                    className="button bg-green-700 text-white p-2 text-sm rounded"
+                                                >
+                                                    Confirmar
+                                                </button>
+                                            </td>
                                         )}
-                                    </p>
-                                    <p>
-                                        <span className="block font-semibold">
-                                            Fecha:
-                                        </span>
-                                        {formatDate(reserva.fecha)}
-                                    </p>
-                                    <p>
-                                        <span className="block font-semibold">
-                                            Hora Inicio:
-                                        </span>
-                                        {reserva.horaInicio}
-                                    </p>
-                                    <p>
-                                        <span className="block font-semibold">
-                                            Hora Fin:
-                                        </span>
-                                        {reserva.horaFin}
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="flex flex-col sm:flex-row gap-6">
-                                <button
-                                    onClick={() => handleConfirm(reserva.id)}
-                                    hidden={
-                                        type === 'grupo' ||
-                                        reserva.confirmada === 1
-                                    }
-                                    disabled={type === 'grupo'}
-                                    className={`button ${
-                                        type === 'grupo'
-                                            ? 'bg-gray-400 cursor-not-allowed'
-                                            : 'bg-blue-500'
-                                    } text-white p-2 rounded`}
-                                >
-                                    Confirmar
-                                </button>
-                                {new Date(reserva.fecha) < new Date() ? (
-                                    ''
-                                ) : (
-                                    <button
-                                        onClick={() => {
-                                            setCancelModalOpen(true);
-                                            setReservaAEliminar(reserva.id); // Guardar la reserva seleccionada
-                                        }}
-                                        hidden={
-                                            type === 'grupo' &&
-                                            reserva.confirmada === 1
-                                        }
-                                        disabled={
-                                            type === 'grupo' &&
-                                            reserva.confirmada === 1
-                                        }
-                                        className="button bg-red-500 text-white p-2 rounded"
-                                    >
-                                        Cancelar
-                                    </button>
-                                )}
-                            </div>
-                            {cancelModalOpen && (
-                                <ConfirmationModal
-                                    isOpen={cancelModalOpen}
-                                    text="¿Estás seguro que quieres eliminar esta reserva?"
-                                    onConfirm={handleConfirmDelete} // Pasar la referencia correcta
-                                    onCancel={() => {
-                                        setCancelModalOpen(false);
-                                        setReservaAEliminar(null); // Limpiar la reserva seleccionada al cancelar
-                                    }}
-                                />
-                            )}
-                            {new Date(reserva.fecha) < new Date() &&
-                            reserva.confirmada === 1 ? (
-                                <>
-                                    {type === 'grupo' ? (
-                                        <GrupoVotaSala
-                                            idReserva={reserva.id}
-                                            idGrupo={reserva.grupo_id}
-                                            idSala={reserva.sala_id}
-                                        />
+                                        <td>
+                                            <a href={`mailto:${reserva.email}`}>
+                                                <FiMail className="m-auto text-lg" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {new Date(reserva.fecha) < new Date() &&
+                                    reserva.confirmada === 1 ? (
+                                        <tr>
+                                            <td colSpan="6">
+                                                {type === 'grupo' && (
+                                                    <GrupoVotaSala
+                                                        idReserva={reserva.id}
+                                                        idGrupo={
+                                                            reserva.grupo_id
+                                                        }
+                                                        idSala={reserva.sala_id}
+                                                    />
+                                                )}
+
+                                                {type === 'sala' && (
+                                                    <SalaVotaGrupo
+                                                        idReserva={reserva.id}
+                                                        idGrupo={
+                                                            reserva.grupo_id
+                                                        }
+                                                        idSala={reserva.sala_id}
+                                                    />
+                                                )}
+                                            </td>
+                                        </tr>
                                     ) : (
-                                        <SalaVotaGrupo
-                                            idReserva={reserva.id}
-                                            idGrupo={reserva.grupo_id}
-                                            idSala={reserva.sala_id}
-                                        />
+                                        ''
                                     )}
-                                </>
-                            ) : (
-                                ''
-                            )}
-                        </div>
-                    ))
+                                </React.Fragment>
+                            ))}
+                        </tbody>
+                    </table>
                 ) : (
                     <p className="text-center">
                         No se han encontrado reservas.

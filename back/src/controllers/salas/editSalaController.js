@@ -19,8 +19,6 @@ const editSalaController = async (req, res, next) => {
             condiciones,
             equipamiento,
             web,
-            horaReservasStart,
-            horaReservasEnd,
         } = req.body;
 
         // Validamos el body con Joi.
@@ -43,10 +41,6 @@ const editSalaController = async (req, res, next) => {
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;
         if (web !== undefined) updatedFields.web = web;
-        if (horaReservasStart !== undefined)
-            updatedFields.horaReservasStart = horaReservasStart;
-        if (horaReservasEnd !== undefined)
-            updatedFields.horaReservasEnd = horaReservasEnd;
         if (generos !== undefined) updatedFields.generos = generos;
 
         await editSalaService(idSala, updatedFields);
