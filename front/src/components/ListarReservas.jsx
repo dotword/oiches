@@ -271,7 +271,7 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                     {new Date(reserva.fecha) < new Date() &&
                                     reserva.confirmada === 1 ? (
                                         <tr>
-                                            <td colSpan="6">
+                                            <td colSpan="7">
                                                 {type === 'grupo' && (
                                                     <GrupoVotaSala
                                                         idReserva={reserva.id}

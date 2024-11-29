@@ -26,7 +26,8 @@ export const listReservaGroupsService = async (group_id, adminUser) => {
        LEFT JOIN grupos ON reservas.grupo_id = grupos.id
        LEFT JOIN salas ON reservas.sala_id = salas.id
        LEFT JOIN usuarios ON salas.usuario_id = usuarios.id
-       WHERE reservas.grupo_id IN (?)`,
+       WHERE reservas.grupo_id IN (?)
+       ORDER BY createdAt DESC`,
             [grupoIds]
         );
 
