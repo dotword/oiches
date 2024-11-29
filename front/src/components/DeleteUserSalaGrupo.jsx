@@ -77,6 +77,7 @@ const DeleteUserSalaGrupo = ({ userLogged, token, id, type }) => {
                     }, incluyendo imágenes, reservas, votos, etc.`}
                     onConfirm={confirmDelete}
                     onCancel={cancelDelete}
+                    classConfirm={'bg-red-500'}
                 />
             )}
             <Toastify />

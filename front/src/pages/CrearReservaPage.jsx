@@ -1,28 +1,36 @@
+import { useParams, Link } from 'react-router-dom';
+import { useState } from 'react';
 import { CrearReservaForm } from '../components/CrearReservaForm.jsx';
 import Header from '../components/Header.jsx';
 import useSala from '../hooks/useSala.jsx';
 import useAuth from '../hooks/useAuth.jsx';
-import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from '../components/Toastify.jsx';
 import noImage from '../assets/noimage.png';
 import Footer from '../components/Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx';
+import MapShow from '../components/MapShow.jsx';
+import { FiExternalLink } from 'react-icons/fi';
 
 export const CrearReservaPage = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
-    const navigate = useNavigate();
     const { idSala } = useParams();
     const { entry } = useSala(idSala);
     const { currentUser } = useAuth();
+    const [formattedAddress, setFormattedAddress] = useState('');
 
     if (!currentUser) {
         toast.error(
-            'Necesitas loguearte como grupo para acceder a esta página'
+            'Necesitas loguearte como músico para acceder a esta página'
         );
-        navigate('/login', toast.error('Error'));
     }
+
     if (!entry) return <p>Cargando...</p>;
+
+    const handleAddressChange = (newAddress) => {
+        setFormattedAddress(newAddress);
+    };
+
     const imageUrl =
         entry.fotos && entry.fotos.length > 0
             ? // Buscar la foto principal con main === 1
@@ -72,41 +80,22 @@ export const CrearReservaPage = () => {
                     />
 
                     <div className="flex flex-col my-6 md:mt-0">
-                        <h2 className="font-semibold">{entry.nombre}</h2>
-                        <p className="mb-4">{entry.direccion}</p>
+                        <Link to={`/sala/${entry.id}`} target="_blank">
+                            <h2 className="font-semibold text-lg flex gap-4 items-center">
+                                {entry.nombre} <FiExternalLink />
+                            </h2>
+                        </Link>
 
-                        {entry.genero.length > 0 && (
-                            <div className="mb-4">
-                                <span className="font-semibold">Géneros</span>
-                                <ul className="flex flex-wrap">
-                                    {entry.genero.map((gen, index) => (
-                                        <li key={gen.generoId}>
-                                            {gen.generoName}
-                                            {index <
-                                                entry.genero.length - 1 && (
-                                                <span>,&nbsp;</span>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
+                        {entry.direccion && (
+                            <>
+                                <p className="text-black">{formattedAddress}</p>
 
-                        {entry.horaReservasStart && (
-                            <p>
-                                <span className="font-semibold">
-                                    Hora inicio reservas:
-                                </span>{' '}
-                                {entry.horaReservasStart}
-                            </p>
-                        )}
-                        {entry.horaReservasEnd && (
-                            <p>
-                                <span className="font-semibold">
-                                    Hora final reservas:
-                                </span>{' '}
-                                {entry.horaReservasEnd}
-                            </p>
+                                <MapShow
+                                    direccion={entry.direccion}
+                                    onAddressChange={handleAddressChange}
+                                    hideMap="hideMap"
+                                />
+                            </>
                         )}
                     </div>
                 </section>

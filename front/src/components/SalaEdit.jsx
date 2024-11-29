@@ -33,8 +33,6 @@ const SalaEdit = () => {
         condiciones: '',
         equipamiento: '',
         web: '',
-        horaReservasStart: '',
-        horaReservasEnd: '',
         activeGenres: [],
     });
 
@@ -64,8 +62,6 @@ const SalaEdit = () => {
                     condiciones: data.sala.condiciones || '',
                     equipamiento: data.sala.equipamiento || '',
                     web: data.sala.web || '',
-                    horaReservasStart: data.sala.horaReservasStart || '',
-                    horaReservasEnd: data.sala.horaReservasEnd || '',
                     activeGenres: data.sala.genero || [],
                     owner: data.sala.usuario_id,
                 });
@@ -147,8 +143,6 @@ const SalaEdit = () => {
             dataForm.append('condiciones', sala.condiciones || '');
             dataForm.append('equipamiento', sala.equipamiento || '');
             dataForm.append('web', sala.web || '');
-            dataForm.append('horaReservasStart', sala.horaReservasStart || '');
-            dataForm.append('horaReservasEnd', sala.horaReservasEnd || '');
 
             await EditSalaService({
                 token,
@@ -422,46 +416,7 @@ const SalaEdit = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-4">
-                        <label
-                            htmlFor="horaReservasStart"
-                            className="font-semibold"
-                        >
-                            Hora de inicio de reservas:
-                        </label>
-                        <input
-                            type="time"
-                            name="horaReservasStart"
-                            value={sala.horaReservasStart}
-                            onChange={(e) =>
-                                setSala({
-                                    ...sala,
-                                    horaReservasStart: e.target.value,
-                                })
-                            }
-                            className="form-input"
-                        />
-                    </div>
-                    <div className="flex flex-col mb-4 md:col-start-4 md:col-end-7">
-                        <label
-                            htmlFor="horaReservasEnd"
-                            className="font-semibold"
-                        >
-                            Hora final de reservas:
-                        </label>
-                        <input
-                            type="time"
-                            name="horaReservasEnd"
-                            value={sala.horaReservasEnd}
-                            onChange={(e) =>
-                                setSala({
-                                    ...sala,
-                                    horaReservasEnd: e.target.value,
-                                })
-                            }
-                            className="form-input"
-                        />
-                    </div>
+
                     <div className="my-12 max-w-80 md:col-start-1 md:col-end-3">
                         <input
                             type="submit"

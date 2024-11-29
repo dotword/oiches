@@ -22,7 +22,7 @@ const SetMapView = ({ position }) => {
     return null;
 };
 
-const MapShow = ({ direccion, onAddressChange }) => {
+const MapShow = ({ direccion, onAddressChange, hideMap }) => {
     const { VITE_LEAFLET_APIKEY } = import.meta.env;
 
     const [position, setPosition] = useState([40.463667, -3.74922]);
@@ -79,17 +79,19 @@ const MapShow = ({ direccion, onAddressChange }) => {
     return (
         <>
             {error && <p>{error}</p>}
-            <MapContainer
-                center={position}
-                zoom={20}
-                style={{ height: '300px', width: '100%' }}
-            >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <SetMapView position={position} />
-                <Marker position={position}>
-                    <Popup>{formattedAddress}</Popup>
-                </Marker>
-            </MapContainer>
+            {hideMap !== 'hideMap' && (
+                <MapContainer
+                    center={position}
+                    zoom={20}
+                    style={{ height: '300px', width: '100%' }}
+                >
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <SetMapView position={position} />
+                    <Marker position={position}>
+                        <Popup>{formattedAddress}</Popup>
+                    </Marker>
+                </MapContainer>
+            )}
         </>
     );
 };

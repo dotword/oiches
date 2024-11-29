@@ -52,7 +52,7 @@ export const CrearReservaForm = ({ nombreSala }) => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 md:py-10 md:items-center"
+                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 mx-auto max-w-700 md:py-10 md:items-center"
             >
                 <h2 className="text-2xl font-semibold mb-3">
                     Contacta con {nombreSala}
@@ -61,52 +61,54 @@ export const CrearReservaForm = ({ nombreSala }) => {
                     Rellena el siguiente formulario y {nombreSala} recibirá un
                     email con tu solicitud.
                 </p>
-                <div className="mt-2">
-                    <label htmlFor="fecha" className="font-semibold">
-                        Fecha en la que quieres tocar*
+                <div className="my-2 flex gap-3 md:gap-8">
+                    <label htmlFor="fecha">
+                        <span className="font-semibold">
+                            Fecha en la que quieres tocar*
+                        </span>
+                        <input
+                            className="block md:mx-auto"
+                            type="date"
+                            name="fecha"
+                            required
+                        />
                     </label>
-                    <input
-                        className="block md:mx-auto"
-                        type="date"
-                        name="fecha"
-                        required
-                    />
+                    <label
+                        htmlFor="flexible"
+                        className="flex items-baseline gap-3"
+                    >
+                        <span className="font-semibold">
+                            ¿Fechas flexibles?
+                        </span>
+                        <input type="checkbox" name="flexible" id="flexible" />
+                    </label>
                 </div>
 
-                <div className="mt-2">
-                    <label htmlFor="horaInicio" className="font-semibold">
-                        Hora de inicio estimada*
-                    </label>
-                    <input
-                        className="block md:mx-auto"
-                        type="time"
-                        name="horaInicio"
-                        required
-                    />
-                </div>
-                <div className="mt-2">
-                    <label htmlFor="horaFin" className="font-semibold">
-                        Hora final estimada*
-                    </label>
-                    <input
-                        className="block md:mx-auto"
-                        type="time"
-                        name="horaFin"
-                        required
-                    />
-                </div>
-                <div className="flex flex-wrap gap-8 mt-8 justify-center">
+                <label htmlFor="message" className="w-full">
+                    <span className="font-semibold">Mensaje:</span>
+
+                    <textarea
+                        name="message"
+                        className="form-textarea min-h-28"
+                        maxLength="1000"
+                    ></textarea>
+                    <p className="mt-1 text-gray-500 text-sm">
+                        1000 caracteres como máximo
+                    </p>
+                </label>
+
+                <button
+                    className="button bg-red-500 py-2 px-4 max-w-20 text-sm self-end"
+                    type="reset"
+                >
+                    Borrar
+                </button>
+                <div className="flex flex-wrap gap-8 mt-6 justify-center">
                     <button
                         className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
                         type="submit"
                     >
                         Enviar solicitud
-                    </button>
-                    <button
-                        className="button bg-red-500 py-2 px-8"
-                        type="reset"
-                    >
-                        Borrar
                     </button>
                 </div>
             </form>
@@ -115,6 +117,7 @@ export const CrearReservaForm = ({ nombreSala }) => {
                 onConfirm={handleConfirm}
                 onCancel={handleCancel}
                 text={'¿Estás seguro de que quieres enviar esta reserva?'}
+                classCancel={'bg-red-500'}
             />
             <Toastify />
         </>

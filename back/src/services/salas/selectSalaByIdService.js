@@ -21,8 +21,6 @@ const selectSalaByIdService = async (idSala) => {
                 S.equipamiento,
                 S.web,
                 S.condiciones,
-                S.horaReservasStart,
-                S.horaReservasEnd,
                 (SELECT email FROM usuarios WHERE usuarios.id = S.usuario_id) AS email,
                 U.avatar AS usuarioAvatar,
                 S.createdAt,
@@ -101,8 +99,6 @@ const selectSalaByIdService = async (idSala) => {
                 R.grupo_id,
                 G.nombre AS grupo,
                 R.fecha,
-                R.horaInicio,
-                R.horaFin,
                 R.confirmada
             FROM reservas R
             LEFT JOIN grupos G ON G.id = R.grupo_id
