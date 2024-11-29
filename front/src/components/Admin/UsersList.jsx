@@ -142,6 +142,7 @@ const UsersList = ({ token }) => {
                                 <th>Fecha alta</th>
                                 <th>Sala/Músico</th>
                                 <th>Provincia</th>
+                                <th>Baja</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -192,6 +193,11 @@ const UsersList = ({ token }) => {
                                     <td>
                                         {filteredUsers.provincia_grupo_nombre ||
                                             filteredUsers.provincia_sala_nombre}
+                                    </td>
+
+                                    <td>
+                                        {filteredUsers.deletedAt &&
+                                            formatDate(filteredUsers.deletedAt)}
                                     </td>
                                 </tr>
                             ))}

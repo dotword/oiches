@@ -63,7 +63,7 @@ router.get('/reservas/salas/:sala_id', authUser, listReservaController);
 // Endpoint para listar reservas de un grupo
 router.get('/reservas/grupos/:group_id', authUser, listReservaGroups);
 
-// Endpoint para listar todas las reservas
+// Endpoint para el Admin: listar todas las reservas
 router.get('/reservas/listar?', authUser, userExists, isAdmin, listAllReservas);
 
 export default router;
