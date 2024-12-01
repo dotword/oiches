@@ -222,7 +222,8 @@ const main = async () => {
                 ('Ópera'),
                 ('Versiones'),
                 ('Fado'),
-                ('Rancheras');
+                ('Rancheras'),
+                ('Rumba');
         `);
 
         await pool.query(`

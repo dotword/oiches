@@ -160,7 +160,8 @@ const AddSalaPhotos = ({ idSala }) => {
         <form onSubmit={handleFotosSubmit} className="w-full">
             <p className="font-semibold mb-2">Sube hasta 4 fotos</p>
             <p className="text-xs mb-3">
-                (*) El tamaño del archivo no debe exceder 3Mb
+                (*) El tamaño del archivo no debe exceder 3Mb.<br></br>
+                Formatos: .jpg, .jpeg, .png o .webp
             </p>
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
@@ -218,7 +219,8 @@ const AddSalaPhotos = ({ idSala }) => {
                                 ))
                             ) : (
                                 <span className="text-sm p-1 overflow-hidden text-center">
-                                    Sube tus fotos (.jpg, .jpeg, .png o .webp)
+                                    Sube o arrastra una foto. <br></br> Después
+                                    haz clic en &quot;Subir foto&quot;
                                 </span>
                             )}
 
@@ -238,7 +240,7 @@ const AddSalaPhotos = ({ idSala }) => {
                         <div className="mt-3 max-w-80">
                             <input
                                 type="submit"
-                                value="Subir fotos"
+                                value="Subir foto"
                                 className="btn-account max-w-44"
                             />
                         </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { toast } from 'react-toastify';
 
 function ChangeMapView({ coords }) {
     const map = useMap();
@@ -8,12 +9,41 @@ function ChangeMapView({ coords }) {
     return null;
 }
 
-const MapComponent = ({ onLocationSelect }) => {
+const MapComponent = ({ onLocationSelect, actualAddress }) => {
     const [address, setAddress] = useState('');
     const [foundAddress, setFoundAddress] = useState('');
     const [location, setLocation] = useState({ lat: 40.463667, lng: -3.74922 });
     const [debouncedAddress, setDebouncedAddress] = useState('');
     const [suggestions, setSuggestions] = useState([]);
+
+    // Efecto para geocodificar actualAddress si se proporciona
+    useEffect(() => {
+        if (actualAddress) {
+            fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${actualAddress}&countrycodes=ES&addressdetails=1`
+            )
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.length > 0) {
+                        const { lat, lon, display_name } = data[0];
+                        setLocation({
+                            lat: parseFloat(lat),
+                            lng: parseFloat(lon),
+                        });
+                        setFoundAddress(display_name);
+                    }
+                })
+                .catch((error) => {
+                    toast.error(
+                        'Error al geocodificar la dirección proporcionada.'
+                    );
+                    console.error(
+                        'Error al geocodificar actualAddress:',
+                        error
+                    );
+                });
+        }
+    }, [actualAddress]);
 
     // Debounce: Retrasar la búsqueda para evitar demasiadas solicitudes rápidas
     useEffect(() => {
@@ -40,11 +70,10 @@ const MapComponent = ({ onLocationSelect }) => {
                         setSuggestions([]); // Si no hay resultados, limpiar las sugerencias
                     }
                 })
-                .catch(
-                    (error) =>
-                        console.error('Error buscando la dirección:', error)
-                    // toast.error('Error de toast')
-                );
+                .catch((error) => {
+                    toast.error('Error al buscar la dirección.');
+                    console.error('Error buscando la dirección:', error);
+                });
         }
     }, [debouncedAddress]);
 
