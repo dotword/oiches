@@ -48,7 +48,7 @@ const SalaDetail = () => {
         const fetchData = async () => {
             const response = await fetch(`${VITE_API_URL_BASE}/salas`);
             const data = await response.json();
-            console.log(data);
+        
             const sortedSalas = Array.isArray(data.result) ? data.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
             console.log(sortedSalas);
             setSalas(sortedSalas);
@@ -327,7 +327,7 @@ const SalaDetail = () => {
 
                     
                 )}
-                <section className="flex justify-between mt-6">
+               
             {previous && (
                 <Link to={`/sala/${previous.id}`} className="text-purpleOiches">
                     <button className="bg-gray-200 py-2 px-4 rounded-lg">Anterior: {previous.nombre}</button>
@@ -338,7 +338,7 @@ const SalaDetail = () => {
                     <button className="bg-gray-200 py-2 px-4 rounded-lg">Siguiente: {next.nombre}</button>
                 </Link>
             )}
-        </section>
+
                 {actualUser.roles === 'admin' && (
                     <a
                         href={`/sala/${idSala}/edit`}
