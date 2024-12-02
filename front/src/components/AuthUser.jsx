@@ -171,7 +171,7 @@ const AuthUser = () => {
                     </p>
                     <form onSubmit={handleAvatarSubmit}>
                         <div className="sect-photo w-40 h-40">
-                            <FaPencilAlt className="absolute right-4 text-greyOiches text-2xl z-10" />
+                            <FaPencilAlt className="absolute right-8 text-gray-950 text-2xl z-10" />
                             <span className="border-photos rounded-full">
                                 {previewUrl ? (
                                     <img

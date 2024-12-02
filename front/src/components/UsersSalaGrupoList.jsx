@@ -12,6 +12,8 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
         idUserOwner,
     });
 
+    console.log(entries);
+
     const type = userLogged.roles;
 
     return (
@@ -33,23 +35,25 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 <a
                                     href={
                                         userOwner.user.roles === 'sala'
+                                            ? `/sala/${entry.id}/edit`
+                                            : `/grupos/${entry.id}/edit`
+                                    }
+                                    className="btn-account bg-footercolor text-xl flex gap-4 items-center hover:text-white hover:bg-purpleOiches"
+                                >
+                                    {entry.nombre}
+
+                                    <FaPencil className="text-white text-sm" />
+                                </a>
+
+                                <a
+                                    href={
+                                        userOwner.user.roles === 'sala'
                                             ? `/sala/${entry.id}`
                                             : `/grupo/${entry.id}`
                                     }
                                     target="_blank"
                                 >
                                     <FaEye className="text-green-900 text-xl" />
-                                </a>
-                                <a
-                                    href={
-                                        userOwner.user.roles === 'sala'
-                                            ? `/sala/${entry.id}/edit`
-                                            : `/grupos/${entry.id}/edit`
-                                    }
-                                    className="text-lg flex gap-3 items-center underline"
-                                >
-                                    {entry.nombre}
-                                    <FaPencil className="text-purpleOiches" />
                                 </a>
                             </li>
                         ))}
@@ -77,9 +81,13 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
             (type === 'admin' && userOwner.user.roles == 'sala') ? (
                 <a
                     href={`/creacion-sala/${userOwner.user.id}`}
-                    className="btn-account text-xl"
+                    className={`btn-account ${
+                        entries.length === 0 ? 'text-xl' : 'mt-6'
+                    } `}
                 >
-                    Publica tu sala
+                    {entries.length === 0
+                        ? 'Publica tu sala'
+                        : 'Publicar una nueva sala'}
                 </a>
             ) : (
                 ''

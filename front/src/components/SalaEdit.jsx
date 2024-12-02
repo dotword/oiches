@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import MapComponent from './MapComponent.jsx';
+import MapShow from './MapShow.jsx';
 import Toastify from './Toastify.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
 import FetchProvinciasService from '../services/FetchProvinciasService.js';
@@ -41,6 +42,7 @@ const SalaEdit = () => {
     const [generos, setGeneros] = useState([]);
     const [deleteGenres, setDeleteGenres] = useState([]);
     const [error, setError] = useState('');
+    const [formattedAddress, setFormattedAddress] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -172,6 +174,10 @@ const SalaEdit = () => {
         }));
     };
 
+    const handleAddressChange = (newAddress) => {
+        setFormattedAddress(newAddress);
+    };
+
     return (userLogged && sala.owner === userLogged.id) ||
         (userLogged && userLogged.roles === 'admin') ? (
         <>
@@ -241,11 +247,13 @@ const SalaEdit = () => {
                                 }}
                                 className="form-multiselect mb-3"
                             />
-                            <input
-                                type="submit"
-                                value="Añadir géneros"
-                                className="btn-account"
-                            />
+                            {generos.length > 0 && (
+                                <input
+                                    type="submit"
+                                    value="Añadir selección"
+                                    className="btn-account"
+                                />
+                            )}
                         </form>
                     </div>
                 </div>
@@ -297,6 +305,19 @@ const SalaEdit = () => {
                     </div>
                     {/* Dirección */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
+                        {sala.direccion && (
+                            <>
+                                <p className="font-semibold">Dirección:</p>
+                                <p className="text-black">{formattedAddress}</p>
+
+                                <MapShow
+                                    direccion={sala.direccion}
+                                    onAddressChange={handleAddressChange}
+                                    hideMap="hideMap"
+                                />
+                            </>
+                        )}
+
                         <label htmlFor="direccion" className="font-semibold">
                             Cambiar dirección:
                         </label>
@@ -320,7 +341,10 @@ const SalaEdit = () => {
                             }
                             className="hidden"
                         />
-                        <MapComponent onLocationSelect={handleLocationSelect} />
+                        <MapComponent
+                            onLocationSelect={handleLocationSelect}
+                            actualAddress={sala.direccion}
+                        />
                     </div>
                     {/* Web */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
@@ -417,10 +441,10 @@ const SalaEdit = () => {
                         </p>
                     </div>
 
-                    <div className="my-12 max-w-80 md:col-start-1 md:col-end-3">
+                    <div className="my-8 max-w-80 md:col-start-1 md:col-end-3">
                         <input
                             type="submit"
-                            value="Modificar Sala"
+                            value="Modificar datos"
                             className="btn-account p-3 w-full"
                         />
                     </div>
