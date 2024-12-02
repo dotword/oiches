@@ -20,7 +20,32 @@ const GrupoDetail = () => {
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
+    const [grupos, setGrupos] = useState('')
+    
+  const [previous,setPrevious]= useState('')
+  const [next,setNext]= useState('')
+   console.log(grupos);
+   useEffect(() => {
+    const fetchData = async () => {
+        const response = await fetch(`${VITE_API_URL_BASE}/grupos`);
+        const data = await response.json();
+        console.log(data);
+        const sortedGrups = Array.isArray(data.rows) ? data.rows.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
+        
+        setGrupos(sortedGrups);
 
+        const currentIndex = sortedGrups.findIndex(sala => sala.id === idGrupo);
+        if (currentIndex !== -1) {
+            const previousSala = currentIndex > 0 ? sortedGrups[currentIndex - 1] : null;
+            const nextSala = currentIndex < sortedGrups.length - 1 ? sortedGrups[currentIndex + 1] : null;
+
+            setPrevious(previousSala);
+            setNext(nextSala);
+        }
+    };
+
+    fetchData();
+}, [idGrupo, VITE_API_URL_BASE]);
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -32,6 +57,7 @@ const GrupoDetail = () => {
         };
         fetchData();
     }, [currentUser, VITE_API_URL_BASE]);
+
 
     const {
         nombre,
@@ -292,6 +318,18 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
+                
+            {previous && (
+                <Link to={`/grupo/${previous.id}`} className="text-purpleOiches">
+                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Anterior: {previous.nombre}</button>
+                </Link>
+            )}
+            {next && (
+                <Link to={`/grupo/${next.id}`} className="text-purpleOiches">
+                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Siguiente: {next.nombre}</button>
+                </Link>
+            )}
+        
                 {actualUser.roles === 'admin' && (
                     <a
                         href={`/grupos/${idGrupo}/edit`}
