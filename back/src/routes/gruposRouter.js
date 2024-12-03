@@ -6,7 +6,7 @@ import {
     userExists,
     grupoExists,
     canEditGrupo,
-    hasOneGroup,
+    // hasOneGroup,
     checkIfGroup,
 } from '../middleware/index.js';
 
@@ -35,7 +35,7 @@ router.post(
     authUser,
     userExists,
     checkIfGroup,
-    hasOneGroup,
+    // hasOneGroup,
     createGrupoController
 );
 

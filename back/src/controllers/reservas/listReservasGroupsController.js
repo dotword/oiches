@@ -1,6 +1,7 @@
 import { listReservaGroupsService } from '../../services/reservas/listReservaGroupsService.js';
 import selectUserByIdService from '../../services/users/selectUserByIdService.js';
-export const listReservaGroups = async (req, res, next) => {
+
+export const listReservasGroupsController = async (req, res, next) => {
     try {
         const { group_id } = req.params;
 

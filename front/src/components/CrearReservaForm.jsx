@@ -4,13 +4,27 @@ import { useState } from 'react';
 import Toastify from './Toastify.jsx';
 import { toast } from 'react-toastify';
 import { ConfirmationModal } from './ConfirmModal.jsx';
+import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
 
-export const CrearReservaForm = ({ nombreSala }) => {
+export const CrearReservaForm = ({ nombreSala, idUserOwner }) => {
     const { idSala } = useParams(); // Obtén el idSala de los parámetros de la URL
     const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`; // Construye la URL con el idSala
     const { token } = useAuth(); // Obtén el token de autenticación
     const [isModalOpen, setIsModalOpen] = useState(false); // Estado para manejar el modal de confirmación
-    const [formValues, setFormValues] = useState(null); // Estado para almacenar los valores del formulario
+    const [formValues, setFormValues] = useState({}); // Estado para almacenar los valores del formulario
+
+    const { entries } = useListSalasGrupoUser({
+        token,
+        idUserOwner,
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: type === 'checkbox' ? checked : value, // Manejo de checkbox y valores normales
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -52,7 +66,7 @@ export const CrearReservaForm = ({ nombreSala }) => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 mx-auto max-w-700 md:py-10 md:items-center"
+                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 mx-auto md:py-10 md:items-center"
             >
                 <h2 className="text-2xl font-semibold mb-3">
                     Contacta con {nombreSala}
@@ -61,13 +75,41 @@ export const CrearReservaForm = ({ nombreSala }) => {
                     Rellena el siguiente formulario y {nombreSala} recibirá un
                     email con tu solicitud.
                 </p>
-                <div className="my-2 flex gap-3 md:gap-8">
-                    <label htmlFor="fecha">
+
+                {entries.length > 0 && (
+                    <div className="my-4 mx-auto flex gap-3 md:gap-8">
+                        <label
+                            htmlFor="project"
+                            className="flex flex-wrap justify-center"
+                        >
+                            <span className="font-semibold text-center mb-2">
+                                Selecciona tu proyecto musical:
+                            </span>
+                            <select
+                                id="project"
+                                name="project"
+                                value={formValues.project || ''}
+                                required
+                                className="form-select"
+                                onChange={handleChange}
+                            >
+                                {entries.map((grupo) => (
+                                    <option key={grupo.id} value={grupo.id}>
+                                        {grupo.nombre}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                    </div>
+                )}
+
+                <div className="my-4 mx-auto flex flex-wrap gap-3 md:gap-8">
+                    <label htmlFor="fecha" className="mb-2">
                         <span className="font-semibold">
                             Fecha en la que quieres tocar*
                         </span>
                         <input
-                            className="block md:mx-auto"
+                            className="block mt-2 bg-slate-100 rounded-xl px-4 py-1 md:mx-auto hover:cursor-pointer"
                             type="date"
                             name="fecha"
                             required
@@ -84,7 +126,7 @@ export const CrearReservaForm = ({ nombreSala }) => {
                     </label>
                 </div>
 
-                <label htmlFor="message" className="w-full">
+                <label htmlFor="message" className="w-full max-w-700 mt-2">
                     <span className="font-semibold">Mensaje:</span>
 
                     <textarea

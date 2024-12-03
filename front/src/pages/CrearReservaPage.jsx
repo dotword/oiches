@@ -99,7 +99,10 @@ export const CrearReservaPage = () => {
                         )}
                     </div>
                 </section>
-                <CrearReservaForm nombreSala={entry.nombre} />
+                <CrearReservaForm
+                    nombreSala={entry.nombre}
+                    idUserOwner={currentUser.id}
+                />
             </main>
             <Footer />
             <Toastify />

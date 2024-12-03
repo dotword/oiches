@@ -19,7 +19,7 @@ export const listReservaService = async (sala_id, adminUser) => {
         const salasId = salaResults.map((sala) => sala.id);
 
         const [reservas] = await pool.query(
-            `SELECT reservas.*, grupos.nombre AS grupo_nombre, grupos.usuario_id AS sala_id, salas.nombre AS sala_nombre, usuarios.email
+            `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.id AS sala_id, salas.nombre AS sala_nombre, usuarios.email
                 FROM reservas
                 LEFT JOIN grupos ON reservas.grupo_id = grupos.id
                 LEFT JOIN salas ON reservas.sala_id = salas.id
