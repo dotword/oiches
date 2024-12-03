@@ -46,11 +46,11 @@ const SalaDetail = () => {
     
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${VITE_API_URL_BASE}/salas`);
+            const response = await fetch(`${VITE_API_URL_BASE}/salas?pageSize=300`);
             const data = await response.json();
         
             const sortedSalas = Array.isArray(data.result) ? data.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
-            console.log(sortedSalas);
+           
             setSalas(sortedSalas);
     
             const currentIndex = sortedSalas.findIndex(sala => sala.id === idSala);
@@ -66,7 +66,7 @@ const SalaDetail = () => {
         fetchData();
     }, [idSala, VITE_API_URL_BASE]);
     
- console.log(previous,next);
+ 
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -328,16 +328,18 @@ const SalaDetail = () => {
                     
                 )}
                
-            {previous && (
-                <Link to={`/sala/${previous.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Anterior: {previous.nombre}</button>
-                </Link>
-            )}
-            {next && (
-                <Link to={`/sala/${next.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Siguiente: {next.nombre}</button>
-                </Link>
-            )}
+               <section className='flex  justify-between '>
+                {previous && (
+                    <Link to={`/sala/${previous.id}`} className="text-purpleOiches hover:text-white">
+                        <button className="py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Anterior</button>
+                    </Link>
+                )}
+                {next && (
+                    <Link to={`/sala/${next.id}`} className="text-purpleOiches hover:text-white ">
+                        <button className=" py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Siguiente</button>
+                    </Link>
+                )}
+                </section> 
 
                 {actualUser.roles === 'admin' && (
                     <a

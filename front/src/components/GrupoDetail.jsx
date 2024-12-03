@@ -13,6 +13,7 @@ import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
 import TextFormat from '../components/TextFormato.jsx'; // Importamos el componente TextFormat
+import FetchGruposService from '../services/FetchGruposService.js';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -21,17 +22,16 @@ const GrupoDetail = () => {
     const { entry, error } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
     const [grupos, setGrupos] = useState('')
-    
   const [previous,setPrevious]= useState('')
   const [next,setNext]= useState('')
-   console.log(grupos);
+
    useEffect(() => {
     const fetchData = async () => {
-        const response = await fetch(`${VITE_API_URL_BASE}/grupos`);
-        const data = await response.json();
-        console.log(data);
-        const sortedGrups = Array.isArray(data.rows) ? data.rows.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
+        const response = await fetch(`${VITE_API_URL_BASE}/grupos?pageSize=300`)
+        const data = await response.json()
         
+        const sortedGrups = Array.isArray(data.rows) ? data.rows.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
+       
         setGrupos(sortedGrups);
 
         const currentIndex = sortedGrups.findIndex(sala => sala.id === idGrupo);
@@ -318,17 +318,18 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
-                
-            {previous && (
-                <Link to={`/grupo/${previous.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Anterior: {previous.nombre}</button>
-                </Link>
-            )}
-            {next && (
-                <Link to={`/grupo/${next.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Siguiente: {next.nombre}</button>
-                </Link>
-            )}
+            <section className='flex  justify-between '>
+                {previous && (
+                    <Link to={`/grupo/${previous.id}`} className="text-purpleOiches hover:text-white">
+                        <button className="py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Anterior</button>
+                    </Link>
+                )}
+                {next && (
+                    <Link to={`/grupo/${next.id}`} className="text-purpleOiches hover:text-white ">
+                        <button className=" py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Siguiente</button>
+                    </Link>
+                )}
+                </section> 
         
                 {actualUser.roles === 'admin' && (
                     <a
