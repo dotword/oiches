@@ -12,7 +12,6 @@ import Seo from '../components/SEO/Seo.jsx'; // Seo
 import TextFormat from './TextFormato.jsx';
 import MapShow from './MapShow.jsx';
 
-
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
@@ -20,9 +19,7 @@ const SalaDetail = () => {
     const { currentUser } = useAuth();
     const [actualUser, setActualUser] = useState('');
     const [formattedAddress, setFormattedAddress] = useState('');
-    const [salas,setSalas] = useState('')
-  const [previous,setPrevious]= useState('')
-  const [next,setNext]= useState('')
+
     const {
         nombre,
         provincia,
@@ -38,35 +35,12 @@ const SalaDetail = () => {
         email,
         fotos,
         pdf,
-    } = entry || {}; 
+    } = entry || {}; // Desestructuración de `entry` (por si aún no está disponible)
 
     const handleAddressChange = (newAddress) => {
         setFormattedAddress(newAddress);
     };
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(`${VITE_API_URL_BASE}/salas`);
-            const data = await response.json();
-        
-            const sortedSalas = Array.isArray(data.result) ? data.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
-            console.log(sortedSalas);
-            setSalas(sortedSalas);
-    
-            const currentIndex = sortedSalas.findIndex(sala => sala.id === idSala);
-            if (currentIndex !== -1) {
-                const previousSala = currentIndex > 0 ? sortedSalas[currentIndex - 1] : null;
-                const nextSala = currentIndex < sortedSalas.length - 1 ? sortedSalas[currentIndex + 1] : null;
-    
-                setPrevious(previousSala);
-                setNext(nextSala);
-            }
-        };
-    
-        fetchData();
-    }, [idSala, VITE_API_URL_BASE]);
-    
- console.log(previous,next);
+
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -87,7 +61,7 @@ const SalaDetail = () => {
             year: 'numeric',
         });
     };
-    
+
     return entry ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}
@@ -324,21 +298,7 @@ const SalaDetail = () => {
                             </div>
                         ))}
                     </section>
-
-                    
                 )}
-               
-            {previous && (
-                <Link to={`/sala/${previous.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Anterior: {previous.nombre}</button>
-                </Link>
-            )}
-            {next && (
-                <Link to={`/sala/${next.id}`} className="text-purpleOiches">
-                    <button className="bg-gray-200 py-2 px-4 rounded-lg">Siguiente: {next.nombre}</button>
-                </Link>
-            )}
-
                 {actualUser.roles === 'admin' && (
                     <a
                         href={`/sala/${idSala}/edit`}
