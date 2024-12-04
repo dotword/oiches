@@ -90,7 +90,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS grupos(
                 id CHAR(36) PRIMARY KEY NOT NULL,
-                nombre VARCHAR(50) NOT NULL UNIQUE,
+                nombre VARCHAR(50) NOT NULL,
                 provincia INT NOT NULL,
                 web VARCHAR(255),
                 honorarios INT,
@@ -223,7 +223,8 @@ const main = async () => {
                 ('Versiones'),
                 ('Fado'),
                 ('Rancheras'),
-                ('Rumba');
+                ('Rumba'),
+                ('Cumbia');
         `);
 
         await pool.query(`
