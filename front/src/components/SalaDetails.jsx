@@ -11,7 +11,8 @@ import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Seo
 import TextFormat from './TextFormato.jsx';
 import MapShow from './MapShow.jsx';
-
+import { IoChevronForward } from 'react-icons/io5';
+import { IoChevronBack } from 'react-icons/io5';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -20,9 +21,8 @@ const SalaDetail = () => {
     const { currentUser } = useAuth();
     const [actualUser, setActualUser] = useState('');
     const [formattedAddress, setFormattedAddress] = useState('');
-    const [salas,setSalas] = useState('')
-  const [previous,setPrevious]= useState('')
-  const [next,setNext]= useState('')
+    const [previous, setPrevious] = useState('');
+    const [next, setNext] = useState('');
     const {
         nombre,
         provincia,
@@ -38,35 +38,44 @@ const SalaDetail = () => {
         email,
         fotos,
         pdf,
-    } = entry || {}; 
+    } = entry || {};
 
     const handleAddressChange = (newAddress) => {
         setFormattedAddress(newAddress);
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`${VITE_API_URL_BASE}/salas?pageSize=300`);
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/salas?pageSize=300`
+            );
             const data = await response.json();
-        
-            const sortedSalas = Array.isArray(data.result) ? data.result.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)) : [];
-           
-            setSalas(sortedSalas);
-    
-            const currentIndex = sortedSalas.findIndex(sala => sala.id === idSala);
+
+            const sortedSalas = Array.isArray(data.result)
+                ? data.result.sort(
+                      (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
+                  )
+                : [];
+
+            const currentIndex = sortedSalas.findIndex(
+                (sala) => sala.id === idSala
+            );
             if (currentIndex !== -1) {
-                const previousSala = currentIndex > 0 ? sortedSalas[currentIndex - 1] : null;
-                const nextSala = currentIndex < sortedSalas.length - 1 ? sortedSalas[currentIndex + 1] : null;
-    
+                const previousSala =
+                    currentIndex > 0 ? sortedSalas[currentIndex - 1] : null;
+                const nextSala =
+                    currentIndex < sortedSalas.length - 1
+                        ? sortedSalas[currentIndex + 1]
+                        : null;
+
                 setPrevious(previousSala);
                 setNext(nextSala);
             }
         };
-    
+
         fetchData();
     }, [idSala, VITE_API_URL_BASE]);
-    
- 
+
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -87,7 +96,7 @@ const SalaDetail = () => {
             year: 'numeric',
         });
     };
-    
+
     return entry ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}
@@ -324,22 +333,32 @@ const SalaDetail = () => {
                             </div>
                         ))}
                     </section>
+                )}
 
-                    
-                )}
-               
-               <section className='flex  justify-between '>
-                {previous && (
-                    <Link to={`/sala/${previous.id}`} className="text-purpleOiches hover:text-white">
-                        <button className="py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Anterior</button>
-                    </Link>
-                )}
-                {next && (
-                    <Link to={`/sala/${next.id}`} className="text-purpleOiches hover:text-white ">
-                        <button className=" py-2 px-4 rounded-lg border border-purpleOiches hover:bg-purpleOiches">Siguiente</button>
-                    </Link>
-                )}
-                </section> 
+                <section className="flex justify-between mt-8 mb-16">
+                    {previous && (
+                        <Link
+                            to={`/sala/${previous.id}`}
+                            className="text-purpleOiches hover:text-white"
+                        >
+                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
+                                <IoChevronBack className=" border-purpleOiches hover:bg-purpleOiches text-xl" />{' '}
+                                Anterior
+                            </button>
+                        </Link>
+                    )}
+                    {next && (
+                        <Link
+                            to={`/sala/${next.id}`}
+                            className="text-purpleOiches hover:text-white "
+                        >
+                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
+                                Siguiente{' '}
+                                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
+                            </button>
+                        </Link>
+                    )}
+                </section>
 
                 {actualUser.roles === 'admin' && (
                     <a
