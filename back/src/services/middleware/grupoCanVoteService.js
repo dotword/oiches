@@ -4,11 +4,13 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 const grupoCanVoteService = async (idReserva, userId) => {
     const pool = await getPool();
 
+    console.log('userId ', userId);
+
     // Comprobar que la reserva existe, esté confirmada y que la fecha de reserva ya pasó
     const [reserva] = await pool.query(
         `
-                    SELECT * FROM reservas WHERE id=? AND reservas.confirmada=?
-                `,
+            SELECT * FROM reservas WHERE id=? AND reservas.confirmada=?
+        `,
         [idReserva, 1]
     );
 
@@ -31,9 +33,12 @@ const grupoCanVoteService = async (idReserva, userId) => {
 
     // Comprobar que el usuario tenga ese grupo
     const [grupoOwner] = await pool.query(
-        `SELECT id FROM grupos WHERE usuario_id = ?`,
-        [userId]
+        `SELECT id FROM grupos WHERE usuario_id = ? AND id = ?`,
+        [userId, reserva[0].grupo_id]
     );
+
+    console.log('grupoOwner[0].id', grupoOwner[0].id);
+    console.log('reserva[0].grupo_id ', reserva[0].grupo_id);
 
     if (grupoOwner[0].id !== reserva[0].grupo_id)
         throw generateErrorsUtil(

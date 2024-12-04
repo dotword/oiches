@@ -15,6 +15,7 @@ const aprobarReservaService = async (reserva_id) => {
         const reservaConfirm = salaInfo[0].confirmada;
         const dateReserva = salaInfo[0].fecha;
         const grupoId = salaInfo[0].grupo_id;
+        const idSala = salaInfo[0].sala_id;
 
         // Comprobar que la reseva no esté confirmada
         if (reservaConfirm === 1) {
@@ -47,6 +48,14 @@ const aprobarReservaService = async (reserva_id) => {
             [userGrupoId]
         );
         const grupoEmail = emailGrupo[0].email;
+
+        // Comprobar el nombre de la sala
+        const [salaName] = await pool.query(
+            'SELECT nombre FROM salas WHERE id = ?',
+            [idSala]
+        );
+
+        const nameSala = salaName[0].nombre;
 
         // Creamos el asunto del email de verificación.
         const emailSubject = `Tu reserva para el ${dateReserva} en Oiches ha sido confirmada.`;
@@ -81,7 +90,7 @@ const aprobarReservaService = async (reserva_id) => {
                 <body>
                     <p>Hola, ${grupoNombre}!</p>
         
-                    <p>Tu reserva para el "${dateReserva}" ha sido confirmada.</p>
+                    <p>Tu reserva para el ${dateReserva} en la sala <b>${nameSala}</b> ha sido confirmada.</p>
 
                      <p>Entra en <a href="${URL_FRONT}/login">tu cuenta</a> para ver todos los detalles.</p>
                   <p>Saludos,</p><br>

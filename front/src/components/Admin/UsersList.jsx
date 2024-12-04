@@ -146,10 +146,8 @@ const UsersList = ({ token }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsers.map((filteredUsers) => (
-                                <tr
-                                    key={`${filteredUsers.usuario_id}${filteredUsers.sala_id}`}
-                                >
+                            {filteredUsers.map((filteredUsers, index) => (
+                                <tr key={`${index}`}>
                                     <td>
                                         <Link
                                             to={`/users/account/${filteredUsers.usuario_id}`}

@@ -5,10 +5,11 @@ import { v4 as uuid } from 'uuid';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 export const crearReservaService = async (
+    project,
     fecha,
     flexible,
     message,
-    id,
+    // id,
     sala_id
 ) => {
     const pool = await getPool();
@@ -28,8 +29,8 @@ export const crearReservaService = async (
         );
     }
     const [grupoResults] = await pool.query(
-        'SELECT id, nombre FROM grupos WHERE usuario_id = ?',
-        [id]
+        'SELECT nombre FROM grupos WHERE id = ?',
+        [project]
     );
     if (grupoResults[0] === undefined) {
         throw generateErrorsUtil(
@@ -37,8 +38,6 @@ export const crearReservaService = async (
             404
         );
     }
-
-    const grupo_id = grupoResults[0].id;
 
     const grupoNombre = grupoResults[0].nombre;
 
@@ -93,7 +92,7 @@ export const crearReservaService = async (
                     <p><b>Mensaje de ${grupoNombre}:</b><br>
                     "${message}"</p>
 
-                    <p>Puedes ver la información de ${grupoNombre} en el siguiente enlace: <a href="${URL_FRONT}/grupo/${grupo_id}">Ver ${grupoNombre}</p>
+                    <p>Puedes ver la información de ${grupoNombre} en el siguiente enlace: <a href="${URL_FRONT}/grupo/${project}">Ver ${grupoNombre}</p>
 
                    <p>Entra en <a href="${URL_FRONT}/login">tu cuenta</a> para confirmar o rechazar el bolo, o para contactar con ${grupoNombre}.</p>
                    
@@ -124,14 +123,14 @@ export const crearReservaService = async (
 
     await pool.query(
         'INSERT INTO reservas(id, fecha, sala_id, grupo_id) VALUES (?, ?, ?, ?)',
-        [reservaId, fecha, sala_id, grupo_id]
+        [reservaId, fecha, sala_id, project]
     );
 
     return {
         reserva: {
             fecha,
             sala_id,
-            grupo_id,
+            project,
             salaResults,
             grupoResults,
         },

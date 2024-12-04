@@ -16,8 +16,8 @@ import {
     aprobarReservaController,
     borrarReservaSalaController,
     listReservaController,
-    listReservaGroups,
-    listAllReservas,
+    listReservasGroupsController,
+    listAllReservasController,
 } from '../controllers/reservas/index.js';
 
 const router = express.Router();
@@ -61,9 +61,19 @@ router.delete(
 router.get('/reservas/salas/:sala_id', authUser, listReservaController);
 
 // Endpoint para listar reservas de un grupo
-router.get('/reservas/grupos/:group_id', authUser, listReservaGroups);
+router.get(
+    '/reservas/grupos/:group_id',
+    authUser,
+    listReservasGroupsController
+);
 
 // Endpoint para el Admin: listar todas las reservas
-router.get('/reservas/listar?', authUser, userExists, isAdmin, listAllReservas);
+router.get(
+    '/reservas/listar?',
+    authUser,
+    userExists,
+    isAdmin,
+    listAllReservasController
+);
 
 export default router;

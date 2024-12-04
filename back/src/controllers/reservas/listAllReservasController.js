@@ -1,6 +1,6 @@
 import listAllReservaService from '../../services/reservas/listAllReservaService.js';
 
-const listAllReservas = async (req, res, next) => {
+const listAllReservasController = async (req, res, next) => {
     try {
         const filters = {
             salaname: req.query.salaname || '',
@@ -24,4 +24,4 @@ const listAllReservas = async (req, res, next) => {
     }
 };
 
-export default listAllReservas;
+export default listAllReservasController;
