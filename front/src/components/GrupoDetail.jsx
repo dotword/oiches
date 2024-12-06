@@ -13,6 +13,8 @@ import useAuth from '../hooks/useAuth.jsx';
 import Footer from './Footer.jsx';
 import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
 import TextFormat from '../components/TextFormato.jsx'; // Importamos el componente TextFormat
+import { IoChevronForward } from 'react-icons/io5';
+import { IoChevronBack } from 'react-icons/io5';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -20,7 +22,45 @@ const GrupoDetail = () => {
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
+<<<<<<< HEAD
 
+=======
+    const [previous, setPrevious] = useState('');
+    const [next, setNext] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/grupos?pageSize=300`
+            );
+            const data = await response.json();
+
+            const sortedGrups = Array.isArray(data.rows)
+                ? data.rows.sort(
+                      (a, b) => new Date(a.updatedAte) - new Date(b.updatedAte)
+                  )
+                : [];
+
+            const currentIndex = sortedGrups.findIndex(
+                (sala) => sala.id === idGrupo
+            );
+            if (currentIndex !== -1) {
+                const previousSala =
+                    currentIndex > 0 ? sortedGrups[currentIndex - 1] : null;
+                const nextSala =
+                    currentIndex < sortedGrups.length - 1
+                        ? sortedGrups[currentIndex + 1]
+                        : null;
+
+                setPrevious(previousSala);
+                setNext(nextSala);
+            }
+        };
+
+        fetchData();
+    }, [idGrupo, VITE_API_URL_BASE]);
+
+>>>>>>> origin/main
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -292,6 +332,34 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
+<<<<<<< HEAD
+=======
+                <section className="flex justify-between mt-8 mb-16">
+                    {previous && (
+                        <Link
+                            to={`/grupo/${previous.id}`}
+                            className="text-purpleOiches hover:text-white"
+                        >
+                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
+                                <IoChevronBack className=" border-purpleOiches hover:bg-purpleOiches text-xl" />{' '}
+                                Anterior
+                            </button>
+                        </Link>
+                    )}
+                    {next && (
+                        <Link
+                            to={`/grupo/${next.id}`}
+                            className="text-purpleOiches hover:text-white ml-auto"
+                        >
+                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
+                                Siguiente{' '}
+                                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
+                            </button>
+                        </Link>
+                    )}
+                </section>
+
+>>>>>>> origin/main
                 {actualUser.roles === 'admin' && (
                     <a
                         href={`/grupos/${idGrupo}/edit`}

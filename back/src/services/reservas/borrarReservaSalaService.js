@@ -9,11 +9,12 @@ const borrarReservaSalaService = async (reserva_id) => {
 
         // Traer el id de la sala
         const [idSala] = await pool.query(
-            'SELECT grupo_id, fecha FROM reservas WHERE id = ?',
+            'SELECT grupo_id, sala_id, fecha FROM reservas WHERE id = ?',
             [reserva_id]
         );
         const grupoId = idSala[0].grupo_id;
         const dateReserva = idSala[0].fecha;
+        const salaId = idSala[0].sala_id;
 
         // Comprobar que la reserva existe
         if (idSala.length === 0)
@@ -36,6 +37,14 @@ const borrarReservaSalaService = async (reserva_id) => {
         );
 
         const grupoEmail = emailGrupo[0].email;
+
+        // Comprobar el nombre de la sala
+        const [salaName] = await pool.query(
+            'SELECT nombre FROM salas WHERE id = ?',
+            [salaId]
+        );
+
+        const nameSala = salaName[0].nombre;
 
         // Creamos el asunto del email de verificación.
         const emailSubject = `Tu reserva para el ${dateReserva} en Oiches ha sido cancelada.`;
@@ -70,7 +79,7 @@ const borrarReservaSalaService = async (reserva_id) => {
                 <body>
                     <p>Hola, ${grupoNombre}!</p>
         
-                    <p>Tu reserva para el "${dateReserva}" ha sido cancelada.</p>
+                    <p>Tu reserva para el "${dateReserva}" en la sala <b>${nameSala}</b> ha sido cancelada.</p>
 
                     <p>Entra en <a href="${URL_FRONT}/login">tu cuenta</a> y ponte en contacto con la sala para saber más detalles.</p>
                     <p>--</p>

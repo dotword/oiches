@@ -12,8 +12,6 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
         idUserOwner,
     });
 
-    console.log(entries);
-
     const type = userLogged.roles;
 
     return (
@@ -63,15 +61,17 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                 ''
             )}
 
-            {(type === 'grupo' && entries.length === 0) ||
-            (type === 'admin' &&
-                userOwner.user.roles === 'grupo' &&
-                entries.length === 0) ? (
+            {type === 'grupo' ||
+            (type === 'admin' && userOwner.user.roles === 'grupo') ? (
                 <a
                     href={`/creacion-grupo/${userOwner.user.id}`}
-                    className="btn-account text-xl"
+                    className={`btn-account ${
+                        entries.length === 0 ? 'text-xl' : 'mt-6'
+                    } `}
                 >
-                    Publica tu proyecto musical
+                    {entries.length === 0
+                        ? 'Publica tu proyecto musical'
+                        : 'Publicar un nuevo proyecto'}
                 </a>
             ) : (
                 ''

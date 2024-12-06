@@ -21,7 +21,7 @@ export const listReservaGroupsService = async (group_id, adminUser) => {
 
         // Fetch reservations along with group names
         const [reservas] = await pool.query(
-            `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.usuario_id AS sala_id, salas.nombre AS sala_nombre, usuarios.email
+            `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.id AS sala_id, salas.nombre AS sala_nombre, usuarios.email
        FROM reservas
        LEFT JOIN grupos ON reservas.grupo_id = grupos.id
        LEFT JOIN salas ON reservas.sala_id = salas.id

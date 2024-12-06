@@ -128,11 +128,8 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                     <table className="max-w-5xl mx-auto">
                         <thead>
                             <tr>
-                                <th>
-                                    {type === 'sala' && 'Artista'}
-                                    {type === 'grupo' && 'Sala'}
-                                </th>
-
+                                <th>Sala</th>
+                                <th>Artista</th>
                                 <th>Estado</th>
                                 <th>Fecha concierto</th>
                                 <th>Fecha solicitud</th>
@@ -146,30 +143,27 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                 <React.Fragment key={reserva.id}>
                                     <tr className="mt-10 md:mt-0">
                                         <td>
-                                            {type === 'sala' && (
-                                                <Link
-                                                    to={`/grupo/${reserva.grupo_id}`}
-                                                    target="_blank"
-                                                >
-                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
-                                                        {reserva.grupo_nombre}
-                                                        <FiExternalLink />
-                                                    </span>
-                                                </Link>
-                                            )}
-                                            {type === 'grupo' && (
-                                                <Link
-                                                    to={`/sala/${reserva.sala_id}`}
-                                                    target="_blank"
-                                                >
-                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
-                                                        {reserva.sala_nombre}
-                                                        <FiExternalLink />
-                                                    </span>
-                                                </Link>
-                                            )}
+                                            <Link
+                                                to={`/sala/${reserva.sala_id}`}
+                                                target="_blank"
+                                            >
+                                                <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                    {reserva.sala_nombre}
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
                                         </td>
-
+                                        <td>
+                                            <Link
+                                                to={`/grupo/${reserva.grupo_id}`}
+                                                target="_blank"
+                                            >
+                                                <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                    {reserva.grupo_nombre}
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
+                                        </td>
                                         <td>
                                             {reserva.confirmada === 0 ? (
                                                 <span className="block font-normal text-red-600">
@@ -271,7 +265,7 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                     {new Date(reserva.fecha) < new Date() &&
                                     reserva.confirmada === 1 ? (
                                         <tr>
-                                            <td colSpan="7">
+                                            <td colSpan="8">
                                                 {type === 'grupo' && (
                                                     <GrupoVotaSala
                                                         idReserva={reserva.id}
