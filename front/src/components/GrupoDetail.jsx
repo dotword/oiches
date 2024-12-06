@@ -22,9 +22,6 @@ const GrupoDetail = () => {
     const { currentUser } = useAuth();
     const { entry, error } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
-<<<<<<< HEAD
-
-=======
     const [previous, setPrevious] = useState('');
     const [next, setNext] = useState('');
 
@@ -60,7 +57,6 @@ const GrupoDetail = () => {
         fetchData();
     }, [idGrupo, VITE_API_URL_BASE]);
 
->>>>>>> origin/main
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -332,8 +328,6 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
-<<<<<<< HEAD
-=======
                 <section className="flex justify-between mt-8 mb-16">
                     {previous && (
                         <Link
@@ -359,7 +353,6 @@ const GrupoDetail = () => {
                     )}
                 </section>
 
->>>>>>> origin/main
                 {actualUser.roles === 'admin' && (
                     <a
                         href={`/grupos/${idGrupo}/edit`}
