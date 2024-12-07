@@ -39,13 +39,13 @@ const Menu = ({ mobile }) => {
                 <>
                     <NavLink
                         to="/login"
-                        className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
+                        className="max-md:m-4 font-medium text-purpleOiches hover:text-black"
                     >
                         Login
                     </NavLink>
                     <NavLink
                         to="/register"
-                        className="btn-account max-md:my-8 font-medium"
+                        className="btn-account max-md:m-6 font-medium"
                     >
                         Registro
                     </NavLink>
@@ -54,7 +54,7 @@ const Menu = ({ mobile }) => {
                 <>
                     <NavLink
                         to={`/users/account/${userLogged.id}`}
-                        className="btn-account max-md:my-8 font-medium"
+                        className="btn-account max-md:m-4 font-medium"
                     >
                         Mi perfil
                     </NavLink>
@@ -63,7 +63,7 @@ const Menu = ({ mobile }) => {
                         onClick={() => {
                             signOut();
                         }}
-                        className="max-md:my-8 font-medium text-purpleOiches hover:text-black"
+                        className="max-md:p-6 font-medium text-purpleOiches hover:text-black"
                     >
                         Logout
                     </NavLink>

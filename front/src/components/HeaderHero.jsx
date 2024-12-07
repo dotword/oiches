@@ -9,13 +9,13 @@ const HeaderHero = () => {
 
     return (
         <header className="flex flex-col items-center justify-between pt-7 pb-4 px-6 md:max-w-7xl md:mx-auto">
-            <nav className="self-end md:flex md:justify-between md:mb-3 md:w-11/12 md:mx-auto">
+            <nav className="self-end md:flex md:justify-between md:mb-3 md:w-[97%] md:mx-auto lg:w-11/12">
                 <a href="/" className="max-md:hidden">
                     <img src={logoBlack} alt="logo" className="max-w-36" />
                 </a>
                 <section className="MOBILE-MENU flex md:hidden">
                     <div
-                        className="HAMBURGER-ICON space-y-1.5"
+                        className="HAMBURGER-ICON"
                         onClick={() => setIsNavOpen((prev) => !prev)}
                     >
                         <RxHamburgerMenu className="text-3xl cursor-pointer" />
@@ -23,32 +23,30 @@ const HeaderHero = () => {
 
                     {isNavOpen && (
                         <div
-                            className="fixed inset-0 bg-black bg-opacity-50 z-10"
+                            className="fixed inset-0 bg-black bg-opacity-70 z-10"
                             onClick={() => setIsNavOpen(false)}
                         ></div>
                     )}
 
                     <div
-                        className={`fixed top-0 right-0 w-10/12 max-w-[85%] h-screen bg-white z-20 flex flex-col items-center justify-start transform transition-transform duration-300 space-y-4 pt-6 ${
+                        className={`fixed top-0 right-0 w-10/12 max-w-[85%] h-screen bg-white z-20 flex flex-col items-center justify-start transform transition-transform duration-300 ${
                             isNavOpen ? 'translate-x-0' : 'translate-x-full'
                         }`}
                     >
                         <div
-                            className="absolute top-0 right-0 px-8 py-8"
+                            className="absolute top-0 right-0 p-4"
                             onClick={() => setIsNavOpen(false)}
                         >
                             <IoClose className="text-3xl cursor-pointer" />
                         </div>
-
-                        <a href="/" className="pt-4">
+                        <a href="/" className="p-4 mt-12">
                             <img
                                 src={logoBlack}
                                 alt="logo"
                                 className="max-w-48"
                             />
                         </a>
-
-                        <div className="flex flex-col items-center justify-between text-xl font-semibold">
+                        <div className="flex flex-col items-center justify-between text-xl font-semibold h-[calc(100vh-10rem)]">
                             <Menu mobile />
                         </div>
                     </div>
