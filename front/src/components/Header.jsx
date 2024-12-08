@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoClose } from 'react-icons/io5';
 import logoBlack from '../assets/Horizontal_negro.webp';
@@ -7,6 +7,20 @@ import Menu from './Menu';
 
 const Header = ({ txt }) => {
     const [isNavOpen, setIsNavOpen] = useState(false);
+
+    // Bloqueo/desbloqueo del scroll en el body
+    useEffect(() => {
+        if (isNavOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        // Limpiar estilo al desmontar el componente
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isNavOpen]);
 
     return (
         <header className="flex flex-col items-center justify-between pt-7 pb-4 px-6 bg-hero-image bg-cover bg-bottom md:bg-none md:max-w-7xl md:mx-auto">
@@ -30,7 +44,7 @@ const Header = ({ txt }) => {
                     )}
 
                     <div
-                        className={`fixed top-0 right-0 w-10/12 max-w-[85%] h-screen bg-white z-20 flex flex-col items-center justify-start transform transition-transform duration-300 ${
+                        className={`fixed top-0 right-0 bottom-0 w-10/12 max-w-[85%] h-screen bg-white z-20 flex flex-col items-center justify-start transform transition-transform duration-300 ${
                             isNavOpen ? 'translate-x-0' : 'translate-x-full'
                         }`}
                     >
