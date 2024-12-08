@@ -15,6 +15,7 @@ import getUserGrupoSalaController from './getUserGrupoSalaController .js';
 import getUserByIdController from './getUserByIdController .js';
 import accountUserController from './accountUserController.js';
 import getAllUsersListController from './getAllUsersListController.js';
+import addToMailchimpController from './addToMailchimpController.js';
 
 export {
     registerUserController,
@@ -34,4 +35,5 @@ export {
     getUserByIdController,
     accountUserController,
     getAllUsersListController,
+    addToMailchimpController,
 };

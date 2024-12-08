@@ -28,6 +28,7 @@ import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -36,6 +37,7 @@ function App() {
 
     return (
         <>
+            <ScrollToTop />
             {isMaintenanceMode &&
             (!userLogged || userLogged.roles !== 'admin') ? (
                 <>
