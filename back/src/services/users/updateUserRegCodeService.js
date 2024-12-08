@@ -14,8 +14,7 @@ const updateUserRegCodeService = async (registrationCode) => {
         [registrationCode]
     );
 
-    if (!user.length)
-        throw generateErrorsUtil('Código de registro incorrecto', 403);
+    if (!user) throw generateErrorsUtil('Código de registro incorrecto', 403);
 
     // Actualizamos el usuario.
     if (user) {

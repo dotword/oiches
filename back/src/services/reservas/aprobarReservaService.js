@@ -62,7 +62,7 @@ const aprobarReservaService = async (reserva_id) => {
 
         // Creamos el contenido del email
         const emailBody = `
-                    <!DOCTYPE html>
+                <!DOCTYPE html>
                 <html lang="es">
                 <head>
                     <meta charset="UTF-8">

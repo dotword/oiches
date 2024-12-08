@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import MenuForms from '../components/MenuForms.jsx';
 import Toastify from '../components/Toastify.jsx';
@@ -13,6 +13,8 @@ export const ValidateUser = () => {
 
     const { VITE_API_URL_BASE } = import.meta.env;
     const navigate = useNavigate();
+    const { code: paramCode } = useParams(); // Obtén el código de los parámetros de la URL
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -20,7 +22,17 @@ export const ValidateUser = () => {
         setLoading(true);
 
         const formData = new FormData(e.target);
-        const code = formData.get('code');
+        // const code = formData.get('code');
+        const formCode = formData.get('code');
+
+        // Usar `paramCode` si existe, sino usar `formCode`
+        const code = paramCode || formCode;
+
+        if (!code) {
+            setError('El código es obligatorio.');
+            setLoading(false);
+            return;
+        }
 
         try {
             const response = await fetch(
@@ -39,7 +51,6 @@ export const ValidateUser = () => {
             }
         } catch (error) {
             setError(error.message);
-            console.log(error);
         } finally {
             setLoading(false);
         }
@@ -92,8 +103,9 @@ export const ValidateUser = () => {
                                     type="text"
                                     name="code"
                                     placeholder="Código de validación"
-                                    required
+                                    required={!paramCode} // Solo es obligatorio si no viene de los params
                                     className="form-input"
+                                    defaultValue={paramCode || ''} // Mostrar el código de params si está disponible
                                 />
                             </label>
                         </div>

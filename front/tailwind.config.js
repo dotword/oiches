@@ -6,6 +6,7 @@ export default {
             colors: {
                 yellowOiches: '#FFB500',
                 purpleOiches: '#9333FF',
+                oichesBGMovil: '#6E3482',
                 purpleClaro: '#A775F7',
                 greyOiches: '#8591A5',
                 orangecolor: '#FFBC8E',
