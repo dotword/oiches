@@ -26,7 +26,11 @@ const SalaCard = ({ sala }) => {
             <img
                 src={imageUrl}
                 alt={sala.nombre}
-                className="sala-card-image w-full max-w-full h-48 max-h-48 object-cover rounded-lg mb-4"
+                className={`sala-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
+                    imageUrl === DefaultProfile
+                        ? 'object-contain'
+                        : 'object-cover'
+                }`}
             />
             <h2 className="card-title text-lg font-bold mt-2">{sala.nombre}</h2>
             <p className="card-genre text-gray-400">{sala.generoNombres}</p>
