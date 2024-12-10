@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import HeaderHero from '../components/HeaderHero.jsx';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import SalaCard from '../components/SalaCard.jsx';
+import SalaCard from '../components/Salas/SalaCard.jsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import GrupoCard from '../components/Grupos/GrupoCard.jsx';

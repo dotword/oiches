@@ -16,7 +16,7 @@ import {
 } from '../../services/Grupos/EditGrupoService.js';
 import { AddGrupoMedia } from './GrupoMedia.jsx';
 import { AddRiderForm, AddFotosForm } from './GrupoFiles.jsx';
-import DeleteUserSalaGrupo from '../DeleteUserSalaGrupo.jsx';
+import DeleteUserSalaGrupo from '../Users/DeleteUserSalaGrupo.jsx';
 
 const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);

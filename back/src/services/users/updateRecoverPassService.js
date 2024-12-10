@@ -58,9 +58,9 @@ const updateRecoverPassService = async (email, recoverPassCode) => {
                     <p>--</p>
                     <p style="font-size:12px">
                         <strong>Equipo Oiches</strong><br>
-                        <strong><a href="mailto:hola@oiches.com" style="text-decoration: none">hola@oiches.com</a></strong><br>
-                        <strong><a href="https://www.oiches.com" style="text-decoration: none" target="_blank">www.oiches.com</a></strong><br>
-                        <strong><a href="https://instagram.com/oiches_musica" style="text-decoration: none" target="_blank">instagram.com/oiches_musica</a></strong>
+                        <strong><a href="mailto:hola@oiches.com" style="color:white; text-decoration:none;">hola@oiches.com</a></strong><br>
+                        <strong><a href="https://www.oiches.com" style="color:white; text-decoration:none;" target="_blank">www.oiches.com</a></strong><br>
+                        <strong><a href="https://instagram.com/oiches_musica" style="color:white; text-decoration:none;" target="_blank">instagram.com/oiches_musica</a></strong>
                     </p>
                     <br>
                     <p class="small-text"><strong>AVISO SOBRE CONFIDENCIALIDAD:</strong> Esta comunicación contiene información que es confidencial y también puede contener información privilegiada. Es para uso exclusivo del destinatario/s. Si usted no es el destinatario/s tenga en cuenta que cualquier distribución, copia o uso de esta comunicación o la información que contiene está estrictamente prohibida. Si usted ha recibido esta comunicación por error por favor notifíquelo a <a href="mailto:hola@oiches.com">hola@oiches.com</a>.</p>
