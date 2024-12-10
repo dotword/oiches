@@ -1,4 +1,4 @@
-import apiRequest from '../utils/apiRequest';
+import apiRequest from '../../utils/apiRequest';
 
 export const DeleteGrupoMediaService = async (mediaDelete, idGrupo, token) => {
     const url = `${

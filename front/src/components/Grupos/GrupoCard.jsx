@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import StarRating from './StartRating.jsx';
+import StarRating from '../StartRating.jsx';
 import DefaultProfile from '/Horizontal_blanco.webp';
 
 const GrupoCard = ({ grupo }) => {

@@ -1,4 +1,4 @@
-import apiRequest from '../utils/apiRequest';
+import apiRequest from '../../utils/apiRequest';
 
 const getGrupoByIdService = async (idGrupo) => {
     try {

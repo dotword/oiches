@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import Header from '../components/Header';
-import GrupoCreacion from '../components/GrupoCreacion';
-import Footer from '../components/Footer';
-import Seo from '../components/SEO/Seo';
+import Header from '../../components/Header';
+import GrupoCreacion from '../../components/Grupos/GrupoCreacion';
+import Footer from '../../components/Footer';
+import Seo from '../../components/SEO/Seo';
 
 const CreacionGrupo = () => {
     return (

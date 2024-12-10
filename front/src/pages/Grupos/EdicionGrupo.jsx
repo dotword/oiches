@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import Header from '../components/Header';
-import GrupoEdit from '../components/GrupoEdit';
-import Footer from '../components/Footer';
-import Seo from '../components/SEO/Seo';
+import Header from '../../components/Header';
+import GrupoEdit from '../../components/Grupos/GrupoEdit';
+import Footer from '../../components/Footer';
+import Seo from '../../components/SEO/Seo';
 
 const EdicionGrupo = () => {
     return (

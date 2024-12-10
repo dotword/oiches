@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context';
+import { AuthContext } from '../../context/auth/auth.context';
 import { toast } from 'react-toastify';
-import Toastify from './Toastify';
+import Toastify from '../Toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
-import FetchProvinciasService from '../services/FetchProvinciasService';
-import FetchGenresService from '../services/FetchGenresService';
-import registerGrupoService from '../services/registerGrupoService';
+import FetchProvinciasService from '../../services/FetchProvinciasService';
+import FetchGenresService from '../../services/FetchGenresService';
+import registerGrupoService from '../../services/Grupos/registerGrupoService';
 
 const GrupoCreacion = () => {
     const { userLogged, token } = useContext(AuthContext);

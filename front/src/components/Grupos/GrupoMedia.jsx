@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context.jsx';
+import { AuthContext } from '../../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import getGrupoByIdService from '../services/getGrupoByIdService.js';
+import getGrupoByIdService from '../../services/Grupos/getGrupoByIdService.js';
 import {
     DeleteGrupoMediaService,
     AddGrupoMediaService,
-} from '../services/GrupoMediaService.js';
+} from '../../services/Grupos/GrupoMediaService.js';
 
 export const AddGrupoMedia = () => {
     const { token } = useContext(AuthContext);

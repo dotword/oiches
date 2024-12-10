@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import GrupoFilter from '../components/GrupoFilter';
-import GrupoList from '../components/GrupoList';
-import FetchGruposService from '../services/FetchGruposService';
-import HeaderHero from '../components/HeaderHero.jsx';
+import GrupoFilter from '../../components/Grupos/GrupoFilter.jsx';
+import GrupoList from '../../components/Grupos/GrupoList';
+import FetchGruposService from '../../services/Grupos/FetchGruposService.js';
+import HeaderHero from '../../components/HeaderHero.jsx';
 import { Link } from 'react-router-dom';
-import Footer from '../components/Footer';
-import Seo from '../components/SEO/Seo.jsx'; // Importar el componente SEO
-import FeatureGridMusicos from '../components/FeatureGridMusicos.jsx';
-import Conectate from '../components/Conectate.jsx';
+import Footer from '../../components/Footer.jsx';
+import Seo from '../../components/SEO/Seo.jsx'; // Importar el componente SEO
+import FeatureGridMusicos from '../../components/Grupos/FeatureGridMusicos.jsx';
+import Conectate from '../../components/Conectate.jsx';
 import { IoFilter } from 'react-icons/io5';
-import Paginator from '../components/Paginator.jsx';
+import Paginator from '../../components/Paginator.jsx';
 
 const Grupos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);

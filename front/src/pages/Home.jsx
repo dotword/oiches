@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import SalaCard from '../components/SalaCard.jsx';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import GrupoCard from '../components/GrupoCard.jsx';
+import GrupoCard from '../components/Grupos/GrupoCard.jsx';
 import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';

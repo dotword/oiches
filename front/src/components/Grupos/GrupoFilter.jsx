@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import FetchProvinciasService from '../services/FetchProvinciasService';
-import FetchGenresService from '../services/FetchGenresService';
+import FetchProvinciasService from '../../services/FetchProvinciasService';
+import FetchGenresService from '../../services/FetchGenresService';
 
 const GrupoFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);

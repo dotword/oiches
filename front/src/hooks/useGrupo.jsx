@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import getGrupoByIdService from '../services/getGrupoByIdService';
+import getGrupoByIdService from '../services/Grupos/getGrupoByIdService';
 
 const useGrupo = (idGrupo) => {
     const [entry, setEntry] = useState('');

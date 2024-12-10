@@ -1,22 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context.jsx';
+import { AuthContext } from '../../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Toastify from './Toastify.jsx';
+import Toastify from '../Toastify.jsx';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 
-import FetchProvinciasService from '../services/FetchProvinciasService.js';
-import FetchGenresService from '../services/FetchGenresService.js';
-import getGrupoByIdService from '../services/getGrupoByIdService.js';
+import FetchProvinciasService from '../../services/FetchProvinciasService.js';
+import FetchGenresService from '../../services/FetchGenresService.js';
+import getGrupoByIdService from '../../services/Grupos/getGrupoByIdService.js';
 import {
     EditGrupoService,
     DeleteGrupoGenerosService,
     addGeneroGrupoService,
-} from '../services/EditGrupoService.js';
+} from '../../services/Grupos/EditGrupoService.js';
 import { AddGrupoMedia } from './GrupoMedia.jsx';
 import { AddRiderForm, AddFotosForm } from './GrupoFiles.jsx';
-import DeleteUserSalaGrupo from './DeleteUserSalaGrupo.jsx';
+import DeleteUserSalaGrupo from '../DeleteUserSalaGrupo.jsx';
 
 const GrupoEdit = () => {
     const { token, userLogged } = useContext(AuthContext);

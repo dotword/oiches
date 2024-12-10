@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { AuthContext } from '../context/auth/auth.context.jsx';
+import { AuthContext } from '../../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import getGrupoByIdService from '../services/getGrupoByIdService.js';
+import getGrupoByIdService from '../../services/Grupos/getGrupoByIdService.js';
 import {
     AddGrupoFilesService,
     DeleteGrupoFilesService,
     AddGrupoFotoService,
     SetMainGrupoPhotoService,
-} from '../services/GrupoFilesService.js';
+} from '../../services/Grupos/GrupoFilesService.js';
 
 const urlUploads = `${import.meta.env.VITE_API_URL_BASE}/uploads`;
 

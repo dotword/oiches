@@ -1,4 +1,4 @@
-import apiRequest from '../utils/apiRequest';
+import apiRequest from '../../utils/apiRequest';
 
 const grupoVotaSalaService = async ({ data, idReserva, token }) => {
     const { VITE_API_URL_BASE } = import.meta.env;

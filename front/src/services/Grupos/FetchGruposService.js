@@ -1,4 +1,4 @@
-import apiRequest from '../utils/apiRequest';
+import apiRequest from '../../utils/apiRequest';
 
 const FetchGruposService = async (filters = {}, page = 1, pageSize = 10) => {
     try {

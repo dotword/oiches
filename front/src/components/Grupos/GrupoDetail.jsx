@@ -5,14 +5,14 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FaPencilAlt } from 'react-icons/fa';
 
-import useGrupo from '../hooks/useGrupo.jsx';
-import StarRating from './StartRating.jsx';
-import Header from './Header.jsx';
+import useGrupo from '../../hooks/useGrupo.jsx';
+import StarRating from '../StartRating.jsx';
+import Header from '../Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
-import useAuth from '../hooks/useAuth.jsx';
-import Footer from './Footer.jsx';
-import Seo from '../components/SEO/Seo.jsx'; // Importamos el componente Seo
-import TextFormat from '../components/TextFormato.jsx'; // Importamos el componente TextFormat
+import useAuth from '../../hooks/useAuth.jsx';
+import Footer from '../Footer.jsx';
+import Seo from '../SEO/Seo.jsx'; // Importamos el componente Seo
+import TextFormat from '../TextFormato.jsx'; // Importamos el componente TextFormat
 import { IoChevronForward } from 'react-icons/io5';
 import { IoChevronBack } from 'react-icons/io5';
 
