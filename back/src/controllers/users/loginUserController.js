@@ -29,7 +29,10 @@ const loginUserController = async (req, res, next) => {
         // Si las contraseña no coincide o no existe un usuario con el email proporcionado
         // lanzamos un error.
         if (!user || !validPass)
-            throw generateErrorsUtil('Credenciales inválidas', 401);
+            throw generateErrorsUtil(
+                'El email o la contraseña que has introducido no son correctos.',
+                401
+            );
 
         // Si el usuario no está activo lanzamos un error.
         if (!user.active)
