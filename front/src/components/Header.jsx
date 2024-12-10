@@ -77,7 +77,7 @@ const Header = ({ txt }) => {
                 <img src={logoWhite} alt="logo" className="max-w-48" />
             </a>
             {txt ? (
-                <h1 className="text-white mt-5 mb-4 text-2xl/8 font-semibold text-center w-4/5 md:mt-12">
+                <h1 className="text-white mt-5 mb-4 text-2xl/8 font-semibold text-center w-4/5 md:mt-12 md:text-black">
                     {txt}
                 </h1>
             ) : null}

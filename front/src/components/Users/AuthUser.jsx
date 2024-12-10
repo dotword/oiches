@@ -50,7 +50,6 @@ const AuthUser = () => {
     useEffect(() => {
         if (userLogged) {
             setNewEmail(userData.user.email || ''); // Actualiza el estado del email si existe
-            // setUserId(userLogged.id); // Actualiza el ID del usuario
         }
     }, [userLogged, userData.user.email]);
 

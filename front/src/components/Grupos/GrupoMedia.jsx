@@ -122,7 +122,7 @@ export const AddGrupoMedia = () => {
             {/* Mostrar los videos ya subidos desde el backend */}
             {media.length > 0 && (
                 <div className="mb-4">
-                    <ul className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">
+                    <ul className="grid max-[600px]:grid-cols-1 grid-cols-2 gap-4 my-6 place-items-center">
                         {media.map((video, index) => (
                             <li key={index} className="w-full">
                                 <LiteYouTubeEmbed

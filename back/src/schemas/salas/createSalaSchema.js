@@ -1,7 +1,5 @@
 // Importamos joi.
 import Joi from 'joi';
-import imgSchema from '../imgSchema.js';
-import fileSchema from '../fileSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -31,11 +29,6 @@ const createSalaSchema = Joi.object({
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
     web: Joi.string().uri().messages(joiErrorMessages),
-    photoA: imgSchema.optional(),
-    photoB: imgSchema.optional(),
-    photoC: imgSchema.optional(),
-    photoD: imgSchema.optional(),
-    file: fileSchema.optional(),
 });
 
 export default createSalaSchema;

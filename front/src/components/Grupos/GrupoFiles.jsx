@@ -113,7 +113,7 @@ export const AddRiderForm = () => {
             </p>
             {/* Previsualización del Rider ya subido */}
             {uploadedRider && (
-                <div className="sect-photo mb-4 flex justify-between max-w-2xl">
+                <div className="sect-photo max-w-2xl">
                     <embed
                         src={uploadedRider}
                         type="application/pdf"
@@ -123,7 +123,7 @@ export const AddRiderForm = () => {
                     <button
                         type="button"
                         onClick={handleDeleteRider}
-                        className="btn-account mt-3 bg-red-500 hover:bg-red-700 w-1/4 h-9 self-end"
+                        className="btn-account mt-3 bg-red-500 hover:bg-red-700 h-9 self-end"
                     >
                         Borrar Rider
                     </button>
@@ -134,7 +134,7 @@ export const AddRiderForm = () => {
             {!uploadedRider && (
                 <>
                     <div className="sect-photo">
-                        <span className="border-photos w-80 max-w-2xl">
+                        <span className="border-photos w-80 max-w-full">
                             {rider ? (
                                 <span className="text-xs p-1 overflow-hidden">
                                     {rider.name}
@@ -325,7 +325,7 @@ export const AddFotosForm = () => {
             </p>
             {/* Previsualización de las Fotos ya subidas */}
             {uploadedFotos.length > 0 && (
-                <div className="grid max-[600px]:grid-cols-1 grid-cols-2 lg:grid-cols-4 gap-4 my-6 place-items-center">
+                <div className="grid max-[600px]:grid-cols-1 grid-cols-2 gap-x-4 gap-y-8 my-6 place-items-center items-baseline">
                     {uploadedFotos.map((fotoUrl, index) => (
                         <div key={index} className="sect-photo w-full">
                             <img

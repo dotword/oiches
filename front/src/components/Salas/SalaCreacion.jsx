@@ -34,19 +34,6 @@ const SalaCreacion = () => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
     const [generos, setGeneros] = useState([]);
-    const [file, setFile] = useState(null);
-    const [photos, setPhotos] = useState({
-        photoA: null,
-        photoB: null,
-        photoC: null,
-        photoD: null,
-    });
-    const [previews, setPreviews] = useState({
-        previewUrlA: null,
-        previewUrlB: null,
-        previewUrlC: null,
-        previewUrlD: null,
-    });
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -69,16 +56,6 @@ const SalaCreacion = () => {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleFileChange = (e, name) => {
-        const file = e.target.files[0];
-        setPhotos({ ...photos, [name]: file });
-        setPreviews({
-            ...previews,
-            [`previewUrl${name.charAt(name.length - 1).toUpperCase()}`]:
-                URL.createObjectURL(file),
-        });
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -96,18 +73,23 @@ const SalaCreacion = () => {
                 if (value) formData.append(key, value);
             }
         });
-        Object.entries(photos).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
-        });
-        if (file) formData.append('file', file);
 
         try {
-            await registerSalaService({ token, userId, formData });
+            const response = await registerSalaService({
+                token,
+                userId,
+                formData,
+            });
 
-            toast.success('Has creado tu nueva sala con éxito');
+            const salaId = response.sala.id;
+
+            toast.success(
+                'Revisa la información y añade las fotos y Rider de tu sala.'
+            );
+
             setTimeout(() => {
-                navigate(`/users/account/${userId}`);
-            }, 3000);
+                navigate(`/sala/${salaId}/edit`);
+            }, 2000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -138,7 +120,7 @@ const SalaCreacion = () => {
     return currentUser ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
-                <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
+                <div className="md:w-1/2 md:flex md:flex-wrap md:justify-between">
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                         <label htmlFor="nombre" className="font-semibold">
                             Nombre de la Sala:*
@@ -205,7 +187,7 @@ const SalaCreacion = () => {
                         </span>
                     </div>
 
-                    <div className="flex flex-col mb-4 md:w-[calc(30%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
                         <label htmlFor="provincia" className="font-semibold">
                             Provincia:*
                         </label>
@@ -226,7 +208,7 @@ const SalaCreacion = () => {
                         </select>
                     </div>
 
-                    <div className="flex flex-col mb-4 md:w-[calc(15%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-[calc(30%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
                             Aforo:*
                         </label>
@@ -240,7 +222,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-[calc(55%-0.5rem)]">
+                    <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="web" className="font-semibold">
                             Web:
                         </label>
@@ -269,6 +251,8 @@ const SalaCreacion = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
+                </div>
+                <div className="md:w-1/2 md:pl-12 md:flex md:flex-col">
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="condiciones" className="font-semibold">
                             Condiciones:
@@ -287,33 +271,6 @@ const SalaCreacion = () => {
                     </div>
 
                     <div className="flex flex-col mb-4 md:w-full">
-                        <p className="font-semibold mb-1">
-                            Sube el Rider (.pdf)
-                        </p>
-                        <p className="text-xs mb-3">
-                            (*) El tamaño del archivo no debe exceder 3Mb
-                        </p>
-                        <div className="sect-photo">
-                            <span className="border-photos w-full h-20">
-                                {file ? (
-                                    <span className="text-xs p-1 overflow-hidden">
-                                        {file.name}
-                                    </span>
-                                ) : (
-                                    <span>Sube tu archivo</span>
-                                )}
-
-                                <input
-                                    type="file"
-                                    name={file}
-                                    className="absolute w-full h-full opacity-0 cursor-pointer"
-                                    onChange={(e) => setFile(e.target.files[0])}
-                                />
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="equipamiento" className="font-semibold">
                             Rider Texto:
                         </label>
@@ -329,51 +286,6 @@ const SalaCreacion = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
-                </div>
-                <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-col">
-                    <section className="mb-8 gap-2 flex flex-wrap">
-                        <p className="mb-1 font-semibold w-full">
-                            Fotos de la sala
-                        </p>
-                        <p className="text-xs mb-3">
-                            (*) Archivos .jpeg, .png, .webp o .pdf con un tamaño
-                            máximo de 3Mb
-                        </p>
-                        <div className="w-full grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
-                            {['A', 'B', 'C', 'D'].map((key) => (
-                                <section
-                                    className="sect-photo w-full"
-                                    key={key}
-                                >
-                                    <span className="border-photos w-full">
-                                        {previews[`previewUrl${key}`] ? (
-                                            <img
-                                                src={
-                                                    previews[`previewUrl${key}`]
-                                                }
-                                                alt="Vista previa"
-                                                className="w-full"
-                                            />
-                                        ) : (
-                                            <span>Sube una foto</span>
-                                        )}
-                                        <input
-                                            type="file"
-                                            name={`photo${key}`}
-                                            className="absolute w-full h-full opacity-0 cursor-pointer"
-                                            onChange={(e) =>
-                                                handleFileChange(
-                                                    e,
-                                                    `photo${key}`
-                                                )
-                                            }
-                                        />
-                                    </span>
-                                </section>
-                            ))}
-                        </div>
-                    </section>
-
                     {/* Botón de ayuda justo después de las fotos */}
                     <div className="sticky top-0 my-8 max-w-full">
                         <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
@@ -395,7 +307,7 @@ const SalaCreacion = () => {
                 <div className="my-12 max-w-80">
                     <input
                         type="submit"
-                        value="Crear Sala"
+                        value="Continuar"
                         className="btn-account p-3 w-full"
                     />
                 </div>

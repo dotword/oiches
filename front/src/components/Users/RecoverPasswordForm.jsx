@@ -6,9 +6,6 @@ import RecoverPasswordService from '../../services/Users/RecoverPasswordService.
 
 const RecoverPasswordForm = () => {
     const [email, setEmail] = useState('');
-    // const [error, setError] = useState('');
-    // const [success, setSuccess] = useState('');
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -19,14 +16,10 @@ const RecoverPasswordForm = () => {
             };
             await RecoverPasswordService(dataForm);
 
-            // setSuccess(
-            //     'Se ha enviado un enlace de recuperación a tu correo electrónico'
-            // );
             toast.success(
                 'Se ha enviado un enlace de recuperación a tu correo electrónico'
             );
         } catch (error) {
-            // setError(error.message);
             toast.error('Error al enviar el enlace de recuperación');
         }
     };
@@ -62,8 +55,6 @@ const RecoverPasswordForm = () => {
                         Enviar enlace
                     </button>
                 </div>
-                {/* {error && <p>{error}</p>}
-                {success && <p>{success}</p>} */}
             </form>
             <Toastify />
         </>

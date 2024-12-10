@@ -21,10 +21,9 @@ export const deleteUserService = async (id) => {
                 `SELECT id FROM grupos WHERE usuario_id = ?`,
                 [user.id]
             );
-            const grupo = grupos[0];
 
-            if (grupo) {
-                // Eliminar media del grupo
+            for (const grupo of grupos) {
+                // Eliminar info del grupo
                 await pool.query(`DELETE FROM grupo_media WHERE grupo_id = ?`, [
                     grupo.id,
                 ]);

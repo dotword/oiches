@@ -24,33 +24,10 @@ const GrupoCreacion = () => {
         honorarios_to: '',
         condiciones: '',
         biografia: '',
-        mediaA: '',
-        mediaB: '',
-        mediaC: '',
-        mediaD: '',
     });
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
     const [generos, setGeneros] = useState([]);
-    const [file, setFile] = useState(null);
-    const [photos, setPhotos] = useState({
-        photoA: null,
-        photoB: null,
-        photoC: null,
-        photoD: null,
-    });
-    const [previews, setPreviews] = useState({
-        previewUrlA: null,
-        previewUrlB: null,
-        previewUrlC: null,
-        previewUrlD: null,
-    });
-    const [mediaLinks, setMediaLinks] = useState({
-        mediaA: '',
-        mediaB: '',
-        mediaC: '',
-        mediaD: '',
-    });
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -72,39 +49,6 @@ const GrupoCreacion = () => {
         setFormValues({ ...formValues, [name]: value });
     };
 
-    const handleFotoChange = (e, name) => {
-        const file = e.target.files[0];
-        setPhotos({ ...photos, [name]: file });
-        setPreviews({
-            ...previews,
-            [`previewUrl${name.charAt(name.length - 1).toUpperCase()}`]:
-                URL.createObjectURL(file),
-        });
-    };
-
-    const extractYouTubeId = (url) => {
-        try {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
-        } catch (e) {
-            return null; // Manejo de casos donde el URL no es válido
-        }
-    };
-    const handleMediaChange = (e) => {
-        const { name, value } = e.target;
-        setMediaLinks((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-
-        const youTubeId = extractYouTubeId(value);
-        if (youTubeId) {
-            setFormValues((prev) => ({
-                ...prev,
-                [name]: youTubeId,
-            }));
-        }
-    };
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -116,22 +60,23 @@ const GrupoCreacion = () => {
                 if (value) formData.append(key, value);
             }
         });
-        Object.entries(photos).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
-        });
-        if (file) formData.append('file', file);
 
         try {
-            await registerGrupoService({
+            const response = await registerGrupoService({
                 token,
                 userId,
                 formData,
             });
 
-            toast.success('Has creado tu nuevo proyecto musical con éxito');
+            const grupoId = response.grupo.id;
+
+            toast.success(
+                'Revisa la información y añade las fotos y Rider de tu proyecto.'
+            );
+
             setTimeout(() => {
-                navigate(`/users/account/${userId}`);
-            }, 3000);
+                navigate(`/grupos/${grupoId}/edit`);
+            }, 2000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -154,7 +99,7 @@ const GrupoCreacion = () => {
                     <div className="md:w-3/5 md:flex md:flex-wrap md:justify-between">
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                             <label htmlFor="nombre" className="font-semibold">
-                                Nombre del artista/grupo:*
+                                Nombre:*
                             </label>
                             <input
                                 type="text"
@@ -171,7 +116,7 @@ const GrupoCreacion = () => {
                                 htmlFor="generos"
                                 className="font-semibold mb-2"
                             >
-                                Géneros *:
+                                Géneros:*
                             </label>
                             <Multiselect
                                 options={genres.map((genre) => ({
@@ -272,7 +217,6 @@ const GrupoCreacion = () => {
                                 />
                             </div>
                         </div>
-
                         <div className="flex flex-col mb-4 md:w-full">
                             <label
                                 htmlFor="biografia"
@@ -291,7 +235,9 @@ const GrupoCreacion = () => {
                                 2000 caracteres como máximo
                             </p>
                         </div>
+                    </div>
 
+                    <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-col">
                         <div className="flex flex-col mb-4 md:w-full">
                             <label
                                 htmlFor="biografia"
@@ -310,101 +256,6 @@ const GrupoCreacion = () => {
                                 2000 caracteres como máximo
                             </p>
                         </div>
-
-                        <section className="mb-8">
-                            <p className="font-semibold mb-2">
-                                Enlaza tus videos:
-                            </p>
-                            {['mediaA', 'mediaB', 'mediaC', 'mediaD'].map(
-                                (media) => (
-                                    <input
-                                        key={media}
-                                        type="text"
-                                        name={media}
-                                        placeholder="Añade enlaces a tus videos de YouTube"
-                                        value={mediaLinks[media]}
-                                        className="form-input mb-4" //Se amplia el espacio entre imputs tambien en movil acilita el uso con los dedos
-                                        onChange={handleMediaChange}
-                                    />
-                                )
-                            )}
-                        </section>
-                    </div>
-                    <div className="pt-4 md:w-2/5 md:pl-12 md:pt-0 md:flex md:flex-col">
-                        <section className="mb-8">
-                            <p className="font-semibold mb-2">
-                                Sube el Rider (.pdf)
-                            </p>
-                            <p className="text-xs mb-3">
-                                (*) El tamaño del archivo no debe exceder 3Mb
-                            </p>
-                            <div className="sect-photo w-full">
-                                <span className="border-photos w-full h-20">
-                                    {file ? (
-                                        <span className="text-xs p-1 overflow-hidden">
-                                            {file.name}
-                                        </span>
-                                    ) : (
-                                        <span>Sube tu archivo</span>
-                                    )}
-
-                                    <input
-                                        type="file"
-                                        name={file}
-                                        className="absolute w-full h-full opacity-0 cursor-pointer"
-                                        onChange={(e) =>
-                                            setFile(e.target.files[0])
-                                        }
-                                    />
-                                </span>
-                            </div>
-                        </section>
-
-                        <section className="mb-8 gap-2 flex flex-wrap">
-                            <p className="mb-1 font-semibold w-full">
-                                Fotos del artista/grupo
-                            </p>
-                            <p className="text-xs mb-3">
-                                (*) Archivos .jpeg, .png, .webp o .pdf con un
-                                tamaño máximo de 3Mb
-                            </p>
-                            <div className="w-full grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-x-4">
-                                {['A', 'B', 'C', 'D'].map((key) => (
-                                    <section
-                                        className="sect-photo w-full"
-                                        key={key}
-                                    >
-                                        <span className="border-photos w-full">
-                                            {previews[`previewUrl${key}`] ? (
-                                                <img
-                                                    src={
-                                                        previews[
-                                                            `previewUrl${key}`
-                                                        ]
-                                                    }
-                                                    alt="Vista previa"
-                                                    className="w-full"
-                                                />
-                                            ) : (
-                                                <span>Sube una foto</span>
-                                            )}
-                                            <input
-                                                type="file"
-                                                name={`photo${key}`}
-                                                className="absolute w-full h-full opacity-0 cursor-pointer"
-                                                onChange={(e) =>
-                                                    handleFotoChange(
-                                                        e,
-                                                        `photo${key}`
-                                                    )
-                                                }
-                                            />
-                                        </span>
-                                    </section>
-                                ))}
-                            </div>
-                        </section>
-
                         {/* Botón de ayuda justo después de las fotos */}
                         <div className="sticky top-0 my-8 max-w-full">
                             <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
@@ -426,7 +277,7 @@ const GrupoCreacion = () => {
                     <div className="my-12 max-w-80">
                         <input
                             type="submit"
-                            value="Publicar artista/grupo"
+                            value="Continuar"
                             className="btn-account p-3 w-full"
                         />
                     </div>

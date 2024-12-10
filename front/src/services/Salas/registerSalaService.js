@@ -3,7 +3,7 @@ import apiRequest from '../../utils/apiRequest';
 const registerSalaService = async ({ token, userId, formData }) => {
     const url = `${import.meta.env.VITE_API_URL_BASE}/users/salas/${userId}`;
 
-    return apiRequest({
+    const response = await apiRequest({
         url,
         method: 'POST',
         headers: {
@@ -11,6 +11,8 @@ const registerSalaService = async ({ token, userId, formData }) => {
         },
         body: formData,
     });
+
+    return response.data;
 };
 
 export default registerSalaService;
