@@ -6,8 +6,8 @@ import RecoverPasswordService from '../../services/Users/RecoverPasswordService.
 
 const RecoverPasswordForm = () => {
     const [email, setEmail] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    // const [error, setError] = useState('');
+    // const [success, setSuccess] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,12 +19,14 @@ const RecoverPasswordForm = () => {
             };
             await RecoverPasswordService(dataForm);
 
-            setSuccess(
+            // setSuccess(
+            //     'Se ha enviado un enlace de recuperación a tu correo electrónico'
+            // );
+            toast.success(
                 'Se ha enviado un enlace de recuperación a tu correo electrónico'
             );
-            toast.success('Enlace de recuperación enviado');
         } catch (error) {
-            setError(error.message);
+            // setError(error.message);
             toast.error('Error al enviar el enlace de recuperación');
         }
     };
@@ -37,8 +39,9 @@ const RecoverPasswordForm = () => {
             >
                 <h1 className="text-4xl">Recupera tu acceso</h1>
                 <p>
-                    ¿Olvidaste o perdiste tu contraseña? Escribe tu correo y te
-                    enviaremos un link para resetearla
+                    ¿Olvidaste o perdiste tu contraseña?
+                    <br />
+                    Escribe tu correo y te enviaremos un enlace para resetearla.
                 </p>
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="email">
@@ -59,8 +62,8 @@ const RecoverPasswordForm = () => {
                         Enviar enlace
                     </button>
                 </div>
-                {error && <p>{error}</p>}
-                {success && <p>{success}</p>}
+                {/* {error && <p>{error}</p>}
+                {success && <p>{success}</p>} */}
             </form>
             <Toastify />
         </>

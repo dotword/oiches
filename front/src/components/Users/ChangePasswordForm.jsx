@@ -1,9 +1,12 @@
 import { Input } from '../Input.jsx';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import ChangePasswordService from '../../services/Users/ChangePasswordService.js';
 
 const ChangePasswordForm = () => {
+    const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -25,6 +28,10 @@ const ChangePasswordForm = () => {
             await ChangePasswordService(dataForm);
 
             toast.success('Contraseña modificada');
+
+            setTimeout(() => {
+                navigate('/login');
+            }, 3000);
         } catch (error) {
             toast.error(error.message);
         }
@@ -65,7 +72,7 @@ const ChangePasswordForm = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="newPass">Contraseña* </label>
+                        <label htmlFor="newPass">Nueva contraseña* </label>
                         <Input
                             type="password"
                             name="newPass"
