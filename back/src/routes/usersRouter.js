@@ -25,6 +25,7 @@ import {
     getUserByIdController,
     accountUserController,
     getAllUsersListController,
+    addToMailchimpController,
     // selectUserByNameController
 } from '../controllers/users/index.js';
 
@@ -32,6 +33,9 @@ const router = express.Router();
 
 // Endpoint registro de usuarios
 router.post('/users/registro', registerUserController);
+
+// Endpoint para añadir a Mailchimp en el registro
+router.post('/add-to-mailchimp', addToMailchimpController);
 
 //Endpoint validación de usuarios
 router.get('/users/validate/:registrationCode', validateUserController);

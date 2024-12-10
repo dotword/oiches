@@ -9,6 +9,34 @@ export const RegisterForm = () => {
     const [showPassword, setShowPassword] = useState(false); // Estado para la visibilidad de la contraseña
     const [showPassword2, setShowPassword2] = useState(false); // Estado para la visibilidad de repetir contraseña
 
+    const url = import.meta.env.VITE_API_URL_BASE;
+
+    const handleAddToMailchimp = async (email, username, roles, active, id) => {
+        try {
+            const response = await fetch(`${url}/add-to-mailchimp`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, username, roles, active, id }),
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('Contacto añadido a Oiches newsletter');
+            } else {
+                console.error(
+                    'Error al añadir a Oiches newsletter:',
+                    data.error || 'Error desconocido'
+                );
+                toast.warn(
+                    'El usuario fue registrado, pero no se pudo añadir a Oiches newsletter.'
+                );
+            }
+        } catch (err) {
+            console.error('Error al añadir a Oiches newsletter:', err.message);
+            toast.warn('No se pudo completar la sincronización con Oiches newsletter.');
+        }
+    };
+
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
@@ -25,7 +53,6 @@ export const RegisterForm = () => {
                 toast.error('Las contraseñas no coinciden');
                 return;
             }
-            const url = import.meta.env.VITE_API_URL_BASE;
 
             const response = await fetch(`${url}/users/registro`, {
                 headers: {
@@ -40,10 +67,17 @@ export const RegisterForm = () => {
 
             if (status === 'error') {
                 toast.error(message);
-            }
-
-            if (status === 'ok') {
+            } else if (status === 'ok') {
                 toast.success(message);
+
+                // Intentar añadir a Mailchimp después del registro exitoso
+                await handleAddToMailchimp(
+                    data.email,
+                    data.username,
+                    data.roles,
+                    data.active,
+                    data.id
+                );
             }
         } catch (err) {
             toast.error(err.message);

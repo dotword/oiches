@@ -4,6 +4,7 @@ import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 const Paginator = ({ setPage, page, total, pageSize }) => {
     const handlePageChange = (newPage) => {
         setPage(newPage); // Actualiza la página actual
+        window.scrollTo(0, 0); // Desplaza al inicio de la página
     };
     const totalPages = total ? Math.ceil(total / pageSize) : 0; // Calcula el total de páginas
 
