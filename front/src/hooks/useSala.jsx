@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-import getSalaService from '../services/getSalaService.js';
-
+import getSalaService from '../services/Salas/getSalaService.js';
 
 const useSala = (idSala) => {
     const [entry, setEntry] = useState('');

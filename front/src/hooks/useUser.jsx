@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/auth/auth.context';
-import getUserDataService from '../services/getUserDataService';
+import getUserDataService from '../services/Users/getUserDataService';
 
 const useUser = (userId) => {
     const { token } = useContext(AuthContext);

@@ -1,7 +1,5 @@
 // Importamos joi.
 import Joi from 'joi';
-import imgSchema from '../imgSchema.js';
-import fileSchema from '../fileSchema.js';
 
 // Importamos los mensajes de error personalizados.
 import joiErrorMessages from '../joiErrorMessages.js';
@@ -31,15 +29,6 @@ const createGrupoSchema = Joi.object({
     honorarios_to: Joi.number().min(0).messages(joiErrorMessages),
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     biografia: Joi.string().max(2000).messages(joiErrorMessages),
-    photoA: imgSchema.optional(),
-    photoB: imgSchema.optional(),
-    photoC: imgSchema.optional(),
-    photoD: imgSchema.optional(),
-    file: fileSchema.optional(),
-    mediaA: Joi.any().messages(joiErrorMessages),
-    mediaB: Joi.any().messages(joiErrorMessages),
-    mediaC: Joi.any().messages(joiErrorMessages),
-    mediaD: Joi.any().messages(joiErrorMessages),
 });
 
 export default createGrupoSchema;

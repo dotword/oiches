@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FiExternalLink, FiMail } from 'react-icons/fi';
-import GrupoVotaSala from './GrupoVotaSala';
-import SalaVotaGrupo from './SalaVotaGrupo';
+import GrupoVotaSala from './Grupos/GrupoVotaSala';
+import SalaVotaGrupo from './Salas/SalaVotaGrupo';
 import { ConfirmationModal } from './ConfirmModal.jsx';
 
 export const ListarReservas = ({ userData, token, userLogged }) => {

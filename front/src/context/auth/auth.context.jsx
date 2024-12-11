@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
-import getDataUserLoggedService from '../../services/getDataUserLoggedService.js';
+import getDataUserLoggedService from '../../services/Users/getDataUserLoggedService.js';
 
 export const AuthContext = createContext({
     currentUser: null,
