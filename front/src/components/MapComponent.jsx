@@ -105,7 +105,7 @@ const MapComponent = ({ onLocationSelect, actualAddress }) => {
                 placeholder="Buscar dirección..."
                 value={address || ''}
                 onChange={(e) => setAddress(e.target.value)}
-                className="form-input mb-2"
+                className="form-input mb-4"
             />
 
             {/* Mostrar sugerencias debajo del campo de texto */}

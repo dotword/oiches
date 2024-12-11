@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/auth/auth.context.jsx';
 import { useParams } from 'react-router-dom';
+import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import MapComponent from '../MapComponent.jsx';
 import MapShow from '../MapShow.jsx';
-import Toastify from '../Toastify.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import FetchGenresService from '../../services/FetchGenresService.js';
@@ -181,8 +181,8 @@ const SalaEdit = () => {
     return (userLogged && sala.owner === userLogged.id) ||
         (userLogged && userLogged.roles === 'admin') ? (
         <>
-            <div className="px-6 pt-3 pb-6 md:px-12 bg-white rounded-lg shadow-md md:grid md:grid-cols-3 md:gap-x-12">
-                <div className="flex flex-col mb-4 md:flex-row md:gap-12 md:col-start-1 md:col-end-4">
+            <div className="px-6 pt-3 pb-6 md:px-12 bg-white rounded-lg shadow-md md:grid md:grid-cols-5 md:gap-x-12">
+                <div className="flex flex-col mb-4 md:flex-row md:gap-12 md:col-start-1 md:col-end-4 md:row-start-1">
                     {sala.activeGenres && sala.activeGenres.length > 0 && (
                         <div className="mb-6 w-2/3">
                             <p className="font-semibold my-2">
@@ -260,7 +260,7 @@ const SalaEdit = () => {
 
                 <form
                     onSubmit={handleSubmit}
-                    className="md:grid md:grid-cols-6 md:gap-x-6 md:col-start-1 md:col-end-3"
+                    className="md:grid md:grid-cols-6 md:gap-x-6 md:col-start-1 md:col-end-4"
                 >
                     {/* Nombre */}
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
@@ -421,8 +421,15 @@ const SalaEdit = () => {
                         </p>
                     </div>
                     <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
-                        <label htmlFor="equipamiento" className="font-semibold">
+                        <label
+                            htmlFor="equipamiento"
+                            className="font-semibold flex flex-col"
+                        >
                             Rider:
+                            <span className="mt-1 text-gray-500 text-sm font-normal">
+                                Si lo prefieres, puedes subir tu rider en PDF en
+                                el siguiente apartado.
+                            </span>
                         </label>
                         <textarea
                             type="text"
@@ -451,7 +458,7 @@ const SalaEdit = () => {
                     <div>{error && <p>{error}</p>}</div>
                 </form>
 
-                <div className="pt-4 md:pt-0 md:flex md:flex-wrap md:flex-col md:items-center md:col-start-3 md:col-end-4">
+                <div className="pt-4 md:pt-0 md:flex md:flex-wrap md:flex-col md:col-start-4 md:col-end-6 md:row-start-1 md:row-end-3 md:justify-self-center">
                     <AddSalaRiderForm />
                     <AddSalaPhotos idSala={idSala} />
                 </div>

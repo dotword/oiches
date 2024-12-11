@@ -84,12 +84,12 @@ const SalaCreacion = () => {
             const salaId = response.sala.id;
 
             toast.success(
-                'Revisa la información y añade las fotos y Rider de tu sala.'
+                'Revisa la información y añade las fotos y el rider de tu sala.'
             );
 
             setTimeout(() => {
                 navigate(`/sala/${salaId}/edit`);
-            }, 2000);
+            }, 3000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -104,7 +104,6 @@ const SalaCreacion = () => {
         capacidad,
         descripcion,
         condiciones,
-        equipamiento,
         web,
     } = formValues;
 
@@ -235,7 +234,8 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-
+                </div>
+                <div className="md:w-1/2 md:pl-12 md:flex md:flex-col">
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="descripcion" className="font-semibold">
                             Descripción:
@@ -251,8 +251,7 @@ const SalaCreacion = () => {
                             2000 caracteres como máximo
                         </p>
                     </div>
-                </div>
-                <div className="md:w-1/2 md:pl-12 md:flex md:flex-col">
+
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="condiciones" className="font-semibold">
                             Condiciones:
@@ -270,22 +269,6 @@ const SalaCreacion = () => {
                         </p>
                     </div>
 
-                    <div className="flex flex-col mb-4 md:w-full">
-                        <label htmlFor="equipamiento" className="font-semibold">
-                            Rider Texto:
-                        </label>
-                        <textarea
-                            type="text"
-                            name="equipamiento"
-                            value={equipamiento}
-                            onChange={handleChange}
-                            className="form-textarea"
-                            maxLength="2000"
-                        ></textarea>
-                        <p className="mt-1 text-gray-500 text-sm">
-                            2000 caracteres como máximo
-                        </p>
-                    </div>
                     {/* Botón de ayuda justo después de las fotos */}
                     <div className="sticky top-0 my-8 max-w-full">
                         <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
