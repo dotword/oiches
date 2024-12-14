@@ -8,6 +8,7 @@ import {
     checkIfSala,
     canEditReserva,
     isAdmin,
+    canEditSala,
 } from '../middleware/index.js';
 
 import {
@@ -18,9 +19,51 @@ import {
     listReservaController,
     listReservasGroupsController,
     listAllReservasController,
+    fechasDisponiblesSalaController,
+    showFechasDisponiblesSalaController,
+    deleteFechasDisponiblesSalaController,
+    toggleCalendarActiveController,
 } from '../controllers/reservas/index.js';
 
 const router = express.Router();
+
+// Enpoint para que la sala active al calendario
+router.patch(
+    '/reservas/salas/:idSala/calendar-active',
+    authUser,
+    userExists,
+    checkIfSala,
+    canEditSala,
+    toggleCalendarActiveController
+);
+
+// Endpoint para que la sala registre fechas  disponibles
+router.post(
+    '/reservas/salas/:idSala/fechas-disponibles',
+    authUser,
+    userExists,
+    checkIfSala,
+    canEditSala,
+    fechasDisponiblesSalaController
+);
+
+// Endpoint para que la sala cambie fecha disponible a no disponible
+router.delete(
+    '/reservas/salas/:idSala/fechas-disponibles',
+    authUser,
+    userExists,
+    checkIfSala,
+    canEditSala,
+    deleteFechasDisponiblesSalaController
+);
+
+// Endpoint para mostrar en el calendario las fechas disponibles
+router.get(
+    '/salas/:idSala/fechas-disponibles',
+    authUser,
+    userExists,
+    showFechasDisponiblesSalaController
+);
 
 // Endpoint para que el grupo cree una reserva
 router.post(

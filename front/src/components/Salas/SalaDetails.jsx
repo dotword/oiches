@@ -4,10 +4,8 @@ import { useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import useSala from '../../hooks/useSala.jsx';
 import StarRating from '../StartRating.jsx';
-import Header from '../Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
-import Footer from '../Footer.jsx';
 import Seo from '../SEO/Seo.jsx'; // Seo
 import TextFormat from '../TextFormato.jsx';
 import MapShow from '../MapShow.jsx';
@@ -112,7 +110,6 @@ const SalaDetail = () => {
                 }
             />
 
-            <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                 <section className="mb-6">
                     {(usuarioAvatar || fotos.length > 0) && (
@@ -161,6 +158,7 @@ const SalaDetail = () => {
                         )}
                     </div>
                 </section>
+
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     {descripcion && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
@@ -371,7 +369,6 @@ const SalaDetail = () => {
                     </a>
                 )}
             </main>
-            <Footer />
         </>
     ) : (
         <p>{error}</p>

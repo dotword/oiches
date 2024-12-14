@@ -3,7 +3,6 @@ const addToMailchimpController = async (req, res, next) => {
 
     const apiKey = process.env.MAILCHIMP_API_KEY;
     const audienceId = process.env.MAILCHIMP_AUDIENCE_ID;
-    // const audienceId = '2f7756d7ae';
     const dc = apiKey.split('-')[1]; // Extraer el datacenter de la clave API
 
     const url = `https://${dc}.api.mailchimp.com/3.0/lists/${audienceId}/members`;

@@ -9,7 +9,6 @@ export const crearReservaService = async (
     fecha,
     flexible,
     message,
-    // id,
     sala_id
 ) => {
     const pool = await getPool();

@@ -53,6 +53,11 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 >
                                     <FaEye className="text-green-900 text-xl" />
                                 </a>
+                                {userOwner.user.roles === 'sala' && (
+                                    <a href={`/sala/calendar/${entry.id}`}>
+                                        Gestionar reservas y calendario
+                                    </a>
+                                )}
                             </li>
                         ))}
                     </ul>
