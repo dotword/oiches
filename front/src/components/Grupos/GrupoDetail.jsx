@@ -142,7 +142,7 @@ const GrupoDetail = () => {
                             {nombre}
                         </h2>
                     </div>
-                    {currentUser && (
+                    {actualUser.roles === 'sala' && (
                         <div className="m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:max-w-80">
                             <p className="text-center">
                                 ¿Quieres que {nombre} toque en tu sala?

@@ -18,7 +18,7 @@ import EdicionGrupo from './pages/Grupos/EdicionGrupo.jsx';
 import { GrupoPage } from './pages/Grupos/GrupoPage.jsx';
 import Grupos from './pages/Grupos/Grupos.jsx';
 import NotFound from './pages/NotFound.jsx';
-import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
+import { CrearReservaPage } from './pages/Reservas/CrearReservaPage.jsx';
 import { ValidateUser } from './pages/Users/ValidateUser.jsx';
 import SobreOiches from './pages/SobreOiches.jsx';
 import AvisoLegal from './pages/AvisoLegal.jsx';

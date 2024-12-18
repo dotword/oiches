@@ -146,7 +146,7 @@ const SalaDetail = () => {
                             </>
                         )}
 
-                        {currentUser && (
+                        {actualUser.roles === 'grupo' && (
                             <p className="m-auto md:mr-0">
                                 <Link
                                     to={`/sala/${idSala}/reservas`}

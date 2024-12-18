@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS mensajes,conversaciones, votos_salas, votos_grupos, reservas, fechas_disponibles, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS mensajes,conversaciones, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -148,17 +148,6 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS fechas_disponibles (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                sala_id CHAR(36) NOT NULL,
-                fecha_disponible DATE NOT NULL,
-                FOREIGN KEY (sala_id) REFERENCES salas(id),
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
-
-        await pool.query(`
             CREATE TABLE IF NOT EXISTS reservas(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 sala_id CHAR(36) NOT NULL,
@@ -167,6 +156,17 @@ const main = async () => {
                 fecha DATE NOT NULL,
                 FOREIGN KEY(sala_id) REFERENCES salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES grupos(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS fechas_disponibles (
+                id CHAR(36) PRIMARY KEY NOT NULL,
+                sala_id CHAR(36) NOT NULL,
+                fecha_disponible DATE NOT NULL,
+                FOREIGN KEY (sala_id) REFERENCES salas(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );

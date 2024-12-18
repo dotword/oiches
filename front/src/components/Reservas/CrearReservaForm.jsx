@@ -1,17 +1,17 @@
 import { useParams } from 'react-router-dom';
-import useAuth from '../hooks/useAuth.jsx';
+import useAuth from '../../hooks/useAuth.jsx';
 import { useState } from 'react';
-import Toastify from './Toastify.jsx';
+import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
-import { ConfirmationModal } from './ConfirmModal.jsx';
-import useListSalasGrupoUser from '../hooks/useListSalasGrupoUser.jsx';
+import { ConfirmationModal } from '../ConfirmModal.jsx';
+import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 
-export const CrearReservaForm = ({ nombreSala, idUserOwner }) => {
-    const { idSala } = useParams(); // Obtén el idSala de los parámetros de la URL
-    const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`; // Construye la URL con el idSala
-    const { token } = useAuth(); // Obtén el token de autenticación
-    const [isModalOpen, setIsModalOpen] = useState(false); // Estado para manejar el modal de confirmación
-    const [formValues, setFormValues] = useState({}); // Estado para almacenar los valores del formulario
+export const CrearReservaForm = ({ idUserOwner }) => {
+    const { idSala } = useParams();
+    const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`;
+    const { token } = useAuth();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formValues, setFormValues] = useState({});
 
     const { entries } = useListSalasGrupoUser({
         token,
@@ -64,18 +64,7 @@ export const CrearReservaForm = ({ nombreSala, idUserOwner }) => {
 
     return (
         <>
-            <form
-                onSubmit={handleSubmit}
-                className="flex flex-col gap-2 border-t border-gray-300 pt-4 mb-14 mx-auto md:py-10 md:items-center"
-            >
-                <h2 className="text-2xl font-semibold mb-3">
-                    Contacta con {nombreSala}
-                </h2>
-                <p>
-                    Rellena el siguiente formulario y {nombreSala} recibirá un
-                    email con tu solicitud.
-                </p>
-
+            <form onSubmit={handleSubmit} className="flex flex-col gap-2 ">
                 {entries.length > 0 && (
                     <div className="my-4 mx-auto flex gap-3 md:gap-8">
                         <label
