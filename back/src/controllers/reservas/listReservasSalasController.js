@@ -1,12 +1,12 @@
-import { listReservaGroupsService } from '../../services/reservas/listReservaGroupsService.js';
+import { listReservasSalasService } from '../../services/reservas/listReservasSalasService.js';
 import selectUserByIdService from '../../services/users/selectUserByIdService.js';
 
-export const listReservasGroupsController = async (req, res, next) => {
+export const listReservasSalasController = async (req, res, next) => {
     try {
-        const { group_id } = req.params;
+        const { sala_id } = req.params;
 
         const userInfo = await selectUserByIdService(req.user.id);
-        const reservas = await listReservaGroupsService(group_id, userInfo);
+        const reservas = await listReservasSalasService(sala_id, userInfo);
 
         return res.status(200).json({
             reservas,

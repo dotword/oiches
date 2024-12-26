@@ -33,7 +33,6 @@ const SalaDetail = () => {
         capacidad,
         usuarioAvatar,
         comentarios,
-        email,
         fotos,
         pdf,
     } = entry || {};
@@ -201,22 +200,6 @@ const SalaDetail = () => {
                             </p>
                         </div>
                     )}
-                    {currentUser && (
-                        <div className="border-t border-gray-300 pt-4">
-                            <span className="font-semibold">Contacto</span>
-                            <p>
-                                <a
-                                    href={`mailto:${email}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="underline"
-                                >
-                                    {email}
-                                </a>
-                            </p>
-                        </div>
-                    )}
-
                     {condiciones && (
                         <div className="md:col-span-3 border-t border-gray-300 pt-4">
                             <span className="font-semibold">Condiciones</span>

@@ -1,7 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { CrearReservaForm } from '../../components/Reservas/CrearReservaForm.jsx';
-import CrearReservaFechaDisponibleForm from '../../components/Reservas/CrearReservaFechaDisponibleForm.jsx';
+import CrearReservaForm from '../../components/Reservas/CrearReservaForm.jsx';
 import Header from '../../components/Header.jsx';
 import useSala from '../../hooks/useSala.jsx';
 import useAuth from '../../hooks/useAuth.jsx';
@@ -102,22 +101,15 @@ export const CrearReservaPage = () => {
                     <h2 className="text-2xl font-semibold mb-3 text-center">
                         Contacta con {entry.nombre}
                     </h2>
-                    <p>
+                    <p className="text-center">
                         Rellena el siguiente formulario y {entry.nombre}{' '}
                         recibirá un email con tu solicitud.
                     </p>
 
-                    {entry.calendarActive === 0 ? (
-                        <CrearReservaForm
-                            nombreSala={entry.nombre}
-                            idUserOwner={currentUser.id}
-                        />
-                    ) : (
-                        <CrearReservaFechaDisponibleForm
-                            nombreSala={entry.nombre}
-                            idUserOwner={currentUser.id}
-                        />
-                    )}
+                    <CrearReservaForm
+                        calendarActive={entry.calendarActive}
+                        idUserOwner={currentUser.id}
+                    />
                 </section>
             </main>
             <Footer />

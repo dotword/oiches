@@ -29,6 +29,7 @@ import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
 import AdminDashboard from './pages/Users/AdminDashboard.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
+import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 function App() {
@@ -95,6 +96,10 @@ function App() {
                         <Route
                             path="/sala/calendar/:idSala"
                             element={<CalendarioSalasPage />}
+                        />
+                        <Route
+                            path="/grupo/calendar/:idGrupo"
+                            element={<CalendarioGruposPage />}
                         />
                         <Route
                             path="/sala/:idSala/reservas"

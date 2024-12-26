@@ -6,17 +6,17 @@ const Steps = () => {
             {/* Columna izquierda: Beneficios */}
             <div className="flex flex-col justify-start items-start gap-10 w-full md:w-1/2">
                 <h2 className="text-3xl font-bold md:text-4xl md:mb-6">
-                    Como darse de alta en Oiches
+                    Cómo darse de alta en Oiches
                 </h2>
 
                 {/* Pasos para darse de alta */}
                 <div className="bg-gray-100 rounded-2xl p-6 flex flex-col gap-4">
                     <h3 className="text-xl font-normal text-gray-900">
-                        Accede a Registro
+                        Accede al registro
                     </h3>
                     <p className="text-gray-500 text-sm">
-                        Seleciona Artista o Sala (según tu interés), rellena
-                        todos los datos.
+                        Selecciona Artista o Sala (según tu interés) y rellena
+                        los datos.
                     </p>
                 </div>
 
@@ -25,28 +25,19 @@ const Steps = () => {
                         Confirma tu alta
                     </h3>
                     <p className="text-gray-500 text-sm">
-                        Te enviaremos a tu correo un email de Confirmación,
-                        copia el código y pégalo en la pantalla de verificación.
+                        Te enviaremos un email para verificar tu dirección de
+                        correo electrónico.
                     </p>
                 </div>
 
                 <div className="bg-gray-100 rounded-2xl p-6 flex flex-col gap-4">
                     <h3 className="text-xl font-normal text-gray-900">
-                        Haz login y accede a tu perfil
+                        Haz login y completa tu perfil
                     </h3>
                     <p className="text-gray-500 text-sm">
-                        Tú decides qué grupos contratar y cuándo, además de
-                        evaluar su actuación.
-                    </p>
-                </div>
-
-                <div className="bg-gray-100 rounded-2xl p-6 flex flex-col gap-4">
-                    <h3 className="text-xl font-normal text-gray-900">
-                        Completa tu perfil
-                    </h3>
-                    <p className="text-gray-500 text-sm">
-                        Rellena todos tus datos de esta forma otras salas o
-                        músicos podrán contactar contigo y tú con ellos.
+                        Completa la información de tu sala o proyecto musical,
+                        de esta forma podrás contactar con otras salas o
+                        músicos.
                     </p>
                 </div>
             </div>

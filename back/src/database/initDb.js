@@ -152,7 +152,7 @@ const main = async () => {
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 sala_id CHAR(36) NOT NULL,
                 grupo_id CHAR(36) NOT NULL,
-                confirmada BOOLEAN DEFAULT false,
+                confirmada ENUM('0', '1', '2') DEFAULT '0',
                 fecha DATE NOT NULL,
                 FOREIGN KEY(sala_id) REFERENCES salas(id),
                 FOREIGN KEY(grupo_id) REFERENCES grupos(id),

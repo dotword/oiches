@@ -8,7 +8,6 @@ import {
     modifyUserEmailService,
     modifyUserPasswordService,
 } from '../../services/Users/userEditService.js';
-import { ListarReservas } from '../ListarReservas.jsx';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import UsersSalaGrupoList from './UsersSalaGrupoList.jsx';
@@ -332,15 +331,6 @@ const AuthUser = () => {
                         {edit ? 'Cancelar' : 'Cambiar contraseña'}
                     </button>
                 </section>
-
-                {userLogged && (
-                    <ListarReservas
-                        userLogged={userLogged}
-                        userData={userData}
-                        token={token}
-                        loading={loading}
-                    />
-                )}
 
                 <section className="flex justify-end mt-28">
                     <button

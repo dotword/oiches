@@ -1,15 +1,19 @@
 import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import useSala from '../../hooks/useSala';
 import CalendarioDisponibilidad from '../../components/Reservas/CalendarioDisponibilidad';
+import { AuthContext } from '../../context/auth/auth.context';
+import ListarReservas from '../../components/Reservas/ListarReservas';
 import Toastify from '../../components/Toastify';
 
 const CalendarioSalasPage = () => {
     const { idSala } = useParams();
-
     const { entry } = useSala(idSala);
+
+    const { userLogged, token } = useContext(AuthContext);
 
     return (
         <motion.div
@@ -41,8 +45,9 @@ const CalendarioSalasPage = () => {
                                     </li>
                                     <li>
                                         Haz clic en el botón &quot;Activar
-                                        Calendario&quot; para empezar a
-                                        gestionar las reservas.
+                                        Calendario&quot; todas las fechas
+                                        pasarán a NO disponibles y ya puedes
+                                        empezar a gestionar tus fechas.
                                     </li>
                                 </ul>
                             </li>
@@ -74,8 +79,18 @@ const CalendarioSalasPage = () => {
                     </div>
                 </section>
                 <section>
-                    <h2 className="font-semibold txt-lg mt-12">Tus reservas</h2>
-                    <p>Aquí irá la tabla con las reservas de esa sala</p>
+                    <h1 className="font-bold text-xl text-center">Reservas</h1>
+                    <p>
+                        Aquí irán las FAQ de salas. Explicar cómo funciona el
+                        histórico reservas
+                    </p>
+                    {userLogged && (
+                        <ListarReservas
+                            userInfo={userLogged}
+                            entry_id={idSala}
+                            token={token}
+                        />
+                    )}
                 </section>
             </main>
             <Footer />

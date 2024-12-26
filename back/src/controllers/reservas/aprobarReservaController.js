@@ -8,7 +8,7 @@ const aprobarReservaController = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            message: 'Se ha aprobado la reserva',
+            message: '¡El concierto está confirmado!',
         });
     } catch (error) {
         next(error);

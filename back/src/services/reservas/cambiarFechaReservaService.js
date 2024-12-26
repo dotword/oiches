@@ -1,26 +1,38 @@
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
+import validarFechaReservaService from './validarFechReservaService.js';
 
-const borrarReservaSalaService = async (reserva_id) => {
+const cambiarFechaReservaService = async (reserva_id, fecha) => {
     try {
         const pool = await getPool();
 
-        // Traer el id de la sala
-        const [idSala] = await pool.query(
-            'SELECT grupo_id, sala_id, fecha FROM reservas WHERE id = ?',
-            [reserva_id]
-        );
-        const grupoId = idSala[0].grupo_id;
-        const dateReserva = idSala[0].fecha;
-        const salaId = idSala[0].sala_id;
-
-        // Comprobar que la reserva existe
-        if (idSala.length === 0)
+        if (!fecha)
             throw generateErrorsUtil(
-                'No se ha encontrado la reserva que intentas borrar.',
+                'Tienes que seleccionar una nueva fecha.',
                 404
             );
+
+        const [salaInfo] = await pool.query(
+            'SELECT confirmada, sala_id, fecha, grupo_id FROM reservas WHERE id = ?',
+            [reserva_id]
+        );
+
+        const reservaConfirm = salaInfo[0].confirmada;
+
+        const grupoId = salaInfo[0].grupo_id;
+        const idSala = salaInfo[0].sala_id;
+
+        // Comprobar que la reseva se esté tramitando
+        if (reservaConfirm !== '2') {
+            throw generateErrorsUtil(
+                'No puedes cambiar la fecha de confirmada o pendiente.',
+                404
+            );
+        }
+
+        // Validar fecha
+        validarFechaReservaService(fecha);
 
         // Comprobar el email del grupo
         const [usuarioId] = await pool.query(
@@ -34,14 +46,14 @@ const borrarReservaSalaService = async (reserva_id) => {
             'SELECT email FROM usuarios WHERE id = ?',
             [userGrupoId]
         );
-
         const grupoEmail = emailGrupo[0].email;
 
         // Comprobar el nombre de la sala
         const [salaName] = await pool.query(
             'SELECT nombre FROM salas WHERE id = ?',
-            [salaId]
+            [idSala]
         );
+
         const nameSala = salaName[0].nombre;
 
         const formatDate = (date) => {
@@ -50,10 +62,10 @@ const borrarReservaSalaService = async (reserva_id) => {
             const day = String(date.getDate()).padStart(2, '0');
             return `${day}-${month}-${year}`;
         };
-        const formatedFecha = formatDate(new Date(dateReserva));
+        const formatedFecha = formatDate(new Date(fecha));
 
         // Creamos el asunto del email de verificación.
-        const emailSubject = `Cancelación de tu solicitud para el concierto en ${nameSala}`;
+        const emailSubject = `Cambio de fecha de tu solicitud para el concierto en ${nameSala}`;
 
         // Creamos el contenido del email
         const emailBody = `
@@ -83,13 +95,13 @@ const borrarReservaSalaService = async (reserva_id) => {
                     </style>
                 </head>
                 <body>
-                    <p>Hola, ${grupoNombre}</p>
+                    <p>Hola, ${grupoNombre}.</p>
         
-                    <p>Lamentamos informarte que tu solicitud para el concierto el ${formatedFecha} en la sala ${nameSala} ha sido cancelada.</p>
+                    <p>Te informamos de que ${nameSala} ha cambiado la fecha para tu concierto al día ${formatedFecha}.</p>
 
-                    <pQuedamos a tu disposición para cualquier consulta.</p>
-
-                    <p>--</p>
+                     <p>Quedamos a tu disposición para cualquier consulta.</p>
+                    
+  <p>--</p>
     <p style="font-size:12px">
         <strong>Equipo Oiches</strong><br>
         <strong><a href="mailto:hola@oiches.com" style="color:#000; text-decoration:none;">hola@oiches.com</a></strong><br>
@@ -111,11 +123,14 @@ const borrarReservaSalaService = async (reserva_id) => {
             return;
         }
 
-        await pool.query('DELETE FROM reservas WHERE id = ?', [reserva_id]);
+        await pool.query('UPDATE reservas SET fecha = ? WHERE id = ?', [
+            fecha,
+            reserva_id,
+        ]);
     } catch (error) {
         console.log(error);
         throw error;
     }
 };
 
-export default borrarReservaSalaService;
+export default cambiarFechaReservaService;
