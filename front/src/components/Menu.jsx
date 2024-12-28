@@ -45,7 +45,7 @@ const Menu = ({ mobile }) => {
                     </NavLink>
                     <NavLink
                         to="/register"
-                        className="btn-account max-md:m-6 font-medium"
+                        className="btn-account max-md:m-4 font-medium"
                     >
                         Registro
                     </NavLink>
@@ -63,7 +63,7 @@ const Menu = ({ mobile }) => {
                         onClick={() => {
                             signOut();
                         }}
-                        className="max-md:p-6 font-medium text-purpleOiches hover:text-black"
+                        className="font-medium text-purpleOiches hover:text-black"
                     >
                         Logout
                     </NavLink>

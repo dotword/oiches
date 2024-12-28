@@ -53,14 +53,14 @@ const HeaderHero = () => {
                         >
                             <IoClose className="text-3xl cursor-pointer" />
                         </div>
-                        <a href="/" className="p-4 mt-12">
+                        <a href="/" className="p-4 mt-8">
                             <img
                                 src={logoBlack}
                                 alt="logo"
                                 className="max-w-48"
                             />
                         </a>
-                        <div className="flex flex-col items-center justify-between text-xl font-semibold h-[calc(100vh-10rem)]">
+                        <div className="flex flex-col items-center justify-between text-xl font-semibold h-[calc(100vh-12rem)]">
                             <Menu mobile />
                         </div>
                     </div>
