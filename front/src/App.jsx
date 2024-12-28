@@ -18,7 +18,7 @@ import EdicionGrupo from './pages/Grupos/EdicionGrupo.jsx';
 import { GrupoPage } from './pages/Grupos/GrupoPage.jsx';
 import Grupos from './pages/Grupos/Grupos.jsx';
 import NotFound from './pages/NotFound.jsx';
-import { CrearReservaPage } from './pages/CrearReservaPage.jsx';
+import { CrearReservaPage } from './pages/Reservas/CrearReservaPage.jsx';
 import { ValidateUser } from './pages/Users/ValidateUser.jsx';
 import SobreOiches from './pages/SobreOiches.jsx';
 import AvisoLegal from './pages/AvisoLegal.jsx';
@@ -27,7 +27,9 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
-import AdminDashboard from './pages/AdminDashboard.jsx';
+import AdminDashboard from './pages/Users/AdminDashboard.jsx';
+import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
+import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 function App() {
@@ -90,6 +92,15 @@ function App() {
                         />
                         <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
                         <Route path="/grupos" element={<Grupos />} />
+
+                        <Route
+                            path="/sala/calendar/:idSala"
+                            element={<CalendarioSalasPage />}
+                        />
+                        <Route
+                            path="/grupo/calendar/:idGrupo"
+                            element={<CalendarioGruposPage />}
+                        />
                         <Route
                             path="/sala/:idSala/reservas"
                             element={<CrearReservaPage type="sala" />}

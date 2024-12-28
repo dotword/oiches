@@ -18,7 +18,7 @@ const transport = nodemailer.createTransport({
 const sendMailUtil = async (email, subject, body) => {
     try {
         const mailOptions = {
-            from: SMTP_USER,
+            from: `Oiches <${SMTP_USER}>`,
             to: email,
             subject,
             text: body,

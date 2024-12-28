@@ -19,7 +19,7 @@ const getUserOwnerService = async (userId) => {
     } else {
         // Comprobamos las salas del usuarios
         const [salas] = await pool.query(
-            `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, horaReservasStart, horaReservasEnd, createdAt FROM salas WHERE usuario_id = ?`,
+            `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, createdAt FROM salas WHERE usuario_id = ?`,
             [userId]
         );
         return salas;

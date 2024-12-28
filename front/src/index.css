@@ -59,6 +59,25 @@
     }
 }
 
+.react-calendar .unavailable {
+    background-color: #ffcccc;
+    color: #a00;
+}
+
+.react-calendar .selected-date {
+    background-color: #00aaff;
+    color: white;
+    border-radius: 50%;
+}
+.react-calendar .react-calendar__tile:disabled {
+    background-color: #f0f0f0;
+    color: #ccc;
+    cursor: not-allowed;
+}
+.react-calendar .available-date {
+    background-color: #6aba81;
+}
+
 @layer components {
     .btn-account {
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;

@@ -100,8 +100,6 @@ const selectGrupoByIdService = async (idGrupo) => {
         R.sala_id,
         S.nombre AS sala,
         R.fecha,
-        R.horaInicio,
-        R.horaFin,
         R.confirmada
         FROM reservas R
         LEFT JOIN salas S ON S.id= R.sala_id 

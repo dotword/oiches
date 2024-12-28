@@ -1,15 +1,15 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { CrearReservaForm } from '../components/CrearReservaForm.jsx';
-import Header from '../components/Header.jsx';
-import useSala from '../hooks/useSala.jsx';
-import useAuth from '../hooks/useAuth.jsx';
+import CrearReservaForm from '../../components/Reservas/CrearReservaForm.jsx';
+import Header from '../../components/Header.jsx';
+import useSala from '../../hooks/useSala.jsx';
+import useAuth from '../../hooks/useAuth.jsx';
 import { toast } from 'react-toastify';
-import Toastify from '../components/Toastify.jsx';
-import noImage from '../assets/noimage.png';
-import Footer from '../components/Footer.jsx';
-import Seo from '../components/SEO/Seo.jsx';
-import MapShow from '../components/MapShow.jsx';
+import Toastify from '../../components/Toastify.jsx';
+import noImage from '../../assets/noimage.png';
+import Footer from '../../components/Footer.jsx';
+import Seo from '../../components/SEO/Seo.jsx';
+import MapShow from '../../components/MapShow.jsx';
 import { FiExternalLink } from 'react-icons/fi';
 
 export const CrearReservaPage = () => {
@@ -66,8 +66,6 @@ export const CrearReservaPage = () => {
                             addressCountry: 'ES',
                         },
                     },
-                    startTime: entry.horaReservasStart || '00:00',
-                    endTime: entry.horaReservasEnd || '23:59',
                 }}
             />
             <Header txt={`Quiero tocar en ${entry.nombre}`} />
@@ -99,10 +97,20 @@ export const CrearReservaPage = () => {
                         )}
                     </div>
                 </section>
-                <CrearReservaForm
-                    nombreSala={entry.nombre}
-                    idUserOwner={currentUser.id}
-                />
+                <section className="border-t border-gray-300 pt-4 mb-14 mx-auto md:py-10">
+                    <h2 className="text-2xl font-semibold mb-3 text-center">
+                        Contacta con {entry.nombre}
+                    </h2>
+                    <p className="text-center">
+                        Rellena el siguiente formulario y {entry.nombre}{' '}
+                        recibirá un email con tu solicitud.
+                    </p>
+
+                    <CrearReservaForm
+                        calendarActive={entry.calendarActive}
+                        idUserOwner={currentUser.id}
+                    />
+                </section>
             </main>
             <Footer />
             <Toastify />

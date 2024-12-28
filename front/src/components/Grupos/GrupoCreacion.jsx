@@ -71,7 +71,7 @@ const GrupoCreacion = () => {
             const grupoId = response.grupo.id;
 
             toast.success(
-                'Revisa la información y añade las fotos y Rider de tu proyecto.'
+                'Revisa la información y añade fotos, videos y rider de tu proyecto.'
             );
 
             setTimeout(() => {

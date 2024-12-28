@@ -3,8 +3,8 @@ import 'dotenv/config';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import morgan from 'morgan';
-
 import routes from './src/routes/index.js';
+import { startScheduledJobs } from './src/jobs/scheduledJobs.js';
 import { PORT, UPLOADS_DIR, URL_FRONT } from './env.js';
 
 const app = express();
@@ -43,6 +43,9 @@ app.use((err, req, res, next) => {
         message: err.message,
     });
 });
+
+// Iniciar los trabajos programados
+startScheduledJobs();
 
 // Use server for listen
 app.listen(PORT, () => {

@@ -3,26 +3,23 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FiExternalLink, FiMail } from 'react-icons/fi';
-import GrupoVotaSala from './Grupos/GrupoVotaSala';
-import SalaVotaGrupo from './Salas/SalaVotaGrupo';
-import { ConfirmationModal } from './ConfirmModal.jsx';
+import GrupoVotaSala from '../Grupos/GrupoVotaSala.jsx';
+import SalaVotaGrupo from '../Salas/SalaVotaGrupo.jsx';
+import { ConfirmationModal } from '../ConfirmModal.jsx';
 
-export const ListarReservas = ({ userData, token, userLogged }) => {
+export const ListarReservas = ({ entry_id, token, userInfo }) => {
     const [reservas, setReservas] = useState([]);
     const [cancelModalOpen, setCancelModalOpen] = useState(false);
     const [reservaAEliminar, setReservaAEliminar] = useState(null);
-
     const { VITE_API_URL_BASE } = import.meta.env;
-
-    const id = userData.user.id;
-    const type = userData.user.roles;
+    const type = userInfo.roles;
 
     useEffect(() => {
         const fetchReservas = async () => {
-            if (id && type) {
+            if (entry_id && type) {
                 try {
                     const response = await fetch(
-                        `${VITE_API_URL_BASE}/reservas/${type}s/${id}`,
+                        `${VITE_API_URL_BASE}/reservas/${type}s/${entry_id}`,
                         {
                             headers: {
                                 authorization: token,
@@ -43,7 +40,7 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
         };
 
         fetchReservas();
-    }, [token, VITE_API_URL_BASE, id, type]);
+    }, [token, VITE_API_URL_BASE, type, entry_id]);
 
     const handleConfirmDelete = async () => {
         if (!reservaAEliminar) return; // Verificar que hay una reserva seleccionada
@@ -78,8 +75,39 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
         }
     };
 
+    const handleTramitando = async (reservaId) => {
+        if (userInfo) {
+            try {
+                const response = await fetch(
+                    `${VITE_API_URL_BASE}/tramitar-reserva/${reservaId}`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            authorization: token,
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error('Error al tramitar la reserva', 400);
+                }
+
+                setReservas(
+                    reservas.map((reserva) =>
+                        reserva.id === reservaId
+                            ? { ...reserva, confirmada: '2' }
+                            : reserva
+                    )
+                );
+                toast.success('¡La reserva se está tramitando!');
+            } catch (error) {
+                toast.error(error);
+            }
+        }
+    };
+
     const handleConfirm = async (reservaId) => {
-        if (userLogged) {
+        if (userInfo) {
             try {
                 const response = await fetch(
                     `${VITE_API_URL_BASE}/aprobar-reserva/${reservaId}`,
@@ -92,20 +120,52 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                 );
 
                 if (!response.ok) {
-                    throw new Error('Failed to confirm reserva');
+                    throw new Error('Error al confirmar el concierto');
                 }
 
                 setReservas(
                     reservas.map((reserva) =>
                         reserva.id === reservaId
-                            ? { ...reserva, confirmada: 1 }
+                            ? { ...reserva, confirmada: '1' }
                             : reserva
                     )
                 );
-                toast.success('Su reserva se ha confirmado con éxito');
+                toast.success('Concierto confirmado con éxito');
             } catch (error) {
                 toast.error(error);
             }
+        }
+    };
+
+    const handleChangeFecha = (id, nuevaFecha) => {
+        setReservas((prevReservas) =>
+            prevReservas.map((reserva) =>
+                reserva.id === id ? { ...reserva, fecha: nuevaFecha } : reserva
+            )
+        );
+    };
+
+    const handleSubmitFecha = async (id, nuevaFecha) => {
+        try {
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/cambiar-fecha-reserva/${id}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        authorization: token,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ fecha: nuevaFecha }),
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error('Error al actualizar la fecha');
+            }
+
+            toast.success('Fecha actualizada correctamente');
+        } catch (error) {
+            toast.error('No se pudo actualizar la fecha');
         }
     };
 
@@ -118,6 +178,13 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
         });
     };
 
+    const today = formatDate(new Date());
+
+    const formatDateForInput = (dateString) => {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
+    };
+
     return (
         <>
             <section>
@@ -128,13 +195,13 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                     <table className="max-w-5xl mx-auto">
                         <thead>
                             <tr>
-                                <th>Sala</th>
-                                <th>Artista</th>
+                                {type === 'grupo' && <th>Sala</th>}
+                                {type === 'sala' && <th>Artista</th>}
                                 <th>Estado</th>
                                 <th>Fecha concierto</th>
                                 <th>Fecha solicitud</th>
                                 <th>Cancelar</th>
-                                {type === 'sala' && <th>Confirmar</th>}
+                                {type === 'sala' && <th>Gestionar</th>}
                                 <th>Contactar</th>
                             </tr>
                         </thead>
@@ -142,44 +209,85 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                             {reservas.map((reserva) => (
                                 <React.Fragment key={reserva.id}>
                                     <tr className="mt-10 md:mt-0">
+                                        {type === 'grupo' && (
+                                            <td>
+                                                <Link
+                                                    to={`/sala/${reserva.sala_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                        {reserva.sala_nombre}
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            </td>
+                                        )}
+                                        {type === 'sala' && (
+                                            <td>
+                                                <Link
+                                                    to={`/grupo/${reserva.grupo_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
+                                                        {reserva.grupo_nombre}
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            </td>
+                                        )}
+
                                         <td>
-                                            <Link
-                                                to={`/sala/${reserva.sala_id}`}
-                                                target="_blank"
-                                            >
-                                                <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
-                                                    {reserva.sala_nombre}
-                                                    <FiExternalLink />
-                                                </span>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            <Link
-                                                to={`/grupo/${reserva.grupo_id}`}
-                                                target="_blank"
-                                            >
-                                                <span className="flex gap-1 justify-center items-center font-semibold md:justify-start">
-                                                    {reserva.grupo_nombre}
-                                                    <FiExternalLink />
-                                                </span>
-                                            </Link>
-                                        </td>
-                                        <td>
-                                            {reserva.confirmada === 0 ? (
+                                            {reserva.confirmada === '0' && (
                                                 <span className="block font-normal text-red-600">
-                                                    Sin confirmar
+                                                    Pendiente
                                                 </span>
-                                            ) : (
+                                            )}
+                                            {reserva.confirmada === '1' && (
                                                 <span className="block font-normal text-green-600">
                                                     Confirmada
+                                                </span>
+                                            )}
+                                            {reserva.confirmada === '2' && (
+                                                <span className="block font-normal text-cyan-700">
+                                                    Tramitando
                                                 </span>
                                             )}
                                         </td>
                                         <td>
                                             <span className="md:hidden text-sm">
-                                                Fecha concierto:{' '}
+                                                Fecha concierto:
                                             </span>
-                                            {formatDate(reserva.fecha)}
+                                            {type === 'sala' &&
+                                            reserva.confirmada === '2' ? (
+                                                <div>
+                                                    <input
+                                                        type="date"
+                                                        value={formatDateForInput(
+                                                            reserva.fecha
+                                                        )}
+                                                        onChange={(e) =>
+                                                            handleChangeFecha(
+                                                                reserva.id,
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="border rounded p-1"
+                                                    />
+                                                    <button
+                                                        onClick={() =>
+                                                            handleSubmitFecha(
+                                                                reserva.id,
+                                                                reserva.fecha
+                                                            )
+                                                        }
+                                                        className="ml-2 bg-blue-500 text-white p-1 rounded"
+                                                    >
+                                                        Cambiar fecha
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                formatDate(reserva.fecha)
+                                            )}
                                         </td>
                                         <td>
                                             <span className="md:hidden text-sm">
@@ -202,12 +310,14 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                                         ); // Guardar la reserva seleccionada
                                                     }}
                                                     hidden={
-                                                        type === 'grupo' &&
-                                                        reserva.confirmada === 1
+                                                        formatDate(
+                                                            reserva.fecha
+                                                        ) >= today
                                                     }
                                                     disabled={
-                                                        type === 'grupo' &&
-                                                        reserva.confirmada === 1
+                                                        formatDate(
+                                                            reserva.fecha
+                                                        ) >= today
                                                     }
                                                     className="button bg-red-500 text-white p-1 text-sm rounded"
                                                 >
@@ -241,13 +351,30 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                             <td>
                                                 <button
                                                     onClick={() =>
+                                                        handleTramitando(
+                                                            reserva.id
+                                                        )
+                                                    }
+                                                    hidden={
+                                                        type === 'grupo' ||
+                                                        reserva.confirmada !==
+                                                            '0'
+                                                    }
+                                                    disabled={type === 'grupo'}
+                                                    className="button bg-green-700 text-white p-2 text-sm rounded"
+                                                >
+                                                    Me interesa
+                                                </button>
+                                                <button
+                                                    onClick={() =>
                                                         handleConfirm(
                                                             reserva.id
                                                         )
                                                     }
                                                     hidden={
                                                         type === 'grupo' ||
-                                                        reserva.confirmada === 1
+                                                        reserva.confirmada !==
+                                                            '2'
                                                     }
                                                     disabled={type === 'grupo'}
                                                     className="button bg-green-700 text-white p-2 text-sm rounded"
@@ -256,10 +383,15 @@ export const ListarReservas = ({ userData, token, userLogged }) => {
                                                 </button>
                                             </td>
                                         )}
+
                                         <td>
-                                            <a href={`mailto:${reserva.email}`}>
-                                                <FiMail className="m-auto text-lg" />
-                                            </a>
+                                            {reserva.confirmada !== '0' && (
+                                                <a
+                                                    href={`mailto:${reserva.email}`}
+                                                >
+                                                    <FiMail className="m-auto text-3xl" />
+                                                </a>
+                                            )}
                                         </td>
                                     </tr>
                                     {new Date(reserva.fecha) < new Date() &&
