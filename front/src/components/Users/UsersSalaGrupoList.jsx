@@ -19,13 +19,13 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
         <section className="w-full mx-auto py-6 my-6 bg-white">
             {entries.length > 0 ? (
                 <>
-                    <h2 className="text-lg font-semibold text-gray-800 mb-6">
+                    <h2 className="text-2xl font-semibold text-gray-900 mb-6">
                         Gestiona{' '}
                         {userOwner.user.roles === 'sala'
                             ? ' tus salas'
                             : ' tu grupo'}
                     </h2>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                         {entries.map((entry) => (
                             <li
                                 key={entry.id}
@@ -39,7 +39,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 </div>
 
                                 {/* Enlaces de acción */}
-                                <div className="flex flex-col items-end text-sm space-y-2">
+                                <div className="flex flex-col items-end text-sm space-y-6">
                                     <a
                                         href={
                                             userOwner.user.roles === 'sala'
@@ -61,12 +61,12 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         }
                                         className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
                                     >
-                                        <FaPencil className="text-base mb-4" />
+                                        <FaPencil className="text-base" />
                                         <span>Editar</span>
                                     </a>
                                     <a
                                         href={`/${type}/calendar/${entry.id}`}
-                                        className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2"
+                                        className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
                                     >
                                         <FaRegCalendarCheck className="text-xl" />
                                         <span>
