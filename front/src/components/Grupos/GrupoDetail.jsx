@@ -121,7 +121,7 @@ const GrupoDetail = () => {
             <Header />
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                 <section className="flex flex-wrap gap-4 py-4">
-                    <div>
+                    <div className="w-full md:w-auto">
                         {(avatar || fotos.length > 0) && (
                             <img
                                 className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"

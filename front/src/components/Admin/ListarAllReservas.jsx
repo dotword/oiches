@@ -64,6 +64,8 @@ const ListarAllReservas = ({ token }) => {
         });
     };
 
+    console.log(reservas);
+
     return (
         <>
             <section>
@@ -88,7 +90,8 @@ const ListarAllReservas = ({ token }) => {
                         className="form-select max-w-40"
                     >
                         <option value="">Estado</option>
-                        <option value="0">Sin confirmar</option>
+                        <option value="0">Pendiente</option>
+                        <option value="2">Tramitando</option>
                         <option value="1">Confirmada</option>
                     </select>
                     <input
@@ -145,11 +148,17 @@ const ListarAllReservas = ({ token }) => {
                                             </Link>
                                         </td>
                                         <td>
-                                            {reserva.confirmada === 0 ? (
+                                            {reserva.confirmada === '0' && (
                                                 <span className="block font-normal text-red-600">
-                                                    Sin confirmar
+                                                    Pendiente
                                                 </span>
-                                            ) : (
+                                            )}
+                                            {reserva.confirmada === '2' && (
+                                                <span className="block font-normal text-orange-500">
+                                                    Tramitando
+                                                </span>
+                                            )}
+                                            {reserva.confirmada === '1' && (
                                                 <span className="block font-normal text-green-600">
                                                     Confirmada
                                                 </span>

@@ -26,7 +26,6 @@ import {
     accountUserController,
     getAllUsersListController,
     addToMailchimpController,
-    // selectUserByNameController
 } from '../controllers/users/index.js';
 
 const router = express.Router();
