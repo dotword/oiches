@@ -15,6 +15,7 @@ import canEditReserva from './canEditReserva.js';
 import canEditPhoto from './canEditPhoto.js';
 import canEditGrupoFiles from './canEditGrupoFiles.js';
 import isAdmin from './isAdmin.js';
+import concertExits from './concertExits.js';
 
 export {
     authUser,
@@ -34,4 +35,5 @@ export {
     canEditPhoto,
     canEditGrupoFiles,
     isAdmin,
+    concertExits,
 };

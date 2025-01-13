@@ -28,9 +28,13 @@ import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
 import AdminDashboard from './pages/Users/AdminDashboard.jsx';
+import CreateConcierto from './pages/Users/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import ConciertoPage from './pages/conciertos/ConciertoPage.jsx';
+import EdicionConcierto from './pages/conciertos/EdicionConcierto.jsx';
+import Conciertos from './pages/conciertos/Conciertos.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -51,15 +55,28 @@ function App() {
             ) : (
                 <AnimatePresence>
                     <Routes>
-                        <Route path="/login" element={<LoginPage />} />
+                        {/* Global pages */}
                         <Route path="/" element={<Home />} />
+                        <Route path="/sobre-oiches" element={<SobreOiches />} />
+                        <Route path="/aviso-legal" element={<AvisoLegal />} />
+                        <Route
+                            path="/politica-privacidad"
+                            element={<PoliticaPrivacidad />}
+                        />
+                        <Route path="/contacto" element={<Contacto />} />
+                        <Route
+                            path="/politica-cookies"
+                            element={<PoliticaCookies />}
+                        />
+                        <Route path="*" element={<NotFound />} />
+
+                        {/* USERS */}
+                        <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
                         <Route
                             path="/users/validate/:registrationCode"
                             element={<UserValidationPage />}
                         />
-
-                        <Route path="/sobre-oiches" element={<SobreOiches />} />
                         <Route
                             path="/users/password/recover"
                             element={<RecuperarPassword />}
@@ -73,6 +90,12 @@ function App() {
                             element={<Users />}
                         />
                         <Route
+                            path="/validateUser"
+                            element={<ValidateUser />}
+                        />
+
+                        {/* SALAS */}
+                        <Route
                             path="/creacion-sala/:userId"
                             element={<CreacionSala />}
                         />
@@ -83,20 +106,23 @@ function App() {
                         <Route path="/salas" element={<Salas />} />
                         <Route path="/sala/:idSala" element={<SalaPage />} />
                         <Route
-                            path="/creacion-grupo/:userId"
-                            element={<CreacionGrupo />}
+                            path="/sala/calendar/:idSala"
+                            element={<CalendarioSalasPage />}
                         />
+
+                        {/* GRUPOS */}
                         <Route
                             path="/grupos/:idGrupo/edit"
                             element={<EdicionGrupo />}
                         />
                         <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
                         <Route path="/grupos" element={<Grupos />} />
-
                         <Route
-                            path="/sala/calendar/:idSala"
-                            element={<CalendarioSalasPage />}
+                            path="/creacion-grupo/:userId"
+                            element={<CreacionGrupo />}
                         />
+
+                        {/* RESERVAS */}
                         <Route
                             path="/grupo/calendar/:idGrupo"
                             element={<CalendarioGruposPage />}
@@ -109,32 +135,30 @@ function App() {
                             path="/grupo/:idGrupo/reservas"
                             element={<CrearReservaPage type="grupo" />}
                         />
-                        <Route
-                            path="/validateUser"
-                            element={<ValidateUser />}
-                        />
-                        <Route path="/aviso-legal" element={<AvisoLegal />} />
-                        <Route
-                            path="/politica-privacidad"
-                            element={<PoliticaPrivacidad />}
-                        />
-                        <Route path="/contacto" element={<Contacto />} />
 
-                        <Route
-                            path="/politica-cookies"
-                            element={<PoliticaCookies />}
-                        />
-
+                        {/* ADMIN */}
                         <Route
                             path="/admin-dashboard"
                             element={<AdminDashboard />}
                         />
-
-                        <Route path="*" element={<NotFound />} />
+                        <Route
+                            path="/crear-concierto/:reservaId"
+                            element={<CreateConcierto />}
+                        />
+                        {/* CONCIERTOS */}
+                        <Route path="/conciertos" element={<Conciertos />} />
+                        <Route
+                            path="/concierto/:conciertoId"
+                            element={<ConciertoPage />}
+                        />
+                        <Route
+                            path="/concierto/:conciertoId/edit"
+                            element={<EdicionConcierto />}
+                        />
                     </Routes>
                 </AnimatePresence>
             )}
-            <CookieConsentBanner /> {/* Añade el banner de cookies */}
+            <CookieConsentBanner />
         </>
     );
 }

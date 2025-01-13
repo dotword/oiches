@@ -5,10 +5,11 @@ const listAllReservaService = async (filters) => {
         const pool = await getPool();
 
         let query = `
-        SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre
+        SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre, conciertos.id AS concierto
             FROM reservas
             LEFT JOIN grupos ON reservas.grupo_id = grupos.id
             LEFT JOIN salas ON reservas.sala_id = salas.id
+            LEFT JOIN conciertos ON conciertos.reservaId = reservas.id
         WHERE 1=1
         `;
 

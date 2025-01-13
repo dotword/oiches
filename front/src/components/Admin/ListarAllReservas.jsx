@@ -128,6 +128,7 @@ const ListarAllReservas = ({ token }) => {
                                     <th>Estado</th>
                                     <th>Fecha concierto</th>
                                     <th>Fecha solicitud</th>
+                                    <th>Concierto</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -174,6 +175,30 @@ const ListarAllReservas = ({ token }) => {
                                         </td>
                                         <td>{formatDate(reserva.fecha)}</td>
                                         <td>{formatDate(reserva.createdAt)}</td>
+                                        <td>
+                                            {reserva.confirmada === '1' &&
+                                                reserva.concierto === null && (
+                                                    <Link
+                                                        to={`/crear-concierto/${reserva.id}`}
+                                                        state={{ reserva }}
+                                                    >
+                                                        <span className="flex gap-1 items-center justify-center font-semibold md:justify-start">
+                                                            Crear concierto
+                                                            <FiExternalLink />
+                                                        </span>
+                                                    </Link>
+                                                )}
+                                            {reserva.concierto !== null && (
+                                                <Link
+                                                    to={`/concierto/${reserva.concierto}`}
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                        Ver concierto
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

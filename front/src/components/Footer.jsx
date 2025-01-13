@@ -110,7 +110,7 @@ const Footer = () => {
                         </NavLink>
                     </div>
                     <p className="flex items-start justify-start gap-2 mt-8">
-                        <FaRegCopyright /> 2024 - Todos los derechos reservados
+                        <FaRegCopyright /> 2025 - Todos los derechos reservados
                     </p>
                 </div>
             </div>
