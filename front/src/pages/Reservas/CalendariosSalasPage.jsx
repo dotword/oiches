@@ -22,13 +22,15 @@ const CalendarioSalasPage = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header txt={`Reservas de ${entry.nombre}`} />
-            <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-7xl">
-                <section className="flex flex-wrap gap-8">
-                    <h2 className="font-semibold txt-lg md:w-full">
+            <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-5xl">
+                <section className="flex flex-wrap md:gap-x-8">
+                    <h2 className="font-bold text-2xl my-2 w-full">
                         Gestión de fechas disponibles
                     </h2>
-                    <CalendarioDisponibilidad idSala={idSala} />
-                    <div className="md:w-[calc(55%-1rem)]">
+                    <div className="my-2 shadow-xl rounded-xl p-4 md:w-[calc(45%-1rem)]">
+                        <CalendarioDisponibilidad idSala={idSala} />
+                    </div>
+                    <div className="my-2 shadow-xl rounded-xl p-4 md:w-[calc(55%-1rem)]">
                         <p>
                             ¡Organiza fácilmente las fechas para que los músicos
                             reserven tu sala!

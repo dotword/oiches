@@ -185,7 +185,7 @@ const CalendarioDisponibilidad = ({ idSala }) => {
     };
 
     return (
-        <div className="md:w-[calc(45%-1rem)]">
+        <>
             <Calendar
                 onChange={handleDateChange}
                 selectRange={false}
@@ -195,27 +195,34 @@ const CalendarioDisponibilidad = ({ idSala }) => {
                         date < today || date > oneYearFromNow || !calendarActive
                     );
                 }}
+                next2Label={null} // Elimina el botón "»"
+                prev2Label={null} // Elimina el botón "«"
+                className="mb-5"
             />
 
-            {(calendarActive === 1 || calendarActive === true) && (
+            <div className="flex flex-col gap-4">
+                {(calendarActive === 1 || calendarActive === true) && (
+                    <button
+                        onClick={submitDates}
+                        disabled={loading}
+                        className="btn-account rounded-xl max-w-40 py-2"
+                    >
+                        {loading ? 'Guardando...' : 'Guardar fechas'}
+                    </button>
+                )}
                 <button
-                    onClick={submitDates}
+                    onClick={toggleCalendarActive}
                     disabled={loading}
-                    className="btn-account mt-2 mr-4"
+                    className={`btn-account rounded-xl max-w-48 py-2 ${
+                        calendarActive ? 'bg-gray-400 text-black' : ''
+                    }`}
                 >
-                    {loading ? 'Guardando...' : 'Guardar fechas'}
+                    {calendarActive
+                        ? 'Desactivar calendario'
+                        : 'Activar calendario'}
                 </button>
-            )}
-            <button
-                onClick={toggleCalendarActive}
-                disabled={loading}
-                className="btn-account mt-2"
-            >
-                {calendarActive
-                    ? 'Desactivar Calendario'
-                    : 'Activar Calendario'}
-            </button>
-        </div>
+            </div>
+        </>
     );
 };
 

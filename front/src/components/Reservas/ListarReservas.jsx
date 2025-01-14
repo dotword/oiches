@@ -180,6 +180,14 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
 
     const today = formatDate(new Date());
 
+    const isPastOrToday = (fechaReserva) => {
+        const reservaDate = new Date(fechaReserva);
+        const todayDate = new Date();
+        reservaDate.setHours(0, 0, 0, 0); // Ignorar la hora
+        todayDate.setHours(0, 0, 0, 0); // Ignorar la hora
+        return reservaDate <= todayDate;
+    };
+
     const formatDateForInput = (dateString) => {
         const date = new Date(dateString);
         return date.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
@@ -309,16 +317,14 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                             reserva.id
                                                         ); // Guardar la reserva seleccionada
                                                     }}
-                                                    hidden={
-                                                        formatDate(
-                                                            reserva.fecha
-                                                        ) >= today
-                                                    }
-                                                    disabled={
-                                                        formatDate(
-                                                            reserva.fecha
-                                                        ) >= today
-                                                    }
+                                                    hidden={isPastOrToday(
+                                                        reserva.fecha,
+                                                        today
+                                                    )}
+                                                    disabled={isPastOrToday(
+                                                        reserva.fecha,
+                                                        today
+                                                    )}
                                                     className="button bg-red-500 text-white p-1 text-sm rounded"
                                                 >
                                                     Cancelar
@@ -358,7 +364,11 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                     hidden={
                                                         type === 'grupo' ||
                                                         reserva.confirmada !==
-                                                            '0'
+                                                            '0' ||
+                                                        isPastOrToday(
+                                                            reserva.fecha,
+                                                            today
+                                                        )
                                                     }
                                                     disabled={type === 'grupo'}
                                                     className="button bg-green-700 text-white p-2 text-sm rounded"
