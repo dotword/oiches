@@ -261,7 +261,11 @@ const SalaDetail = () => {
                                 key={comentario.id}
                                 className="my-6 p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-4"
                             >
-                                <div className="flex items-center gap-4 mb-2">
+                                <Link
+                                    className="flex items-center gap-4 mb-2"
+                                    to={`/grupo/${comentario.grupoVotaId}`}
+                                    target="_blank"
+                                >
                                     <img
                                         className="w-10 h-10 rounded-full object-cover"
                                         src={
@@ -284,7 +288,7 @@ const SalaDetail = () => {
                                             )}
                                         </p>
                                     </div>
-                                </div>
+                                </Link>
 
                                 <div className="flex flex-row gap-1">
                                     <StarRating rating={comentario.voto} />
@@ -293,24 +297,6 @@ const SalaDetail = () => {
                                 <p className="text-sm text-gray-700">
                                     {comentario.comentario}
                                 </p>
-
-                                <Link
-                                    className="flex justify-end items-center gap-2 mt-3"
-                                    to={`/grupo/${comentario.grupoVotaId}`}
-                                >
-                                    <img
-                                        className="w-8 rounded-full"
-                                        src={
-                                            comentario.grupoAvatar
-                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.grupoAvatar}`
-                                                : DefaultProfile
-                                        }
-                                        alt="Avatar grupo"
-                                    />
-                                    <p className="italic text-sm text-gray-500">
-                                        {comentario.grupoVotaName}
-                                    </p>
-                                </Link>
                             </div>
                         ))}
                     </section>

@@ -94,7 +94,7 @@ button.react-calendar__navigation__arrow {
 }
 .react-calendar__tile.react-calendar__month-view__days__day {
     border: 1px solid rgba(128, 128, 128, 0.1);
-    padding: 1rem;
+    height: 3rem;
 }
 .react-calendar .unavailable {
     background-color: #ffcccc;
