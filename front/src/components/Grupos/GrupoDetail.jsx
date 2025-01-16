@@ -275,29 +275,35 @@ const GrupoDetail = () => {
                                 key={comentario.id}
                                 className="my-6 p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-4"
                             >
-                                <div className="flex items-center gap-4">
-                                    <img
-                                        className="w-10 h-10 rounded-full object-cover"
-                                        src={
-                                            comentario.salaAvatar
-                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.salaAvatar}`
-                                                : DefaultProfile
-                                        }
-                                        alt="Avatar sala"
-                                    />
-                                    <div className="flex flex-col">
-                                        <span className="font-semibold text-sm">
-                                            {comentario.salaVotaNombre}
-                                        </span>
-                                        <p className="text-xs text-gray-500">
-                                            {formatDate(
-                                                comentario.createdAt.slice(
-                                                    0,
-                                                    10
-                                                )
-                                            )}
-                                        </p>
-                                    </div>
+                                <div className="">
+                                    <Link
+                                        to={`/sala/${comentario.salaVotaId}`}
+                                        className="flex items-center gap-4"
+                                        target="_blank"
+                                    >
+                                        <img
+                                            className="w-10 h-10 rounded-full object-cover"
+                                            src={
+                                                comentario.salaAvatar
+                                                    ? `${VITE_API_URL_BASE}/uploads/${comentario.salaAvatar}`
+                                                    : DefaultProfile
+                                            }
+                                            alt="Avatar sala"
+                                        />
+                                        <div className="flex flex-col">
+                                            <span className="font-semibold text-sm">
+                                                {comentario.salaVotaNombre}
+                                            </span>
+                                            <p className="text-xs text-gray-500">
+                                                {formatDate(
+                                                    comentario.createdAt.slice(
+                                                        0,
+                                                        10
+                                                    )
+                                                )}
+                                            </p>
+                                        </div>
+                                    </Link>
                                 </div>
                                 <div className="flex flex-row gap-1">
                                     <StarRating rating={comentario.voto} />
@@ -306,24 +312,6 @@ const GrupoDetail = () => {
                                 <p className="text-sm text-gray-700">
                                     {comentario.comentario}
                                 </p>
-
-                                <Link
-                                    className="flex justify-end items-center gap-2 mt-3"
-                                    to={`/sala/${comentario.salaVotaId}`}
-                                >
-                                    <img
-                                        className="w-8 rounded-full"
-                                        src={
-                                            comentario.salaAvatar
-                                                ? `${VITE_API_URL_BASE}/uploads/${comentario.salaAvatar}`
-                                                : DefaultProfile
-                                        }
-                                        alt="Avatar sala"
-                                    />
-                                    <p className="italic text-sm text-gray-500">
-                                        {comentario.salaVotaNombre}
-                                    </p>
-                                </Link>
                             </div>
                         ))}
                     </section>

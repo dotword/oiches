@@ -180,6 +180,14 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
 
     const today = formatDate(new Date());
 
+    const isPastOrToday = (fechaReserva) => {
+        const reservaDate = new Date(fechaReserva);
+        const todayDate = new Date();
+        reservaDate.setHours(0, 0, 0, 0); // Ignorar la hora
+        todayDate.setHours(0, 0, 0, 0); // Ignorar la hora
+        return reservaDate <= todayDate;
+    };
+
     const formatDateForInput = (dateString) => {
         const date = new Date(dateString);
         return date.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
@@ -188,11 +196,11 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
     return (
         <>
             <section>
-                <h3 className="text-lg font-semibold text-center my-6">
-                    Histórico Reservas
+                <h3 className="font-bold text-2xl my-6 w-full">
+                    Histórico de reservas
                 </h3>
                 {reservas.length > 0 ? (
-                    <table className="max-w-5xl mx-auto">
+                    <table className="max-w-5xl">
                         <thead>
                             <tr>
                                 {type === 'grupo' && <th>Sala</th>}
@@ -208,7 +216,7 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                         <tbody>
                             {reservas.map((reserva) => (
                                 <React.Fragment key={reserva.id}>
-                                    <tr className="mt-10 md:mt-0">
+                                    <tr className="mt-8 md:mt-0">
                                         {type === 'grupo' && (
                                             <td>
                                                 <Link
@@ -248,7 +256,7 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                 </span>
                                             )}
                                             {reserva.confirmada === '2' && (
-                                                <span className="block font-normal text-cyan-700">
+                                                <span className="block font-normal text-purpleOiches">
                                                     Tramitando
                                                 </span>
                                             )}
@@ -271,7 +279,7 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                                 e.target.value
                                                             )
                                                         }
-                                                        className="border rounded p-1"
+                                                        className="border rounded p-1 max-w-28"
                                                     />
                                                     <button
                                                         onClick={() =>
@@ -280,9 +288,9 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                                 reserva.fecha
                                                             )
                                                         }
-                                                        className="ml-2 bg-blue-500 text-white p-1 rounded"
+                                                        className="button ml-2 bg-blue-500 text-white p-1 text-sm rounded"
                                                     >
-                                                        Cambiar fecha
+                                                        Cambiar
                                                     </button>
                                                 </div>
                                             ) : (
@@ -309,16 +317,14 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                             reserva.id
                                                         ); // Guardar la reserva seleccionada
                                                     }}
-                                                    hidden={
-                                                        formatDate(
-                                                            reserva.fecha
-                                                        ) >= today
-                                                    }
-                                                    disabled={
-                                                        formatDate(
-                                                            reserva.fecha
-                                                        ) >= today
-                                                    }
+                                                    hidden={isPastOrToday(
+                                                        reserva.fecha,
+                                                        today
+                                                    )}
+                                                    disabled={isPastOrToday(
+                                                        reserva.fecha,
+                                                        today
+                                                    )}
                                                     className="button bg-red-500 text-white p-1 text-sm rounded"
                                                 >
                                                     Cancelar
@@ -358,10 +364,14 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                     hidden={
                                                         type === 'grupo' ||
                                                         reserva.confirmada !==
-                                                            '0'
+                                                            '0' ||
+                                                        isPastOrToday(
+                                                            reserva.fecha,
+                                                            today
+                                                        )
                                                     }
                                                     disabled={type === 'grupo'}
-                                                    className="button bg-green-700 text-white p-2 text-sm rounded"
+                                                    className="button bg-purpleOiches text-white p-1 text-sm rounded"
                                                 >
                                                     Me interesa
                                                 </button>
@@ -377,7 +387,7 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                                             '2'
                                                     }
                                                     disabled={type === 'grupo'}
-                                                    className="button bg-green-700 text-white p-2 text-sm rounded"
+                                                    className="button bg-green-700 text-white p-1 text-sm rounded"
                                                 >
                                                     Confirmar
                                                 </button>
@@ -395,7 +405,7 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                         </td>
                                     </tr>
                                     {new Date(reserva.fecha) < new Date() &&
-                                    reserva.confirmada === 1 ? (
+                                    reserva.confirmada === '1' ? (
                                         <tr>
                                             <td colSpan="8">
                                                 {type === 'grupo' && (

@@ -11,7 +11,7 @@ const grupoCanVoteService = async (idReserva, userId) => {
         `
             SELECT * FROM reservas WHERE id=? AND reservas.confirmada=?
         `,
-        [idReserva, 1]
+        [idReserva, '1']
     );
 
     if (!reserva.length) {
