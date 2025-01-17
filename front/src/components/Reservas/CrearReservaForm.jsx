@@ -159,6 +159,7 @@ const CrearReservaForm = ({ idUserOwner, calendarActive }) => {
                         </p>
                         <Calendar
                             onChange={setSelectedDate}
+                            className="calendarReserva"
                             tileDisabled={
                                 calendarActive === 1
                                     ? ({ date }) =>
