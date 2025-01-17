@@ -15,6 +15,7 @@ const ListarAllReservas = ({ token }) => {
         gruponame: '',
         confirm: '',
         order: '',
+        orderField: 'fecha',
     });
 
     const [autoSearch, setAutoSearch] = useState(true);
@@ -48,9 +49,12 @@ const ListarAllReservas = ({ token }) => {
     // Actualizar el estado de los filtros cuando el usuario cambia un valor
     const handleChange = (e) => {
         const { name, value } = e.target;
+        const [orderField, order] = value.split('_'); // Separa el valor para extraer campo y dirección
         setFilters({
             ...filters,
             [name]: value,
+            orderField,
+            order, // Setea la dirección (ASC/DESC)
         });
         setAutoSearch(true); // Activa búsqueda automática cuando se cambian los filtros
     };
@@ -64,8 +68,6 @@ const ListarAllReservas = ({ token }) => {
         });
     };
 
-    console.log(reservas);
-
     return (
         <>
             <section>
@@ -76,12 +78,18 @@ const ListarAllReservas = ({ token }) => {
                 <form className="grupo-filter-form mx-auto px-0 flex flex-wrap flex-row">
                     <select
                         name="order"
-                        value={filters.order}
+                        value={`${filters.orderField}_${filters.order}`} // Combina campo y dirección
                         onChange={handleChange}
-                        className="py-0 px-1 text-sm form-input max-w-20"
+                        className="py-0 px-1 text-sm form-input max-w-40"
                     >
-                        <option value="DESC">Fecha &#8595;</option>
-                        <option value="ASC">Fecha &#8593;</option>
+                        <option value="fecha_ASC">Fecha &#8593;</option>
+                        <option value="fecha_DESC">Fecha &#8595;</option>
+                        <option value="createdAt_ASC">
+                            Fecha solicitud &#8593;
+                        </option>
+                        <option value="createdAt_DESC">
+                            Fecha solicitud &#8595;
+                        </option>
                     </select>
                     <select
                         name="confirm"

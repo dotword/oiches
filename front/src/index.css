@@ -101,7 +101,8 @@ button.react-calendar__navigation__arrow {
     color: #a00;
 }
 .react-calendar .available-date,
-.react-calendar__tile.react-calendar__month-view__days__day.selected-date {
+.react-calendar__tile.react-calendar__month-view__days__day.selected-date,
+.calendarReserva .react-calendar__tile.react-calendar__tile--active {
     background-color: #9333ff;
     color: #fff;
 }
