@@ -65,7 +65,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         <span>Editar</span>
                                     </a>
                                     <a
-                                        href={`/${type}/calendar/${entry.id}`}
+                                        href={`/${userOwner.user.roles}/calendar/${entry.id}`}
                                         className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
                                     >
                                         <FaRegCalendarCheck className="text-xl" />
