@@ -12,6 +12,11 @@ export const deleteSalaService = async (salaId) => {
             salaId,
         ]);
 
+        // Eliminar fechas_disponibles
+        await pool.query(`DELETE FROM fechas_disponibles WHERE sala_id = ?`, [
+            salaId,
+        ]);
+
         // Seleccionar reservas de la sala
         const [reservas] = await pool.query(
             `SELECT id FROM reservas WHERE sala_id = ?`,
