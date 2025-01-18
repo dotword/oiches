@@ -116,6 +116,12 @@ button.react-calendar__navigation__arrow {
 .react-calendar__tile--active:enabled:focus {
     background-color: #ffb500;
 }
+.react-calendar.calendar-concert {
+    width: 20rem;
+}
+.calendar-concert .react-calendar__navigation__label {
+    font-size: 1rem;
+}
 @layer components {
     .btn-account {
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;

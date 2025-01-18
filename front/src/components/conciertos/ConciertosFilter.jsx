@@ -107,7 +107,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
     const today = new Date();
 
     return (
-        <form className="grupo-filter-form mx-auto md:flex md:w-4/5 md:flex-row md:space-x-4">
+        <form className="grupo-filter-form mx-auto md:flex md:flex-row md:space-x-4">
             <select
                 name="provincia"
                 value={filters.provincia}
@@ -159,7 +159,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                                 filters.fecha ? new Date(filters.fecha) : null
                             }
                             locale="es-ES"
-                            className="rounded-md"
+                            className="calendar-concert"
                             minDate={today}
                         />
                     </div>
@@ -196,7 +196,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                                     : null
                             }
                             locale="es-ES"
-                            className="rounded-md"
+                            className="calendar-concert"
                             minDate={today}
                         />
                     </div>
