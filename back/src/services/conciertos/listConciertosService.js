@@ -33,35 +33,32 @@ const listConciertosService = async (filters) => {
 
         const queryParams = [];
 
-        if (filters.provincia && filters.provincia.trim() !== '') {
-            query += ' AND provincias.provincia LIKE ?';
-            queryParams.push(`%${filters.provincia}%`);
-        }
+        if (!filters.clearFilters) {
+            if (filters.provincia && filters.provincia.trim() !== '') {
+                query += ' AND provincias.provincia LIKE ?';
+                queryParams.push(`%${filters.provincia}%`);
+            }
 
-        if (filters.ciudad && filters.ciudad.trim() !== '') {
-            query += ' AND salas.ciudad LIKE ?';
-            queryParams.push(`%${filters.ciudad}%`);
-        }
+            if (filters.ciudad && filters.ciudad.trim() !== '') {
+                query += ' AND salas.ciudad LIKE ?';
+                queryParams.push(`%${filters.ciudad}%`);
+            }
 
-        // if (filters.fecha && filters.fecha.trim() !== '') {
-        //     query += ' AND conciertos.fecha LIKE ?';
-        //     queryParams.push(`%${filters.fecha}%`);
-        // }
+            // Filtrar por rango de fechas
+            if (filters.fecha && filters.fecha.trim() !== '') {
+                query += ' AND conciertos.fecha >= ?';
+                queryParams.push(filters.fecha);
+            }
+            if (filters.fechaHasta && filters.fechaHasta.trim() !== '') {
+                query += ' AND conciertos.fecha <= ?';
+                queryParams.push(filters.fechaHasta);
+            }
 
-        // Filtrar por rango de fechas
-        if (filters.fecha && filters.fecha.trim() !== '') {
-            query += ' AND conciertos.fecha >= ?';
-            queryParams.push(filters.fecha);
-        }
-        if (filters.fechaHasta && filters.fechaHasta.trim() !== '') {
-            query += ' AND conciertos.fecha <= ?';
-            queryParams.push(filters.fechaHasta);
-        }
-
-        if (filters.generos && filters.generos !== '') {
-            const generosArray = filters.generos.split(','); // Si generos es una lista separada por comas
-            query += ` AND generos_grupos.generoId IN (${generosArray.map(() => '?').join(',')})`;
-            queryParams.push(...generosArray);
+            if (filters.generos && filters.generos !== '') {
+                const generosArray = filters.generos.split(','); // Si generos es una lista separada por comas
+                query += ` AND generos_grupos.generoId IN (${generosArray.map(() => '?').join(',')})`;
+                queryParams.push(...generosArray);
+            }
         }
 
         query += `
@@ -99,10 +96,28 @@ const listConciertosService = async (filters) => {
             WHERE 1=1
         `;
 
-        // Aplicar los mismos filtros a la consulta de conteo
-        const countQueryParams = [...queryParams];
+        if (!filters.clearFilters) {
+            if (filters.provincia && filters.provincia.trim() !== '') {
+                countQuery += ' AND provincias.provincia LIKE ?';
+            }
+            if (filters.ciudad && filters.ciudad.trim() !== '') {
+                countQuery += ' AND salas.ciudad LIKE ?';
+            }
+            if (filters.fecha && filters.fecha.trim() !== '') {
+                countQuery += ' AND conciertos.fecha >= ?';
+            }
+            if (filters.fechaHasta && filters.fechaHasta.trim() !== '') {
+                countQuery += ' AND conciertos.fecha <= ?';
+            }
+            if (filters.generos && filters.generos !== '') {
+                countQuery += ` AND generos_grupos.generoId IN (${filters.generos
+                    .split(',')
+                    .map(() => '?')
+                    .join(',')})`;
+            }
+        }
 
-        const [countResult] = await pool.query(countQuery, countQueryParams);
+        const [countResult] = await pool.query(countQuery, queryParams);
         const total = countResult[0].total;
 
         return { rows, total };

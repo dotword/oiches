@@ -84,6 +84,7 @@ const CrearConcierto = ({ reserva, token }) => {
                     <Calendar
                         value={selectedDate}
                         onChange={handleChangeDate}
+                        className="concert"
                     />
                 </div>
 

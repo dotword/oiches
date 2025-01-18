@@ -18,6 +18,7 @@ const FetchAllReservasService = async (
         if (filters.gruponame) queryParamsObj.gruponame = filters.gruponame;
         if (filters.confirm) queryParamsObj.confirm = filters.confirm;
         if (filters.order) queryParamsObj.order = filters.order;
+        if (filters.orderField) queryParamsObj.orderField = filters.orderField;
 
         // Crear los parámetros de consulta
         const queryParams = new URLSearchParams(queryParamsObj).toString();

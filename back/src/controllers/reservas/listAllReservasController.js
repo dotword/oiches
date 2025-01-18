@@ -6,8 +6,8 @@ const listAllReservasController = async (req, res, next) => {
             salaname: req.query.salaname || '',
             gruponame: req.query.gruponame || '',
             confirm: req.query.confirm || '',
-            order: req.query.order || 'ASC',
             orderField: req.query.orderField || 'fecha',
+            order: req.query.order || 'ASC',
             page: req.query.page || 1,
             pageSize: req.query.pageSize || 25,
         };

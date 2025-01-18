@@ -3,6 +3,7 @@ import listConciertosService from '../../services/conciertos/listConciertosServi
 const listConciertosController = async (req, res, next) => {
     try {
         const filters = {
+            clearFilters: req.query.clearFilters === 'true',
             provincia: req.query.provincia || '',
             ciudad: req.query.ciudad || '',
             generos: req.query.generos || '',

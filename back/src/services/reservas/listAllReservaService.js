@@ -30,16 +30,27 @@ const listAllReservaService = async (filters) => {
             queryParams.push(`%${filters.confirm}%`);
         }
 
-        const validOrderFields = ['fecha', 'createdAt'];
-        const orderField = validOrderFields.includes(filters.orderField)
-            ? filters.orderField
-            : 'fecha'; // Campo por defecto
-
-        // Dirección de orden
+        const orderField =
+            filters.orderField &&
+            ['fecha', 'createdAt'].includes(filters.orderField)
+                ? filters.orderField
+                : 'fecha'; // Campo predeterminado
         const orderDirection =
-            filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+            filters.order && filters.order.toUpperCase() === 'ASC'
+                ? 'ASC'
+                : 'DESC';
 
         query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
+        // const validOrderFields = ['fecha', 'createdAt'];
+        // const orderField = validOrderFields.includes(filters.orderField)
+        //     ? filters.orderField
+        //     : 'fecha'; // Campo por defecto
+
+        // // Dirección de orden
+        // const orderDirection =
+        //     filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+        // query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
 
         // Paginación
         const page = filters.page ? parseInt(filters.page, 10) : 1;

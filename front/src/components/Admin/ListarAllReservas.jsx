@@ -49,13 +49,23 @@ const ListarAllReservas = ({ token }) => {
     // Actualizar el estado de los filtros cuando el usuario cambia un valor
     const handleChange = (e) => {
         const { name, value } = e.target;
-        const [orderField, order] = value.split('_'); // Separa el valor para extraer campo y dirección
-        setFilters({
-            ...filters,
-            [name]: value,
-            orderField,
-            order, // Setea la dirección (ASC/DESC)
-        });
+
+        if (name === 'order') {
+            // Dividir el valor combinado en orderField y order
+            const [orderField, order] = value.split('_');
+            setFilters({
+                ...filters,
+                orderField,
+                order,
+            });
+        } else {
+            // Actualizar otros filtros como confirm, salaname, gruponame
+            setFilters({
+                ...filters,
+                [name]: value,
+            });
+        }
+
         setAutoSearch(true); // Activa búsqueda automática cuando se cambian los filtros
     };
 
@@ -80,10 +90,14 @@ const ListarAllReservas = ({ token }) => {
                         name="order"
                         value={`${filters.orderField}_${filters.order}`} // Combina campo y dirección
                         onChange={handleChange}
-                        className="py-0 px-1 text-sm form-input max-w-40"
+                        className="py-0 px-1 text-sm form-input max-w-32"
                     >
-                        <option value="fecha_ASC">Fecha &#8593;</option>
-                        <option value="fecha_DESC">Fecha &#8595;</option>
+                        <option value="fecha_ASC">
+                            Fecha concierto &#8593;
+                        </option>
+                        <option value="fecha_DESC">
+                            Fecha concierto &#8595;
+                        </option>
                         <option value="createdAt_ASC">
                             Fecha solicitud &#8593;
                         </option>
@@ -91,11 +105,12 @@ const ListarAllReservas = ({ token }) => {
                             Fecha solicitud &#8595;
                         </option>
                     </select>
+
                     <select
                         name="confirm"
                         value={filters.confirm}
                         onChange={handleChange}
-                        className="form-select max-w-40"
+                        className="form-select max-w-32"
                     >
                         <option value="">Estado</option>
                         <option value="0">Pendiente</option>

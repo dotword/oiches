@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import FetchGenresService from '../../services/FetchGenresService';
 import ReactCalendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -12,16 +12,17 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
         fecha: '',
         fechaHasta: '',
         order: '',
+        clearFilters: '',
     });
     const [autoSearch, setAutoSearch] = useState(true);
-    const [isFechaDesdeOpen, setIsFechaDesdeOpen] = useState(false);
-    const [isFechaHastaOpen, setIsFechaHastaOpen] = useState(false);
+    const [isDesdeCalendarOpen, setDesdeCalendarOpen] = useState(false);
+    const [isHastaCalendarOpen, setHastaCalendarOpen] = useState(false);
+
+    const desdeCalendarRef = useRef(null);
+    const hastaCalendarRef = useRef(null);
 
     useEffect(() => {
-        const fetchFilters = async () => {
-            await FetchGenresService(setGenres);
-        };
-        fetchFilters();
+        FetchGenresService(setGenres);
     }, []);
 
     useEffect(() => {
@@ -57,21 +58,53 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
 
         setAutoSearch(true);
 
-        // Cerramos el calendario correspondiente después de seleccionar la fecha
+        // Cierra los calendarios dependiendo de cuál está activo
         if (type === 'fecha') {
-            setIsFechaDesdeOpen(false);
+            setDesdeCalendarOpen(false);
         } else if (type === 'fechaHasta') {
-            setIsFechaHastaOpen(false);
+            setHastaCalendarOpen(false);
         }
     };
 
-    const toggleCalendar = (type) => {
-        if (type === 'desde') {
-            setIsFechaDesdeOpen(!isFechaDesdeOpen);
-        } else if (type === 'hasta') {
-            setIsFechaHastaOpen(!isFechaHastaOpen);
+    const handleOutsideClick = (event) => {
+        // Cierra "Fecha desde" si el clic está fuera de su calendario
+        if (
+            desdeCalendarRef.current &&
+            !desdeCalendarRef.current.contains(event.target)
+        ) {
+            setDesdeCalendarOpen(false);
+        }
+
+        // Cierra "Fecha hasta" si el clic está fuera de su calendario
+        if (
+            hastaCalendarRef.current &&
+            !hastaCalendarRef.current.contains(event.target)
+        ) {
+            setHastaCalendarOpen(false);
         }
     };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
+    const handleClearFilters = () => {
+        setFilters({
+            provincia: '',
+            ciudad: '',
+            generos: '',
+            fecha: '',
+            fechaHasta: '',
+            order: '',
+            clearFilters: 'true', // Indica que se borraron los filtros
+        });
+        setAutoSearch(true);
+    };
+
+    const today = new Date();
 
     return (
         <form className="grupo-filter-form mx-auto md:flex md:w-4/5 md:flex-row md:space-x-4">
@@ -104,11 +137,11 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
             </select>
 
             {/* Filtro de Fecha desde */}
-            <div className="relative">
+            <div className="relative" ref={desdeCalendarRef}>
                 <button
                     type="button"
-                    onClick={() => toggleCalendar('desde')}
                     className="form-select mt-0"
+                    onClick={() => setDesdeCalendarOpen((prev) => !prev)}
                 >
                     {filters.fecha
                         ? new Date(filters.fecha).toLocaleDateString('es-ES', {
@@ -118,7 +151,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                           })
                         : 'Fecha desde'}
                 </button>
-                {isFechaDesdeOpen && (
+                {isDesdeCalendarOpen && (
                     <div className="absolute z-10 mt-2 shadow-lg">
                         <ReactCalendar
                             onChange={(date) => handleDateChange(date, 'fecha')}
@@ -127,17 +160,18 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                             }
                             locale="es-ES"
                             className="rounded-md"
+                            minDate={today}
                         />
                     </div>
                 )}
             </div>
 
             {/* Filtro de Fecha hasta */}
-            <div className="relative">
+            <div className="relative" ref={hastaCalendarRef}>
                 <button
                     type="button"
-                    onClick={() => toggleCalendar('hasta')}
                     className="form-select mt-0"
+                    onClick={() => setHastaCalendarOpen((prev) => !prev)}
                 >
                     {filters.fechaHasta
                         ? new Date(filters.fechaHasta).toLocaleDateString(
@@ -150,7 +184,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                           )
                         : 'Fecha hasta'}
                 </button>
-                {isFechaHastaOpen && (
+                {isHastaCalendarOpen && (
                     <div className="absolute z-10 mt-2 shadow-lg">
                         <ReactCalendar
                             onChange={(date) =>
@@ -163,6 +197,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                             }
                             locale="es-ES"
                             className="rounded-md"
+                            minDate={today}
                         />
                     </div>
                 )}
@@ -181,17 +216,14 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                     </option>
                 ))}
             </select>
-
-            <select
-                name="order"
-                value={filters.order}
-                onChange={handleChange}
-                className="form-select"
+            {/* Botón para limpiar filtros */}
+            <button
+                type="button"
+                className="btn text-white"
+                onClick={handleClearFilters}
             >
-                <option value="">Ordenar</option>
-                <option value="ASC">Fecha ⬆</option>
-                <option value="DESC">Fecha ⬇</option>
-            </select>
+                Limpiar filtros
+            </button>
         </form>
     );
 };
