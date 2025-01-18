@@ -8,6 +8,7 @@ import Footer from '../../components/Footer.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 import { IoFilter } from 'react-icons/io5';
 import Paginator from '../../components/Paginator.jsx';
+import OldConciertosList from '../../components/conciertos/OldConciertosList.jsx';
 
 const Conciertos = () => {
     const [filteredConciertos, setFilteredConciertos] = useState([]);
@@ -141,6 +142,12 @@ const Conciertos = () => {
                             total={total}
                             pageSize={pageSize}
                         />
+                    </section>
+                    <section className="mt-12">
+                        <h2 className="font-semibold text-center first-line:text-2xl">
+                            Concierto anteriores
+                        </h2>
+                        <OldConciertosList Paginator={Paginator} />
                     </section>
                 </main>
                 <Footer />

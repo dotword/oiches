@@ -14,6 +14,7 @@ import {
     editConciertoPosterController,
     borrarConciertoController,
     listConciertosController,
+    listOldConciertosController,
 } from '../controllers/conciertos/index.js';
 
 const router = express.Router();
@@ -67,6 +68,6 @@ router.get(
 router.get('/conciertos?', listConciertosController);
 
 // Enpoint listar los conciertos pasados
-// router.get('/conciertos-old', listOldConciertosController);
+router.get('/conciertos-old', listOldConciertosController);
 
 export default router;
