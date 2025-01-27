@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import io from 'socket.io-client';
-import { AuthContext } from '../context/auth/auth.context.jsx';
+import AuthContext from '../context/auth/AuthContext.jsx';
 import Noimage from '../../src/assets/noimage.png';
 
 export const Chat = () => {

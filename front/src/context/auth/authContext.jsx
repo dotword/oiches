@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import getDataUserLoggedService from '../../services/Users/getDataUserLoggedService.js';
 
-export const AuthContext = createContext({
+const AuthContext = createContext({
     currentUser: null,
     signIn: (token = '') => {
         console.log(token);
@@ -96,3 +96,5 @@ export function AuthContextProvider({ children }) {
         </AuthContext.Provider>
     );
 }
+
+export default AuthContext;

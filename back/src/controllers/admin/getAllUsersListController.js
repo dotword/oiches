@@ -1,4 +1,4 @@
-import selectAllUsersService from '../../services/users/selectAllUsersService.js';
+import selectAllUsersService from '../../services/admin/selectAllUsersService.js';
 
 const getAllUsersListController = async (req, res, next) => {
     try {
@@ -6,6 +6,7 @@ const getAllUsersListController = async (req, res, next) => {
             username: req.query.username || '',
             active: req.query.active || '',
             roles: req.query.roles || '',
+            published: req.query.published || '',
             salaname: req.query.salaname || '',
             gruponame: req.query.gruponame || '',
             provincia: req.query.provincia || '',

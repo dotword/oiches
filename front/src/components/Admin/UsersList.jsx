@@ -108,7 +108,16 @@ const UsersList = ({ token }) => {
                     <option value="grupo">Músicos</option>
                     <option value="admin">Admin</option>
                 </select>
-
+                <select
+                    name="published"
+                    value={filters.published}
+                    onChange={handleChange}
+                    className="form-select max-w-32"
+                >
+                    <option value="">Publicado</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
                 <input
                     name="provincia"
                     value={filters.provincia}
@@ -141,6 +150,7 @@ const UsersList = ({ token }) => {
                                 <th>Role</th>
                                 <th>Fecha alta</th>
                                 <th>Sala/Músico</th>
+                                <th>Publicado</th>
                                 <th>Provincia</th>
                                 <th>Baja</th>
                             </tr>
@@ -187,6 +197,12 @@ const UsersList = ({ token }) => {
                                                 </span>
                                             </Link>
                                         )}
+                                    </td>
+                                    <td>
+                                        {filteredUsers.roles === 'grupo' &&
+                                            filteredUsers.grupo_published}
+                                        {filteredUsers.roles === 'sala' &&
+                                            filteredUsers.sala_published}
                                     </td>
                                     <td>
                                         {filteredUsers.provincia_grupo_nombre ||

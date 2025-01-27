@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import {
@@ -20,7 +20,6 @@ const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
     const { userId } = useParams();
     const userData = useUser(userId);
-
     const [avatar, setAvatar] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
     const [newEmail, setNewEmail] = useState('');
@@ -121,8 +120,8 @@ const AuthUser = () => {
             // Activar el modo de edición
             setEditEmail(true);
             setTimeout(() => {
-                emailInputRef.current.focus(); // Poner el foco en el input de email
-            }, 0); // Asegúrate de que el setEditEmail se complete antes de poner el foco
+                emailInputRef.current.focus();
+            }, 0);
         } else {
             // Guardar el nuevo email
             try {

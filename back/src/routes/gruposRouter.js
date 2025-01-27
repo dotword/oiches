@@ -131,4 +131,5 @@ router.get('/grupos/:idGrupo', grupoExists, getGrupoDetailController);
 
 // Endpoint listado de grupos con filtro, búsqueda y ordenación
 router.get('/grupos?', listGruposController);
+
 export default router;

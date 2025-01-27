@@ -16,9 +16,11 @@ const selectAllUsersService = async (filters) => {
             salas.id AS sala_id,
             salas.nombre AS sala_nombre,
             salas.updatedAt AS sala_updatedAt,
+            salas.published AS sala_published,
             grupos.id AS grupo_id,
             grupos.nombre AS grupo_nombre,
             grupos.updatedAt AS grupo_updatedAt,
+            grupos.published AS grupo_published,
             prov_grupo.provincia AS provincia_grupo_nombre,
             prov_sala.provincia AS provincia_sala_nombre
         FROM 
@@ -55,6 +57,11 @@ const selectAllUsersService = async (filters) => {
     if (filters.gruponame && filters.gruponame.trim() !== '') {
         query += ' AND grupos.nombre LIKE ?';
         queryParams.push(`%${filters.gruponame}%`);
+    }
+    if (filters.published && filters.published.trim() !== '') {
+        query += ' AND (grupos.published = ? OR salas.published = ?)';
+        const publishedValue = parseInt(filters.published, 10); // Convertimos el valor a número
+        queryParams.push(publishedValue, publishedValue);
     }
     if (filters.provincia && filters.provincia.trim() !== '') {
         query +=

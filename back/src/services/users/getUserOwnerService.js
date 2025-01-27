@@ -12,14 +12,14 @@ const getUserOwnerService = async (userId) => {
     if (role[0].roles === 'grupo') {
         // Comprobamos los grupos del usuarios
         const [grupos] = await pool.query(
-            `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, createdAt FROM grupos WHERE usuario_id = ?`,
+            `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, published, createdAt FROM grupos WHERE usuario_id = ?`,
             [userId]
         );
         return grupos;
     } else {
         // Comprobamos las salas del usuarios
         const [salas] = await pool.query(
-            `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, createdAt FROM salas WHERE usuario_id = ?`,
+            `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, published, createdAt FROM salas WHERE usuario_id = ?`,
             [userId]
         );
         return salas;

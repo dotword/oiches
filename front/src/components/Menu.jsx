@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context';
+import AuthContext from '../context/auth/AuthContext';
 import { NavLink } from 'react-router-dom';
 
 const Menu = ({ mobile }) => {

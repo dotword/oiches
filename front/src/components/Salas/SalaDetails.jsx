@@ -11,12 +11,14 @@ import TextFormat from '../TextFormato.jsx';
 import MapShow from '../MapShow.jsx';
 import { IoChevronForward } from 'react-icons/io5';
 import { IoChevronBack } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import Toastify from '../Toastify.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
-    const { entry, error } = useSala(idSala);
-    const { currentUser } = useAuth();
+    const { entry } = useSala(idSala);
+    const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
     const [formattedAddress, setFormattedAddress] = useState('');
     const [previous, setPrevious] = useState('');
@@ -35,6 +37,7 @@ const SalaDetail = () => {
         comentarios,
         fotos,
         pdf,
+        published,
     } = entry || {};
 
     const handleAddressChange = (newAddress) => {
@@ -94,7 +97,28 @@ const SalaDetail = () => {
         });
     };
 
-    return entry ? (
+    const handlePublish = async () => {
+        try {
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/published-sala/${idSala}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            if (response.ok) {
+                toast.success('Publicado con éxito');
+            }
+        } catch (error) {
+            toast.error('Error al publicar');
+        }
+    };
+
+    return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}
             <Seo
@@ -328,19 +352,30 @@ const SalaDetail = () => {
                 </section>
 
                 {actualUser.roles === 'admin' && (
-                    <a
-                        href={`/sala/${idSala}/edit`}
-                        className="flex justify-end gap-4 mb-16"
-                    >
-                        {' '}
-                        <FaPencilAlt className=" text-2xl" />
-                        Editar
-                    </a>
+                    <>
+                        {published === 0 && (
+                            <button
+                                className="btn-account max-w-44 min-w-32 bg-red-600"
+                                onClick={handlePublish}
+                            >
+                                Publicar
+                            </button>
+                        )}
+                        <a
+                            href={`/sala/${idSala}/edit`}
+                            className="flex justify-end gap-4 mb-16"
+                        >
+                            {' '}
+                            <FaPencilAlt className=" text-2xl" />
+                            Editar
+                        </a>
+                        <Toastify />
+                    </>
                 )}
             </main>
         </>
     ) : (
-        <p>{error}</p>
+        <p className="text-center mt-12">La sala aún no está publicada</p>
     );
 };
 

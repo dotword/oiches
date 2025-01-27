@@ -28,7 +28,7 @@ const createSalaSchema = Joi.object({
     condiciones: Joi.string().max(2000).messages(joiErrorMessages),
     equipamiento: Joi.string().max(2000).messages(joiErrorMessages),
     provincia: Joi.number().max(50).required().messages(joiErrorMessages),
-    web: Joi.string().uri().messages(joiErrorMessages),
+    web: Joi.string().uri().required().messages(joiErrorMessages),
 });
 
 export default createSalaSchema;

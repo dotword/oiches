@@ -11,7 +11,7 @@ const cambiarFechaReservaController = async (req, res, next) => {
         res.send({
             status: 'ok',
             message:
-                'Fecha modificada. El músico recivirá un email con la nueva fecha.',
+                'Fecha modificada. El músico recibirá un email con la nueva fecha.',
         });
     } catch (error) {
         next(error);

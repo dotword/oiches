@@ -23,7 +23,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                         Gestiona{' '}
                         {userOwner.user.roles === 'sala'
                             ? ' tus salas'
-                            : ' tu grupo'}
+                            : ' tu proyecto musical'}
                     </h2>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                         {entries.map((entry) => (
@@ -32,10 +32,18 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
                             >
                                 {/* Título del proyecto */}
-                                <div className="flex items-center justify-between mb-3">
+                                <div className="flex flex-wrap items-center justify-between mb-3">
                                     <h3 className="font-medium text-gray-800 text-lg">
                                         {entry.nombre}
                                     </h3>
+                                    {entry.published === 0 && (
+                                        <p className="text-sm mt-2 text-orange-600">
+                                            {userOwner.user.roles === 'sala' &&
+                                                'Estamos revisando tu sala, muy pronto aparecerá publicada'}
+                                            {userOwner.user.roles === 'grupo' &&
+                                                'Estamos revisando tu proyecto, muy pronto aparecerá publicado'}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Enlaces de acción */}
@@ -64,17 +72,19 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         <FaPencil className="text-base" />
                                         <span>Editar</span>
                                     </a>
-                                    <a
-                                        href={`/${userOwner.user.roles}/calendar/${entry.id}`}
-                                        className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
-                                    >
-                                        <FaRegCalendarCheck className="text-xl" />
-                                        <span>
-                                            Gestionar reservas{' '}
-                                            {userOwner.user.roles === 'sala' &&
-                                                'y calendario'}
-                                        </span>
-                                    </a>
+                                    {entry.published === 1 && (
+                                        <a
+                                            href={`/${userOwner.user.roles}/calendar/${entry.id}`}
+                                            className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
+                                        >
+                                            <FaRegCalendarCheck className="text-xl" />
+                                            <span>
+                                                Gestionar reservas{' '}
+                                                {userOwner.user.roles ===
+                                                    'sala' && 'y calendario'}
+                                            </span>
+                                        </a>
+                                    )}
                                 </div>
                             </li>
                         ))}

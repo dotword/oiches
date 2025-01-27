@@ -1,5 +1,5 @@
 import { useState, useContext, useCallback, useEffect } from 'react';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import {
     AddSalaPhotosService,

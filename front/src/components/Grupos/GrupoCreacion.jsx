@@ -1,11 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/auth/auth.context';
+import AuthContext from '../../context/auth/AuthContext';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
-
 import FetchProvinciasService from '../../services/FetchProvinciasService';
 import FetchGenresService from '../../services/FetchGenresService';
 import registerGrupoService from '../../services/Grupos/registerGrupoService';
@@ -62,20 +61,18 @@ const GrupoCreacion = () => {
         });
 
         try {
-            const response = await registerGrupoService({
+            await registerGrupoService({
                 token,
                 userId,
                 formData,
             });
 
-            const grupoId = response.grupo.id;
-
             toast.success(
-                'Revisa la información y añade fotos, videos y rider de tu proyecto.'
+                'Vamos a verificar los datos de tu proyecto y en breves lo publicaremos en Oiches.'
             );
 
             setTimeout(() => {
-                navigate(`/grupos/${grupoId}/edit`);
+                navigate(`/users/account/${userId}`);
             }, 2000);
         } catch (error) {
             setError(error.message);
@@ -171,13 +168,14 @@ const GrupoCreacion = () => {
 
                         <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                             <label htmlFor="web" className="font-semibold">
-                                Web:
+                                Web o enlace a tus RRSS:*
                             </label>
                             <input
                                 type="url"
                                 name="web"
                                 placeholder="https://www.tugrupo.com"
                                 value={web}
+                                required
                                 onChange={handleChange}
                                 className="form-input"
                             />

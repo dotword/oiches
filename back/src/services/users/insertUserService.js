@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
-
 import getPool from '../../database/getPool.js';
 import sendMailUtil from '../../utils/sendMailUtil.js';
 import { URL_FRONT } from '../../../env.js';
@@ -51,18 +50,18 @@ const insertUserService = async (
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <style>
                         body {
-                            font-size: 12px; /* Tamaño general reducido */
+                            font-size: 12px; 
                             font-family: Arial, sans-serif;
-                            line-height: 1.4; /* Altura de línea para mayor legibilidad */
+                            line-height: 1.4; 
                         }
                         .small-text {
-                            font-size: 8px; /* Tamaño de texto aún más pequeño */
+                            font-size: 8px;
                         }
                         a {
                             color: #000000;
                         }
                         a:hover {
-                            text-decoration: underline; /* Subrayado al pasar el mouse */
+                            text-decoration: underline; 
                         }
                         button {
                             padding: 5px 10px;
@@ -75,7 +74,7 @@ const insertUserService = async (
                             text-decoration: none
                         }
                         p {
-                            margin: 8px 0; /* Espaciado entre párrafos */
+                            margin: 8px 0; 
                         }
                     </style>
                 </head>

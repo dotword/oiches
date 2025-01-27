@@ -1,4 +1,4 @@
-import listAllReservaService from '../../services/reservas/listAllReservaService.js';
+import listAllReservaService from '../../services/admin/listAllReservaService.js';
 
 const listAllReservasController = async (req, res, next) => {
     try {

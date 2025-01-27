@@ -21,28 +21,32 @@ const GrupoCard = ({ grupo }) => {
     };
 
     return (
-        <div className="card" onClick={handleClick}>
-            <img
-                src={imageUrl}
-                alt={grupo.nombre}
-                className={`grupo-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
-                    imageUrl === DefaultProfile
-                        ? 'object-contain'
-                        : 'object-cover'
-                }`}
-            />
-            <h2 className="card-title text-lg font-bold mt-2">
-                {grupo.nombre}
-            </h2>
-            <p className="card-genre text-gray-400">{grupo.generoNombres}</p>
-            <p className="card-province text-gray-400">
-                <span className="sub_title_ficha">Provincia:</span>{' '}
-                {grupo.provincia_nombre}
-            </p>
-            <div className="mt-2">
-                <StarRating rating={grupo.media_votos} />
+        grupo.published === 1 && (
+            <div className="card" onClick={handleClick}>
+                <img
+                    src={imageUrl}
+                    alt={grupo.nombre}
+                    className={`grupo-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
+                        imageUrl === DefaultProfile
+                            ? 'object-contain'
+                            : 'object-cover'
+                    }`}
+                />
+                <h2 className="card-title text-lg font-bold mt-2">
+                    {grupo.nombre}
+                </h2>
+                <p className="card-genre text-gray-400">
+                    {grupo.generoNombres}
+                </p>
+                <p className="card-province text-gray-400">
+                    <span className="sub_title_ficha">Provincia:</span>{' '}
+                    {grupo.provincia_nombre}
+                </p>
+                <div className="mt-2">
+                    <StarRating rating={grupo.media_votos} />
+                </div>
             </div>
-        </div>
+        )
     );
 };
 
