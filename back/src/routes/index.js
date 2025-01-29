@@ -8,7 +8,10 @@ import listasRouter from './listasRouter.js';
 import votosRouter from './votosRouter.js';
 import conversacionesRouter from './conversacionesRouter.js';
 import contactRoutes from './contactRoutes.js';
+import conciertosRouter from './conciertosRouter.js';
+
 const router = express.Router();
+
 router.use(conversacionesRouter);
 router.use(usersRouter);
 router.use(salasRouter);
@@ -17,5 +20,6 @@ router.use(listasRouter);
 router.use(reservasRouter);
 router.use(votosRouter);
 router.use(contactRoutes);
+router.use(conciertosRouter);
 
 export default router;

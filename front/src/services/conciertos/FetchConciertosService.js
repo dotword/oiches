@@ -1,7 +1,6 @@
 import apiRequest from '../../utils/apiRequest';
 
-const FetchAllReservasService = async (
-    token,
+const FetchConciertosService = async (
     filters = {},
     page = 1,
     pageSize = 10
@@ -14,11 +13,11 @@ const FetchAllReservasService = async (
         };
 
         // Agregar solo los filtros que no estén vacíos
-        if (filters.salaname) queryParamsObj.salaname = filters.salaname;
-        if (filters.gruponame) queryParamsObj.gruponame = filters.gruponame;
-        if (filters.confirm) queryParamsObj.confirm = filters.confirm;
+        if (filters.ciudad) queryParamsObj.ciudad = filters.ciudad;
+        if (filters.provincia) queryParamsObj.provincia = filters.provincia;
+        if (filters.generos) queryParamsObj.generos = filters.generos;
+        if (filters.fecha) queryParamsObj.fecha = filters.fecha;
         if (filters.order) queryParamsObj.order = filters.order;
-        if (filters.orderField) queryParamsObj.orderField = filters.orderField;
 
         // Crear los parámetros de consulta
         const queryParams = new URLSearchParams(queryParamsObj).toString();
@@ -26,21 +25,16 @@ const FetchAllReservasService = async (
         // Construir la URL con los parámetros de consulta
         const url = `${
             import.meta.env.VITE_API_URL_BASE
-        }/reservas/listar?${queryParams}`;
+        }/conciertos?${queryParams}`;
 
         // Usar apiRequest para hacer la solicitud
-        const data = await apiRequest({
-            url,
-            headers: {
-                authorization: token,
-            },
-        });
+        const data = await apiRequest({ url });
 
         return data;
     } catch (error) {
-        console.error('Hubo un error al obtener los usuarios:', error);
+        console.error('Hubo un error al obtener los conciertos:', error);
         return { total: 0, rows: [] };
     }
 };
 
-export default FetchAllReservasService;
+export default FetchConciertosService;

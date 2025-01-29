@@ -102,7 +102,8 @@ button.react-calendar__navigation__arrow {
 }
 .react-calendar .available-date,
 .react-calendar__tile.react-calendar__month-view__days__day.selected-date,
-.calendarReserva .react-calendar__tile.react-calendar__tile--active {
+.calendarReserva .react-calendar__tile.react-calendar__tile--active,
+.concert .react-calendar__tile.react-calendar__tile--active {
     background-color: #9333ff;
     color: #fff;
 }
@@ -114,6 +115,12 @@ button.react-calendar__navigation__arrow {
 .react-calendar__tile--active:enabled:hover,
 .react-calendar__tile--active:enabled:focus {
     background-color: #ffb500;
+}
+.react-calendar.calendar-concert {
+    width: 20rem;
+}
+.calendar-concert .react-calendar__navigation__label {
+    font-size: 1rem;
 }
 @layer components {
     .btn-account {
@@ -208,12 +215,17 @@ button.react-calendar__navigation__arrow {
     .grupo-card {
         @apply bg-gray-900 p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
     }
-
+    .concert-list {
+        @apply w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
+    }
     .sala-card-image,
     .grupo-card-image {
         @apply w-full max-w-full h-48 max-h-48 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
     }
 
+    .concert-card-image {
+        @apply w-full max-w-full h-72 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
+    }
     .sala-card-title,
     .grupo-card-title {
         @apply text-xl font-bold text-white mb-2;

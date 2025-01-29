@@ -5,10 +5,11 @@ const listAllReservaService = async (filters) => {
         const pool = await getPool();
 
         let query = `
-        SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre
+        SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.nombre AS sala_nombre, conciertos.id AS concierto
             FROM reservas
             LEFT JOIN grupos ON reservas.grupo_id = grupos.id
             LEFT JOIN salas ON reservas.sala_id = salas.id
+            LEFT JOIN conciertos ON conciertos.reservaId = reservas.id
         WHERE 1=1
         `;
 
@@ -29,16 +30,27 @@ const listAllReservaService = async (filters) => {
             queryParams.push(`%${filters.confirm}%`);
         }
 
-        const validOrderFields = ['fecha', 'createdAt'];
-        const orderField = validOrderFields.includes(filters.orderField)
-            ? filters.orderField
-            : 'fecha'; // Campo por defecto
-
-        // Dirección de orden
+        const orderField =
+            filters.orderField &&
+            ['fecha', 'createdAt'].includes(filters.orderField)
+                ? filters.orderField
+                : 'fecha'; // Campo predeterminado
         const orderDirection =
-            filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+            filters.order && filters.order.toUpperCase() === 'ASC'
+                ? 'ASC'
+                : 'DESC';
 
         query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
+        // const validOrderFields = ['fecha', 'createdAt'];
+        // const orderField = validOrderFields.includes(filters.orderField)
+        //     ? filters.orderField
+        //     : 'fecha'; // Campo por defecto
+
+        // // Dirección de orden
+        // const orderDirection =
+        //     filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+        // query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
 
         // Paginación
         const page = filters.page ? parseInt(filters.page, 10) : 1;
