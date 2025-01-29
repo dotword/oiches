@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import useConcierto from '../../hooks/useConcierto.jsx';
@@ -15,11 +15,9 @@ const ConciertoDetail = () => {
     const [formattedAddress, setFormattedAddress] = useState('');
     const [isOpen, setIsOpen] = useState(false); // Estado del modal de imagen apertura y demas
 
-    useEffect(() => {
-        if (concierto?.direccion) {
-            setFormattedAddress(concierto.direccion);
-        }
-    }, [concierto]);
+    const handleAddressChange = (newAddress) => {
+        setFormattedAddress(newAddress);
+    };
 
     // Funciones utilitarias
     const formatDate = (dateString) => {
@@ -81,30 +79,24 @@ const ConciertoDetail = () => {
     return (
         <>
             <Seo
-                title={`Concierto de ${artista || 'Artista desconocido'} en ${
-                    sala || 'Sala desconocida'
-                }`}
+                title={`Concierto de ${artista} en ${sala}`}
                 description={`Concierto de ${artista} en ${sala} (${ciudad}) el ${formattedDate.dia} de ${formattedDate.mes} de ${formattedDate.anio}.`}
                 keywords={`conciertos, ${sala}, ${artista}, ${provincia}, ${ciudad}, música en vivo, eventos`}
                 url={`https://oiches.com/concierto/${conciertoId}`}
                 image={`${VITE_API_URL_BASE}/uploads/${poster}`}
             />
 
-            <main className="p-2 mt-6 flex flex-col gap-6 mx-auto shadow-lg bg-white w-11/12 md:max-w-5xl rounded-xl">
+            <main className="px-4 pb-16 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200">
                 {/* Contenedor principal */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-900 mx-auto md:gap-8 md:mb-8">
                     {/* Columna izquierda: Información */}
-                    <div className="p-4 flex flex-col  justify-center">
-                        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+                    <div className="py-4 flex flex-col  justify-center">
+                        <h1 className="text-3xl font-bold text-gray-800 mb-6 md:text-4xl">
                             {artista} en concierto
                         </h1>
-                        <p className="text-lg text-gray-600 mb-6">
-                            ¡Disfruta de una noche mágica con {artista} en el
-                            escenario de {sala}!
-                        </p>
 
                         {/* Tarjeta de evento */}
-                        <section className="mb-6 ">
+                        <section className="mb-6">
                             <TarjetaEvento
                                 fecha={formattedDate.dia}
                                 mes={formattedDate.mes}
@@ -133,13 +125,13 @@ const ConciertoDetail = () => {
                     </div>
                     {/* Columna derecha: Imagen ampliable */}
                     <div
-                        className="relative w-full bg-gray-900 rounded-xl overflow-hidden shadow-xl cursor-pointer"
+                        className="relative w-full rounded-xl overflow-hidden  cursor-pointer mt-8"
                         onClick={() => setIsOpen(true)} // Abre el modal al hacer clic
                     >
                         <img
                             src={`${VITE_API_URL_BASE}/uploads/${poster}`}
                             alt={`Imagen del concierto de ${artista}`}
-                            className="w-full h-[600px] object-cover rounded-xl"
+                            className="w-full object-cover rounded-xl shadow-xl bg-gray-900 "
                             loading="lazy"
                         />
                     </div>
@@ -147,72 +139,73 @@ const ConciertoDetail = () => {
 
                 {/* Modal de imagen expandida y Genera  el fondo oscuro */}
                 {isOpen && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-                        {/* Botón para cerrar */}
-                        <button
-                            className="absolute top-5 right-5 text-white text-3xl"
-                            onClick={() => setIsOpen(false)}
+                    <div
+                        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-85 z-50"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        <div
+                            className="max-w-full max-h-full p-5"
+                            onClick={(e) => e.stopPropagation()}
                         >
-                            ✕
-                        </button>
-
-                        {/* Imagen en pantalla completa */}
-                        <img
-                            src={`${VITE_API_URL_BASE}/uploads/${poster}`}
-                            alt="Póster del concierto expandido"
-                            className="max-w-full max-h-full object-contain rounded-lg"
-                        />
+                            <button
+                                className="absolute top-5 right-5 text-white text-3xl"
+                                onClick={() => setIsOpen(false)}
+                            >
+                                ✕
+                            </button>
+                            <img
+                                src={`${VITE_API_URL_BASE}/uploads/${poster}`}
+                                alt="Póster del concierto expandido"
+                                className="w-auto h-auto max-w-[90vw] max-h-[90vh] object-contain rounded-lg"
+                            />
+                        </div>
                     </div>
                 )}
-                {/* Descripción del evento */}
-                <section className="p-6">
+
+                {/* Descripción del grupo */}
+                <section className="max-w-900 mx-auto md:mb-8">
                     <h2 className="text-2xl font-bold mb-4">{artista}</h2>
-                    <p className="text-gray-700">
-                        {biografiaGrupo
-                            ? limitText(biografiaGrupo, 1000)
-                            : 'Sin descripción disponible.'}
-                    </p>
+                    {biografiaGrupo && (
+                        <p className="text-gray-700">
+                            {limitText(biografiaGrupo, 1000)}
+                        </p>
+                    )}
+
                     <a
                         href={`/grupo/${grupo_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center mt-4 py-2 px-6 bg-purple-600 rounded-lg text-white font-medium hover:bg-purple-700"
+                        className="inline-flex items-center mt-4 py-2 px-6 bg-purpleOiches rounded-lg text-white font-medium hover:bg-moradoOiches"
                     >
-                        Ver más sobre {artista}
+                        Más info
                     </a>
                 </section>
 
                 {/* Información de la sala */}
-                <section className="p-6 bg-gray-50 rounded-xl shadow-md">
-                    <h2 className="text-2xl font-bold mb-4">
-                        Información de la sala
-                    </h2>
-                    <p className="text-gray-700 mb-2 font-bold">
-                        Dirección:{' '}
-                        {formattedAddress || direccion || 'No disponible'}
+                <section className="p-6 bg-gray-50 rounded-xl shadow-md w-full max-w-900 mx-auto">
+                    <h2 className="text-2xl font-bold mb-4">{sala}</h2>
+                    <p className="mb-2">
+                        <span className="font-semibold">Dirección: </span>{' '}
+                        {formattedAddress}
                     </p>
-                    {infoSala ? (
+                    {infoSala && (
                         <p className="text-gray-700">
                             {limitText(infoSala, 1000)}
-                        </p>
-                    ) : (
-                        <p className="text-gray-500">
-                            Información no disponible.
                         </p>
                     )}
                     <div className="mt-4">
                         <MapShow
                             direccion={direccion}
-                            onAddressChange={setFormattedAddress}
+                            onAddressChange={handleAddressChange}
                         />
                     </div>
                     <a
                         href={`/sala/${sala_id}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center mt-4 py-2 px-6 bg-purple-600 rounded-lg text-white font-medium hover:bg-purple-700"
+                        className="inline-flex items-center mt-4 py-2 px-6 bg-purpleOiches rounded-lg text-white font-medium hover:bg-moradoOiches"
                     >
-                        Ver más sobre la sala
+                        Más info
                     </a>
                 </section>
 

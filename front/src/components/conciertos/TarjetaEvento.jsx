@@ -19,7 +19,7 @@ const TarjetaEvento = ({
         <div className="flex flex-col sm:flex-row w-11/12 mx-auto h-full justify-start items-stretch">
             {/* Columna de la fecha */}
             <div className="w-full sm:w-auto p-6 bg-gray-800 rounded-t-lg sm:rounded-lg flex flex-col justify-center items-center">
-                <div className="text-center  text-white text-6xl font-semibold leading-8">
+                <div className="text-center text-white text-5xl font-semibold leading-8">
                     {fecha}
                 </div>
                 <div className="text-center text-white text-lg font-semibold leading-8 mt-2">
@@ -35,7 +35,7 @@ const TarjetaEvento = ({
                 {/* Información textual */}
                 <div className="flex-1 flex flex-col justify-start items-start gap-1">
                     {/* Título del evento */}
-                    <div className="text-gray-900 text-xl font-extrabold">
+                    <div className="text-gray-900 text-xl font-extrabold mb-2">
                         {titulo}
                     </div>
 
@@ -43,7 +43,7 @@ const TarjetaEvento = ({
                     <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full">
                         {/* Lugar */}
                         <div className="flex items-center">
-                            <LuTicket className="inline-block stroke-purple-600 mr-1" />
+                            <LuTicket className="inline-block stroke-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
                                 {lugar}
                             </span>
@@ -51,15 +51,15 @@ const TarjetaEvento = ({
 
                         {/* Precio */}
                         <div className="flex items-center">
-                            <FaRegMoneyBillAlt className="inline-block fill-purple-600 mr-1" />
+                            <FaRegMoneyBillAlt className="inline-block fill-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
-                                {precio}
+                                {precio} €
                             </span>
                         </div>
 
                         {/* Hora */}
                         <div className="flex items-center">
-                            <IoTimeOutline className="inline-block stroke-purple-600 mr-1" />
+                            <IoTimeOutline className="inline-block stroke-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
                                 {hora}
                             </span>
@@ -67,7 +67,7 @@ const TarjetaEvento = ({
 
                         {/* Ciudad */}
                         <div className="flex items-center">
-                            <PiCityLight className="inline-block fill-purple-600 mr-1" />
+                            <PiCityLight className="inline-block fill-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
                                 {ciudad}, {provincia}
                             </span>
@@ -80,9 +80,9 @@ const TarjetaEvento = ({
                     href={link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="py-2 px-3 mt-4 w-full sm:w-auto bg-purple-600 rounded-lg text-center text-white text-base font-medium hover:bg-purple-700"
+                    className="py-2 px-3 mt-4 w-full sm:w-auto bg-purpleOiches rounded-lg text-center text-white text-base font-medium hover:bg-moradoOiches"
                 >
-                    Ver Evento
+                    Enlace del evento
                 </a>
             </div>
         </div>
