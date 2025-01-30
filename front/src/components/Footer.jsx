@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../context/auth/auth.context';
+import AuthContext from '../context/auth/AuthContext';
 import logoWhite from '../assets/Horizontal_blanco.webp';
 import { FaEnvelope } from 'react-icons/fa6';
 import { FaInstagram } from 'react-icons/fa';

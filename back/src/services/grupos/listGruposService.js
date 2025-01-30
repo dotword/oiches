@@ -10,6 +10,7 @@ export async function listGruposService(filters) {
         g.id, 
         g.nombre, 
         g.usuario_id,
+        g.published,
         g.createdAt,
         g.updatedAt,
         (SELECT avatar FROM usuarios WHERE usuarios.id = g.usuario_id) AS avatar,

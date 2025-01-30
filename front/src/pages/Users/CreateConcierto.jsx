@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import CrearConcierto from '../../components/conciertos/CrearConcierto';
-
-import { AuthContext } from '../../context/auth/auth.context';
+import AuthContext from '../../context/auth/AuthContext';
 
 const CreateConcierto = () => {
     const { userLogged, token } = useContext(AuthContext);

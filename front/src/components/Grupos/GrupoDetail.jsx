@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 import { FaPencilAlt } from 'react-icons/fa';
-
 import useGrupo from '../../hooks/useGrupo.jsx';
 import StarRating from '../StartRating.jsx';
 import Header from '../Header.jsx';
@@ -15,12 +14,14 @@ import Seo from '../SEO/Seo.jsx'; // Importamos el componente Seo
 import TextFormat from '../TextFormato.jsx'; // Importamos el componente TextFormat
 import { IoChevronForward } from 'react-icons/io5';
 import { IoChevronBack } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import Toastify from '../Toastify.jsx';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idGrupo } = useParams();
-    const { currentUser } = useAuth();
-    const { entry, error } = useGrupo(idGrupo);
+    const { currentUser, token } = useAuth();
+    const { entry } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
     const [previous, setPrevious] = useState('');
     const [next, setNext] = useState('');
@@ -84,6 +85,7 @@ const GrupoDetail = () => {
         condiciones,
         media,
         pdf,
+        published,
     } = entry || {}; // Desestructuramos `entry`
 
     const formatDate = (dateString) => {
@@ -95,7 +97,27 @@ const GrupoDetail = () => {
         });
     };
 
-    return entry ? (
+    const handlePublish = async () => {
+        try {
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/published-grupo/${idGrupo}`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        Authorization: `${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            if (response.ok) {
+                toast.success('Publicado con éxito');
+            }
+        } catch (error) {
+            toast.error('Error al publicar');
+        }
+    };
+    return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración de SEO dinámico con los datos del grupo */}
             <Seo
@@ -342,19 +364,33 @@ const GrupoDetail = () => {
                 </section>
 
                 {actualUser.roles === 'admin' && (
-                    <a
-                        href={`/grupos/${idGrupo}/edit`}
-                        className="flex justify-end gap-4 mb-16"
-                    >
-                        <FaPencilAlt className=" text-2xl" />
-                        Editar
-                    </a>
+                    <>
+                        {published === 0 && (
+                            <button
+                                className="btn-account max-w-44 min-w-32 bg-red-600"
+                                onClick={handlePublish}
+                            >
+                                Publicar
+                            </button>
+                        )}
+
+                        <a
+                            href={`/grupos/${idGrupo}/edit`}
+                            className="flex justify-end gap-4 mb-16"
+                        >
+                            <FaPencilAlt className=" text-2xl" />
+                            Editar
+                        </a>
+                        <Toastify />
+                    </>
                 )}
             </main>
             <Footer />
         </>
     ) : (
-        <p>{error}</p>
+        <p className="text-center mt-12">
+            El proyecto musical aún no está publicado
+        </p>
     );
 };
 

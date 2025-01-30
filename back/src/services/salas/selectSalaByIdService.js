@@ -22,6 +22,7 @@ const selectSalaByIdService = async (idSala) => {
                 S.web,
                 S.calendarActive,
                 S.condiciones,
+                S.published,
                 (SELECT email FROM usuarios WHERE usuarios.id = S.usuario_id) AS email,
                 U.avatar AS usuarioAvatar,
                 S.createdAt,

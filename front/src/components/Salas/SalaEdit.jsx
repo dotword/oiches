@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import { useParams } from 'react-router-dom';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';

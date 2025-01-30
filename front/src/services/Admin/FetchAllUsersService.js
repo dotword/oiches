@@ -19,6 +19,7 @@ const FetchAllUsersService = async (
         if (filters.roles) queryParamsObj.roles = filters.roles;
         if (filters.salaname) queryParamsObj.salaname = filters.salaname;
         if (filters.gruponame) queryParamsObj.gruponame = filters.gruponame;
+        if (filters.published) queryParamsObj.published = filters.published;
         if (filters.provincia) queryParamsObj.provincia = filters.provincia;
         if (filters.order) queryParamsObj.order = filters.order;
 

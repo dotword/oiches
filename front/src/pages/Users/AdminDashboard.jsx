@@ -4,7 +4,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import UsersList from '../../components/Admin/UsersList';
 import ListarAllReservas from '../../components/Admin/ListarAllReservas';
-import { AuthContext } from '../../context/auth/auth.context';
+import AuthContext from '../../context/auth/AuthContext';
 
 const AdminDashboard = () => {
     const { userLogged, token } = useContext(AuthContext);

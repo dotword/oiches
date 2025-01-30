@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,9 +13,7 @@ import registerSalaService from '../../services/Salas/registerSalaService.js';
 
 const SalaCreacion = () => {
     const { currentUser, token } = useContext(AuthContext);
-
     const navigate = useNavigate();
-
     const { userId } = useParams();
 
     const [formValues, setFormValues] = useState({
@@ -75,21 +73,19 @@ const SalaCreacion = () => {
         });
 
         try {
-            const response = await registerSalaService({
+            await registerSalaService({
                 token,
                 userId,
                 formData,
             });
 
-            const salaId = response.sala.id;
-
             toast.success(
-                'Revisa la información y añade las fotos y el rider de tu sala.'
+                'Vamos a verificar los datos de tu sala y en breves la publicaremos en Oiches.'
             );
 
             setTimeout(() => {
-                navigate(`/sala/${salaId}/edit`);
-            }, 3000);
+                navigate(`/users/account/${userId}`);
+            }, 2000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -223,13 +219,14 @@ const SalaCreacion = () => {
                     </div>
                     <div className="flex flex-col mb-4 md:w-full">
                         <label htmlFor="web" className="font-semibold">
-                            Web:
+                            Web o enlace a tus RRSS:*
                         </label>
                         <input
                             type="url"
                             name="web"
                             placeholder="https://www.tusala.com"
                             value={web}
+                            required
                             onChange={handleChange}
                             className="form-input"
                         />

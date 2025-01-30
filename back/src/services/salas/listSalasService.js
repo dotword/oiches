@@ -11,6 +11,7 @@ export async function listSalasService(filters) {
         salas.usuario_id, 
         salas.nombre, 
         salas.ciudad,
+        salas.published,
         salas.createdAt,
         salas.updatedAt,
         (SELECT avatar FROM usuarios WHERE usuarios.id = salas.usuario_id) AS avatar,

@@ -20,6 +20,7 @@ const selectGrupoByIdService = async (idGrupo) => {
                 G.condiciones,
                 G.biografia,
                 G.usuario_id,
+                G.published,
                 AVG(IFNULL(V.voto, 0)) AS votes,
                 G.createdAt
             FROM grupos G

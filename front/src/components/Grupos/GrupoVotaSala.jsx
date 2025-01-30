@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import grupoVotaSalaService from '../../services/Grupos/grupoVotaSalaService.js';
 
 const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {

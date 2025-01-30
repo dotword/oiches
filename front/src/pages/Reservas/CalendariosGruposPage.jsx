@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import useGrupo from '../../hooks/useGrupo';
-import { AuthContext } from '../../context/auth/auth.context';
+import AuthContext from '../../context/auth/AuthContext';
 import ListarReservas from '../../components/Reservas/ListarReservas';
 import Toastify from '../../components/Toastify';
 import Dropdown from '../../components/Dropdown';

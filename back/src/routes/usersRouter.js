@@ -1,12 +1,7 @@
 import express from 'express';
 
 // Importamos las funciones controladoras intermedias.
-import {
-    authUser,
-    userExists,
-    canEditUser,
-    isAdmin,
-} from '../middleware/index.js';
+import { authUser, userExists, canEditUser } from '../middleware/index.js';
 
 // Importamos las funciones controladoras finales.
 import {
@@ -24,7 +19,6 @@ import {
     getUserGrupoSalaController,
     getUserByIdController,
     accountUserController,
-    getAllUsersListController,
     addToMailchimpController,
 } from '../controllers/users/index.js';
 
@@ -68,8 +62,6 @@ router.get(
 // Perfil de cada usuario
 router.get('/users/info/:userId', getUserByIdController);
 
-// router.get('/users/chat/:name', authUser, selectUserByNameController);
-
 // Listado de salas o grupos del usuario
 router.get(
     '/users/owner/:userId',
@@ -97,8 +89,5 @@ router.put(
     canEditUser,
     editUserAvatarController
 );
-
-// Listar todos los usuarios para el Admin
-router.get('/dashboard/users?', authUser, isAdmin, getAllUsersListController);
 
 export default router;

@@ -1,5 +1,4 @@
 import randomstring from 'randomstring';
-
 import insertUserService from '../../services/users/insertUserService.js';
 import validateSchemaUtil from '../../utils/validateSchemaUtil.js';
 import newUserSchema from '../../schemas/users/newUserSchema.js';

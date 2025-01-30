@@ -63,14 +63,17 @@ export const crearReservaService = async (
     // Validar fecha
     validarFechaReservaService(fecha);
 
-    // Verificar si el grupo existe
+    // Verificar si el grupo existe y está publicado
     const [grupoResults] = await pool.query(
-        'SELECT nombre FROM grupos WHERE id = ?',
+        'SELECT published FROM grupos WHERE id = ?',
         [project]
     );
-    if (!grupoResults.length) {
+
+    console.log(grupoResults[0].published);
+
+    if (grupoResults[0].published !== 1) {
         throw generateErrorsUtil(
-            'Tienes que publicar tu proyecto musical para poder reservar.',
+            'Tu proyecto musical tiene que estar publicado para poder reservar.',
             404
         );
     }

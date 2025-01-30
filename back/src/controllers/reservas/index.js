@@ -5,7 +5,6 @@ import crearReservaController from './crearReservaController.js';
 import tramitarReservaController from './tramitarReservaController.js';
 import { listReservasSalasController } from './listReservasSalasController.js';
 import { listReservasGroupsController } from './listReservasGroupsController.js';
-import listAllReservasController from './listAllReservasController.js';
 import fechasDisponiblesSalaController from './fechasDisponiblesSalaController.js';
 import showFechasDisponiblesSalaController from './showFechasDisponiblesSalaController.js';
 import deleteFechasDisponiblesSalaController from './DeleteFechasDisponiblesSalaController.js';
@@ -20,7 +19,6 @@ export {
     tramitarReservaController,
     listReservasSalasController,
     listReservasGroupsController,
-    listAllReservasController,
     fechasDisponiblesSalaController,
     showFechasDisponiblesSalaController,
     deleteFechasDisponiblesSalaController,

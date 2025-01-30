@@ -7,7 +7,6 @@ import {
     userExists,
     checkIfSala,
     canEditReserva,
-    isAdmin,
     canEditSala,
 } from '../middleware/index.js';
 
@@ -18,7 +17,6 @@ import {
     borrarReservaSalaController,
     listReservasSalasController,
     listReservasGroupsController,
-    listAllReservasController,
     fechasDisponiblesSalaController,
     showFechasDisponiblesSalaController,
     deleteFechasDisponiblesSalaController,
@@ -140,15 +138,6 @@ router.get(
     userExists,
     checkIfGroup,
     listReservasGroupsController
-);
-
-// Endpoint para el Admin: listar todas las reservas
-router.get(
-    '/reservas/listar?',
-    authUser,
-    userExists,
-    isAdmin,
-    listAllReservasController
 );
 
 export default router;

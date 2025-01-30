@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, useCallback } from 'react';
-import { AuthContext } from '../../context/auth/auth.context.jsx';
+import AuthContext from '../../context/auth/AuthContext.jsx';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import getSalasServices from '../../services/Salas/getSalaService.js';
