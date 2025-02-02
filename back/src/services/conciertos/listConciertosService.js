@@ -93,31 +93,40 @@ const listConciertosService = async (filters) => {
             LEFT JOIN grupos ON reservas.grupo_id = grupos.id
             LEFT JOIN salas ON reservas.sala_id = salas.id
             LEFT JOIN provincias ON provincias.id = salas.provincia
+            LEFT JOIN generos_grupos ON generos_grupos.grupoId = grupos.id
+            LEFT JOIN generos_musicales ON generos_grupos.generoId = generos_musicales.id
             WHERE 1=1
         `;
+
+        const countQueryParams = [];
 
         if (!filters.clearFilters) {
             if (filters.provincia && filters.provincia.trim() !== '') {
                 countQuery += ' AND provincias.provincia LIKE ?';
+                countQueryParams.push(`%${filters.provincia}%`);
             }
             if (filters.ciudad && filters.ciudad.trim() !== '') {
                 countQuery += ' AND salas.ciudad LIKE ?';
+                countQueryParams.push(`%${filters.ciudad}%`);
             }
             if (filters.fecha && filters.fecha.trim() !== '') {
                 countQuery += ' AND conciertos.fecha >= ?';
+                countQueryParams.push(filters.fecha);
             }
             if (filters.fechaHasta && filters.fechaHasta.trim() !== '') {
                 countQuery += ' AND conciertos.fecha <= ?';
+                countQueryParams.push(filters.fechaHasta);
             }
             if (filters.generos && filters.generos !== '') {
-                countQuery += ` AND generos_grupos.generoId IN (${filters.generos
-                    .split(',')
-                    .map(() => '?')
-                    .join(',')})`;
+                const generosArray = filters.generos.split(',');
+                countQuery += ` AND generos_grupos.generoId IN (${generosArray.map(() => '?').join(',')})`;
+                countQueryParams.push(...generosArray);
             }
         }
 
-        const [countResult] = await pool.query(countQuery, queryParams);
+        // Ejecutar la consulta de conteo con sus propios parámetros
+        const [countResult] = await pool.query(countQuery, countQueryParams);
+
         const total = countResult[0].total;
 
         return { rows, total };

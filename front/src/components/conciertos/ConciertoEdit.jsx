@@ -5,7 +5,7 @@ import useConcierto from '../../hooks/useConcierto.jsx';
 import Calendar from 'react-calendar';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
-import EditConciertoService from '../../services/conciertos/EditConciertoService.js';
+import EditConciertoService from '../../services/Conciertos/EditConciertoService.js';
 const { VITE_API_URL_BASE } = import.meta.env;
 import apiRequest from '../../utils/apiRequest.js';
 import DeleteConcierto from './DeleteConcierto.jsx';

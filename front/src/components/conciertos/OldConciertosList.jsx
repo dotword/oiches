@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ConciertosList from './ConciertosList.jsx';
-import FetchOldConciertosService from '../../services/conciertos/FetchOldConciertosService.js';
+import FetchOldConciertosService from '../../services/Conciertos/FetchOldConciertosService.js';
 import { toast } from 'react-toastify';
 
 const OldConciertosList = ({ Paginator }) => {
@@ -27,7 +27,7 @@ const OldConciertosList = ({ Paginator }) => {
     }, [page]);
 
     return (
-        <section className="grupo-list-container">
+        <div className="grupo-list-container mt-8">
             {conciertos && conciertos.length > 0 ? (
                 <ConciertosList conciertos={conciertos} />
             ) : (
@@ -40,7 +40,7 @@ const OldConciertosList = ({ Paginator }) => {
                 total={total}
                 pageSize={pageSize}
             />
-        </section>
+        </div>
     );
 };
 

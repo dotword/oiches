@@ -32,9 +32,9 @@ import CreateConcierto from './pages/Users/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
-import ConciertoPage from './pages/conciertos/ConciertoPage.jsx';
-import EdicionConcierto from './pages/conciertos/EdicionConcierto.jsx';
-import Conciertos from './pages/conciertos/Conciertos.jsx';
+import ConciertoPage from './pages/Conciertos/ConciertoPage.jsx';
+import EdicionConcierto from './pages/Conciertos/EdicionConcierto.jsx';
+import Conciertos from './pages/Conciertos/Conciertos.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento

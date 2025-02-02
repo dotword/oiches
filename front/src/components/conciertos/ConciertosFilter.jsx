@@ -50,15 +50,11 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
 
     const handleDateChange = (date, type) => {
         const formattedDate = formatFecha(date);
-
         setFilters((prev) => ({
             ...prev,
             [type]: formattedDate,
         }));
-
         setAutoSearch(true);
-
-        // Cierra los calendarios dependiendo de cuál está activo
         if (type === 'fecha') {
             setDesdeCalendarOpen(false);
         } else if (type === 'fechaHasta') {
@@ -67,15 +63,12 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
     };
 
     const handleOutsideClick = (event) => {
-        // Cierra "Fecha desde" si el clic está fuera de su calendario
         if (
             desdeCalendarRef.current &&
             !desdeCalendarRef.current.contains(event.target)
         ) {
             setDesdeCalendarOpen(false);
         }
-
-        // Cierra "Fecha hasta" si el clic está fuera de su calendario
         if (
             hastaCalendarRef.current &&
             !hastaCalendarRef.current.contains(event.target)
@@ -99,7 +92,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
             fecha: '',
             fechaHasta: '',
             order: '',
-            clearFilters: 'true', // Indica que se borraron los filtros
+            clearFilters: 'true',
         });
         setAutoSearch(true);
     };
@@ -107,124 +100,143 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
     const today = new Date();
 
     return (
-        <form className="grupo-filter-form mx-auto md:flex md:flex-row md:space-x-4">
-            <select
-                name="provincia"
-                value={filters.provincia}
-                onChange={handleChange}
-                className="form-select"
-            >
-                <option value="">Provincia</option>
-                {allProvincias.map((provincia, index) => (
-                    <option key={index} value={provincia}>
-                        {provincia}
-                    </option>
-                ))}
-            </select>
+        <div className="flex flex-col items-center justify-between w-11/12">
+            <form className="w-full mx-auto flex flex-wrap items-center justify-center gap-6 bg-footercolor p-4 rounded-lg shadow-md">
+                {/* Select de Provincia */}
+                <select
+                    name="provincia"
+                    value={filters.provincia}
+                    onChange={handleChange}
+                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                >
+                    <option value="">Provincia</option>
+                    {allProvincias.map((provincia, index) => (
+                        <option key={index} value={provincia}>
+                            {provincia}
+                        </option>
+                    ))}
+                </select>
 
-            <select
-                name="ciudad"
-                value={filters.ciudad}
-                onChange={handleChange}
-                className="form-select"
-            >
-                <option value="">Ciudad</option>
-                {cities.map((city, index) => (
-                    <option key={index} value={city}>
-                        {city}
-                    </option>
-                ))}
-            </select>
+                {/* Select de Ciudad */}
+                <select
+                    name="ciudad"
+                    value={filters.ciudad}
+                    onChange={handleChange}
+                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                >
+                    <option value="">Ciudad</option>
+                    {cities.map((city, index) => (
+                        <option key={index} value={city}>
+                            {city}
+                        </option>
+                    ))}
+                </select>
 
-            {/* Filtro de Fecha desde */}
-            <div className="relative" ref={desdeCalendarRef}>
+                {/* Filtro de Fecha desde */}
+                <div
+                    className="relative w-full md:w-auto"
+                    ref={desdeCalendarRef}
+                >
+                    <button
+                        type="button"
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches bg-white w-full text-left"
+                        onClick={() => setDesdeCalendarOpen((prev) => !prev)}
+                    >
+                        {filters.fecha
+                            ? new Date(filters.fecha).toLocaleDateString(
+                                  'es-ES',
+                                  {
+                                      day: '2-digit',
+                                      month: '2-digit',
+                                      year: 'numeric',
+                                  }
+                              )
+                            : 'Fecha desde'}
+                    </button>
+                    {isDesdeCalendarOpen && (
+                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2">
+                            <ReactCalendar
+                                onChange={(date) =>
+                                    handleDateChange(date, 'fecha')
+                                }
+                                value={
+                                    filters.fecha
+                                        ? new Date(filters.fecha)
+                                        : null
+                                }
+                                locale="es-ES"
+                                className="calendar-concert"
+                                minDate={today}
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* Filtro de Fecha hasta */}
+                <div
+                    className="relative w-full md:w-auto"
+                    ref={hastaCalendarRef}
+                >
+                    <button
+                        type="button"
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches bg-white w-full text-left"
+                        onClick={() => setHastaCalendarOpen((prev) => !prev)}
+                    >
+                        {filters.fechaHasta
+                            ? new Date(filters.fechaHasta).toLocaleDateString(
+                                  'es-ES',
+                                  {
+                                      day: '2-digit',
+                                      month: '2-digit',
+                                      year: 'numeric',
+                                  }
+                              )
+                            : 'Fecha hasta'}
+                    </button>
+                    {isHastaCalendarOpen && (
+                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2">
+                            <ReactCalendar
+                                onChange={(date) =>
+                                    handleDateChange(date, 'fechaHasta')
+                                }
+                                value={
+                                    filters.fechaHasta
+                                        ? new Date(filters.fechaHasta)
+                                        : null
+                                }
+                                locale="es-ES"
+                                className="calendar-concert"
+                                minDate={today}
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* Select de Género */}
+                <select
+                    name="generos"
+                    value={filters.generos}
+                    onChange={handleChange}
+                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                >
+                    <option value="">Género</option>
+                    {genres.map((genre) => (
+                        <option key={genre.id} value={genre.id}>
+                            {genre.nombre}
+                        </option>
+                    ))}
+                </select>
+
+                {/* Botón para limpiar filtros */}
                 <button
                     type="button"
-                    className="form-select mt-0"
-                    onClick={() => setDesdeCalendarOpen((prev) => !prev)}
+                    className="py-2 text-white font-semibold"
+                    onClick={handleClearFilters}
                 >
-                    {filters.fecha
-                        ? new Date(filters.fecha).toLocaleDateString('es-ES', {
-                              day: '2-digit',
-                              month: '2-digit',
-                              year: 'numeric',
-                          })
-                        : 'Fecha desde'}
+                    Limpiar filtros
                 </button>
-                {isDesdeCalendarOpen && (
-                    <div className="absolute z-10 mt-2 shadow-lg">
-                        <ReactCalendar
-                            onChange={(date) => handleDateChange(date, 'fecha')}
-                            value={
-                                filters.fecha ? new Date(filters.fecha) : null
-                            }
-                            locale="es-ES"
-                            className="calendar-concert"
-                            minDate={today}
-                        />
-                    </div>
-                )}
-            </div>
-
-            {/* Filtro de Fecha hasta */}
-            <div className="relative" ref={hastaCalendarRef}>
-                <button
-                    type="button"
-                    className="form-select mt-0"
-                    onClick={() => setHastaCalendarOpen((prev) => !prev)}
-                >
-                    {filters.fechaHasta
-                        ? new Date(filters.fechaHasta).toLocaleDateString(
-                              'es-ES',
-                              {
-                                  day: '2-digit',
-                                  month: '2-digit',
-                                  year: 'numeric',
-                              }
-                          )
-                        : 'Fecha hasta'}
-                </button>
-                {isHastaCalendarOpen && (
-                    <div className="absolute z-10 mt-2 shadow-lg">
-                        <ReactCalendar
-                            onChange={(date) =>
-                                handleDateChange(date, 'fechaHasta')
-                            }
-                            value={
-                                filters.fechaHasta
-                                    ? new Date(filters.fechaHasta)
-                                    : null
-                            }
-                            locale="es-ES"
-                            className="calendar-concert"
-                            minDate={today}
-                        />
-                    </div>
-                )}
-            </div>
-
-            <select
-                name="generos"
-                value={filters.generos}
-                onChange={handleChange}
-                className="form-select"
-            >
-                <option value="">Género</option>
-                {genres.map((genre) => (
-                    <option key={genre.id} value={genre.id}>
-                        {genre.nombre}
-                    </option>
-                ))}
-            </select>
-            {/* Botón para limpiar filtros */}
-            <button
-                type="button"
-                className="btn text-white"
-                onClick={handleClearFilters}
-            >
-                Limpiar filtros
-            </button>
-        </form>
+            </form>
+        </div>
     );
 };
 

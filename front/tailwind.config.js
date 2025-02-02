@@ -13,7 +13,13 @@ export default {
                 moradoOiches: '#A33ABD',
                 footercolor: '#1f2937',
             },
-
+            fontSize: {
+                xxs: '0.625rem', // 10px
+                xs: '0.75rem', // 12px
+            },
+            fontWeight: {
+                normal: '400',
+            },
             backgroundImage: {
                 'oiches-live': "url('/oiches/front/src/assets/Live.jpg')",
                 'hero-image': "url('/Live.jpg')",

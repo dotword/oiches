@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ConciertosFilter from '../../components/conciertos/ConciertosFilter.jsx';
-import ConciertosList from '../../components/conciertos/ConciertosList.jsx';
-import FetchConciertosService from '../../services/conciertos/FetchConciertosService.js';
+import ConciertosFilter from '../../components/Conciertos/ConciertosFilter.jsx';
+import ConciertosList from '../../components/Conciertos/ConciertosList.jsx';
+import FetchConciertosService from '../../services/Conciertos/FetchConciertosService.js';
 import Header from '../../components/Header.jsx';
 import Footer from '../../components/Footer.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 import { IoFilter } from 'react-icons/io5';
 import Paginator from '../../components/Paginator.jsx';
-import OldConciertosList from '../../components/conciertos/OldConciertosList.jsx';
+import OldConciertosList from '../../components/Conciertos/OldConciertosList.jsx';
 
 const Conciertos = () => {
     const [filteredConciertos, setFilteredConciertos] = useState([]);
@@ -113,17 +113,15 @@ const Conciertos = () => {
                             isNavOpen ? 'flex' : 'hidden md:flex'
                         }`}
                     >
-                        <div className="flex flex-col items-center justify-between w-4/5">
-                            <ConciertosFilter
-                                onFilterChange={handleFilterChange}
-                                cities={allCities}
-                                allProvincias={allProvincias}
-                            />
-                        </div>
+                        <ConciertosFilter
+                            onFilterChange={handleFilterChange}
+                            cities={allCities}
+                            allProvincias={allProvincias}
+                        />
                     </div>
                 </section>
 
-                <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
+                <main className="w-11/12 mx-auto mt-6 mb-16 md:max-w-7xl md:mb-20">
                     <section className="grupo-list-container">
                         {!error &&
                             (filteredConciertos.length > 0 ? (
@@ -143,13 +141,13 @@ const Conciertos = () => {
                             pageSize={pageSize}
                         />
                     </section>
-                    <section className="mt-12">
-                        <h2 className="font-semibold text-center first-line:text-2xl">
-                            Concierto anteriores
-                        </h2>
-                        <OldConciertosList Paginator={Paginator} />
-                    </section>
                 </main>
+                <section className="bg-gray-100 pt-8 pb-16">
+                    <h2 className="font-semibold text-center first-line:text-2xl">
+                        Conciertos pasados
+                    </h2>
+                    <OldConciertosList Paginator={Paginator} />
+                </section>
                 <Footer />
             </motion.div>
         </>
