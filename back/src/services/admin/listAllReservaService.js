@@ -15,14 +15,9 @@ const listAllReservaService = async (filters) => {
 
         const queryParams = [];
 
-        if (filters.salaname && filters.salaname.trim() !== '') {
-            query += ' AND salas.nombre LIKE ?';
-            queryParams.push(`%${filters.salaname}%`);
-        }
-
-        if (filters.gruponame && filters.gruponame.trim() !== '') {
-            query += ' AND grupos.nombre LIKE ?';
-            queryParams.push(`%${filters.gruponame}%`);
+        if (filters.name && filters.name.trim() !== '') {
+            query += ' AND (grupos.nombre LIKE ? OR salas.nombre LIKE ?)';
+            queryParams.push(`%${filters.name}%`, `%${filters.name}%`);
         }
 
         if (filters.confirm && filters.confirm.trim() !== '') {
@@ -41,16 +36,6 @@ const listAllReservaService = async (filters) => {
                 : 'DESC';
 
         query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
-        // const validOrderFields = ['fecha', 'createdAt'];
-        // const orderField = validOrderFields.includes(filters.orderField)
-        //     ? filters.orderField
-        //     : 'fecha'; // Campo por defecto
-
-        // // Dirección de orden
-        // const orderDirection =
-        //     filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
-
-        // query += ` ORDER BY reservas.${orderField} ${orderDirection}`;
 
         // Paginación
         const page = filters.page ? parseInt(filters.page, 10) : 1;

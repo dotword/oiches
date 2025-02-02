@@ -21,16 +21,24 @@ const selectAllUsersService = async (filters) => {
             grupos.nombre AS grupo_nombre,
             grupos.updatedAt AS grupo_updatedAt,
             grupos.published AS grupo_published,
+            agencias.id AS agencia_id,
+            agencias.nombre AS agencia_nombre,
+            agencias.updatedAt AS agencia_updatedAt,
+            agencias.published AS agencia_published,
             prov_grupo.provincia AS provincia_grupo_nombre,
-            prov_sala.provincia AS provincia_sala_nombre
+            prov_sala.provincia AS provincia_sala_nombre,
+            prov_agencia.provincia AS provincia_agencia_nombre
         FROM 
             usuarios u  
         LEFT JOIN 
             salas ON salas.usuario_id = u.id
         LEFT JOIN 
             grupos ON grupos.usuario_id = u.id
+        LEFT JOIN 
+            agencias ON agencias.usuario_id = u.id
         LEFT JOIN provincias prov_grupo ON grupos.provincia = prov_grupo.id
-        LEFT JOIN provincias prov_sala ON salas.provincia = prov_sala.id     
+        LEFT JOIN provincias prov_sala ON salas.provincia = prov_sala.id
+        LEFT JOIN provincias prov_agencia ON agencias.provincia = prov_agencia.id        
         WHERE 
             1=1
         `;
@@ -43,33 +51,38 @@ const selectAllUsersService = async (filters) => {
         queryParams.push(`%${filters.username}%`);
     }
     if (filters.active && filters.active.trim() !== '') {
-        query += ' AND u.active LIKE ?';
-        queryParams.push(`${filters.active}`);
+        query += ' AND u.active = ?';
+        queryParams.push(filters.active);
     }
     if (filters.roles && filters.roles.trim() !== '') {
         query += ' AND u.roles LIKE ?';
         queryParams.push(`${filters.roles}`);
     }
-    if (filters.salaname && filters.salaname.trim() !== '') {
-        query += ' AND salas.nombre LIKE ?';
-        queryParams.push(`%${filters.salaname}%`);
-    }
-    if (filters.gruponame && filters.gruponame.trim() !== '') {
-        query += ' AND grupos.nombre LIKE ?';
-        queryParams.push(`%${filters.gruponame}%`);
-    }
     if (filters.published && filters.published.trim() !== '') {
-        query += ' AND (grupos.published = ? OR salas.published = ?)';
-        const publishedValue = parseInt(filters.published, 10); // Convertimos el valor a número
-        queryParams.push(publishedValue, publishedValue);
+        query +=
+            ' AND (grupos.published = ? OR salas.published = ? OR agencias.published = ?)';
+        const publishedValue = parseInt(filters.published, 10);
+        queryParams.push(publishedValue, publishedValue, publishedValue);
     }
     if (filters.provincia && filters.provincia.trim() !== '') {
         query +=
-            ' AND (prov_grupo.provincia LIKE ? OR prov_sala.provincia LIKE ?)';
-        queryParams.push(`%${filters.provincia}%`, `%${filters.provincia}%`);
+            ' AND (prov_grupo.provincia LIKE ? OR prov_sala.provincia LIKE ? OR prov_agencia.provincia LIKE ?)';
+        queryParams.push(
+            `%${filters.provincia}%`,
+            `%${filters.provincia}%`,
+            `%${filters.provincia}%`
+        );
     }
-
-    query += ' GROUP BY u.username, salas.id, grupos.id';
+    if (filters.name && filters.name.trim() !== '') {
+        query +=
+            ' AND (grupos.nombre LIKE ? OR salas.nombre LIKE ? OR agencias.nombre LIKE ?)';
+        queryParams.push(
+            `%${filters.name}%`,
+            `%${filters.name}%`,
+            `%${filters.name}%`
+        );
+    }
+    query += ' GROUP BY u.username, salas.id, grupos.id, agencias.id';
 
     // Ordenamiento dinámico basado en los parámetros proporcionados
     const orderDirection =

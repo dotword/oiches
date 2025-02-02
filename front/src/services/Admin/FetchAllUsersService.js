@@ -17,10 +17,9 @@ const FetchAllUsersService = async (
         if (filters.username) queryParamsObj.username = filters.username;
         if (filters.active) queryParamsObj.active = filters.active;
         if (filters.roles) queryParamsObj.roles = filters.roles;
-        if (filters.salaname) queryParamsObj.salaname = filters.salaname;
-        if (filters.gruponame) queryParamsObj.gruponame = filters.gruponame;
         if (filters.published) queryParamsObj.published = filters.published;
         if (filters.provincia) queryParamsObj.provincia = filters.provincia;
+        if (filters.name) queryParamsObj.name = filters.name;
         if (filters.order) queryParamsObj.order = filters.order;
 
         // Crear los parámetros de consulta

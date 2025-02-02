@@ -16,13 +16,20 @@ const getUserOwnerService = async (userId) => {
             [userId]
         );
         return grupos;
-    } else {
+    } else if (role[0].roles === 'salas') {
         // Comprobamos las salas del usuarios
         const [salas] = await pool.query(
             `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, published, createdAt FROM salas WHERE usuario_id = ?`,
             [userId]
         );
         return salas;
+    } else {
+        // Comprobamos las agencias del usuarios
+        const [agencias] = await pool.query(
+            `SELECT * FROM agencias WHERE usuario_id = ?`,
+            [userId]
+        );
+        return agencias;
     }
 };
 

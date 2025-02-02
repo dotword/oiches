@@ -1,12 +1,12 @@
 import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
-const canEditSalaService = async (idSala, userId) => {
+const canEditAgenciaService = async (idAgencia, userId) => {
     const pool = await getPool();
 
-    const [salaOwner] = await pool.query(
-        `SELECT usuario_id FROM salas WHERE id = ?`,
-        [idSala]
+    const [agenciaOwner] = await pool.query(
+        `SELECT usuario_id FROM agencias WHERE id = ?`,
+        [idAgencia]
     );
 
     const [user] = await pool.query(
@@ -19,11 +19,11 @@ const canEditSalaService = async (idSala, userId) => {
     }
 
     // Si no somos los propietarios lanzamos un error.
-    if (salaOwner[0].usuario_id !== userId)
+    if (agenciaOwner[0].usuario_id !== userId)
         throw generateErrorsUtil(
             'El usuario no está autorizado para hacer esta operación',
             409
         );
 };
 
-export default canEditSalaService;
+export default canEditAgenciaService;

@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS mensajes,conversaciones, conciertos, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS mensajes,conversaciones, conciertos,agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -23,7 +23,7 @@ const main = async () => {
                 password VARCHAR(250) NOT NULL,
                 avatar CHAR(100),
                 registrationCode CHAR(30),
-                roles ENUM('admin','sala','grupo') DEFAULT 'grupo',
+                roles ENUM('admin','sala','grupo','agencia') DEFAULT 'grupo',
                 active BOOLEAN DEFAULT false,
                 socket CHAR(36),
                 recoverPassCode CHAR(10),
@@ -203,6 +203,22 @@ const main = async () => {
                 FOREIGN KEY (salaVota) REFERENCES salas(id)
             );
         `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS agencias(
+                id CHAR(36) PRIMARY KEY NOT NULL,
+                usuario_id CHAR(36) NOT NULL,
+                nombre VARCHAR(100) NOT NULL,
+                provincia INT NOT NULL,
+                descripcion TEXT,
+                web VARCHAR(255),
+                published BOOLEAN DEFAULT false,
+                FOREIGN KEY(provincia) REFERENCES provincias(id),
+                FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+                );
+            `);
 
         await pool.query(`
             INSERT INTO generos_musicales (nombre) VALUES

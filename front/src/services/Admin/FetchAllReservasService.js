@@ -14,8 +14,7 @@ const FetchAllReservasService = async (
         };
 
         // Agregar solo los filtros que no estén vacíos
-        if (filters.salaname) queryParamsObj.salaname = filters.salaname;
-        if (filters.gruponame) queryParamsObj.gruponame = filters.gruponame;
+        if (filters.name) queryParamsObj.name = filters.name;
         if (filters.confirm) queryParamsObj.confirm = filters.confirm;
         if (filters.order) queryParamsObj.order = filters.order;
         if (filters.orderField) queryParamsObj.orderField = filters.orderField;

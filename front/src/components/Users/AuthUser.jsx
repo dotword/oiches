@@ -15,6 +15,8 @@ import { ConfirmationModal } from '../ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser.jsx';
 import { FaPencil } from 'react-icons/fa6';
+// import AgenciaCreacion from '../Agencias/AgenciaCreacion.jsx';
+import AgenciaGestion from '../Agencias/AgenciaGestion.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
@@ -225,12 +227,21 @@ const AuthUser = () => {
                     )}
                 </section>
 
-                <UsersSalaGrupoList
-                    userLogged={userLogged}
-                    token={token}
-                    userOwner={userData}
-                />
+                {userLogged && userLogged.roles !== 'agencia' && (
+                    <UsersSalaGrupoList
+                        userLogged={userLogged}
+                        token={token}
+                        userOwner={userData}
+                    />
+                )}
 
+                {userLogged && userLogged.roles === 'agencia' && (
+                    <AgenciaGestion
+                        userLogged={userLogged}
+                        token={token}
+                        userOwner={userData}
+                    />
+                )}
                 <section className="w-full max-w-md bg-white overflow-hidden mt-8">
                     <div className="w-full max-w-md space-y-8">
                         <h2 className="text-2xl font-semibold text-gray-900 mb-6 mt-6">

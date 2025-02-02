@@ -9,8 +9,8 @@ import votosRouter from './votosRouter.js';
 import conversacionesRouter from './conversacionesRouter.js';
 import contactRoutes from './contactRoutes.js';
 import conciertosRouter from './conciertosRouter.js';
-
 import adminRouter from './adminRouter.js';
+import agenciasRouter from './agenciasRouter.js';
 
 const router = express.Router();
 
@@ -24,5 +24,6 @@ router.use(votosRouter);
 router.use(contactRoutes);
 router.use(conciertosRouter);
 router.use(adminRouter);
+router.use(agenciasRouter);
 
 export default router;

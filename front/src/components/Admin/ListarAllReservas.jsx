@@ -11,8 +11,7 @@ const ListarAllReservas = ({ token }) => {
     const pageSize = 25;
     const [total, setTotal] = useState(null);
     const [filters, setFilters] = useState({
-        salaname: '',
-        gruponame: '',
+        name: '',
         confirm: '',
         order: '',
         orderField: 'fecha',
@@ -85,12 +84,12 @@ const ListarAllReservas = ({ token }) => {
                     Histórico Reservas
                 </h3>
 
-                <form className="grupo-filter-form mx-auto px-0 flex flex-wrap flex-row">
+                <form className="grupo-filter-form mx-auto px-0 flex gap-4">
                     <select
                         name="order"
                         value={`${filters.orderField}_${filters.order}`} // Combina campo y dirección
                         onChange={handleChange}
-                        className="py-0 px-1 text-sm form-input max-w-32"
+                        className="py-0 px-1 form-input md:w-[calc(25%-.25rem)]"
                     >
                         <option value="fecha_ASC">
                             Fecha concierto &#8593;
@@ -110,7 +109,7 @@ const ListarAllReservas = ({ token }) => {
                         name="confirm"
                         value={filters.confirm}
                         onChange={handleChange}
-                        className="form-select max-w-32"
+                        className="form-select md:w-[calc(25%-.25rem)]"
                     >
                         <option value="">Estado</option>
                         <option value="0">Pendiente</option>
@@ -118,18 +117,11 @@ const ListarAllReservas = ({ token }) => {
                         <option value="1">Confirmada</option>
                     </select>
                     <input
-                        name="salaname"
-                        value={filters.salaname}
-                        placeholder="Nombre de la sala"
+                        name="name"
+                        value={filters.name}
+                        placeholder="Nombre de la sala o músico"
                         onChange={handleChange}
-                        className="form-select md:w-2/6"
-                    />
-                    <input
-                        name="gruponame"
-                        value={filters.gruponame}
-                        placeholder="Nombre del músico"
-                        onChange={handleChange}
-                        className="form-select md:w-2/6"
+                        className="form-select md:w-[calc(50%-.50rem)]"
                     />
                 </form>
 
