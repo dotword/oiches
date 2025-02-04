@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ConciertosFilter from '../../components/Conciertos/ConciertosFilter.jsx';
-import ConciertosList from '../../components/Conciertos/ConciertosList.jsx';
-import FetchConciertosService from '../../services/Conciertos/FetchConciertosService.js';
+import ConciertosFilter from '../../components/conciertos/ConciertosFilter.jsx';
+import ConciertosList from '../../components/conciertos/ConciertosList.jsx';
+import FetchConciertosService from '../../services/conciertos/FetchConciertosService.js';
 import Header from '../../components/Header.jsx';
 import Footer from '../../components/Footer.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 import { IoFilter } from 'react-icons/io5';
 import Paginator from '../../components/Paginator.jsx';
-import OldConciertosList from '../../components/Conciertos/OldConciertosList.jsx';
+import OldConciertosList from '../../components/conciertos/OldConciertosList.jsx';
 
 const Conciertos = () => {
     const [filteredConciertos, setFilteredConciertos] = useState([]);

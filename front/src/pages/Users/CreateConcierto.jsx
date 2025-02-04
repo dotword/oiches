@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
-import CrearConcierto from '../../components/Conciertos/CrearConcierto';
+import CrearConcierto from '../../components/conciertos/CrearConcierto';
 import AuthContext from '../../context/auth/AuthContext';
 
 const CreateConcierto = () => {
