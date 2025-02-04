@@ -117,7 +117,6 @@ button.react-calendar__navigation__arrow {
     background-color: #ffb500;
 }
 .react-calendar.calendar-concert {
-    width: 20rem;
     max-width: 100%;
 }
 .react-calendar.calendar-concert .react-calendar__navigation__prev2-button,

@@ -142,12 +142,7 @@ const Conciertos = () => {
                         />
                     </section>
                 </main>
-                <section className="bg-gray-100 pt-8 pb-16">
-                    <h2 className="font-semibold text-center first-line:text-2xl">
-                        Conciertos pasados
-                    </h2>
-                    <OldConciertosList Paginator={Paginator} />
-                </section>
+                <OldConciertosList Paginator={Paginator} />
                 <Footer />
             </motion.div>
         </>

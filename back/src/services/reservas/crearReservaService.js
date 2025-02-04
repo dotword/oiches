@@ -65,11 +65,9 @@ export const crearReservaService = async (
 
     // Verificar si el grupo existe y está publicado
     const [grupoResults] = await pool.query(
-        'SELECT published FROM grupos WHERE id = ?',
+        'SELECT published, nombre FROM grupos WHERE id = ?',
         [project]
     );
-
-    console.log(grupoResults[0].published);
 
     if (grupoResults[0].published !== 1) {
         throw generateErrorsUtil(

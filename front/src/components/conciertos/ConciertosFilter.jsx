@@ -154,7 +154,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                             : 'Fecha desde'}
                     </button>
                     {isDesdeCalendarOpen && (
-                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2">
+                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2 md:min-w-[280px] md:left-auto md:-right-3/4">
                             <ReactCalendar
                                 onChange={(date) =>
                                     handleDateChange(date, 'fecha')
@@ -194,7 +194,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                             : 'Fecha hasta'}
                     </button>
                     {isHastaCalendarOpen && (
-                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2">
+                        <div className="absolute right-0 left-0 z-20 mt-2 bg-white shadow-lg rounded-lg p-2 md:min-w-[280px] md:left-auto md:-right-3/4">
                             <ReactCalendar
                                 onChange={(date) =>
                                     handleDateChange(date, 'fechaHasta')

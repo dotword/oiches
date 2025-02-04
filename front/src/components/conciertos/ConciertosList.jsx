@@ -1,10 +1,76 @@
-import ConciertoCard from './ConciertoCard';
+import { FaArrowRight } from 'react-icons/fa';
+import { BsClock, BsCalendar, BsGeoAlt } from 'react-icons/bs';
 
 const ConciertoList = ({ conciertos }) => {
+    const { VITE_API_URL_BASE } = import.meta.env;
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+        });
+    };
+
+    const formatHour = (timeString) => {
+        const [hours, minutes] = timeString?.split(':') || ['--', '--'];
+        return `${hours}:${minutes}`;
+    };
+
     return (
         <div className="concert-list">
             {conciertos.map((concierto) => (
-                <ConciertoCard key={concierto.id} concierto={concierto} />
+                <div
+                    className="bg-white rounded-lg shadow-lg mx-auto w-80 max-w-full overflow-hidden"
+                    key={`{${concierto.id}}`}
+                >
+                    <a className="relative" href={`/concierto/${concierto.id}`}>
+                        <img
+                            src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
+                            alt={`Imagen del concierto de ${concierto.artista}`}
+                            className="concert-card-image"
+                        />
+                    </a>
+
+                    {/* Contenedor de información */}
+                    <div className="px-4 pb-6">
+                        <h2 className="text-xl font-bold">
+                            {concierto.artista}
+                        </h2>
+                        <p className="text-gray-600">
+                            {concierto.banda_invitada}
+                        </p>
+
+                        {/* Detalles del evento */}
+                        <div className="mt-3 space-y-2 text-gray-700">
+                            <div className="flex items-baseline gap-2">
+                                <BsCalendar className="text-gray-500 text-lg" />
+                                <span>{formatDate(concierto.fecha)}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <BsClock className="text-gray-500 text-lg" />
+                                <span>{formatHour(concierto.hora)}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <span>
+                                    <BsGeoAlt className="text-gray-500 text-lg" />
+                                </span>
+                                <span className="font-semibold">
+                                    {concierto.sala}, {concierto.ciudad}
+                                </span>
+                            </div>
+                        </div>
+
+                        {/* Botón de acción */}
+                        <a
+                            className="mt-4 flex justify-center items-center gap-2 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 rounded-lg"
+                            href={`/concierto/${concierto.id}`}
+                        >
+                            Ver evento <FaArrowRight />
+                        </a>
+                    </div>
+                </div>
             ))}
         </div>
     );
