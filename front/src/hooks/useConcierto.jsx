@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import getConciertoService from '../services/conciertos/getConciertoService.js';
+import getConciertoService from '../services/Conciertos/getConciertoService.js';
 
 const useConcierto = (conciertoId) => {
     const [concierto, setConcierto] = useState('');

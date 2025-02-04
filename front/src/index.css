@@ -117,7 +117,11 @@ button.react-calendar__navigation__arrow {
     background-color: #ffb500;
 }
 .react-calendar.calendar-concert {
-    width: 20rem;
+    max-width: 100%;
+}
+.react-calendar.calendar-concert .react-calendar__navigation__prev2-button,
+.react-calendar.calendar-concert .react-calendar__navigation__next2-button {
+    display: none;
 }
 .calendar-concert .react-calendar__navigation__label {
     font-size: 1rem;
@@ -224,7 +228,7 @@ button.react-calendar__navigation__arrow {
     }
 
     .concert-card-image {
-        @apply w-full max-w-full h-72 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
+        @apply w-full max-w-full h-72 object-cover rounded-lg mb-4 transition delay-150 duration-300 ease-in-out hover:scale-105;
     }
     .sala-card-title,
     .grupo-card-title {

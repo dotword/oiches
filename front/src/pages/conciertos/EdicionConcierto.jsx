@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
-import ConciertoEdit from '../../components/conciertos/ConciertoEdit';
+import ConciertoEdit from '../../components/Conciertos/ConciertoEdit';
 
 const EdicionConcierto = () => {
     return (

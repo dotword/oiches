@@ -24,20 +24,20 @@ const SalaDetail = () => {
     const [previous, setPrevious] = useState('');
     const [next, setNext] = useState('');
     const {
-        nombre,
-        provincia,
-        equipamiento,
-        web,
-        descripcion,
-        condiciones,
-        genero,
-        direccion,
-        capacidad,
-        usuarioAvatar,
-        comentarios,
-        fotos,
-        pdf,
-        published,
+        nombre = '',
+        provincia = '',
+        equipamiento = '',
+        web = '',
+        descripcion = '',
+        condiciones = '',
+        genero = [],
+        direccion = '',
+        capacidad = 0,
+        usuarioAvatar = '',
+        comentarios = [],
+        fotos = [],
+        pdf = [],
+        published = 0,
     } = entry || {};
 
     const handleAddressChange = (newAddress) => {

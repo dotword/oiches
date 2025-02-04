@@ -71,22 +71,22 @@ const GrupoDetail = () => {
     }, [currentUser, VITE_API_URL_BASE]);
 
     const {
-        nombre,
-        provincia,
-        web,
-        genero,
-        avatar,
-        biografia,
-        comentarios,
-        email,
-        fotos,
-        honorarios,
-        honorarios_to,
-        condiciones,
-        media,
-        pdf,
-        published,
-    } = entry || {}; // Desestructuramos `entry`
+        nombre = '',
+        provincia = '',
+        web = '',
+        genero = [],
+        avatar = '',
+        biografia = '',
+        comentarios = [],
+        email = '',
+        fotos = [],
+        honorarios = 0,
+        honorarios_to = 0,
+        condiciones = '',
+        media = [],
+        pdf = [],
+        published = 0,
+    } = entry || {};
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);

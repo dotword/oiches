@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../../components/Header.jsx';
-import ConciertoDetail from '../../components/conciertos/ConciertoDetails.jsx';
+import ConciertoDetail from '../../components/Conciertos/ConciertoDetails.jsx';
 import Footer from '../../components/Footer.jsx';
 
 const ConciertoPage = () => {

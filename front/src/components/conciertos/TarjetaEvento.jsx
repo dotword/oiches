@@ -82,7 +82,7 @@ const TarjetaEvento = ({
                     rel="noopener noreferrer"
                     className="py-2 px-3 mt-4 w-full sm:w-auto bg-purpleOiches rounded-lg text-center text-white text-base font-medium hover:bg-moradoOiches"
                 >
-                    Enlace del evento
+                    Más info +
                 </a>
             </div>
         </div>
