@@ -25,7 +25,7 @@ export async function listGruposService(filters) {
     JOIN generos_musicales gm ON gg.generoId = gm.id
     LEFT JOIN grupo_fotos gf ON g.id = gf.grupoId
     LEFT JOIN votos_grupos v ON g.id = v.grupoVotado
-    WHERE 1=1
+    WHERE 1=1 AND g.published = 1
     `;
 
     const queryParams = [];

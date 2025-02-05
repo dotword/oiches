@@ -22,29 +22,25 @@ const SalaCard = ({ sala }) => {
     };
 
     return (
-        sala.published === 1 && (
-            <div className="card" onClick={handleClick}>
-                <img
-                    src={imageUrl}
-                    alt={sala.nombre}
-                    className={`sala-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
-                        imageUrl === DefaultProfile
-                            ? 'object-contain'
-                            : 'object-cover'
-                    }`}
-                />
-                <h2 className="card-title text-lg font-bold mt-2">
-                    {sala.nombre}
-                </h2>
-                <p className="card-genre text-gray-400">{sala.generoNombres}</p>
-                <p>
-                    {sala.ciudad}, {sala.provincia}
-                </p>
-                <div className="mt-2">
-                    <StarRating rating={sala.media_votos} />
-                </div>
+        <div className="card" onClick={handleClick}>
+            <img
+                src={imageUrl}
+                alt={sala.nombre}
+                className={`sala-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
+                    imageUrl === DefaultProfile
+                        ? 'object-contain'
+                        : 'object-cover'
+                }`}
+            />
+            <h2 className="card-title text-lg font-bold mt-2">{sala.nombre}</h2>
+            <p className="card-genre text-gray-400">{sala.generoNombres}</p>
+            <p>
+                {sala.ciudad}, {sala.provincia}
+            </p>
+            <div className="mt-2">
+                <StarRating rating={sala.media_votos} />
             </div>
-        )
+        </div>
     );
 };
 
