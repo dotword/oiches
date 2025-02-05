@@ -9,6 +9,7 @@ import {
     publishGrupoController,
     listAllReservasController,
     publishSalaController,
+    publishAgenciaController,
 } from '../controllers/admin/index.js';
 
 const router = express.Router();
@@ -35,5 +36,13 @@ router.put(
 
 // Endpoint para que el admin publique una sala
 router.put('/published-sala/:salaId', authUser, isAdmin, publishSalaController);
+
+// Endpoint para que el admin publique una agencia
+router.put(
+    '/published-agencia/:idAgencia',
+    authUser,
+    isAdmin,
+    publishAgenciaController
+);
 
 export default router;

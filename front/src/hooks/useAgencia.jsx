@@ -10,7 +10,7 @@ const useAgencia = (idAgencia) => {
             try {
                 const json = await getAgenciaService(idAgencia);
 
-                setEntry(json.data.sala);
+                setEntry(json.data.agencia);
             } catch (error) {
                 setError(error);
             }

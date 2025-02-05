@@ -35,6 +35,7 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 import ConciertoPage from './pages/conciertos/ConciertoPage.jsx';
 import EdicionConcierto from './pages/conciertos/EdicionConcierto.jsx';
 import Conciertos from './pages/conciertos/Conciertos.jsx';
+import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -154,6 +155,11 @@ function App() {
                         <Route
                             path="/concierto/:conciertoId/edit"
                             element={<EdicionConcierto />}
+                        />
+                        {/* AGENCIA */}
+                        <Route
+                            path="/agencia/:idAgencia"
+                            element={<AgenciaPage />}
                         />
                     </Routes>
                 </AnimatePresence>

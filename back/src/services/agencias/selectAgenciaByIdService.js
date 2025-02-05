@@ -15,6 +15,7 @@ const selectAgenciaByIdService = async (idAgencia) => {
                 A.web,
                 A.published,
                 (SELECT email FROM usuarios WHERE usuarios.id = A.usuario_id) AS email,
+                (SELECT avatar FROM usuarios WHERE usuarios.id = A.usuario_id) AS avatar,
                 A.createdAt
             FROM agencias A
             WHERE A.id = ?
