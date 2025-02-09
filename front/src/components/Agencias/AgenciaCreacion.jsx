@@ -56,6 +56,7 @@ const AgenciaCreacion = () => {
 
     return currentUser ? (
         <>
+            <h3 className="text-xl font-semibold">Gestiona tu agencia</h3>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
                     <label htmlFor="nombre" className="font-semibold">

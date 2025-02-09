@@ -1,6 +1,7 @@
 import AgenciaCreacion from './AgenciaCreacion.jsx';
 import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 import AgenciaEdit from './AgenciaEdit.jsx';
+import AgenciaGruposList from './AgenciaGruposList.jsx';
 
 const AgenciaGestion = ({ userLogged, token, userOwner }) => {
     const idUserOwner = userOwner.user.id;
@@ -12,8 +13,7 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
     return idUserOwner ? (
         <>
             <section>
-                <h1>GESTIONA TU AGENCIA</h1>
-                {entries && entries.length === 0 && (
+                {entries.agencias && entries.agencias.length === 0 && (
                     <AgenciaCreacion
                         userLogged={userLogged}
                         token={token}
@@ -21,17 +21,28 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
                     />
                 )}
 
-                {entries && entries.length === 1 && (
+                {entries.agencias && entries.agencias.length === 1 && (
                     <AgenciaEdit
                         userLogged={userLogged}
                         token={token}
-                        idAgencia={entries[0]?.id}
+                        idAgencia={entries.agencias[0]?.id}
                     />
+                )}
+            </section>
+            <section className="mt-8">
+                {entries && entries.agencias[0].published === 1 ? (
+                    <AgenciaGruposList
+                        userLogged={userLogged}
+                        token={token}
+                        userOwner={userOwner}
+                    />
+                ) : (
+                    'Tenemos que aprovar tu agencia para que puedas empezar a añadir tu roster.'
                 )}
             </section>
         </>
     ) : (
-        <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
+        <p className="text-center text-xl">No puedes acceder a esta página</p>
     );
 };
 

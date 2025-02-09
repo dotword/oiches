@@ -14,7 +14,6 @@ import {
     createAgenciaController,
     editAgenciaController,
     getAgenciaDetailController,
-    deleteAgenciaController,
 } from '../controllers/agencias/index.js';
 
 const router = express.Router();
@@ -36,16 +35,6 @@ router.put(
     agenciaExists,
     canEditAgencia,
     editAgenciaController
-);
-
-// Borrar una agencia
-router.delete(
-    '/agencia/delete/:idAgencia',
-    authUser,
-    userExists,
-    agenciaExists,
-    canEditAgencia,
-    deleteAgenciaController
 );
 
 // Endpoint detalle agencia

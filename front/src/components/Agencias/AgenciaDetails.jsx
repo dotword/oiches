@@ -5,6 +5,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 import useAgencia from '../../hooks/useAgencia.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
+import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 import Seo from '../SEO/Seo.jsx'; //
 import TextFormat from '../TextFormato.jsx';
 // import { IoChevronForward } from 'react-icons/io5';
@@ -25,9 +26,21 @@ const AgenciaDetails = () => {
         provincia = '',
         descripcion = '',
         web = '',
+        email = '',
         published = 0,
         avatar = '',
     } = entry || {};
+
+    console.log('entry ', entry);
+    console.log('current ', currentUser);
+    const idUserOwner = actualUser.id;
+
+    const { entries } = useListSalasGrupoUser({
+        token,
+        idUserOwner,
+    });
+
+    console.log(entries);
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -101,7 +114,7 @@ const AgenciaDetails = () => {
                 title={`${nombre} - Agencia de músicos en ${provincia}`}
                 description={`Descubre la agencia ${nombre} en ${provincia}.`}
                 keywords={`agencia, manager, ${nombre}, ${provincia}, música en vivo, eventos`}
-                url={`https://oiches.com/sala/${idAgencia}`}
+                url={`https://oiches.com/agencia/${idAgencia}`}
                 image={
                     avatar
                         ? `${VITE_API_URL_BASE}/uploads/${avatar}`
@@ -121,21 +134,23 @@ const AgenciaDetails = () => {
                     <h2 className="text-3xl font-bold mt-6 text-left mb-2">
                         {nombre}
                     </h2>
+                    <p className="text-black">{provincia}</p>
+
                     <div className="flex flex-wrap gap-6">
                         {actualUser.roles === 'grupo' && (
                             <p className="m-auto md:mr-0">
                                 <Link
-                                    to={`/sala/${idAgencia}/reservas`}
+                                    to={`mailto:${email}`}
                                     className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
                                 >
-                                    Quiero tocar aquí
+                                    Contactar
                                 </Link>
                             </p>
                         )}
                     </div>
                 </section>
 
-                <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <section className="mb-6">
                     {descripcion && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
                             <TextFormat text={descripcion} />
@@ -155,6 +170,29 @@ const AgenciaDetails = () => {
                                 </a>
                             </p>
                         </div>
+                    )}
+                </section>
+
+                <section className="mb-6">
+                    <h2 className="font-semibold text-xl">Roster</h2>
+                    {entries && entries.length > 0 ? (
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                            {entries.map((entry) => (
+                                <li
+                                    key={entry.id}
+                                    className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
+                                >
+                                    {/* Título del proyecto */}
+                                    <div className="flex flex-wrap items-center justify-between mb-3">
+                                        <h3 className="font-medium text-gray-800 text-lg">
+                                            {entry.nombre}
+                                        </h3>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        ''
                     )}
                 </section>
 

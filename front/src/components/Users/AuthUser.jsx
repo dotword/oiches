@@ -227,7 +227,7 @@ const AuthUser = () => {
                     )}
                 </section>
 
-                {userLogged && userLogged.roles !== 'agencia' && (
+                {userLogged && userData.user.roles !== 'agencia' && (
                     <UsersSalaGrupoList
                         userLogged={userLogged}
                         token={token}
@@ -235,7 +235,7 @@ const AuthUser = () => {
                     />
                 )}
 
-                {userLogged && userLogged.roles === 'agencia' && (
+                {userLogged && userData.user.roles === 'agencia' && (
                     <AgenciaGestion
                         userLogged={userLogged}
                         token={token}

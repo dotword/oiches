@@ -11,6 +11,13 @@ const createGrupoController = async (req, res, next) => {
 
         const adminUser = await selectUserByIdService(req.user.id);
 
+        let published = '';
+        if (adminUser[0].roles === 'agencia') {
+            published = 1;
+        } else {
+            published = 0;
+        }
+
         const {
             nombre,
             provincia,
@@ -39,6 +46,7 @@ const createGrupoController = async (req, res, next) => {
             honorarios_to,
             condiciones,
             biografia,
+            published,
             userId
         );
 

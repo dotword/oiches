@@ -9,14 +9,15 @@ const getUserOwnerService = async (userId) => {
         userId,
     ]);
 
-    if (role[0].roles === 'grupo') {
+    if (role[0].roles === 'grupo' || role[0].roles === 'agencia') {
         // Comprobamos los grupos del usuarios
         const [grupos] = await pool.query(
             `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, published, createdAt FROM grupos WHERE usuario_id = ?`,
             [userId]
         );
         return grupos;
-    } else if (role[0].roles === 'salas') {
+    }
+    if (role[0].roles === 'sala') {
         // Comprobamos las salas del usuarios
         const [salas] = await pool.query(
             `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, published, createdAt FROM salas WHERE usuario_id = ?`,
@@ -29,7 +30,12 @@ const getUserOwnerService = async (userId) => {
             `SELECT * FROM agencias WHERE usuario_id = ?`,
             [userId]
         );
-        return agencias;
+
+        const [grupos] = await pool.query(
+            `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, published, createdAt FROM grupos WHERE usuario_id = ?`,
+            [userId]
+        );
+        return { agencias, grupos };
     }
 };
 

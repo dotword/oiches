@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-// import AuthContext from '../../context/auth/AuthContext.jsx';
-// import { useParams } from 'react-router-dom';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import getAgenciaService from '../../services/Agencias/getAgenciaService.js';
 import EditAgenciaService from '../../services/Agencias/EditAgenciaService.js';
-import DeleteUserSalaGrupo from '../Users/DeleteUserSalaGrupo.jsx';
+import { FaEye } from 'react-icons/fa';
 
 const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     const [agencia, setAgencia] = useState({
@@ -164,15 +162,16 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                     </div>
                     <div>{error && <p>{error}</p>}</div>
                 </form>
+                <a
+                    href={`/agencia/${idAgencia}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
+                >
+                    <FaEye className="text-base" />
+                    <span>Ver</span>
+                </a>
             </div>
-            <section className="flex justify-end my-8">
-                <DeleteUserSalaGrupo
-                    userLogged={userLogged}
-                    token={token}
-                    id={idAgencia}
-                    type="agencia"
-                />
-            </section>
             <Toastify />
         </>
     ) : (
