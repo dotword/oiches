@@ -3,11 +3,11 @@ import getPool from '../../database/getPool.js';
 import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const insertAgenciaService = async (
+    userId,
     nombre,
     provincia,
     descripcion,
-    web,
-    userId
+    web
 ) => {
     const pool = await getPool();
 
@@ -27,10 +27,10 @@ const insertAgenciaService = async (
 
     await pool.query(
         `
-            INSERT INTO agencias (id, provincia, usuario_id, nombre, descripcion, web)
-            VALUES (?,?,?,?,?,?)
+        INSERT INTO agencias (id, usuario_id, nombre, provincia, descripcion, web)
+        VALUES (?, ?, ?, ?, ?, ?)
         `,
-        [agenciaId, provincia, userId, nombre, descripcion, web]
+        [agenciaId, userId, nombre, provincia, descripcion, web]
     );
 
     return agenciaId;

@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS mensajes,conversaciones, conciertos,agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS conciertos,agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -213,6 +213,7 @@ const main = async () => {
                 descripcion TEXT,
                 web VARCHAR(255),
                 published BOOLEAN DEFAULT false,
+                hidden BOOLEAN DEFAULT false,
                 FOREIGN KEY(provincia) REFERENCES provincias(id),
                 FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -272,30 +273,6 @@ const main = async () => {
                 FOREIGN KEY (reservaId) REFERENCES reservas(id)
             );
         `);
-
-        await pool.query(`
-        CREATE TABLE IF NOT EXISTS conversaciones (
-            id CHAR(36) PRIMARY KEY NOT NULL,
-            usuario1 CHAR(36) NOT NULL,
-            usuario2 CHAR(36) NOT NULL,
-            FOREIGN KEY (usuario1) REFERENCES usuarios(id),
-            FOREIGN KEY (usuario2) REFERENCES usuarios(id),
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
-        );
-        `);
-        await pool.query(`
-        CREATE TABLE IF NOT EXISTS mensajes (
-            id CHAR(36) PRIMARY KEY NOT NULL,
-            conversacion CHAR(36) NOT NULL,
-            usuario CHAR(36) NOT NULL,
-            mensaje TEXT NOT NULL,
-            status BOOLEAN DEFAULT false,
-            destinatario CHAR(36) NOT NULL,
-            createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (conversacion) REFERENCES conversaciones(id),
-            FOREIGN KEY (usuario) REFERENCES usuarios(id),
-            FOREIGN KEY (destinatario) REFERENCES usuarios(id)
-        );`);
 
         console.log('¡Tablas creadas!');
     } catch (err) {

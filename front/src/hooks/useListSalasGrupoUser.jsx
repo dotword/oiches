@@ -13,6 +13,7 @@ const useListSalasGrupoUser = ({ token, idUserOwner }) => {
                         token,
                         idUserOwner,
                     });
+
                     setEntries(json.data.ownerList);
                 }
             } catch (error) {

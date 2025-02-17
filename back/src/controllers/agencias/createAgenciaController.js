@@ -18,24 +18,24 @@ const createAgenciaController = async (req, res, next) => {
         // Validamos el body con Joi.
         await validateSchemaUtil(createAgenciaSchema, req.body);
 
-        const grupoId = await insertAgenciaService(
+        const agenciaId = await insertAgenciaService(
+            userId,
             nombre,
             provincia,
-            web,
             descripcion,
-            userId
+            web
         );
 
         res.send({
             status: 'ok',
             data: {
-                grupo: {
-                    id: grupoId,
+                agencia: {
                     userId,
+                    id: agenciaId,
                     nombre,
                     provincia,
-                    web,
                     descripcion,
+                    web,
                     createdAt: new Date(),
                 },
             },

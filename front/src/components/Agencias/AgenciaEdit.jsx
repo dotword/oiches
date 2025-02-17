@@ -169,7 +169,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                     className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
                 >
                     <FaEye className="text-base" />
-                    <span>Ver</span>
+                    <span>Ver {agencia.nombre}</span>
                 </a>
             </div>
             <Toastify />

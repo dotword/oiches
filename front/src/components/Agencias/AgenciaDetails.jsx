@@ -3,24 +3,21 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { FaPencilAlt } from 'react-icons/fa';
 import useAgencia from '../../hooks/useAgencia.jsx';
-import DefaultProfile from '/DefaultProfile2.png';
+import DefaultProfile from '/Horizontal_blanco.webp';
 import useAuth from '../../hooks/useAuth.jsx';
-import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 import Seo from '../SEO/Seo.jsx'; //
 import TextFormat from '../TextFormato.jsx';
-// import { IoChevronForward } from 'react-icons/io5';
-// import { IoChevronBack } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
+import usePrevNext from '../../hooks/usePrevNext.jsx';
+import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
 
 const AgenciaDetails = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idAgencia } = useParams();
-    const { entry } = useAgencia(idAgencia);
+    const { agencia } = useAgencia(idAgencia);
     const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
-    // const [previous, setPrevious] = useState('');
-    // const [next, setNext] = useState('');
     const {
         nombre = '',
         provincia = '',
@@ -29,50 +26,10 @@ const AgenciaDetails = () => {
         email = '',
         published = 0,
         avatar = '',
-    } = entry || {};
-
-    console.log('entry ', entry);
-    console.log('current ', currentUser);
-    const idUserOwner = actualUser.id;
-
-    const { entries } = useListSalasGrupoUser({
-        token,
-        idUserOwner,
-    });
-
-    console.log(entries);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const response = await fetch(
-    //             `${VITE_API_URL_BASE}/salas?pageSize=300`
-    //         );
-    //         const data = await response.json();
-
-    //         const sortedSalas = Array.isArray(data.result)
-    //             ? data.result.sort(
-    //                   (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
-    //               )
-    //             : [];
-
-    //         const currentIndex = sortedSalas.findIndex(
-    //             (sala) => sala.id === idAgencia
-    //         );
-    //         if (currentIndex !== -1) {
-    //             const previousSala =
-    //                 currentIndex > 0 ? sortedSalas[currentIndex - 1] : null;
-    //             const nextSala =
-    //                 currentIndex < sortedSalas.length - 1
-    //                     ? sortedSalas[currentIndex + 1]
-    //                     : null;
-
-    //             setPrevious(previousSala);
-    //             setNext(nextSala);
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, [idAgencia, VITE_API_URL_BASE]);
+    } = agencia || {};
+    const grupos = agencia?.grupos || [];
+    const roles = 'agencia';
+    const { previous, next } = usePrevNext({ idItem: idAgencia, roles: roles });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -107,6 +64,10 @@ const AgenciaDetails = () => {
         }
     };
 
+    const imageUrl = avatar
+        ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+        : DefaultProfile;
+
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}
@@ -127,7 +88,7 @@ const AgenciaDetails = () => {
                     {avatar && (
                         <img
                             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"
-                            src={`${VITE_API_URL_BASE}/uploads/${avatar}`}
+                            src={imageUrl}
                             alt="Imagen de perfil de la agencia"
                         />
                     )}
@@ -139,18 +100,15 @@ const AgenciaDetails = () => {
                     <div className="flex flex-wrap gap-6">
                         {actualUser.roles === 'grupo' && (
                             <p className="m-auto md:mr-0">
-                                <Link
-                                    to={`mailto:${email}`}
-                                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
+                                <a
+                                    href={`mailto:${email}`}
+                                    className="button-large px-4"
                                 >
                                     Contactar
-                                </Link>
+                                </a>
                             </p>
                         )}
                     </div>
-                </section>
-
-                <section className="mb-6">
                     {descripcion && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
                             <TextFormat text={descripcion} />
@@ -173,53 +131,38 @@ const AgenciaDetails = () => {
                     )}
                 </section>
 
-                <section className="mb-6">
-                    <h2 className="font-semibold text-xl">Roster</h2>
-                    {entries && entries.length > 0 ? (
+                {grupos && grupos.length > 0 ? (
+                    <section className="mb-6">
+                        <h2 className="font-semibold text-xl">Roster</h2>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
-                            {entries.map((entry) => (
+                            {grupos.map((grupo) => (
                                 <li
-                                    key={entry.id}
+                                    key={grupo.id}
                                     className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
                                 >
-                                    {/* Título del proyecto */}
                                     <div className="flex flex-wrap items-center justify-between mb-3">
                                         <h3 className="font-medium text-gray-800 text-lg">
-                                            {entry.nombre}
+                                            {grupo.nombre}
                                         </h3>
+                                        <Link
+                                            to={`/grupo/${grupo.id}`}
+                                            className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
+                                        >
+                                            + Info
+                                        </Link>
                                     </div>
                                 </li>
                             ))}
                         </ul>
-                    ) : (
-                        ''
-                    )}
-                </section>
-
-                {/* <section className="flex justify-between mt-8 mb-16">
-                    {previous && (
-                        <Link
-                            to={`/sala/${previous.id}`}
-                            className="text-purpleOiches hover:text-white"
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                <IoChevronBack className=" border-purpleOiches hover:bg-purpleOiches text-xl" />{' '}
-                                Anterior
-                            </button>
-                        </Link>
-                    )}
-                    {next && (
-                        <Link
-                            to={`/sala/${next.id}`}
-                            className="text-purpleOiches hover:text-white "
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                Siguiente{' '}
-                                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
-                            </button>
-                        </Link>
-                    )}
-                </section> */}
+                    </section>
+                ) : (
+                    ''
+                )}
+                <NextPreviousItem
+                    previous={previous}
+                    next={next}
+                    roles={roles}
+                />
 
                 {actualUser.roles === 'admin' && (
                     <>

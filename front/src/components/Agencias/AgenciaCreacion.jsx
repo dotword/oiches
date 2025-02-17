@@ -32,6 +32,7 @@ const AgenciaCreacion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
+
         Object.entries(formValues).forEach(([key, value]) => {
             if (value) formData.append(key, value);
         });
@@ -146,7 +147,7 @@ const AgenciaCreacion = () => {
                 <div className="my-12 max-w-80">
                     <input
                         type="submit"
-                        value="Continuar"
+                        value="Publicar"
                         className="btn-account p-3 w-full"
                     />
                 </div>

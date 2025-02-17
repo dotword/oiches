@@ -14,6 +14,9 @@ import {
     createAgenciaController,
     editAgenciaController,
     getAgenciaDetailController,
+    listAgenciasController,
+    hiddeAgenciaController,
+    nextPrevAgenciaController,
 } from '../controllers/agencias/index.js';
 
 const router = express.Router();
@@ -37,10 +40,27 @@ router.put(
     editAgenciaController
 );
 
+// Ocultar/Mostrar agencia y sus músicos
+router.put(
+    '/agencia/hidde-agencia/:idAgencia',
+    authUser,
+    userExists,
+    agenciaExists,
+    canEditAgencia,
+    hiddeAgenciaController
+);
+
 // Endpoint detalle agencia
 router.get('/agencia/:idAgencia', agenciaExists, getAgenciaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
-// router.get('/salas?', listSalasController);
+router.get('/agencias?', listAgenciasController);
+
+// Endpoint para navegador post (agencia anterior/siguiente)
+router.get(
+    '/agencia/:idAgencia/prevnext',
+    agenciaExists,
+    nextPrevAgenciaController
+);
 
 export default router;

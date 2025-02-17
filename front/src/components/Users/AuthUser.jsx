@@ -15,7 +15,6 @@ import { ConfirmationModal } from '../ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser.jsx';
 import { FaPencil } from 'react-icons/fa6';
-// import AgenciaCreacion from '../Agencias/AgenciaCreacion.jsx';
 import AgenciaGestion from '../Agencias/AgenciaGestion.jsx';
 
 const AuthUser = () => {
@@ -375,21 +374,25 @@ const AuthUser = () => {
                                 : 'Cambiar contraseña'}
                         </button>
                     </div>
-                    <div className="text-black">
-                        <p className="font-semibold text-lg mt-40">
-                            Eliminar cuenta
-                        </p>
-                        <p className="text-sm">
-                            Esta acción es irreversible. Todos tus datos serán
-                            eliminados permanentemente.
-                        </p>
-                    </div>
-                    <button
-                        onClick={() => setModalOpen(true)}
-                        className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
-                    >
-                        Eliminar cuenta
-                    </button>
+                    {userLogged && userData.user.roles !== 'agencia' && (
+                        <>
+                            <div className="text-black">
+                                <p className="font-semibold text-lg mt-40">
+                                    Eliminar cuenta
+                                </p>
+                                <p className="text-sm">
+                                    Esta acción es irreversible. Todos tus datos
+                                    serán eliminados permanentemente.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setModalOpen(true)}
+                                className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
+                            >
+                                Eliminar cuenta
+                            </button>
+                        </>
+                    )}
                 </section>
             </div>
             <Toastify />

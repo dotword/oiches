@@ -23,6 +23,7 @@ import {
     addSalaGeneroController,
     deleteSalaGeneroController,
     addRiderController,
+    nextPrevSalaController,
 } from '../controllers/salas/index.js';
 
 const router = express.Router();
@@ -117,5 +118,8 @@ router.get('/salas/:idSala', salaExists, getSalaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/salas?', listSalasController);
+
+// Endpoint para navegador post (sala anterior/siguiente)
+router.get('/sala/:idSala/prevnext', salaExists, nextPrevSalaController);
 
 export default router;

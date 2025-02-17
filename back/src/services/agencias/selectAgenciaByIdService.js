@@ -3,7 +3,7 @@ import getPool from '../../database/getPool.js';
 const selectAgenciaByIdService = async (idAgencia) => {
     const pool = await getPool();
 
-    const [entry] = await pool.query(
+    const [agencia] = await pool.query(
         `
             SELECT 
                 A.id,
@@ -14,6 +14,7 @@ const selectAgenciaByIdService = async (idAgencia) => {
                 A.descripcion,
                 A.web,
                 A.published,
+                A.hidden,
                 (SELECT email FROM usuarios WHERE usuarios.id = A.usuario_id) AS email,
                 (SELECT avatar FROM usuarios WHERE usuarios.id = A.usuario_id) AS avatar,
                 A.createdAt
@@ -24,13 +25,16 @@ const selectAgenciaByIdService = async (idAgencia) => {
         [idAgencia]
     );
 
-    if (entry.length === 0) {
+    const [grupos] = await pool.query(
+        `SELECT id, nombre, provincia FROM grupos WHERE usuario_id = ?`,
+        [agencia[0].usuario_id]
+    );
+
+    if (agencia.length === 0) {
         return null;
     }
 
-    return {
-        ...entry[0],
-    };
+    return { ...agencia[0], grupos };
 };
 
 export default selectAgenciaByIdService;

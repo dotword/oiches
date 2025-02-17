@@ -12,6 +12,8 @@ const registerAgenciaService = async ({ token, userId, formData }) => {
         body: formData,
     });
 
+    console.log('response ', response);
+
     return response.data;
 };
 

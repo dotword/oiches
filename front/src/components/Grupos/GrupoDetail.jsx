@@ -11,11 +11,11 @@ import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
 import Footer from '../Footer.jsx';
 import Seo from '../SEO/Seo.jsx'; // Importamos el componente Seo
-import TextFormat from '../TextFormato.jsx'; // Importamos el componente TextFormat
-import { IoChevronForward } from 'react-icons/io5';
-import { IoChevronBack } from 'react-icons/io5';
+import TextFormat from '../TextFormato.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
+import usePrevNext from '../../hooks/usePrevNext.jsx';
+import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -23,40 +23,8 @@ const GrupoDetail = () => {
     const { currentUser, token } = useAuth();
     const { entry } = useGrupo(idGrupo);
     const [actualUser, setActualUser] = useState('');
-    const [previous, setPrevious] = useState('');
-    const [next, setNext] = useState('');
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(
-                `${VITE_API_URL_BASE}/grupos?pageSize=300`
-            );
-            const data = await response.json();
-
-            const sortedGrups = Array.isArray(data.rows)
-                ? data.rows.sort(
-                      (a, b) => new Date(a.updatedAte) - new Date(b.updatedAte)
-                  )
-                : [];
-
-            const currentIndex = sortedGrups.findIndex(
-                (sala) => sala.id === idGrupo
-            );
-            if (currentIndex !== -1) {
-                const previousSala =
-                    currentIndex > 0 ? sortedGrups[currentIndex - 1] : null;
-                const nextSala =
-                    currentIndex < sortedGrups.length - 1
-                        ? sortedGrups[currentIndex + 1]
-                        : null;
-
-                setPrevious(previousSala);
-                setNext(nextSala);
-            }
-        };
-
-        fetchData();
-    }, [idGrupo, VITE_API_URL_BASE]);
+    const roles = 'grupo';
+    const { previous, next } = usePrevNext({ idItem: idGrupo, roles: roles });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -338,30 +306,11 @@ const GrupoDetail = () => {
                         ))}
                     </section>
                 )}
-                <section className="flex justify-between mt-8 mb-16">
-                    {previous && (
-                        <Link
-                            to={`/grupo/${previous.id}`}
-                            className="text-purpleOiches hover:text-white"
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                <IoChevronBack className=" border-purpleOiches hover:bg-purpleOiches text-xl" />{' '}
-                                Anterior
-                            </button>
-                        </Link>
-                    )}
-                    {next && (
-                        <Link
-                            to={`/grupo/${next.id}`}
-                            className="text-purpleOiches hover:text-white ml-auto"
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                Siguiente{' '}
-                                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
-                            </button>
-                        </Link>
-                    )}
-                </section>
+                <NextPreviousItem
+                    previous={previous}
+                    next={next}
+                    roles={roles}
+                />
 
                 {actualUser.roles === 'admin' && (
                     <>

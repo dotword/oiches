@@ -2,24 +2,24 @@ import { useState, useEffect } from 'react';
 import getAgenciaService from '../services/Agencias/getAgenciaService';
 
 const useAgencia = (idAgencia) => {
-    const [entry, setEntry] = useState('');
+    const [agencia, setAgencia] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
-        const getEntry = async () => {
+        const getAgencia = async () => {
             try {
                 const json = await getAgenciaService(idAgencia);
 
-                setEntry(json.data.agencia);
+                setAgencia(json.data.agencia);
             } catch (error) {
                 setError(error);
             }
         };
 
-        getEntry();
+        getAgencia();
     }, [idAgencia]);
 
-    return { entry, error };
+    return { agencia, error };
 };
 
 export default useAgencia;
