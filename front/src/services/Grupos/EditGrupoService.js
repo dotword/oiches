@@ -1,7 +1,7 @@
 import apiRequest from '../../utils/apiRequest';
 
 export const EditGrupoService = async ({ token, idGrupo, dataForm }) => {
-    const url = `${import.meta.env.VITE_API_URL_BASE}/grupos/${idGrupo}/edit`;
+    const url = `${import.meta.env.VITE_API_URL_BASE}/grupo/${idGrupo}/edit`;
 
     return apiRequest({
         url,

@@ -15,6 +15,8 @@ const selectGrupoByIdService = async (idGrupo) => {
                 G.web,
                 (SELECT email FROM usuarios WHERE usuarios.id = G.usuario_id) AS email,
                 (SELECT avatar FROM usuarios WHERE usuarios.id = G.usuario_id) AS avatar,
+                A.nombre AS agencia,
+                A.id AS agenciaId,
                 G.honorarios,
                 G.honorarios_to,
                 G.condiciones,
@@ -24,10 +26,11 @@ const selectGrupoByIdService = async (idGrupo) => {
                 AVG(IFNULL(V.voto, 0)) AS votes,
                 G.createdAt
             FROM grupos G
-            LEFT JOIN votos_grupos V ON V.grupoVotado = G.id           
+            LEFT JOIN votos_grupos V ON V.grupoVotado = G.id
+            LEFT JOIN agencias A ON A.usuario_id = G.usuario_id             
             INNER JOIN usuarios U ON U.id = G.usuario_id
             WHERE G.id = ?
-            GROUP BY G.id
+            GROUP BY G.id, A.id
         `,
         [idGrupo]
     );

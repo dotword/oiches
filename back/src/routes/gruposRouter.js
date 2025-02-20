@@ -40,7 +40,7 @@ router.post(
 
 // Actualizar un grupo
 router.put(
-    '/grupos/:idGrupo/edit',
+    '/grupo/:idGrupo/edit',
     authUser,
     userExists,
     grupoExists,

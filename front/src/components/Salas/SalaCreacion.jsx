@@ -80,7 +80,7 @@ const SalaCreacion = () => {
             });
 
             toast.success(
-                'Vamos a verificar los datos de tu sala y en breves la publicaremos en Oiches.'
+                'Vamos a verificar los datos de tu sala y en breve la publicaremos en Oiches.'
             );
 
             setTimeout(() => {

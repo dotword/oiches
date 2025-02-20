@@ -39,7 +39,7 @@ router.post(
 
 // Actualizar una sala
 router.put(
-    '/salas/:idSala/edit',
+    '/sala/:idSala/edit',
     authUser,
     userExists,
     salaExists,

@@ -3,19 +3,17 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
-import { FaPencilAlt } from 'react-icons/fa';
 import useGrupo from '../../hooks/useGrupo.jsx';
 import StarRating from '../StartRating.jsx';
 import Header from '../Header.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
 import Footer from '../Footer.jsx';
-import Seo from '../SEO/Seo.jsx'; // Importamos el componente Seo
+import Seo from '../SEO/Seo.jsx';
 import TextFormat from '../TextFormato.jsx';
-import { toast } from 'react-toastify';
-import Toastify from '../Toastify.jsx';
 import usePrevNext from '../../hooks/usePrevNext.jsx';
 import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
+import EditPublishItemAdmin from '../Admin/EditPublishItemAdmin.jsx';
 
 const GrupoDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -53,6 +51,8 @@ const GrupoDetail = () => {
         condiciones = '',
         media = [],
         pdf = [],
+        agencia = '',
+        agenciaId = '',
         published = 0,
     } = entry || {};
 
@@ -65,26 +65,6 @@ const GrupoDetail = () => {
         });
     };
 
-    const handlePublish = async () => {
-        try {
-            const response = await fetch(
-                `${VITE_API_URL_BASE}/published-grupo/${idGrupo}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        Authorization: `${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
-            if (response.ok) {
-                toast.success('Publicado con éxito');
-            }
-        } catch (error) {
-            toast.error('Error al publicar');
-        }
-    };
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración de SEO dinámico con los datos del grupo */}
@@ -205,6 +185,21 @@ const GrupoDetail = () => {
                         </div>
                     )}
 
+                    {agencia && (
+                        <div className="border-t border-gray-300 pt-4">
+                            <span className="font-semibold">
+                                Agencia/Manager
+                            </span>
+                            <p>
+                                <Link
+                                    to={`/agencia/${agenciaId}`}
+                                    className="flex items-center gap-4 underline"
+                                >
+                                    {agencia}
+                                </Link>
+                            </p>
+                        </div>
+                    )}
                     {condiciones && (
                         <div className="border-t border-gray-300 pt-4 md:col-span-4">
                             <span className="font-semibold">Condiciones</span>
@@ -265,11 +260,10 @@ const GrupoDetail = () => {
                                 key={comentario.id}
                                 className="my-6 p-4 rounded-lg border border-gray-200 shadow-sm flex flex-col gap-4"
                             >
-                                <div className="">
+                                <div>
                                     <Link
                                         to={`/sala/${comentario.salaVotaId}`}
                                         className="flex items-center gap-4"
-                                        target="_blank"
                                     >
                                         <img
                                             className="w-10 h-10 rounded-full object-cover"
@@ -313,25 +307,12 @@ const GrupoDetail = () => {
                 />
 
                 {actualUser.roles === 'admin' && (
-                    <>
-                        {published === 0 && (
-                            <button
-                                className="btn-account max-w-44 min-w-32 bg-red-600"
-                                onClick={handlePublish}
-                            >
-                                Publicar
-                            </button>
-                        )}
-
-                        <a
-                            href={`/grupos/${idGrupo}/edit`}
-                            className="flex justify-end gap-4 mb-16"
-                        >
-                            <FaPencilAlt className=" text-2xl" />
-                            Editar
-                        </a>
-                        <Toastify />
-                    </>
+                    <EditPublishItemAdmin
+                        idItem={idGrupo}
+                        token={token}
+                        published={published}
+                        roles={roles}
+                    />
                 )}
             </main>
             <Footer />

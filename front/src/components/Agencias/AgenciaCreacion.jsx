@@ -45,7 +45,7 @@ const AgenciaCreacion = () => {
             });
 
             toast.success(
-                'Vamos a verificar los datos de tu agencia y en breves la publicaremos en Oiches.'
+                'Vamos a verificar los datos de tu agencia y en breve la publicaremos en Oiches.'
             );
         } catch (error) {
             setError(error.message);

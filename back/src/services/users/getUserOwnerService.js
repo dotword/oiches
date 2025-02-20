@@ -23,6 +23,18 @@ const getUserOwnerService = async (userId) => {
             `SELECT id, usuario_id, nombre, provincia, direccion, capacidad, descripcion, precios, condiciones, equipamiento, published, createdAt FROM salas WHERE usuario_id = ?`,
             [userId]
         );
+        if (salas.length === 0) {
+            return { salas: [] };
+        }
+
+        // Obtener el número total de reservas por cada sala
+        for (let sala of salas) {
+            const [[{ totalReservas }]] = await pool.query(
+                'SELECT COUNT(*) AS totalReservas FROM reservas WHERE confirmada != "1" AND sala_id = ?',
+                [sala.id]
+            );
+            sala.totalReservas = totalReservas; // Agregar el total de reservas a cada sala
+        }
         return salas;
     }
 

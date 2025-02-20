@@ -12,7 +12,10 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
     const [cancelModalOpen, setCancelModalOpen] = useState(false);
     const [reservaAEliminar, setReservaAEliminar] = useState(null);
     const { VITE_API_URL_BASE } = import.meta.env;
-    const type = userInfo.roles;
+    let type = userInfo.roles;
+    if (userInfo.roles === 'agencia') {
+        type = 'grupo';
+    }
 
     useEffect(() => {
         const fetchReservas = async () => {
@@ -31,7 +34,6 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                         return;
                     }
                     const reservasData = await response.json();
-
                     setReservas(reservasData.reservas);
                 } catch (error) {
                     toast.error(error);

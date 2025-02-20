@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { FaPencilAlt } from 'react-icons/fa';
 import useAgencia from '../../hooks/useAgencia.jsx';
 import DefaultProfile from '/Horizontal_blanco.webp';
 import useAuth from '../../hooks/useAuth.jsx';
-import Seo from '../SEO/Seo.jsx'; //
+import Seo from '../SEO/Seo.jsx';
 import TextFormat from '../TextFormato.jsx';
-import { toast } from 'react-toastify';
-import Toastify from '../Toastify.jsx';
 import usePrevNext from '../../hooks/usePrevNext.jsx';
 import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
+import EditPublishItemAdmin from '../Admin/EditPublishItemAdmin.jsx';
 
 const AgenciaDetails = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -42,27 +40,6 @@ const AgenciaDetails = () => {
         };
         fetchData();
     }, [currentUser, VITE_API_URL_BASE]);
-
-    const handlePublish = async () => {
-        try {
-            const response = await fetch(
-                `${VITE_API_URL_BASE}/published-agencia/${idAgencia}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        Authorization: `${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
-
-            if (response.ok) {
-                toast.success('Agencia publicada con éxito');
-            }
-        } catch (error) {
-            toast.error('Error al publicar');
-        }
-    };
 
     const imageUrl = avatar
         ? `${VITE_API_URL_BASE}/uploads/${avatar}`
@@ -165,25 +142,12 @@ const AgenciaDetails = () => {
                 />
 
                 {actualUser.roles === 'admin' && (
-                    <>
-                        {published === 0 && (
-                            <button
-                                className="btn-account max-w-44 min-w-32 bg-red-600"
-                                onClick={handlePublish}
-                            >
-                                Publicar
-                            </button>
-                        )}
-                        <a
-                            href={`/sala/${idAgencia}/edit`}
-                            className="flex justify-end gap-4 mb-16"
-                        >
-                            {' '}
-                            <FaPencilAlt className=" text-2xl" />
-                            Editar
-                        </a>
-                        <Toastify />
-                    </>
+                    <EditPublishItemAdmin
+                        idItem={idAgencia}
+                        token={token}
+                        published={published}
+                        roles={roles}
+                    />
                 )}
             </main>
         </>

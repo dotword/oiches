@@ -115,7 +115,7 @@ function App() {
 
                         {/* GRUPOS */}
                         <Route
-                            path="/grupos/:idGrupo/edit"
+                            path="/grupo/:idGrupo/edit"
                             element={<EdicionGrupo />}
                         />
                         <Route path="/grupo/:idGrupo" element={<GrupoPage />} />

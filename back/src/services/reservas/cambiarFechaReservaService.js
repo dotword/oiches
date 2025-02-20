@@ -13,15 +13,14 @@ const cambiarFechaReservaService = async (reserva_id, fecha) => {
                 404
             );
 
-        const [salaInfo] = await pool.query(
+        const [reservaInfo] = await pool.query(
             'SELECT confirmada, sala_id, fecha, grupo_id FROM reservas WHERE id = ?',
             [reserva_id]
         );
 
-        const reservaConfirm = salaInfo[0].confirmada;
-
-        const grupoId = salaInfo[0].grupo_id;
-        const idSala = salaInfo[0].sala_id;
+        const reservaConfirm = reservaInfo[0].confirmada;
+        const grupoId = reservaInfo[0].grupo_id;
+        const idSala = reservaInfo[0].sala_id;
 
         // Comprobar que la reseva se esté tramitando
         if (reservaConfirm !== '2') {
