@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify';
 import { FaPencilAlt } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const EditPublishItemAdmin = ({ idItem, token, published, roles }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -30,20 +31,20 @@ const EditPublishItemAdmin = ({ idItem, token, published, roles }) => {
         <>
             {published === 0 && (
                 <button
-                    className="btn-account max-w-44 min-w-32 bg-red-600"
+                    className="btn-account max-w-44 min-w-32 bg-green-700"
                     onClick={handlePublish}
                 >
                     Publicar
                 </button>
             )}
-            <a
-                href={`/${roles}/${idItem}/edit`}
+
+            <Link
+                to={`/${roles}/${idItem}/edit`}
                 className="flex justify-end gap-4 mb-16"
             >
-                {' '}
                 <FaPencilAlt className=" text-2xl" />
                 Editar
-            </a>
+            </Link>
             <Toastify />
         </>
     );

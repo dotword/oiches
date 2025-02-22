@@ -149,6 +149,7 @@ const UsersList = ({ token }) => {
                                 <th>Fecha alta</th>
                                 <th>Nombre</th>
                                 <th>Publicado</th>
+                                <th>Sala/Grupo publicado</th>
                                 <th>Provincia</th>
                                 <th>Baja</th>
                             </tr>
@@ -216,6 +217,20 @@ const UsersList = ({ token }) => {
                                             filteredUsers.sala_published}
                                         {filteredUsers.roles === 'agencia' &&
                                             filteredUsers.agencia_published}
+                                    </td>
+                                    <td>
+                                        {filteredUsers.roles === 'grupo' &&
+                                            filteredUsers.grupo_published ===
+                                                1 &&
+                                            formatDate(
+                                                filteredUsers.grupo_createdAt
+                                            )}
+                                        {filteredUsers.roles === 'sala' &&
+                                            filteredUsers.sala_published ===
+                                                1 &&
+                                            formatDate(
+                                                filteredUsers.sala_createdAt
+                                            )}
                                     </td>
                                     <td>
                                         {filteredUsers.provincia_grupo_nombre ||

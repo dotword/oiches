@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 const AgenciaRoster = () => {
     const location = useLocation();
     const { userOwner, entries } = location.state || {};
+
     return (
         <>
             <motion.div

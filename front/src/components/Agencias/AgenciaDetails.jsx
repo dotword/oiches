@@ -142,12 +142,14 @@ const AgenciaDetails = () => {
                 />
 
                 {actualUser.roles === 'admin' && (
-                    <EditPublishItemAdmin
-                        idItem={idAgencia}
-                        token={token}
-                        published={published}
-                        roles={roles}
-                    />
+                    <div>
+                        <EditPublishItemAdmin
+                            idItem={idAgencia}
+                            token={token}
+                            published={published}
+                            roles={roles}
+                        />
+                    </div>
                 )}
             </main>
         </>

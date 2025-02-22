@@ -25,7 +25,6 @@ const main = async () => {
                 registrationCode CHAR(30),
                 roles ENUM('admin','sala','grupo','agencia') DEFAULT 'grupo',
                 active BOOLEAN DEFAULT false,
-                socket CHAR(36),
                 recoverPassCode CHAR(10),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

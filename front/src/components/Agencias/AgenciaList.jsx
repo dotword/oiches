@@ -1,5 +1,6 @@
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import DefaultProfile from '/Horizontal_blanco.webp';
 
 const AgenciaList = ({ agencias }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -10,9 +11,17 @@ const AgenciaList = ({ agencias }) => {
                 <div className="card" key={`{${agencia.id}}`}>
                     <Link to={`/agencia/${agencia.id}`} className="relative">
                         <img
-                            src={`${VITE_API_URL_BASE}/uploads/${agencia.avatar}`}
+                            src={
+                                agencia.avatar
+                                    ? `${VITE_API_URL_BASE}/uploads/${agencia.avatar}`
+                                    : DefaultProfile
+                            }
                             alt={`Imagen de ${agencia.nombre}`}
-                            className="grupo-card-image"
+                            className={`grupo-card-image ${
+                                !agencia.avatar
+                                    ? 'object-contain'
+                                    : 'object-cover'
+                            }`}
                         />
                     </Link>
 

@@ -20,10 +20,7 @@ const getUserOwnerController = async (req, res, next) => {
         const ownerList = await getUserOwnerService(userId);
 
         if (!ownerList) {
-            throw generateErrorsUtil(
-                'No se encontraron datos para este usuario',
-                404
-            );
+            return;
         }
 
         res.send({

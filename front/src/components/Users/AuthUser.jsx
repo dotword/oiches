@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser.jsx';
 import { FaPencil } from 'react-icons/fa6';
 import AgenciaGestion from '../Agencias/AgenciaGestion.jsx';
+import AdminDeleteUsers from '../Admin/AdminDeleteUsers.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
@@ -374,24 +375,34 @@ const AuthUser = () => {
                                 : 'Cambiar contraseña'}
                         </button>
                     </div>
-                    {userLogged && userData.user.roles !== 'agencia' && (
-                        <>
-                            <div className="text-black">
-                                <p className="font-semibold text-lg mt-40">
+                    {userLogged &&
+                        userLogged.roles !== 'admin' &&
+                        userData.user.roles !== 'agencia' && (
+                            <>
+                                <div className="text-black">
+                                    <p className="font-semibold text-lg mt-40">
+                                        Eliminar cuenta
+                                    </p>
+                                    <p className="text-sm">
+                                        Esta acción es irreversible. Todos tus
+                                        datos serán eliminados permanentemente.
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => setModalOpen(true)}
+                                    className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
+                                >
                                     Eliminar cuenta
-                                </p>
-                                <p className="text-sm">
-                                    Esta acción es irreversible. Todos tus datos
-                                    serán eliminados permanentemente.
-                                </p>
-                            </div>
-                            <button
-                                onClick={() => setModalOpen(true)}
-                                className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
-                            >
-                                Eliminar cuenta
-                            </button>
-                        </>
+                                </button>
+                            </>
+                        )}
+
+                    {userLogged && userLogged.roles === 'admin' && (
+                        <AdminDeleteUsers
+                            token={token}
+                            userId={userId}
+                            type={userData.user.roles}
+                        />
                     )}
                 </section>
             </div>

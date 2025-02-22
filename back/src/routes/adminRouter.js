@@ -10,6 +10,8 @@ import {
     listAllReservasController,
     publishSalaController,
     publishAgenciaController,
+    deleteAgenciaController,
+    deleteSalaController,
 } from '../controllers/admin/index.js';
 
 const router = express.Router();
@@ -43,6 +45,33 @@ router.put(
     authUser,
     isAdmin,
     publishAgenciaController
+);
+
+// Endpoint para que el admin elimine un usuario tipo agencia y sus datos
+router.delete(
+    '/delete-agencia/:userId',
+    authUser,
+    isAdmin,
+    userExists,
+    deleteAgenciaController
+);
+
+// Endpoint para que el admin elimine un usuario tipo grupos y sus datos
+router.delete(
+    '/delete-grupo/:userId',
+    authUser,
+    isAdmin,
+    userExists,
+    deleteAgenciaController
+);
+
+// Endpoint para que el admin elimine un usuario tipo sala y sus datos
+router.delete(
+    '/delete-sala/:userId',
+    authUser,
+    isAdmin,
+    userExists,
+    deleteSalaController
 );
 
 export default router;

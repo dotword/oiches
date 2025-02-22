@@ -51,7 +51,7 @@ router.put(
 );
 
 // Endpoint detalle agencia
-router.get('/agencia/:idAgencia', agenciaExists, getAgenciaDetailController);
+router.get('/agencia/:idAgencia?', agenciaExists, getAgenciaDetailController);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/agencias?', listAgenciasController);

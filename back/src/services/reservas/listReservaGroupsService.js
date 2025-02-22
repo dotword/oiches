@@ -30,13 +30,6 @@ export const listReservaGroupsService = async (group_id, userInfo) => {
             [group_id]
         );
 
-        if (reservas.length === 0) {
-            throw generateErrorsUtil(
-                'No se han encontrado reservas para este grupo.',
-                400
-            );
-        }
-
         return reservas;
     } catch (error) {
         console.log(error);

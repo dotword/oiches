@@ -30,13 +30,6 @@ export const listReservasSalasService = async (sala_id, userInfo) => {
             [sala_id]
         );
 
-        if (reservas.length === 0) {
-            throw generateErrorsUtil(
-                'No se han encontrado reservas para esta sala.',
-                400
-            );
-        }
-
         return reservas;
     } catch (error) {
         console.log(error);
