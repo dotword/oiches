@@ -5,6 +5,7 @@ import publishSalaController from './publishSalaController.js';
 import publishAgenciaController from './publishAgenciaController.js';
 import deleteAgenciaController from './deleteAgenciaController.js';
 import deleteSalaController from './deleteSalaController.js';
+import borrarReservaAdminController from './borrarReservaAdminController.js';
 
 export {
     getAllUsersListController,
@@ -14,4 +15,5 @@ export {
     publishAgenciaController,
     deleteAgenciaController,
     deleteSalaController,
+    borrarReservaAdminController,
 };

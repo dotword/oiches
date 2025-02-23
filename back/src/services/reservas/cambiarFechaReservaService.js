@@ -22,16 +22,18 @@ const cambiarFechaReservaService = async (reserva_id, fecha) => {
         const grupoId = reservaInfo[0].grupo_id;
         const idSala = reservaInfo[0].sala_id;
 
-        // Comprobar que la reseva se esté tramitando
-        if (reservaConfirm !== '2') {
+        // Comprobar que la reseva no esté pendiente
+        if (reservaConfirm === '0') {
             throw generateErrorsUtil(
-                'No puedes cambiar la fecha de confirmada o pendiente.',
+                'No puedes cambiar la fecha de solicitud pendiente.',
                 404
             );
         }
 
         // Validar fecha
         validarFechaReservaService(fecha);
+
+        console.log('fecha ', fecha);
 
         // Comprobar el email del grupo
         const [usuarioId] = await pool.query(

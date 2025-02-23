@@ -18,7 +18,6 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
 
     return (
         <section className="w-full mx-auto py-6 my-6 bg-white">
-            {userLogged.roles === 'sala' && <div>Soy una sala</div>}
             {entries.length > 0 ? (
                 <>
                     <h2 className="text-2xl font-semibold text-gray-900 mb-6">

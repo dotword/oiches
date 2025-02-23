@@ -16,6 +16,9 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
     if (userInfo.roles === 'agencia') {
         type = 'grupo';
     }
+    if (userInfo.roles === 'admin') {
+        type = 'sala';
+    }
 
     useEffect(() => {
         const fetchReservas = async () => {
@@ -267,8 +270,11 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                             <span className="md:hidden text-sm">
                                                 Fecha concierto:
                                             </span>
+
                                             {type === 'sala' &&
-                                            reserva.confirmada === '2' ? (
+                                            reserva.confirmada !== '0' &&
+                                            new Date(reserva.fecha) >
+                                                new Date() ? (
                                                 <div>
                                                     <input
                                                         type="date"

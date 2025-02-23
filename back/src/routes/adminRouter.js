@@ -12,6 +12,7 @@ import {
     publishAgenciaController,
     deleteAgenciaController,
     deleteSalaController,
+    borrarReservaAdminController,
 } from '../controllers/admin/index.js';
 
 const router = express.Router();
@@ -72,6 +73,16 @@ router.delete(
     isAdmin,
     userExists,
     deleteSalaController
+);
+
+// Endpoint para que el admin borre una reserva
+router.delete(
+    '/admin-borrar-reserva/:reserva_id',
+    authUser,
+    userExists,
+    isAdmin,
+    userExists,
+    borrarReservaAdminController
 );
 
 export default router;

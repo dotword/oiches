@@ -118,20 +118,20 @@ const UsersList = ({ token }) => {
                         value={filters.provincia}
                         placeholder="Provincia"
                         onChange={handleChange}
-                        className="form-select md:w-[calc(50%-.25rem)]"
+                        className="form-select md:w-[calc(35%-.25rem)]"
                     />
                     <input
                         name="name"
                         value={filters.name}
-                        placeholder="Nombre"
+                        placeholder="Nombre sala, músico, agencia"
                         onChange={handleChange}
-                        className="form-select md:w-[calc(25%-.25rem)]"
+                        className="form-select md:w-[calc(45%-.25rem)]"
                     />
                     <select
                         name="order"
                         value={filters.order}
                         onChange={handleChange}
-                        className="py-0 px-1 form-input md:w-[calc(25%-.25rem)]"
+                        className="py-0 px-1 form-input md:w-[calc(20%-.25rem)]"
                     >
                         <option value="DESC">Recientes</option>
                         <option value="ASC">Antiguas</option>
@@ -140,7 +140,7 @@ const UsersList = ({ token }) => {
             </form>
             <div className="mb-4 flex flex-col">
                 {filteredUsers.length > 0 ? (
-                    <table className="max-w-5xl mx-auto">
+                    <table className="mx-auto">
                         <thead>
                             <tr>
                                 <th>Usuario</th>
@@ -185,30 +185,64 @@ const UsersList = ({ token }) => {
                                                 </span>
                                             </Link>
                                         )}
-                                        {filteredUsers.grupo_id !== null && (
-                                            <Link
-                                                to={`/grupo/${filteredUsers.grupo_id}`}
-                                                target="_blank"
-                                            >
-                                                <span className="flex gap-1 items-center justify-center md:justify-start">
-                                                    {filteredUsers.grupo_nombre}
-                                                    <FiExternalLink />
-                                                </span>
-                                            </Link>
-                                        )}
-                                        {filteredUsers.agencia_id !== null && (
-                                            <Link
-                                                to={`/agencia/${filteredUsers.agencia_id}`}
-                                                target="_blank"
-                                            >
-                                                <span className="flex gap-1 items-center justify-center md:justify-start">
-                                                    {
-                                                        filteredUsers.agencia_nombre
-                                                    }
-                                                    <FiExternalLink />
-                                                </span>
-                                            </Link>
-                                        )}
+                                        {filteredUsers.grupo_id !== null &&
+                                            filteredUsers.agencia_id ===
+                                                null && (
+                                                <Link
+                                                    to={`/grupo/${filteredUsers.grupo_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                        {
+                                                            filteredUsers.grupo_nombre
+                                                        }
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre ===
+                                                null && (
+                                                <Link
+                                                    to={`/agencia/${filteredUsers.agencia_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                        {
+                                                            filteredUsers.agencia_nombre
+                                                        }
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre !==
+                                                null && (
+                                                <>
+                                                    <Link
+                                                        to={`/agencia/${filteredUsers.agencia_id}`}
+                                                        target="_blank"
+                                                    >
+                                                        <span className="flex gap-1 items-center justify-center md:justify-start text-sm">
+                                                            {
+                                                                filteredUsers.agencia_nombre
+                                                            }
+                                                            <FiExternalLink />
+                                                        </span>
+                                                    </Link>
+                                                    <Link
+                                                        to={`/grupo/${filteredUsers.grupo_id}`}
+                                                        target="_blank"
+                                                    >
+                                                        <span className="flex gap-1 items-center justify-center md:justify-start text-sm">
+                                                            {
+                                                                filteredUsers.grupo_nombre
+                                                            }
+                                                            <FiExternalLink />
+                                                        </span>
+                                                    </Link>
+                                                </>
+                                            )}
                                     </td>
                                     <td>
                                         {filteredUsers.roles === 'grupo' &&
@@ -230,6 +264,17 @@ const UsersList = ({ token }) => {
                                                 1 &&
                                             formatDate(
                                                 filteredUsers.sala_createdAt
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre ===
+                                                null &&
+                                            formatDate(filteredUsers.createdAt)}
+
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre !==
+                                                null &&
+                                            formatDate(
+                                                filteredUsers.grupo_createdAt
                                             )}
                                     </td>
                                     <td>

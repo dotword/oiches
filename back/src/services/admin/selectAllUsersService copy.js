@@ -34,6 +34,7 @@ const selectAllUsersService = async (filters) => {
             salas ON salas.usuario_id = u.id
         LEFT JOIN 
             grupos ON grupos.usuario_id = u.id
+            AND u.roles != 'agencia'
         LEFT JOIN 
             agencias ON agencias.usuario_id = u.id
         LEFT JOIN provincias prov_grupo ON grupos.provincia = prov_grupo.id

@@ -4,9 +4,11 @@ import { toast } from 'react-toastify';
 import { FiExternalLink } from 'react-icons/fi';
 import Paginator from '../Paginator.jsx';
 import FetchAllReservasService from '../../services/Admin/FetchAllReservasService';
+import { ConfirmationModal } from '../ConfirmModal.jsx';
 
 const ListarAllReservas = ({ token }) => {
     const [reservas, setReservas] = useState([]);
+    const { VITE_API_URL_BASE } = import.meta.env;
     const [page, setPage] = useState(1);
     const pageSize = 25;
     const [total, setTotal] = useState(null);
@@ -16,8 +18,9 @@ const ListarAllReservas = ({ token }) => {
         order: '',
         orderField: 'fecha',
     });
-
     const [autoSearch, setAutoSearch] = useState(true);
+    const [cancelModalOpen, setCancelModalOpen] = useState(false);
+    const [reservaAEliminar, setReservaAEliminar] = useState(null);
 
     useEffect(() => {
         const fetchAllReservas = async () => {
@@ -39,6 +42,36 @@ const ListarAllReservas = ({ token }) => {
         fetchAllReservas();
     }, [token, page, filters, pageSize]);
 
+    const handleConfirmDelete = async () => {
+        if (!reservaAEliminar) return; // Verificar que hay una reserva seleccionada
+        try {
+            const response = await fetch(
+                `${VITE_API_URL_BASE}/admin-borrar-reserva/${reservaAEliminar}`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        authorization: token,
+                    },
+                }
+            );
+
+            if (!response.ok) {
+                toast.error('Fallo al eliminar la reserva');
+            }
+
+            // Actualizar el estado de reservas
+            setReservas(
+                reservas.filter((reserva) => reserva.id !== reservaAEliminar)
+            );
+            toast.success('Su reserva se ha eliminado con éxito');
+        } catch (error) {
+            toast.error('Error eliminando la reserva');
+        } finally {
+            // Cerrar el modal y limpiar el estado
+            setCancelModalOpen(false);
+            setReservaAEliminar(null);
+        }
+    };
     useEffect(() => {
         if (autoSearch) {
             setPage(1); // Reinicia la paginación cuando cambian los filtros.
@@ -127,7 +160,7 @@ const ListarAllReservas = ({ token }) => {
 
                 {reservas.length > 0 ? (
                     <>
-                        <table className="max-w-5xl mx-auto">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Artista</th>
@@ -135,6 +168,7 @@ const ListarAllReservas = ({ token }) => {
                                     <th>Estado</th>
                                     <th>Fecha concierto</th>
                                     <th>Fecha solicitud</th>
+                                    <th>Eliminar</th>
                                     <th>Concierto</th>
                                 </tr>
                             </thead>
@@ -182,6 +216,40 @@ const ListarAllReservas = ({ token }) => {
                                         </td>
                                         <td>{formatDate(reserva.fecha)}</td>
                                         <td>{formatDate(reserva.createdAt)}</td>
+                                        <td>
+                                            <button
+                                                onClick={() => {
+                                                    setCancelModalOpen(true);
+                                                    setReservaAEliminar(
+                                                        reserva.id
+                                                    ); // Guardar la reserva seleccionada
+                                                }}
+                                                className="button bg-red-500 text-white p-1 text-sm rounded"
+                                            >
+                                                Cancelar
+                                            </button>
+                                            {cancelModalOpen && (
+                                                <ConfirmationModal
+                                                    isOpen={cancelModalOpen}
+                                                    text="¿Estás seguro que quieres eliminar esta reserva?"
+                                                    onConfirm={
+                                                        handleConfirmDelete
+                                                    }
+                                                    onCancel={() => {
+                                                        setCancelModalOpen(
+                                                            false
+                                                        );
+                                                        setReservaAEliminar(
+                                                            null
+                                                        );
+                                                    }}
+                                                    classConfirm={'bg-red-600'}
+                                                    textConfirm="Eliminar reserva"
+                                                    textCancel="No eliminar"
+                                                    classCancel={'bg-green-600'}
+                                                />
+                                            )}
+                                        </td>
                                         <td>
                                             {reserva.confirmada === '1' &&
                                                 reserva.concierto === null && (

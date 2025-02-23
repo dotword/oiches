@@ -19,7 +19,7 @@ export const listReservasSalasService = async (sala_id, userInfo) => {
         }
 
         // Obtener las reservas de la sala
-        const [reservas] = await pool.query(
+        const [allReservas] = await pool.query(
             `SELECT reservas.*, grupos.nombre AS grupo_nombre, salas.id AS sala_id, salas.nombre AS sala_nombre, usuarios.email
                 FROM reservas
                 LEFT JOIN grupos ON reservas.grupo_id = grupos.id
@@ -29,8 +29,21 @@ export const listReservasSalasService = async (sala_id, userInfo) => {
                 ORDER BY createdAt DESC`,
             [sala_id]
         );
+        const today = new Date();
 
-        return reservas;
+        // Filtrar y ordenar según la condición especial
+        const reservas = [];
+        const reservasAtrasadas = [];
+
+        for (const reserva of allReservas) {
+            if (reserva.confirmada === '1' && reserva.fecha < today) {
+                reservasAtrasadas.push(reserva);
+            } else {
+                reservas.push(reserva);
+            }
+        }
+
+        return [...reservas, ...reservasAtrasadas];
     } catch (error) {
         console.log(error);
         throw error;
