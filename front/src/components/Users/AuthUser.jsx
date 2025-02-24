@@ -15,6 +15,8 @@ import { ConfirmationModal } from '../ConfirmModal.jsx';
 import { useNavigate } from 'react-router-dom';
 import useUser from '../../hooks/useUser.jsx';
 import { FaPencil } from 'react-icons/fa6';
+import AgenciaGestion from '../Agencias/AgenciaGestion.jsx';
+import AdminDeleteUsers from '../Admin/AdminDeleteUsers.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
@@ -225,12 +227,21 @@ const AuthUser = () => {
                     )}
                 </section>
 
-                <UsersSalaGrupoList
-                    userLogged={userLogged}
-                    token={token}
-                    userOwner={userData}
-                />
+                {userLogged && userData.user.roles !== 'agencia' && (
+                    <UsersSalaGrupoList
+                        userLogged={userLogged}
+                        token={token}
+                        userOwner={userData}
+                    />
+                )}
 
+                {userLogged && userData.user.roles === 'agencia' && (
+                    <AgenciaGestion
+                        userLogged={userLogged}
+                        token={token}
+                        userOwner={userData}
+                    />
+                )}
                 <section className="w-full max-w-md bg-white overflow-hidden mt-8">
                     <div className="w-full max-w-md space-y-8">
                         <h2 className="text-2xl font-semibold text-gray-900 mb-6 mt-6">
@@ -364,21 +375,35 @@ const AuthUser = () => {
                                 : 'Cambiar contraseña'}
                         </button>
                     </div>
-                    <div className="text-black">
-                        <p className="font-semibold text-lg mt-40">
-                            Eliminar cuenta
-                        </p>
-                        <p className="text-sm">
-                            Esta acción es irreversible. Todos tus datos serán
-                            eliminados permanentemente.
-                        </p>
-                    </div>
-                    <button
-                        onClick={() => setModalOpen(true)}
-                        className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
-                    >
-                        Eliminar cuenta
-                    </button>
+                    {userLogged &&
+                        userLogged.roles !== 'admin' &&
+                        userData.user.roles !== 'agencia' && (
+                            <>
+                                <div className="text-black">
+                                    <p className="font-semibold text-lg mt-40">
+                                        Eliminar cuenta
+                                    </p>
+                                    <p className="text-sm">
+                                        Esta acción es irreversible. Todos tus
+                                        datos serán eliminados permanentemente.
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={() => setModalOpen(true)}
+                                    className="btn-account max-w-44 min-w-32 bg-white border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:outline-none"
+                                >
+                                    Eliminar cuenta
+                                </button>
+                            </>
+                        )}
+
+                    {userLogged && userLogged.roles === 'admin' && (
+                        <AdminDeleteUsers
+                            token={token}
+                            userId={userId}
+                            type={userData.user.roles}
+                        />
+                    )}
                 </section>
             </div>
             <Toastify />

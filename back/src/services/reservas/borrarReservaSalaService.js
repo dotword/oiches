@@ -22,7 +22,7 @@ const borrarReservaSalaService = async (reserva_id) => {
                 404
             );
 
-        // Comprobar el email del grupo
+        // Comprobar el nombre del músico y usuario_id del músico o agencia
         const [usuarioId] = await pool.query(
             'SELECT usuario_id, nombre FROM grupos WHERE id = ?',
             [grupoId]
@@ -30,12 +30,13 @@ const borrarReservaSalaService = async (reserva_id) => {
         const userGrupoId = usuarioId[0].usuario_id;
         const grupoNombre = usuarioId[0].nombre;
 
-        const [emailGrupo] = await pool.query(
-            'SELECT email FROM usuarios WHERE id = ?',
+        // Comprobar el email y nombre de usuario del grupo/agencia
+        const [datosGrupoAgencia] = await pool.query(
+            'SELECT email, username FROM usuarios WHERE id = ?',
             [userGrupoId]
         );
-
-        const grupoEmail = emailGrupo[0].email;
+        const userNameGrupoAgencia = datosGrupoAgencia[0].username;
+        const grupoAgenciaEmail = datosGrupoAgencia[0].email;
 
         // Comprobar el nombre de la sala
         const [salaName] = await pool.query(
@@ -83,9 +84,9 @@ const borrarReservaSalaService = async (reserva_id) => {
                     </style>
                 </head>
                 <body>
-                    <p>Hola, ${grupoNombre}</p>
+                    <p>Hola, ${userNameGrupoAgencia}</p>
         
-                    <p>Lamentamos informarte que tu solicitud para el concierto el ${formatedFecha} en la sala ${nameSala} ha sido cancelada.</p>
+                    <p>Lamentamos informarte que tu solicitud para el concierto de ${grupoNombre} el ${formatedFecha} en la sala ${nameSala} ha sido cancelada.</p>
 
                     <pQuedamos a tu disposición para cualquier consulta.</p>
 
@@ -106,7 +107,7 @@ const borrarReservaSalaService = async (reserva_id) => {
 
         // Enviamos el email de verificación al usuario.
         try {
-            await sendMailUtil(grupoEmail, emailSubject, emailBody);
+            await sendMailUtil(grupoAgenciaEmail, emailSubject, emailBody);
         } catch (error) {
             return;
         }

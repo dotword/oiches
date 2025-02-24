@@ -3,8 +3,7 @@ import listAllReservaService from '../../services/admin/listAllReservaService.js
 const listAllReservasController = async (req, res, next) => {
     try {
         const filters = {
-            salaname: req.query.salaname || '',
-            gruponame: req.query.gruponame || '',
+            name: req.query.name || '',
             confirm: req.query.confirm || '',
             orderField: req.query.orderField || 'fecha',
             order: req.query.order || 'ASC',

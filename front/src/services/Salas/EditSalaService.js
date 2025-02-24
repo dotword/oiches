@@ -1,7 +1,7 @@
 import apiRequest from '../../utils/apiRequest';
 
 export const EditSalaService = async ({ token, idSala, dataForm }) => {
-    const url = `${import.meta.env.VITE_API_URL_BASE}/salas/${idSala}/edit`;
+    const url = `${import.meta.env.VITE_API_URL_BASE}/sala/${idSala}/edit`;
 
     return apiRequest({
         url,

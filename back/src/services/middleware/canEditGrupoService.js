@@ -14,7 +14,7 @@ const canEditGrupoService = async (idGrupo, userId) => {
         [userId]
     );
 
-    if (user[0].roles === 'admin') {
+    if (user[0].roles === 'admin' || user[0].roles === 'agencia') {
         return;
     }
 

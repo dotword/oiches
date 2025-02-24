@@ -3,6 +3,7 @@ import FetchOldConciertosService from '../../services/conciertos/FetchOldConcier
 import { FaArrowRight } from 'react-icons/fa';
 import { BsClock, BsCalendar, BsGeoAlt } from 'react-icons/bs';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const OldConciertosList = ({ Paginator }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -58,16 +59,16 @@ const OldConciertosList = ({ Paginator }) => {
                                     className="bg-white rounded-lg shadow-lg mx-auto w-full max-w-80 overflow-hidden"
                                     key={`{${concierto.id}}`}
                                 >
-                                    <a
+                                    <Link
+                                        to={`/concierto/${concierto.id}`}
                                         className="relative flex h-32"
-                                        href={`/concierto/${concierto.id}`}
                                     >
                                         <img
                                             src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
                                             alt={`Imagen del concierto de ${concierto.artista}`}
                                             className="concert-card-image h-32"
                                         />
-                                    </a>
+                                    </Link>
 
                                     {/* Contenedor de información */}
                                     <div className="p-4">
@@ -104,14 +105,12 @@ const OldConciertosList = ({ Paginator }) => {
                                                 </span>
                                             </div>
                                         </div>
-
-                                        {/* Botón de acción */}
-                                        <a
-                                            className="mt-3 flex justify-center items-center gap-1 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-semibold py-1 rounded-lg"
-                                            href={`/concierto/${concierto.id}`}
+                                        <Link
+                                            to={`/concierto/${concierto.id}`}
+                                            className="button-large"
                                         >
-                                            Ver evento <FaArrowRight />
-                                        </a>
+                                            Ver concierto <FaArrowRight />
+                                        </Link>
                                     </div>
                                 </div>
                             ))}

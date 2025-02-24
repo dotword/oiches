@@ -1,5 +1,6 @@
 import { FaArrowRight } from 'react-icons/fa';
 import { BsClock, BsCalendar, BsGeoAlt } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 const ConciertoList = ({ conciertos }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -25,15 +26,25 @@ const ConciertoList = ({ conciertos }) => {
                     className="bg-white rounded-lg shadow-lg mx-auto w-80 max-w-full overflow-hidden"
                     key={`{${concierto.id}}`}
                 >
-                    <a className="relative" href={`/concierto/${concierto.id}`}>
+                    {/* <a className="relative" href={`/concierto/${concierto.id}`}>
                         <img
                             src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
                             alt={`Imagen del concierto de ${concierto.artista}`}
                             className="concert-card-image"
                         />
-                    </a>
+                    </a> */}
 
-                    {/* Contenedor de información */}
+                    <Link
+                        to={`/concierto/${concierto.id}`}
+                        className="relative"
+                    >
+                        <img
+                            src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
+                            alt={`Imagen del concierto de ${concierto.artista}`}
+                            className="concert-card-image"
+                        />
+                    </Link>
+
                     <div className="px-4 pb-6">
                         <h2 className="text-xl font-bold">
                             {concierto.artista}
@@ -62,13 +73,12 @@ const ConciertoList = ({ conciertos }) => {
                             </div>
                         </div>
 
-                        {/* Botón de acción */}
-                        <a
-                            className="mt-4 flex justify-center items-center gap-2 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 rounded-lg"
-                            href={`/concierto/${concierto.id}`}
+                        <Link
+                            to={`/concierto/${concierto.id}`}
+                            className="button-large"
                         >
-                            Ver evento <FaArrowRight />
-                        </a>
+                            Ver concierto <FaArrowRight />
+                        </Link>
                     </div>
                 </div>
             ))}

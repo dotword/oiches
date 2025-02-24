@@ -151,7 +151,7 @@ const SalaEdit = () => {
                 idSala,
                 dataForm,
             });
-            toast.success('Has modificado sala con éxito');
+            toast.success('Has modificado tu sala con éxito');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

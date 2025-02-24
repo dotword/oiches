@@ -16,7 +16,7 @@ export const CrearReservaPage = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
     const { idSala } = useParams();
     const { entry } = useSala(idSala);
-    const { currentUser } = useAuth();
+    const { currentUser, userLogged } = useAuth();
     const [formattedAddress, setFormattedAddress] = useState('');
 
     if (!currentUser) {
@@ -109,6 +109,7 @@ export const CrearReservaPage = () => {
                     <CrearReservaForm
                         calendarActive={entry.calendarActive}
                         idUserOwner={currentUser.id}
+                        roles={userLogged.roles}
                     />
                 </section>
             </main>

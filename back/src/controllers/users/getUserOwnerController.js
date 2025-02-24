@@ -6,15 +6,22 @@ const getUserOwnerController = async (req, res, next) => {
     try {
         const { userId } = req.params;
 
+        // Verificar que estamos obteniendo el usuario admin correctamente
         const adminUser = await selectUserByIdService(req.user.id);
 
-        if (req.user.id !== userId && adminUser[0].roles !== 'admin')
+        if (req.user.id !== userId && adminUser[0].roles !== 'admin') {
             throw generateErrorsUtil(
                 'No puedes acceder a esta información',
                 400
             );
+        }
 
+        // Llamar al servicio para obtener los datos del propietario
         const ownerList = await getUserOwnerService(userId);
+
+        if (!ownerList) {
+            return;
+        }
 
         res.send({
             status: 'ok',

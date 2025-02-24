@@ -53,7 +53,10 @@ const GrupoVotaSala = ({ idReserva, idSala, idGrupo }) => {
         }
     };
 
-    if (!userLogged || userLogged.roles !== 'grupo') {
+    if (
+        !userLogged ||
+        (userLogged.roles === 'grupo' && userLogged.roles === 'agencia')
+    ) {
         return null;
     }
 

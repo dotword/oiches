@@ -68,7 +68,7 @@ const GrupoCreacion = () => {
             });
 
             toast.success(
-                'Vamos a verificar los datos de tu proyecto y en breves lo publicaremos en Oiches.'
+                'Vamos a verificar los datos de tu proyecto y en breve lo publicaremos en Oiches.'
             );
 
             setTimeout(() => {

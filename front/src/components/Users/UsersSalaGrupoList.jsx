@@ -4,6 +4,7 @@ import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 import { FaEye } from 'react-icons/fa';
 import { FaPencil } from 'react-icons/fa6';
 import { FaRegCalendarCheck } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
     const idUserOwner = userOwner.user.id;
@@ -31,6 +32,13 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                 key={entry.id}
                                 className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
                             >
+                                {entry.totalReservas > 0 && (
+                                    <p className="text-sm text-red-600 font-semibold">
+                                        {entry.totalReservas} reservas
+                                        pendientes
+                                    </p>
+                                )}
+
                                 {/* Título del proyecto */}
                                 <div className="flex flex-wrap items-center justify-between mb-3">
                                     <h3 className="font-medium text-gray-800 text-lg">
@@ -48,8 +56,8 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
 
                                 {/* Enlaces de acción */}
                                 <div className="flex flex-col items-end text-sm space-y-6">
-                                    <a
-                                        href={
+                                    <Link
+                                        to={
                                             userOwner.user.roles === 'sala'
                                                 ? `/sala/${entry.id}`
                                                 : `/grupo/${entry.id}`
@@ -60,9 +68,10 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                     >
                                         <FaEye className="text-base" />
                                         <span>Ver</span>
-                                    </a>
-                                    <a
-                                        href={
+                                    </Link>
+
+                                    <Link
+                                        to={
                                             userOwner.user.roles === 'sala'
                                                 ? `/sala/${entry.id}/edit`
                                                 : `/grupos/${entry.id}/edit`
@@ -71,10 +80,11 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                     >
                                         <FaPencil className="text-base" />
                                         <span>Editar</span>
-                                    </a>
+                                    </Link>
+
                                     {entry.published === 1 && (
-                                        <a
-                                            href={`/${userOwner.user.roles}/calendar/${entry.id}`}
+                                        <Link
+                                            to={`/${userOwner.user.roles}/calendar/${entry.id}`}
                                             className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
                                         >
                                             <FaRegCalendarCheck className="text-xl" />
@@ -83,7 +93,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                                 {userOwner.user.roles ===
                                                     'sala' && 'y calendario'}
                                             </span>
-                                        </a>
+                                        </Link>
                                     )}
                                 </div>
                             </li>
@@ -96,8 +106,8 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
 
             {type === 'grupo' ||
             (type === 'admin' && userOwner.user.roles === 'grupo') ? (
-                <a
-                    href={`/creacion-grupo/${userOwner.user.id}`}
+                <Link
+                    to={`/creacion-grupo/${userOwner.user.id}`}
                     className={`w-[90%] mx-auto px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${
                         entries.length === 0
                             ? 'bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 text-xl'
@@ -107,15 +117,15 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                     {entries.length === 0
                         ? 'Publica tu proyecto musical'
                         : 'Publicar un nuevo proyecto'}
-                </a>
+                </Link>
             ) : (
                 ''
             )}
 
             {type === 'sala' ||
             (type === 'admin' && userOwner.user.roles == 'sala') ? (
-                <a
-                    href={`/creacion-sala/${userOwner.user.id}`}
+                <Link
+                    to={`/creacion-sala/${userOwner.user.id}`}
                     className={`w-[90%] mx-auto px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors ${
                         entries.length === 0
                             ? 'bg-purple-600 hover:bg-purple-700 focus:ring-purple-500 text-xl'
@@ -125,7 +135,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                     {entries.length === 0
                         ? 'Publica tu sala'
                         : 'Publicar una nueva sala'}
-                </a>
+                </Link>
             ) : (
                 ''
             )}

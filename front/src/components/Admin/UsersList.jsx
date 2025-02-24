@@ -70,87 +70,86 @@ const UsersList = ({ token }) => {
                 Usuarios de Oiches
             </h2>
             <form className="grupo-filter-form mx-auto px-0 flex flex-wrap flex-row">
-                <select
-                    name="order"
-                    value={filters.order}
-                    onChange={handleChange}
-                    className="py-0 px-1 text-sm form-input max-w-24"
-                >
-                    <option value="DESC">Recientes</option>
-                    <option value="ASC">Antiguas</option>
-                </select>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="Username"
-                    value={filters.username}
-                    onChange={handleChange}
-                    className="form-input max-w-40"
-                />
-                <select
-                    name="active"
-                    value={filters.active}
-                    onChange={handleChange}
-                    className="form-select max-w-28"
-                >
-                    <option value="">Activo</option>
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
-                </select>
-                <select
-                    name="roles"
-                    value={filters.roles}
-                    onChange={handleChange}
-                    className="form-select max-w-24"
-                >
-                    <option value="">Roles</option>
-                    <option value="sala">Salas</option>
-                    <option value="grupo">Músicos</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <select
-                    name="published"
-                    value={filters.published}
-                    onChange={handleChange}
-                    className="form-select max-w-32"
-                >
-                    <option value="">Publicado</option>
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
-                </select>
-                <input
-                    name="provincia"
-                    value={filters.provincia}
-                    placeholder="Provincia"
-                    onChange={handleChange}
-                    className="form-select max-w-36"
-                />
-                <input
-                    name="salaname"
-                    value={filters.salaname}
-                    placeholder="Nombre de la sala"
-                    onChange={handleChange}
-                    className="form-select w-5/12"
-                />
-                <input
-                    name="gruponame"
-                    value={filters.gruponame}
-                    placeholder="Nombre del músico"
-                    onChange={handleChange}
-                    className="form-select w-1/2"
-                />
+                <div className="w-full flex gap-4">
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        value={filters.username}
+                        onChange={handleChange}
+                        className="form-input md:w-[calc(25%-.25rem)]"
+                    />
+                    <select
+                        name="active"
+                        value={filters.active}
+                        onChange={handleChange}
+                        className="form-select md:w-[calc(25%-.25rem)]"
+                    >
+                        <option value="">Activo</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                    <select
+                        name="roles"
+                        value={filters.roles}
+                        onChange={handleChange}
+                        className="form-select md:w-[calc(25%-.25rem)]"
+                    >
+                        <option value="">Roles</option>
+                        <option value="sala">Salas</option>
+                        <option value="grupo">Músicos</option>
+                        <option value="agencia">Agencias</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <select
+                        name="published"
+                        value={filters.published}
+                        onChange={handleChange}
+                        className="form-select md:w-[calc(25%-.25rem)]"
+                    >
+                        <option value="">Publicado</option>
+                        <option value="1">Sí</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div className="w-full flex gap-4">
+                    <input
+                        name="provincia"
+                        value={filters.provincia}
+                        placeholder="Provincia"
+                        onChange={handleChange}
+                        className="form-select md:w-[calc(35%-.25rem)]"
+                    />
+                    <input
+                        name="name"
+                        value={filters.name}
+                        placeholder="Nombre sala, músico, agencia"
+                        onChange={handleChange}
+                        className="form-select md:w-[calc(45%-.25rem)]"
+                    />
+                    <select
+                        name="order"
+                        value={filters.order}
+                        onChange={handleChange}
+                        className="py-0 px-1 form-input md:w-[calc(20%-.25rem)]"
+                    >
+                        <option value="DESC">Recientes</option>
+                        <option value="ASC">Antiguas</option>
+                    </select>
+                </div>
             </form>
             <div className="mb-4 flex flex-col">
                 {filteredUsers.length > 0 ? (
-                    <table className="max-w-5xl mx-auto">
+                    <table className="mx-auto">
                         <thead>
                             <tr>
                                 <th>Usuario</th>
                                 <th>Activo</th>
                                 <th>Role</th>
                                 <th>Fecha alta</th>
-                                <th>Sala/Músico</th>
+                                <th>Nombre</th>
                                 <th>Publicado</th>
+                                <th>Sala/Grupo publicado</th>
                                 <th>Provincia</th>
                                 <th>Baja</th>
                             </tr>
@@ -186,27 +185,102 @@ const UsersList = ({ token }) => {
                                                 </span>
                                             </Link>
                                         )}
-                                        {filteredUsers.grupo_id !== null && (
-                                            <Link
-                                                to={`/grupo/${filteredUsers.grupo_id}`}
-                                                target="_blank"
-                                            >
-                                                <span className="flex gap-1 items-center justify-center md:justify-start">
-                                                    {filteredUsers.grupo_nombre}
-                                                    <FiExternalLink />
-                                                </span>
-                                            </Link>
-                                        )}
+                                        {filteredUsers.grupo_id !== null &&
+                                            filteredUsers.agencia_id ===
+                                                null && (
+                                                <Link
+                                                    to={`/grupo/${filteredUsers.grupo_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                        {
+                                                            filteredUsers.grupo_nombre
+                                                        }
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre ===
+                                                null && (
+                                                <Link
+                                                    to={`/agencia/${filteredUsers.agencia_id}`}
+                                                    target="_blank"
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                        {
+                                                            filteredUsers.agencia_nombre
+                                                        }
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre !==
+                                                null && (
+                                                <>
+                                                    <Link
+                                                        to={`/agencia/${filteredUsers.agencia_id}`}
+                                                        target="_blank"
+                                                    >
+                                                        <span className="flex gap-1 items-center justify-center md:justify-start text-sm">
+                                                            {
+                                                                filteredUsers.agencia_nombre
+                                                            }
+                                                            <FiExternalLink />
+                                                        </span>
+                                                    </Link>
+                                                    <Link
+                                                        to={`/grupo/${filteredUsers.grupo_id}`}
+                                                        target="_blank"
+                                                    >
+                                                        <span className="flex gap-1 items-center justify-center md:justify-start text-sm">
+                                                            {
+                                                                filteredUsers.grupo_nombre
+                                                            }
+                                                            <FiExternalLink />
+                                                        </span>
+                                                    </Link>
+                                                </>
+                                            )}
                                     </td>
                                     <td>
                                         {filteredUsers.roles === 'grupo' &&
                                             filteredUsers.grupo_published}
                                         {filteredUsers.roles === 'sala' &&
                                             filteredUsers.sala_published}
+                                        {filteredUsers.roles === 'agencia' &&
+                                            filteredUsers.agencia_published}
+                                    </td>
+                                    <td>
+                                        {filteredUsers.roles === 'grupo' &&
+                                            filteredUsers.grupo_published ===
+                                                1 &&
+                                            formatDate(
+                                                filteredUsers.grupo_createdAt
+                                            )}
+                                        {filteredUsers.roles === 'sala' &&
+                                            filteredUsers.sala_published ===
+                                                1 &&
+                                            formatDate(
+                                                filteredUsers.sala_createdAt
+                                            )}
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre ===
+                                                null &&
+                                            formatDate(filteredUsers.createdAt)}
+
+                                        {filteredUsers.agencia_id !== null &&
+                                            filteredUsers.grupo_nombre !==
+                                                null &&
+                                            formatDate(
+                                                filteredUsers.grupo_createdAt
+                                            )}
                                     </td>
                                     <td>
                                         {filteredUsers.provincia_grupo_nombre ||
-                                            filteredUsers.provincia_sala_nombre}
+                                            filteredUsers.provincia_sala_nombre ||
+                                            filteredUsers.provincia_agencia_nombre}
                                     </td>
 
                                     <td>

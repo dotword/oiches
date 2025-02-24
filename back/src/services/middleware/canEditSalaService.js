@@ -4,9 +4,6 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 const canEditSalaService = async (idSala, userId) => {
     const pool = await getPool();
 
-    console.log('idSala ', idSala);
-    console.log('userid ', userId);
-
     const [salaOwner] = await pool.query(
         `SELECT usuario_id FROM salas WHERE id = ?`,
         [idSala]

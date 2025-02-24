@@ -16,6 +16,8 @@ const DeleteUserSalaGrupo = ({ userLogged, token, id, type }) => {
         const endpoint =
             type === 'sala' || type === 'admin'
                 ? `/salas/delete/${id}`
+                : type === 'agencias' || type === 'admin'
+                ? `/agencia/delete/${id}`
                 : `/grupos/delete/${id}`;
         try {
             const response = await fetch(`${VITE_API_URL_BASE}${endpoint}`, {

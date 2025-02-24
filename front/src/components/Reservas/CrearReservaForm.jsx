@@ -8,7 +8,7 @@ import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-const CrearReservaForm = ({ idUserOwner, calendarActive }) => {
+const CrearReservaForm = ({ idUserOwner, calendarActive, roles }) => {
     const { idSala } = useParams();
     const url = `${import.meta.env.VITE_API_URL_BASE}/reservar-sala/${idSala}`;
     const { token } = useAuth();
@@ -17,10 +17,13 @@ const CrearReservaForm = ({ idUserOwner, calendarActive }) => {
     const [availableDates, setAvailableDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
 
-    const { entries } = useListSalasGrupoUser({
+    let { entries } = useListSalasGrupoUser({
         token,
         idUserOwner,
     });
+    if (roles === 'agencia') {
+        entries = entries.grupos;
+    }
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -32,7 +35,7 @@ const CrearReservaForm = ({ idUserOwner, calendarActive }) => {
 
     // useEffect para establecer el valor por defecto
     useEffect(() => {
-        if (entries.length > 0 && !formValues.project) {
+        if (entries && entries.length > 0 && !formValues.project) {
             setFormValues((prev) => ({
                 ...prev,
                 project: entries[0].id, // Asigna el primer ID como valor por defecto
@@ -125,7 +128,7 @@ const CrearReservaForm = ({ idUserOwner, calendarActive }) => {
     ) : (
         <>
             <form onSubmit={handleSubmit} className="flex flex-col gap-2 ">
-                {entries.length > 0 && (
+                {entries && entries.length > 0 && (
                     <div className="my-4 mx-auto flex gap-3 md:gap-8">
                         <label
                             htmlFor="project"

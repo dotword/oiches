@@ -35,6 +35,9 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 import ConciertoPage from './pages/conciertos/ConciertoPage.jsx';
 import EdicionConcierto from './pages/conciertos/EdicionConcierto.jsx';
 import Conciertos from './pages/conciertos/Conciertos.jsx';
+import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
+import Agencias from './pages/Agencias/Agencias.jsx';
+import AgenciaRoster from './pages/Agencias/AgenciaRoster.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -112,7 +115,7 @@ function App() {
 
                         {/* GRUPOS */}
                         <Route
-                            path="/grupos/:idGrupo/edit"
+                            path="/grupo/:idGrupo/edit"
                             element={<EdicionGrupo />}
                         />
                         <Route path="/grupo/:idGrupo" element={<GrupoPage />} />
@@ -154,6 +157,16 @@ function App() {
                         <Route
                             path="/concierto/:conciertoId/edit"
                             element={<EdicionConcierto />}
+                        />
+                        {/* AGENCIA */}
+                        <Route
+                            path="/agencia/:idAgencia"
+                            element={<AgenciaPage />}
+                        />
+                        <Route path="/agencias" element={<Agencias />} />
+                        <Route
+                            path="users/roster/:idAgencia"
+                            element={<AgenciaRoster />}
                         />
                     </Routes>
                 </AnimatePresence>

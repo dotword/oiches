@@ -12,7 +12,13 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
     const [cancelModalOpen, setCancelModalOpen] = useState(false);
     const [reservaAEliminar, setReservaAEliminar] = useState(null);
     const { VITE_API_URL_BASE } = import.meta.env;
-    const type = userInfo.roles;
+    let type = userInfo.roles;
+    if (userInfo.roles === 'agencia') {
+        type = 'grupo';
+    }
+    if (userInfo.roles === 'admin') {
+        type = 'sala';
+    }
 
     useEffect(() => {
         const fetchReservas = async () => {
@@ -31,7 +37,6 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                         return;
                     }
                     const reservasData = await response.json();
-
                     setReservas(reservasData.reservas);
                 } catch (error) {
                     toast.error(error);
@@ -265,8 +270,11 @@ export const ListarReservas = ({ entry_id, token, userInfo }) => {
                                             <span className="md:hidden text-sm">
                                                 Fecha concierto:
                                             </span>
+
                                             {type === 'sala' &&
-                                            reserva.confirmada === '2' ? (
+                                            reserva.confirmada !== '0' &&
+                                            new Date(reserva.fecha) >
+                                                new Date() ? (
                                                 <div>
                                                     <input
                                                         type="date"

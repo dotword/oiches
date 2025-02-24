@@ -16,6 +16,9 @@ import canEditPhoto from './canEditPhoto.js';
 import canEditGrupoFiles from './canEditGrupoFiles.js';
 import isAdmin from './isAdmin.js';
 import concertExits from './concertExits.js';
+import checkIfAgencia from './checkIfAgencia.js';
+import agenciaExists from './agenciaExists.js';
+import canEditAgencia from './canEditAgencia.js';
 
 export {
     authUser,
@@ -36,4 +39,7 @@ export {
     canEditGrupoFiles,
     isAdmin,
     concertExits,
+    checkIfAgencia,
+    agenciaExists,
+    canEditAgencia,
 };

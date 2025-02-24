@@ -247,7 +247,9 @@ button.react-calendar__navigation__arrow {
     .button {
         @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
     }
-
+    .button-large {
+        @apply mt-4 flex justify-center items-center gap-2 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 rounded-lg;
+    }
     .sub_title_ficha {
         @apply text-white; /*Bold para texto como provincia genero etc... de las fichas*/
     }

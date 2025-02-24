@@ -7,15 +7,15 @@ const tramitarReservaService = async (reserva_id) => {
     try {
         const pool = await getPool();
 
-        const [salaInfo] = await pool.query(
+        const [resevaInfo] = await pool.query(
             'SELECT confirmada, sala_id, fecha, grupo_id FROM reservas WHERE id = ?',
             [reserva_id]
         );
 
-        const reservaConfirm = salaInfo[0].confirmada;
-        const dateReserva = salaInfo[0].fecha;
-        const grupoId = salaInfo[0].grupo_id;
-        const idSala = salaInfo[0].sala_id;
+        const reservaConfirm = resevaInfo[0].confirmada;
+        const dateReserva = resevaInfo[0].fecha;
+        const grupoId = resevaInfo[0].grupo_id;
+        const idSala = resevaInfo[0].sala_id;
 
         // Comprobar que la reseva no esté confirmada o tramitando
         if (reservaConfirm === '1') {
@@ -41,7 +41,7 @@ const tramitarReservaService = async (reserva_id) => {
             );
         }
 
-        // Comprobar el email del grupo
+        // Comprobar el email del grupo/agencia
         const [usuarioId] = await pool.query(
             'SELECT usuario_id, nombre FROM grupos WHERE id = ?',
             [grupoId]
@@ -71,7 +71,7 @@ const tramitarReservaService = async (reserva_id) => {
         const formatedFecha = formatDate(new Date(dateReserva));
 
         // Creamos el asunto del email de verificación.
-        const emailSubject = `Tu solicitud para el concierto en ${nameSala} está en proceso.`;
+        const emailSubject = `Tu solicitud para el concierto de ${grupoNombre} en ${nameSala} está en proceso.`;
 
         // Creamos el contenido del email
         const emailBody = `
@@ -102,7 +102,7 @@ const tramitarReservaService = async (reserva_id) => {
                 </head>
                 <body>
                     <p>¡Hola, ${grupoNombre}!</p>
-                    <p>Nos complace informarte que la sala <b>${nameSala}</b> ha mostrado interés en tu solicitud para el concierto el ${formatedFecha}. Tu solicitud está actualmente en proceso.</p>
+                    <p>Nos complace informarte que la sala <b>${nameSala}</b> ha mostrado interés en tu solicitud para el concierto de ${grupoNombre} el ${formatedFecha}. Tu solicitud está actualmente en proceso.</p>
                     <p>Te recomendamos entrar en <a href="${URL_FRONT}/login">tu cuenta</a> para ponerte en contacto directamente con la sala y discutir los detalles y condiciones del evento.</p>
                    <p>Quedamos a tu disposición para cualquier consulta.</p>
                     

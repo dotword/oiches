@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { FaPencilAlt } from 'react-icons/fa';
 import useSala from '../../hooks/useSala.jsx';
 import StarRating from '../StartRating.jsx';
 import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
-import Seo from '../SEO/Seo.jsx'; // Seo
+import Seo from '../SEO/Seo.jsx';
 import TextFormat from '../TextFormato.jsx';
 import MapShow from '../MapShow.jsx';
-import { IoChevronForward } from 'react-icons/io5';
-import { IoChevronBack } from 'react-icons/io5';
-import { toast } from 'react-toastify';
-import Toastify from '../Toastify.jsx';
+import usePrevNext from '../../hooks/usePrevNext.jsx';
+import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
+import EditPublishItemAdmin from '../Admin/EditPublishItemAdmin.jsx';
 
 const SalaDetail = () => {
     const { VITE_API_URL_BASE } = import.meta.env;
@@ -21,8 +19,6 @@ const SalaDetail = () => {
     const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
     const [formattedAddress, setFormattedAddress] = useState('');
-    const [previous, setPrevious] = useState('');
-    const [next, setNext] = useState('');
     const {
         nombre = '',
         provincia = '',
@@ -40,41 +36,12 @@ const SalaDetail = () => {
         published = 0,
     } = entry || {};
 
+    const roles = 'sala';
+    const { previous, next } = usePrevNext({ idItem: idSala, roles: roles });
+
     const handleAddressChange = (newAddress) => {
         setFormattedAddress(newAddress);
     };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(
-                `${VITE_API_URL_BASE}/salas?pageSize=300`
-            );
-            const data = await response.json();
-
-            const sortedSalas = Array.isArray(data.result)
-                ? data.result.sort(
-                      (a, b) => new Date(a.updatedAt) - new Date(b.updatedAt)
-                  )
-                : [];
-
-            const currentIndex = sortedSalas.findIndex(
-                (sala) => sala.id === idSala
-            );
-            if (currentIndex !== -1) {
-                const previousSala =
-                    currentIndex > 0 ? sortedSalas[currentIndex - 1] : null;
-                const nextSala =
-                    currentIndex < sortedSalas.length - 1
-                        ? sortedSalas[currentIndex + 1]
-                        : null;
-
-                setPrevious(previousSala);
-                setNext(nextSala);
-            }
-        };
-
-        fetchData();
-    }, [idSala, VITE_API_URL_BASE]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -97,26 +64,26 @@ const SalaDetail = () => {
         });
     };
 
-    const handlePublish = async () => {
-        try {
-            const response = await fetch(
-                `${VITE_API_URL_BASE}/published-sala/${idSala}`,
-                {
-                    method: 'PUT',
-                    headers: {
-                        Authorization: `${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+    // const handlePublish = async () => {
+    //     try {
+    //         const response = await fetch(
+    //             `${VITE_API_URL_BASE}/published-sala/${idSala}`,
+    //             {
+    //                 method: 'PUT',
+    //                 headers: {
+    //                     Authorization: `${token}`,
+    //                     'Content-Type': 'application/json',
+    //                 },
+    //             }
+    //         );
 
-            if (response.ok) {
-                toast.success('Publicado con éxito');
-            }
-        } catch (error) {
-            toast.error('Error al publicar');
-        }
-    };
+    //         if (response.ok) {
+    //             toast.success('Publicado con éxito');
+    //         }
+    //     } catch (error) {
+    //         toast.error('Error al publicar');
+    //     }
+    // };
 
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
@@ -169,7 +136,8 @@ const SalaDetail = () => {
                             </>
                         )}
 
-                        {actualUser.roles === 'grupo' && (
+                        {(actualUser.roles === 'grupo' ||
+                            actualUser.roles === 'agencia') && (
                             <p className="m-auto md:mr-0">
                                 <Link
                                     to={`/sala/${idSala}/reservas`}
@@ -325,52 +293,19 @@ const SalaDetail = () => {
                         ))}
                     </section>
                 )}
-
-                <section className="flex justify-between mt-8 mb-16">
-                    {previous && (
-                        <Link
-                            to={`/sala/${previous.id}`}
-                            className="text-purpleOiches hover:text-white"
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                <IoChevronBack className=" border-purpleOiches hover:bg-purpleOiches text-xl" />{' '}
-                                Anterior
-                            </button>
-                        </Link>
-                    )}
-                    {next && (
-                        <Link
-                            to={`/sala/${next.id}`}
-                            className="text-purpleOiches hover:text-white "
-                        >
-                            <button className="p-2 rounded-lg border border-purpleOiches hover:bg-purpleOiches flex items-end">
-                                Siguiente{' '}
-                                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
-                            </button>
-                        </Link>
-                    )}
-                </section>
+                <NextPreviousItem
+                    previous={previous}
+                    next={next}
+                    roles={roles}
+                />
 
                 {actualUser.roles === 'admin' && (
-                    <>
-                        {published === 0 && (
-                            <button
-                                className="btn-account max-w-44 min-w-32 bg-red-600"
-                                onClick={handlePublish}
-                            >
-                                Publicar
-                            </button>
-                        )}
-                        <a
-                            href={`/sala/${idSala}/edit`}
-                            className="flex justify-end gap-4 mb-16"
-                        >
-                            {' '}
-                            <FaPencilAlt className=" text-2xl" />
-                            Editar
-                        </a>
-                        <Toastify />
-                    </>
+                    <EditPublishItemAdmin
+                        idItem={idSala}
+                        token={token}
+                        published={published}
+                        roles={roles}
+                    />
                 )}
             </main>
         </>

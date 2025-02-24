@@ -15,7 +15,6 @@ const editConciertoPosterController = async (req, res, next) => {
 
         // Obtenemos los datos del concierto para comprobar si ya tiene un poster previo.
         const concierto = await selectConciertoByIdService(conciertoId);
-        console.log(concierto);
 
         // Si tiene un poster previo lo eliminamos.
         if (concierto.poster) {

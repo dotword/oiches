@@ -1,5 +1,4 @@
 import getPool from '../../database/getPool.js';
-import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const selectSalasVotosService = async (idSala) => {
     const pool = await getPool();
@@ -12,9 +11,6 @@ const selectSalasVotosService = async (idSala) => {
         [idSala]
     );
 
-    if (comentarios.length === 0) {
-        throw generateErrorsUtil('No hay comentarios', 404);
-    }
     return comentarios;
 };
 

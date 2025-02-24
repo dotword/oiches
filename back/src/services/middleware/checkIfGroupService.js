@@ -9,7 +9,10 @@ const checkIfGroupService = async (currentUser) => {
         [currentUser.id]
     );
 
-    if (userResults[0].roles === 'admin') {
+    if (
+        userResults[0].roles === 'admin' ||
+        userResults[0].roles === 'agencia'
+    ) {
         return;
     }
 
