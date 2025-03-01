@@ -51,7 +51,7 @@ const listAllReservaService = async (filters) => {
         // Ejecutar la consulta principal con los filtros y paginación
         const [rows] = await pool.query(query, queryParams);
 
-        // Consulta para obtener el total de grupos sin paginación
+        // Consulta para obtener el total de reservas sin paginación
         let countQuery = `
         SELECT COUNT(DISTINCT reservas.id) AS total
             FROM reservas

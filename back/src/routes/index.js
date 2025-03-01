@@ -10,6 +10,7 @@ import contactRoutes from './contactRoutes.js';
 import conciertosRouter from './conciertosRouter.js';
 import adminRouter from './adminRouter.js';
 import agenciasRouter from './agenciasRouter.js';
+import noticeboardRouter from './noticeboardRouter.js';
 
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.use(contactRoutes);
 router.use(conciertosRouter);
 router.use(adminRouter);
 router.use(agenciasRouter);
+router.use(noticeboardRouter);
 
 export default router;
