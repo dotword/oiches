@@ -6,6 +6,7 @@ const listNoticesController = async (req, res, next) => {
             categoria: req.query.categoria || '',
             provincia: req.query.provincia || '',
             generos: req.query.generos || '',
+            ownerRole: req.query.ownerRole || '',
             orderField: req.query.orderField || 'fecha',
             order: req.query.order || 'DESC',
             page: req.query.page || 1,
