@@ -57,7 +57,7 @@ const Agencias = () => {
                         '@type': 'ListItem',
                         position: index + 1,
                         name: agencia.nombre,
-                        url: `https://oiches.com/salas/${agencia.id}`,
+                        url: `https://oiches.com/agencia/${agencia.id}`,
                     })),
                 }}
             />

@@ -146,25 +146,9 @@ const AgenciaCreacion = () => {
                         2000 caracteres como máximo
                     </p>
                 </div>
-
-                {/* Sección de ayuda alineada a la izquierda */}
-                <div className="flex flex-col items-start bg-white w-full mt-6">
-                    <p className="mb-4 text-left">
-                        ¿Necesitas ayuda con la publicación?
-                    </p>
-                    <a
-                        href="mailto:hola@oiches.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-degradado"
-                    >
-                        Escríbenos
-                    </a>
-                </div>
-
                 {/* Botón de Enviar con más aire arriba */}
                 <div className="flex flex-col items-start bg-white w-full">
-                    <button type="submit" className="btn-degradado mt-8 mb-4">
+                    <button type="submit" className="btn-degradado my-4">
                         Modificar datos
                     </button>
                 </div>
@@ -172,6 +156,23 @@ const AgenciaCreacion = () => {
                 {/* Mensaje de error */}
                 {error && <p className="text-red-500 text-center">{error}</p>}
             </form>
+            {/* Sección de ayuda alineada a la izquierda */}
+
+            <div className="max-w-80 flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl mx-auto my-8 md:mr-0">
+                <p className="text-center">
+                    ¿Necesitas ayuda con la publicación?
+                </p>
+
+                <a
+                    href="mailto:hola@oiches.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                >
+                    Escríbenos
+                </a>
+            </div>
+
             <Toastify />
         </>
     ) : (

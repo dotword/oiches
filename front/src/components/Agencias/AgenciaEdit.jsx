@@ -181,7 +181,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                     </div>
 
                     {/* Botones en una sola línea alineados a la izquierda */}
-                    <div className="flex items-center gap-4 justify-start mt-4">
+                    <div className="flex flex-wrap items-center gap-8 justify-start pt-6">
                         {/* Botón de Modificar datos */}
                         <input
                             type="submit"

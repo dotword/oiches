@@ -43,19 +43,19 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
                 )}
 
                 {/* Sección de botones con diseño responsivo */}
-                <section className="mb-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
+                <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
                     {(entries && entries.agencias[0]?.published === 1) ||
                     (entries && entries.agencias[0]?.hidden === 1) ? (
                         <Link
                             to={`/users/roster/${idUserOwner}`}
                             state={{ userOwner, entries: entries.grupos }}
-                            className="btn-degradado w-full md:w-auto text-center"
+                            className="btn-degradado w-full md:max-w-64 text-center"
                         >
                             Ir a tu roster
                         </Link>
                     ) : (
-                        <p className="text-gray-500 text-center md:text-left">
-                            Tenemos que aprobar tu agencia para que puedas
+                        <p className="text-gray-500 text-center mt-4 md:text-left">
+                            * Tenemos que aprobar tu agencia para que puedas
                             empezar a gestionar tu roster.
                         </p>
                     )}
@@ -72,7 +72,7 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
 
             {/* Botón ocultar agencia (más discreto y debajo) */}
             {entries && entries.agencias[0]?.published === 1 && (
-                <section className="mt-2 flex justify-start">
+                <section className="mt-8 flex justify-start">
                     <button onClick={toggleAgenciaHidden} className="enlaces">
                         {hidden
                             ? 'Publicar tu agencia y roster'
