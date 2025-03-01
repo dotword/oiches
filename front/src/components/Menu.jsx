@@ -111,6 +111,10 @@ const Menu = ({ mobile }) => {
                 {mobile && <span className={backgroundClassName}></span>}
                 <span className={textClassName}>Conciertos</span>
             </NavLink>
+            <NavLink to="/noticeboard" className={linkClassName}>
+                {mobile && <span className={backgroundClassName}></span>}
+                <span className={textClassName}>Se busca</span>
+            </NavLink>
             <NavLink to="/contacto" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}
                 <span className={textClassName}>Contacto</span>

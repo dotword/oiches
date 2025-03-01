@@ -27,7 +27,8 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
-import AdminDashboard from './pages/Users/AdminDashboard.jsx';
+import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
+import AdminNoticeboard from './pages/Admin/AdminNoticeboard.jsx';
 import CreateConcierto from './pages/conciertos/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
@@ -47,6 +48,10 @@ import {
     ValidateEmailPage,
     ConcursoMusicosOiches,
 } from './pages/Concurso/index.jsx';
+import NoticeboardPage from './pages/Noticeboard/NoticeboardPage.jsx';
+import CreacionNotice from './pages/Noticeboard/CreacionNotice.jsx';
+import CondicionesNoticeboard from './pages/Noticeboard/CondicionesNoticeboard.jsx';
+import NoticeDetail from './pages/Noticeboard/NoticeDetail.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -154,6 +159,10 @@ function App() {
                             element={<AdminDashboard />}
                         />
                         <Route
+                            path="/admin-noticeboard"
+                            element={<AdminNoticeboard />}
+                        />
+                        <Route
                             path="/crear-concierto/:reservaId"
                             element={<CreateConcierto />}
                         />
@@ -206,6 +215,23 @@ function App() {
                         <Route
                             path="/concurso-musicos-oiches"
                             element={<ConcursoMusicosOiches />}
+                        />
+                        {/* NOTICEBOARD */}
+                        <Route
+                            path="/noticeboard"
+                            element={<NoticeboardPage />}
+                        />
+                        <Route
+                            path="/notice-creacion/:userId"
+                            element={<CreacionNotice />}
+                        />
+                        <Route
+                            path="/condiciones-noticeboard"
+                            element={<CondicionesNoticeboard />}
+                        />
+                        <Route
+                            path="/noticeboard/:idNotice"
+                            element={<NoticeDetail />}
                         />
                     </Routes>
                 </AnimatePresence>

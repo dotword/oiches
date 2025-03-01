@@ -13,6 +13,9 @@ import {
     deleteAgenciaController,
     deleteSalaController,
     borrarReservaAdminController,
+    getAllNoticesController,
+    publishNoticeController,
+    deleteNoticeController,
 } from '../controllers/admin/index.js';
 
 const router = express.Router();
@@ -83,6 +86,25 @@ router.delete(
     isAdmin,
     userExists,
     borrarReservaAdminController
+);
+
+// Endpoint para que el admin pueda listar todas las notices filtrando por estado y ordenar fecha publicación
+router.get('/dashboard/notices?', authUser, isAdmin, getAllNoticesController);
+
+// Endpoint para que el admin apruebe un notice
+router.put(
+    '/published-notice/:idNotice',
+    authUser,
+    isAdmin,
+    publishNoticeController
+);
+
+// Endpoint para que el admin rechace un notice
+router.delete(
+    '/delete-notice/:idNotice',
+    authUser,
+    isAdmin,
+    deleteNoticeController
 );
 
 export default router;
