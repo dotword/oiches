@@ -4,11 +4,12 @@ import Header from '../../components/Header.jsx';
 import Footer from '../../components/Footer.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 import AuthContext from '../../context/auth/AuthContext.jsx';
-import Noticeboard from '../../components/Noticeboard/Noticeboard.jsx';
+import NoticeboardList from '../../components/Noticeboard/NoticeboardList.jsx';
 import { Link } from 'react-router-dom';
 import { IoFilter } from 'react-icons/io5';
 import FetchNoticesService from '../../services/Noticeboard/FetchNoticesService.js';
 import NoticeboardFilter from '../../components/Noticeboard/NoticeboardFilter.jsx';
+import Paginator from '../../components/Paginator.jsx';
 
 const NoticeboardPage = () => {
     const { userLogged } = useContext(AuthContext);
@@ -28,9 +29,6 @@ const NoticeboardPage = () => {
 
         fetchNotices();
     }, [page, filters, pageSize]);
-
-    console.log('filteredNot ', filteredNotices);
-    console.log('total ', total);
 
     const handleFilterChange = async (newFilters) => {
         if (JSON.stringify(newFilters) !== JSON.stringify(filters)) {
@@ -66,42 +64,58 @@ const NoticeboardPage = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Se busca..." />
-                <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-7xl">
-                    {(userLogged && userLogged.roles === 'grupo') ||
-                    (userLogged && userLogged.roles === 'sala') ? (
-                        <Link
-                            to={`/notice-creacion/${userLogged.id}`}
-                            className="button-large max-w-48 mb-8"
-                        >
-                            Publica tu anuncio
-                        </Link>
-                    ) : (
-                        ''
-                    )}
 
-                    <section>
-                        <div
-                            className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
-                            onClick={() => setIsNavOpen((prev) => !prev)}
-                        >
-                            FILTRAR
-                            <IoFilter className="text-2xl cursor-pointer" />
+                {(userLogged && userLogged.roles === 'grupo') ||
+                (userLogged && userLogged.roles === 'sala') ? (
+                    <Link
+                        to={`/notice-creacion/${userLogged.id}`}
+                        className="button-large max-w-48 mb-8 mx-auto"
+                    >
+                        Publica tu anuncio
+                    </Link>
+                ) : (
+                    ''
+                )}
+
+                <section>
+                    <div
+                        className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
+                        onClick={() => setIsNavOpen((prev) => !prev)}
+                    >
+                        FILTRAR
+                        <IoFilter className="text-2xl cursor-pointer" />
+                    </div>
+                    <div
+                        className={`bg-footercolor flex-col items-center justify-evenly ${
+                            isNavOpen ? 'flex' : 'hidden md:flex'
+                        }`}
+                    >
+                        <div className="flex flex-col items-center justify-between">
+                            <NoticeboardFilter
+                                onFilterChange={handleFilterChange}
+                            />
                         </div>
-                        <div
-                            className={`bg-footercolor flex-col items-center justify-evenly ${
-                                isNavOpen ? 'flex' : 'hidden md:flex'
-                            }`}
-                        >
-                            <div className="flex flex-col items-center justify-between w-4/5">
-                                <NoticeboardFilter
-                                    onFilterChange={handleFilterChange}
-                                />
-                            </div>
-                        </div>
+                    </div>
+                </section>
+                <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
+                    <section className="sala-list-container">
+                        {filteredNotices.length > 0 ? (
+                            <NoticeboardList notices={filteredNotices} />
+                        ) : (
+                            <p className="text-center">
+                                No se encontraron anuncios
+                            </p>
+                        )}
+
+                        <Paginator
+                            setPage={setPage}
+                            page={page}
+                            total={total}
+                            pageSize={pageSize}
+                        />
                     </section>
-
-                    <Noticeboard />
                 </main>
+
                 <Footer />
             </motion.div>
         </>

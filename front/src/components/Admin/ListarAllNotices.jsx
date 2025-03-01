@@ -37,35 +37,6 @@ const ListarAllNotices = ({ token }) => {
         fetchAllNotices();
     }, [token, page, filters, pageSize]);
 
-    //     if (!reservaAEliminar) return; // Verificar que hay una reserva seleccionada
-    //     try {
-    //         const response = await fetch(
-    //             `${VITE_API_URL_BASE}/admin-borrar-reserva/${reservaAEliminar}`,
-    //             {
-    //                 method: 'DELETE',
-    //                 headers: {
-    //                     authorization: token,
-    //                 },
-    //             }
-    //         );
-
-    //         if (!response.ok) {
-    //             toast.error('Fallo al eliminar la reserva');
-    //         }
-
-    //         // Actualizar el estado de reservas
-    //         setReservas(
-    //             reservas.filter((reserva) => reserva.id !== reservaAEliminar)
-    //         );
-    //         toast.success('Su reserva se ha eliminado con éxito');
-    //     } catch (error) {
-    //         toast.error('Error eliminando la reserva');
-    //     } finally {
-    //         // Cerrar el modal y limpiar el estado
-    //         setCancelModalOpen(false);
-    //         setReservaAEliminar(null);
-    //     }
-    // };
     useEffect(() => {
         if (autoSearch) {
             setPage(1); // Reinicia la paginación cuando cambian los filtros.
