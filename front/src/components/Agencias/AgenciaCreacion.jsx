@@ -56,11 +56,18 @@ const AgenciaCreacion = () => {
     const { nombre, provincia, descripcion, web } = formValues;
 
     return currentUser ? (
-        <>
-            <h3 className="text-xl font-semibold">Gestiona tu agencia</h3>
-            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                    <label htmlFor="nombre" className="font-semibold">
+        <div className="max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+            <h3 className="text-xl font-semibold text-center mb-6">
+                Gestiona tu agencia
+            </h3>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Nombre de la agencia */}
+                <div>
+                    <label
+                        htmlFor="nombre"
+                        className="block font-semibold mb-1"
+                    >
                         Nombre de la agencia/manager:*
                     </label>
                     <input
@@ -70,12 +77,16 @@ const AgenciaCreacion = () => {
                         value={nombre}
                         required
                         onChange={handleChange}
-                        className="form-input"
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
                     />
                 </div>
 
-                <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                    <label htmlFor="provincia" className="font-semibold">
+                {/* Provincia */}
+                <div>
+                    <label
+                        htmlFor="provincia"
+                        className="block font-semibold mb-1"
+                    >
                         Provincia:*
                     </label>
                     <select
@@ -83,7 +94,7 @@ const AgenciaCreacion = () => {
                         name="provincia"
                         required
                         value={provincia}
-                        className="form-select"
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
                         onChange={handleChange}
                     >
                         <option value="">Selecciona</option>
@@ -95,8 +106,9 @@ const AgenciaCreacion = () => {
                     </select>
                 </div>
 
-                <div className="flex flex-col mb-4 md:w-full">
-                    <label htmlFor="web" className="font-semibold">
+                {/* Web o Redes Sociales */}
+                <div>
+                    <label htmlFor="web" className="block font-semibold mb-1">
                         Web o enlace a tus RRSS:*
                     </label>
                     <input
@@ -106,12 +118,16 @@ const AgenciaCreacion = () => {
                         value={web}
                         required
                         onChange={handleChange}
-                        className="form-input"
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
                     />
                 </div>
 
-                <div className="flex flex-col mb-4 md:w-full">
-                    <label htmlFor="descripcion" className="font-semibold">
+                {/* Descripción */}
+                <div>
+                    <label
+                        htmlFor="descripcion"
+                        className="block font-semibold mb-1"
+                    >
                         Descripción:*
                     </label>
                     <textarea
@@ -119,42 +135,42 @@ const AgenciaCreacion = () => {
                         value={descripcion}
                         onChange={handleChange}
                         required
-                        className="form-textarea"
+                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
                         maxLength="2000"
                     ></textarea>
                     <p className="mt-1 text-gray-500 text-sm">
                         2000 caracteres como máximo
                     </p>
-
-                    {/* Botón de ayuda justo después de las fotos */}
-                    <div className="sticky top-0 my-8 max-w-full">
-                        <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
-                            <p className="text-center">
-                                ¿Necesitas ayuda con la publicación?
-                            </p>
-
-                            <a
-                                href="mailto:hola@oiches.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
-                            >
-                                Escríbenos
-                            </a>
-                        </div>
-                    </div>
                 </div>
-                <div className="my-12 max-w-80">
+
+                {/* Botón de ayuda */}
+                <div className="bg-gray-100 p-4 rounded-lg text-center shadow-md">
+                    <p className="mb-2">¿Necesitas ayuda con la publicación?</p>
+                    <a
+                        href="mailto:hola@oiches.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                    >
+                        Escríbenos
+                    </a>
+                </div>
+
+                {/* Botón de Enviar */}
+                <div className="text-center">
                     <input
                         type="submit"
                         value="Publicar"
-                        className="btn-account p-3 w-full"
+                        className="btn-primary w-full"
                     />
                 </div>
-                <div>{error && <p>{error}</p>}</div>
+
+                {/* Mensaje de error */}
+                {error && <p className="text-red-500 text-center">{error}</p>}
             </form>
+
             <Toastify />
-        </>
+        </div>
     ) : (
         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );

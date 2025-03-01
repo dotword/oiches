@@ -134,6 +134,9 @@ button.react-calendar__navigation__arrow {
     .btn-buscar {
         @apply py-2 px-6 bg-purpleOiches hover:bg-moradoOiches rounded-md text-white text-center font-bold transition-all cursor-pointer w-full md:w-auto;
     }
+    .btn-degradado {
+        @apply bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:opacity-90;
+    }
 
     .form-input {
         @apply p-3 border border-gray-300 rounded-lg mt-2 h-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
@@ -153,6 +156,10 @@ button.react-calendar__navigation__arrow {
     .image-shadow,
     article.yt-lite {
         @apply rounded-2xl shadow-[3px_3px_6px_2px_rgba(0,0,0,0.3)];
+    }
+
+    .enlaces {
+        @apply text-purple-600 hover:underline focus:outline focus:ring-2 focus:ring-purple-600 flex items-center gap-2;
     }
 
     /* Zona de héroe */
