@@ -11,6 +11,7 @@ import conciertosRouter from './conciertosRouter.js';
 import adminRouter from './adminRouter.js';
 import agenciasRouter from './agenciasRouter.js';
 import concursoRouter from './concursoRouter.js';
+import noticeboardRouter from './noticeboardRouter.js';
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.use(conciertosRouter);
 router.use(adminRouter);
 router.use(agenciasRouter);
 router.use(concursoRouter);
+router.use(noticeboardRouter);
 
 export default router;

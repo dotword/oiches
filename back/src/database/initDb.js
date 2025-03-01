@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS contest_votes, voters, proyectos_inscritos, conciertos, agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -312,6 +312,50 @@ const main = async () => {
             INSERT INTO provincias (provincia) VALUES
             ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza'), ('Ceuta'), ('Melilla');
         
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS category_noticeboard (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                role ENUM('grupo','sala') NOT NULL,
+                nombre VARCHAR(50) NOT NULL,
+                parent_id INT DEFAULT NULL,
+                CONSTRAINT fk_parent_category FOREIGN KEY (parent_id) REFERENCES category_noticeboard(id)
+            );
+        `);
+
+        await pool.query(`    
+            CREATE TABLE IF NOT EXISTS noticeboard (
+                id CHAR(36) PRIMARY KEY NOT NULL,
+                usuario_id CHAR(36) NOT NULL,
+                salaGrupo_id CHAR(36) NOT NULL,
+                category_id INT NOT NULL,
+                provincia INT,
+                titulo VARCHAR(255) NOT NULL,
+                descripcion TEXT NOT NULL,
+                estado ENUM('pendiente','aprobado','rechazado') DEFAULT 'pendiente',
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+                FOREIGN KEY (category_id) REFERENCES category_noticeboard(id),
+                FOREIGN KEY(provincia) REFERENCES provincias(id)
+            );
+        `);
+
+        await pool.query(`
+            INSERT INTO generos_musicales (nombre) VALUES ('Rock'), ('Pop'), ('Metal'), ('Funk'), ('Country'), ('Folk'), ('Jazz'), ('Reggae'), ('Indie'), ('Electrónica'), ('Soul'), ('Canción de autor'), ('Flamenco'), ('Clásica'), ('Latina'), ('Reaggeton'), ('Hip-Hop'), ('Blues'), ('Punk'), ('Ska'), ('Rap'), ('Hardcore'), ('Heavy'), ('Ópera'), ('Versiones'), ('Fado'), ('Rancheras'), ('Rumba'), ('Cumbia');
+        `);
+
+        await pool.query(`
+            INSERT INTO provincias (provincia) VALUES
+            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
+        
+        `);
+
+        await pool.query(`
+            INSERT INTO category_noticeboard (role, nombre, parent_id) VALUES 
+            ('grupo', 'Nuevo integrante', NULL), ('grupo', 'Compartir bolo/gira', NULL), ('grupo', 'Promotor/Manager', NULL), ('grupo', 'Otros', NULL), ('sala', 'Músicos', NULL), ('sala', 'Otros', NULL), 
+            ('grupo', 'Bajista', 1), ('grupo', 'Guitarrista', 1), ('grupo', 'Cantante', 1), ('grupo', 'Batería', 1), ('grupo', 'Teclista', 1), ('grupo', 'Otros', 1);
         `);
 
         console.log('¡Tablas creadas!');

@@ -19,6 +19,7 @@ import concertExits from './concertExits.js';
 import checkIfAgencia from './checkIfAgencia.js';
 import agenciaExists from './agenciaExists.js';
 import canEditAgencia from './canEditAgencia.js';
+import noticeExists from './noticeExists.js';
 
 export {
     authUser,
@@ -42,4 +43,5 @@ export {
     checkIfAgencia,
     agenciaExists,
     canEditAgencia,
+    noticeExists,
 };
