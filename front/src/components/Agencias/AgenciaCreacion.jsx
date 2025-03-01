@@ -56,74 +56,77 @@ const AgenciaCreacion = () => {
     const { nombre, provincia, descripcion, web } = formValues;
 
     return currentUser ? (
-        <div className="max-w-3xl mx-auto bg-white p-6 shadow-lg rounded-lg">
-            <h3 className="text-xl font-semibold text-center mb-6">
-                Gestiona tu agencia
-            </h3>
-
+        <>
+            <h3 className="text-xl font-semibold mb-6">Gestiona tu agencia</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Nombre de la agencia */}
-                <div>
-                    <label
-                        htmlFor="nombre"
-                        className="block font-semibold mb-1"
-                    >
-                        Nombre de la agencia/manager:*
-                    </label>
-                    <input
-                        type="text"
-                        name="nombre"
-                        placeholder="Nombre de la agencia/manager"
-                        value={nombre}
-                        required
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
-                    />
+                {/* Fila de Nombre, Provincia y Web en una línea */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Nombre de la agencia */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="nombre"
+                            className="block font-semibold mb-1"
+                        >
+                            Nombre de la agencia/manager:*
+                        </label>
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre de la agencia/manager"
+                            value={nombre}
+                            required
+                            onChange={handleChange}
+                            className="form-input w-full"
+                        />
+                    </div>
+
+                    {/* Provincia */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="provincia"
+                            className="block font-semibold mb-1"
+                        >
+                            Provincia:*
+                        </label>
+                        <select
+                            id="provincia"
+                            name="provincia"
+                            required
+                            value={provincia}
+                            className="form-input w-full py-2 h-auto"
+                            onChange={handleChange}
+                        >
+                            <option value="">Selecciona</option>
+                            {provinces.map((province) => (
+                                <option key={province.id} value={province.id}>
+                                    {province.provincia}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Web o Redes Sociales */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="web"
+                            className="block font-semibold mb-1"
+                        >
+                            Web o enlace a tus RRSS:*
+                        </label>
+                        <input
+                            type="url"
+                            name="web"
+                            placeholder="https://www.tuagencia.com"
+                            value={web}
+                            required
+                            onChange={handleChange}
+                            className="form-input w-full py-2 h-auto"
+                        />
+                    </div>
                 </div>
 
-                {/* Provincia */}
-                <div>
-                    <label
-                        htmlFor="provincia"
-                        className="block font-semibold mb-1"
-                    >
-                        Provincia:*
-                    </label>
-                    <select
-                        id="provincia"
-                        name="provincia"
-                        required
-                        value={provincia}
-                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
-                        onChange={handleChange}
-                    >
-                        <option value="">Selecciona</option>
-                        {provinces.map((province) => (
-                            <option key={province.id} value={province.id}>
-                                {province.provincia}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                {/* Web o Redes Sociales */}
-                <div>
-                    <label htmlFor="web" className="block font-semibold mb-1">
-                        Web o enlace a tus RRSS:*
-                    </label>
-                    <input
-                        type="url"
-                        name="web"
-                        placeholder="https://www.tuagencia.com"
-                        value={web}
-                        required
-                        onChange={handleChange}
-                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
-                    />
-                </div>
-
-                {/* Descripción */}
-                <div>
+                {/* Descripción en otra línea */}
+                <div className="w-full">
                     <label
                         htmlFor="descripcion"
                         className="block font-semibold mb-1"
@@ -135,42 +138,42 @@ const AgenciaCreacion = () => {
                         value={descripcion}
                         onChange={handleChange}
                         required
-                        className="w-full border border-gray-300 p-2 rounded-lg focus:ring focus:ring-purple-300"
+                        className="form-input w-full min-h-[8rem]"
                         maxLength="2000"
+                        placeholder="Describe tu agencia..."
                     ></textarea>
                     <p className="mt-1 text-gray-500 text-sm">
                         2000 caracteres como máximo
                     </p>
                 </div>
 
-                {/* Botón de ayuda */}
-                <div className="bg-gray-100 p-4 rounded-lg text-center shadow-md">
-                    <p className="mb-2">¿Necesitas ayuda con la publicación?</p>
+                {/* Sección de ayuda alineada a la izquierda */}
+                <div className="flex flex-col items-start bg-white w-full mt-6">
+                    <p className="mb-4 text-left">
+                        ¿Necesitas ayuda con la publicación?
+                    </p>
                     <a
                         href="mailto:hola@oiches.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn-primary"
+                        className="btn-degradado"
                     >
                         Escríbenos
                     </a>
                 </div>
 
-                {/* Botón de Enviar */}
-                <div className="text-center">
-                    <input
-                        type="submit"
-                        value="Publicar"
-                        className="btn-primary w-full"
-                    />
+                {/* Botón de Enviar con más aire arriba */}
+                <div className="flex flex-col items-start bg-white w-full">
+                    <button type="submit" className="btn-degradado mt-8 mb-4">
+                        Modificar datos
+                    </button>
                 </div>
 
                 {/* Mensaje de error */}
                 {error && <p className="text-red-500 text-center">{error}</p>}
             </form>
-
             <Toastify />
-        </div>
+        </>
     ) : (
         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );
