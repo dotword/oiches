@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import FetchProvinciasService from '../../services/FetchProvinciasService';
 import FetchGenresService from '../../services/FetchGenresService';
+import FetchNoticeCategoriasService from '../../services/Noticeboard/FetchNoticeCategoriasService';
 
 const NoticeboardFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
+    // const [role, setRole] = useState([]);
+    const [categoria, setCategoria] = useState([]);
     const [filters, setFilters] = useState({
-        nombre: '',
+        ownerRole: '',
+        categoria: '',
         provincia: '',
-        genero: 'Todos', // Valor por defecto como "Todos"
+        generos: '',
         order: '',
     });
 
@@ -18,6 +22,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
         const fetchFilters = async () => {
             await FetchProvinciasService(setProvinces);
             await FetchGenresService(setGenres);
+            await FetchNoticeCategoriasService(setCategoria);
         };
         fetchFilters();
     }, []);
@@ -39,21 +44,36 @@ const NoticeboardFilter = ({ onFilterChange }) => {
 
     return (
         <form className="sala-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4">
-            <input
-                type="text"
-                name="nombre"
-                placeholder="Nombre de la sala"
-                value={filters.nombre}
-                onChange={handleChange}
-                className="form-input placeholder:text-black"
-            />
             <select
-                name="genero"
-                value={filters.genero}
+                name="ownerRole"
+                value={filters.ownerRole}
                 onChange={handleChange}
                 className="form-select"
             >
-                <option value="Todos">Todos</option> {/* Cambio aquí */}
+                <option value="">Tipo</option>
+                <option value="grupo">Músico/Grupo busca...</option>
+                <option value="sala">Sala busca... </option>
+            </select>
+            <select
+                name="categoria"
+                value={filters.categoria}
+                onChange={handleChange}
+                className="form-select"
+            >
+                <option value="">Categoría</option>
+                {categoria.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                        {cat.nombre}
+                    </option>
+                ))}
+            </select>
+            <select
+                name="generos"
+                value={filters.generos}
+                onChange={handleChange}
+                className="form-select"
+            >
+                <option value="">Géneros</option> {/* Cambio aquí */}
                 {genres.map((genre) => (
                     <option key={genre.id} value={genre.id}>
                         {genre.nombre}
@@ -81,8 +101,8 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                 className="form-select"
             >
                 <option value="">Ordenar</option>
-                <option value="ASC">Puntuación ⬆</option>
-                <option value="DESC">Puntuación ⬇</option>
+                <option value="ASC">Fecha ⬆</option>
+                <option value="DESC">Fecha ⬇</option>
             </select>
         </form>
     );

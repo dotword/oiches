@@ -29,12 +29,16 @@ const listNoticesService = async (filters) => {
         const queryParams = [];
 
         // Filtros
+        if (filters.ownerRole && filters.ownerRole.trim() !== '') {
+            query += ' AND C.id = ?';
+            queryParams.push(filters.ownerRole);
+        }
         if (filters.categoria && filters.categoria.trim() !== '') {
-            query += ' AND C.nombre LIKE ?';
-            queryParams.push(`%${filters.categoria}%`);
+            query += ' AND C.id = ?';
+            queryParams.push(filters.categoria);
         }
         if (filters.provincia && filters.provincia.trim() !== '') {
-            query += ' AND PR.provincia = ?';
+            query += ' AND PR.id = ?';
             queryParams.push(filters.provincia);
         }
 
@@ -49,11 +53,11 @@ const listNoticesService = async (filters) => {
                 query += ` AND N.salaGrupo_id IN (
                 SELECT GG.grupoId FROM generos_grupos GG
                 JOIN generos_musicales GM ON GM.id = GG.generoId
-                WHERE GM.nombre IN (${generosArray.map(() => '?').join(',')})
+                WHERE GM.id IN (${generosArray.map(() => '?').join(',')})
                 UNION
                 SELECT GS.salaId FROM generos_salas GS
                 JOIN generos_musicales GM ON GM.id = GS.generoId
-                WHERE GM.nombre IN (${generosArray.map(() => '?').join(',')})
+                WHERE GM.id IN (${generosArray.map(() => '?').join(',')})
             )`;
                 // Se agregan los parámetros dos veces (uno para cada subconsulta)
                 queryParams.push(...generosArray, ...generosArray);
