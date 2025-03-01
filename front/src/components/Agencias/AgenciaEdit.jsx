@@ -57,6 +57,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                 idAgencia,
                 dataForm,
             });
+
             toast.success('Has modificado tu agencia con éxito');
         } catch (error) {
             setError(error.message);
@@ -67,15 +68,22 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     return (userLogged && agencia.owner === userLogged.id) ||
         (userLogged && userLogged.roles === 'admin') ? (
         <>
-            <div className="px-6 pt-3 pb-6 md:px-12 bg-white rounded-lg shadow-md ">
-                <form onSubmit={handleSubmit} className="">
-                    {/* Nombre */}
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="nombre">
-                            <span className="font-semibold">
-                                Nombre de la agencia:
-                            </span>
+            <div className="max-w-full mx-auto">
+                <h3 className="text-xl font-semibold text-center mb-6">
+                    Editar Agencia
+                </h3>
 
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Agrupamos los 3 primeros campos en una fila */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Nombre */}
+                        <div className="w-full">
+                            <label
+                                htmlFor="nombre"
+                                className="block font-semibold mb-1"
+                            >
+                                Nombre de la agencia:
+                            </label>
                             <input
                                 type="text"
                                 name="nombre"
@@ -87,54 +95,73 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                                         nombre: e.target.value,
                                     })
                                 }
-                                className="form-input"
+                                className="form-input w-full"
                             />
-                        </label>
-                    </div>
+                        </div>
 
-                    {/* Provincia */}
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="province" className="font-semibold">
-                            Provincia:
-                        </label>
-                        <select
-                            name="provincia"
-                            value={agencia.provincia}
-                            className="form-select"
-                            onChange={(e) =>
-                                setAgencia({
-                                    ...agencia,
-                                    provincia: e.target.value,
-                                })
-                            }
-                        >
-                            <option value="">Provincia</option>
-                            {provinces.map((province) => (
-                                <option key={province.id} value={province.id}>
-                                    {province.provincia}
+                        {/* Provincia */}
+                        <div className="w-full">
+                            <label
+                                htmlFor="provincia"
+                                className="block font-semibold mb-1"
+                            >
+                                Provincia:
+                            </label>
+                            <select
+                                name="provincia"
+                                value={agencia.provincia}
+                                className="form-input w-full py-2 h-auto"
+                                onChange={(e) =>
+                                    setAgencia({
+                                        ...agencia,
+                                        provincia: e.target.value,
+                                    })
+                                }
+                            >
+                                <option value="">
+                                    Selecciona una provincia
                                 </option>
-                            ))}
-                        </select>
-                    </div>
-                    {/* Web */}
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="web" className="font-semibold">
-                            Web o enlace a tus RRSS:
-                        </label>
-                        <input
-                            type="url"
-                            name="web"
-                            placeholder="https://www.tuagencia.com"
-                            value={agencia.web}
-                            className="form-input"
-                            onChange={(e) =>
-                                setAgencia({ ...agencia, web: e.target.value })
-                            }
-                        />
+                                {provinces.map((province) => (
+                                    <option
+                                        key={province.id}
+                                        value={province.id}
+                                    >
+                                        {province.provincia}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+
+                        {/* Web */}
+                        <div className="w-full">
+                            <label
+                                htmlFor="web"
+                                className="block font-semibold mb-1"
+                            >
+                                Web o enlace a tus RRSS:
+                            </label>
+                            <input
+                                type="url"
+                                name="web"
+                                placeholder="https://www.tuagencia.com"
+                                value={agencia.web}
+                                className="form-input w-full"
+                                onChange={(e) =>
+                                    setAgencia({
+                                        ...agencia,
+                                        web: e.target.value,
+                                    })
+                                }
+                            />
+                        </div>
                     </div>
 
-                    <div className="flex flex-col mb-4">
-                        <label htmlFor="descripcion" className="font-semibold">
+                    {/* Descripción - Se coloca en una fila aparte */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="descripcion"
+                            className="block font-semibold mb-1"
+                        >
                             Descripción:
                         </label>
                         <textarea
@@ -146,31 +173,39 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                                     descripcion: e.target.value,
                                 })
                             }
-                            className="form-textarea"
+                            className="form-input w-full min-h-[8rem]" // Altura mínima de 8 líneas
                         ></textarea>
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
                     </div>
 
-                    <div className="my-8 max-w-80">
+                    {/* Botones en una sola línea alineados a la izquierda */}
+                    <div className="flex flex-wrap items-center gap-8 justify-start pt-6">
+                        {/* Botón de Modificar datos */}
                         <input
                             type="submit"
                             value="Modificar datos"
-                            className="btn-account p-3 w-full"
+                            className="btn-degradado"
                         />
+
+                        {/* Enlace para Ver la Agencia */}
+                        <a
+                            href={`/agencia/${idAgencia}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-purple-600 hover:underline focus:outline focus:ring-2 focus:ring-purple-600 flex items-center gap-2"
+                        >
+                            <FaEye className="text-base" />
+                            <span>Ver Agencia</span>
+                        </a>
                     </div>
-                    <div>{error && <p>{error}</p>}</div>
+
+                    {/* Mensaje de error */}
+                    {error && (
+                        <p className="text-red-500 text-center">{error}</p>
+                    )}
                 </form>
-                <a
-                    href={`/agencia/${idAgencia}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
-                >
-                    <FaEye className="text-base" />
-                    <span>Ver {agencia.nombre}</span>
-                </a>
             </div>
             <Toastify />
         </>

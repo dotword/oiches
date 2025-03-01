@@ -28,12 +28,11 @@ const AgenciaList = ({ agencias }) => {
                     <div className="px-4 pb-5">
                         <h2 className="text-lg font-bold">{agencia.nombre}</h2>
                         <p className="text-gray-400">{agencia.provincia}</p>
-
                         <Link
                             to={`/agencia/${agencia.id}`}
-                            className="button-large"
+                            className="mt-3 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-all"
                         >
-                            Ver agencia <FaArrowRight />
+                            Ver Agencia <FaArrowRight className="ml-2" />
                         </Link>
                     </div>
                 </div>

@@ -57,61 +57,80 @@ const AgenciaCreacion = () => {
 
     return currentUser ? (
         <>
-            <h3 className="text-xl font-semibold">Gestiona tu agencia</h3>
-            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                    <label htmlFor="nombre" className="font-semibold">
-                        Nombre de la agencia/manager:*
-                    </label>
-                    <input
-                        type="text"
-                        name="nombre"
-                        placeholder="Nombre de la agencia/manager"
-                        value={nombre}
-                        required
-                        onChange={handleChange}
-                        className="form-input"
-                    />
+            <h3 className="text-xl font-semibold mb-6">Gestiona tu agencia</h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Fila de Nombre, Provincia y Web en una línea */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Nombre de la agencia */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="nombre"
+                            className="block font-semibold mb-1"
+                        >
+                            Nombre de la agencia/manager:*
+                        </label>
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre de la agencia/manager"
+                            value={nombre}
+                            required
+                            onChange={handleChange}
+                            className="form-input w-full"
+                        />
+                    </div>
+
+                    {/* Provincia */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="provincia"
+                            className="block font-semibold mb-1"
+                        >
+                            Provincia:*
+                        </label>
+                        <select
+                            id="provincia"
+                            name="provincia"
+                            required
+                            value={provincia}
+                            className="form-input w-full py-2 h-auto"
+                            onChange={handleChange}
+                        >
+                            <option value="">Selecciona</option>
+                            {provinces.map((province) => (
+                                <option key={province.id} value={province.id}>
+                                    {province.provincia}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* Web o Redes Sociales */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="web"
+                            className="block font-semibold mb-1"
+                        >
+                            Web o enlace a tus RRSS:*
+                        </label>
+                        <input
+                            type="url"
+                            name="web"
+                            placeholder="https://www.tuagencia.com"
+                            value={web}
+                            required
+                            onChange={handleChange}
+                            className="form-input w-full py-2 h-auto"
+                        />
+                    </div>
                 </div>
 
-                <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                    <label htmlFor="provincia" className="font-semibold">
-                        Provincia:*
-                    </label>
-                    <select
-                        id="provincia"
-                        name="provincia"
-                        required
-                        value={provincia}
-                        className="form-select"
-                        onChange={handleChange}
+                {/* Descripción en otra línea */}
+                <div className="w-full">
+                    <label
+                        htmlFor="descripcion"
+                        className="block font-semibold mb-1"
                     >
-                        <option value="">Selecciona</option>
-                        {provinces.map((province) => (
-                            <option key={province.id} value={province.id}>
-                                {province.provincia}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className="flex flex-col mb-4 md:w-full">
-                    <label htmlFor="web" className="font-semibold">
-                        Web o enlace a tus RRSS:*
-                    </label>
-                    <input
-                        type="url"
-                        name="web"
-                        placeholder="https://www.tuagencia.com"
-                        value={web}
-                        required
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-
-                <div className="flex flex-col mb-4 md:w-full">
-                    <label htmlFor="descripcion" className="font-semibold">
                         Descripción:*
                     </label>
                     <textarea
@@ -119,40 +138,41 @@ const AgenciaCreacion = () => {
                         value={descripcion}
                         onChange={handleChange}
                         required
-                        className="form-textarea"
+                        className="form-input w-full min-h-[8rem]"
                         maxLength="2000"
+                        placeholder="Describe tu agencia..."
                     ></textarea>
                     <p className="mt-1 text-gray-500 text-sm">
                         2000 caracteres como máximo
                     </p>
-
-                    {/* Botón de ayuda justo después de las fotos */}
-                    <div className="sticky top-0 my-8 max-w-full">
-                        <div className=" m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
-                            <p className="text-center">
-                                ¿Necesitas ayuda con la publicación?
-                            </p>
-
-                            <a
-                                href="mailto:hola@oiches.com"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
-                            >
-                                Escríbenos
-                            </a>
-                        </div>
-                    </div>
                 </div>
-                <div className="my-12 max-w-80">
-                    <input
-                        type="submit"
-                        value="Publicar"
-                        className="btn-account p-3 w-full"
-                    />
+                {/* Botón de Enviar con más aire arriba */}
+                <div className="flex flex-col items-start bg-white w-full">
+                    <button type="submit" className="btn-degradado my-4">
+                        Modificar datos
+                    </button>
                 </div>
-                <div>{error && <p>{error}</p>}</div>
+
+                {/* Mensaje de error */}
+                {error && <p className="text-red-500 text-center">{error}</p>}
             </form>
+            {/* Sección de ayuda alineada a la izquierda */}
+
+            <div className="max-w-80 flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl mx-auto my-8 md:mr-0">
+                <p className="text-center">
+                    ¿Necesitas ayuda con la publicación?
+                </p>
+
+                <a
+                    href="mailto:hola@oiches.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                >
+                    Escríbenos
+                </a>
+            </div>
+
             <Toastify />
         </>
     ) : (

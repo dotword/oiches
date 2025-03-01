@@ -66,7 +66,7 @@ const AgenciaDetails = () => {
                         <img
                             className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"
                             src={imageUrl}
-                            alt="Imagen de perfil de la agencia"
+                            alt={`Imagen de perfil de la ${nombre}`}
                         />
                     )}
                     <h2 className="text-3xl font-bold mt-6 text-left mb-2">
@@ -74,20 +74,18 @@ const AgenciaDetails = () => {
                     </h2>
                     <p className="text-black">{provincia}</p>
 
-                    <div className="flex flex-wrap gap-6">
+                    <div className="flex flex-wrap mb-4">
                         {actualUser.roles === 'grupo' && (
-                            <p className="m-auto md:mr-0">
-                                <a
-                                    href={`mailto:${email}`}
-                                    className="button-large px-4"
-                                >
-                                    Contactar
-                                </a>
-                            </p>
+                            <a
+                                href={`mailto:${email}`}
+                                className="button-large px-4 m-auto md:mr-0"
+                            >
+                                Contactar
+                            </a>
                         )}
                     </div>
                     {descripcion && (
-                        <div className="border-t border-gray-300 pt-4 md:col-span-3 py-4">
+                        <div className="py-4">
                             <TextFormat text={descripcion} />
                         </div>
                     )}

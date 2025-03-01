@@ -10,7 +10,7 @@ import Paginator from '../../components/Paginator.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 import Conectate from '../../components/Conectate.jsx';
 import { IoFilter } from 'react-icons/io5';
-import FeatureGridMusicos from '../../components/Grupos/FeatureGridMusicos.jsx';
+import FeatureGridAgencias from '../../components/Agencias/FeatureGridAgencias.jsx';
 
 const Agencias = () => {
     const [page, setPage] = useState(1); // Estado para la página actual
@@ -57,7 +57,7 @@ const Agencias = () => {
                         '@type': 'ListItem',
                         position: index + 1,
                         name: agencia.nombre,
-                        url: `https://oiches.com/salas/${agencia.id}`,
+                        url: `https://oiches.com/agencia/${agencia.id}`,
                     })),
                 }}
             />
@@ -69,7 +69,7 @@ const Agencias = () => {
             >
                 <HeaderHero />
 
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-salas bg-cover bg-center md:h-[680px] p-8 md:p-16">
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-promotor bg-cover bg-center md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu agencia
@@ -131,7 +131,7 @@ const Agencias = () => {
                     </section>
 
                     <section className="flex flex-col gap-8 mt-20 mx-4 md:mt-28">
-                        <FeatureGridMusicos />
+                        <FeatureGridAgencias />
                     </section>
 
                     <section className="mt-20 mx-4 flex flex-col justify-between items-center gap-16 md:flex-row md:mt-28">
