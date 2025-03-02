@@ -15,7 +15,7 @@ const Conectate = () => {
                     <h2 className="text-3xl font-bold md:text-4xl md:mb-6">
                         Conéctate con la música en vivo
                     </h2>
-                    <p className="text-gray-500 text-lg max-w-md">
+                    <p className="text-gray-500 text-lg max-w-[30rem]">
                         Oiches te ofrece una plataforma para que locales y
                         músicos se encuentren y colaboren.
                     </p>
