@@ -7,9 +7,7 @@ import { Link } from 'react-router-dom';
 
 const AgenciaGruposList = ({ userOwner, entries }) => {
     return (
-        <section className="w-full mx-auto py-6 my-6 bg-white">
-            <h3 className="text-xl font-semibold mb-4">Roster</h3>
-
+        <section className="w-full mx-auto pb-6 my-6 bg-white">
             {entries && entries.length > 0 ? (
                 <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                     {entries.map((entry) => (
