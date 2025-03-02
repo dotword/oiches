@@ -3,7 +3,7 @@ import { FiMapPin, FiCalendar, FiMusic, FiStar } from 'react-icons/fi';
 const FeatureGridMusicos = () => {
     return (
         <>
-            <h2 className="text-3xl text-center font-bold mb-8 mx-auto max-w-[40rem] md:text-4xl md:mb-12">
+            <h2 className="text-3xl text-center font-bold mb-8 mx-auto max-w-lg md:text-4xl md:mb-12">
                 Cómo Oiches puede ayudarte si eres manager o agencia
             </h2>
 
