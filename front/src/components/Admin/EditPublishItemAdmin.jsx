@@ -37,14 +37,15 @@ const EditPublishItemAdmin = ({ idItem, token, published, roles }) => {
                     Publicar
                 </button>
             )}
-
-            <Link
-                to={`/${roles}/${idItem}/edit`}
-                className="flex justify-end gap-4 mb-16"
-            >
-                <FaPencilAlt className=" text-2xl" />
-                Editar
-            </Link>
+            {roles !== 'agencia' && (
+                <Link
+                    to={`/${roles}/${idItem}/edit`}
+                    className="flex justify-end gap-4 mb-16"
+                >
+                    <FaPencilAlt className=" text-2xl" />
+                    Editar
+                </Link>
+            )}
             <Toastify />
         </>
     );

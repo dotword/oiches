@@ -15,8 +15,8 @@ const AgenciaRoster = () => {
                 animate={{ opacity: 1, height: '100%' }}
                 exit={{ opacity: 0, height: 0 }}
             >
-                <Header />
-                <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
+                <Header txt="Roster" />
+                <main className="p-4 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                     <AgenciaGruposList
                         userOwner={userOwner}
                         entries={entries}
