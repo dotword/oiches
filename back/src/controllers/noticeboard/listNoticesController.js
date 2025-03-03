@@ -6,13 +6,12 @@ const listNoticesController = async (req, res, next) => {
             categoria: req.query.categoria || '',
             provincia: req.query.provincia || '',
             generos: req.query.generos || '',
-            ownerRole: req.query.ownerRole || '',
+            role: req.query.role || '',
             orderField: req.query.orderField || 'fecha',
             order: req.query.order || 'DESC',
             page: req.query.page || 1,
             pageSize: req.query.pageSize || 25,
         };
-
         const notices = await listNoticesService(filters);
 
         res.send({

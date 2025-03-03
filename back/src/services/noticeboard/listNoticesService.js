@@ -11,6 +11,7 @@ const listNoticesService = async (filters) => {
             N.salaGrupo_id,
             N.category_id,
             C.nombre AS category,
+            C.role AS role,
             P.nombre AS parentCategory,
             PR.provincia AS provincia,
             PR.id AS provinciaId,
@@ -29,9 +30,9 @@ const listNoticesService = async (filters) => {
         const queryParams = [];
 
         // Filtros
-        if (filters.ownerRole && filters.ownerRole.trim() !== '') {
-            query += ' AND C.id = ?';
-            queryParams.push(filters.ownerRole);
+        if (filters.role && filters.role.trim() !== '') {
+            query += ' AND C.role = ?';
+            queryParams.push(filters.role);
         }
         if (filters.categoria && filters.categoria.trim() !== '') {
             query += ' AND C.id = ?';
@@ -117,7 +118,6 @@ const listNoticesService = async (filters) => {
             []
         );
         const total = countResult[0].total;
-
         return { rows, total };
     } catch (error) {
         console.error(error);

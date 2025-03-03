@@ -8,6 +8,7 @@ const FetchNoticeCategoriasService = async (setCategorias) => {
 
         // Utilizamos apiRequest para manejar la petición
         const data = await apiRequest({ url });
+        console.log(data);
 
         // Establecer los géneros con los datos obtenidos
         setCategorias(data.categorias);

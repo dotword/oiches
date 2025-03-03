@@ -1,4 +1,5 @@
 import { FaArrowRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const NoticeboardList = ({ notices }) => {
     console.log('notices ', notices);
@@ -53,14 +54,12 @@ const NoticeboardList = ({ notices }) => {
                             </div>
                         )}
                         <h2 className="text-lg font-bold">{notice.titulo}</h2>
-
-                        <a
-                            href={`/noticeboard/${notice.id}`}
+                        <Link
+                            to={`/noticeboard/${notice.id}`}
                             className="button-large max-w-40"
-                            target="_blank"
                         >
                             Más info <FaArrowRight />
-                        </a>
+                        </Link>
                     </div>
                 </li>
             ))}

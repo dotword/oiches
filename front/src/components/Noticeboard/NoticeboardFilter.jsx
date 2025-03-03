@@ -6,10 +6,10 @@ import FetchNoticeCategoriasService from '../../services/Noticeboard/FetchNotice
 const NoticeboardFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
-    // const [role, setRole] = useState([]);
+    const [role, setRole] = useState([]);
     const [categoria, setCategoria] = useState([]);
     const [filters, setFilters] = useState({
-        ownerRole: '',
+        role: '',
         categoria: '',
         provincia: '',
         generos: '',
@@ -27,14 +27,21 @@ const NoticeboardFilter = ({ onFilterChange }) => {
         fetchFilters();
     }, []);
 
+    console.log('categoria ', categoria);
+
+    console.log('role ', role);
+
     useEffect(() => {
         if (autoSearch) {
+            console.log('Filtros enviados:', filters);
             onFilterChange(filters);
         }
     }, [filters, onFilterChange, autoSearch]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Cambiando filtro: ${name} -> ${value}`); // Depuración
+
         setFilters({
             ...filters,
             [name]: value,
@@ -45,14 +52,17 @@ const NoticeboardFilter = ({ onFilterChange }) => {
     return (
         <form className="sala-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4">
             <select
-                name="ownerRole"
-                value={filters.ownerRole}
+                name="role"
+                value={filters.role}
                 onChange={handleChange}
                 className="form-select"
             >
                 <option value="">Tipo</option>
-                <option value="grupo">Músico/Grupo busca...</option>
-                <option value="sala">Sala busca... </option>
+                {categoria.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                        {cat.role}
+                    </option>
+                ))}
             </select>
             <select
                 name="categoria"
