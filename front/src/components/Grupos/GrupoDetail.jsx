@@ -24,6 +24,8 @@ const GrupoDetail = () => {
     const roles = 'grupo';
     const { previous, next } = usePrevNext({ idItem: idGrupo, roles: roles });
 
+    console.log(entry);
+
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -65,6 +67,10 @@ const GrupoDetail = () => {
         });
     };
 
+    const firstImage =
+        fotos.find((foto) => foto.main === 1)?.name || fotos[0]?.name;
+    console.log(firstImage);
+
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración de SEO dinámico con los datos del grupo */}
@@ -96,13 +102,13 @@ const GrupoDetail = () => {
                             <img
                                 className="w-40 h-40 rounded-full object-cover shadow-lg mx-auto md:ml-0"
                                 src={
-                                    avatar
-                                        ? `${VITE_API_URL_BASE}/uploads/${avatar}`
-                                        : `${VITE_API_URL_BASE}/uploads/${
-                                              fotos.find(
-                                                  (foto) => foto.main === 1
-                                              )?.name || fotos[0]?.name
-                                          }`
+                                    !entry.agencia
+                                        ? avatar
+                                            ? `${VITE_API_URL_BASE}/uploads/${avatar}`
+                                            : `${VITE_API_URL_BASE}/uploads/${firstImage}`
+                                        : firstImage
+                                        ? `${VITE_API_URL_BASE}/uploads/${firstImage}`
+                                        : `${VITE_API_URL_BASE}/uploads/${avatar}`
                                 }
                                 alt="Imagen de perfil del grupo"
                             />
