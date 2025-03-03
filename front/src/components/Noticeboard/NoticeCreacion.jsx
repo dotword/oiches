@@ -21,7 +21,7 @@ const NoticeCreacion = () => {
 
     const [formValues, setFormValues] = useState({
         categoria: '',
-        provincia: null,
+        provincia: '',
         titulo: '',
         descripcion: '',
     });
@@ -55,7 +55,7 @@ const NoticeCreacion = () => {
         } else {
             setFormValues({
                 ...formValues,
-                [name]: name === 'provincia' && value === '' ? null : value,
+                [name]: name === 'provincia' && value === '' ? '' : value,
             });
         }
     };
@@ -83,7 +83,7 @@ const NoticeCreacion = () => {
         const formData = new FormData();
         formData.append('salaGrupo_id', salaGrupo_id);
         formData.append('category_id', category_id);
-        if (formValues.provincia) {
+        if (formValues.provincia !== '') {
             formData.append('provincia', formValues.provincia); // Solo agregar si tiene valor
         }
         formData.append('titulo', formValues.titulo);
@@ -146,7 +146,7 @@ const NoticeCreacion = () => {
                 )}
                 <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
                     <label htmlFor="categoria" className="font-semibold">
-                        Categoría:*
+                        Busco... *
                     </label>
                     <select
                         id="categoria"
