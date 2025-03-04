@@ -2,8 +2,6 @@ import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const NoticeboardList = ({ notices }) => {
-    console.log('notices ', notices);
-
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('es-ES', {

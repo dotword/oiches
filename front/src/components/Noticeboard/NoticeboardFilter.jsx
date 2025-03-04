@@ -6,11 +6,11 @@ import FetchNoticeCategoriasService from '../../services/Noticeboard/FetchNotice
 const NoticeboardFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);
     const [genres, setGenres] = useState([]);
-    const [role, setRole] = useState([]);
-    const [categoria, setCategoria] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [filters, setFilters] = useState({
         role: '',
         categoria: '',
+        subcategoria: '',
         provincia: '',
         generos: '',
         order: '',
@@ -20,70 +20,131 @@ const NoticeboardFilter = ({ onFilterChange }) => {
 
     useEffect(() => {
         const fetchFilters = async () => {
-            await FetchProvinciasService(setProvinces);
-            await FetchGenresService(setGenres);
-            await FetchNoticeCategoriasService(setCategoria);
+            try {
+                await FetchProvinciasService(setProvinces);
+                await FetchGenresService(setGenres);
+                await FetchNoticeCategoriasService(setCategorias);
+            } catch (error) {
+                console.error('Error cargando filtros:', error);
+            }
         };
         fetchFilters();
     }, []);
 
-    console.log('categoria ', categoria);
-
-    console.log('role ', role);
+    const categoriasPrincipales = categorias.filter(
+        (cat) => cat.parent_id === null && cat.role === filters.role
+    );
+    const subcategorias = categorias.filter(
+        (cat) => cat.parent_id === Number(filters.categoria)
+    );
 
     useEffect(() => {
         if (autoSearch) {
-            console.log('Filtros enviados:', filters);
-            onFilterChange(filters);
+            let filtrosActualizados = { ...filters };
+
+            if (filters.categoria && !filters.subcategoria) {
+                // Obtener todas las subcategorías de la categoría seleccionada
+                const subcategoriasDeCategoria = categorias
+                    .filter(
+                        (cat) => cat.parent_id === Number(filters.categoria)
+                    )
+                    .map((cat) => cat.id);
+
+                if (subcategoriasDeCategoria.length > 0) {
+                    filtrosActualizados.categoria = subcategoriasDeCategoria; // Enviamos un array de IDs
+                }
+            } else if (filters.subcategoria) {
+                // Si hay subcategoría seleccionada, usarla como categoría
+                filtrosActualizados.categoria = filters.subcategoria;
+            }
+            onFilterChange(filtrosActualizados);
         }
-    }, [filters, onFilterChange, autoSearch]);
+    }, [filters, autoSearch, onFilterChange, categorias]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(`Cambiando filtro: ${name} -> ${value}`); // Depuración
 
+        setFilters((prevFilters) => {
+            const newFilters = { ...prevFilters, [name]: value };
+
+            if (name === 'categoria') {
+                newFilters.subcategoria = ''; // Resetear subcategoría al cambiar la categoría
+            }
+
+            return newFilters;
+        });
+
+        setAutoSearch(true);
+    };
+
+    const resetFilters = () => {
         setFilters({
-            ...filters,
-            [name]: value,
+            role: '',
+            categoria: '',
+            subcategoria: '',
+            provincia: '',
+            generos: '',
+            order: '',
         });
         setAutoSearch(true);
     };
 
     return (
-        <form className="sala-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4">
-            <select
-                name="role"
-                value={filters.role}
-                onChange={handleChange}
-                className="form-select"
-            >
-                <option value="">Tipo</option>
-                {categoria.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                        {cat.role}
-                    </option>
-                ))}
-            </select>
-            <select
-                name="categoria"
-                value={filters.categoria}
-                onChange={handleChange}
-                className="form-select"
-            >
-                <option value="">Categoría</option>
-                {categoria.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                        {cat.nombre}
-                    </option>
-                ))}
-            </select>
+        <form className="sala-filter-form mx-auto md:flex md:flex-row md:space-x-4">
+            <div className="min-w-56">
+                <select
+                    name="role"
+                    value={filters.role}
+                    className="form-select mt-0"
+                    onChange={handleChange}
+                >
+                    <option value="">Categoría</option>
+                    <option value="sala">Sala</option>
+                    <option value="grupo">Músico/Grupo</option>
+                </select>
+
+                {filters.role && (
+                    <select
+                        id="categoria"
+                        name="categoria"
+                        value={filters.categoria}
+                        className="form-select"
+                        onChange={handleChange}
+                    >
+                        <option value="">Selecciona una categoría</option>
+                        {categoriasPrincipales.map((category) => (
+                            <option key={category.id} value={category.id}>
+                                {category.nombre}
+                            </option>
+                        ))}
+                    </select>
+                )}
+
+                {filters.categoria && subcategorias.length > 0 && (
+                    <select
+                        id="subcategoria"
+                        name="subcategoria"
+                        value={filters.subcategoria}
+                        className="form-select"
+                        onChange={handleChange}
+                    >
+                        <option value="">Selecciona una subcategoría</option>
+                        {subcategorias.map((sub) => (
+                            <option key={sub.id} value={sub.id}>
+                                {sub.nombre}
+                            </option>
+                        ))}
+                    </select>
+                )}
+            </div>
+
             <select
                 name="generos"
                 value={filters.generos}
                 onChange={handleChange}
                 className="form-select"
             >
-                <option value="">Géneros</option> {/* Cambio aquí */}
+                <option value="">Géneros</option>
                 {genres.map((genre) => (
                     <option key={genre.id} value={genre.id}>
                         {genre.nombre}
@@ -104,6 +165,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                     </option>
                 ))}
             </select>
+
             <select
                 name="order"
                 value={filters.order}
@@ -114,6 +176,13 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                 <option value="ASC">Fecha ⬆</option>
                 <option value="DESC">Fecha ⬇</option>
             </select>
+            <button
+                type="button"
+                onClick={resetFilters}
+                className="py-2 text-white font-semibold"
+            >
+                Limpiar filtros
+            </button>
         </form>
     );
 };
