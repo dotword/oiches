@@ -17,6 +17,7 @@ import {
     listAgenciasController,
     hiddeAgenciaController,
     nextPrevAgenciaController,
+    getAgenciaRosterController,
 } from '../controllers/agencias/index.js';
 
 const router = express.Router();
@@ -52,6 +53,15 @@ router.put(
 
 // Endpoint detalle agencia
 router.get('/agencia/:idAgencia?', agenciaExists, getAgenciaDetailController);
+
+// Listado y filtrado por nombre del roster de la agencia
+router.get(
+    '/agencia/roster/:userId?',
+    authUser,
+    userExists,
+    checkIfAgencia,
+    getAgenciaRosterController
+);
 
 // Endpoint de filtro/búsqueda y ordenación
 router.get('/agencias?', listAgenciasController);

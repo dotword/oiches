@@ -48,7 +48,7 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
                     (entries && entries.agencias[0]?.hidden === 1) ? (
                         <Link
                             to={`/users/roster/${idUserOwner}`}
-                            state={{ userOwner, entries: entries.grupos }}
+                            // state={{ userOwner, entries: entries.grupos }}
                             className="btn-degradado w-full md:max-w-64 text-center"
                         >
                             Ir a tu roster
@@ -72,7 +72,7 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
 
             {/* Botón ocultar agencia (más discreto y debajo) */}
             {entries && entries.agencias[0]?.published === 1 && (
-                <section className="mt-8 flex justify-start">
+                <section className="mt-10 flex justify-start">
                     <button onClick={toggleAgenciaHidden} className="enlaces">
                         {hidden
                             ? 'Publicar tu agencia y roster'

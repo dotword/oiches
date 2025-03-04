@@ -74,7 +74,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         to={
                                             userOwner.user.roles === 'sala'
                                                 ? `/sala/${entry.id}/edit`
-                                                : `/grupos/${entry.id}/edit`
+                                                : `/grupo/${entry.id}/edit`
                                         }
                                         className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
                                     >

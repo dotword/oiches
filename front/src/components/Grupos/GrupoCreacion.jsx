@@ -13,7 +13,6 @@ const GrupoCreacion = () => {
     const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
     const { userId } = useParams();
-
     const [formValues, setFormValues] = useState({
         nombre: '',
         provincia: '',
@@ -72,7 +71,9 @@ const GrupoCreacion = () => {
             );
 
             setTimeout(() => {
-                navigate(`/users/account/${userId}`);
+                userLogged && userLogged.roles === 'agencia'
+                    ? navigate(`/users/roster/${userId}`)
+                    : navigate(`/users/account/${userId}`);
             }, 2000);
         } catch (error) {
             setError(error.message);
