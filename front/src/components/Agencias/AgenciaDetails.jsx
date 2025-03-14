@@ -25,7 +25,7 @@ const AgenciaDetails = () => {
         published = 0,
         avatar = '',
     } = agencia || {};
-    const grupos = agencia?.grupos || [];
+    const grupos = agencia?.gruposPhotos || [];
     const roles = 'agencia';
     const { previous, next } = usePrevNext({ idItem: idAgencia, roles: roles });
 
@@ -108,20 +108,40 @@ const AgenciaDetails = () => {
 
                 {grupos && grupos.length > 0 ? (
                     <section className="mb-6">
-                        <h2 className="font-semibold text-xl">Roster</h2>
+                        <h2 className="text-2xl font-bold text-center md:text-left">
+                            Roster
+                        </h2>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
                             {grupos.map((grupo) => (
                                 <li
                                     key={grupo.id}
-                                    className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
+                                    className="bg-moradoOiches rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105 overflow-hidden group relative"
                                 >
-                                    <div className="flex flex-wrap items-center justify-between mb-3">
-                                        <h3 className="font-medium text-gray-800 text-lg">
-                                            {grupo.nombre}
-                                        </h3>
+                                    {/* Imagen y overlay */}
+                                    <div className="relative w-full aspect-square overflow-hidden">
+                                        <img
+                                            src={
+                                                grupo.fotos.length > 0
+                                                    ? `${VITE_API_URL_BASE}/uploads/${grupo.fotos[0].name}`
+                                                    : imageUrl
+                                            }
+                                            alt={`Imagen de perfil de ${grupo.nombre}`}
+                                            className="object-cover w-full h-full"
+                                        />
+                                        {/* Gradiente para el fondo del texto */}
+                                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                                            <h3 className="text-white font-bold text-lg">
+                                                {grupo.nombre}
+                                            </h3>
+                                            <p className="text-gray-300 text-base">
+                                                {grupo.genero}
+                                            </p>
+                                        </div>
+
+                                        {/* Botón de Info Posicionado Correctamente */}
                                         <Link
                                             to={`/grupo/${grupo.id}`}
-                                            className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
+                                            className="absolute bottom-4 right-4 bg-purple-600 text-white font-bold py-2 px-5 rounded-full text-sm shadow-lg hover:bg-purple-700 transition-all"
                                         >
                                             + Info
                                         </Link>
@@ -133,6 +153,7 @@ const AgenciaDetails = () => {
                 ) : (
                     ''
                 )}
+
                 <NextPreviousItem
                     previous={previous}
                     next={next}
