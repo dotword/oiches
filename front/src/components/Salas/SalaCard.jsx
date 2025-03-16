@@ -131,8 +131,8 @@ const SalaCard = ({ sala }) => {
         navigate(`/sala/${sala.id}`);
     };
 
-    // Configurar el límite de géneros a 5 y agregar "..." si hay más
-    const maxGeneros = 5;
+    // Límite de géneros a 3 y agregar "..." si hay más
+    const maxGeneros = 3;
     const generosArray = sala.generoNombres
         ? sala.generoNombres.split(',').map((g) => g.trim()) // Limpiar espacios
         : [];
@@ -162,17 +162,17 @@ const SalaCard = ({ sala }) => {
             <div className="flex flex-col flex-grow">
                 <h2 className="text-lg font-bold">{sala.nombre}</h2>
 
-                {/* Mostrar los géneros con límite */}
+                {/* Mostrar los géneros con límite mirar mas arribe el limite */}
                 <p className="text-gray-400">{mostrarGeneros}</p>
 
                 <p>
                     {sala.ciudad}, {sala.provincia}
                 </p>
 
-                {/* Espaciador para empujar el rating hacia abajo */}
+                {/* manda rating hacia abajo */}
                 <div className="flex-grow"></div>
 
-                {/* Rating al final */}
+                {/* Rating  */}
                 <div className="mt-2">
                     <StarRating rating={sala.media_votos} />
                 </div>
