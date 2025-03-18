@@ -143,15 +143,12 @@ const SalaCard = ({ sala }) => {
             : generosArray.join(', ');
 
     return (
-        <div
-            className="card flex flex-col h-full p-4 bg-footercolor shadow-md rounded-lg cursor-pointer transition-transform hover:scale-105"
-            onClick={handleClick}
-        >
+        <div className="card-generica" onClick={handleClick}>
             {/* Imagen */}
             <img
                 src={imageUrl}
                 alt={sala.nombre}
-                className={`w-full h-48 sm:h-48 rounded-lg mb-4 ${
+                className={`grupo-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
                     imageUrl === DefaultProfile
                         ? 'object-contain'
                         : 'object-cover'

@@ -30,7 +30,7 @@ const GrupoCard = ({ grupo }) => {
             ? `${generosArray.slice(0, maxGeneros).join(', ')}...`
             : generosArray.join(', ');
     return (
-        <div className="card" onClick={handleClick}>
+        <div className="card-generica" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
