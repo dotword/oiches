@@ -288,9 +288,9 @@ const AgenciaDetails = () => {
                 {grupos && grupos.length > 0 ? (
                     <section className="mb-6">
                         <h2 className="text-2xl font-bold text-center md:text-left">
-                            Team Roster
+                            Roster
                         </h2>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4 mt-8">
                             {grupos.map((grupo) => (
                                 <li
                                     key={grupo.id}
@@ -311,7 +311,7 @@ const AgenciaDetails = () => {
 
                                     {/* Información */}
                                     <div className="flex-1">
-                                        <h3 className=" font-medium text-footercolor mb-2">
+                                        <h3 className=" font-semibold text-footercolor mb-2">
                                             {grupo.nombre}
                                         </h3>
                                         {/* Botón de más información */}
