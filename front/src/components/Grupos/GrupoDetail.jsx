@@ -24,8 +24,6 @@ const GrupoDetail = () => {
     const roles = 'grupo';
     const { previous, next } = usePrevNext({ idItem: idGrupo, roles: roles });
 
-    console.log(entry);
-
     useEffect(() => {
         const fetchData = async () => {
             if (!currentUser) return;
@@ -69,7 +67,6 @@ const GrupoDetail = () => {
 
     const firstImage =
         fotos.find((foto) => foto.main === 1)?.name || fotos[0]?.name;
-    console.log(firstImage);
 
     return published === 1 || actualUser.roles === 'admin' ? (
         <>

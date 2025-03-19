@@ -8,10 +8,7 @@ const AgenciaList = ({ agencias }) => {
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {agencias.map((agencia) => (
-                <div
-                    key={agencia.id}
-                    className="card bg-footercolor shadow-md rounded-lg p-4 flex flex-col cursor-pointer transition-transform transform hover:scale-105"
-                >
+                <div key={agencia.id} className="card-generica">
                     <Link to={`/agencia/${agencia.id}`} className="w-full">
                         <img
                             src={
