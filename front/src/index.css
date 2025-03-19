@@ -223,7 +223,7 @@ button.react-calendar__navigation__arrow {
         @apply bg-gray-800 text-white p-3 rounded-lg shadow-lg cursor-pointer w-full max-w-80 mx-auto;
     }
     .card-generica {
-        @apply card flex flex-col h-full p-4 bg-footercolor shadow-md rounded-lg cursor-pointer transition-transform hover:scale-105;
+        @apply card flex flex-col h-full p-3 bg-footercolor shadow-md rounded-lg cursor-pointer transition-transform hover:scale-105;
     }
     .sala-card,
     .grupo-card {
