@@ -33,7 +33,7 @@ const AgenciaList = ({ agencias }) => {
                         <p className="text-gray-400">{agencia.provincia}</p>
 
                         {/* Botón siempre abajo alineado a la izquierda */}
-                        <div className="mt-auto">
+                        <div className="mt-auto pb-2">
                             <Link
                                 to={`/agencia/${agencia.id}`}
                                 className="mt-4 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-all"
