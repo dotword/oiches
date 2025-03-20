@@ -104,7 +104,7 @@ const AgenciaDetails = () => {
                 </section>
 
                 {/* Roster - Tarjetas de Grupos (Nuevo Diseño) */}
-                {grupos && grupos.length > 0 ? (
+                {grupos && grupos.length > 0 && (
                     <section className="mb-6">
                         <h2 className="text-2xl font-bold text-center md:text-left">
                             Roster
@@ -145,10 +145,6 @@ const AgenciaDetails = () => {
                             ))}
                         </ul>
                     </section>
-                ) : (
-                    <p className="text-center mt-4 text-gray-500">
-                        No hay grupos disponibles.
-                    </p>
                 )}
 
                 <NextPreviousItem
