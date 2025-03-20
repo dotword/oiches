@@ -64,27 +64,6 @@ const SalaDetail = () => {
         });
     };
 
-    // const handlePublish = async () => {
-    //     try {
-    //         const response = await fetch(
-    //             `${VITE_API_URL_BASE}/published-sala/${idSala}`,
-    //             {
-    //                 method: 'PUT',
-    //                 headers: {
-    //                     Authorization: `${token}`,
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //             }
-    //         );
-
-    //         if (response.ok) {
-    //             toast.success('Publicado con éxito');
-    //         }
-    //     } catch (error) {
-    //         toast.error('Error al publicar');
-    //     }
-    // };
-
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}

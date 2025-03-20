@@ -26,14 +26,6 @@ const ConciertoList = ({ conciertos }) => {
                     className="bg-white rounded-lg shadow-lg mx-auto w-80 max-w-full overflow-hidden"
                     key={`{${concierto.id}}`}
                 >
-                    {/* <a className="relative" href={`/concierto/${concierto.id}`}>
-                        <img
-                            src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
-                            alt={`Imagen del concierto de ${concierto.artista}`}
-                            className="concert-card-image"
-                        />
-                    </a> */}
-
                     <Link
                         to={`/concierto/${concierto.id}`}
                         className="relative"

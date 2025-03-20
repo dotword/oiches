@@ -222,6 +222,9 @@ button.react-calendar__navigation__arrow {
     .card {
         @apply bg-gray-800 text-white p-3 rounded-lg shadow-lg cursor-pointer w-full max-w-80 mx-auto;
     }
+    .card-generica {
+        @apply card flex flex-col h-full p-3 bg-footercolor shadow-md rounded-lg cursor-pointer transition-transform hover:scale-105;
+    }
     .sala-card,
     .grupo-card {
         @apply bg-gray-900 p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;

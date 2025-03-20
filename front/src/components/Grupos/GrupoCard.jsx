@@ -19,9 +19,18 @@ const GrupoCard = ({ grupo }) => {
     const handleClick = () => {
         navigate(`/grupo/${grupo.id}`);
     };
+    // Límite de géneros a 3 y agregar "..." si hay más
+    const maxGeneros = 3;
+    const generosArray = grupo.generoNombres
+        ? grupo.generoNombres.split(',').map((g) => g.trim()) // Limpiar espacios
+        : [];
 
+    const mostrarGeneros =
+        generosArray.length > maxGeneros
+            ? `${generosArray.slice(0, maxGeneros).join(', ')}...`
+            : generosArray.join(', ');
     return (
-        <div className="card" onClick={handleClick}>
+        <div className="card-generica" onClick={handleClick}>
             <img
                 src={imageUrl}
                 alt={grupo.nombre}
@@ -34,7 +43,7 @@ const GrupoCard = ({ grupo }) => {
             <h2 className="card-title text-lg font-bold mt-2">
                 {grupo.nombre}
             </h2>
-            <p className="card-genre text-gray-400">{grupo.generoNombres}</p>
+            <p className="card-genre text-gray-400">{mostrarGeneros}</p>
             <p className="card-province text-gray-400">
                 <span className="sub_title_ficha">Provincia:</span>{' '}
                 {grupo.provincia_nombre}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import useAgencia from '../../hooks/useAgencia.jsx';
 import DefaultProfile from '/Horizontal_blanco.webp';
 import useAuth from '../../hooks/useAuth.jsx';
@@ -16,6 +15,7 @@ const AgenciaDetails = () => {
     const { agencia } = useAgencia(idAgencia);
     const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
+
     const {
         nombre = '',
         provincia = '',
@@ -25,9 +25,10 @@ const AgenciaDetails = () => {
         published = 0,
         avatar = '',
     } = agencia || {};
-    const grupos = agencia?.grupos || [];
+
+    const grupos = agencia?.gruposPhotos || [];
     const roles = 'agencia';
-    const { previous, next } = usePrevNext({ idItem: idAgencia, roles: roles });
+    const { previous, next } = usePrevNext({ idItem: idAgencia, roles });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,20 +48,16 @@ const AgenciaDetails = () => {
 
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
-            {/* Integración del componente Seo con datos dinámicos */}
             <Seo
                 title={`${nombre} - Agencia de músicos en ${provincia}`}
                 description={`Descubre la agencia ${nombre} en ${provincia}.`}
                 keywords={`agencia, manager, ${nombre}, ${provincia}, música en vivo, eventos`}
                 url={`https://oiches.com/agencia/${idAgencia}`}
-                image={
-                    avatar
-                        ? `${VITE_API_URL_BASE}/uploads/${avatar}`
-                        : DefaultProfile
-                }
+                image={imageUrl}
             />
 
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
+                {/* Información de la agencia */}
                 <section className="mb-6">
                     {avatar && (
                         <img
@@ -106,22 +103,40 @@ const AgenciaDetails = () => {
                     )}
                 </section>
 
-                {grupos && grupos.length > 0 ? (
+                {/* Roster - Tarjetas de Grupos (Nuevo Diseño) */}
+                {grupos && grupos.length > 0 && (
                     <section className="mb-6">
-                        <h2 className="font-semibold text-xl">Roster</h2>
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4">
+                        <h2 className="text-2xl font-bold text-center md:text-left">
+                            Roster
+                        </h2>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-4 mt-8">
                             {grupos.map((grupo) => (
                                 <li
                                     key={grupo.id}
-                                    className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between"
+                                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105 overflow-hidden flex items-center p-4 gap-4 border-b-2 border-moradoOiches"
                                 >
-                                    <div className="flex flex-wrap items-center justify-between mb-3">
-                                        <h3 className="font-medium text-gray-800 text-lg">
+                                    {/* Imagen Redonda */}
+                                    <div className="w-16 h-16 sm:w-20 sm:h-20 flex-shrink-0">
+                                        <img
+                                            src={
+                                                grupo.fotos.length > 0
+                                                    ? `${VITE_API_URL_BASE}/uploads/${grupo.fotos[0].name}`
+                                                    : imageUrl
+                                            }
+                                            alt={`Imagen de ${grupo.nombre}`}
+                                            className="object-cover w-full h-full rounded-full shadow-lg"
+                                        />
+                                    </div>
+
+                                    {/* Información */}
+                                    <div className="flex-1">
+                                        <h3 className=" font-semibold text-footercolor mb-2">
                                             {grupo.nombre}
                                         </h3>
+                                        {/* Botón de más información */}
                                         <Link
                                             to={`/grupo/${grupo.id}`}
-                                            className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
+                                            className="mt-2 inline-block bg-purple-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-purple-700 transition"
                                         >
                                             + Info
                                         </Link>
@@ -130,9 +145,8 @@ const AgenciaDetails = () => {
                             ))}
                         </ul>
                     </section>
-                ) : (
-                    ''
                 )}
+
                 <NextPreviousItem
                     previous={previous}
                     next={next}
