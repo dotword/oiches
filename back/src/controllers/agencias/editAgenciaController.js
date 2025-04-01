@@ -7,7 +7,24 @@ const editAgenciaController = async (req, res, next) => {
     try {
         const { idAgencia } = req.params;
 
-        const { nombre, provincia, descripcion, web } = req.body;
+        let { nombre, provincia, descripcion, web, especialidad } = req.body;
+
+        // Si especialidad es un string con comas, lo convertimos en un array
+        if (typeof especialidad === 'string') {
+            especialidad = especialidad.split(',').map((e) => Number(e.trim()));
+        }
+
+        // Si especialidad es un número, lo convertimos en un array
+        if (typeof especialidad === 'number') {
+            especialidad = [especialidad];
+        }
+
+        // Si especialidad ya es un array, nos aseguramos de que todos sean números enteros
+        if (Array.isArray(especialidad)) {
+            especialidad = especialidad
+                .map((e) => Number(e))
+                .filter((e) => Number.isInteger(e));
+        }
 
         // Validamos el body con Joi.
         await validateSchemaUtil(editAgenciaSchema, Object.assign(req.body));
@@ -23,7 +40,7 @@ const editAgenciaController = async (req, res, next) => {
         if (descripcion !== undefined) updatedFields.descripcion = descripcion;
         if (web !== undefined) updatedFields.web = web;
 
-        await editAgenciaService(idAgencia, updatedFields);
+        await editAgenciaService(idAgencia, updatedFields, especialidad);
 
         res.send({
             status: 'ok',

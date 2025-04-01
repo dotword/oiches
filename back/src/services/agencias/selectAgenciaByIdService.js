@@ -30,6 +30,19 @@ const selectAgenciaByIdService = async (idAgencia) => {
         return null;
     }
 
+    const [agenciaEspecialidad] = await pool.query(
+        `
+            SELECT 
+                I.especialidad_id idEspecialidad,
+                E.especialidad
+            FROM agencias_especialidades I
+            LEFT JOIN agencias_especialidad E ON E.id = I.especialidad_id
+            WHERE I.agencia_id = ?
+            GROUP BY I.especialidad_id
+        `,
+        [idAgencia]
+    );
+
     const [grupos] = await pool.query(
         `SELECT
             id, nombre, provincia
@@ -66,7 +79,7 @@ const selectAgenciaByIdService = async (idAgencia) => {
         fotos: groupedPhotos[row.id] || [],
     }));
 
-    return { ...agencia[0], gruposPhotos };
+    return { ...agencia[0], agenciaEspecialidad, gruposPhotos };
 };
 
 export default selectAgenciaByIdService;
