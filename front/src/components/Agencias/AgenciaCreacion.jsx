@@ -4,7 +4,10 @@ import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import { useParams } from 'react-router-dom';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
+import FetchAgenciaEspecialidadService from '../../services/Agencias/FetchAgenciaEspecialidadService.js';
 import registerAgenciaService from '../../services/Agencias/registerAgenciaService.js';
+import Multiselect from 'multiselect-react-dropdown';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
 
 const AgenciaCreacion = () => {
     const { currentUser, token } = useContext(AuthContext);
@@ -15,13 +18,16 @@ const AgenciaCreacion = () => {
         provincia: '',
         descripcion: '',
         web: '',
+        especialidad: [],
     });
 
     const [provinces, setProvinces] = useState([]);
+    const [especialidades, setEspecialidades] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
+        FetchAgenciaEspecialidadService(setEspecialidades);
     }, []);
 
     const handleChange = (e) => {
@@ -34,7 +40,16 @@ const AgenciaCreacion = () => {
         const formData = new FormData();
 
         Object.entries(formValues).forEach(([key, value]) => {
-            if (value) formData.append(key, value);
+            if (key === 'especialidad') {
+                const especialidadArray = Array.isArray(value)
+                    ? value
+                    : value.split(',');
+                especialidadArray.forEach((especialidad) =>
+                    formData.append('especialidad', especialidad)
+                );
+            } else {
+                if (value) formData.append(key, value);
+            }
         });
 
         try {
@@ -60,10 +75,10 @@ const AgenciaCreacion = () => {
 
     return currentUser ? (
         <>
-            <h3 className="text-xl font-semibold mb-6">Gestiona tu agencia</h3>
+            <h3 className="text-xl font-semibold mb-6">Publica tu agencia</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Fila de Nombre, Provincia y Web en una línea */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Nombre de la agencia */}
                     <div className="w-full">
                         <label
@@ -106,6 +121,47 @@ const AgenciaCreacion = () => {
                                 </option>
                             ))}
                         </select>
+                    </div>
+
+                    {/* Especialidades */}
+                    <div className="w-full">
+                        <label
+                            htmlFor="especialidad"
+                            className="block font-semibold mb-3"
+                        >
+                            Especialidad:*
+                        </label>
+                        <Multiselect
+                            options={especialidades.map((especialidad) => ({
+                                id: especialidad.id,
+                                nombre: especialidad.especialidad,
+                            }))}
+                            displayValue="nombre"
+                            placeholder="Selecciona una o varias especialidades"
+                            onSelect={(selectedList) => {
+                                const ids = selectedList.map((item) => item.id);
+                                setFormValues({
+                                    ...formValues,
+                                    especialidad: ids.join(','),
+                                });
+                            }}
+                            onRemove={(selectedList) => {
+                                const ids = selectedList.map((item) => item.id);
+                                setFormValues({
+                                    ...formValues,
+                                    especialidad: ids.join(','),
+                                });
+                            }}
+                            customCloseIcon={
+                                <IoIosCloseCircleOutline className="ml-1" />
+                            }
+                            style={{
+                                chips: {
+                                    background: '#ffb500',
+                                    color: 'black',
+                                },
+                            }}
+                        />
                     </div>
 
                     {/* Web o Redes Sociales */}

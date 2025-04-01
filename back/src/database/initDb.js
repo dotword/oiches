@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias_especialidades, agencias_especialidad,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -204,6 +204,13 @@ const main = async () => {
         `);
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS agencias_especialidad (
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                especialidad VARCHAR(100) NOT NULL
+            );
+        `);
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS agencias(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 usuario_id CHAR(36) NOT NULL,
@@ -217,8 +224,8 @@ const main = async () => {
                 FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
+                );
+            `);
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS conciertos (
@@ -337,18 +344,11 @@ const main = async () => {
 
         await pool.query(`
             INSERT INTO provincias (provincia) VALUES
-            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza'), ('Ceuta'), ('Melilla');
-        
+            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza'), ('Ceuta'), ('Melilla');  
         `);
 
         await pool.query(`
-            INSERT INTO generos_musicales (nombre) VALUES ('Rock'), ('Pop'), ('Metal'), ('Funk'), ('Country'), ('Folk'), ('Jazz'), ('Reggae'), ('Indie'), ('Electrónica'), ('Soul'), ('Canción de autor'), ('Flamenco'), ('Clásica'), ('Latina'), ('Reaggeton'), ('Hip-Hop'), ('Blues'), ('Punk'), ('Ska'), ('Rap'), ('Hardcore'), ('Heavy'), ('Ópera'), ('Versiones'), ('Fado'), ('Rancheras'), ('Rumba'), ('Cumbia');
-        `);
-
-        await pool.query(`
-            INSERT INTO provincias (provincia) VALUES
-            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
-        
+            INSERT INTO agencias_especialidad (especialidad) VALUES ('Management'), ('Promotora'), ('Booking'), ('Sello Discográfico'), ('Comunicación');
         `);
 
         await pool.query(`

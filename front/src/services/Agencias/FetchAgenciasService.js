@@ -10,6 +10,8 @@ const FetchAgenciasService = async (filters = {}, page = 1, pageSize = 10) => {
 
         if (filters.nombre) queryParamsObj.nombre = filters.nombre;
         if (filters.provincia) queryParamsObj.provincia = filters.provincia;
+        if (filters.especialidades)
+            queryParamsObj.especialidades = filters.especialidades;
 
         // Agregar lógica: Si 'Todos' está seleccionado, no se pasa el filtro de géneros
         if (filters.order) queryParamsObj.order = filters.order;

@@ -4,7 +4,10 @@ import { toast } from 'react-toastify';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import getAgenciaService from '../../services/Agencias/getAgenciaService.js';
 import EditAgenciaService from '../../services/Agencias/EditAgenciaService.js';
+import FetchAgenciaEspecialidadService from '../../services/Agencias/FetchAgenciaEspecialidadService.js';
 import { FaEye } from 'react-icons/fa';
+import { IoIosCloseCircleOutline } from 'react-icons/io';
+import Multiselect from 'multiselect-react-dropdown';
 
 const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     const [agencia, setAgencia] = useState({
@@ -15,10 +18,13 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     });
 
     const [provinces, setProvinces] = useState([]);
+    const [especialidades, setEspecialidades] = useState([]);
+    const [selectedEspecialidades, setSelectedEspecialidades] = useState([]);
     const [error, setError] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
+        FetchAgenciaEspecialidadService(setEspecialidades);
     }, []);
 
     useEffect(() => {
@@ -33,6 +39,13 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                     web: data.agencia.web || '',
                     owner: data.agencia.usuario_id,
                 });
+                const mappedEspecialidades = (
+                    data.agencia.agenciaEspecialidad || []
+                ).map((item) => ({
+                    id: item.idEspecialidad,
+                    nombre: item.especialidad,
+                }));
+                setSelectedEspecialidades(mappedEspecialidades);
             } catch (error) {
                 setError(error.message);
                 toast.error(error.message);
@@ -45,12 +58,20 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (selectedEspecialidades.length === 0) {
+            toast.error('Debes seleccionar al menos una especialidad.');
+            return;
+        }
+
         try {
             const dataForm = new FormData();
             dataForm.append('nombre', agencia.nombre || '');
             dataForm.append('provincia', agencia.provincia || '');
             dataForm.append('descripcion', agencia.descripcion || '');
             dataForm.append('web', agencia.web || '');
+            selectedEspecialidades.forEach((esp) => {
+                dataForm.append('especialidad', esp.id);
+            });
 
             await EditAgenciaService({
                 token,
@@ -77,7 +98,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Agrupamos los 3 primeros campos en una fila */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {/* Nombre */}
                         <div className="w-full">
                             <label
@@ -132,6 +153,43 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                                     </option>
                                 ))}
                             </select>
+                        </div>
+
+                        {/* Especialidades */}
+                        <div className="w-full">
+                            <label
+                                htmlFor="especialidad"
+                                className="block font-semibold mb-3"
+                            >
+                                Especialidad:*
+                            </label>
+                            <Multiselect
+                                options={especialidades.map((esp) => ({
+                                    id: esp.id,
+                                    nombre: esp.especialidad,
+                                }))}
+                                displayValue="nombre"
+                                placeholder="Selecciona una o varias especialidades"
+                                selectedValues={selectedEspecialidades}
+                                onSelect={(selectedList) =>
+                                    setSelectedEspecialidades(selectedList)
+                                }
+                                onRemove={(selectedList) =>
+                                    setSelectedEspecialidades(selectedList)
+                                }
+                                showArrow={true}
+                                closeOnSelect={false}
+                                customCloseIcon={
+                                    <IoIosCloseCircleOutline className="ml-1" />
+                                }
+                                style={{
+                                    chips: {
+                                        background: '#ffb500',
+                                        color: 'black',
+                                    },
+                                }}
+                                className="form-multiselect mb-3"
+                            />
                         </div>
 
                         {/* Web */}

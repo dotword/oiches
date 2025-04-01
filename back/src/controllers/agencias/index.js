@@ -5,6 +5,7 @@ import listAgenciasController from './listAgenciasController.js';
 import hiddeAgenciaController from './hiddeAgenciaController.js';
 import nextPrevAgenciaController from './nextPrevAgenciaController.js';
 import getAgenciaRosterController from './getAgenciaRosterController.js';
+import listEspecialidadesController from './listEspecialidadesController.js';
 
 export {
     createAgenciaController,
@@ -14,4 +15,5 @@ export {
     hiddeAgenciaController,
     nextPrevAgenciaController,
     getAgenciaRosterController,
+    listEspecialidadesController,
 };

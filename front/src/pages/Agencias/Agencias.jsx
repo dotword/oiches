@@ -23,7 +23,6 @@ const Agencias = () => {
     useEffect(() => {
         const fetchAgencias = async () => {
             const data = await FetchAgenciasService(filters, page, pageSize);
-
             setTotal(data.total);
             setFilteredAgencias(data.result);
         };
@@ -104,7 +103,7 @@ const Agencias = () => {
                             isNavOpen ? 'flex' : 'hidden md:flex'
                         }`}
                     >
-                        <div className="flex flex-col items-center justify-between w-4/5">
+                        <div className="flex flex-col items-center justify-between w-11/12">
                             <AgenciaFilter
                                 onFilterChange={handleFilterChange}
                             />
