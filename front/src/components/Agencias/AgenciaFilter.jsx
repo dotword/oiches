@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import FetchProvinciasService from '../../services/FetchProvinciasService';
+import FetchAgenciaEspecialidadService from '../../services/Agencias/FetchAgenciaEspecialidadService';
 
 const AgenciaFilter = ({ onFilterChange }) => {
     const [provinces, setProvinces] = useState([]);
+    const [especialidades, setEspecialidades] = useState([]);
     const [filters, setFilters] = useState({
         nombre: '',
         provincia: '',
-        order: '',
+        especialidades: '',
+        order: 'DESC',
+        field: 'createdAt',
     });
 
     const [autoSearch, setAutoSearch] = useState(true);
@@ -14,6 +18,7 @@ const AgenciaFilter = ({ onFilterChange }) => {
     useEffect(() => {
         const fetchFilters = async () => {
             await FetchProvinciasService(setProvinces);
+            await FetchAgenciaEspecialidadService(setEspecialidades);
         };
         fetchFilters();
     }, []);
@@ -34,7 +39,7 @@ const AgenciaFilter = ({ onFilterChange }) => {
     };
 
     return (
-        <form className="sala-filter-form w-4/5 mx-auto md:flex md:flex-row md:space-x-4">
+        <form className="sala-filter-form mx-auto md:flex md:flex-row md:space-x-4">
             <input
                 type="text"
                 name="nombre"
@@ -43,6 +48,20 @@ const AgenciaFilter = ({ onFilterChange }) => {
                 onChange={handleChange}
                 className="form-input placeholder:text-black"
             />
+
+            <select
+                name="especialidades"
+                value={filters.especialidades}
+                onChange={handleChange}
+                className="form-select"
+            >
+                <option value="">Especialidad</option>
+                {especialidades.map((espc) => (
+                    <option key={espc.id} value={espc.id}>
+                        {espc.especialidad}
+                    </option>
+                ))}
+            </select>
 
             <select
                 name="provincia"
@@ -61,7 +80,7 @@ const AgenciaFilter = ({ onFilterChange }) => {
                 name="order"
                 value={filters.order}
                 onChange={handleChange}
-                className="form-select"
+                className="form-select max-w-32"
             >
                 <option value="">Ordenar</option>
                 <option value="ASC">Recientes ⬆</option>

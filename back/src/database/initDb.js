@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS conciertos,agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS conciertos, agencias_especialidades, agencias_especialidad, agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -204,6 +204,13 @@ const main = async () => {
         `);
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS agencias_especialidad (
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+                especialidad VARCHAR(100) NOT NULL
+            );
+        `);
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS agencias(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 usuario_id CHAR(36) NOT NULL,
@@ -217,26 +224,26 @@ const main = async () => {
                 FOREIGN KEY(usuario_id) REFERENCES usuarios(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
+                );
+            `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS conciertos (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                reservaId CHAR(36),
-                title TEXT(255),
-                fecha DATE NOT NULL,
-                hora TIME NOT NULL,
-                precioAnticipada DECIMAL(10, 2),
-                precio DECIMAL(10, 2),
-                description LONGTEXT,
-                link VARCHAR(255),
-                salaLink VARCHAR(255),
-                poster VARCHAR(100) NOT NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (reservaId) REFERENCES reservas(id)
-            );
-        `);
+                CREATE TABLE IF NOT EXISTS conciertos (
+                    id CHAR(36) PRIMARY KEY NOT NULL,
+                    reservaId CHAR(36),
+                    title TEXT(255),
+                    fecha DATE NOT NULL,
+                    hora TIME NOT NULL,
+                    precioAnticipada DECIMAL(10, 2),
+                    precio DECIMAL(10, 2),
+                    description LONGTEXT,
+                    link VARCHAR(255),
+                    salaLink VARCHAR(255),
+                    poster VARCHAR(100) NOT NULL,
+                    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (reservaId) REFERENCES reservas(id)
+                );
+            `);
 
         await pool.query(`
             INSERT INTO generos_musicales (nombre) VALUES
@@ -268,13 +275,16 @@ const main = async () => {
                 ('Fado'),
                 ('Rancheras'),
                 ('Rumba'),
-                ('Cumbia');
+                ('Cumbia'), ('Músicas del mundo'), ('Músicas urbanas');
         `);
 
         await pool.query(`
             INSERT INTO provincias (provincia) VALUES
-            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza')
-        
+            ('A Coruña'), ('Álava'), ('Albacete'), ('Alicante'), ('Almería'), ('Asturias'), ('Ávila'), ('Badajoz'), ('Baleares'), ('Barcelona'), ('Burgos'), ('Cáceres'), ('Cádiz'), ('Cantabria'), ('Castellón'), ('Ciudad Real'), ('Córdoba'), ('Cuenca'), ('Girona'), ('Granada'), ('Guadalajara'), ('Guipúzcoa'), ('Huelva'), ('Huesca'), ('Jaén'), ('La Rioja'), ('Las Palmas'), ('León'), ('Lleida'), ('Lugo'), ('Madrid'), ('Málaga'), ('Murcia'), ('Navarra'), ('Ourense'), ('Palencia'), ('Pontevedra'), ('Salamanca'), ('Segovia'), ('Sevilla'), ('Soria'), ('Tarragona'), ('Santa Cruz de Tenerife'), ('Teruel'), ('Toledo'), ('Valencia'), ('Valladolid'), ('Vizcaya'), ('Zamora'), ('Zaragoza'), ('Ceuta'), ('Melilla');  
+        `);
+
+        await pool.query(`
+            INSERT INTO agencias_especialidad (especialidad) VALUES ('Management'), ('Promotora'), ('Booking'), ('Sello Discográfico'), ('Comunicación');
         `);
 
         console.log('¡Tablas creadas!');
