@@ -44,24 +44,29 @@ const getUserOwnerService = async (userId) => {
             `SELECT * FROM agencias WHERE usuario_id = ?`,
             [userId]
         );
-        const [agenciaEspecialidad] = await pool.query(
-            `
-                SELECT
-                    I.especialidad_id idEspecialidad,
-                    E.especialidad
-                FROM agencias_especialidades I
-                LEFT JOIN agencias_especialidad E ON E.id = I.especialidad_id
-                WHERE I.agencia_id = ?
-                GROUP BY I.especialidad_id
-            `,
-            [agencias[0].id]
-        );
 
-        const [grupos] = await pool.query(
-            `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, published, createdAt FROM grupos WHERE usuario_id = ?`,
-            [userId]
-        );
-        return { agencias, agenciaEspecialidad, grupos };
+        if (agencias.length === 0) {
+            return { agencias };
+        } else {
+            const [agenciaEspecialidad] = await pool.query(
+                `
+                    SELECT
+                        I.especialidad_id idEspecialidad,
+                        E.especialidad
+                    FROM agencias_especialidades I
+                    LEFT JOIN agencias_especialidad E ON E.id = I.especialidad_id
+                    WHERE I.agencia_id = ?
+                    GROUP BY I.especialidad_id
+                `,
+                [agencias[0].id]
+            );
+
+            const [grupos] = await pool.query(
+                `SELECT id, nombre, provincia, honorarios, biografia, usuario_id, published, createdAt FROM grupos WHERE usuario_id = ?`,
+                [userId]
+            );
+            return { agencias, agenciaEspecialidad, grupos };
+        }
     }
 };
 
