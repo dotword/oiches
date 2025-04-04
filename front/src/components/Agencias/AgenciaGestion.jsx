@@ -65,14 +65,15 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
             <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
                 {entries &&
                     (entries.agencias[0]?.published === 0 ||
-                        entries.agencias[0]?.hidden === 1) &&
-                    entries.agenciaEspecialidad &&
-                    entries.agenciaEspecialidad.some(
-                        (esp) => esp.idEspecialidad === 1
-                    ) && (
+                        entries.agencias[0]?.hidden === 1) && (
                         <p className="text-gray-500 text-center mt-4 md:text-left">
-                            * Tenemos que aprobar tu agencia para que puedas
-                            empezar a gestionar tu roster.
+                            * Estamos revisando tu agencia, muy pronto aparecerá
+                            publicada{' '}
+                            {entries.agenciaEspecialidad &&
+                                entries.agenciaEspecialidad.some(
+                                    (esp) => esp.idEspecialidad === 1
+                                ) &&
+                                'y podrás gestionar tu roster.'}
                         </p>
                     )}
             </section>
