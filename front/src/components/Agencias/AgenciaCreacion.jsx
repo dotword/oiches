@@ -60,7 +60,10 @@ const AgenciaCreacion = () => {
             });
 
             toast.success(
-                'Vamos a verificar los datos de tu agencia y en breve la publicaremos en Oiches.'
+                'Vamos a verificar los datos de tu agencia y en breve la publicaremos en Oiches.',
+                {
+                    onClose: () => window.location.reload(), // Refresca la página tras cerrar el toast
+                }
             );
         } catch (error) {
             setError(error.message);
