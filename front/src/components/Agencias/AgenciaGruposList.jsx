@@ -64,63 +64,65 @@ const AgenciaGruposList = () => {
 
     return (
         <section className="w-full mx-auto pb-6 mb-6 bg-white">
-            <form className="grupo-filter-form max-w-2xl mx-auto flex mb-6">
-                <input
-                    name="name"
-                    value={filters.name}
-                    placeholder="Nombre del músico/grupo"
-                    onChange={handleChange}
-                    className="form-select"
-                />
-            </form>
             {entries && entries.length > 0 ? (
-                <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                    {entries.map((entry) => (
-                        <li
-                            key={entry.id}
-                            className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between gap-4"
-                        >
-                            <div className="flex flex-wrap items-center justify-between mb-3">
-                                <h3 className="font-medium text-lg">
-                                    {entry.nombre}
-                                </h3>
-                                {entry.published === 0 && (
-                                    <p className="text-sm mt-2 text-orange-600">
-                                        Estamos revisando tu proyecto, muy
-                                        pronto aparecerá publicado
-                                    </p>
+                <>
+                    <form className="grupo-filter-form max-w-2xl mx-auto flex mb-6">
+                        <input
+                            name="name"
+                            value={filters.name}
+                            placeholder="Buscar... Nombre del músico/grupo"
+                            onChange={handleChange}
+                            className="form-select"
+                        />
+                    </form>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                        {entries.map((entry) => (
+                            <li
+                                key={entry.id}
+                                className="border border-gray-200 p-4 rounded-md hover:shadow-md transition-shadow flex flex-col justify-between gap-4"
+                            >
+                                <div className="flex flex-wrap items-center justify-between mb-3">
+                                    <h3 className="font-medium text-lg">
+                                        {entry.nombre}
+                                    </h3>
+                                    {entry.published === 0 && (
+                                        <p className="text-sm mt-2 text-orange-600">
+                                            Estamos revisando tu proyecto, muy
+                                            pronto aparecerá publicado
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="flex text-sm justify-between">
+                                    <Link
+                                        to={`/grupo/${entry.id}`}
+                                        className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
+                                    >
+                                        <FaEye className="text-base" />
+                                        <span>Ver</span>
+                                    </Link>
+
+                                    <Link
+                                        to={`/grupo/${entry.id}/edit`}
+                                        className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
+                                    >
+                                        <FaPencil className="text-base" />
+                                        <span>Editar</span>
+                                    </Link>
+                                </div>
+                                {entry.published === 1 && (
+                                    <Link
+                                        to={`/grupo/calendar/${entry.id}`}
+                                        className="font-semibold hover:text-purple-600 mt-2 flex items-center gap-2 justify-end"
+                                    >
+                                        <FaRegCalendarCheck className="text-xl" />
+                                        <span>Gestionar reservas</span>
+                                    </Link>
                                 )}
-                            </div>
-
-                            <div className="flex text-sm justify-between">
-                                <Link
-                                    to={`/grupo/${entry.id}`}
-                                    className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
-                                >
-                                    <FaEye className="text-base" />
-                                    <span>Ver</span>
-                                </Link>
-
-                                <Link
-                                    to={`/grupo/${entry.id}/edit`}
-                                    className="text-purple-600 flex items-center gap-2 hover:underline focus:outline focus:ring-2 focus:ring-purple-600"
-                                >
-                                    <FaPencil className="text-base" />
-                                    <span>Editar</span>
-                                </Link>
-                            </div>
-                            {entry.published === 1 && (
-                                <Link
-                                    to={`/grupo/calendar/${entry.id}`}
-                                    className="font-semibold hover:text-purple-600 mt-2 flex items-center gap-2 justify-end"
-                                >
-                                    <FaRegCalendarCheck className="text-xl" />
-                                    <span>Gestionar reservas</span>
-                                </Link>
-                            )}
-                        </li>
-                    ))}
-                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                </>
             ) : (
                 ''
             )}
@@ -134,8 +136,8 @@ const AgenciaGruposList = () => {
                 }`}
             >
                 {entries.length === 0
-                    ? 'Publica tu proyecto musical'
-                    : 'Publicar un nuevo proyecto'}
+                    ? 'Publica tu artista o grupo'
+                    : 'Publicar un nuevo artista o grupo'}
             </Link>
 
             <Toastify />
