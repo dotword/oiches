@@ -5,12 +5,15 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const CrearConcierto = ({ reserva, token }) => {
-    const url = `${import.meta.env.VITE_API_URL_BASE}/conciertos/${reserva.id}`;
-    const initialDate = new Date(reserva.fecha);
+    const url = `${import.meta.env.VITE_API_URL_BASE}/conciertos/crear/${
+        reserva?.id || 'non-reserva'
+    }`;
+    const initialDate = reserva?.fecha ? new Date(reserva.fecha) : new Date();
+
     const [selectedDate, setSelectedDate] = useState(initialDate);
     const [formValues, setFormValues] = useState({
-        reservaId: reserva.id,
-        fecha: '',
+        reservaId: reserva?.id || '',
+        fecha: reserva?.fecha || '',
         hora: '',
         precio: '',
         link: '',
@@ -41,7 +44,9 @@ const CrearConcierto = ({ reserva, token }) => {
         e.preventDefault();
         try {
             const formData = new FormData();
-            formData.append('reservaId', formValues.reservaId);
+            if (formValues.reservaId) {
+                formData.append('reservaId', formValues.reservaId);
+            }
             formData.append('fecha', formValues.fecha);
             formData.append('hora', formValues.hora);
             formData.append('precio', formValues.precio);

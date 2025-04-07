@@ -7,12 +7,17 @@ import AuthContext from '../../context/auth/AuthContext';
 
 const CreateConcierto = () => {
     const { userLogged, token } = useContext(AuthContext);
+
     const location = useLocation();
     const { reserva } = location.state || {};
+    const crearConciertoProps = {
+        token,
+        ...(reserva && { reserva }), // Solo añade 'reserva' si existe
+    };
 
-    if (!reserva) {
-        return <p>Cargando detalles de la reserva...</p>;
-    }
+    // if (!reserva) {
+    //     return <p>Cargando detalles de la reserva...</p>;
+    // }
 
     return userLogged && userLogged.roles === 'admin' ? (
         <motion.div
@@ -22,11 +27,14 @@ const CreateConcierto = () => {
         >
             <Header txt="Crear concierto" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
-                <p className="text-center mb-8">
-                    Concierto de <b>{reserva.grupo_nombre}</b> en{' '}
-                    <b>{reserva.sala_nombre}</b>
-                </p>
-                <CrearConcierto reserva={reserva} token={token} />
+                {reserva && (
+                    <p className="text-center mb-8">
+                        Concierto de <b>{reserva.grupo_nombre}</b> en{' '}
+                        <b>{reserva.sala_nombre}</b>
+                    </p>
+                )}
+
+                <CrearConcierto {...crearConciertoProps} />
             </main>
         </motion.div>
     ) : (

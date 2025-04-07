@@ -116,6 +116,12 @@ const ListarAllReservas = ({ token }) => {
                 <h3 className="text-lg font-semibold text-center my-6">
                     Histórico Reservas
                 </h3>
+                <Link to={`/crear-concierto/non-reserva`}>
+                    <span className="flex gap-1 items-center justify-center font-semibold md:justify-start">
+                        Crear concierto
+                        <FiExternalLink />
+                    </span>
+                </Link>
 
                 <form className="grupo-filter-form mx-auto px-0 flex gap-4">
                     <select
@@ -251,18 +257,17 @@ const ListarAllReservas = ({ token }) => {
                                             )}
                                         </td>
                                         <td>
-                                            {reserva.confirmada === '1' &&
-                                                reserva.concierto === null && (
-                                                    <Link
-                                                        to={`/crear-concierto/${reserva.id}`}
-                                                        state={{ reserva }}
-                                                    >
-                                                        <span className="flex gap-1 items-center justify-center font-semibold md:justify-start">
-                                                            Crear concierto
-                                                            <FiExternalLink />
-                                                        </span>
-                                                    </Link>
-                                                )}
+                                            {reserva.concierto === null && (
+                                                <Link
+                                                    to={`/crear-concierto/${reserva.id}`}
+                                                    state={{ reserva }}
+                                                >
+                                                    <span className="flex gap-1 items-center justify-center font-semibold md:justify-start">
+                                                        Crear concierto
+                                                        <FiExternalLink />
+                                                    </span>
+                                                </Link>
+                                            )}
                                             {reserva.concierto !== null && (
                                                 <Link
                                                     to={`/concierto/${reserva.concierto}`}
