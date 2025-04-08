@@ -7,6 +7,7 @@ import joiErrorMessages from '../joiErrorMessages.js';
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const createConciertoSchema = Joi.object({
     reservaId: Joi.string().messages(joiErrorMessages),
+    title: Joi.string().allow('').min(10).max(255).messages(joiErrorMessages),
     fecha: Joi.string()
         .pattern(/^\d{4}-\d{2}-\d{2}$/)
         .required()
@@ -15,10 +16,23 @@ const createConciertoSchema = Joi.object({
         .pattern(/^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/)
         .required()
         .messages(joiErrorMessages),
-    precio: Joi.number().positive().precision(2).messages(joiErrorMessages),
-    description: Joi.string().min(10).max(5000).messages(joiErrorMessages),
+    precioAnticipada: Joi.number()
+        .allow('')
+        .positive()
+        .precision(2)
+        .messages(joiErrorMessages),
+    precio: Joi.number()
+        .allow('')
+        .positive()
+        .precision(2)
+        .messages(joiErrorMessages),
+    description: Joi.string()
+        .allow('')
+        .min(10)
+        .max(5000)
+        .messages(joiErrorMessages),
     link: Joi.string().uri().messages(joiErrorMessages),
-    salaLink: Joi.string().uri().messages(joiErrorMessages),
+    salaLink: Joi.string().allow('').messages(joiErrorMessages),
     image: Joi.object({
         name: Joi.string().required(),
         mimetype: Joi.string()

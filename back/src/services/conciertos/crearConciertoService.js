@@ -3,8 +3,10 @@ import { v4 as uuid } from 'uuid';
 
 const crearConciertoService = async (
     reservaId,
+    title,
     fecha,
     hora,
+    precioAnticipada,
     precio,
     description,
     link,
@@ -13,16 +15,22 @@ const crearConciertoService = async (
 ) => {
     const pool = await getPool();
 
+    // Convertimos campos vacíos a null si es necesario
+    const anticipadaFinal = precioAnticipada === '' ? null : precioAnticipada;
+    const precioFinal = precio === '' ? null : precio;
+
     // Crear el concierto
     const conciertoId = uuid();
     await pool.query(
-        'INSERT INTO conciertos(id, reservaId, fecha, hora, precio, description, link, salaLink, poster ) VALUES (?, ?, ?, ?, ? , ?, ?, ?, ?)',
+        'INSERT INTO conciertos(id, reservaId, title, fecha, hora, precioAnticipada, precio, description, link, salaLink, poster ) VALUES (?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)',
         [
             conciertoId,
             reservaId,
+            title,
             fecha,
             hora,
-            precio,
+            anticipadaFinal,
+            precioFinal,
             description,
             link,
             salaLink,
@@ -33,8 +41,10 @@ const crearConciertoService = async (
     return {
         conciertoId,
         reservaId,
+        title,
         fecha,
         hora,
+        precioAnticipada,
         precio,
         description,
         link,

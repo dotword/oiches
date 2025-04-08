@@ -17,8 +17,8 @@ const listOldConciertosService = async (page = 1, pageSize = 12) => {
                 reservas ON reservas.id = conciertos.reservaId
             LEFT JOIN 
                 grupos ON reservas.grupo_id = grupos.id
-            LEFT JOIN 
-                salas ON reservas.sala_id = salas.id
+            LEFT JOIN salas ON
+                (salas.id = COALESCE(NULLIF(conciertos.salaLink, ''), reservas.sala_id))
             LEFT JOIN 
                 provincias ON provincias.id = salas.provincia     
             WHERE 

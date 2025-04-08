@@ -6,27 +6,27 @@ const listConciertosService = async (filters) => {
 
         let query = `
             SELECT 
-                conciertos.*, 
-                grupos.nombre AS artista, 
+                conciertos.*,
                 salas.nombre AS sala, 
-                salas.ciudad AS ciudad, 
+                salas.ciudad AS ciudad,
                 provincias.provincia AS provincia,
+                grupos.nombre AS artista,
                 (SELECT GROUP_CONCAT(generoId) FROM generos_grupos WHERE generos_grupos.grupoId = grupos.id) AS generos,
                 GROUP_CONCAT(DISTINCT generos_musicales.nombre SEPARATOR ', ') AS generoNombres
             FROM 
                 conciertos
             LEFT JOIN 
-                reservas ON reservas.id = conciertos.reservaId
+                reservas ON reservas.id = conciertos.reservaId    
+            LEFT JOIN salas ON 
+                (salas.id = COALESCE(NULLIF(conciertos.salaLink, ''), reservas.sala_id))
             LEFT JOIN 
-                grupos ON reservas.grupo_id = grupos.id
+                provincias ON provincias.id = salas.provincia
             LEFT JOIN 
-                salas ON reservas.sala_id = salas.id
-            LEFT JOIN 
-                provincias ON provincias.id = salas.provincia  
-            JOIN
+                grupos ON reservas.grupo_id = grupos.id 
+            LEFT JOIN
                 generos_grupos generos_grupos ON generos_grupos.grupoId = grupos.id
-            JOIN
-                generos_musicales generos_musicales ON generos_grupos.generoId = generos_musicales.id     
+            LEFT JOIN
+                generos_musicales generos_musicales ON generos_grupos.generoId = generos_musicales.id                 
             WHERE 
                 conciertos.fecha >= NOW()
         `;
@@ -62,8 +62,8 @@ const listConciertosService = async (filters) => {
         }
 
         query += `
-            GROUP BY 
-                conciertos.id, grupos.id, salas.id, provincias.id
+            GROUP BY
+                conciertos.id, salas.id, provincias.id, grupos.id
         `;
         const orderDirection =
             filters.order && filters.order.toUpperCase() === 'ASC'

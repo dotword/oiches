@@ -15,10 +15,6 @@ const CreateConcierto = () => {
         ...(reserva && { reserva }), // Solo añade 'reserva' si existe
     };
 
-    // if (!reserva) {
-    //     return <p>Cargando detalles de la reserva...</p>;
-    // }
-
     return userLogged && userLogged.roles === 'admin' ? (
         <motion.div
             initial={{ opacity: 0, height: 0 }}

@@ -19,6 +19,8 @@ const SalaDetail = () => {
     const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
     const [formattedAddress, setFormattedAddress] = useState('');
+    console.log(entry);
+
     const {
         nombre = '',
         provincia = '',

@@ -224,8 +224,10 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS conciertos (
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 reservaId CHAR(36),
+                title TEXT(255),
                 fecha DATE NOT NULL,
                 hora TIME NOT NULL,
+                precioAnticipada DECIMAL(10, 2),
                 precio DECIMAL(10, 2),
                 description LONGTEXT,
                 link VARCHAR(255),

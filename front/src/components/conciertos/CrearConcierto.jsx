@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.core.css';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
 import Calendar from 'react-calendar';
@@ -13,10 +15,14 @@ const CrearConcierto = ({ reserva, token }) => {
     const [selectedDate, setSelectedDate] = useState(initialDate);
     const [formValues, setFormValues] = useState({
         reservaId: reserva?.id || '',
+        title: '',
         fecha: reserva?.fecha || '',
         hora: '',
+        precioAnticipada: '',
         precio: '',
         link: '',
+        description: '',
+        salaLink: '',
         image: null,
     });
 
@@ -39,6 +45,9 @@ const CrearConcierto = ({ reserva, token }) => {
             fecha: formattedDate,
         });
     };
+    const handleDescriptionChange = (value) => {
+        setFormValues({ ...formValues, description: value });
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,10 +56,14 @@ const CrearConcierto = ({ reserva, token }) => {
             if (formValues.reservaId) {
                 formData.append('reservaId', formValues.reservaId);
             }
+            formData.append('title', formValues.title);
             formData.append('fecha', formValues.fecha);
             formData.append('hora', formValues.hora);
+            formData.append('precioAnticipada', formValues.precioAnticipada);
             formData.append('precio', formValues.precio);
             formData.append('link', formValues.link);
+            formData.append('description', formValues.description);
+            formData.append('salaLink', formValues.salaLink);
             formData.append('image', formValues.image);
 
             const response = await fetch(url, {
@@ -71,7 +84,15 @@ const CrearConcierto = ({ reserva, token }) => {
         }
     };
 
-    const { hora, precio, link } = formValues;
+    const {
+        title,
+        hora,
+        precioAnticipada,
+        precio,
+        link,
+        description,
+        salaLink,
+    } = formValues;
 
     return (
         <div className="w-full flex flex-col items-center p-4 min-h-screen">
@@ -90,7 +111,7 @@ const CrearConcierto = ({ reserva, token }) => {
                         </p>
 
                         <label className="text-gray-700 text-sm font-medium">
-                            Fecha del concierto
+                            Fecha del concierto *
                         </label>
                         <Calendar
                             value={selectedDate}
@@ -100,7 +121,7 @@ const CrearConcierto = ({ reserva, token }) => {
 
                         <div className="w-full md:w-1/5 flex flex-col gap-2 mt-8">
                             <label className="font-semibold text-sm text-gray-700 flex items-center gap-2">
-                                Hora:
+                                Hora: *
                                 <input
                                     type="time"
                                     name="hora"
@@ -120,20 +141,48 @@ const CrearConcierto = ({ reserva, token }) => {
                         <p className="text-gray-500 text-sm mb-4">
                             Información adicional del evento
                         </p>
+                        <div className="mb-4">
+                            <label className="block text-gray-700 text-sm font-medium">
+                                Título (si no hay reserva)
+                            </label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={title}
+                                onChange={handleChange}
+                                className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                            />
+                        </div>
 
-                        <label className="block text-gray-700 text-sm font-medium">
-                            Precio (€)
-                        </label>
-                        <input
-                            type="number"
-                            name="precio"
-                            value={precio}
-                            onChange={handleChange}
-                            className="w-full md:w-1/5 mt-1 p-2 border border-gray-300 rounded-lg"
-                        />
+                        <div className="flex gap-4">
+                            <div>
+                                <label className="block text-gray-700 text-sm font-medium">
+                                    Precio anticipada
+                                </label>
+                                <input
+                                    type="number"
+                                    name="precioAnticipada"
+                                    value={precioAnticipada}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 text-sm font-medium">
+                                    Precio taquilla
+                                </label>
+                                <input
+                                    type="number"
+                                    name="precio"
+                                    value={precio}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                                />
+                            </div>
+                        </div>
 
                         <label className="block mt-4 text-gray-700 text-sm font-medium">
-                            Enlace
+                            Enlace evento *
                         </label>
                         <input
                             type="url"
@@ -144,7 +193,18 @@ const CrearConcierto = ({ reserva, token }) => {
                         />
 
                         <label className="block mt-4 text-gray-700 text-sm font-medium">
-                            Poster
+                            Id de la sala (si no hay reserva)
+                        </label>
+                        <input
+                            type="text"
+                            name="salaLink"
+                            value={salaLink}
+                            onChange={handleChange}
+                            className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                        />
+
+                        <label className="block mt-4 text-gray-700 text-sm font-medium">
+                            Poster *
                         </label>
                         <input
                             type="file"
@@ -156,12 +216,22 @@ const CrearConcierto = ({ reserva, token }) => {
                         <p className="text-gray-400 text-xs mt-2">
                             PNG, JPG, GIF hasta 2MB
                         </p>
-                        {/* Botón de Enviar */}
-                        <div className="col-span-1 lg:col-span-2 flex justify-items-start mt-6">
-                            <button className="w-full  bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold text-lg py-3 rounded-lg shadow-md transition-all duration-300 hover:brightness-110 hover:shadow-lg">
-                                Crear concierto
-                            </button>
-                        </div>
+                    </div>
+
+                    <div className="pt-8 grid-cols-1 lg:col-span-2">
+                        <h3 className="text-lg font-semibold mb-2">
+                            Descripción del concierto
+                        </h3>
+                        <ReactQuill
+                            value={description}
+                            onChange={handleDescriptionChange}
+                        />
+                    </div>
+                    {/* Botón de Enviar */}
+                    <div className="col-span-1 lg:col-span-2 flex justify-items-start mt-6">
+                        <button className="w-full  bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold text-lg py-3 rounded-lg shadow-md transition-all duration-300 hover:brightness-110 hover:shadow-lg">
+                            Crear concierto
+                        </button>
                     </div>
                 </form>
 
