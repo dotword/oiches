@@ -8,38 +8,47 @@ import { toast } from 'react-toastify';
 import EditConciertoService from '../../services/conciertos/EditConciertoService.js';
 const { VITE_API_URL_BASE } = import.meta.env;
 import apiRequest from '../../utils/apiRequest.js';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import DeleteConcierto from './DeleteConcierto.jsx';
 
 const ConciertoEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
     const { conciertoId } = useParams();
     const { concierto } = useConcierto(conciertoId);
-    const [selectedDate, setSelectedDate] = useState(concierto.fecha);
+    const [selectedDate, setSelectedDate] = useState(null);
     const [poster, setPoster] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
 
     const [concert, setConcert] = useState({
+        title: '',
         fecha: '',
         hora: '',
+        precioAnticipada: '',
         precio: '',
+        description: '',
         link: '',
+        salaLink: '',
     });
 
-    // Actualiza el estado solo cuando 'concierto' cambia
     useEffect(() => {
         if (concierto) {
             const formattedDate = concierto.fecha
                 ? formatFecha(concierto.fecha)
                 : '';
             setConcert({
+                title: concierto.title || '',
                 fecha: formattedDate,
                 hora: concierto.hora || '',
+                precioAnticipada: concierto.precioAnticipada || '',
                 precio: concierto.precio || '',
+                description: concierto.description || '',
                 link: concierto.link || '',
+                salaLink: concierto.salaLink || '',
             });
             setSelectedDate(concierto.fecha ? new Date(concierto.fecha) : null);
         }
-    }, [concierto]); // Dependencia en concierto
+    }, [concierto]);
 
     const formatFecha = (fecha) => {
         const date = new Date(fecha);
@@ -50,36 +59,13 @@ const ConciertoEdit = () => {
     };
 
     const handleChangeDate = (date) => {
-        // Formatea la fecha seleccionada y actualiza formValues
         const formattedDate = formatFecha(date);
         setSelectedDate(date);
         setConcert({
             ...concert,
-            fecha: formattedDate, // Actualiza la fecha en formValues
+            fecha: formattedDate,
         });
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        try {
-            const dataForm = new FormData();
-            dataForm.append('fecha', concert.fecha);
-            dataForm.append('hora', concert.hora || '');
-            dataForm.append('precio', concert.precio || '');
-            dataForm.append('link', concert.link || '');
-
-            await EditConciertoService({
-                token,
-                conciertoId,
-                dataForm,
-            });
-            toast.success('Has modificado el concierto con éxito');
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
-
     const handlePosterChange = (e) => {
         setPoster(e.target.files[0]);
         setPreviewUrl(URL.createObjectURL(e.target.files[0]));
@@ -105,71 +91,54 @@ const ConciertoEdit = () => {
         }
     };
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const dataForm = new FormData();
+            dataForm.append('title', concert.title || '');
+            dataForm.append('fecha', concert.fecha || '');
+            dataForm.append('hora', concert.hora || '');
+
+            // ✅ Convertir '' a null en valores DECIMAL
+            dataForm.append(
+                'precioAnticipada',
+                concert.precioAnticipada !== ''
+                    ? concert.precioAnticipada
+                    : null
+            );
+            dataForm.append(
+                'precio',
+                concert.precio !== '' ? concert.precio : null
+            );
+
+            dataForm.append('description', concert.description || '');
+            dataForm.append('link', concert.link || '');
+            dataForm.append('salaLink', concert.salaLink || '');
+
+            await EditConciertoService({
+                token,
+                conciertoId,
+                dataForm,
+            });
+
+            toast.success('Has modificado el concierto con éxito');
+        } catch (error) {
+            toast.error(error.message);
+        }
+    };
+
     return userLogged && userLogged.roles === 'admin' ? (
         <>
-            <h1 className="text-center font-semibold mb-8 text-xl">
-                Concierto de {concierto.artista} en {concierto.sala}
+            <h1 className="text-center font-semibold mb-10 text-xl">
+                {concierto.title ? concierto.title : concierto.artista} en{' '}
+                {concierto.sala}
             </h1>
-            <section className="flex flex-wrap justify-evenly gap-8">
+
+            <section>
                 <form
-                    onSubmit={handleSubmit}
-                    className="md:max-w-[calc(50%-1rem)]"
+                    onSubmit={handlePosterSubmit}
+                    className="flex justify-center mb-8"
                 >
-                    <p className="font-semibold mb-2">Fecha del concierto*</p>
-                    <Calendar
-                        value={selectedDate}
-                        onChange={handleChangeDate}
-                    />
-
-                    <label>
-                        <span className="font-semibold mr-2">Hora:</span>
-                        <input
-                            type="time"
-                            name="hora"
-                            value={concert.hora}
-                            onChange={(e) =>
-                                setConcert({ ...concert, hora: e.target.value })
-                            }
-                        />
-                    </label>
-
-                    <label>
-                        <span className="font-semibold mr-2">Precio:</span>
-                        <input
-                            type="number"
-                            name="precio"
-                            value={concert.precio}
-                            onChange={(e) =>
-                                setConcert({
-                                    ...concert,
-                                    precio: e.target.value,
-                                })
-                            }
-                            className="form-input max-w-32"
-                        />
-                    </label>
-
-                    <label className="flex items-baseline">
-                        <span className="font-semibold mr-2">Enlace:</span>
-                        <input
-                            type="url"
-                            name="link"
-                            value={concert.link}
-                            onChange={(e) =>
-                                setConcert({ ...concert, link: e.target.value })
-                            }
-                            className="form-input"
-                        />
-                    </label>
-
-                    <div className="flex gap-4 mt-6 justify-center">
-                        <button className="btn-account">
-                            Editar concierto
-                        </button>
-                    </div>
-                </form>
-
-                <form onSubmit={handlePosterSubmit}>
                     <div className="sect-photo">
                         <span className="border-photos">
                             {previewUrl ? (
@@ -182,11 +151,9 @@ const ConciertoEdit = () => {
                                 <img
                                     src={
                                         concierto.poster &&
-                                        `${
-                                            import.meta.env.VITE_API_URL_BASE
-                                        }/uploads/${concierto.poster}`
+                                        `${VITE_API_URL_BASE}/uploads/${concierto.poster}`
                                     }
-                                    alt="avatar"
+                                    alt="poster"
                                     className="w-40 h-40 object-cover"
                                 />
                             )}
@@ -207,6 +174,142 @@ const ConciertoEdit = () => {
                             />
                         </div>
                     )}
+                </form>
+                <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-wrap justify-between gap-4 max-w-1200 mx-auto"
+                >
+                    <div className="">
+                        <p className="font-semibold mb-2">
+                            Fecha del concierto*
+                        </p>
+                        <Calendar
+                            value={selectedDate}
+                            onChange={handleChangeDate}
+                            className="mb-4"
+                        />
+                        <label>
+                            <span className="font-semibold mr-2">Hora:</span>
+                            <input
+                                type="time"
+                                name="hora"
+                                value={concert.hora}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        hora: e.target.value,
+                                    })
+                                }
+                            />
+                        </label>
+                    </div>
+                    <div className="">
+                        <label className="block text-gray-700 text-sm font-medium mb-4">
+                            Título (si no hay reserva)
+                            <input
+                                type="text"
+                                name="title"
+                                value={concert.title}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        title: e.target.value,
+                                    })
+                                }
+                                className="form-input"
+                            />
+                        </label>
+                        <label className="mr-4">
+                            <span className="font-semibold mr-2">
+                                Precio anticipada:
+                            </span>
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="precioAnticipada"
+                                value={concert.precioAnticipada}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        precioAnticipada: e.target.value,
+                                    })
+                                }
+                                className="form-input max-w-32"
+                            />
+                        </label>
+
+                        <label>
+                            <span className="font-semibold mr-2">
+                                Precio taquilla:
+                            </span>
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="precio"
+                                value={concert.precio}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        precio: e.target.value,
+                                    })
+                                }
+                                className="form-input max-w-32"
+                            />
+                        </label>
+
+                        <label className="flex items-baseline my-4">
+                            <span className="font-semibold mr-2">Enlace:</span>
+                            <input
+                                type="url"
+                                name="link"
+                                value={concert.link}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        link: e.target.value,
+                                    })
+                                }
+                                className="form-input"
+                            />
+                        </label>
+
+                        <label>
+                            <span className="font-semibold">
+                                Sala (ID manual):
+                            </span>
+                            <input
+                                type="text"
+                                name="salaLink"
+                                value={concert.salaLink}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        salaLink: e.target.value,
+                                    })
+                                }
+                                className="form-input"
+                            />
+                        </label>
+                    </div>
+
+                    <label className="block mt-4 w-full">
+                        <span className="font-semibold mr-2">Descripción:</span>
+                        <ReactQuill
+                            value={concert.description}
+                            onChange={(value) =>
+                                setConcert({
+                                    ...concert,
+                                    description: value,
+                                })
+                            }
+                        />
+                    </label>
+
+                    <div className="flex gap-4 mt-6 justify-center">
+                        <button className="btn-account">
+                            Editar concierto
+                        </button>
+                    </div>
                 </form>
             </section>
 

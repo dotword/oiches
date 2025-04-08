@@ -7,16 +7,17 @@ const TarjetaEvento = ({
     fecha = '--',
     mes = '--',
     anio = '--',
-    titulo = 'Evento no disponible',
+    artista = 'Evento no disponible',
     lugar = 'Lugar desconocido',
-    precio = 'No disponible',
+    precioAnticipada = '',
+    precio = '',
     hora = '--:--',
     ciudad = 'Ciudad no especificada',
     provincia = 'Provincia no especificada',
     link = '#',
 }) => {
     return (
-        <div className="flex flex-col sm:flex-row w-11/12 mx-auto h-full justify-start items-stretch">
+        <div className="flex flex-col sm:flex-row w-11/12 h-full justify-start items-stretch">
             {/* Columna de la fecha */}
             <div className="w-full sm:w-auto p-6 bg-gray-800 rounded-t-lg sm:rounded-lg flex flex-col justify-center items-center">
                 <div className="text-center text-white text-5xl font-semibold leading-8">
@@ -36,7 +37,7 @@ const TarjetaEvento = ({
                 <div className="flex-1 flex flex-col justify-start items-start gap-1">
                     {/* Título del evento */}
                     <div className="text-gray-900 text-xl font-extrabold mb-2">
-                        {titulo}
+                        {artista && artista}
                     </div>
 
                     {/* Información adicional en dos columnas */}
@@ -53,7 +54,8 @@ const TarjetaEvento = ({
                         <div className="flex items-center">
                             <FaRegMoneyBillAlt className="inline-block fill-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
-                                {precio} €
+                                {precioAnticipada && `${precioAnticipada} € - `}
+                                {precio ? `${precio} €` : 'Gratuito'}
                             </span>
                         </div>
 
@@ -75,15 +77,16 @@ const TarjetaEvento = ({
                     </div>
                 </div>
 
-                {/* Botón */}
-                <a
-                    href={link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-2 px-3 mt-4 w-full sm:w-auto bg-purpleOiches rounded-lg text-center text-white text-base font-medium hover:bg-moradoOiches"
-                >
-                    Más info +
-                </a>
+                {link && (
+                    <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 py-2 px-3 bg-purpleOiches rounded-lg text-center text-white text-base font-medium hover:bg-moradoOiches"
+                    >
+                        Más info +
+                    </a>
+                )}
             </div>
         </div>
     );

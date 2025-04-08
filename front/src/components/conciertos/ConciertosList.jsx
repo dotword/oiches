@@ -32,18 +32,17 @@ const ConciertoList = ({ conciertos }) => {
                     >
                         <img
                             src={`${VITE_API_URL_BASE}/uploads/${concierto.poster}`}
-                            alt={`Imagen del concierto de ${concierto.artista}`}
+                            alt={`Imagen del concierto`}
                             className="concert-card-image"
                         />
                     </Link>
 
                     <div className="px-4 pb-6">
                         <h2 className="text-xl font-bold">
-                            {concierto.artista}
+                            {concierto.title
+                                ? concierto.title
+                                : concierto.artista}
                         </h2>
-                        <p className="text-gray-600">
-                            {concierto.banda_invitada}
-                        </p>
 
                         {/* Detalles del evento */}
                         <div className="mt-3 space-y-2 text-gray-700">

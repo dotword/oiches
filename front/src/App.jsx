@@ -28,7 +28,7 @@ import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
 import AdminDashboard from './pages/Users/AdminDashboard.jsx';
-import CreateConcierto from './pages/Users/CreateConcierto.jsx';
+import CreateConcierto from './pages/conciertos/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';

@@ -8,18 +8,22 @@ const selectConciertoByIdService = async (conciertoId) => {
         `
             SELECT
                 conciertos.reservaId,
+                conciertos.title,
                 conciertos.fecha,
                 conciertos.hora,
+                conciertos.precioAnticipada,
                 conciertos.precio,
                 conciertos.link,
+                conciertos.description,
+                conciertos.salaLink,
                 conciertos.poster,
                 salas.id AS sala_id, 
                 salas.nombre AS sala, 
                 salas.descripcion AS infoSala, 
                 salas.provincia AS sala_idProvincia,
-                provincias.provincia AS provincia,
                 salas.ciudad AS ciudad, 
                 salas.direccion AS direccion, 
+                provincias.provincia AS provincia,
                 grupos.id AS grupo_id,
                 grupos.biografia AS biografiaGrupo, 
                 grupos.nombre AS artista
@@ -28,16 +32,14 @@ const selectConciertoByIdService = async (conciertoId) => {
                 reservas ON reservas.id = conciertos.reservaId
             LEFT JOIN 
                 grupos ON reservas.grupo_id = grupos.id
-            LEFT JOIN 
-                salas ON reservas.sala_id = salas.id
+            LEFT JOIN salas ON 
+                (salas.id = COALESCE(NULLIF(conciertos.salaLink, ''), reservas.sala_id))
             LEFT JOIN 
                 provincias ON provincias.id = salas.provincia    
             WHERE conciertos.id = ?
         `,
         [conciertoId]
     );
-
-    // console.log(concert[0].grupo_id);
 
     if (concert.length === 0) {
         return null;

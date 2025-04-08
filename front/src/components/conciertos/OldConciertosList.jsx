@@ -73,11 +73,10 @@ const OldConciertosList = ({ Paginator }) => {
                                     {/* Contenedor de información */}
                                     <div className="p-4">
                                         <h2 className="text-lg font-bold">
-                                            {concierto.artista}
+                                            {concierto.title
+                                                ? concierto.title
+                                                : concierto.artista}
                                         </h2>
-                                        <p className="text-gray-600">
-                                            {concierto.banda_invitada}
-                                        </p>
 
                                         {/* Detalles del evento */}
                                         <div className="mt-3 space-y-2 text-gray-700">

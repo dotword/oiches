@@ -6,7 +6,17 @@ import uploadFiles from '../../utils/uploadFiles.js';
 const createNewConcertController = async (req, res, next) => {
     try {
         const { reservaId } = req.params;
-        const { fecha, hora, precio, link } = req.body;
+        const {
+            title,
+            fecha,
+            hora,
+            precioAnticipada,
+            precio,
+            description,
+            link,
+            salaLink,
+        } = req.body;
+
         const { image } = req.files;
         const sanitizedImage = {
             name: image.name,
@@ -24,10 +34,14 @@ const createNewConcertController = async (req, res, next) => {
 
         await crearConciertoService(
             reservaId,
+            title,
             fecha,
             hora,
+            precioAnticipada,
             precio,
+            description,
             link,
+            salaLink,
             poster
         );
 

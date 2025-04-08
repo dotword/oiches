@@ -34,8 +34,7 @@ const ConciertoDetail = () => {
         return `${hours}:${minutes}`;
     };
 
-    const formatPrice = (priceString) =>
-        priceString?.replace('.', ',') || 'No disponible';
+    const formatPrice = (priceString) => priceString?.replace('.', ',') || '';
 
     const limitText = (text, limit) =>
         text?.length > limit ? text.slice(0, limit) + '...' : text;
@@ -55,6 +54,7 @@ const ConciertoDetail = () => {
     }
 
     const {
+        title,
         artista,
         sala,
         ciudad,
@@ -62,11 +62,13 @@ const ConciertoDetail = () => {
         direccion,
         fecha,
         hora,
+        precioAnticipada,
         precio,
         genero,
         link,
         poster,
         biografiaGrupo,
+        description,
         grupo_id,
         infoSala,
         sala_id,
@@ -79,9 +81,21 @@ const ConciertoDetail = () => {
     return (
         <>
             <Seo
-                title={`Concierto de ${artista} en ${sala}`}
-                description={`Concierto de ${artista} en ${sala} (${ciudad}) el ${formattedDate.dia} de ${formattedDate.mes} de ${formattedDate.anio}.`}
-                keywords={`conciertos, ${sala}, ${artista}, ${provincia}, ${ciudad}, música en vivo, eventos`}
+                title={`Concierto de ${
+                    artista && artista.length > 0
+                        ? `${artista} en concierto en ${sala}`
+                        : title
+                } `}
+                description={`Concierto de ${
+                    artista && artista.length > 0
+                        ? `${artista} en concierto en ${sala}`
+                        : title
+                } (${ciudad}) el ${formattedDate.dia} de ${
+                    formattedDate.mes
+                } de ${formattedDate.anio}.`}
+                keywords={`conciertos, ${sala}, ${
+                    artista && artista.length > 0 && { artista }
+                }, ${provincia}, ${ciudad}, música en vivo, eventos`}
                 url={`https://oiches.com/concierto/${conciertoId}`}
                 image={`${VITE_API_URL_BASE}/uploads/${poster}`}
             />
@@ -92,7 +106,9 @@ const ConciertoDetail = () => {
                     {/* Columna izquierda: Información */}
                     <div className="py-4 flex flex-col  justify-center">
                         <h1 className="text-3xl font-bold text-gray-800 mb-6 md:text-4xl">
-                            {artista} en concierto
+                            {artista && artista.length > 0
+                                ? `${artista} en concierto`
+                                : title}
                         </h1>
 
                         {/* Tarjeta de evento */}
@@ -101,27 +117,32 @@ const ConciertoDetail = () => {
                                 fecha={formattedDate.dia}
                                 mes={formattedDate.mes}
                                 anio={formattedDate.anio}
-                                titulo={artista || 'Evento'}
-                                lugar={sala || 'Sala desconocida'}
-                                precio={formatPrice(precio)}
+                                artista={artista || ''}
+                                lugar={sala || ''}
+                                precio={formatPrice(precio) || ''}
+                                precioAnticipada={
+                                    formatPrice(precioAnticipada) || ''
+                                }
                                 hora={formatHour(hora)}
-                                ciudad={ciudad || 'Ciudad desconocida'}
-                                provincia={provincia || 'Provincia desconocida'}
+                                ciudad={ciudad || ''}
+                                provincia={provincia || ''}
                                 link={link || '#'}
                             />
                         </section>
 
                         {/* Etiquetas de género musical*/}
-                        <div className="flex flex-wrap gap-2">
-                            {genero?.map((g, index) => (
-                                <span
-                                    key={index}
-                                    className="bg-gray-900 text-white px-3 py-1 rounded-full text-sm"
-                                >
-                                    #{g.generoName || 'Desconocido'}
-                                </span>
-                            ))}
-                        </div>
+                        {genero && genero.length > 0 && (
+                            <div className="flex flex-wrap gap-2">
+                                {genero?.map((g, index) => (
+                                    <span
+                                        key={index}
+                                        className="bg-gray-900 text-white px-3 py-1 rounded-full text-sm"
+                                    >
+                                        #{g.generoName}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                     </div>
                     {/* Columna derecha: Imagen ampliable */}
                     <div
@@ -130,7 +151,7 @@ const ConciertoDetail = () => {
                     >
                         <img
                             src={`${VITE_API_URL_BASE}/uploads/${poster}`}
-                            alt={`Imagen del concierto de ${artista}`}
+                            alt={`Imagen del concierto`}
                             className="w-full object-cover rounded-xl shadow-xl bg-gray-900 "
                             loading="lazy"
                         />
@@ -163,22 +184,32 @@ const ConciertoDetail = () => {
                 )}
 
                 {/* Descripción del grupo */}
-                <section className="max-w-900 mx-auto md:mb-8">
-                    <h2 className="text-2xl font-bold mb-4">{artista}</h2>
-                    {biografiaGrupo && (
-                        <p className="text-gray-700">
-                            {limitText(biografiaGrupo, 1000)}
-                        </p>
-                    )}
+                <section className="w-full max-w-900 mx-auto md:mb-8">
+                    {artista && artista.length > 0 && (
+                        <>
+                            <h2 className="text-2xl font-bold mb-4">
+                                {artista}
+                            </h2>
 
-                    <a
-                        href={`/grupo/${grupo_id}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center mt-4 py-2 px-6 bg-purpleOiches rounded-lg text-white font-medium hover:bg-moradoOiches"
-                    >
-                        Más info
-                    </a>
+                            <p className="text-gray-700">
+                                {limitText(biografiaGrupo, 1000)}
+                            </p>
+                            <a
+                                href={`/grupo/${grupo_id}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center mt-4 py-2 px-6 bg-purpleOiches rounded-lg text-white font-medium hover:bg-moradoOiches"
+                            >
+                                Más info
+                            </a>
+                        </>
+                    )}
+                    {description && description.length > 0 && (
+                        <div
+                            className="description-content"
+                            dangerouslySetInnerHTML={{ __html: description }}
+                        />
+                    )}
                 </section>
 
                 {/* Información de la sala */}

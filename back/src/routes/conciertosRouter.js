@@ -21,7 +21,7 @@ const router = express.Router();
 
 // Endpoint para crear un nuevo concierto
 router.post(
-    '/conciertos/:reservaId',
+    '/conciertos/crear/:reservaId',
     authUser,
     userExists,
     isAdmin,
