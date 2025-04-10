@@ -63,6 +63,7 @@ const ConciertoDetail = () => {
         fecha,
         hora,
         precioAnticipada,
+        otroTipoEntrada,
         precio,
         otroTipoEntrada,
         genero,

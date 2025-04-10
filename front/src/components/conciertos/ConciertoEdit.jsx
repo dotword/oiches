@@ -203,7 +203,7 @@ const ConciertoEdit = () => {
                             />
                         </label>
                     </div>
-                    <div className="full">
+                    <div className="w-full">
                         <label className="block text-gray-700 text-sm font-medium mb-4">
                             Título (si no hay reserva)
                             <input
