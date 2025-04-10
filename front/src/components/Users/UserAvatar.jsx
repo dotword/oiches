@@ -31,7 +31,7 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
     return (
         <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
             <p className="font-semibold text-2xl text-gray-900">
-                {userData.user.username}
+                {userData.username}
             </p>
             <form onSubmit={handleAvatarSubmit}>
                 <div className="sect-photo w-40 h-40">
@@ -46,10 +46,10 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                         ) : (
                             <img
                                 src={
-                                    userData.user.avatar
+                                    userData.avatar
                                         ? `${
                                               import.meta.env.VITE_API_URL_BASE
-                                          }/uploads/${userData.user.avatar}`
+                                          }/uploads/${userData.avatar}`
                                         : userIcon
                                 }
                                 alt="avatar"

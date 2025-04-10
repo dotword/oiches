@@ -3,7 +3,7 @@ import getListSalasGrupoService from '../services/getListSalasGrupoService';
 
 const useListSalasGrupoUser = ({ token, idUserOwner }) => {
     const [entries, setEntries] = useState('');
-    const [error, setError] = useState('');
+    const [error, setError] = useState([]);
 
     useEffect(() => {
         const getEntry = async () => {
