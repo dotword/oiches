@@ -17,6 +17,7 @@ const editConciertoController = async (req, res, next) => {
             hora,
             precioAnticipada,
             precio,
+            otroTipoEntrada,
             description,
             link,
             salaLink,
@@ -34,6 +35,8 @@ const editConciertoController = async (req, res, next) => {
         if (precioAnticipada !== undefined)
             updatedFields.precioAnticipada = precioAnticipada;
         if (precio !== undefined) updatedFields.precio = precio;
+        if (otroTipoEntrada !== undefined)
+            updatedFields.otroTipoEntrada = otroTipoEntrada;
         if (description !== undefined) updatedFields.description = description;
         if (link !== undefined) updatedFields.link = link;
         if (salaLink !== undefined) updatedFields.salaLink = salaLink;
