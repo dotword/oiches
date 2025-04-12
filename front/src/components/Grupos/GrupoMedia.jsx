@@ -32,14 +32,11 @@ export const AddGrupoMedia = () => {
         fetchGrupoMedia();
     }, [idGrupo]);
 
-    // Función para extraer el ID de YouTube de la URL
     const extractYouTubeId = (url) => {
-        try {
-            const urlObj = new URL(url);
-            return urlObj.searchParams.get('v');
-        } catch (e) {
-            return null; // Manejo de casos donde el URL no es válido
-        }
+        const regex =
+            /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&?]+)/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
     };
 
     // Agregar un nuevo video a la lista temporal
@@ -67,7 +64,7 @@ export const AddGrupoMedia = () => {
                 // Si todo va bien, actualizamos la lista visualmente
                 setVideoUrls([
                     ...videoUrls,
-                    { id: videoId, url: currentVideoUrl },
+                    { id: videoId, url: `https://youtu.be/${videoId}` },
                 ]);
                 setCurrentVideoUrl(''); // Limpiar el input después de agregar
                 toast.success('Video añadido con éxito');
