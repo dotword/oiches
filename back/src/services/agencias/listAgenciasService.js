@@ -30,28 +30,30 @@ const listAgenciasService = async (filters) => {
     }
 
     // Filtro por provincia (si está presente)
-    if (filters.provincia) {
+    if (filters.provincia && filters.provincia.trim() !== '') {
         query += ' AND agencias.provincia = ?';
         queryParams.push(filters.provincia);
     }
-
     query +=
         ' GROUP BY agencias.id, agencias.nombre, agencias.usuario_id, agencias.provincia';
 
-    if (filters.order && filters.field) {
-        const orderField = filters.field === 'agencias.createdAt';
-
+    // ORDERBY
+    const allowedFields = ['createdAt', 'nombre'];
+    if (
+        filters.order &&
+        filters.field &&
+        allowedFields.includes(filters.field)
+    ) {
         const orderDirection =
             filters.order.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
-
-        query += ` ORDER BY ${orderField} ${orderDirection}`;
+        query += ` ORDER BY ${filters.field} ${orderDirection}`;
     } else {
-        query += ' ORDER BY createdAt DESC';
+        query += ' ORDER BY a.createdAt DESC';
     }
 
     // Paginación
     const page = filters.page ? parseInt(filters.page, 10) : 1;
-    let pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
+    const pageSize = filters.pageSize ? parseInt(filters.pageSize, 10) : 10;
     const offset = (page - 1) * pageSize;
     query += ` LIMIT ? OFFSET ?`;
     queryParams.push(pageSize, offset);
@@ -76,7 +78,7 @@ const listAgenciasService = async (filters) => {
         countQueryParams.push(`%${filters.nombre}%`);
     }
 
-    if (filters.provincia) {
+    if (filters.provincia && filters.provincia.trim() !== '') {
         countQuery += ' AND agencias.provincia = ?';
         countQueryParams.push(filters.provincia);
     }
