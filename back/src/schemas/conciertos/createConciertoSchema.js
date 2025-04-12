@@ -26,6 +26,7 @@ const createConciertoSchema = Joi.object({
         .positive()
         .precision(2)
         .messages(joiErrorMessages),
+    otroTipoEntrada: Joi.string().allow('').max(100).messages(joiErrorMessages),
     description: Joi.string()
         .allow('')
         .min(10)

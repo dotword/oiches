@@ -13,6 +13,7 @@ const selectConciertoByIdService = async (conciertoId) => {
                 conciertos.hora,
                 conciertos.precioAnticipada,
                 conciertos.precio,
+                conciertos.otroTipoEntrada,
                 conciertos.link,
                 conciertos.description,
                 conciertos.salaLink,

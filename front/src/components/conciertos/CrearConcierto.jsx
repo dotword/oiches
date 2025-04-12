@@ -20,6 +20,7 @@ const CrearConcierto = ({ reserva, token }) => {
         hora: '',
         precioAnticipada: '',
         precio: '',
+        otroTipoEntrada: '',
         link: '',
         description: '',
         salaLink: '',
@@ -61,6 +62,7 @@ const CrearConcierto = ({ reserva, token }) => {
             formData.append('hora', formValues.hora);
             formData.append('precioAnticipada', formValues.precioAnticipada);
             formData.append('precio', formValues.precio);
+            formData.append('otroTipoEntrada', formValues.otroTipoEntrada);
             formData.append('link', formValues.link);
             formData.append('description', formValues.description);
             formData.append('salaLink', formValues.salaLink);
@@ -89,6 +91,7 @@ const CrearConcierto = ({ reserva, token }) => {
         hora,
         precioAnticipada,
         precio,
+        otroTipoEntrada,
         link,
         description,
         salaLink,
@@ -175,6 +178,19 @@ const CrearConcierto = ({ reserva, token }) => {
                                     type="number"
                                     name="precio"
                                     value={precio}
+                                    onChange={handleChange}
+                                    className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
+                                />
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700 text-sm font-medium">
+                                    Otro tipo de entrada (gratis, taquilla
+                                    inversa...)
+                                </label>
+                                <input
+                                    type="text"
+                                    name="otroTipoEntrada"
+                                    value={otroTipoEntrada}
                                     onChange={handleChange}
                                     className="w-full mt-1 p-2 border border-gray-300 rounded-lg"
                                 />

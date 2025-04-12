@@ -28,7 +28,7 @@ const listConciertosService = async (filters) => {
             LEFT JOIN
                 generos_musicales generos_musicales ON generos_grupos.generoId = generos_musicales.id                 
             WHERE 
-                conciertos.fecha >= NOW()
+                DATE(conciertos.fecha) >= CURDATE()
         `;
 
         const queryParams = [];

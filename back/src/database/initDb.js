@@ -229,6 +229,7 @@ const main = async () => {
                 hora TIME NOT NULL,
                 precioAnticipada DECIMAL(10, 2),
                 precio DECIMAL(10, 2),
+                otroTipoEntrada TEXT(100),
                 description LONGTEXT,
                 link VARCHAR(255),
                 salaLink VARCHAR(255),
