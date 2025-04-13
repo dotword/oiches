@@ -27,6 +27,7 @@
         "mysql2": "^3.10.1",
         "node-cron": "^3.0.3",
         "nodemailer": "^6.9.14",
+        "prerender-node": "^3.8.0",
         "randomstring": "^1.3.0",
         "sharp": "^0.33.4",
         "socket.io": "^4.8.0",

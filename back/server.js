@@ -5,9 +5,17 @@ import cors from 'cors';
 import morgan from 'morgan';
 import routes from './src/routes/index.js';
 import { startScheduledJobs } from './src/jobs/scheduledJobs.js';
-import { PORT, UPLOADS_DIR, URL_FRONT } from './env.js';
+import { PORT, UPLOADS_DIR, URL_FRONT, PRERENDER_TOKEN } from './env.js';
+import prerender from 'prerender-node';
 
 const app = express();
+
+if (PRERENDER_TOKEN) {
+    prerender.set('prerenderToken', PRERENDER_TOKEN);
+    // Opcional: puedes configurar otros parámetros, como tiempo de espera
+    // prerender.set('prerenderServiceUrl', 'https://service.prerender.io/');
+    app.use(prerender);
+}
 
 app.use(morgan('dev'));
 app.use(express.json());

@@ -16,6 +16,7 @@ const {
     SMTP_USER,
     SMTP_PASS,
     URL_FRONT,
+    PRERENDER_TOKEN,
 } = process.env;
 
 export {
@@ -32,4 +33,5 @@ export {
     SMTP_USER,
     SMTP_PASS,
     URL_FRONT,
+    PRERENDER_TOKEN,
 };
