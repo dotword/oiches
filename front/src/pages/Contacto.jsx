@@ -18,24 +18,6 @@ export const Contacto = () => {
                 url="https://oiches.com/contacto"
                 keywords="contacto, hablar con Oiches, dudas, propuestas, ideas"
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'ContactPage',
-                    name: 'Contacto - Oiches',
-                    description:
-                        'Ponte en contacto con Oiches para dudas, propuestas o ideas.',
-                    url: 'https://oiches.com/contacto',
-                    mainEntity: {
-                        '@type': 'ContactPoint',
-                        email: 'hola@oiches.com',
-                        contactType: 'Customer Support',
-                        availableLanguage: ['Spanish', 'English'],
-                        sameAs: [
-                            'https://www.instagram.com/oiches_musica/',
-                            'https://www.facebook.com/oiches',
-                        ],
-                    },
-                }}
             />
             <motion.div
                 initial={{ opacity: 0, height: 0 }}

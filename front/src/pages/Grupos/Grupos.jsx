@@ -55,17 +55,7 @@ const Grupos = () => {
                 url="https://oiches.com/grupos"
                 keywords="músicos, bandas emergentes, grupos musicales, músicos para eventos, eventos, salas de conciertos"
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salas.jpg"
-                type="website"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'ItemList',
-                    itemListElement: filteredGrupos.map((grupo, index) => ({
-                        '@type': 'ListItem',
-                        position: index + 1,
-                        name: grupo.nombre,
-                        url: `https://oiches.com/grupos/${grupo.id}`,
-                    })),
-                }}
+                imageAlt="Oiches - Conectamos músicos y salas"
             />
 
             <motion.div

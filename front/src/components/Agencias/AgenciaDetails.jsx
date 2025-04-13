@@ -50,10 +50,17 @@ const AgenciaDetails = () => {
         <>
             <Seo
                 title={`${nombre} - Agencia de músicos en ${provincia}`}
-                description={`Descubre la agencia ${nombre} en ${provincia}.`}
+                description={`Descubre la agencia ${nombre} en ${provincia}. ${
+                    descripcion
+                        ? descripcion.length > 160
+                            ? descripcion.slice(0, 157).trim() + '...'
+                            : descripcion
+                        : 'Conoce más sobre la agencia.'
+                }`}
                 keywords={`agencia, manager, ${nombre}, ${provincia}, música en vivo, eventos`}
                 url={`https://oiches.com/agencia/${idAgencia}`}
                 image={imageUrl}
+                imageAlt={`Imagen de la agencia ${nombre}`}
             />
 
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">

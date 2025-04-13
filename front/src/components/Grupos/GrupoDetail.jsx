@@ -98,6 +98,7 @@ const GrupoDetail = () => {
                         ? `${VITE_API_URL_BASE}/uploads/${avatar}`
                         : DefaultProfile
                 }
+                imageAlt={`Imagen de ${nombre}`}
             />
 
             <Header />

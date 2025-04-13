@@ -65,19 +65,31 @@ const SalaDetail = () => {
         });
     };
 
+    const firstImage =
+        fotos.find((foto) => foto.main === 1)?.name || fotos[0]?.name;
+
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración del componente Seo con datos dinámicos */}
             <Seo
                 title={`${nombre} - Sala de Conciertos en ${provincia}`}
-                description={`Descubre la sala ${nombre} en ${provincia}. Capacidad: ${capacidad} personas. Equipamiento: ${equipamiento}. Reserva tu evento hoy.`}
+                description={`Descubre la sala ${nombre} en ${provincia}. ${
+                    descripcion
+                        ? descripcion.length > 160
+                            ? descripcion.slice(0, 157).trim() + '...'
+                            : descripcion
+                        : 'Conoce más sobre esta sala.'
+                } Capacidad: ${capacidad} personas.`}
                 keywords={`sala de conciertos, ${nombre}, ${provincia}, música en vivo, eventos`}
                 url={`https://oiches.com/sala/${idSala}`}
                 image={
-                    usuarioAvatar
+                    firstImage
+                        ? `${VITE_API_URL_BASE}/uploads/${firstImage}`
+                        : usuarioAvatar
                         ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
                         : DefaultProfile
                 }
+                imageAlt={`Imagen de ${nombre}`}
             />
 
             <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
@@ -88,10 +100,7 @@ const SalaDetail = () => {
                             src={
                                 usuarioAvatar
                                     ? `${VITE_API_URL_BASE}/uploads/${usuarioAvatar}`
-                                    : `${VITE_API_URL_BASE}/uploads/${
-                                          fotos.find((foto) => foto.main === 1)
-                                              ?.name || fotos[0]?.name
-                                      }`
+                                    : `${VITE_API_URL_BASE}/uploads/${firstImage}`
                             }
                             alt="Imagen de perfil de la sala"
                         />

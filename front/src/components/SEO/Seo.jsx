@@ -64,6 +64,7 @@ const Seo = ({
             <link rel="canonical" href={url} />
 
             {/* 🔹 Open Graph (Facebook, WhatsApp) */}
+            <meta property="og:site_name" content="Oiches" />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />

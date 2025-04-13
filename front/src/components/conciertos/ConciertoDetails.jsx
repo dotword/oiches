@@ -84,12 +84,12 @@ const ConciertoDetail = () => {
             <Seo
                 title={`Concierto de ${
                     artista && artista.length > 0
-                        ? `${artista} en concierto en ${sala}`
+                        ? `${artista} en ${sala}`
                         : title
                 } `}
                 description={`Concierto de ${
                     artista && artista.length > 0
-                        ? `${artista} en concierto en ${sala}`
+                        ? `${artista} en ${sala}`
                         : title
                 } (${ciudad}) el ${formattedDate.dia} de ${
                     formattedDate.mes
@@ -99,6 +99,7 @@ const ConciertoDetail = () => {
                 }, ${provincia}, ${ciudad}, música en vivo, eventos`}
                 url={`https://oiches.com/concierto/${conciertoId}`}
                 image={`${VITE_API_URL_BASE}/uploads/${poster}`}
+                imageAlt="Imagen del concierto"
             />
 
             <main className="px-4 pb-16 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200">
