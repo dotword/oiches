@@ -49,18 +49,7 @@ const Salas = () => {
                 keywords="salas de conciertos, música en vivo, reservas de salas, eventos musicales, donde tocar, conciertos en vivo"
                 url="https://oiches.com/salas"
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
-                type="website"
-                imageType="image/jpg"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'ItemList',
-                    itemListElement: filteredSalas.map((sala, index) => ({
-                        '@type': 'ListItem',
-                        position: index + 1,
-                        name: sala.nombre,
-                        url: `https://oiches.com/salas/${sala.id}`,
-                    })),
-                }}
+                imageAlt="Oiches -Encuentra Salas de Conciertos para Eventos en Vivo"
             />
 
             <motion.div

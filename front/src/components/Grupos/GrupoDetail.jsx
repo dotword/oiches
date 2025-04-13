@@ -68,27 +68,37 @@ const GrupoDetail = () => {
     const firstImage =
         fotos.find((foto) => foto.main === 1)?.name || fotos[0]?.name;
 
+    // Si aún no se han cargado los datos, podemos mostrar un loader o retornar null
+    if (!entry || !nombre) {
+        return <div>Cargando...</div>;
+    }
+
     return published === 1 || actualUser.roles === 'admin' ? (
         <>
             {/* Integración de SEO dinámico con los datos del grupo */}
             <Seo
-                title={`${nombre} - Grupo Musical en Oiches`}
-                description={`Descubre a ${nombre}, un grupo musical destacado en ${provincia}. Género: ${
+                title={`${nombre} - Músicos en Oiches`}
+                description={`Descubre a ${nombre}, artista destacado en ${provincia}. Género: ${
                     genero?.map((g) => g.generoName).join(', ') || 'Desconocido'
                 }. ${
                     biografia
-                        ? biografia
+                        ? biografia.length > 160
+                            ? biografia.slice(0, 157).trim() + '...'
+                            : biografia
                         : 'Conoce más sobre su música en vivo.'
                 }`}
-                keywords={`grupo musical, ${nombre}, ${genero
+                keywords={`músico, ${nombre}, ${genero
                     ?.map((g) => g.generoName)
                     .join(', ')}, música en vivo, conciertos`}
                 url={`https://oiches.com/grupo/${idGrupo}`}
                 image={
-                    avatar
+                    firstImage
+                        ? `${VITE_API_URL_BASE}/uploads/${firstImage}`
+                        : avatar
                         ? `${VITE_API_URL_BASE}/uploads/${avatar}`
                         : DefaultProfile
                 }
+                imageAlt={`Imagen de ${nombre}`}
             />
 
             <Header />

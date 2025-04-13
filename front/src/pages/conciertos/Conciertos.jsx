@@ -90,7 +90,7 @@ const Conciertos = () => {
                 url="https://oiches.com/conciertos"
                 keywords="conciertos, músicos, bandas emergentes, grupos musicales, músicos para eventos, eventos, salas de conciertos"
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salas.jpg"
-                type="website"
+                imageAlt="Oiches - Conciertos"
             />
 
             <motion.div

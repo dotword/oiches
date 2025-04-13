@@ -13,23 +13,6 @@ const SobreOiches = () => {
                 keywords="Oiches, músicos emergentes, salas de concierto, música en vivo, reservas de conciertos, gestión de eventos, conectar músicos y salas"
                 url="https://oiches.com/sobre-oiches"
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
-                type="website"
-                structuredData={{
-                    '@context': 'https://schema.org',
-                    '@type': 'AboutPage',
-                    name: 'Sobre Oiches',
-                    description:
-                        'Página sobre Oiches, una plataforma que conecta a músicos emergentes con salas de concierto para facilitar reservas y oportunidades únicas en música en vivo.',
-                    url: 'https://oiches.com/sobre-oiches',
-                    publisher: {
-                        '@type': 'Organization',
-                        name: 'Oiches',
-                        logo: {
-                            '@type': 'ImageObject',
-                            url: 'https://oiches.com/Oiches-logo-vertical.png',
-                        },
-                    },
-                }}
             />
 
             <motion.div
