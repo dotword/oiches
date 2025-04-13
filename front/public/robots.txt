@@ -3,16 +3,25 @@ User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Disallow: /tmp/
-Disallow: /node_modules/
-Disallow: /scripts/
-Disallow: /src/
 Disallow: /uploads/
 Disallow: /server.js
 Disallow: /env.js
 Disallow: /Oiches.postman_collection.json
 
+# Permite acceso a imágenes dentro de /uploads/ (para Open Graph, etc.)
+Allow: /uploads/*.jpg
+Allow: /uploads/*.jpeg
+Allow: /uploads/*.png
+Allow: /uploads/*.webp
+Allow: /uploads/*.gif
+
+# Excepciones para permitir recursos necesarios
+Allow: /scripts/*.js
+Allow: /src/*.js
+Allow: /node_modules/*.js
+Allow: /api/public-*.json
+
 # Bloquea archivos específicos que no deberían ser rastreados
-Disallow: /*.json$
 Disallow: /*.md$
 Disallow: /*.env$
 Disallow: /*.log$
@@ -35,8 +44,12 @@ Allow: /sala/*
 Allow: /sobre-oiches
 Allow: /contacto
 
-# Permite acceso a las imágenes
+# Permite acceso a imágenes de /images/ (si usas esa ruta también)
 Allow: /images/
+
+# Permite acceso explícito al bot de Prerender.io
+User-agent: Prerender
+Allow: /
 
 # Indica la ubicación del sitemap
 Sitemap: https://www.oiches.com/sitemap.xml
