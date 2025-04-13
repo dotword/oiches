@@ -64,6 +64,7 @@ const ConciertoDetail = () => {
         hora,
         precioAnticipada,
         precio,
+        otroTipoEntrada,
         genero,
         link,
         poster,
@@ -123,6 +124,7 @@ const ConciertoDetail = () => {
                                 precioAnticipada={
                                     formatPrice(precioAnticipada) || ''
                                 }
+                                otroTipoEntrada={otroTipoEntrada || ''}
                                 hora={formatHour(hora)}
                                 ciudad={ciudad || ''}
                                 provincia={provincia || ''}

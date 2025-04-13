@@ -26,6 +26,7 @@ const ConciertoEdit = () => {
         hora: '',
         precioAnticipada: '',
         precio: '',
+        otroTipoEntrada: '',
         description: '',
         link: '',
         salaLink: '',
@@ -42,6 +43,7 @@ const ConciertoEdit = () => {
                 hora: concierto.hora || '',
                 precioAnticipada: concierto.precioAnticipada || '',
                 precio: concierto.precio || '',
+                otroTipoEntrada: concierto.otroTipoEntrada || '',
                 description: concierto.description || '',
                 link: concierto.link || '',
                 salaLink: concierto.salaLink || '',
@@ -98,8 +100,6 @@ const ConciertoEdit = () => {
             dataForm.append('title', concert.title || '');
             dataForm.append('fecha', concert.fecha || '');
             dataForm.append('hora', concert.hora || '');
-
-            // ✅ Convertir '' a null en valores DECIMAL
             dataForm.append(
                 'precioAnticipada',
                 concert.precioAnticipada !== ''
@@ -110,7 +110,7 @@ const ConciertoEdit = () => {
                 'precio',
                 concert.precio !== '' ? concert.precio : null
             );
-
+            dataForm.append('otroTipoEntrada', concert.otroTipoEntrada || '');
             dataForm.append('description', concert.description || '');
             dataForm.append('link', concert.link || '');
             dataForm.append('salaLink', concert.salaLink || '');
@@ -203,7 +203,7 @@ const ConciertoEdit = () => {
                             />
                         </label>
                     </div>
-                    <div className="">
+                    <div className="full">
                         <label className="block text-gray-700 text-sm font-medium mb-4">
                             Título (si no hay reserva)
                             <input
@@ -256,7 +256,23 @@ const ConciertoEdit = () => {
                                 className="form-input max-w-32"
                             />
                         </label>
-
+                        <label className="flex items-baseline my-4">
+                            <span className="font-semibold mr-2 min-w-40">
+                                Otro tipo de entrada:
+                            </span>
+                            <input
+                                type="text"
+                                name="otroTipoEntrada"
+                                value={concert.otroTipoEntrada}
+                                onChange={(e) =>
+                                    setConcert({
+                                        ...concert,
+                                        otroTipoEntrada: e.target.value,
+                                    })
+                                }
+                                className="form-input"
+                            />
+                        </label>
                         <label className="flex items-baseline my-4">
                             <span className="font-semibold mr-2">Enlace:</span>
                             <input

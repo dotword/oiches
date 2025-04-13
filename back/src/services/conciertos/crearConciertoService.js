@@ -8,6 +8,7 @@ const crearConciertoService = async (
     hora,
     precioAnticipada,
     precio,
+    otroTipoEntrada,
     description,
     link,
     salaLink,
@@ -22,7 +23,7 @@ const crearConciertoService = async (
     // Crear el concierto
     const conciertoId = uuid();
     await pool.query(
-        'INSERT INTO conciertos(id, reservaId, title, fecha, hora, precioAnticipada, precio, description, link, salaLink, poster ) VALUES (?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO conciertos(id, reservaId, title, fecha, hora, precioAnticipada, precio, otroTipoEntrada, description, link, salaLink, poster ) VALUES (?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?)',
         [
             conciertoId,
             reservaId,
@@ -31,6 +32,7 @@ const crearConciertoService = async (
             hora,
             anticipadaFinal,
             precioFinal,
+            otroTipoEntrada,
             description,
             link,
             salaLink,
@@ -46,6 +48,7 @@ const crearConciertoService = async (
         hora,
         precioAnticipada,
         precio,
+        otroTipoEntrada,
         description,
         link,
         salaLink,

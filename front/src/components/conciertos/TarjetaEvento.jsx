@@ -11,6 +11,7 @@ const TarjetaEvento = ({
     lugar = 'Lugar desconocido',
     precioAnticipada = '',
     precio = '',
+    otroTipoEntrada = '',
     hora = '--:--',
     ciudad = 'Ciudad no especificada',
     provincia = 'Provincia no especificada',
@@ -55,7 +56,7 @@ const TarjetaEvento = ({
                             <FaRegMoneyBillAlt className="inline-block fill-purpleOiches mr-1" />
                             <span className="text-gray-700 text-sm">
                                 {precioAnticipada && `${precioAnticipada} € - `}
-                                {precio ? `${precio} €` : 'Gratuito'}
+                                {precio ? `${precio} €` : otroTipoEntrada}
                             </span>
                         </div>
 

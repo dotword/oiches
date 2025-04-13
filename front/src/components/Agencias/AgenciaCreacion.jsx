@@ -45,7 +45,10 @@ const AgenciaCreacion = () => {
             });
 
             toast.success(
-                'Vamos a verificar los datos de tu agencia y en breve la publicaremos en Oiches.'
+                'Vamos a verificar los datos de tu agencia y en breve la publicaremos en Oiches.',
+                {
+                    onClose: () => window.location.reload(), // Refresca la página tras cerrar el toast
+                }
             );
         } catch (error) {
             setError(error.message);
@@ -149,7 +152,7 @@ const AgenciaCreacion = () => {
                 {/* Botón de Enviar con más aire arriba */}
                 <div className="flex flex-col items-start bg-white w-full">
                     <button type="submit" className="btn-degradado my-4">
-                        Modificar datos
+                        Publica tu agencia
                     </button>
                 </div>
 

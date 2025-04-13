@@ -6,6 +6,7 @@ const listAgenciasController = async (req, res, next) => {
             nombre: req.query.nombre || '',
             provincia: req.query.provincia || '',
             order: req.query.order || 'DESC',
+            field: req.query.field || 'createdAt',
             page: req.query.page || 1,
             pageSize: req.query.pageSize || 12,
         };

@@ -58,7 +58,9 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                 dataForm,
             });
 
-            toast.success('Has modificado tu agencia con éxito');
+            toast.success('Has modificado tu agencia con éxito', {
+                onClose: () => window.location.reload(), // Refresca la página tras cerrar el toast
+            });
         } catch (error) {
             setError(error.message);
             toast.error(error.message);

@@ -22,6 +22,7 @@ const editConciertoSchema = Joi.object({
     precio: Joi.alternatives()
         .try(Joi.number().positive().precision(2), Joi.valid('', 'null', null))
         .messages(joiErrorMessages),
+    otroTipoEntrada: Joi.string().allow('').max(100).messages(joiErrorMessages),
     description: Joi.string()
         .allow('')
         .min(10)
