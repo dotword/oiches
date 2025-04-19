@@ -51,7 +51,7 @@ const InscripcionConcursoForm = ({ idGrupo, token, setInscription }) => {
                 <input type="checkbox" name="basesConfirmed" required /> Acepto
                 las{' '}
                 <a
-                    href="#"
+                    href="/bases-concurso"
                     target="_blank"
                     className="text-yellowOiches font-semibold"
                 >

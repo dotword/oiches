@@ -33,7 +33,7 @@ const InscripcionConcurso = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Inscripción concurso de artistas Oiches 2025" />
+            <Header txt="Inscripción concurso de músicos Oiches 2025" />
             <main className="w-11/12 mx-auto py-8 md:max-w-7xl">
                 {entry && (
                     <section className="mb-20">
@@ -52,7 +52,7 @@ const InscripcionConcurso = () => {
                                 <li className="font-semibold">
                                     Lee atentamente las{' '}
                                     <a
-                                        href="#"
+                                        href="/bases-concurso"
                                         target="_blank"
                                         className="underline"
                                     >
@@ -69,7 +69,7 @@ const InscripcionConcurso = () => {
                                         </li>
                                         <li>
                                             Sube 2-4 videos de YouTube con temas
-                                            de tu repertorio (preferiflemente
+                                            de tu repertorio (preferiblemente
                                             algún directo).
                                         </li>
                                         <li>
@@ -78,6 +78,16 @@ const InscripcionConcurso = () => {
                                         </li>
                                         <li>Incluye rider y/o condiciones.</li>
                                     </ol>
+                                </li>
+                                <li className="font-semibold">
+                                    Síguenos en Instagram:{' '}
+                                    <a
+                                        href="https://www.instagram.com/oiches_musica/"
+                                        target="_blank"
+                                        className="underline"
+                                    >
+                                        @oiches_musica
+                                    </a>
                                 </li>
                             </ul>
                         </div>
