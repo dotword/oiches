@@ -14,6 +14,7 @@ import {
     getInfoInscriptionController,
     listadoInscripcionesController,
     unsubscribeContestInscriptionController,
+    subscribeContestInscriptionController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -59,14 +60,15 @@ router.patch(
     canEditGrupo,
     unsubscribeContestInscriptionController
 );
-// Endpoint para que el admin rechaze o acepte un proyecto ya admitido
-// router.post(
-//     '/concurso/inscripcion/:idGrupo/admision',
-//     authUser,
-//     isAdmin,
-//     grupoExists,
-//     canEditGrupo,
-//     createNewContestInscriptionController
-// );
+
+// Endpoint para active una inscripción del concurso
+router.patch(
+    '/concurso/subscribe/:idGrupo',
+    authUser,
+    userExists,
+    isAdmin,
+    grupoExists,
+    subscribeContestInscriptionController
+);
 
 export default router;

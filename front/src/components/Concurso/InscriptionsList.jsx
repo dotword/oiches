@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import FetchInscripcionesService from '../../services/Concurso/FetchInscripcionesService.js';
 import { FiExternalLink } from 'react-icons/fi';
 import Paginator from '../Paginator.jsx';
+import UnsubscribeFromContest from './UnsubscribeFromContest.jsx';
+import SubscribeFromContest from './SubscribeFromContest.jsx';
 
 const InscriptionsList = ({ token }) => {
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -100,7 +102,7 @@ const InscriptionsList = ({ token }) => {
                                 <th>Aceptado</th>
                                 <th>Fecha alta</th>
                                 <th>Baja</th>
-                                <th>Aprobar</th>
+                                <th>Cancelar/Aprobar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -126,7 +128,19 @@ const InscriptionsList = ({ token }) => {
                                         {filteredUser.deletedAt &&
                                             formatDate(filteredUser.deletedAt)}
                                     </td>
-                                    <td>Aprobar</td>
+                                    <td>
+                                        {filteredUser.projectAcepted === 0 ? (
+                                            <SubscribeFromContest
+                                                token={token}
+                                                idGrupo={filteredUser.id}
+                                            />
+                                        ) : (
+                                            <UnsubscribeFromContest
+                                                token={token}
+                                                idGrupo={filteredUser.id}
+                                            />
+                                        )}
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

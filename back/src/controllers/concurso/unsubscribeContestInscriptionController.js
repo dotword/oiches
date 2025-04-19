@@ -7,7 +7,7 @@ const unsubscribeContestInscriptionController = async (req, res, next) => {
         const { idGrupo } = req.params;
 
         await pool.query(
-            'UPDATE proyectos_inscritos SET basesConfirmed = 0, projectAcepted = 0 WHERE id = ?',
+            'UPDATE proyectos_inscritos SET basesConfirmed = 0, projectAcepted = 0, deletedAt = NOW() WHERE id = ?',
             [idGrupo]
         );
 
