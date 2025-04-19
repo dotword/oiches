@@ -5,6 +5,8 @@ import logoWhite from '../assets/Horizontal_blanco.webp';
 import { FaEnvelope } from 'react-icons/fa6';
 import { FaInstagram } from 'react-icons/fa';
 import { FaRegCopyright } from 'react-icons/fa';
+import { FaFacebook } from 'react-icons/fa';
+
 const Footer = () => {
     const { userLogged } = useContext(AuthContext);
 
@@ -27,7 +29,7 @@ const Footer = () => {
                     <div className="flex flex-col flex-wrap gap-x-12 gap-y-4 md:items-center md:flex-row">
                         <div className="flex gap-4 items-center">
                             <FaEnvelope className="text-lg" />
-                            <p className="flex flex-col gap-1">
+                            <p className="flex flex-col gap-1 mb-0">
                                 <span>Contacta con nosotros</span>
                                 <span className="italic font-semibold">
                                     <a
@@ -41,9 +43,9 @@ const Footer = () => {
                             </p>
                         </div>
 
-                        <div className="flex gap-4 items-center">
+                        <div className="flex gap-3 items-center">
                             <FaInstagram className="text-lg" />
-                            <p className="flex flex-col gap-1">
+                            <p className="flex flex-col gap-1 mb-0">
                                 <span className="italic font-semibold">
                                     <a
                                         href="https://www.instagram.com/oiches_musica/"
@@ -51,6 +53,21 @@ const Footer = () => {
                                         rel="noopener noreferrer"
                                     >
                                         @oiches_musica
+                                    </a>
+                                </span>
+                            </p>
+                        </div>
+
+                        <div className="flex gap-3 items-center">
+                            <FaFacebook className="text-lg" />
+                            <p className="flex flex-col gap-1 mb-0">
+                                <span className="italic font-semibold">
+                                    <a
+                                        href="https://www.facebook.com/oiches/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        @oiches
                                     </a>
                                 </span>
                             </p>
@@ -71,6 +88,12 @@ const Footer = () => {
                             className="hover:text-yellowOiches mx-2 md:mx-2"
                         >
                             Salas
+                        </NavLink>
+                        <NavLink
+                            to={'/agencias'}
+                            className="hover:text-yellowOiches mx-2 md:mx-2"
+                        >
+                            Agencias
                         </NavLink>
                         {userLogged ? (
                             <NavLink
