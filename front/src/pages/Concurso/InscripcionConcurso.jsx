@@ -7,6 +7,7 @@ import useGrupo from '../../hooks/useGrupo';
 import useInscription from '../../hooks/useInscription';
 import AuthContext from '../../context/auth/AuthContext';
 import InscripcionConcursoForm from '../../components/Concurso/InscripcionConcursoForm';
+import UnsubscribeFromContest from '../../components/Concurso/UnsubscribeFromContest';
 
 const InscripcionConcurso = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -93,15 +94,17 @@ const InscripcionConcurso = () => {
                                 <p className="font-semibold text-green-700 text-lg text-center mb-8">
                                     Ya estás inscrito en el concurso
                                 </p>
-                                <button className="btn-account w-80 self-end bg-red-600 margin-r-0">
-                                    Eliminar tu proyecto musical del concurso
-                                </button>
+                                <UnsubscribeFromContest
+                                    token={token}
+                                    idGrupo={idGrupo}
+                                />
                             </div>
                         )}
                         {inscription && inscription.projectAcepted === 0 && (
                             <p className="shadow-xl px-4 py-8 rounded-lg text-red-700">
-                                Tu inscripción ha sido rechazada. Si necesitas
-                                más información, contacta con nosotros en{' '}
+                                Has cancelado tu inscripción o ha sido
+                                rechazada. Si necesitas más información,
+                                contacta con nosotros en{' '}
                                 <a
                                     href="mailto:hola@oiches.com"
                                     className="underline"

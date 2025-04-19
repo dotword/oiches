@@ -13,6 +13,7 @@ import {
     createNewContestInscriptionController,
     getInfoInscriptionController,
     listadoInscripcionesController,
+    unsubscribeContestInscriptionController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -48,22 +49,21 @@ router.get(
     listadoInscripcionesController
 );
 
+// Endpoint para desincribirse del concurso
+router.patch(
+    '/concurso/unsubscribe/:idGrupo',
+    authUser,
+    userExists,
+    checkIfGroup,
+    grupoExists,
+    canEditGrupo,
+    unsubscribeContestInscriptionController
+);
 // Endpoint para que el admin rechaze o acepte un proyecto ya admitido
 // router.post(
 //     '/concurso/inscripcion/:idGrupo/admision',
 //     authUser,
 //     isAdmin,
-//     grupoExists,
-//     canEditGrupo,
-//     createNewContestInscriptionController
-// );
-
-// Endpoint para que el usuario se desinscriba del concurso
-// router.delete(
-//     '/concurso/inscripcion/:idGrupo',
-//     authUser,
-//     userExists,
-//     checkIfGroup,
 //     grupoExists,
 //     canEditGrupo,
 //     createNewContestInscriptionController
