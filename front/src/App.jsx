@@ -38,6 +38,7 @@ import Conciertos from './pages/conciertos/Conciertos.jsx';
 import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
 import Agencias from './pages/Agencias/Agencias.jsx';
 import AgenciaRoster from './pages/Agencias/AgenciaRoster.jsx';
+import { InscripcionConcurso, AdminConcurso } from './pages/Concurso/index.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -167,6 +168,15 @@ function App() {
                         <Route
                             path="users/roster/:idAgencia"
                             element={<AgenciaRoster />}
+                        />
+                        {/* CONCURSO */}
+                        <Route
+                            path="/concurso/inscripcion/:idGrupo"
+                            element={<InscripcionConcurso />}
+                        />
+                        <Route
+                            path="/admin-concurso"
+                            element={<AdminConcurso />}
                         />
                     </Routes>
                 </AnimatePresence>

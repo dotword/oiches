@@ -96,6 +96,18 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         </Link>
                                     )}
                                 </div>
+                                {/* Inscripcion grupo a concurso */}
+                                {type === 'grupo' && entry.published === 1 ? (
+                                    <Link
+                                        to={`/concurso/inscripcion/${entry.id}`}
+                                    >
+                                        <button className="mt-4 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
+                                            Concurso Oiches 2025
+                                        </button>
+                                    </Link>
+                                ) : (
+                                    ''
+                                )}
                             </li>
                         ))}
                     </ul>
