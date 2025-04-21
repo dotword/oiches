@@ -1,8 +1,6 @@
-import { useNavigate } from 'react-router-dom';
 import DefaultProfile from '/Horizontal_blanco.webp';
 
 const GrupoConcursoCard = ({ grupo }) => {
-    const navigate = useNavigate();
     const { VITE_API_URL_BASE } = import.meta.env;
 
     const imageUrl =
@@ -15,9 +13,6 @@ const GrupoConcursoCard = ({ grupo }) => {
             ? `${VITE_API_URL_BASE}/uploads/${grupo.avatar}`
             : DefaultProfile;
 
-    const handleClick = () => {
-        navigate(`/grupo/${grupo.id}`);
-    };
     // Límite de géneros a 3 y agregar "..." si hay más
     const maxGeneros = 3;
     const generosArray = grupo.generos
@@ -55,14 +50,16 @@ const GrupoConcursoCard = ({ grupo }) => {
                 </p>
             </div>
             <div>
-                <p
-                    className="font-semibold text-right text-xl cursor-pointer hover:text-yellowOiches transition duration-200 ease-in-out"
-                    onClick={handleClick}
+                <a
+                    href={`/grupo/${grupo.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold flex justify-end text-xl hover:text-yellowOiches transition duration-200 ease-in-out"
                 >
                     + info
-                </p>
+                </a>
             </div>
-            {/* <button className="button py-3 font-semibold mt-3">Votar</button> */}
+            <button className="button py-3 font-semibold mt-3">Votar</button>
         </div>
     );
 };
