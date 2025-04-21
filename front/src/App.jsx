@@ -42,6 +42,7 @@ import {
     InscripcionConcurso,
     AdminConcurso,
     BasesConcurso,
+    ListadoGruposInscritos,
 } from './pages/Concurso/index.jsx';
 
 function App() {
@@ -185,6 +186,10 @@ function App() {
                         <Route
                             path="/bases-concurso"
                             element={<BasesConcurso />}
+                        />
+                        <Route
+                            path="/votacion-concurso-Oiches"
+                            element={<ListadoGruposInscritos />}
                         />
                     </Routes>
                 </AnimatePresence>

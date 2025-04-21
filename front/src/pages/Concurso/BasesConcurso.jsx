@@ -146,14 +146,14 @@ const BasesConcurso = () => {
                     <ul className="list-disc list-inside my-3 pl-4">
                         <li>
                             <b>FASE 1</b>: Inscripción de los proyectos:
-                            19/05/2025 – 08/06/2025. A partir del 19/05/2025 y
-                            hasta el 08/06/2025 estará abierta la inscripción
+                            19/05/2025 – 09/06/2025. A partir del 19/05/2025 y
+                            hasta el 09/06/2025 estará abierta la inscripción
                             para los artistas interesados en participar.
                         </li>
                         <li>
-                            <b>FASE 2</b>: Votación del público: 13/06/2025 –
+                            <b>FASE 2</b>: Votación del público: 11/06/2025 –
                             06/07/2025. El proceso de votaciones online
-                            comenzará el 13/06/2025 hasta el 06/07/2025. Los 9
+                            comenzará el 11/06/2025 hasta el 06/07/2025. Los 9
                             proyectos más votados pasarán a la fase 3 del
                             concurso.
                         </li>

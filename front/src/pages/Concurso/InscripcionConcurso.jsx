@@ -27,7 +27,7 @@ const InscripcionConcurso = () => {
     const firstImage =
         fotos.find((foto) => foto.main === 1)?.name || fotos[0]?.name;
 
-    return userLogged && userLogged.roles === 'grupo' ? (
+    return userLogged && userLogged.roles !== 'sala' ? (
         <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100%' }}
@@ -48,7 +48,7 @@ const InscripcionConcurso = () => {
                                 }/uploads/${firstImage}`}
                                 alt={entry.nombre}
                             />
-                            <ul className="list-disc list-inside my-3 pl-4">
+                            <ul className="list-disc my-3 pl-8">
                                 <li className="font-semibold">
                                     Lee atentamente las{' '}
                                     <a
@@ -87,6 +87,19 @@ const InscripcionConcurso = () => {
                                         className="underline"
                                     >
                                         @oiches_musica
+                                    </a>
+                                </li>
+                                <li>
+                                    ¿Necesitas ayuda con la publicación de tu
+                                    proyecto o tienes alguna duda sobre el
+                                    concurso? <br />
+                                    Escríbenos a{' '}
+                                    <a
+                                        href="mailto:hola@oiches.com"
+                                        target="_blank"
+                                        className="underline font-semibold"
+                                    >
+                                        hola@oiches.com
                                     </a>
                                 </li>
                             </ul>

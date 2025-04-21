@@ -15,6 +15,7 @@ import {
     listadoInscripcionesController,
     unsubscribeContestInscriptionController,
     subscribeContestInscriptionController,
+    listContestInscriptionsController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -70,5 +71,8 @@ router.patch(
     grupoExists,
     subscribeContestInscriptionController
 );
+
+// Endpoint para listar los proyectos inscritos y aceptados al concurso
+router.get('/concurso/contest-list?', listContestInscriptionsController);
 
 export default router;

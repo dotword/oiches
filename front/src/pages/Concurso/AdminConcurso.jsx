@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import InscriptionsList from '../../components/Concurso/InscriptionsList';
+import AdminInscriptionsList from '../../components/Concurso/AdminInscriptionsList';
 import AuthContext from '../../context/auth/AuthContext';
 
 const AdminConcurso = () => {
@@ -15,7 +15,7 @@ const AdminConcurso = () => {
         >
             <Header txt="Concurso Oiches 2025" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
-                <InscriptionsList token={token} />
+                <AdminInscriptionsList token={token} />
             </main>
             <Footer />
         </motion.div>

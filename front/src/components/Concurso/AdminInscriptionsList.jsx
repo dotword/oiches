@@ -9,7 +9,7 @@ import Paginator from '../Paginator.jsx';
 import UnsubscribeFromContest from './UnsubscribeFromContest.jsx';
 import SubscribeFromContest from './SubscribeFromContest.jsx';
 
-const InscriptionsList = ({ token }) => {
+const AdminInscriptionsList = ({ token }) => {
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [page, setPage] = useState(1);
     const pageSize = 25;
@@ -30,7 +30,6 @@ const InscriptionsList = ({ token }) => {
                     page,
                     pageSize
                 );
-
                 setFilteredUsers(data.inscripciones.rows);
                 setTotal(data.inscripciones.total);
             } catch (error) {
@@ -160,4 +159,4 @@ const InscriptionsList = ({ token }) => {
     );
 };
 
-export default InscriptionsList;
+export default AdminInscriptionsList;

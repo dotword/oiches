@@ -1,6 +1,7 @@
 import getPool from '../../database/getPool.js';
+import path from 'path';
 
-const listadoInscripcionesService = async (filters) => {
+const listContestInscriptionsService = async (filters) => {
     try {
         const pool = await getPool();
 
@@ -8,10 +9,20 @@ const listadoInscripcionesService = async (filters) => {
         let query = `
             SELECT 
                 pi.*,
-                g.nombre AS grupo_nombre
+                g.nombre AS grupo_nombre,
+                g.provincia AS provincia_id,
+                g.usuario_id AS usuario_id,
+                p.provincia AS provincia_nombre,
+                (
+                    SELECT GROUP_CONCAT(gm.nombre SEPARATOR ', ')
+                    FROM generos_grupos gg
+                    JOIN generos_musicales gm ON gg.generoId = gm.id
+                    WHERE gg.grupoId = pi.id
+                ) AS generos   
             FROM proyectos_inscritos pi
             LEFT JOIN grupos g ON pi.id = g.id
-            WHERE 1=1
+            JOIN provincias p ON g.provincia = p.id
+            WHERE 1=1 AND pi.projectAcepted = 1
         `;
 
         // Consulta de conteo
@@ -19,7 +30,7 @@ const listadoInscripcionesService = async (filters) => {
             SELECT COUNT(DISTINCT pi.id) AS total
             FROM proyectos_inscritos pi
             LEFT JOIN grupos g ON pi.id = g.id
-            WHERE 1=1
+            WHERE 1=1 AND pi.projectAcepted = 1
         `;
 
         const queryParams = [];
@@ -32,15 +43,6 @@ const listadoInscripcionesService = async (filters) => {
             const nameFilter = `%${filters.name}%`;
             queryParams.push(nameFilter);
             countQueryParams.push(nameFilter);
-        }
-
-        // Filtro por aceptación
-        if (filters.acepted && filters.acepted.trim() !== '') {
-            query += ' AND pi.projectAcepted = ?';
-            countQuery += ' AND pi.projectAcepted = ?';
-            const aceptedValue = parseInt(filters.acepted, 10);
-            queryParams.push(aceptedValue);
-            countQueryParams.push(aceptedValue);
         }
 
         // Ordenamiento
@@ -68,11 +70,38 @@ const listadoInscripcionesService = async (filters) => {
         const [countResult] = await pool.query(countQuery, countQueryParams);
         const total = countResult[0].total;
 
-        return { rows, total };
+        // Consulta para obtener las fotos agrupadas por grupo
+        const [photos] = await pool.query(`
+        SELECT id, name, grupoId, es_principal 
+        FROM grupo_fotos
+    `);
+
+        // Agrupar las fotos por grupo excluyendo los archivos PDF
+        const groupedPhotos = photos.reduce((acc, photo) => {
+            if (path.extname(photo.name).toLowerCase() !== '.pdf') {
+                if (!acc[photo.grupoId]) {
+                    acc[photo.grupoId] = [];
+                }
+                acc[photo.grupoId].push({
+                    id: photo.id,
+                    name: photo.name,
+                    main: photo.es_principal,
+                });
+            }
+            return acc;
+        }, {});
+
+        // Añadir las fotos correspondientes a cada grupo
+        const result = rows.map((row) => ({
+            ...row,
+            fotos: groupedPhotos[row.id] || [],
+        }));
+
+        return { result, total };
     } catch (error) {
         console.log(error);
         throw error;
     }
 };
 
-export default listadoInscripcionesService;
+export default listContestInscriptionsService;
