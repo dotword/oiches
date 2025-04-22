@@ -16,6 +16,8 @@ import {
     unsubscribeContestInscriptionController,
     subscribeContestInscriptionController,
     listContestInscriptionsController,
+    registerVoterEmailController,
+    validateVoterEmailTokenController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -74,5 +76,16 @@ router.patch(
 
 // Endpoint para listar los proyectos inscritos y aceptados al concurso
 router.get('/concurso/contest-list?', listContestInscriptionsController);
+
+// Endpoint para enviar codigo de verficacion al email del votante
+router.post('/concurso/vote/verification-code', registerVoterEmailController);
+
+//Endpoint para validar el token de verificación del votante
+router.get(
+    '/concurso/validate_email/:verification_token',
+    validateVoterEmailTokenController
+);
+//Endpoint para validar el token de verificación del votante si no se pasa por params
+router.post('/concurso/validate_email', validateVoterEmailTokenController);
 
 export default router;

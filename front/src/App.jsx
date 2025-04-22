@@ -43,6 +43,8 @@ import {
     AdminConcurso,
     BasesConcurso,
     ListadoGruposInscritos,
+    PoliticaVotacion,
+    ValidateEmailPage,
 } from './pages/Concurso/index.jsx';
 
 function App() {
@@ -190,6 +192,14 @@ function App() {
                         <Route
                             path="/votacion-concurso-Oiches"
                             element={<ListadoGruposInscritos />}
+                        />
+                        <Route
+                            path="/politica-votacion"
+                            element={<PoliticaVotacion />}
+                        />
+                        <Route
+                            path="/concurso/validate_email/:verification_token"
+                            element={<ValidateEmailPage />}
                         />
                     </Routes>
                 </AnimatePresence>

@@ -10,6 +10,7 @@ import Toastify from '../../components/Toastify.jsx';
 import { ImBullhorn } from 'react-icons/im';
 import { IoIosSearch } from 'react-icons/io';
 import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
+import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
 
 const ListadoGruposInscritos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -88,9 +89,11 @@ const ListadoGruposInscritos = () => {
                             </p> */}
                         </div>
                     </section>
-                    <section>
+                    <section className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
                         <RegisterEmailForVoteForm />
-
+                        <ValidateEmailWithCodeForm />
+                    </section>
+                    <section>
                         <form className="flex justify-end relative">
                             <input
                                 type="text"
