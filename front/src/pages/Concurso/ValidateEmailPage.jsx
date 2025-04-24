@@ -51,7 +51,7 @@ const ValidateEmailPage = () => {
                 <p className="text-lg font-medium">Verificando tu email...</p>
             ) : (
                 <p className="text-lg font-medium">
-                    Redirigiéndote o vuelve al sitio para votar
+                    Redirigiéndote al sitio para votar
                 </p>
             )}
 

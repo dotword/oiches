@@ -30,7 +30,6 @@ const ListadoGruposInscritos = () => {
                     page,
                     pageSize
                 );
-                console.log(data);
 
                 setFilteredGrupos(data.inscripciones.result);
                 setTotal(data.inscripciones.total);
@@ -74,19 +73,19 @@ const ListadoGruposInscritos = () => {
                             className="text-3xl"
                         />
                         <div className="flex flex-col justify-center text-center">
-                            <p className="mb-1">
+                            {/* <p className="mb-1">
                                 Inscripciones abiertas hasta el 09/06/2025
                             </p>
                             <p className="mb-1">
                                 Las votaciones comienzan el 11/06/2025
-                            </p>
-                            {/* <p className="mb-1">
+                            </p> */}
+                            <p className="mb-1">
                                 Finalizado el plazo de inscripción. ¡Suerte!
                             </p>
                             <p className="mb-1">
                                 Las votaciones están abiertas hasta el
                                 06/07/2025
-                            </p> */}
+                            </p>
                         </div>
                     </section>
                     <section className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
