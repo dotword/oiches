@@ -12,6 +12,7 @@ import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
 import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
+import MusicianContestBanner from '../components/MusicianContestBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -81,9 +82,10 @@ const Home = () => {
                 className="overflow-hidden"
             >
                 <HeaderHero />
-
-                {/* Hero Section */}
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
+                <MusicianContestBanner />{' '}
+                {/* Componente banner anuncio concurso */}
+                {/* Hero Section hero banner comentado para usar banner concurso, descomentar y eliminar comoponente MusicanContestBanner*/}
+                {/* <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu banda sonora
@@ -110,8 +112,7 @@ const Home = () => {
                             </Link>
                         </div>
                     </div>
-                </section>
-
+                </section> */}
                 {/* Main Content */}
                 <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
                     {/* Músicos más votados */}
@@ -176,7 +177,6 @@ const Home = () => {
                         <Conectate />
                     </section>
                 </main>
-
                 <Footer />
                 <Toastify />
             </motion.div>
