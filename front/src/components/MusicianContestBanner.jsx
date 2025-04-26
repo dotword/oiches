@@ -57,9 +57,8 @@ const MusicianContestBanner = () => {
                 </div>
             </div>
 
-            {/* Banner Informativo Blanco */}
-            {/* Margen negativo lo sube sobre la sección superior */}
-            {/* z-10 asegura que esté sobre la imagen si hay solapamiento */}
+            {/* Banner Informativo Blanco Margen negativo lo sube sobre la sección superior z-10 asegura que esté sobre la imagen si hay solapamiento */}
+
             <div className="relative -mt-12 md:-mt-8 lg:-mt-24 z-10">
                 {/* Contenedor con fondo, padding, ancho máximo, esquina redondeada y sombra */}
                 <div className="bg-white text-gray-900 py-10 px-6 sm:px-10 md:px-12 lg:px-16 w-full max-w-full md:max-w-6xl lg:max-w-7xl rounded-tr-3xl shadow-[0_0_25px_rgba(0,0,0,0.70)]">
