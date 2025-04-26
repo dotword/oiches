@@ -38,6 +38,14 @@ import Conciertos from './pages/conciertos/Conciertos.jsx';
 import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
 import Agencias from './pages/Agencias/Agencias.jsx';
 import AgenciaRoster from './pages/Agencias/AgenciaRoster.jsx';
+import {
+    InscripcionConcurso,
+    AdminConcurso,
+    BasesConcurso,
+    ListadoGruposInscritos,
+    PoliticaVotacion,
+    ValidateEmailPage,
+} from './pages/Concurso/index.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -167,6 +175,31 @@ function App() {
                         <Route
                             path="users/roster/:idAgencia"
                             element={<AgenciaRoster />}
+                        />
+                        {/* CONCURSO */}
+                        <Route
+                            path="/concurso/inscripcion/:idGrupo"
+                            element={<InscripcionConcurso />}
+                        />
+                        <Route
+                            path="/admin-concurso"
+                            element={<AdminConcurso />}
+                        />
+                        <Route
+                            path="/bases-concurso"
+                            element={<BasesConcurso />}
+                        />
+                        <Route
+                            path="/votacion-concurso-Oiches"
+                            element={<ListadoGruposInscritos />}
+                        />
+                        <Route
+                            path="/politica-votacion"
+                            element={<PoliticaVotacion />}
+                        />
+                        <Route
+                            path="/concurso/validate_email/:verification_token"
+                            element={<ValidateEmailPage />}
                         />
                     </Routes>
                 </AnimatePresence>
