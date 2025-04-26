@@ -47,10 +47,10 @@ const listContestInscriptionsService = async (filters) => {
 
         // Ordenamiento
         const orderDirection =
-            filters.order && filters.order.toUpperCase() === 'ASC'
-                ? 'ASC'
-                : 'DESC';
-        query += ` ORDER BY createdAt ${orderDirection}`;
+            filters.order && filters.order.toUpperCase() === 'DESC'
+                ? 'DESC'
+                : 'ASC';
+        query += ` ORDER BY grupo_nombre ${orderDirection}`;
 
         // Paginación
         const page = filters.page ? parseInt(filters.page, 10) : 1;

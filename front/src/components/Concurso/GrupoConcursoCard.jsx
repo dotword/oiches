@@ -1,7 +1,12 @@
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import DefaultProfile from '/Horizontal_blanco.webp';
 
 const GrupoConcursoCard = ({ grupo }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
+    const [showForm, setShowForm] = useState(false);
+    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const imageUrl =
         grupo.fotos && grupo.fotos.length > 0
@@ -23,6 +28,39 @@ const GrupoConcursoCard = ({ grupo }) => {
         generosArray.length > maxGeneros
             ? `${generosArray.slice(0, maxGeneros).join(', ')}...`
             : generosArray.join(', ');
+
+    const handleVote = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+
+        try {
+            const res = await fetch(
+                `${VITE_API_URL_BASE}/concurso/vote/${grupo.id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                }
+            );
+
+            const result = await res.json();
+
+            if (!res.ok) throw new Error(result.message);
+
+            toast.success(
+                `¡Gracias por votar a ${grupo.grupo_nombre}! Te quedan ${result.result.votosRestantes} voto/s.`
+            );
+            setEmail('');
+            setShowForm(false);
+        } catch (err) {
+            toast.error(err.message || 'Error al votar');
+            setShowForm(false);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="card-generica justify-between cursor-auto">
@@ -59,7 +97,35 @@ const GrupoConcursoCard = ({ grupo }) => {
                     + info
                 </a>
             </div>
-            <button className="button py-3 font-semibold mt-3">Votar</button>
+            <button
+                className={`button ${
+                    showForm ? 'py-2' : 'py-3 font-semibold'
+                } mt-3 transition duration-200 `}
+                onClick={() => setShowForm(!showForm)}
+            >
+                {showForm ? 'No votar' : 'Votar'}
+            </button>
+            {/* Formulario de votación */}
+            {showForm && (
+                <form onSubmit={handleVote} className="mt-4">
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Introduce tu email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="form-input w-full mb-2 text-black"
+                    />
+                    <button
+                        type="submit"
+                        className="button w-full py-2"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? 'Enviando voto...' : 'Confirmar voto'}
+                    </button>
+                </form>
+            )}
         </div>
     );
 };

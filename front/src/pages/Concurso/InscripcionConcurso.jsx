@@ -79,15 +79,19 @@ const InscripcionConcurso = () => {
                                         <li>Incluye rider y/o condiciones.</li>
                                     </ol>
                                 </li>
-                                <li className="font-semibold">
-                                    Síguenos en Instagram:{' '}
-                                    <a
-                                        href="https://www.instagram.com/oiches_musica/"
-                                        target="_blank"
-                                        className="underline"
-                                    >
-                                        @oiches_musica
-                                    </a>
+                                <li>
+                                    <span className="font-semibold">
+                                        Síguenos en Instagram:{' '}
+                                        <a
+                                            href="https://www.instagram.com/oiches_musica/"
+                                            target="_blank"
+                                            className="underline"
+                                        >
+                                            @oiches_musica
+                                        </a>
+                                        .{' '}
+                                    </span>
+                                    (No es obligatorio, pero se agradece).
                                 </li>
                                 <li>
                                     ¿Necesitas ayuda con la publicación de tu

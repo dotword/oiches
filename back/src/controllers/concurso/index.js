@@ -6,6 +6,7 @@ import subscribeContestInscriptionController from './subscribeContestInscription
 import listContestInscriptionsController from './listContestInscriptionsController.js';
 import registerVoterEmailController from './registerVoterEmailController.js';
 import validateVoterEmailTokenController from './validateVoterEmailTokenController.js';
+import registerVoterVoteController from './registerVoterVoteController.js';
 
 export {
     createNewContestInscriptionController,
@@ -16,4 +17,5 @@ export {
     listContestInscriptionsController,
     registerVoterEmailController,
     validateVoterEmailTokenController,
+    registerVoterVoteController,
 };

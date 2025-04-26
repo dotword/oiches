@@ -18,6 +18,7 @@ import {
     listContestInscriptionsController,
     registerVoterEmailController,
     validateVoterEmailTokenController,
+    registerVoterVoteController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -87,5 +88,10 @@ router.get(
 );
 //Endpoint para validar el token de verificación del votante si no se pasa por params
 router.post('/concurso/validate_email', validateVoterEmailTokenController);
+
+// Endpoint para registrar un voto con el email del votante
+router.post('/concurso/vote/:idProyecto', registerVoterVoteController);
+
+// Permitir al admin elimiar los votos de un usuario
 
 export default router;
