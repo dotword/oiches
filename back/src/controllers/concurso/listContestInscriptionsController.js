@@ -4,7 +4,6 @@ const listContestInscriptionsController = async (req, res, next) => {
     try {
         const filters = {
             name: req.query.name || '',
-            order: req.query.order || 'ASC',
             page: req.query.page || 1,
             pageSize: req.query.pageSize || 12,
         };

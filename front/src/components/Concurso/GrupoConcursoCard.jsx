@@ -64,9 +64,10 @@ const GrupoConcursoCard = ({ grupo }) => {
 
     return (
         <div className="card-generica justify-between cursor-auto">
-            <div className="text-white flex justify-between pb-3 font-semibold">
-                <span>#1</span>
-                <span>20 votos</span>
+            <div className="text-white flex justify-end pb-3 font-semibold">
+                <span>
+                    {grupo.number_votes} voto{grupo.number_votes !== 1 && 's'}
+                </span>
             </div>
             <div>
                 <img

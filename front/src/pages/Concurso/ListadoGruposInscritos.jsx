@@ -41,8 +41,6 @@ const ListadoGruposInscritos = () => {
         fetchAllUsers();
     }, [page, filters, pageSize]);
 
-    console.log('filteredGrupos', filteredGrupos);
-
     useEffect(() => {
         if (autoSearch) {
             setPage(1); // Reinicia la paginación cuando cambian los filtros.

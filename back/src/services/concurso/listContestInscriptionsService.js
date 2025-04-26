@@ -18,7 +18,8 @@ const listContestInscriptionsService = async (filters) => {
                     FROM generos_grupos gg
                     JOIN generos_musicales gm ON gg.generoId = gm.id
                     WHERE gg.grupoId = pi.id
-                ) AS generos   
+                ) AS generos,
+                (SELECT COUNT(id) FROM contest_votes WHERE contest_votes.project_id = pi.id) AS number_votes 
             FROM proyectos_inscritos pi
             LEFT JOIN grupos g ON pi.id = g.id
             JOIN provincias p ON g.provincia = p.id
@@ -46,11 +47,7 @@ const listContestInscriptionsService = async (filters) => {
         }
 
         // Ordenamiento
-        const orderDirection =
-            filters.order && filters.order.toUpperCase() === 'DESC'
-                ? 'DESC'
-                : 'ASC';
-        query += ` ORDER BY grupo_nombre ${orderDirection}`;
+        query += ` ORDER BY number_votes DESC, grupo_nombre ASC`;
 
         // Paginación
         const page = filters.page ? parseInt(filters.page, 10) : 1;

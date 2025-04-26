@@ -14,7 +14,6 @@ const FetchListInscripcionesService = async (
 
         // Agregar solo los filtros que no estén vacíos
         if (filters.name) queryParamsObj.name = filters.name;
-        if (filters.order) queryParamsObj.order = filters.order;
 
         // Crear los parámetros de consulta
         const queryParams = new URLSearchParams(queryParamsObj).toString();
