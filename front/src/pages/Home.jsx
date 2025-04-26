@@ -82,8 +82,8 @@ const Home = () => {
                 className="overflow-hidden"
             >
                 <HeaderHero />
-                <MusicianContestBanner />{' '}
                 {/* Componente banner anuncio concurso */}
+                <MusicianContestBanner />
                 {/* Hero Section hero banner comentado para usar banner concurso, descomentar y eliminar comoponente MusicanContestBanner*/}
                 {/* <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">

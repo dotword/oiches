@@ -7,8 +7,6 @@ const MusicianContestBanner = () => {
         <section className="w-full bg-black text-white overflow-hidden">
             {/* Contenedor flex principal: columna en pequeño, fila en mediano+ */}
             <div className="flex flex-col md:flex-row h-auto lg:h-[750px] relative">
-                {/* Área de texto izquierda (Fondo degradado) */}
-                {/* Contenido centrado verticalmente por defecto solo para resoluciones de tablet y moviles en pantallas grandes se deja tal cual */}
                 <div className="relative w-full md:w-2/4 flex flex-col justify-center px-6 sm:px-8 md:px-12 lg:px-16 py-12 md:py-8 lg:py-8 bg-gradient-to-r from-[#3A0CA3] via-[#7209B7] to-[#f72585]">
                     {/* Contenedor interno para alineación de texto y ancho máximo */}
                     <div className="w-full mx-auto md:mx-0">
@@ -27,15 +25,13 @@ const MusicianContestBanner = () => {
                             <h2 className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
                                 Oiches 2025
                             </h2>
-
                             <h3 className="text-lg lg:text-2xl font-semibold uppercase mt-6 mb-1">
                                 Inscripciones
                             </h3>
                             <p className="text-base lg:text-lg mb-6">
-                                19 DE MAYO
+                                19 DE MAYO - 09 DE JUNIO
                             </p>
-                            {/* Componente Link actuando como botón */}
-                            {/* Margen inferior aumentado md */}
+
                             <Link
                                 to="/concurso/concurso-musicos-oiches"
                                 className="relative z-20 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-base lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 md:mb-32"

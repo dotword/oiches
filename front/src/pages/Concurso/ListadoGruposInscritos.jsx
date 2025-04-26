@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 import Toastify from '../../components/Toastify.jsx';
 import { ImBullhorn } from 'react-icons/im';
 import { IoIosSearch } from 'react-icons/io';
-import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
-import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
+// import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
+// import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
 
 const ListadoGruposInscritos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -73,25 +73,29 @@ const ListadoGruposInscritos = () => {
                             className="text-3xl"
                         />
                         <div className="flex flex-col justify-center text-center">
-                            {/* <p className="mb-1">
+                            {/* INSCRIPCIONES ABIERTAS */}
+                            <p className="mb-1">
                                 Inscripciones abiertas hasta el 09/06/2025
                             </p>
                             <p className="mb-1">
                                 Las votaciones comienzan el 11/06/2025
-                            </p> */}
-                            <p className="mb-1">
+                            </p>
+
+                            {/* VOTACIONES ABIERTAS */}
+                            {/* <p className="mb-1">
                                 Finalizado el plazo de inscripción. ¡Suerte!
                             </p>
                             <p className="mb-1">
                                 Las votaciones están abiertas hasta el
                                 06/07/2025
-                            </p>
+                            </p> */}
                         </div>
                     </section>
-                    <section className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
+                    {/* VOTACIONES ABIERTAS */}
+                    {/* <section className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
                         <RegisterEmailForVoteForm />
                         <ValidateEmailWithCodeForm />
-                    </section>
+                    </section> */}
                     <section>
                         <form className="flex justify-end relative">
                             <input

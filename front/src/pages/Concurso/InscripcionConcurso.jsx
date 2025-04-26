@@ -37,8 +37,11 @@ const InscripcionConcurso = () => {
             <main className="w-11/12 mx-auto py-8 md:max-w-7xl">
                 {entry && (
                     <section className="mb-20">
-                        <p className="font-semibold mb-4 text-lg">
+                        <p className="font-semibold text-lg">
                             Inscribir a {entry.nombre} en el concurso
+                        </p>
+                        <p className="mb-4 ">
+                            Inscripciones abiertas hasta el 09/06/2025
                         </p>
                         <div className="flex flex-col gap-4 md:flex-row-reverse">
                             <img
