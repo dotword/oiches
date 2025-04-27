@@ -33,7 +33,7 @@ const MusicianContestBanner = () => {
                             </p>
 
                             <Link
-                                to="/concurso/concurso-musicos-oiches"
+                                to="/concurso-musicos-oiches" // Ruta corregida
                                 className="relative z-20 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-base lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 md:mb-32"
                             >
                                 Más información →
