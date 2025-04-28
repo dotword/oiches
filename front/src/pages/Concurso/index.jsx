@@ -6,6 +6,7 @@ import PoliticaVotacion from './PoliticaVotacion';
 import ValidateEmailPage from './ValidateEmailPage';
 import ConcursoMusicosOiches from './ConcursoMusicosOiches.jsx';
 import AdminVoters from './AdminVoters.jsx';
+import SemifinalistasConcurso from './SemifinalistasConcurso';
 
 export {
     InscripcionConcurso,
@@ -14,6 +15,7 @@ export {
     ListadoGruposInscritos,
     PoliticaVotacion,
     ValidateEmailPage,
+    SemifinalistasConcurso,
     ConcursoMusicosOiches,
     AdminVoters,
 };

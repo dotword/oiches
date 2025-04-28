@@ -47,6 +47,7 @@ import {
     ValidateEmailPage,
     ConcursoMusicosOiches,
     AdminVoters,
+    SemifinalistasConcurso,
 } from './pages/Concurso/index.jsx';
 import {
     NoticeboardPage,
@@ -248,6 +249,10 @@ function App() {
                         <Route
                             path="/noticeboard/:idNotice/edit"
                             element={<EdicionNotice />}
+                        />
+                        <Route
+                            path="/concurso/semifinalistas"
+                            element={<SemifinalistasConcurso />}
                         />
                     </Routes>
                 </AnimatePresence>

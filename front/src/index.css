@@ -277,6 +277,20 @@ button.react-calendar__navigation__arrow {
     .btn-reset {
         @apply py-2 px-4 bg-red-500 rounded-lg text-white text-center hover:bg-red-600 transition-all;
     }
+
+    /* CONCURSO */
+    .concurso_semifinal-card {
+        @apply text-white w-full flex flex-col h-full px-4 py-4 bg-footercolor shadow-md cursor-pointer  transition-transform duration-500 transform hover:scale-105 hover:z-10 border-2 border-solid border-white;
+    }
+    .concurso_semifinal-image {
+        @apply w-full max-w-full h-72 max-h-72 object-cover rounded-lg mb-4;
+    }
+    .concurso_semifinal-title {
+        @apply text-white my-2 text-2xl font-bold;
+    }
+    .concurso_semifinal-link {
+        @apply inline-flex items-center bg-purple-600 text-white text-lg px-4 py-2 mb-4 rounded-md hover:bg-purple-700 transition-all font-semibold;
+    }
 }
 
 .active:not(.btn-account) {
