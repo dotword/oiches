@@ -194,6 +194,12 @@ const Menu = ({ mobile }) => {
                     >
                         Logout
                     </NavLink>
+                    <NavLink
+                        to={`/users/account/${userLogged.id}`}
+                        className="btn-account max-lg:mb-8 max-lg:mt-2 font-medium"
+                    >
+                        Mi perfil
+                    </NavLink>
                 </>
             )}
         </>
