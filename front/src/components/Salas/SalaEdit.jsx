@@ -134,6 +134,21 @@ const SalaEdit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Normalizamos la URL
+        let normalizedWeb = sala.web.trim();
+        if (normalizedWeb && !/^https?:\/\//i.test(normalizedWeb)) {
+            normalizedWeb = 'https://' + normalizedWeb;
+        }
+
+        // Validación extra con la API URL
+        try {
+            new URL(normalizedWeb);
+        } catch {
+            setError('La dirección web no es válida');
+            toast.error('La dirección web no es válida');
+            return;
+        }
+
         try {
             const dataForm = new FormData();
             dataForm.append('nombre', sala.nombre || '');
@@ -144,7 +159,7 @@ const SalaEdit = () => {
             dataForm.append('descripcion', sala.descripcion || '');
             dataForm.append('condiciones', sala.condiciones || '');
             dataForm.append('equipamiento', sala.equipamiento || '');
-            dataForm.append('web', sala.web || '');
+            dataForm.append('web', normalizedWeb || '');
 
             await EditSalaService({
                 token,
@@ -352,7 +367,7 @@ const SalaEdit = () => {
                             Web:
                         </label>
                         <input
-                            type="url"
+                            type="text"
                             name="web"
                             placeholder="https://www.tusala.com"
                             value={sala.web}
