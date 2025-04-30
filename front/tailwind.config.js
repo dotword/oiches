@@ -30,6 +30,7 @@ export default {
                 'hero-maintenance': "url('/oiches-maintenance.jpg')",
                 'hero-contacto': "url('/Oiches-contacto.jpg')",
                 'hero-promotor': "url('/Oiches-promotor.jpg')",
+                'hero-concurso': "url('/ConcursoBanner.jpg')",
             },
             background404: {
                 'oiches-404': "url('/oiches/front/src/assets/404Pages.jpg')",

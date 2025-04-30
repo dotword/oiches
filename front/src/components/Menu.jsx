@@ -57,27 +57,57 @@ const Menu = ({ mobile }) => {
                     <div
                         className={`${
                             mobile
-                                ? 'bg-gray-50 -left-14'
-                                : 'top-full w-56 bg-white left-0 '
-                        } absolute shadow-lg font-medium rounded z-20 flex flex-col`}
+                                ? 'bg-gray-50 left-0 right-0 fixed' // Modificado: cambiado absolute por fixed de esta forma ocupa todo el ancho del movil
+                                : 'top-full w-56 bg-white left-0 absolute' // Mantenido absolute para escritorio
+                        } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
-                        <NavLink
-                            to="/concurso/concurso-musicos-oiches"
+                        {/* <NavLink
+                            to="/concurso-musicos-oiches"
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
                         >
                             Concurso de músicos
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
+                            to="/concurso-musicos-oiches"
+                            className={linkClassName}
+                        >
+                            {mobile && (
+                                <span className={backgroundClassName}></span>
+                            )}
+                            <span className={textClassName}>
+                                Concurso de músicos
+                            </span>
+                        </NavLink>
+
+                        {/* <NavLink
                             to="/votacion-concurso-Oiches"
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
                         >
                             Inscripciones y votaciones
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
+                            to="/votacion-concurso-Oiches"
+                            className={linkClassName}
+                        >
+                            {mobile && (
+                                <span className={backgroundClassName}></span>
+                            )}
+                            <span className={textClassName}>
+                                Inscripciones y votaciones
+                            </span>
+                        </NavLink>
+
+                        {/* <NavLink
                             to="/bases-concurso"
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
                         >
                             Bases
+                        </NavLink> */}
+                        <NavLink to="/bases-concurso" className={linkClassName}>
+                            {mobile && (
+                                <span className={backgroundClassName}></span>
+                            )}
+                            <span className={textClassName}>Bases</span>
                         </NavLink>
                     </div>
                 )}
