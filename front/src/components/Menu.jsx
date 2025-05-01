@@ -80,9 +80,7 @@ const Menu = ({ mobile }) => {
                             {mobile && (
                                 <span className={backgroundClassName}></span>
                             )}
-                            <span className={textClassName}>
-                                Inscripciones y votaciones
-                            </span>
+                            <span className={textClassName}>Candidaturas</span>
                         </NavLink>
 
                         <NavLink to="/bases-concurso" className={linkClassName}>
