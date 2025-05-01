@@ -57,16 +57,10 @@ const Menu = ({ mobile }) => {
                     <div
                         className={`${
                             mobile
-                                ? 'bg-gray-50 left-0 right-0 fixed' // Modificado: cambiado absolute por fixed de esta forma ocupa todo el ancho del movil
-                                : 'top-full w-56 bg-white left-0 absolute' // Mantenido absolute para escritorio
+                                ? 'bg-gray-50 left-0 right-0 fixed'
+                                : 'top-full w-56 bg-white left-0 absolute'
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
-                        {/* <NavLink
-                            to="/concurso-musicos-oiches"
-                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
-                        >
-                            Concurso de músicos
-                        </NavLink> */}
                         <NavLink
                             to="/concurso-musicos-oiches"
                             className={linkClassName}
@@ -79,12 +73,6 @@ const Menu = ({ mobile }) => {
                             </span>
                         </NavLink>
 
-                        {/* <NavLink
-                            to="/votacion-concurso-Oiches"
-                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
-                        >
-                            Inscripciones y votaciones
-                        </NavLink> */}
                         <NavLink
                             to="/votacion-concurso-Oiches"
                             className={linkClassName}
@@ -97,12 +85,6 @@ const Menu = ({ mobile }) => {
                             </span>
                         </NavLink>
 
-                        {/* <NavLink
-                            to="/bases-concurso"
-                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
-                        >
-                            Bases
-                        </NavLink> */}
                         <NavLink to="/bases-concurso" className={linkClassName}>
                             {mobile && (
                                 <span className={backgroundClassName}></span>
@@ -175,84 +157,3 @@ const Menu = ({ mobile }) => {
 };
 
 export default Menu;
-
-// import { useContext } from 'react';
-// import AuthContext from '../context/auth/AuthContext';
-// import { NavLink } from 'react-router-dom';
-
-// const Menu = ({ mobile }) => {
-//     const { signOut, userLogged } = useContext(AuthContext);
-
-//     const linkClassName = mobile
-//         ? 'block w-full max-md:my-4 py-4 px-12 font-medium relative overflow-hidden group'
-//         : 'font-medium hover:text-purpleOiches';
-
-//     const backgroundClassName = mobile
-//         ? 'absolute inset-0 w-full h-full bg-gradient-to-r from-purple-600 to-purple-800 shadow-lg rounded-lg transform translate-x-[200%] group-hover:translate-x-0 transition-transform duration-500 ease-in-out'
-//         : '';
-
-//     const textClassName = mobile
-//         ? 'relative z-10 flex justify-center items-center h-full text-black group-hover:text-white'
-//         : '';
-
-//     return (
-//         <>
-//             <NavLink to="/salas" className={linkClassName}>
-//                 {mobile && <span className={backgroundClassName}></span>}
-//                 <span className={textClassName}>Salas</span>
-//             </NavLink>
-//             <NavLink to="/grupos" className={linkClassName}>
-//                 {mobile && <span className={backgroundClassName}></span>}
-//                 <span className={textClassName}>Músicos</span>
-//             </NavLink>
-//             <NavLink to="/agencias" className={linkClassName}>
-//                 {mobile && <span className={backgroundClassName}></span>}
-//                 <span className={textClassName}>Agencias</span>
-//             </NavLink>
-//             <NavLink to="/conciertos" className={linkClassName}>
-//                 {mobile && <span className={backgroundClassName}></span>}
-//                 <span className={textClassName}>Conciertos</span>
-//             </NavLink>
-//             <NavLink to="/contacto" className={linkClassName}>
-//                 {mobile && <span className={backgroundClassName}></span>}
-//                 <span className={textClassName}>Contacto</span>
-//             </NavLink>
-//             {!userLogged ? (
-//                 <>
-//                     <NavLink
-//                         to="/login"
-//                         className="max-md:m-4 font-medium text-purpleOiches hover:text-black"
-//                     >
-//                         Login
-//                     </NavLink>
-//                     <NavLink
-//                         to="/register"
-//                         className="btn-account max-md:m-4 font-medium"
-//                     >
-//                         Registro
-//                     </NavLink>
-//                 </>
-//             ) : (
-//                 <>
-//                     <NavLink
-//                         to={`/users/account/${userLogged.id}`}
-//                         className="btn-account max-md:m-4 font-medium"
-//                     >
-//                         Mi perfil
-//                     </NavLink>
-//                     <NavLink
-//                         to="/login"
-//                         onClick={() => {
-//                             signOut();
-//                         }}
-//                         className="font-medium text-purpleOiches hover:text-black"
-//                     >
-//                         Logout
-//                     </NavLink>
-//                 </>
-//             )}
-//         </>
-//     );
-// };
-
-// export default Menu;
