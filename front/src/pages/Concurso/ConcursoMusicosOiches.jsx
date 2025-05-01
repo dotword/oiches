@@ -32,9 +32,9 @@ const howToParticipate = [
     },
     {
         title: 'Inscríbete',
-        href: '/concurso/inscripcion/:idGrupo',
+        href: '/login',
         description:
-            'En tu cuenta de Oiches, accede a ‘Concurso Oiches 2025’ y acepta las bases del concurso.',
+            'En tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
     },
     {
         title: 'Tu música',
@@ -61,12 +61,12 @@ const comoVotar = [
     {
         title: 'Registra tu email',
         description:
-            'En la pestaña ‘Inscribe tu email para votar’, introduce tu email. Recibirás un correo electrónico para validarlo.',
+            'En la pestaña «Inscribe tu email para votar», introduce tu email. Recibirás un correo electrónico para validarlo.',
     },
     {
         title: 'Vota hasta 3 proyectos',
         description:
-            'Selecciona el proyecto y haz clic en ‘Votar’. Introduce tu email validado. Confirma tu elección.',
+            'Selecciona el proyecto y haz clic en «Votar». Introduce tu email validado. Confirma tu elección.',
     },
 ];
 
