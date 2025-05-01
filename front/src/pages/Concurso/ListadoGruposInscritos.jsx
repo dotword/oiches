@@ -11,6 +11,7 @@ import { ImBullhorn } from 'react-icons/im';
 import { IoIosSearch } from 'react-icons/io';
 import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
 import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
+import Seo from '../../components/SEO/Seo.jsx';
 
 const ListadoGruposInscritos = () => {
     const [filteredGrupos, setFilteredGrupos] = useState([]);
@@ -59,6 +60,14 @@ const ListadoGruposInscritos = () => {
 
     return (
         <>
+            <Seo
+                title="Músicos - Concurso Oiches 2025"
+                description="Músicos inscritos en el Concurso Oiches 2025. Vota a tus proyectos musicales favoritos"
+                url="https://oiches.com/votacion-concurso-Oiches"
+                keywords="músicos, concurso de bandas, bandas emergentes, grupos musicales, concierto"
+                image="https://oiches.com/Oiches-Conectamos-musicos-y-salas.jpg"
+                imageAlt="Oiches - Conectamos músicos y salas"
+            />
             <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: '100%' }}

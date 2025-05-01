@@ -8,7 +8,6 @@ import useInscription from '../../hooks/useInscription';
 import AuthContext from '../../context/auth/AuthContext';
 import InscripcionConcursoForm from '../../components/Concurso/InscripcionConcursoForm';
 import UnsubscribeFromContest from '../../components/Concurso/UnsubscribeFromContest';
-
 const InscripcionConcurso = () => {
     const { userLogged, token } = useContext(AuthContext);
     const { idGrupo } = useParams();
