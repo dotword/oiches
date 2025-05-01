@@ -4,6 +4,7 @@ import BasesConcurso from './BasesConcurso';
 import ListadoGruposInscritos from './ListadoGruposInscritos';
 import PoliticaVotacion from './PoliticaVotacion';
 import ValidateEmailPage from './ValidateEmailPage';
+import ConcursoMusicosOiches from './ConcursoMusicosOiches.jsx';
 
 export {
     InscripcionConcurso,
@@ -12,4 +13,5 @@ export {
     ListadoGruposInscritos,
     PoliticaVotacion,
     ValidateEmailPage,
+    ConcursoMusicosOiches,
 };

@@ -45,6 +45,7 @@ import {
     ListadoGruposInscritos,
     PoliticaVotacion,
     ValidateEmailPage,
+    ConcursoMusicosOiches,
 } from './pages/Concurso/index.jsx';
 
 function App() {
@@ -187,6 +188,7 @@ function App() {
                         />
                         <Route
                             path="/bases-concurso"
+                            xs
                             element={<BasesConcurso />}
                         />
                         <Route
@@ -200,6 +202,10 @@ function App() {
                         <Route
                             path="/concurso/validate_email/:verification_token"
                             element={<ValidateEmailPage />}
+                        />
+                        <Route
+                            path="/concurso-musicos-oiches"
+                            element={<ConcursoMusicosOiches />}
                         />
                     </Routes>
                 </AnimatePresence>
