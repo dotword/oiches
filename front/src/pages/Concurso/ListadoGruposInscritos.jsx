@@ -9,8 +9,8 @@ import { toast } from 'react-toastify';
 import Toastify from '../../components/Toastify.jsx';
 import { ImBullhorn } from 'react-icons/im';
 import { IoIosSearch } from 'react-icons/io';
-// import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
-// import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
+import RegisterEmailForVoteForm from '../../components/Concurso/RegisterEmailForVoteForm.jsx';
+import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
 
 const ListadoGruposInscritos = () => {
@@ -101,10 +101,22 @@ const ListadoGruposInscritos = () => {
                         </div>
                     </section>
                     {/* VOTACIONES ABIERTAS */}
-                    {/* <section className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
-                        <RegisterEmailForVoteForm />
-                        <ValidateEmailWithCodeForm />
-                    </section> */}
+                    <section className="mb-8">
+                        <div className="flex flex-col text-center mb-4">
+                            <p>
+                                1. Inscribe tu email para votar y recibirás un
+                                correo para verificar tu dirección.
+                            </p>
+                            <p>
+                                2. Ya puedes votar a tus 3 artistas/grupos
+                                favoritos
+                            </p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-8">
+                            <RegisterEmailForVoteForm />
+                            <ValidateEmailWithCodeForm />
+                        </div>
+                    </section>
                     <section>
                         <form className="flex justify-end relative">
                             <input

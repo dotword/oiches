@@ -119,7 +119,7 @@ const AgenciaGruposList = () => {
                                         <span>Gestionar reservas</span>
                                     </Link>
                                 )}
-                                {entry.published === 1 ? (
+                                {/* {entry.published === 1 ? (
                                     <Link
                                         to={`/concurso/inscripcion/${entry.id}`}
                                         className="text-center"
@@ -130,7 +130,7 @@ const AgenciaGruposList = () => {
                                     </Link>
                                 ) : (
                                     ''
-                                )}
+                                )} */}
                             </li>
                         ))}
                     </ul>

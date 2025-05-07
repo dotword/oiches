@@ -185,7 +185,26 @@ const CookieConsentBanner = () => {
                         .
                     </DialogContentText>
                 </DialogContent>
-                <DialogActions>
+                <DialogActions
+                    sx={{
+                        padding: '16px 24px',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-end',
+                        '@media (max-width:600px)': {
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            '& .MuiButton-root': {
+                                width: '90%',
+                                margin: '0 0 8px 0',
+                                paddingLeft: '16px',
+                                paddingRight: '16px',
+                                '&:last-child': {
+                                    marginBottom: 0,
+                                },
+                            },
+                        },
+                    }}
+                >
                     {showPreferences ? (
                         <>
                             <Button

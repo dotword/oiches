@@ -60,11 +60,6 @@ const RegisterEmailForVoteForm = () => {
             </div>
             {isOpen && (
                 <div className="mt-2 bg-gray-50 p-4 rounded-md shadow-md border-t border-gray-200 mb-6 text-center">
-                    <p>
-                        1. Introduce tu email en el formulario y recibirás un
-                        correo para verificar tu dirección.
-                    </p>
-                    <p>2. Ya puedes votar a tus 3 artistas/grupos favoritos</p>
                     <form
                         onSubmit={handleSubmit}
                         className="flex justify-between md:justify-evenly flex-col gap-5 p-2 my-6"
@@ -77,7 +72,7 @@ const RegisterEmailForVoteForm = () => {
                                 placeholder="Introduce tu email"
                                 required
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="form-input max-w-md md:w-1/3 mx-auto"
+                                className="form-input max-w-md mx-auto"
                             />
                             <div className="">
                                 <input
@@ -98,7 +93,7 @@ const RegisterEmailForVoteForm = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className={`button py-3 font-semibold transition max-w-md md:w-1/3 mx-auto ${
+                                className={`button py-3 font-semibold transition ${
                                     loading
                                         ? 'opacity-50 cursor-not-allowed'
                                         : ''

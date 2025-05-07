@@ -54,7 +54,7 @@ const howToParticipate = [
 const comoVotar = [
     {
         title: 'Accede a las candidaturas',
-        href: '#',
+        href: '/votacion-concurso-Oiches',
         description:
             'Entra en la sección «Candidaturas y votación» de nuestra web.',
     },
@@ -106,10 +106,18 @@ function ConcursoMusicosOichesPage() {
                         </p>
                         <div className="flex justify-center md:justify-start gap-4 mt-8">
                             <Link
+                                // 12/05 al 09/06
                                 to="/register"
+                                // 11/06 al 08/07
+                                // to="/votacion-concurso-Oiches"
                                 className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg"
                             >
-                                ¡Participa Ahora!
+                                {/* 12/05 al 18/05 */}
+                                ¡Regístrate ya!
+                                {/* 19/05 al 09/06 */}
+                                {/* ¡Participa ahora! */}
+                                {/* 11/06 al 08/07 */}
+                                {/* ¡Vota ahora! */}
                             </Link>
                         </div>
                     </div>
@@ -162,9 +170,8 @@ function ConcursoMusicosOichesPage() {
 
                 {/* COMO PARTICIPAR Section - Refactorizada */}
                 <section className="relative bg-white text-black overflow-hidden py-20 md:py-32 px-4 sm:px-6">
-                    {/* Glow difuminado morado - Anclado abajo */}
                     <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[90vw] max-w-[800px] h-[400px] md:bottom-[-200px] md:w-[1200px] md:h-[600px] lg:bottom-[-250px] lg:w-[1500px] lg:h-[700px] bg-purple-600/20 rounded-full blur-[120px] md:blur-[150px] lg:blur-[180px] z-0 pointer-events-none" />
-                    {/* Grid pattern */}
+
                     <div
                         className="absolute inset-0 z-0 opacity-15"
                         style={{
@@ -176,7 +183,6 @@ function ConcursoMusicosOichesPage() {
                     />
 
                     <div className="relative z-10 max-w-7xl mx-auto">
-                        {/* Título */}
                         <div className="text-center md:text-left mb-12 md:mb-16">
                             <h2 className="text-3xl md:text-4xl font-bold border-b-2 border-purple-500 inline-block pb-2 text-gray-800">
                                 CÓMO PARTICIPAR

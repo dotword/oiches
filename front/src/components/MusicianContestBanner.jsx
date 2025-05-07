@@ -27,9 +27,11 @@ const MusicianContestBanner = () => {
                             </h2>
                             <h3 className="text-lg lg:text-2xl font-semibold uppercase mt-6 mb-1">
                                 Inscripciones
+                                {/* Votaciones */}
                             </h3>
                             <p className="text-base lg:text-lg mb-6">
                                 19 DE MAYO - 09 DE JUNIO
+                                {/* 11 DE JUNIO - 06 DE JULIO */}
                             </p>
 
                             <Link
