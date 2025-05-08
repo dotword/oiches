@@ -7,7 +7,7 @@ import joiErrorMessages from '../joiErrorMessages.js';
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const createGrupoSchema = Joi.object({
     nombre: Joi.string().required().messages(joiErrorMessages),
-    provincia: Joi.number().max(50).required().messages(joiErrorMessages),
+    provincia: Joi.number().max(60).required().messages(joiErrorMessages),
     generos: Joi.alternatives()
         .required()
         .messages(joiErrorMessages)

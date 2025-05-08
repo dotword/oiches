@@ -50,14 +50,28 @@ const GrupoCreacion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Normalizamos la URL
+        let normalizedWeb = formValues.web.trim();
+        if (!/^https?:\/\//i.test(normalizedWeb)) {
+            normalizedWeb = 'https://' + normalizedWeb;
+        }
+        try {
+            new URL(normalizedWeb);
+        } catch {
+            setError('La dirección web no es válida');
+            return;
+        }
+
         const formData = new FormData();
-        Object.entries(formValues).forEach(([key, value]) => {
-            if (key === 'generos') {
-                value.forEach((genre) => formData.append('generos', genre));
-            } else {
-                if (value) formData.append(key, value);
+        Object.entries({ ...formValues, web: normalizedWeb }).forEach(
+            ([key, value]) => {
+                if (key === 'generos') {
+                    value.forEach((genre) => formData.append('generos', genre));
+                } else {
+                    if (value) formData.append(key, value);
+                }
             }
-        });
+        );
 
         try {
             await registerGrupoService({
@@ -172,7 +186,7 @@ const GrupoCreacion = () => {
                                 Web o enlace a tus RRSS:*
                             </label>
                             <input
-                                type="url"
+                                type="text"
                                 name="web"
                                 placeholder="https://www.tugrupo.com"
                                 value={web}

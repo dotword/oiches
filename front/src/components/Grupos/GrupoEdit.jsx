@@ -127,11 +127,26 @@ const GrupoEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // 1. Normalizamos la URL
+        let normalizedWeb = grupo.web.trim();
+        if (normalizedWeb && !/^https?:\/\//i.test(normalizedWeb)) {
+            normalizedWeb = 'https://' + normalizedWeb;
+        }
+
+        // Validación extra con la API URL
+        try {
+            new URL(normalizedWeb);
+        } catch {
+            setError('La dirección web no es válida');
+            toast.error('La dirección web no es válida');
+            return;
+        }
+
         try {
             const dataForm = new FormData();
             dataForm.append('nombre', grupo.nombre || '');
             dataForm.append('provincia', grupo.provincia || '');
-            dataForm.append('web', grupo.web || '');
+            dataForm.append('web', normalizedWeb || '');
             dataForm.append('honorarios', grupo.honorarios || 0);
             dataForm.append('honorarios_to', grupo.honorarios_to || 0);
             dataForm.append('condiciones', grupo.condiciones || '');
@@ -142,7 +157,7 @@ const GrupoEdit = () => {
                 idGrupo,
                 dataForm,
             });
-            toast.success('Has modificado tu grupo con éxito');
+            toast.success('Has modificado tu proyecto musical con éxito');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -282,7 +297,7 @@ const GrupoEdit = () => {
                             Web:
                         </label>
                         <input
-                            type="url"
+                            type="text"
                             name="web"
                             placeholder="https://www.tugrupo.com"
                             value={grupo.web}
