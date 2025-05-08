@@ -72,7 +72,7 @@ const Menu = ({ mobile }) => {
                                 Concurso de músicos
                             </span>
                         </NavLink>
-
+                        {/*                          
                         <NavLink
                             to="/votacion-concurso-Oiches"
                             className={linkClassName}
@@ -82,6 +82,7 @@ const Menu = ({ mobile }) => {
                             )}
                             <span className={textClassName}>Candidaturas</span>
                         </NavLink>
+                        */}
 
                         <NavLink to="/bases-concurso" className={linkClassName}>
                             {mobile && (

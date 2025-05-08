@@ -12,7 +12,7 @@ import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
 import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
-import MusicianContestBanner from '../components/MusicianContestBanner.jsx';
+import MusicianContestBanner from '../components/Concurso/MusicianContestBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);

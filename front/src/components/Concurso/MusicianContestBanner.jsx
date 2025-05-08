@@ -7,11 +7,11 @@ const MusicianContestBanner = () => {
         <section className="w-full bg-black text-white overflow-hidden">
             {/* Contenedor flex principal: columna en pequeño, fila en mediano+ */}
             <div className="flex flex-col md:flex-row h-auto lg:h-[750px] relative">
-                <div className="relative w-full md:w-2/4 flex flex-col justify-center px-6 sm:px-8 md:px-12 lg:px-16 py-12 md:py-8 lg:py-8 bg-gradient-to-r from-[#3A0CA3] via-[#7209B7] to-[#f72585]">
+                <div className="relative w-full flex flex-col justify-center px-6 py-12 bg-gradient-to-r from-[#3A0CA3] via-[#7209B7] to-[#f72585] sm:px-8 md:w-2/4 md:px-12 md:py-8">
                     {/* Contenedor interno para alineación de texto y ancho máximo */}
                     <div className="w-full mx-auto md:mx-0">
                         {/* Alineación de texto: moviles tablet */}
-                        <div className="pl-4 sm:pl-6 md:pl-8 lg:pl-0 text-center md:text-left">
+                        <div className="text-center md:text-left">
                             <p className="uppercase text-base md:text-lg lg:text-xl tracking-wide mb-2">
                                 Atención artistas y bandas
                             </p>

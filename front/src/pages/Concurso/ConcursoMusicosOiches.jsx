@@ -32,9 +32,10 @@ const howToParticipate = [
     },
     {
         title: 'Inscríbete',
-        href: '/login',
+        href: '#',
         description:
-            'En tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
+            // 'En tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
+            'Cuando comiencen las inscripciones, entra en tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
     },
     {
         title: 'Tu música',
@@ -54,9 +55,10 @@ const howToParticipate = [
 const comoVotar = [
     {
         title: 'Accede a las candidaturas',
-        href: '/votacion-concurso-Oiches',
+        href: '#',
         description:
-            'Entra en la sección «Candidaturas y votación» de nuestra web.',
+            // 'Entra en la sección «Candidaturas y votación» de nuestra web.',
+            'Cuando comiencen las votaciones, entra en la sección «Candidaturas y votación» de nuestra web.',
     },
     {
         title: 'Registra tu email',
