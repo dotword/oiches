@@ -153,7 +153,7 @@ const BasesConcurso = () => {
                         <li>
                             <b>FASE 2</b>: Votación del público: 11/06/2025 –
                             06/07/2025. El proceso de votaciones online
-                            comenzará el 11/06/2025 hasta el 06/07/2025. Los 9
+                            comenzará el 11/06/2025 hasta el 06/07/2025. Los 6
                             proyectos más votados pasarán a la fase 3 del
                             concurso.
                         </li>

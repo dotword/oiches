@@ -72,7 +72,7 @@ const MusicianContestBanner = () => {
                                 Votación popular
                             </h4>
                             <p className="text-base text-gray-600">
-                                Votación online y pública. 9 proyectos
+                                Votación online y pública. 6 proyectos
                                 finalistas.
                             </p>
                         </div>
