@@ -8,7 +8,6 @@ import deleteSalaController from './deleteSalaController.js';
 import borrarReservaAdminController from './borrarReservaAdminController.js';
 import getAllNoticesController from './getAllNoticesController.js';
 import publishNoticeController from './publishNoticeController.js';
-import deleteNoticeController from './deleteNoticeController.js';
 
 export {
     getAllUsersListController,
@@ -21,5 +20,4 @@ export {
     borrarReservaAdminController,
     getAllNoticesController,
     publishNoticeController,
-    deleteNoticeController,
 };

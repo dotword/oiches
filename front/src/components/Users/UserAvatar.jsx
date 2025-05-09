@@ -77,7 +77,7 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
             {userLogged &&
             userLogged.roles === 'admin' &&
             userLogged.id === userId ? (
-                <>
+                <div className="flex flex-wrap gap-8">
                     <Link
                         to="/admin-dashboard"
                         className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
@@ -85,12 +85,18 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                         Admin Dashboard
                     </Link>
                     <Link
+                        to="/admin-noticeboard"
+                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                    >
+                        Admin Noticeboard
+                    </Link>
+                    <Link
                         to="/admin-concurso"
                         className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
                     >
                         Concurso Oiches
                     </Link>
-                </>
+                </div>
             ) : (
                 ''
             )}

@@ -42,21 +42,21 @@ const NoticeboardFilter = ({ onFilterChange }) => {
         if (autoSearch) {
             let filtrosActualizados = { ...filters };
 
-            if (filters.categoria && !filters.subcategoria) {
-                // Obtener todas las subcategorías de la categoría seleccionada
-                const subcategoriasDeCategoria = categorias
-                    .filter(
-                        (cat) => cat.parent_id === Number(filters.categoria)
-                    )
-                    .map((cat) => cat.id);
+            // if (filters.categoria && !filters.subcategoria) {
+            //     // Obtener todas las subcategorías de la categoría seleccionada
+            //     const subcategoriasDeCategoria = categorias
+            //         .filter(
+            //             (cat) => cat.parent_id === Number(filters.categoria)
+            //         )
+            //         .map((cat) => cat.id);
 
-                if (subcategoriasDeCategoria.length > 0) {
-                    filtrosActualizados.categoria = subcategoriasDeCategoria; // Enviamos un array de IDs
-                }
-            } else if (filters.subcategoria) {
-                // Si hay subcategoría seleccionada, usarla como categoría
-                filtrosActualizados.categoria = filters.subcategoria;
-            }
+            //     if (subcategoriasDeCategoria.length > 0) {
+            //         filtrosActualizados.categoria = subcategoriasDeCategoria; // Enviamos un array de IDs
+            //     }
+            // } else if (filters.subcategoria) {
+            //     // Si hay subcategoría seleccionada, usarla como categoría
+            //     filtrosActualizados.categoria = filters.subcategoria;
+            // }
             onFilterChange(filtrosActualizados);
         }
     }, [filters, autoSearch, onFilterChange, categorias]);
@@ -90,12 +90,12 @@ const NoticeboardFilter = ({ onFilterChange }) => {
     };
 
     return (
-        <form className="sala-filter-form mx-auto md:flex md:flex-row md:space-x-4">
-            <div className="min-w-56">
+        <form className="flex flex-col justify-between p-4 mx-auto w-80 md:gap-1">
+            <div className="w-full">
                 <select
                     name="role"
                     value={filters.role}
-                    className="form-select mt-0"
+                    className="form-select mt-0 md:bg-footercolor md:text-white"
                     onChange={handleChange}
                 >
                     <option value="">Categoría</option>
@@ -108,7 +108,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                         id="categoria"
                         name="categoria"
                         value={filters.categoria}
-                        className="form-select"
+                        className="form-select md:bg-footercolor md:text-white"
                         onChange={handleChange}
                     >
                         <option value="">Selecciona una categoría</option>
@@ -125,7 +125,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                         id="subcategoria"
                         name="subcategoria"
                         value={filters.subcategoria}
-                        className="form-select"
+                        className="form-select md:bg-footercolor md:text-white"
                         onChange={handleChange}
                     >
                         <option value="">Selecciona una subcategoría</option>
@@ -142,7 +142,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                 name="generos"
                 value={filters.generos}
                 onChange={handleChange}
-                className="form-select"
+                className="form-select md:bg-footercolor md:text-white"
             >
                 <option value="">Géneros</option>
                 {genres.map((genre) => (
@@ -156,7 +156,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                 name="provincia"
                 value={filters.provincia}
                 onChange={handleChange}
-                className="form-select"
+                className="form-select md:bg-footercolor md:text-white"
             >
                 <option value="">Provincia</option>
                 {provinces.map((province) => (
@@ -170,7 +170,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
                 name="order"
                 value={filters.order}
                 onChange={handleChange}
-                className="form-select"
+                className="form-select md:bg-footercolor md:text-white"
             >
                 <option value="">Ordenar</option>
                 <option value="ASC">Fecha ⬆</option>
@@ -179,7 +179,7 @@ const NoticeboardFilter = ({ onFilterChange }) => {
             <button
                 type="button"
                 onClick={resetFilters}
-                className="py-2 text-white font-semibold"
+                className="py-2 text-white font-semibold md:text-footercolor"
             >
                 Limpiar filtros
             </button>

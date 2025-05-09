@@ -35,8 +35,12 @@ const listNoticesService = async (filters) => {
             queryParams.push(filters.role);
         }
         if (filters.categoria && filters.categoria.trim() !== '') {
-            query += ' AND C.id = ?';
-            queryParams.push(filters.categoria);
+            query += ` AND (
+            C.id = ? 
+            OR C.parent_id = ?
+        )`;
+            const catId = Number(filters.categoria);
+            queryParams.push(catId, catId);
         }
         if (filters.provincia && filters.provincia.trim() !== '') {
             query += ' AND PR.id = ?';

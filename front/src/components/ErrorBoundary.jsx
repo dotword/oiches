@@ -31,7 +31,7 @@ class ErrorBoundary extends React.Component {
                 () => {
                     if (this.state.countdown <= 0) {
                         clearInterval(this.timer);
-                        window.location.reload();
+                        window.location.href = '/';
                     }
                 }
             );

@@ -77,28 +77,28 @@ const NoticeboardPage = () => {
                     ''
                 )}
 
-                <section>
-                    <div
-                        className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
-                        onClick={() => setIsNavOpen((prev) => !prev)}
-                    >
-                        FILTRAR
-                        <IoFilter className="text-2xl cursor-pointer" />
-                    </div>
-                    <div
-                        className={`bg-footercolor flex-col items-center justify-evenly ${
-                            isNavOpen ? 'flex' : 'hidden md:flex'
-                        }`}
-                    >
-                        <div className="flex flex-col items-center justify-between">
-                            <NoticeboardFilter
-                                onFilterChange={handleFilterChange}
-                            />
+                <main className="mx-auto md:flex md:flex-row-reverse md:max-w-7xl md:mb-28 md:w-11/12 md:mt-6">
+                    <section>
+                        <div
+                            className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
+                            onClick={() => setIsNavOpen((prev) => !prev)}
+                        >
+                            FILTRAR
+                            <IoFilter className="text-2xl cursor-pointer" />
                         </div>
-                    </div>
-                </section>
-                <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
-                    <section className="sala-list-container">
+                        <div
+                            className={`bg-footercolor flex-col items-center justify-evenly pt-8 md:h-full md:justify-start md:bg-transparent ${
+                                isNavOpen ? 'flex' : 'hidden md:flex'
+                            }`}
+                        >
+                            <div className="flex flex-col items-center justify-between  md:shadow-[-6px_0_8px_0px_rgba(0,0,0,0.10)] md:h-full">
+                                <NoticeboardFilter
+                                    onFilterChange={handleFilterChange}
+                                />
+                            </div>
+                        </div>
+                    </section>
+                    <section className="sala-list-container md:pr-8">
                         {filteredNotices.length > 0 ? (
                             <NoticeboardList notices={filteredNotices} />
                         ) : (

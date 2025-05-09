@@ -98,7 +98,7 @@ const AccountConfiguration = ({ userLogged, userData, userId, token }) => {
                 </h2>
             </div>
 
-            <form className="py-4 space-y-6">
+            <form className="pb-4 space-y-6">
                 <label
                     htmlFor="email"
                     className="block text-sm font-medium text-gray-700"
