@@ -5,7 +5,7 @@ import Toastify from '../Toastify.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import FetchNoticeCategoriasService from '../../services/Noticeboard/FetchNoticeCategoriasService.js';
-import registerNoticeService from '../../services/Noticeboard/registerNoticeService.js';
+import RegisterNoticeService from '../../services/Noticeboard/RegisterNoticeService.js';
 import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 
 const NoticeCreacion = () => {
@@ -90,7 +90,7 @@ const NoticeCreacion = () => {
         formData.append('descripcion', formValues.descripcion);
 
         try {
-            await registerNoticeService({ token, userId, formData });
+            await RegisterNoticeService({ token, userId, formData });
 
             toast.success(
                 'Vamos a verificar los datos de tu anuncio y en breve la publicaremos en Oiches.'
@@ -116,38 +116,43 @@ const NoticeCreacion = () => {
 
     return userLogged ? (
         <>
-            <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
+            <form
+                onSubmit={handleSubmit}
+                className="mb-12 md:flex md:flex-wrap gap-x-8"
+            >
                 {entries && entries.length > 0 && (
-                    <div className="mb-4">
-                        <label htmlFor="project" className="flex flex-wrap">
-                            <span className="font-semibold mb-2">
-                                {userLogged.roles === 'grupo' &&
-                                    'Elige tu proyecto musical:'}
-                                {userLogged.roles === 'sala' &&
-                                    'Elige tu sala:'}
-                            </span>
-                            <select
-                                id="salaGrupo_id"
-                                name="salaGrupo_id"
-                                value={formValues.salaGrupo_id || ''}
-                                required
-                                className="form-select"
-                                onChange={handleChange}
-                            >
-                                <option value="">Selecciona</option>
-                                {entries.map((grupo) => (
-                                    <option key={grupo.id} value={grupo.id}>
-                                        {grupo.nombre}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </div>
-                )}
-                <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                    <label htmlFor="categoria" className="font-semibold">
-                        Busco... *
+                    <label
+                        htmlFor="project"
+                        className="flex flex-wrap mb-4 md:w-[calc(50%-1rem)]"
+                    >
+                        <span className="font-semibold">
+                            {userLogged.roles === 'grupo' &&
+                                'Elige tu proyecto musical:'}
+                            {userLogged.roles === 'sala' && 'Elige tu sala:'}
+                        </span>
+                        <select
+                            id="salaGrupo_id"
+                            name="salaGrupo_id"
+                            value={formValues.salaGrupo_id || ''}
+                            required
+                            className="form-select"
+                            onChange={handleChange}
+                        >
+                            <option value="">Selecciona</option>
+                            {entries.map((grupo) => (
+                                <option key={grupo.id} value={grupo.id}>
+                                    {grupo.nombre}
+                                </option>
+                            ))}
+                        </select>
                     </label>
+                )}
+
+                <label
+                    htmlFor="categoria"
+                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+                >
+                    <span className="font-semibold">Busco... *</span>
                     <select
                         id="categoria"
                         name="categoria"
@@ -163,13 +168,15 @@ const NoticeCreacion = () => {
                             </option>
                         ))}
                     </select>
-                </div>
+                </label>
 
                 {subcategorias.length > 0 && (
-                    <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                        <label htmlFor="subcategoria" className="font-semibold">
-                            Subcategoría:
-                        </label>
+                    <label
+                        htmlFor="subcategoria"
+                        className="flex flex-col mb-4 w-full"
+                    >
+                        <span className="font-semibold">Subcategoría:</span>
+
                         <select
                             id="subcategoria"
                             name="subcategoria"
@@ -184,13 +191,15 @@ const NoticeCreacion = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </label>
                 )}
 
-                <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
-                    <label htmlFor="nombre" className="font-semibold">
-                        Título:*
-                    </label>
+                <label
+                    htmlFor="nombre"
+                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+                >
+                    <span className="font-semibold">Título:*</span>
+
                     <input
                         type="text"
                         name="titulo"
@@ -200,12 +209,14 @@ const NoticeCreacion = () => {
                         onChange={handleChange}
                         className="form-input"
                     />
-                </div>
+                </label>
 
-                <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                    <label htmlFor="provincia" className="font-semibold">
-                        Provincia:
-                    </label>
+                <label
+                    htmlFor="provincia"
+                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+                >
+                    <span className="font-semibold">Provincia:</span>
+
                     <select
                         id="provincia"
                         name="provincia"
@@ -220,11 +231,14 @@ const NoticeCreacion = () => {
                             </option>
                         ))}
                     </select>
-                </div>
-                <div className="flex flex-col mb-4 md:w-full">
-                    <label htmlFor="descripcion" className="font-semibold">
-                        Descripción:*
-                    </label>
+                </label>
+
+                <label
+                    htmlFor="descripcion"
+                    className="flex flex-col mb-4 md:w-full"
+                >
+                    <span className="font-semibold">Descripción:*</span>
+
                     <textarea
                         name="descripcion"
                         value={descripcion}
@@ -236,7 +250,8 @@ const NoticeCreacion = () => {
                     <p className="mt-1 text-gray-500 text-sm">
                         2000 caracteres como máximo
                     </p>
-                </div>
+                </label>
+
                 <div className="flex flex-wrap w-full gap-x-2">
                     <input
                         className="accent-purpleOiches"
@@ -253,31 +268,15 @@ const NoticeCreacion = () => {
                         condiciones de uso
                     </a>
                 </div>
-                <div className="my-12 max-w-80">
-                    <input
-                        type="submit"
-                        value="Publicar"
-                        className="btn-account p-3 w-full"
-                    />
-                </div>
+
+                <input
+                    type="submit"
+                    value="Publicar"
+                    className="btn-account my-8 mx-auto p-3 w-full max-w-80 font-semibold"
+                />
 
                 <div>{error && <p>{error}</p>}</div>
             </form>
-
-            <div className="m-auto flex flex-col gap-4 shadow-[0_8px_10px_4px_rgba(0,0,0,0.07)] p-4 items-center rounded-2xl md:mr-0 md:mb-0 md:w-full">
-                <p className="text-center">
-                    ¿Necesitas ayuda con la publicación?
-                </p>
-
-                <a
-                    href="mailto:hola@oiches.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
-                >
-                    Escríbenos
-                </a>
-            </div>
 
             <Toastify />
         </>

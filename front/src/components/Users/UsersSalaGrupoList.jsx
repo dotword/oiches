@@ -17,7 +17,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
     const type = userLogged.roles;
 
     return (
-        <section className="w-full mx-auto py-6 my-6 bg-white">
+        <section className="w-full mx-auto py-6 my-6 border-b">
             {entries.length > 0 ? (
                 <>
                     <h2 className="text-2xl font-semibold text-gray-900 mb-6">

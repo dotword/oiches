@@ -112,8 +112,10 @@ const ListarAllNotices = ({ token }) => {
                                 <tr>
                                     <th>Titulo</th>
                                     <th>Usuario</th>
+                                    <th>Sala/Músico</th>
                                     <th>Creado</th>
                                     <th>Estado</th>
+                                    <th>Ver</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -139,9 +141,33 @@ const ListarAllNotices = ({ token }) => {
                                                 </span>
                                             </Link>
                                         </td>
+                                        <td>
+                                            <Link
+                                                to={`/${
+                                                    notice.role === 'grupo'
+                                                        ? 'grupo'
+                                                        : 'sala'
+                                                }/${notice.salaGrupo_id}`}
+                                            >
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                    {notice.role === 'grupo'
+                                                        ? notice.grupo
+                                                        : notice.sala}
+
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
+                                        </td>
                                         <td>{formatDate(notice.createdAt)}</td>
 
                                         <td>{notice.estado}</td>
+                                        <td>
+                                            <Link
+                                                to={`/noticeboard/${notice.id}`}
+                                            >
+                                                <FiExternalLink />
+                                            </Link>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

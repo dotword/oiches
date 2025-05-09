@@ -27,8 +27,7 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
-import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
-import AdminNoticeboard from './pages/Admin/AdminNoticeboard.jsx';
+import { AdminNoticeboard, AdminDashboard } from './pages/Admin/index.jsx';
 import CreateConcierto from './pages/conciertos/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
@@ -48,10 +47,14 @@ import {
     ValidateEmailPage,
     ConcursoMusicosOiches,
 } from './pages/Concurso/index.jsx';
-import NoticeboardPage from './pages/Noticeboard/NoticeboardPage.jsx';
-import CreacionNotice from './pages/Noticeboard/CreacionNotice.jsx';
-import CondicionesNoticeboard from './pages/Noticeboard/CondicionesNoticeboard.jsx';
-import NoticeDetail from './pages/Noticeboard/NoticeDetail.jsx';
+import {
+    NoticeboardPage,
+    CreacionNotice,
+    CondicionesNoticeboard,
+    NoticeDetail,
+    UserNoticeboard,
+    EdicionNotice,
+} from './pages/Noticeboard/index.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -232,6 +235,14 @@ function App() {
                         <Route
                             path="/noticeboard/:idNotice"
                             element={<NoticeDetail />}
+                        />
+                        <Route
+                            path="/noticeboard/user/:userId"
+                            element={<UserNoticeboard />}
+                        />
+                        <Route
+                            path="/noticeboard/:idNotice/edit"
+                            element={<EdicionNotice />}
                         />
                     </Routes>
                 </AnimatePresence>

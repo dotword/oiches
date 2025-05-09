@@ -15,7 +15,6 @@ import {
     borrarReservaAdminController,
     getAllNoticesController,
     publishNoticeController,
-    deleteNoticeController,
 } from '../controllers/admin/index.js';
 
 const router = express.Router();
@@ -97,14 +96,6 @@ router.put(
     authUser,
     isAdmin,
     publishNoticeController
-);
-
-// Endpoint para que el admin rechace un notice
-router.delete(
-    '/delete-notice/:idNotice',
-    authUser,
-    isAdmin,
-    deleteNoticeController
 );
 
 export default router;

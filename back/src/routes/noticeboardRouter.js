@@ -1,7 +1,12 @@
 import express from 'express';
 
 // Funciones controladoras intermedias
-import { authUser, userExists, noticeExists } from '../middleware/index.js';
+import {
+    authUser,
+    userExists,
+    noticeExists,
+    canEditNotice,
+} from '../middleware/index.js';
 
 // Funciones controladoras finales
 import {
@@ -9,6 +14,9 @@ import {
     listCategoriesNoticeController,
     getNoticeDetailController,
     listNoticesController,
+    listMyOwnNoticesController,
+    editNoticeController,
+    deleteNoticeController,
 } from '../controllers/noticeboard/index.js';
 
 const router = express.Router();
@@ -25,8 +33,12 @@ router.post(
 router.get('/categories-noticeboard', listCategoriesNoticeController);
 
 // Endpoint para que el usuario pueda listar sus notices
-
-// Endpoint para que un usuario pueda borrar su notice
+router.get(
+    '/noticeboard/user/:userId',
+    authUser,
+    userExists,
+    listMyOwnNoticesController
+);
 
 // Endpoint para mostrar detalle de un notice
 router.get(
@@ -35,6 +47,24 @@ router.get(
     userExists,
     noticeExists,
     getNoticeDetailController
+);
+
+// Endpoint para que un usuario pueda borrar su notice
+router.delete(
+    '/delete-notice/:idNotice',
+    authUser,
+    userExists,
+    canEditNotice,
+    deleteNoticeController
+);
+
+// Endpoint para que un usuario pueda editar su notice
+router.put(
+    '/noticeboard/:idNotice/edit',
+    authUser,
+    userExists,
+    canEditNotice,
+    editNoticeController
 );
 
 // Endpoint para listar y filtrar notice aprobadas

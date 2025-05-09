@@ -12,13 +12,14 @@ const NoticeboardList = ({ notices }) => {
     };
 
     return (
-        <ul className="">
+        <ul className="md:flex md:flex-wrap md:gap-x-16">
             {notices.map((notice) => (
                 <li
-                    className="border-b border-gray-300 py-4"
+                    className="border-b border-gray-300 py-4 md:w-[calc(50%-2rem)]"
                     key={`{${notice.id}}`}
                 >
                     <div className="px-4 pb-5">
+                        <h2 className="text-lg font-bold">{notice.titulo}</h2>
                         <p className="text-sm">
                             {formatDate(notice.createdAt)}
                         </p>
@@ -34,8 +35,7 @@ const NoticeboardList = ({ notices }) => {
                             {notice.provincia && ` en  ${notice.provincia}`}
                         </p>
 
-                        {notice.provincia && <p>{notice.provincia}</p>}
-                        {notice.genero && (
+                        {notice.genero.length > 0 && (
                             <div className="flex gap-x-1 mb-2">
                                 <span className="font-semibold">Géneros: </span>
                                 <ul className="flex flex-wrap">
@@ -51,7 +51,7 @@ const NoticeboardList = ({ notices }) => {
                                 </ul>
                             </div>
                         )}
-                        <h2 className="text-lg font-bold">{notice.titulo}</h2>
+
                         <Link
                             to={`/noticeboard/${notice.id}`}
                             className="button-large max-w-40"

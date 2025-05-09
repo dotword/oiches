@@ -20,6 +20,7 @@ import checkIfAgencia from './checkIfAgencia.js';
 import agenciaExists from './agenciaExists.js';
 import canEditAgencia from './canEditAgencia.js';
 import noticeExists from './noticeExists.js';
+import canEditNotice from './canEditNotice.js';
 
 export {
     authUser,
@@ -44,4 +45,5 @@ export {
     agenciaExists,
     canEditAgencia,
     noticeExists,
+    canEditNotice,
 };

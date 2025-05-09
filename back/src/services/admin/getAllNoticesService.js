@@ -5,9 +5,15 @@ const getAllNoticesService = async (filters) => {
         const pool = await getPool();
 
         let query = `
-        SELECT noticeboard.*, usuarios.username AS userName
-            FROM noticeboard
-            LEFT JOIN usuarios ON usuarios.id = noticeboard.usuario_id
+        SELECT noticeboard.*,
+            usuarios.username AS userName,
+            usuarios.roles AS role,
+            G.nombre AS grupo,
+            S.nombre AS sala
+        FROM noticeboard
+        LEFT JOIN usuarios ON usuarios.id = noticeboard.usuario_id
+        LEFT JOIN grupos G ON G.id = noticeboard.salaGrupo_id AND usuarios.roles = 'grupo'
+        LEFT JOIN salas S ON S.id = noticeboard.salaGrupo_id AND usuarios.roles = 'sala'
         WHERE 1=1
         `;
 

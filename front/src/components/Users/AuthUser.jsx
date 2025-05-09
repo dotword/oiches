@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
@@ -69,6 +69,21 @@ const AuthUser = () => {
                         userOwner={userData}
                     />
                 )}
+
+                {(userLogged && userData.user.roles == 'sala') ||
+                    (userData.user.roles == 'grupo' && (
+                        <section className="mt-12 pb-6 border-b">
+                            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                                Mis anuncios
+                            </h2>
+                            <Link
+                                to={`/noticeboard/user/${userId}`}
+                                className="bg-purpleOiches hover:bg-moradoOiches text-white text-sm font-semibold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                            >
+                                Gestionar mis anuncios
+                            </Link>
+                        </section>
+                    ))}
 
                 {userLogged && userData.user.roles === 'agencia' && (
                     <AgenciaGestion
