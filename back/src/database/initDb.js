@@ -283,43 +283,6 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS proyectos_inscritos (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                userId CHAR(36) NOT NULL,
-                basesConfirmed BOOLEAN DEFAULT false,
-                projectAcepted BOOLEAN DEFAULT true,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                deletedAt DATETIME NULL,
-                FOREIGN KEY (id) REFERENCES grupos(id),
-                FOREIGN KEY (userId) REFERENCES grupos(usuario_id)
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS voters (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                email VARCHAR(255) NOT NULL UNIQUE,
-                verification_token CHAR(36) NOT NULL,
-                token_expires DATETIME NOT NULL,
-                verified BOOLEAN NOT NULL DEFAULT FALSE,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  
-                verified_at DATETIME NULL
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS contest_votes (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                voter_id CHAR(36) NOT NULL,
-                project_id CHAR(36) NOT NULL,
-                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (voter_id) REFERENCES voters(id),
-                FOREIGN KEY (project_id) REFERENCES proyectos_inscritos(id),
-                UNIQUE (voter_id, project_id)
-            );
-        `);
-
-        await pool.query(`
             CREATE TABLE IF NOT EXISTS category_noticeboard (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 role ENUM('grupo','sala') NOT NULL,

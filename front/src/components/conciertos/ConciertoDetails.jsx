@@ -65,7 +65,6 @@ const ConciertoDetail = () => {
         precioAnticipada,
         otroTipoEntrada,
         precio,
-        otroTipoEntrada,
         genero,
         link,
         poster,
