@@ -336,9 +336,7 @@ const main = async () => {
                 ('Heavy'),
                 ('Ópera'),
                 ('Versiones'),
-                ('Fado'),
-                ('Rancheras'),
-                ('Rumba'),('Cumbia'), ('Góspel'), ('Músicas del mundo'), ('Músicas urbanas');
+                ('Fado'),('Rancheras'),('Rumba'),('Cumbia'), ('Góspel'), ('Músicas del mundo'), ('Músicas urbanas'), ('Garage');
         `);
 
         await pool.query(`

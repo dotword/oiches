@@ -37,20 +37,35 @@ const AgenciaCreacion = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Normalizamos la URL
+        let normalizedWeb = formValues.web.trim();
+        if (!/^https?:\/\//i.test(normalizedWeb)) {
+            normalizedWeb = 'https://' + normalizedWeb;
+        }
+        try {
+            new URL(normalizedWeb);
+        } catch {
+            setError('La dirección web no es válida');
+            return;
+        }
+
         const formData = new FormData();
 
-        Object.entries(formValues).forEach(([key, value]) => {
-            if (key === 'especialidad') {
-                const especialidadArray = Array.isArray(value)
-                    ? value
-                    : value.split(',');
-                especialidadArray.forEach((especialidad) =>
-                    formData.append('especialidad', especialidad)
-                );
-            } else {
-                if (value) formData.append(key, value);
+        Object.entries({ ...formValues, web: normalizedWeb }).forEach(
+            ([key, value]) => {
+                if (key === 'especialidad') {
+                    const especialidadArray = Array.isArray(value)
+                        ? value
+                        : value.split(',');
+                    especialidadArray.forEach((especialidad) =>
+                        formData.append('especialidad', especialidad)
+                    );
+                } else {
+                    if (value) formData.append(key, value);
+                }
             }
-        });
+        );
 
         try {
             await registerAgenciaService({
@@ -173,7 +188,7 @@ const AgenciaCreacion = () => {
                             Web o enlace a tus RRSS:*
                         </label>
                         <input
-                            type="url"
+                            type="text"
                             name="web"
                             placeholder="https://www.tuagencia.com"
                             value={web}

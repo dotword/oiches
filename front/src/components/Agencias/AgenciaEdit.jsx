@@ -58,6 +58,19 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        let normalizedWeb = agencia.web.trim();
+        if (normalizedWeb && !/^https?:\/\//i.test(normalizedWeb)) {
+            normalizedWeb = 'https://' + normalizedWeb;
+        }
+
+        try {
+            new URL(normalizedWeb);
+        } catch {
+            setError('La dirección web no es válida');
+            toast.error('La dirección web no es válida');
+            return;
+        }
+
         if (selectedEspecialidades.length === 0) {
             toast.error('Debes seleccionar al menos una especialidad.');
             return;
@@ -68,7 +81,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
             dataForm.append('nombre', agencia.nombre || '');
             dataForm.append('provincia', agencia.provincia || '');
             dataForm.append('descripcion', agencia.descripcion || '');
-            dataForm.append('web', agencia.web || '');
+            dataForm.append('web', normalizedWeb || '');
             selectedEspecialidades.forEach((esp) => {
                 dataForm.append('especialidad', esp.id);
             });
@@ -201,7 +214,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
                                 Web o enlace a tus RRSS:
                             </label>
                             <input
-                                type="url"
+                                type="text"
                                 name="web"
                                 placeholder="https://www.tuagencia.com"
                                 value={agencia.web}
