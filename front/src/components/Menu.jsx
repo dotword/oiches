@@ -63,6 +63,15 @@ const Menu = ({ mobile }) => {
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
                         <NavLink
+                            to="/votacion-concurso-Oiches"
+                            className={linkClassName}
+                        >
+                            {mobile && (
+                                <span className={backgroundClassName}></span>
+                            )}
+                            <span className={textClassName}>Candidaturas</span>
+                        </NavLink>
+                        <NavLink
                             to="/concurso-musicos-oiches"
                             className={linkClassName}
                         >
@@ -73,17 +82,6 @@ const Menu = ({ mobile }) => {
                                 Concurso de músicos
                             </span>
                         </NavLink>
-                        {/*                          
-                        <NavLink
-                            to="/votacion-concurso-Oiches"
-                            className={linkClassName}
-                        >
-                            {mobile && (
-                                <span className={backgroundClassName}></span>
-                            )}
-                            <span className={textClassName}>Candidaturas</span>
-                        </NavLink>
-                        */}
 
                         <NavLink to="/bases-concurso" className={linkClassName}>
                             {mobile && (
@@ -125,7 +123,7 @@ const Menu = ({ mobile }) => {
                     onClick={() =>
                         mobile && setOpenDropdownPlus((prev) => !prev)
                     }
-                    className="w-full mt-2 py-3 text-center relative overflow-hidden group flex items-center justify-center max-lg:uppercase max-lg:hover:text-white font-medium max-lg:font-semibold"
+                    className="w-full py-3 text-center relative overflow-hidden group flex items-center justify-center max-lg:uppercase max-lg:hover:text-white font-medium max-lg:font-semibold"
                 >
                     {mobile && <span className={backgroundClassName}></span>}
                     <span className={textClassName}>+ Oiches</span>

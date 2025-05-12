@@ -97,7 +97,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                     )}
                                 </div>
                                 {/* Inscripcion grupo a concurso */}
-                                {/* {type === 'grupo' && entry.published === 1 ? (
+                                {type === 'grupo' && entry.published === 1 ? (
                                     <Link
                                         to={`/concurso/inscripcion/${entry.id}`}
                                         className="text-center"
@@ -108,7 +108,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                     </Link>
                                 ) : (
                                     ''
-                                )} */}
+                                )}
                             </li>
                         ))}
                     </ul>
