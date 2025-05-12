@@ -60,7 +60,7 @@ const Header = ({ txt }) => {
                             <IoClose className="text-3xl cursor-pointer" />
                         </div>
 
-                        <div className="flex flex-col items-center justify-between mt-11 h-[calc(100vh-3rem)] uppercase">
+                        <div className="flex flex-col items-center justify-between mt-11 mb-8 h-[calc(100vh-5rem)] uppercase">
                             <Menu mobile />
                         </div>
                     </div>

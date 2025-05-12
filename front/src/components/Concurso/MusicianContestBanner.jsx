@@ -36,7 +36,7 @@ const MusicianContestBanner = () => {
 
                             <Link
                                 to="/concurso-musicos-oiches"
-                                className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-base lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 md:mb-32"
+                                className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-base lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 md:mb-16 lg:mb-32"
                             >
                                 Más información →
                             </Link>
