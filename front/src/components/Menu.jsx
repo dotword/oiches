@@ -121,7 +121,7 @@ const Menu = ({ mobile }) => {
                 <>
                     <NavLink
                         to="/login"
-                        className="max-md:mb-4 max-lg:mt-2 font-medium text-purpleOiches hover:text-black lg:px-4 lg:py-2"
+                        className="max-md:py-2 font-medium text-purpleOiches hover:text-black lg:px-4 lg:py-2"
                     >
                         Login
                     </NavLink>
@@ -136,7 +136,7 @@ const Menu = ({ mobile }) => {
                 <>
                     <NavLink
                         to={`/users/account/${userLogged.id}`}
-                        className="btn-account max-lg:m-4 font-medium"
+                        className="btn-account font-medium"
                     >
                         Mi perfil
                     </NavLink>
@@ -145,7 +145,7 @@ const Menu = ({ mobile }) => {
                         onClick={() => {
                             signOut();
                         }}
-                        className="font-medium text-purpleOiches hover:text-black"
+                        className="py-2 font-medium text-purpleOiches hover:text-black lg:px-4"
                     >
                         Logout
                     </NavLink>
