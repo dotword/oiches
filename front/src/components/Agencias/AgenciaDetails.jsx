@@ -21,6 +21,7 @@ const AgenciaDetails = () => {
         provincia = '',
         descripcion = '',
         web = '',
+        agenciaEspecialidad = [],
         email = '',
         published = 0,
         avatar = '',
@@ -76,6 +77,18 @@ const AgenciaDetails = () => {
                     <h2 className="text-3xl font-bold mt-6 text-left mb-2">
                         {nombre}
                     </h2>
+
+                    <ul className="flex flex-wrap">
+                        {agenciaEspecialidad.map((espc, index) => (
+                            <li key={espc.idEspecialidad} className="mb-0">
+                                {espc.especialidad}
+                                {index < agenciaEspecialidad.length - 1 && (
+                                    <span>,&nbsp;</span>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+
                     <p className="text-black">{provincia}</p>
 
                     <div className="flex flex-wrap mb-4">

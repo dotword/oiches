@@ -7,7 +7,8 @@ const insertAgenciaService = async (
     nombre,
     provincia,
     descripcion,
-    web
+    web,
+    especialidad
 ) => {
     const pool = await getPool();
 
@@ -32,6 +33,20 @@ const insertAgenciaService = async (
         `,
         [agenciaId, userId, nombre, provincia, descripcion, web]
     );
+
+    // Insertar las especialidades en la tabla intermedia
+    if (Array.isArray(especialidad) && especialidad.length > 0) {
+        const values = especialidad.map((especialidadId) => [
+            uuid(),
+            agenciaId,
+            especialidadId,
+        ]);
+
+        await pool.query(
+            `INSERT INTO agencias_especialidades (id, agencia_id, especialidad_id) VALUES ?`,
+            [values]
+        );
+    }
 
     return agenciaId;
 };

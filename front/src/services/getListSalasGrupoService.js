@@ -7,7 +7,7 @@ const getListSalasGrupoService = async ({ token, idUserOwner }) => {
     return apiRequest({
         url,
         headers: {
-            authorization: token,
+            Authorization: token,
         },
     });
 };

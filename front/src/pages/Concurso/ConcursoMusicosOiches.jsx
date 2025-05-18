@@ -32,10 +32,9 @@ const howToParticipate = [
     },
     {
         title: 'Inscríbete',
-        href: '#',
+        href: '/login',
         description:
-            // 'En tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
-            'Cuando comiencen las inscripciones, entra en tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
+            'En tu cuenta de Oiches, accede a «Concurso Oiches 2025» y acepta las bases del concurso.',
     },
     {
         title: 'Tu música',
@@ -66,7 +65,7 @@ const comoVotar = [
             'En la pestaña «Inscribe tu email para votar», introduce tu email. Recibirás un correo electrónico para validarlo.',
     },
     {
-        title: 'Vota hasta 3 proyectos',
+        title: 'Vota a tus artistas favoritos',
         description:
             'Selecciona el proyecto y haz clic en «Votar». Introduce tu email validado. Confirma tu elección.',
     },
@@ -114,10 +113,7 @@ function ConcursoMusicosOichesPage() {
                                 // to="/votacion-concurso-Oiches"
                                 className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg"
                             >
-                                {/* 12/05 al 18/05 */}
-                                ¡Regístrate ya!
-                                {/* 19/05 al 09/06 */}
-                                {/* ¡Participa ahora! */}
+                                ¡Participa ahora!
                                 {/* 11/06 al 08/07 */}
                                 {/* ¡Vota ahora! */}
                             </Link>

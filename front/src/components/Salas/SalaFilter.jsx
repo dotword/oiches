@@ -53,7 +53,7 @@ const SalaFilter = ({ onFilterChange }) => {
                 onChange={handleChange}
                 className="form-select"
             >
-                <option value="Todos">Todos</option> {/* Cambio aquí */}
+                <option value="Todos">Géneros</option> {/* Cambio aquí */}
                 {genres.map((genre) => (
                     <option key={genre.id} value={genre.id}>
                         {genre.nombre}

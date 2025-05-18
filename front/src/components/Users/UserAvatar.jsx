@@ -31,7 +31,7 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
     return (
         <section className="mb-4 flex flex-col items-center gap-2 md:self-start">
             <p className="font-semibold text-2xl text-gray-900">
-                {userData.user.username}
+                {userData.username}
             </p>
             <form onSubmit={handleAvatarSubmit}>
                 <div className="sect-photo w-40 h-40">
@@ -46,10 +46,10 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                         ) : (
                             <img
                                 src={
-                                    userData.user.avatar
+                                    userData.avatar
                                         ? `${
                                               import.meta.env.VITE_API_URL_BASE
-                                          }/uploads/${userData.user.avatar}`
+                                          }/uploads/${userData.avatar}`
                                         : userIcon
                                 }
                                 alt="avatar"
@@ -77,12 +77,18 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
             {userLogged &&
             userLogged.roles === 'admin' &&
             userLogged.id === userId ? (
-                <>
+                <div className="flex flex-wrap gap-8">
                     <Link
                         to="/admin-dashboard"
                         className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
                     >
-                        Admin Dashboard
+                        Usuarios y reservas
+                    </Link>
+                    <Link
+                        to="/admin-noticeboard"
+                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                    >
+                        Noticeboard
                     </Link>
                     <Link
                         to="/admin-concurso"
@@ -90,7 +96,7 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                     >
                         Concurso Oiches
                     </Link>
-                </>
+                </div>
             ) : (
                 ''
             )}

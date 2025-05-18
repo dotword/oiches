@@ -49,6 +49,7 @@ export const AddGrupoMedia = () => {
         }
 
         const videoId = extractYouTubeId(currentVideoUrl);
+
         if (videoId && !videoUrls.some((video) => video.id === videoId)) {
             try {
                 const dataForm = new FormData();

@@ -34,49 +34,63 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
     return idUserOwner ? (
         <>
             <section>
-                {entries.agencias && entries.agencias.length === 0 && (
+                {entries && entries.agencias.length === 0 && (
                     <AgenciaCreacion
                         userLogged={userLogged}
                         token={token}
                         userOwner={userOwner}
                     />
                 )}
+            </section>
 
-                {/* Sección de botones con diseño responsivo */}
-                <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
-                    {(entries && entries.agencias[0]?.published === 1) ||
-                    (entries && entries.agencias[0]?.hidden === 1) ? (
-                        <Link
-                            to={`/users/roster/${idUserOwner}`}
-                            // state={{ userOwner, entries: entries.grupos }}
-                            className="btn-degradado w-full md:max-w-64 text-center"
-                        >
-                            Ir a tu roster
-                        </Link>
-                    ) : (
+            <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
+                {entries &&
+                (entries.agencias[0]?.published === 1 ||
+                    entries.agencias[0]?.hidden === 1) &&
+                entries.agenciaEspecialidad &&
+                entries.agenciaEspecialidad.some(
+                    (esp) => esp.idEspecialidad === 1
+                ) ? (
+                    <Link
+                        to={`/users/roster/${idUserOwner}`}
+                        className="btn-degradado w-full md:max-w-64 text-center"
+                    >
+                        Ir a tu roster
+                    </Link>
+                ) : (
+                    ''
+                )}
+            </section>
+
+            <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
+                {entries &&
+                    (entries.agencias[0]?.published === 0 ||
+                        entries.agencias[0]?.hidden === 1) && (
                         <p className="text-gray-500 text-center mt-4 md:text-left">
-                            * Tenemos que aprobar tu agencia para que puedas
-                            empezar a gestionar tu roster.
+                            * Estamos revisando tu agencia, muy pronto aparecerá
+                            publicada{' '}
+                            {entries.agenciaEspecialidad &&
+                                entries.agenciaEspecialidad.some(
+                                    (esp) => esp.idEspecialidad === 1
+                                ) &&
+                                'y podrás gestionar tu roster.'}
                         </p>
                     )}
-                </section>
             </section>
-            <section className="mt-8"></section>
-            {entries.agencias && entries.agencias.length === 1 && (
-                <AgenciaEdit
-                    userLogged={userLogged}
-                    token={token}
-                    idAgencia={entries.agencias[0]?.id}
-                />
-            )}
 
-            {/* Botón ocultar agencia (más discreto y debajo) */}
+            <section className="mt-8">
+                {entries && entries.agencias.length === 1 && (
+                    <AgenciaEdit
+                        userLogged={userLogged}
+                        token={token}
+                        idAgencia={entries.agencias[0]?.id}
+                    />
+                )}
+            </section>
             {entries && entries.agencias[0]?.published === 1 && (
                 <section className="mt-10 flex justify-start">
                     <button onClick={toggleAgenciaHidden} className="enlaces">
-                        {hidden
-                            ? 'Publicar tu agencia y roster'
-                            : 'Ocultar tu agencia y roster'}
+                        {hidden ? 'Publicar tu agencia' : 'Ocultar tu agencia'}
                     </button>
                 </section>
             )}

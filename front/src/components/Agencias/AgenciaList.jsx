@@ -31,6 +31,7 @@ const AgenciaList = ({ agencias }) => {
                             {agencia.nombre}
                         </h2>
                         <p className="text-gray-400">{agencia.provincia}</p>
+                        <p className="text-sm">{agencia.especNombres}</p>
 
                         {/* Botón siempre abajo alineado a la izquierda */}
                         <div className="mt-auto pb-2">

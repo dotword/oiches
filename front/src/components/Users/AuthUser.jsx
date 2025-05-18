@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
@@ -11,6 +11,7 @@ import AgenciaGestion from '../Agencias/AgenciaGestion.jsx';
 import AdminDeleteUsers from '../Admin/AdminDeleteUsers.jsx';
 import UserAvatar from './UserAvatar.jsx';
 import AccountConfiguration from './AccountConfiguration.jsx';
+import { IoChevronForward } from 'react-icons/io5';
 
 const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
@@ -69,6 +70,30 @@ const AuthUser = () => {
                         userOwner={userData}
                     />
                 )}
+
+                {(userLogged && userData.user.roles == 'sala') ||
+                    (userData.user.roles == 'grupo' && (
+                        <section className="mt-12 pb-6 border-b">
+                            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                                Mis anuncios
+                            </h2>
+                            <div className="flex flex-wrap gap-8 mt-8">
+                                <Link
+                                    to={`/noticeboard/user/${userId}`}
+                                    className="bg-purpleOiches hover:bg-moradoOiches text-white font-semibold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                                >
+                                    Gestionar mis anuncios
+                                </Link>
+                                <Link
+                                    to="/noticeboard"
+                                    className="p-2 rounded-lg border border-purpleOiches text-purpleOiches hover:text-white hover:bg-purpleOiches flex items-end"
+                                >
+                                    Todos los anuncios{' '}
+                                    <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
+                                </Link>
+                            </div>
+                        </section>
+                    ))}
 
                 {userLogged && userData.user.roles === 'agencia' && (
                     <AgenciaGestion

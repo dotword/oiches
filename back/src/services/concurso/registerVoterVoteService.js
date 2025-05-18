@@ -42,8 +42,8 @@ const registerVoterVoteService = async (idProyecto, email) => {
         [votanteId[0].id]
     );
 
-    if (count >= 3) {
-        throw generateErrorsUtil('Ya has votado a 3 proyectos', 403);
+    if (count >= 6) {
+        throw generateErrorsUtil('Ya has votado a 6 proyectos', 403);
     }
 
     // Comprobar que el votante no haya votado al mismo proyecto
@@ -64,7 +64,7 @@ const registerVoterVoteService = async (idProyecto, email) => {
         [votosId, votanteId[0].id, idProyecto]
     );
     return {
-        votosRestantes: 2 - count,
+        votosRestantes: 5 - count,
         email,
         idProyecto,
     };
