@@ -118,7 +118,7 @@ const Home = () => {
                     {/* Músicos más votados */}
                     <section className="mt-16 md:mt-20">
                         <h2 className="text-3xl text-center font-bold mb-8 mx-auto md:text-4xl md:mb-12">
-                            Músicos más votados
+                            Músicos
                         </h2>
                         {grupos.length > 0 ? (
                             <SliderMulti>
@@ -144,7 +144,7 @@ const Home = () => {
                     {/* Salas más votadas */}
                     <section className="mt-16 md:mt-20">
                         <h2 className="text-3xl text-center font-bold mb-8 mx-auto md:text-4xl md:mb-12">
-                            Salas más votadas
+                            Salas
                         </h2>
                         {salas.length > 0 ? (
                             <SliderMulti>
