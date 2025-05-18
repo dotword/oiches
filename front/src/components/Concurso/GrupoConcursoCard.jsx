@@ -52,7 +52,7 @@ const GrupoConcursoCard = ({ grupo }) => {
     //         setVotes((v) => v + 1);
 
     //         toast.success(
-    //             `¡Gracias por votar a ${grupo.grupo_nombre}! Te quedan ${result.result.votosRestantes} voto/s.`
+    //             `¡Gracias por votar a '${grupo.grupo_nombre}'! Te quedan ${result.result.votosRestantes} voto/s.`
     //         );
     //         setEmail('');
     //     } catch (err) {

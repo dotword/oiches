@@ -7,7 +7,7 @@ import useGrupo from '../../hooks/useGrupo';
 import useInscription from '../../hooks/useInscription';
 import AuthContext from '../../context/auth/AuthContext';
 import InscripcionConcursoForm from '../../components/Concurso/InscripcionConcursoForm';
-import UnsubscribeFromContest from '../../components/Concurso/UnsubscribeFromContest';
+// import UnsubscribeFromContest from '../../components/Concurso/UnsubscribeFromContest';
 const InscripcionConcurso = () => {
     const { userLogged, token } = useContext(AuthContext);
     const { idGrupo } = useParams();
@@ -52,18 +52,7 @@ const InscripcionConcurso = () => {
                             />
                             <ul className="list-disc my-3 pl-8">
                                 <li className="font-semibold">
-                                    Lee atentamente las{' '}
-                                    <a
-                                        href="/bases-concurso"
-                                        target="_blank"
-                                        className="underline"
-                                    >
-                                        {' '}
-                                        bases del concurso
-                                    </a>
-                                </li>
-                                <li className="font-semibold">
-                                    Completa el perfil de tu proyecto musical
+                                    Completa el perfil de tu proyecto musical.
                                     <ol className="list-decimal list-inside my-3 pl-4 font-normal">
                                         <li>
                                             Incluye al menos una foto del
@@ -82,6 +71,35 @@ const InscripcionConcurso = () => {
                                     </ol>
                                 </li>
                                 <li>
+                                    Lee atentamente y acepta las{' '}
+                                    <a
+                                        href="/bases-concurso"
+                                        target="_blank"
+                                        className="underline font-semibold"
+                                    >
+                                        bases del concurso
+                                    </a>
+                                    , y haz clic en{' '}
+                                    <span className="font-semibold">
+                                        «Inscribirme al concurso»
+                                    </span>{' '}
+                                    para participar.
+                                </li>
+                                <li>
+                                    Tu perfil aparecerá automáticamente en la
+                                    sección de{' '}
+                                    <a
+                                        href="/votacion-concurso-Oiches"
+                                        target="_blank"
+                                        className="font-semibold underline"
+                                    >
+                                        Candidaturas
+                                    </a>
+                                    . Las votaciones se realizarán en esta
+                                    sección una vez se abra el plazo.
+                                </li>
+
+                                <li>
                                     <span className="font-semibold">
                                         Síguenos en Instagram:{' '}
                                         <a
@@ -95,6 +113,7 @@ const InscripcionConcurso = () => {
                                     </span>
                                     (No es obligatorio, pero se agradece).
                                 </li>
+
                                 <li>
                                     ¿Necesitas ayuda con la publicación de tu
                                     proyecto o tienes alguna duda sobre el
@@ -105,7 +124,7 @@ const InscripcionConcurso = () => {
                                         target="_blank"
                                         className="underline font-semibold"
                                     >
-                                        hola@oiches.com
+                                        hola@oiches.com.
                                     </a>
                                 </li>
                             </ul>
@@ -123,10 +142,10 @@ const InscripcionConcurso = () => {
                                 <p className="font-semibold text-green-700 text-lg text-center mb-8">
                                     Ya estás inscrito en el concurso
                                 </p>
-                                <UnsubscribeFromContest
+                                {/* <UnsubscribeFromContest
                                     token={token}
                                     idGrupo={idGrupo}
-                                />
+                                /> */}
                             </div>
                         )}
                         {inscription && inscription.projectAcepted === 0 && (

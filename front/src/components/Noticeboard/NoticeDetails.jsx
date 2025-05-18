@@ -97,17 +97,6 @@ const NoticeDetails = () => {
         (userLogged && userLogged.roles === 'admin') ||
         notice.estado === 'aprobado' ? (
             <>
-                {/* <Seo
-                    title={`${nombre} - Agencia de músicos en ${provincia}`}
-                    description={`Descubre la agencia ${nombre} en ${provincia}.`}
-                    keywords={`agencia, manager, ${nombre}, ${provincia}, música en vivo, eventos`}
-                    url={`https://oiches.com/agencia/${idAgencia}`}
-                    image={
-                        avatar
-                            ? `${VITE_API_URL_BASE}/uploads/${avatar}`
-                            : DefaultProfile
-                    }
-                /> */}
                 <main className="p-4 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200 md:px-24">
                     <section className="mb-6">
                         <h1 className="text-3xl font-bold mt-6 text-left mb-2">
@@ -118,7 +107,7 @@ const NoticeDetails = () => {
                                 Publicado el: {formatDate(notice.createdAt)}
                             </p>
 
-                            <p className="flex">
+                            <p className="flex flex-wrap">
                                 <a
                                     href={`/${notice.ownerRole}/${notice.salaGrupo_id}`}
                                     target="_blank"

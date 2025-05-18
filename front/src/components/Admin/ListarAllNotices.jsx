@@ -160,7 +160,15 @@ const ListarAllNotices = ({ token }) => {
                                         </td>
                                         <td>{formatDate(notice.createdAt)}</td>
 
-                                        <td>{notice.estado}</td>
+                                        <td
+                                            className={
+                                                notice.estado === 'aprobado'
+                                                    ? 'text-green-600'
+                                                    : ''
+                                            }
+                                        >
+                                            {notice.estado}
+                                        </td>
                                         <td>
                                             <Link
                                                 to={`/noticeboard/${notice.id}`}

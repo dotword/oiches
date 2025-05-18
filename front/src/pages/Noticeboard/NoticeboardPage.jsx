@@ -47,16 +47,6 @@ const NoticeboardPage = () => {
                 image="https://oiches.com/Oiches-Conectamos-musicos-y-salasRRSS.jpg"
                 type="website"
                 imageType="image/jpg"
-                // structuredData={{
-                //     '@context': 'https://schema.org',
-                //     '@type': 'ItemList',
-                //     itemListElement: filteredSalas.map((sala, index) => ({
-                //         '@type': 'ListItem',
-                //         position: index + 1,
-                //         name: sala.nombre,
-                //         url: `https://oiches.com/salas/${sala.id}`,
-                //     })),
-                // }}
             />
             <motion.div
                 initial={{ opacity: 0, height: 0 }}
@@ -87,7 +77,7 @@ const NoticeboardPage = () => {
                             <IoFilter className="text-2xl cursor-pointer" />
                         </div>
                         <div
-                            className={`bg-footercolor flex-col items-center justify-evenly pt-8 md:h-full md:justify-start md:bg-transparent ${
+                            className={`bg-footercolor flex-col items-center justify-evenly pt-8 md:pt-0 md:h-full md:justify-start md:bg-transparent ${
                                 isNavOpen ? 'flex' : 'hidden md:flex'
                             }`}
                         >
@@ -98,7 +88,7 @@ const NoticeboardPage = () => {
                             </div>
                         </div>
                     </section>
-                    <section className="sala-list-container md:pr-8">
+                    <section className="sala-list-container md:pr-8 md:mt-0">
                         {filteredNotices.length > 0 ? (
                             <NoticeboardList notices={filteredNotices} />
                         ) : (

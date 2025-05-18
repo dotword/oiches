@@ -188,7 +188,7 @@ const Menu = ({ mobile }) => {
                         onClick={() => {
                             signOut();
                         }}
-                        className="py-2 font-medium text-purpleOiches hover:text-black lg:px-4"
+                        className="py-2 font-medium text-purpleOiches hover:text-black lg:px-4 max-lg:mb-8 max-lg:mt-2"
                     >
                         Logout
                     </NavLink>

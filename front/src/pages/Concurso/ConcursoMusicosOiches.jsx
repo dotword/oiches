@@ -65,7 +65,7 @@ const comoVotar = [
             'En la pestaña «Inscribe tu email para votar», introduce tu email. Recibirás un correo electrónico para validarlo.',
     },
     {
-        title: 'Vota hasta 3 proyectos',
+        title: 'Vota a tus artistas favoritos',
         description:
             'Selecciona el proyecto y haz clic en «Votar». Introduce tu email validado. Confirma tu elección.',
     },

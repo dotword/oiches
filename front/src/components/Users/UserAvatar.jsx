@@ -82,13 +82,13 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                         to="/admin-dashboard"
                         className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
                     >
-                        Admin Dashboard
+                        Usuarios y reservas
                     </Link>
                     <Link
                         to="/admin-noticeboard"
                         className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
                     >
-                        Admin Noticeboard
+                        Noticeboard
                     </Link>
                     <Link
                         to="/admin-concurso"

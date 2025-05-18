@@ -57,7 +57,7 @@ const UnsubscribeFromContest = ({ token, idGrupo }) => {
     return (
         <>
             <button
-                className="btn-account w-80 self-end bg-red-600 margin-r-0"
+                className="btn-account w-80 self-end bg-red-600 margin-r-0 mt-16"
                 onClick={() => openModal(idGrupo)}
             >
                 Eliminar tu proyecto musical del concurso

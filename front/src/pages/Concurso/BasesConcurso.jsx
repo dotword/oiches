@@ -201,8 +201,8 @@ const BasesConcurso = () => {
                             dirección de correo electrónico.
                         </li>
                         <li>
-                            Cada usuario podrá votar a un máximo de 3 proyectos
-                            musicales.
+                            Cada usuario podrá votar hasta 6 proyectos
+                            musicales, pero solo una vez a cada proyecto.
                         </li>
                     </ul>
                 </div>
