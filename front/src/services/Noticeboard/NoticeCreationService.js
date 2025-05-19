@@ -1,6 +1,6 @@
 import apiRequest from '../../utils/apiRequest';
 
-const RegisterNoticeService = async ({ token, userId, formData }) => {
+const NoticeCreationService = async ({ token, userId, formData }) => {
     const url = `${import.meta.env.VITE_API_URL_BASE}/create-notice/${userId}`;
 
     const response = await apiRequest({
@@ -15,4 +15,4 @@ const RegisterNoticeService = async ({ token, userId, formData }) => {
     return response.data;
 };
 
-export default RegisterNoticeService;
+export default NoticeCreationService;
