@@ -5,7 +5,7 @@ import Toastify from '../Toastify.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import FetchNoticeCategoriasService from '../../services/Noticeboard/FetchNoticeCategoriasService.js';
-import RegisterNoticeService from '../../services/Noticeboard/RegisterNoticeService.js';
+import NoticeCreationService from '../../services/Noticeboard/NoticeCreationService.js';
 import useListSalasGrupoUser from '../../hooks/useListSalasGrupoUser.jsx';
 
 const NoticeCreacion = () => {
@@ -90,7 +90,7 @@ const NoticeCreacion = () => {
         formData.append('descripcion', formValues.descripcion);
 
         try {
-            await RegisterNoticeService({ token, userId, formData });
+            await NoticeCreationService({ token, userId, formData });
 
             toast.success(
                 'Vamos a verificar los datos de tu anuncio y en breve la publicaremos en Oiches.'
