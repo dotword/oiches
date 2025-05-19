@@ -211,6 +211,16 @@ const main = async () => {
         `);
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS agencias_especialidades (
+                id CHAR(36) PRIMARY KEY NOT NULL,
+                agencia_id CHAR(36) NOT NULL,
+                especialidad_id INT NOT NULL,
+                FOREIGN KEY (agencia_id) REFERENCES agencias(id) ON DELETE CASCADE,
+                FOREIGN KEY (especialidad_id) REFERENCES agencias_especialidad(id) ON DELETE CASCADE
+            );
+        `);
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS agencias(
                 id CHAR(36) PRIMARY KEY NOT NULL,
                 usuario_id CHAR(36) NOT NULL,
