@@ -21,6 +21,9 @@ const deleteAgenciaService = async (userId) => {
             await pool.query(`DELETE FROM generos_grupos WHERE grupoId = ?`, [
                 grupo.id,
             ]);
+            await pool.query(`DELETE FROM noticeboard WHERE salaGrupo_id = ?`, [
+                grupo.id,
+            ]);
 
             // Seleccionar reservas del grupo
             const [reservas] = await pool.query(
@@ -46,6 +49,12 @@ const deleteAgenciaService = async (userId) => {
                     reserva.id,
                 ]);
             }
+
+            // Borrar del concurso
+            await pool.query(
+                `DELETE FROM proyectos_inscritos WHERE userId = ?`,
+                [userId]
+            );
 
             // Eliminar grupo
             await pool.query(`DELETE FROM grupos WHERE id = ?`, [grupo.id]);
