@@ -47,7 +47,9 @@ const InscripcionConcurso = () => {
                                 className="w-52 h-52 rounded-full object-cover image-shadow mx-auto"
                                 src={`${
                                     import.meta.env.VITE_API_URL_BASE
-                                }/uploads/${firstImage}`}
+                                }/uploads/${
+                                    firstImage ? firstImage : entry.avatar
+                                }`}
                                 alt={entry.nombre}
                             />
                             <ul className="list-disc my-3 pl-8">
