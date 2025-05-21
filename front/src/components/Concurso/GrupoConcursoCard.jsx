@@ -1,12 +1,12 @@
-// import { useState } from 'react';
-// import { toast } from 'react-toastify';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import DefaultProfile from '/Horizontal_blanco.webp';
 
 const GrupoConcursoCard = ({ grupo }) => {
     const { VITE_API_URL_BASE } = import.meta.env;
-    // const [email, setEmail] = useState('');
-    // const [isLoading, setIsLoading] = useState(false);
-    // const [votes, setVotes] = useState(grupo.number_votes);
+    const [email, setEmail] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [votes, setVotes] = useState(grupo.number_votes);
 
     const imageUrl =
         grupo.fotos && grupo.fotos.length > 0
@@ -29,46 +29,46 @@ const GrupoConcursoCard = ({ grupo }) => {
             ? `${generosArray.slice(0, maxGeneros).join(', ')}...`
             : generosArray.join(', ');
 
-    // const handleVote = async (e) => {
-    //     e.preventDefault();
-    //     setIsLoading(true);
+    const handleVote = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
 
-    //     try {
-    //         const res = await fetch(
-    //             `${VITE_API_URL_BASE}/concurso/vote/${grupo.id}`,
-    //             {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify({ email }),
-    //             }
-    //         );
+        try {
+            const res = await fetch(
+                `${VITE_API_URL_BASE}/concurso/vote/${grupo.id}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                }
+            );
 
-    //         const result = await res.json();
+            const result = await res.json();
 
-    //         if (!res.ok) throw new Error(result.message);
+            if (!res.ok) throw new Error(result.message);
 
-    //         setVotes((v) => v + 1);
+            setVotes((v) => v + 1);
 
-    //         toast.success(
-    //             `¡Gracias por votar a '${grupo.grupo_nombre}'! Te quedan ${result.result.votosRestantes} voto/s.`
-    //         );
-    //         setEmail('');
-    //     } catch (err) {
-    //         toast.error(err.message || 'Error al votar');
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // };
+            toast.success(
+                `¡Gracias por votar a '${grupo.grupo_nombre}'! Te quedan ${result.result.votosRestantes} voto/s.`
+            );
+            setEmail('');
+        } catch (err) {
+            toast.error(err.message || 'Error al votar');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <div className="card-generica justify-between cursor-auto">
-            {/* <div className="text-white flex justify-end pb-3 font-semibold">
+            <div className="text-white flex justify-end pb-3 font-semibold">
                 <span>
                     {votes} voto{votes !== 1 && 's'}
                 </span>
-            </div> */}
+            </div>
             <div>
                 <img
                     src={imageUrl}
@@ -98,9 +98,8 @@ const GrupoConcursoCard = ({ grupo }) => {
                     + info
                 </a>
             </div>
-            {/* VOTACIONES ABIERTAS */}
 
-            {/* <form onSubmit={handleVote} className="mt-4">
+            <form onSubmit={handleVote} className="mt-4">
                 <input
                     type="email"
                     name="email"
@@ -117,7 +116,7 @@ const GrupoConcursoCard = ({ grupo }) => {
                 >
                     {isLoading ? 'Enviando voto...' : 'Votar'}
                 </button>
-            </form> */}
+            </form>
         </div>
     );
 };
