@@ -54,7 +54,7 @@ const howToParticipate = [
 const comoVotar = [
     {
         title: 'Accede a las candidaturas',
-        href: '/votacion-concurso-Oiches',
+        // href: '/votacion-concurso-Oiches',
         description:
             'Entra en la sección «Candidaturas y votación» de nuestra web.',
     },
@@ -109,7 +109,8 @@ function ConcursoMusicosOichesPage() {
                                 to="/votacion-concurso-Oiches"
                                 className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg"
                             >
-                                ¡Vota ahora!
+                                {/* ¡Vota ahora! */}
+                                Proyectos inscritos
                             </Link>
                         </div>
                     </div>
