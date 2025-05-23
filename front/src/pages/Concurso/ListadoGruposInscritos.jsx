@@ -98,7 +98,7 @@ const ListadoGruposInscritos = () => {
                                 correo para verificar tu dirección.
                             </p>
                             <p>
-                                2. Ya puedes votar a tus 3 artistas/grupos
+                                2. Ya puedes votar a tus 6 artistas/grupos
                                 favoritos
                             </p>
                         </div>
