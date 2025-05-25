@@ -73,7 +73,7 @@ const ListadoGruposInscritos = () => {
                 animate={{ opacity: 1, height: '100%' }}
                 exit={{ opacity: 0, height: 0 }}
             >
-                <Header txt="Candidaturas - Concurso Oiches 2025" />
+                <Header txt="Votaciones - Concurso Oiches 2025" />
 
                 <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
                     <section className="bg-yellowOiches rounded-3xl px-6 py-3 max-w-2xl mx-auto mb-8 flex flex-wrap items-center gap-3 font-semibold justify-center sm:gap-8">
@@ -82,25 +82,16 @@ const ListadoGruposInscritos = () => {
                             className="text-3xl"
                         />
                         <div className="flex flex-col justify-center text-center">
-                            {/* INSCRIPCIONES ABIERTAS */}
-                            <p className="mb-1 text-lg">
-                                Inscripciones abiertas hasta el 09/06/2025
-                            </p>
                             <p className="mb-1">
-                                Las votaciones comienzan el 11/06/2025
+                                {/* Las votaciones están abiertas hasta el
+                                06/07/2025 */}
+                                ¡Mañana empieza la votación!
                             </p>
-
-                            {/* VOTACIONES ABIERTAS */}
-                            {/* <p className="mb-1">
+                            <p className="mb-1 text-sm">
                                 Finalizado el plazo de inscripción. ¡Suerte!
                             </p>
-                            <p className="mb-1">
-                                Las votaciones están abiertas hasta el
-                                06/07/2025
-                            </p> */}
                         </div>
                     </section>
-                    {/* VOTACIONES ABIERTAS */}
                     {/* <section className="mb-8">
                         <div className="flex flex-col text-center mb-4">
                             <p>
@@ -108,7 +99,7 @@ const ListadoGruposInscritos = () => {
                                 correo para verificar tu dirección.
                             </p>
                             <p>
-                                2. Ya puedes votar a tus 3 artistas/grupos
+                                2. Ya puedes votar a tus 6 artistas/grupos
                                 favoritos
                             </p>
                         </div>

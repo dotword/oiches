@@ -85,7 +85,7 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                     {entry.published === 1 && (
                                         <Link
                                             to={`/${userOwner.user.roles}/calendar/${entry.id}`}
-                                            className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4"
+                                            className="font-semibold text-gray-800 hover:text-purple-600 mt-2 flex items-center gap-2 pb-4 text-lg"
                                         >
                                             <FaRegCalendarCheck className="text-xl" />
                                             <span>
@@ -96,19 +96,6 @@ const UsersSalaGrupoList = ({ userLogged, token, userOwner }) => {
                                         </Link>
                                     )}
                                 </div>
-                                {/* Inscripcion grupo a concurso */}
-                                {type === 'grupo' && entry.published === 1 ? (
-                                    <Link
-                                        to={`/concurso/inscripcion/${entry.id}`}
-                                        className="text-center"
-                                    >
-                                        <button className="my-4 bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold py-2 px-6 rounded-lg shadow-lg transition-transform hover:scale-105">
-                                            Concurso Oiches 2025
-                                        </button>
-                                    </Link>
-                                ) : (
-                                    ''
-                                )}
                             </li>
                         ))}
                     </ul>

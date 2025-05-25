@@ -12,9 +12,6 @@ const MusicianContestBanner = () => {
                     <div className="w-full mx-auto md:mx-0">
                         {/* Alineación de texto: moviles tablet */}
                         <div className="text-center md:text-left">
-                            <p className="uppercase text-base md:text-lg lg:text-xl tracking-wide mb-2">
-                                Atención artistas y bandas
-                            </p>
                             <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-7xl font-extrabold leading-tight break-words mb-2">
                                 {/* Span para texto en una sola l inea pantallas grandes asi dejamos menos espacio de degradado */}
                                 <span className="block lg:inline">
@@ -26,19 +23,18 @@ const MusicianContestBanner = () => {
                                 Oiches 2025
                             </h2>
                             <h3 className="text-lg lg:text-2xl font-semibold uppercase mt-6 mb-1">
-                                Inscripciones
-                                {/* Votaciones */}
+                                Votaciones
                             </h3>
                             <p className="text-base lg:text-lg mb-6">
-                                19 DE MAYO - 09 DE JUNIO
-                                {/* 11 DE JUNIO - 06 DE JULIO */}
+                                11 DE JUNIO - 06 DE JULIO
                             </p>
 
                             <Link
-                                to="/concurso-musicos-oiches"
+                                to="/votacion-concurso-Oiches"
                                 className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg text-base lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 md:mb-16 lg:mb-32"
                             >
-                                Más información →
+                                {/* Vota ahora → */}
+                                Proyectos inscritos →
                             </Link>
                         </div>
                     </div>

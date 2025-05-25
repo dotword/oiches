@@ -98,7 +98,6 @@ const GrupoConcursoCard = ({ grupo }) => {
                     + info
                 </a>
             </div>
-            {/* VOTACIONES ABIERTAS */}
 
             {/* <form onSubmit={handleVote} className="mt-4">
                 <input

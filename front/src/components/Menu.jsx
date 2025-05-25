@@ -69,7 +69,9 @@ const Menu = ({ mobile }) => {
                             {mobile && (
                                 <span className={backgroundClassName}></span>
                             )}
-                            <span className={textClassName}>Candidaturas</span>
+                            <span className={textClassName}>
+                                Candidaturas y votación
+                            </span>
                         </NavLink>
                         <NavLink
                             to="/concurso-musicos-oiches"
