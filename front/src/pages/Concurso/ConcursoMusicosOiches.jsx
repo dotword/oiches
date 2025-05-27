@@ -66,7 +66,7 @@ const comoVotar = [
     {
         title: 'Vota a tus artistas favoritos',
         description:
-            'Selecciona el proyecto y haz clic en «Votar». Introduce tu email validado. Confirma tu elección.',
+            'Selecciona el proyecto y haz clic en «Votar». Introduce tu email validado. Vota hasta 6 proyectos diferentes.',
     },
 ];
 
@@ -109,8 +109,7 @@ function ConcursoMusicosOichesPage() {
                                 to="/votacion-concurso-Oiches"
                                 className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 shadow-md hover:shadow-lg"
                             >
-                                {/* ¡Vota ahora! */}
-                                Proyectos inscritos
+                                ¡Vota ahora!
                             </Link>
                         </div>
                     </div>
