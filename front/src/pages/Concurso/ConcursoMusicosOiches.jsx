@@ -54,7 +54,7 @@ const howToParticipate = [
 const comoVotar = [
     {
         title: 'Accede a las candidaturas',
-        // href: '/votacion-concurso-Oiches',
+        href: '/votacion-concurso-Oiches',
         description:
             'Entra en la sección «Candidaturas y votación» de nuestra web.',
     },
