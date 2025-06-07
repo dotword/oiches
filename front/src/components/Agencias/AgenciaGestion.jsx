@@ -11,6 +11,14 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
     const { entries } = useListSalasGrupoUser({ token, idUserOwner });
     const [hidden, setHidden] = useState(null);
 
+    // Obtenemos la primera agencia (si existe) de entries
+    const primeraAgencia = entries?.agencias?.[0] || null;
+
+    // Comprobamos si hay al menos una especialidad con id 1 o 3
+    const tieneEspecialidad1o3 = entries?.agenciaEspecialidad?.some(
+        ({ idEspecialidad }) => idEspecialidad === 1 || idEspecialidad === 3
+    );
+
     useEffect(() => {
         if (entries && entries.agencias.length > 0) {
             setHidden(entries.agencias[0].hidden === 1);
@@ -44,13 +52,10 @@ const AgenciaGestion = ({ userLogged, token, userOwner }) => {
             </section>
 
             <section className="my-8 flex flex-col md:flex-row gap-4 items-center md:justify-start">
-                {entries &&
-                (entries.agencias[0]?.published === 1 ||
-                    entries.agencias[0]?.hidden === 1) &&
-                entries.agenciaEspecialidad &&
-                entries.agenciaEspecialidad.some(
-                    (esp) => esp.idEspecialidad === 1
-                ) ? (
+                {primeraAgencia &&
+                (primeraAgencia.published === 1 ||
+                    primeraAgencia.hidden === 1) &&
+                tieneEspecialidad1o3 ? (
                     <Link
                         to={`/users/roster/${idUserOwner}`}
                         className="btn-degradado w-full md:max-w-64 text-center"
