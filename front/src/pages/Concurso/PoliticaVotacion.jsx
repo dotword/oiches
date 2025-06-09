@@ -30,8 +30,8 @@ const PoliticaVotacion = () => {
                     </li>
                     <li>
                         Registrar tu participación en la votación, permitiéndote
-                        votar a un máximo de 3 grupos musicales inscritos en el
-                        concurso.
+                        votar a un máximo de 6 proyectos musicales inscritos en
+                        el concurso.
                     </li>
                     <li>Prevenir fraudes o votos duplicados.</li>
                 </ul>
@@ -79,12 +79,11 @@ const PoliticaVotacion = () => {
                 </h2>
                 <ul>
                     <li>
-                        Solo se permite un voto por persona (identificada
+                        Solo se permiten 6 votos por persona (identificada
                         mediante dirección de correo electrónico verificada).
                     </li>
                     <li>
-                        Cada usuario puede votar por un máximo de{' '}
-                        <strong>3 grupos</strong> diferentes.
+                        No se puede votar por el mismo proyecto más de una vez.
                     </li>
                     <li>
                         Cualquier intento de manipulación del sistema de

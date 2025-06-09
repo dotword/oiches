@@ -2,11 +2,10 @@ import { useContext } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import AdminInscriptionsList from '../../components/Concurso/AdminInscriptionsList';
+import AdminVotersList from '../../components/Concurso/AdminVotersList';
 import AuthContext from '../../context/auth/AuthContext';
-import { Link } from 'react-router-dom';
 
-const AdminConcurso = () => {
+const AdminVoters = () => {
     const { userLogged, token } = useContext(AuthContext);
     return userLogged && userLogged.roles === 'admin' ? (
         <motion.div
@@ -14,15 +13,9 @@ const AdminConcurso = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Concurso Oiches 2025" />
+            <Header txt="Votantes concurso Oiches 2025" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
-                <Link
-                    to="/concurso/admin-voters"
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md my-4 mx-auto flex justify-center max-w-60"
-                >
-                    Listado voters
-                </Link>
-                <AdminInscriptionsList token={token} />
+                <AdminVotersList token={token} />
             </main>
             <Footer />
         </motion.div>
@@ -31,4 +24,4 @@ const AdminConcurso = () => {
     );
 };
 
-export default AdminConcurso;
+export default AdminVoters;

@@ -21,7 +21,7 @@ const registerVoterEmailController = async (req, res, next) => {
 
         // Creamos el verification token y expiration.
         const verification_token = randomstring.generate(30);
-        const expiration = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 horas
+        const expiration = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 24 horas
 
         // Insertamos el votante.
         await registerVoterEmailService(email, verification_token, expiration);

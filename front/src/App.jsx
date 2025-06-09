@@ -39,13 +39,14 @@ import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
 import Agencias from './pages/Agencias/Agencias.jsx';
 import AgenciaRoster from './pages/Agencias/AgenciaRoster.jsx';
 import {
-    InscripcionConcurso,
+    // InscripcionConcurso,
     AdminConcurso,
     BasesConcurso,
     ListadoGruposInscritos,
     PoliticaVotacion,
     ValidateEmailPage,
     ConcursoMusicosOiches,
+    AdminVoters,
 } from './pages/Concurso/index.jsx';
 import {
     NoticeboardPage,
@@ -190,13 +191,17 @@ function App() {
                             element={<AgenciaRoster />}
                         />
                         {/* CONCURSO */}
-                        <Route
+                        {/* <Route
                             path="/concurso/inscripcion/:idGrupo"
                             element={<InscripcionConcurso />}
-                        />
+                        /> */}
                         <Route
                             path="/admin-concurso"
                             element={<AdminConcurso />}
+                        />
+                        <Route
+                            path="/concurso/admin-voters"
+                            element={<AdminVoters />}
                         />
                         <Route
                             path="/bases-concurso"
