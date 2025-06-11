@@ -18,7 +18,7 @@ const SemifinalistasConcurso = () => {
 
                 <main className="w-full">
                     <section className="bg-footercolor px-4 py-8 font-bold text-center text-white">
-                        <h1 className="text-4xl">Semifinalistas</h1>
+                        <h1 className="text-5xl">Finalistas</h1>
                         <p className="text-2xl">Concurso Oiches 2025</p>
                     </section>
                     <section className="flex flex-col">

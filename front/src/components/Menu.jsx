@@ -63,41 +63,23 @@ const Menu = ({ mobile }) => {
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
                         <NavLink
-                            to="/votacion-concurso-Oiches"
-                            className={linkClassName}
-                        >
-                            {mobile && (
-                                <span className={backgroundClassName}></span>
-                            )}
-                            <span className={textClassName}>
-                                Candidaturas y votación
-                            </span>
-                        </NavLink>
-                        <NavLink
-                            to="/concurso-musicos-oiches"
-                            className={linkClassName}
-                        >
-                            {mobile && (
-                                <span className={backgroundClassName}></span>
-                            )}
-                            <span className={textClassName}>
-                                Concurso de músicos
-                            </span>
-                        </NavLink>
-
-                        <NavLink
                             to="/concurso/semifinalistas"
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
                         >
-                            Semifinalistas
+                            Finalistas
                         </NavLink>
+
                         <NavLink
                             to="/votacion-concurso-Oiches"
                             className={linkClassName}
                         >
-                            Candidaturas y votaciones
+                            {mobile && (
+                                <span className={backgroundClassName}></span>
+                            )}
+                            <span className={textClassName}>
+                                Proyectos inscritos
+                            </span>
                         </NavLink>
-
                         <NavLink to="/bases-concurso" className={linkClassName}>
                             {mobile && (
                                 <span className={backgroundClassName}></span>
@@ -206,12 +188,6 @@ const Menu = ({ mobile }) => {
                         className="py-2 font-medium text-purpleOiches hover:text-black lg:px-4 max-lg:mb-8 max-lg:mt-2"
                     >
                         Logout
-                    </NavLink>
-                    <NavLink
-                        to={`/users/account/${userLogged.id}`}
-                        className="btn-account max-lg:mb-8 max-lg:mt-2 font-medium"
-                    >
-                        Mi perfil
                     </NavLink>
                 </>
             )}

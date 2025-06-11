@@ -22,18 +22,15 @@ const MusicianContestBanner = () => {
                             <h2 className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
                                 Oiches 2025
                             </h2>
-                            <h3 className="text-lg lg:text-2xl font-semibold uppercase mt-6 mb-1">
-                                Votaciones abiertas
+                            <h3 className="text-lg lg:text-2xl font-semibold uppercase my-8">
+                                6 proyectos finalistas
                             </h3>
-                            <p className="text-base lg:text-lg mb-6">
-                                11 DE JUNIO - 06 DE JULIO
-                            </p>
 
                             <Link
-                                to="/votacion-concurso-Oiches"
+                                to="/concurso/semifinalistas"
                                 className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 md:mb-16 lg:mb-32"
                             >
-                                Vota ahora →
+                                Ver finalistas →
                             </Link>
                         </div>
                     </div>
