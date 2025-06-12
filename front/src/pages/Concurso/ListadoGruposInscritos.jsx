@@ -7,7 +7,7 @@ import Footer from '../../components/Footer.jsx';
 import Paginator from '../../components/Paginator.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../../components/Toastify.jsx';
-// import { ImBullhorn } from 'react-icons/im';
+import { ImBullhorn } from 'react-icons/im';
 import { IoIosSearch } from 'react-icons/io';
 // import ValidateEmailWithCodeForm from '../../components/Concurso/ValidateEmailWithCodeForm.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
@@ -75,7 +75,7 @@ const ListadoGruposInscritos = () => {
                 <Header txt="Proyectos inscritos - Concurso Oiches 2025" />
 
                 <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
-                    {/* <section className="bg-yellowOiches rounded-3xl px-6 py-3 max-w-2xl mx-auto mb-8 flex flex-wrap items-center gap-3 font-semibold justify-center sm:gap-8">
+                    <section className="bg-yellowOiches rounded-3xl px-6 py-3 max-w-2xl mx-auto mb-8 flex flex-wrap items-center gap-3 font-semibold justify-center sm:gap-8">
                         <ImBullhorn
                             style={{ transform: 'rotateY(180deg)' }}
                             className="text-3xl"

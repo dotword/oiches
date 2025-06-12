@@ -70,13 +70,6 @@ const Menu = ({ mobile }) => {
                         </NavLink> */}
 
                         <NavLink
-                            to="/concurso/semifinalistas"
-                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
-                        >
-                            Finalistas
-                        </NavLink>
-
-                        <NavLink
                             to="/votacion-concurso-Oiches"
                             className={linkClassName}
                         >
