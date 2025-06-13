@@ -6,9 +6,17 @@ const adminListContestVotersService = async (filters) => {
 
         // Consulta principal
         let query = `
-            SELECT 
-                voters.*
+          SELECT 
+                voters.*,
+                grupos.nombre AS grupo_nombre,
+                contest_votes.id AS vote_id
             FROM voters
+            LEFT JOIN 
+                contest_votes ON voters.id = contest_votes.voter_id
+            LEFT JOIN 
+                proyectos_inscritos ON contest_votes.project_id = proyectos_inscritos.id
+            LEFT JOIN 
+                grupos ON proyectos_inscritos.id = grupos.id
             WHERE 1=1
         `;
 

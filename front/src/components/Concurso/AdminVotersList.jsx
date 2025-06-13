@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
 import FetchVotersService from '../../services/Concurso/FetchVotersService.js';
+import DeleteAdminVote from './DeleteAdminVote.jsx';
 import Paginator from '../Paginator.jsx';
 
 const AdminVotersList = ({ token }) => {
@@ -24,7 +25,6 @@ const AdminVotersList = ({ token }) => {
                     page,
                     pageSize
                 );
-
                 setFilteredUsers(data.voters.rows);
                 setTotal(data.voters.total);
             } catch (error) {
@@ -80,7 +80,9 @@ const AdminVotersList = ({ token }) => {
                                 <th>Email</th>
                                 <th>Verificado</th>
                                 <th>Token</th>
+                                <th>Proyecto votado</th>
                                 <th>Fecha alta</th>
+                                <th>Borrar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,9 +90,18 @@ const AdminVotersList = ({ token }) => {
                                 <tr key={`${index}`}>
                                     <td>{filteredUser.email}</td>
                                     <td>{filteredUser.verified}</td>
-                                    <td>{filteredUser.verification_token}</td>
+                                    <td className="text-sm">
+                                        {filteredUser.verification_token}
+                                    </td>
+                                    <td>{filteredUser.grupo_nombre}</td>
                                     <td>
                                         {formatDate(filteredUser.created_at)}
+                                    </td>
+                                    <td>
+                                        <DeleteAdminVote
+                                            token={token}
+                                            idVoto={filteredUser.vote_id}
+                                        />
                                     </td>
                                 </tr>
                             ))}

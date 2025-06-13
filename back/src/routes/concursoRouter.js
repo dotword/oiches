@@ -20,6 +20,7 @@ import {
     validateVoterEmailTokenController,
     registerVoterVoteController,
     adminListContestVotersController,
+    borrarVotoAdminController,
 } from '../controllers/concurso/index.js';
 
 const router = express.Router();
@@ -100,6 +101,15 @@ router.get(
     userExists,
     isAdmin,
     adminListContestVotersController
+);
+
+// Endpoint para que el admin pueda eliminar un voto
+router.delete(
+    '/concurso/vote/:idVoto',
+    authUser,
+    userExists,
+    isAdmin,
+    borrarVotoAdminController
 );
 
 export default router;

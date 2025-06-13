@@ -86,7 +86,11 @@ const ListadoGruposInscritos = () => {
                                 06/07/2025
                             </p>
                             <p className="mb-1 text-sm">
-                                Finalizado el plazo de inscripción. ¡Suerte!
+                                Los votos son revisados manualmente.
+                            </p>
+                            <p className="mb-1 text-sm">
+                                Pueden ser descontados si incumplen las bases
+                                del concurso.
                             </p>
                         </div>
                     </section>

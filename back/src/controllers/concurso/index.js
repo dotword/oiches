@@ -8,6 +8,7 @@ import registerVoterEmailController from './registerVoterEmailController.js';
 import validateVoterEmailTokenController from './validateVoterEmailTokenController.js';
 import registerVoterVoteController from './registerVoterVoteController.js';
 import adminListContestVotersController from './adminListContestVotersController.js';
+import borrarVotoAdminController from './borrarVotoAdminController.js';
 
 export {
     createNewContestInscriptionController,
@@ -20,4 +21,5 @@ export {
     validateVoterEmailTokenController,
     registerVoterVoteController,
     adminListContestVotersController,
+    borrarVotoAdminController,
 };
