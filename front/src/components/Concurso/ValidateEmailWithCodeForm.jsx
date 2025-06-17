@@ -5,6 +5,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 
 const ValidateEmailWithCodeForm = () => {
     const [email, setEmail] = useState('');
+    const [user_rrss, setUser_rrss] = useState('');
     const [code, setCode] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenValidate, setIsOpenValidate] = useState(false);
@@ -18,6 +19,7 @@ const ValidateEmailWithCodeForm = () => {
             const formValues = new FormData(e.target);
             const dataForm = {
                 email: formValues.get('email'),
+                user_rrss: formValues.get('user_rrss'),
             };
 
             const response = await fetch(
@@ -114,7 +116,18 @@ const ValidateEmailWithCodeForm = () => {
                                     placeholder="Introduce tu email"
                                     required
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="form-input max-w-md mx-auto"
+                                    className="form-input max-w-md mx-auto placeholder-gray-600"
+                                />
+                                <input
+                                    type="text"
+                                    name="user_rrss"
+                                    value={user_rrss}
+                                    placeholder="Usuario de Instagram o Facebook"
+                                    required
+                                    onChange={(e) =>
+                                        setUser_rrss(e.target.value)
+                                    }
+                                    className="form-input max-w-md mx-auto placeholder-gray-600"
                                 />
                                 <div className="">
                                     <input

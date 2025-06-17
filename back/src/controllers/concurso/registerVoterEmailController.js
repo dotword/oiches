@@ -6,7 +6,7 @@ import joiErrorMessages from '../../schemas/joiErrorMessages.js';
 
 const registerVoterEmailController = async (req, res, next) => {
     try {
-        const { email } = req.body;
+        const { email, user_rrss } = req.body;
 
         // Validamos el body con Joi.
         await validateSchemaUtil(
@@ -15,6 +15,13 @@ const registerVoterEmailController = async (req, res, next) => {
                     .email()
                     .required()
                     .messages(joiErrorMessages),
+                user_rrss: Joi.string().required().max(255).messages({
+                    'string.base': 'Tienes que introducir un usuario de RRSS',
+                    'string.empty': 'El campo RRSS no puede estar vacío',
+                    'any.required': 'El campo RRSS es obligatorio',
+                    'string.max':
+                        'El usuario de RRSS no puede superar los 255 caracteres',
+                }),
             }),
             req.body
         );
@@ -24,7 +31,12 @@ const registerVoterEmailController = async (req, res, next) => {
         const expiration = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 24 horas
 
         // Insertamos el votante.
-        await registerVoterEmailService(email, verification_token, expiration);
+        await registerVoterEmailService(
+            email,
+            user_rrss,
+            verification_token,
+            expiration
+        );
 
         res.send({
             status: 'ok',

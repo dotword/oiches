@@ -276,7 +276,8 @@ const main = async () => {
                 token_expires DATETIME NOT NULL,
                 verified BOOLEAN NOT NULL DEFAULT FALSE,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,  
-                verified_at DATETIME NULL
+                verified_at DATETIME NULL,
+                user_rrss VARCHAR(300) NOT NULL
             );
         `);
 
