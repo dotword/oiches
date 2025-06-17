@@ -61,7 +61,38 @@ const comoVotar = [
     {
         title: 'Registra tu email',
         description:
-            'En la pestaña «Inscribe tu email para votar», introduce tu email. Recibirás un correo electrónico para validarlo.',
+            'En la pestaña «Inscribe tu email para votar», ingresa tu email y tu nombre de usuario de Instagram o Facebook. Recibirás un correo para verificar tu email.',
+    },
+    {
+        title: 'Confirma tu red social',
+        description: (
+            <ol>
+                <li>
+                    • Si usaste Instagram: Síguenos en{' '}
+                    <a
+                        href="https://www.instagram.com/oiches_musica/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purpleOiches"
+                    >
+                        @oiches_musica
+                    </a>{' '}
+                    o envíanos un mensaje con el texto “Concurso Oiches”.
+                </li>
+                <li className="mb-0">
+                    • Si usaste Facebook: Síguenos en{' '}
+                    <a
+                        href="https://www.facebook.com/oiches"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purpleOiches"
+                    >
+                        @oiches
+                    </a>{' '}
+                    o envíanos un mensaje con el texto “Concurso Oiches”.
+                </li>
+            </ol>
+        ),
     },
     {
         title: 'Vota a tus artistas favoritos',
@@ -243,7 +274,7 @@ function ConcursoMusicosOichesPage() {
                             <p>11/06/2025 al 06/07/2025</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 text-left">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-16 text-left">
                             {/* Mapeo con variable renombrada */}
                             {comoVotar.map((item) => (
                                 <motion.div
