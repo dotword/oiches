@@ -197,8 +197,9 @@ const BasesConcurso = () => {
                         </li>
                         <li>
                             El usuario deberá introducir su correo electrónico y
-                            validarlo con un mensaje que recibirá en esa
-                            dirección de correo electrónico.
+                            usuario de Facebook o Instagram. Deberá validar su
+                            email con un mensaje que recibirá en esa dirección
+                            de correo electrónico.
                         </li>
                         <li>
                             Cada usuario podrá votar hasta 6 proyectos

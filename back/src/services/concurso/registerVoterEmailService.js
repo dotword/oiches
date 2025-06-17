@@ -6,6 +6,7 @@ import generateErrorsUtil from '../../utils/generateErrorsUtil.js';
 
 const registerVoterEmailService = async (
     email,
+    user_rrss,
     verification_token,
     expiration
 ) => {
@@ -21,6 +22,16 @@ const registerVoterEmailService = async (
     // Si existe algún usuario con ese email lanzamos un error.
     if (voters.length > 0)
         throw generateErrorsUtil('Este email ya está registrado', 409);
+
+    // Comprobar que RRSS no esté registrado
+    let [votersRRSS] = await pool.query(
+        `SELECT id FROM voters WHERE user_rrss = ?`,
+        [user_rrss]
+    );
+
+    // Si existe algún usuario con ese RRSS lanzamos un error.
+    if (votersRRSS.length > 0)
+        throw generateErrorsUtil('Este usuario ya está registrado', 409);
 
     // Creamos el asunto del email de verificación.
     const emailSubject =
@@ -99,10 +110,10 @@ const registerVoterEmailService = async (
 
     await pool.query(
         `
-            INSERT INTO voters (id, email, verification_token, token_expires ) 
-            VALUES (?, ?, ?, ?)
+            INSERT INTO voters (id, email, verification_token, token_expires, user_rrss ) 
+            VALUES (?, ?, ?, ?, ?)
         `,
-        [id, email, verification_token, expiration]
+        [id, email, verification_token, expiration, user_rrss]
     );
 };
 

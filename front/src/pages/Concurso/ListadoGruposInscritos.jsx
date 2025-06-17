@@ -97,7 +97,8 @@ const ListadoGruposInscritos = () => {
                     <section className="mb-8">
                         <div className="flex flex-col text-center mb-4">
                             <p>
-                                1. Inscribe tu email para votar y recibirás un
+                                1. Inscribe tu email y nombre de usuario de
+                                Instagram o Facebook para votar. Recibirás un
                                 correo para verificar tu dirección.
                             </p>
                             <p>
