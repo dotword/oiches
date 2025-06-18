@@ -92,13 +92,13 @@ const ListadoGruposInscritos = () => {
                         </div>
                     </section>
                     <section className="mb-8">
-                        <div className="flex flex-col mb-4 max-w-3xl mx-auto">
-                            <p>
+                        <ul className="flex flex-col mb-4 max-w-3xl mx-auto">
+                            <li>
                                 1. Ingresa tu email y tu usuario de Instagram o
                                 Facebook. Recibirás un correo para verificar tu
                                 email.
-                            </p>
-                            <p>
+                            </li>
+                            <li>
                                 2. Confirma tu cuenta de red social:
                                 <ol className="ml-4">
                                     <li>
@@ -128,12 +128,12 @@ const ListadoGruposInscritos = () => {
                                         “Concurso Oiches”.
                                     </li>
                                 </ol>
-                            </p>
-                            <p>
+                            </li>
+                            <li>
                                 3. Ya puedes votar a tus 6 artistas/grupos
                                 favoritos.
-                            </p>
-                        </div>
+                            </li>
+                        </ul>
 
                         <ValidateEmailWithCodeForm />
                     </section>
