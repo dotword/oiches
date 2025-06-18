@@ -202,6 +202,35 @@ const BasesConcurso = () => {
                             de correo electrónico.
                         </li>
                         <li>
+                            Confirma tu cuenta de red social:
+                            <p className="ml-6">
+                                Si usaste Instagram: Síguenos en{' '}
+                                <a
+                                    href="https://www.instagram.com/oiches_musica/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purpleOiches"
+                                >
+                                    @oiches_musica
+                                </a>{' '}
+                                o envíanos un mensaje con el texto “Concurso
+                                Oiches”.
+                            </p>
+                            <p className="ml-6">
+                                Si usaste Facebook: Síguenos en{' '}
+                                <a
+                                    href="https://www.facebook.com/oiches"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-purpleOiches"
+                                >
+                                    @oiches
+                                </a>{' '}
+                                o envíanos un mensaje con el texto “Concurso
+                                Oiches”.
+                            </p>
+                        </li>
+                        <li>
                             Cada usuario podrá votar hasta 6 proyectos
                             musicales, pero solo una vez a cada proyecto.
                         </li>

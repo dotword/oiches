@@ -86,26 +86,54 @@ const ListadoGruposInscritos = () => {
                                 06/07/2025
                             </p>
                             <p className="mb-1 text-sm">
-                                Los votos son revisados manualmente.
-                            </p>
-                            <p className="mb-1 text-sm">
-                                Pueden ser descontados si incumplen las bases
-                                del concurso.
+                                Los votos pueden ser descontados si incumplen
+                                las bases del concurso.
                             </p>
                         </div>
                     </section>
                     <section className="mb-8">
-                        <div className="flex flex-col text-center mb-4">
-                            <p>
-                                1. Inscribe tu email y nombre de usuario de
-                                Instagram o Facebook para votar. Recibirás un
-                                correo para verificar tu dirección.
-                            </p>
-                            <p>
-                                2. Ya puedes votar a tus 6 artistas/grupos
-                                favoritos
-                            </p>
-                        </div>
+                        <ul className="flex flex-col mb-4 max-w-3xl mx-auto">
+                            <li>
+                                1. Ingresa tu email y tu usuario de Instagram o
+                                Facebook. Recibirás un correo para verificar tu
+                                email.
+                            </li>
+                            <li>
+                                2. Confirma tu cuenta de red social:
+                                <ol className="ml-4">
+                                    <li>
+                                        • Si usaste Instagram: Síguenos en{' '}
+                                        <a
+                                            href="https://www.instagram.com/oiches_musica/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-purpleOiches"
+                                        >
+                                            @oiches_musica
+                                        </a>{' '}
+                                        o envíanos un mensaje con el texto
+                                        “Concurso Oiches”.
+                                    </li>
+                                    <li className="mb-0">
+                                        • Si usaste Facebook: Síguenos en{' '}
+                                        <a
+                                            href="https://www.facebook.com/oiches"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-purpleOiches"
+                                        >
+                                            @oiches
+                                        </a>{' '}
+                                        o envíanos un mensaje con el texto
+                                        “Concurso Oiches”.
+                                    </li>
+                                </ol>
+                            </li>
+                            <li>
+                                3. Ya puedes votar a tus 6 artistas/grupos
+                                favoritos.
+                            </li>
+                        </ul>
 
                         <ValidateEmailWithCodeForm />
                     </section>
