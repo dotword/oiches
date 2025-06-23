@@ -118,17 +118,20 @@ const ValidateEmailWithCodeForm = () => {
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="form-input max-w-md mx-auto placeholder-gray-600"
                                 />
-                                <input
-                                    type="text"
-                                    name="user_rrss"
-                                    value={user_rrss}
-                                    placeholder="Usuario de Instagram o Facebook"
-                                    required
-                                    onChange={(e) =>
-                                        setUser_rrss(e.target.value)
-                                    }
-                                    className="form-input max-w-md mx-auto placeholder-gray-600"
-                                />
+                                <label htmlFor="user_rrss">
+                                    Nombre de usuario en Instagram o Facebook:
+                                    <input
+                                        type="text"
+                                        name="user_rrss"
+                                        value={user_rrss}
+                                        placeholder="Usuario de Instagram o Facebook"
+                                        required
+                                        onChange={(e) =>
+                                            setUser_rrss(e.target.value)
+                                        }
+                                        className="form-input max-w-md mx-auto placeholder-gray-600"
+                                    />
+                                </label>
                                 <div className="">
                                     <input
                                         type="checkbox"

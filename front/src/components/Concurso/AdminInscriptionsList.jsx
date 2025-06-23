@@ -98,6 +98,7 @@ const AdminInscriptionsList = ({ token }) => {
                         <thead>
                             <tr>
                                 <th>Nombre</th>
+                                <th>Usuario</th>
                                 <th>Aceptado</th>
                                 <th>Fecha alta</th>
                                 <th>Baja</th>
@@ -118,6 +119,7 @@ const AdminInscriptionsList = ({ token }) => {
                                             </span>
                                         </Link>
                                     </td>
+                                    <td>{filteredUser.usuario_nombre}</td>
                                     <td>{filteredUser.projectAcepted}</td>
                                     <td>
                                         {formatDate(filteredUser.createdAt)}

@@ -74,14 +74,42 @@ const registerVoterEmailService = async (
                         }
                     </style>
                 </head>
-             <p>¡Bienvenid@!</p>
+  <p>¡Bienvenid@!</p>
 
-             <p>Para verificar tu email y votar en el concurso de Oiches, haz clic en el siguiente botón.</p>
-             <p><button><a href="${URL_FRONT}/concurso/validate_email/${verification_token}" style="color:white; text-decoration:none; padding: 5px 10px; background-color: #9333ea; border-radius: 20px; border: none;">Validar mi email</a></button></p>
-             <br />
-             <p>Si el botón no funciona, haz clic en el siguiente enlace: <b><a href="${URL_FRONT}/votacion-concurso-Oiches">Concurso Oiches 2025</a></b>, e introduce este código de verificación: <b>${verification_token}</b></p>
-             <p>Si no te has registrado en el concurso, ignora este mensaje.</p>
-             <br />
+<p>Para validar tu voto en el Concurso Oiches 2025, sigue estos pasos:</p>
+
+<ol style="padding-left: 1em;">
+  <li>
+    Confirma tu cuenta de red social usando el nombre de usuario que incluiste en el formulario:
+    <ul style="padding-left: 1.2em; margin-top: 0.5em;">
+      <li>
+        <strong>Instagram</strong>: síguenos en <a href="https://instagram.com/oiches_musica" target="_blank">@oiches_musica</a> 
+        o envíanos un mensaje desde tu cuenta <em>(@tu_usuario)</em> con el texto <em>“Concurso Oiches”</em>.
+      </li>
+      <li>
+        <strong>Facebook</strong>: síguenos en <a href="https://facebook.com/oiches" target="_blank">@oiches</a> 
+        o envíanos un mensaje desde tu cuenta <em>(@tu_usuario)</em> con el texto <em>“Concurso Oiches”</em>.
+      </li>
+    </ul>
+  </li>
+  <br>
+  <li>
+    Verifica tu correo electrónico:
+    <br>
+    <a href="${URL_FRONT}/concurso/validate_email/${verification_token}"
+       style="display: inline-block; padding: 8px 16px; background-color: #9333ea; color: #ffffff; text-decoration: none; border-radius: 20px;">
+       Confirmar mi email
+    </a>
+    <br><br>
+<p>Si el botón no funciona, haz clic en el siguiente enlace: <b><a href="${URL_FRONT}/votacion-concurso-Oiches">Concurso Oiches 2025</a></b>, e introduce este código de verificación: <b>${verification_token}</b></p>
+  </li>
+<br>
+  <li>
+    ¡Ya puedes votar a tus <strong>6 artistas/grupos favoritos</strong> en la web!
+  </li>
+</ol>
+
+<p>Si no te has registrado en el concurso, ignora este mensaje.</p>
 
                     <p>--</p>
                     <p style="font-size:12px">
