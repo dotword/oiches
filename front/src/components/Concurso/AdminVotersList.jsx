@@ -78,6 +78,7 @@ const AdminVotersList = ({ token }) => {
                         <thead>
                             <tr>
                                 <th>Email</th>
+                                <th>RRSS</th>
                                 <th>Verificado</th>
                                 <th>Token</th>
                                 <th>Proyecto votado</th>
@@ -89,6 +90,7 @@ const AdminVotersList = ({ token }) => {
                             {filteredUsers.map((filteredUser, index) => (
                                 <tr key={`${index}`}>
                                     <td>{filteredUser.email}</td>
+                                    <td>{filteredUser.user_rrss}</td>
                                     <td>{filteredUser.verified}</td>
                                     <td className="text-sm">
                                         {filteredUser.verification_token}

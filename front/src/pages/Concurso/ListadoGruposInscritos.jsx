@@ -111,8 +111,8 @@ const ListadoGruposInscritos = () => {
                                         >
                                             @oiches_musica
                                         </a>{' '}
-                                        o envíanos un mensaje con el texto
-                                        “Concurso Oiches”.
+                                        <b>o</b> envíanos un mensaje con el
+                                        texto “Concurso Oiches”.
                                     </li>
                                     <li className="mb-0">
                                         • Si usaste Facebook: Síguenos en{' '}
@@ -124,8 +124,8 @@ const ListadoGruposInscritos = () => {
                                         >
                                             @oiches
                                         </a>{' '}
-                                        o envíanos un mensaje con el texto
-                                        “Concurso Oiches”.
+                                        <b>o</b> envíanos un mensaje con el
+                                        texto “Concurso Oiches”.
                                     </li>
                                 </ol>
                             </li>

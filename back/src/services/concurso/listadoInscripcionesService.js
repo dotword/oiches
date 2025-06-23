@@ -8,9 +8,11 @@ const listadoInscripcionesService = async (filters) => {
         let query = `
             SELECT 
                 pi.*,
-                g.nombre AS grupo_nombre
+                g.nombre AS grupo_nombre,
+                usuarios.username AS usuario_nombre
             FROM proyectos_inscritos pi
-            LEFT JOIN grupos g ON pi.id = g.id
+                LEFT JOIN grupos g ON pi.id = g.id
+                LEFT JOIN usuarios ON g.usuario_id = usuarios.id
             WHERE 1=1
         `;
 
