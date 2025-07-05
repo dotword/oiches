@@ -62,6 +62,13 @@ const Menu = ({ mobile }) => {
                                 : 'top-full w-56 bg-white left-0 absolute'
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
+                        {/* <NavLink
+                            to="/concurso/semifinalistas"
+                            className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
+                        >
+                            Finalistas
+                        </NavLink> */}
+
                         <NavLink
                             to="/votacion-concurso-Oiches"
                             className={linkClassName}
@@ -70,21 +77,9 @@ const Menu = ({ mobile }) => {
                                 <span className={backgroundClassName}></span>
                             )}
                             <span className={textClassName}>
-                                Candidaturas y votación
+                                Proyectos inscritos
                             </span>
                         </NavLink>
-                        <NavLink
-                            to="/concurso-musicos-oiches"
-                            className={linkClassName}
-                        >
-                            {mobile && (
-                                <span className={backgroundClassName}></span>
-                            )}
-                            <span className={textClassName}>
-                                Concurso de músicos
-                            </span>
-                        </NavLink>
-
                         <NavLink to="/bases-concurso" className={linkClassName}>
                             {mobile && (
                                 <span className={backgroundClassName}></span>
