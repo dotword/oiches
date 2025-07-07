@@ -62,12 +62,12 @@ const Menu = ({ mobile }) => {
                                 : 'top-full w-56 bg-white left-0 absolute'
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
-                        {/* <NavLink
-                            to="/concurso/semifinalistas"
+                        <NavLink
+                            to="/concurso/finalistas"
                             className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
                         >
                             Finalistas
-                        </NavLink> */}
+                        </NavLink>
 
                         <NavLink
                             to="/votacion-concurso-Oiches"

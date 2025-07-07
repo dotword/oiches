@@ -22,22 +22,22 @@ const MusicianContestBanner = () => {
                             <h2 className="text-3xl sm:text-4xl md:text-3xl lg:text-5xl font-extrabold leading-tight mb-4">
                                 Oiches 2025
                             </h2>
-                            <Link
+                            {/* <Link
                                 to="/votacion-concurso-Oiches"
                                 className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 mt-8 rounded-lg lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 md:mb-16 lg:mb-32"
                             >
                                 Ver candidaturas →
-                            </Link>
-                            {/* <h3 className="text-lg lg:text-2xl font-semibold uppercase my-8">
+                            </Link> */}
+                            <h3 className="text-lg lg:text-2xl font-semibold uppercase my-8">
                                 6 proyectos finalistas
-                            </h3> */}
+                            </h3>
 
-                            {/* <Link
-                                to="/concurso/semifinalistas"
+                            <Link
+                                to="/concurso/finalistas"
                                 className="relative z-10 inline-block bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg lg:text-lg transition duration-300 ease-in-out transform hover:scale-105 md:mb-16 lg:mb-32"
                             >
                                 Ver finalistas →
-                            </Link> */}
+                            </Link>
                         </div>
                     </div>
                 </div>

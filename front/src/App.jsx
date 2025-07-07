@@ -251,7 +251,7 @@ function App() {
                             element={<EdicionNotice />}
                         />
                         <Route
-                            path="/concurso/semifinalistas"
+                            path="/concurso/finalistas"
                             element={<SemifinalistasConcurso />}
                         />
                     </Routes>
