@@ -97,29 +97,6 @@ const SemifinalistasConcurso = () => {
                                 </div>
                             </div>
 
-                            {/* Betania */}
-                            <div className="concurso_semifinal-card">
-                                <img
-                                    src={`${VITE_API_URL_BASE}/uploads/aa4320e5-01f4-4012-ba57-5b19037fd573.jpeg`}
-                                    alt="Betania"
-                                    className="concurso_semifinal-image"
-                                />
-                                <h2 className="concurso_semifinal-title">
-                                    Betania
-                                </h2>
-                                <p className="text-gray-200">Heavy, Metal</p>
-                                <p className="text-gray-200">Valencia</p>
-                                <div className="self-end">
-                                    <Link
-                                        to="/grupo/87f49a01-3757-4a97-be7b-1d5c8c3c13c1"
-                                        className="concurso_semifinal-link"
-                                    >
-                                        + info
-                                        <FaArrowRight className="ml-2" />
-                                    </Link>
-                                </div>
-                            </div>
-
                             {/* Peet Fighting Murphy */}
                             <div className="concurso_semifinal-card">
                                 <img
@@ -136,6 +113,29 @@ const SemifinalistasConcurso = () => {
                                 <div className="self-end">
                                     <Link
                                         to="/grupo/7171aeca-fead-47d0-b191-8884b5c21f02"
+                                        className="concurso_semifinal-link"
+                                    >
+                                        + info
+                                        <FaArrowRight className="ml-2" />
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* Betania */}
+                            <div className="concurso_semifinal-card">
+                                <img
+                                    src={`${VITE_API_URL_BASE}/uploads/aa4320e5-01f4-4012-ba57-5b19037fd573.jpeg`}
+                                    alt="Betania"
+                                    className="concurso_semifinal-image"
+                                />
+                                <h2 className="concurso_semifinal-title">
+                                    Betania
+                                </h2>
+                                <p className="text-gray-200">Heavy, Metal</p>
+                                <p className="text-gray-200">Valencia</p>
+                                <div className="self-end">
+                                    <Link
+                                        to="/grupo/87f49a01-3757-4a97-be7b-1d5c8c3c13c1"
                                         className="concurso_semifinal-link"
                                     >
                                         + info
