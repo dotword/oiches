@@ -1,1 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&display=swap');
+@font-face {
+    font-family: 'kilogram';
+    src: url(fonts/kilogram.woff2) format('woff2');
+}
