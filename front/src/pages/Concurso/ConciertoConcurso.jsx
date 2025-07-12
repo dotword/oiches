@@ -160,7 +160,6 @@ const ConciertoConcurso = () => {
                         </div>
                     </section>
 
-                 
                     <section
                         className="text-white py-12 bg-no-repeat bg-cover bg-center md:py-36"
                         style={{
@@ -186,7 +185,8 @@ const ConciertoConcurso = () => {
                                             Viveiro, Lugo
                                         </p>
                                         <p className="flex gap-2 items-center mb-4">
-                                            <MdOutlineDoorSliding /> Apertura: 20:00
+                                            <MdOutlineDoorSliding /> Apertura:
+                                            20:00
                                         </p>
                                         <p className="flex gap-2 items-center mb-4">
                                             <HiOutlineTicket /> Entrada: 10 €
@@ -194,7 +194,8 @@ const ConciertoConcurso = () => {
                                     </div>
                                     <div>
                                         <p className="font-semibold text-lg">
-                                            Puntos de venta de entradas anticipadas
+                                            Puntos de venta de entradas
+                                            anticipadas
                                         </p>
                                         <p className="flex flex-col lg:flex-row lg:gap-1">
                                             <span className="font-semibold">
@@ -206,13 +207,15 @@ const ConciertoConcurso = () => {
                                             <span className="font-semibold">
                                                 Marlem (Dekada):
                                             </span>{' '}
-                                            Av. Granxas, 13, 27861 Viveiro (Lugo)
+                                            Av. Granxas, 13, 27861 Viveiro
+                                            (Lugo)
                                         </p>
                                         <p className="flex flex-col lg:flex-row lg:gap-1">
                                             <span className="font-semibold">
                                                 Galipizza Covas:
                                             </span>{' '}
-                                            C/ Suasbarras, 40, 27861 Viveiro (Lugo)
+                                            C/ Suasbarras, 40, 27861 Viveiro
+                                            (Lugo)
                                         </p>
                                         <p className="font-semibold text-lg mt-6">
                                             Venta online
@@ -229,11 +232,12 @@ const ConciertoConcurso = () => {
                                             .
                                         </p>
                                         <p>
-                                            Asunto: Entradas Concurso Oiches 2025.
+                                            Asunto: Entradas Concurso Oiches
+                                            2025.
                                         </p>
                                         <p>
-                                            Indica tu nombre, número de entradas y
-                                            tu DNI.
+                                            Indica tu nombre, número de entradas
+                                            y tu DNI.
                                         </p>
                                     </div>
                                 </div>
@@ -253,7 +257,7 @@ const ConciertoConcurso = () => {
                     </section>
 
                     <section
-                        className="pt-10 pb-32 px-6 bg-no-repeat bg-cover bg-bottom text-white md:px-20"
+                        className="pt-20 pb-32 px-6 bg-no-repeat bg-cover bg-bottom text-white md:px-20 md:pt-40 md:pb-60"
                         style={{
                             backgroundImage: `url(${sobreBG})`,
                         }}
@@ -263,7 +267,7 @@ const ConciertoConcurso = () => {
                         </h3>
                         <div className="md:flex md:gap-8 md:justify-evenly md:mb-10">
                             <div>
-                                <div className="text-2xl mb-6 md:text-4xl">
+                                <div className="text-2xl mb-10 md:mb-12 md:text-4xl space-y-4 md:space-y-6">
                                     <p>Más de 135 artistas.</p>
                                     <p>3 proyectos musicales seleccionados.</p>
                                     <p>
@@ -271,7 +275,7 @@ const ConciertoConcurso = () => {
                                         gracias.
                                     </p>
                                 </div>
-                                <div className="md:text-xl">
+                                <div className="md:text-xl space-y-4 md:space-y-6">
                                     <p>Esto no ha hecho más que empezar. </p>
                                     <p>
                                         Gracias por votar, compartir y vivir
