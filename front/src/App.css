@@ -2,4 +2,6 @@
 @font-face {
     font-family: 'kilogram';
     src: url(fonts/kilogram.woff2) format('woff2');
+    font-weight: normal;
+    font-style: normal;
 }
