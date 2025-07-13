@@ -12,7 +12,7 @@ import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
 import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
-import MusicianContestBanner from '../components/Concurso/MusicianContestBanner.jsx';
+import ConcertBanner from '../components/Concurso/ConcertBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -83,7 +83,7 @@ const Home = () => {
             >
                 <HeaderHero />
                 {/* Componente banner anuncio concurso */}
-                <MusicianContestBanner />
+                <ConcertBanner />
                 {/* Hero Section hero banner comentado para usar banner concurso, descomentar y eliminar comoponente MusicanContestBanner*/}
                 {/* <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">

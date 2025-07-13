@@ -291,6 +291,12 @@ button.react-calendar__navigation__arrow {
     .concurso_semifinal-link {
         @apply inline-flex items-center bg-purple-600 text-white text-lg px-4 py-2 mb-4 rounded-md hover:bg-purple-700 transition-all font-semibold;
     }
+    .kilogram {
+        font-family: 'kilogram', sans-serif;
+    }
+    .concurso_winners-card {
+        @apply text-white w-full flex flex-col justify-end h-[35rem] max-w-[25rem] px-8 py-2 mb-8 bg-cover bg-center shadow-md cursor-pointer transition-transform duration-500 transform hover:scale-105 hover:z-10 relative inset-0 md:h-[40rem];
+    }
 }
 
 .active:not(.btn-account) {

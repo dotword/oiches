@@ -7,6 +7,7 @@ import ValidateEmailPage from './ValidateEmailPage';
 import ConcursoMusicosOiches from './ConcursoMusicosOiches.jsx';
 import AdminVoters from './AdminVoters.jsx';
 import SemifinalistasConcurso from './SemifinalistasConcurso';
+import ConciertoConcurso from './ConciertoConcurso.jsx';
 
 export {
     InscripcionConcurso,
@@ -18,4 +19,5 @@ export {
     SemifinalistasConcurso,
     ConcursoMusicosOiches,
     AdminVoters,
+    ConciertoConcurso,
 };

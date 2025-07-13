@@ -44,10 +44,11 @@ import {
     BasesConcurso,
     ListadoGruposInscritos,
     PoliticaVotacion,
-    ValidateEmailPage,
+    // ValidateEmailPage,
     ConcursoMusicosOiches,
     AdminVoters,
     SemifinalistasConcurso,
+    ConciertoConcurso,
 } from './pages/Concurso/index.jsx';
 import {
     NoticeboardPage,
@@ -217,13 +218,17 @@ function App() {
                             path="/politica-votacion"
                             element={<PoliticaVotacion />}
                         />
-                        <Route
+                        {/* <Route
                             path="/concurso/validate_email/:verification_token"
                             element={<ValidateEmailPage />}
-                        />
+                        /> */}
                         <Route
                             path="/concurso-musicos-oiches"
                             element={<ConcursoMusicosOiches />}
+                        />
+                        <Route
+                            path="/concurso/concierto-oiches"
+                            element={<ConciertoConcurso />}
                         />
                         {/* NOTICEBOARD */}
                         <Route
