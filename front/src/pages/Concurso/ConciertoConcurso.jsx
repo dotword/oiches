@@ -6,15 +6,18 @@ import { Link } from 'react-router-dom';
 import StepsImg from '../../assets/Steps.jpg';
 import selectedBg from '../../assets/ganadoresBG.png';
 import sobreBG from '../../assets/sobreConcursoBg.jpg';
+import BetaniaBG from '../../assets/foto-concert-betania.jpg';
+import AndreiBG from '../../assets/andrei-BG.jpg';
+import DistanceBG from '../../assets/distanceBG.jpg';
 import logoOiches from '../../assets/Horizontal_blanco.webp';
 import logoConservera from '../../assets/logo-conservera.png';
 import { CiCalendar } from 'react-icons/ci';
 import { PiMapPinLight } from 'react-icons/pi';
-import { MdOutlineDoorSliding } from 'react-icons/md';
-import { HiOutlineTicket } from 'react-icons/hi2';
+// import { MdOutlineDoorSliding } from 'react-icons/md';
+// import { HiOutlineTicket } from 'react-icons/hi2';
 
 const ConciertoConcurso = () => {
-    const { VITE_API_URL_BASE } = import.meta.env;
+    // const { VITE_API_URL_BASE } = import.meta.env;
 
     return (
         <>
@@ -58,7 +61,7 @@ const ConciertoConcurso = () => {
                         <div
                             className="concurso_winners-card"
                             style={{
-                                backgroundImage: `url(${VITE_API_URL_BASE}/uploads/aeda57d2-59bd-4ae7-99df-5398f8fe6e95.jpg)`,
+                                backgroundImage: `url(${DistanceBG})`,
                             }}
                         >
                             <div
@@ -92,7 +95,7 @@ const ConciertoConcurso = () => {
                         <div
                             className="concurso_winners-card"
                             style={{
-                                backgroundImage: `url(${VITE_API_URL_BASE}/uploads/01abad53-16ea-4dc8-9b9c-1cb133e833d9.jpeg)`,
+                                backgroundImage: `url(${BetaniaBG})`,
                             }}
                         >
                             <div
@@ -123,7 +126,7 @@ const ConciertoConcurso = () => {
                         <div
                             className="concurso_winners-card"
                             style={{
-                                backgroundImage: `url(${VITE_API_URL_BASE}/uploads/ce70d336-a49f-40bb-8580-cfe5aaabf0fc.jpg)`,
+                                backgroundImage: `url(${AndreiBG})`,
                             }}
                         >
                             <div
@@ -178,15 +181,18 @@ const ConciertoConcurso = () => {
                                             La Conservera: C. Costa, 5, 27863
                                             Viveiro, Lugo
                                         </p>
-                                        <p className="flex gap-2 items-center mb-4">
+                                        <p className="mt-12 text-2xl">
+                                            Próximamente más información.
+                                        </p>
+                                        {/* <p className="flex gap-2 items-center mb-4">
                                             <MdOutlineDoorSliding /> Apertura:
                                             20:00
                                         </p>
                                         <p className="flex gap-2 items-center mb-4">
                                             <HiOutlineTicket /> Entrada: 10 €
-                                        </p>
+                                        </p> */}
                                     </div>
-                                    <div>
+                                    {/* <div>
                                         <p className="font-semibold text-lg">
                                             Puntos de venta de entradas
                                             anticipadas
@@ -233,7 +239,7 @@ const ConciertoConcurso = () => {
                                             Indica tu nombre, número de entradas
                                             y tu DNI.
                                         </p>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 {/* --- Columna 2: Mapa --- */}
