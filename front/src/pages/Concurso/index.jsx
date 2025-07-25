@@ -8,6 +8,7 @@ import ConcursoMusicosOiches from './ConcursoMusicosOiches.jsx';
 import AdminVoters from './AdminVoters.jsx';
 import SemifinalistasConcurso from './SemifinalistasConcurso';
 import ConciertoConcurso from './ConciertoConcurso.jsx';
+import BasesSorteoEntradas from './BasesSorteoEntradas.jsx';
 
 export {
     InscripcionConcurso,
@@ -20,4 +21,5 @@ export {
     ConcursoMusicosOiches,
     AdminVoters,
     ConciertoConcurso,
+    BasesSorteoEntradas,
 };

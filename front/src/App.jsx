@@ -49,6 +49,7 @@ import {
     AdminVoters,
     SemifinalistasConcurso,
     ConciertoConcurso,
+    BasesSorteoEntradas,
 } from './pages/Concurso/index.jsx';
 import {
     NoticeboardPage,
@@ -258,6 +259,10 @@ function App() {
                         <Route
                             path="/concurso/finalistas"
                             element={<SemifinalistasConcurso />}
+                        />
+                        <Route
+                            path="/bases-sorteo-entradas"
+                            element={<BasesSorteoEntradas />}
                         />
                     </Routes>
                 </AnimatePresence>
