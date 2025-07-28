@@ -251,7 +251,7 @@ const BasesConcurso = () => {
                         <li>
                             Pago de <b>600 € por actuación</b>, en concepto de
                             gastos, que será pagado mediante transferencia
-                            bancaria, tras la celebración del concierto o contra
+                            bancaria, tras la celebración del concierto, contra
                             factura emitida por el artista.
                         </li>
                         <li>
