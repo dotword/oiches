@@ -13,12 +13,10 @@ import logoOiches from '../../assets/Horizontal_blanco.webp';
 import logoConservera from '../../assets/logo-conservera.png';
 import { CiCalendar } from 'react-icons/ci';
 import { PiMapPinLight } from 'react-icons/pi';
-// import { MdOutlineDoorSliding } from 'react-icons/md';
-// import { HiOutlineTicket } from 'react-icons/hi2';
+import { MdOutlineDoorSliding } from 'react-icons/md';
+import { HiOutlineTicket } from 'react-icons/hi2';
 
 const ConciertoConcurso = () => {
-    // const { VITE_API_URL_BASE } = import.meta.env;
-
     return (
         <>
             <motion.div
@@ -57,6 +55,40 @@ const ConciertoConcurso = () => {
                             backgroundImage: `url(${selectedBg})`,
                         }}
                     >
+                        {/* ANDREI */}
+                        <div
+                            className="concurso_winners-card"
+                            style={{
+                                backgroundImage: `url(${AndreiBG})`,
+                            }}
+                        >
+                            <div
+                                className="absolute inset-0"
+                                style={{
+                                    background:
+                                        'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%)',
+                                }}
+                            />
+                            <p className="font-semibold z-10">Rap, Hip-Hop</p>
+                            <p className="text-xl z-10">
+                                Su directo es pura energía. No busca simplemente
+                                llenar escenarios, sino conectar con el público.
+                                Su nombre es sinónimo de impacto.
+                            </p>
+                            <h2 className="font-bold text-4xl z-10 mb-0">
+                                Andrei La Ley
+                            </h2>
+                            <p className="font-semibold text-lg z-10">21:30h</p>
+                            <div className="self-end mt-6 z-10">
+                                <Link
+                                    to="/grupo/edc649e0-fbb8-45d3-ab9e-0a747459a966"
+                                    className="concurso_semifinal-link"
+                                >
+                                    Conoce más
+                                    <FaArrowRight className="ml-2" />
+                                </Link>
+                            </div>
+                        </div>
                         {/* Distance Sisters */}
                         <div
                             className="concurso_winners-card"
@@ -77,9 +109,10 @@ const ConciertoConcurso = () => {
                                 contundente, riffs de guitarra inspirados en el
                                 rock clásico y una voz llena de personalidad.
                             </p>
-                            <h2 className="font-bold text-4xl z-10">
+                            <h2 className="font-bold text-4xl z-10 mb-0">
                                 Distance Sisters
                             </h2>
+                            <p className="font-semibold text-lg z-10">22:30h</p>
                             <div className="self-end mt-6 z-10">
                                 <Link
                                     to="/grupo/951c5f2b-1dc0-42ac-9a5d-993995f8cde6"
@@ -111,43 +144,13 @@ const ConciertoConcurso = () => {
                                 esta banda emergente tiene mucho por ofrecer en
                                 la escena del heavy metal melódico.
                             </p>
-                            <h2 className="font-bold text-4xl z-10">Betania</h2>
+                            <h2 className="font-bold text-4xl z-10 mb-0">
+                                Betania
+                            </h2>
+                            <p className="font-semibold text-lg z-10">23:30h</p>
                             <div className="self-end mt-6 z-10">
                                 <Link
                                     to="/grupo/87f49a01-3757-4a97-be7b-1d5c8c3c13c1"
-                                    className="concurso_semifinal-link"
-                                >
-                                    Conoce más
-                                    <FaArrowRight className="ml-2" />
-                                </Link>
-                            </div>
-                        </div>
-                        {/* ANDREI */}
-                        <div
-                            className="concurso_winners-card"
-                            style={{
-                                backgroundImage: `url(${AndreiBG})`,
-                            }}
-                        >
-                            <div
-                                className="absolute inset-0"
-                                style={{
-                                    background:
-                                        'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 100%)',
-                                }}
-                            />
-                            <p className="font-semibold z-10">Rap, Hip-Hop</p>
-                            <p className="text-xl z-10">
-                                Su directo es pura energía. No busca simplemente
-                                llenar escenarios, sino conectar con el público.
-                                Su nombre es sinónimo de impacto.
-                            </p>
-                            <h2 className="font-bold text-4xl z-10">
-                                Andrei La Ley
-                            </h2>
-                            <div className="self-end mt-6 z-10">
-                                <Link
-                                    to="/grupo/edc649e0-fbb8-45d3-ab9e-0a747459a966"
                                     className="concurso_semifinal-link"
                                 >
                                     Conoce más
@@ -181,18 +184,20 @@ const ConciertoConcurso = () => {
                                             La Conservera: C. Costa, 5, 27863
                                             Viveiro, Lugo
                                         </p>
-                                        <p className="mt-12 text-2xl">
-                                            Próximamente más información.
-                                        </p>
-                                        {/* <p className="flex gap-2 items-center mb-4">
+                                        <p className="flex gap-2 items-center mb-4">
                                             <MdOutlineDoorSliding /> Apertura:
-                                            20:00
+                                            19:30
                                         </p>
                                         <p className="flex gap-2 items-center mb-4">
-                                            <HiOutlineTicket /> Entrada: 10 €
-                                        </p> */}
+                                            <HiOutlineTicket /> Entrada
+                                            anticipada: 8 €
+                                        </p>
+                                        <p className="flex gap-2 items-center mb-4">
+                                            <HiOutlineTicket /> Entrada
+                                            taquilla: 10 €
+                                        </p>
                                     </div>
-                                    {/* <div>
+                                    <div>
                                         <p className="font-semibold text-lg">
                                             Puntos de venta de entradas
                                             anticipadas
@@ -239,7 +244,7 @@ const ConciertoConcurso = () => {
                                             Indica tu nombre, número de entradas
                                             y tu DNI.
                                         </p>
-                                    </div> */}
+                                    </div>
                                 </div>
 
                                 {/* --- Columna 2: Mapa --- */}
