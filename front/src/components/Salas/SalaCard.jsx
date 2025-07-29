@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import StarRating from '../StartRating.jsx';
+
+// import StarRating from '../StartRating.jsx';
 import DefaultProfile from '/Horizontal_blanco.webp';
 
 const SalaCard = ({ sala }) => {
@@ -57,13 +58,15 @@ const SalaCard = ({ sala }) => {
                     {sala.ciudad}, {sala.provincia}
                 </p>
 
-                {/* manda rating hacia abajo */}
-                <div className="flex-grow"></div>
-
-                {/* Rating  */}
-                <div className="mt-2">
-                    <StarRating rating={sala.media_votos} />
+                <div className="mt-auto pb-2 flex justify-end">
+                    <div className="mt-4 inline-flex items-center bg-purple-600 text-white px-4 py-1 rounded-md hover:bg-purple-700 transition-all">
+                        Más info
+                    </div>
                 </div>
+                {/* Rating  */}
+                {/* <div className="mt-2">
+                    <StarRating rating={sala.media_votos} />
+                </div> */}
             </div>
         </div>
     );
