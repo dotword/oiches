@@ -10,13 +10,14 @@ import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
-import Steps from '../components/Steps.jsx';
+// import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
 import ConcertBanner from '../components/Concurso/ConcertBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
     const [grupos, setGrupos] = useState([]);
+    const [agencias, setAgencias] = useState([]);
     const { VITE_API_URL_BASE } = import.meta.env;
 
     useEffect(() => {
@@ -42,6 +43,21 @@ const Home = () => {
             } catch (error) {
                 console.error('Error fetching grupos:', error);
                 setGrupos([]);
+            }
+        };
+        fetchData();
+    }, [VITE_API_URL_BASE]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${VITE_API_URL_BASE}/agencias`);
+                const result = await response.json();
+
+                setAgencias(Array.isArray(result.result) ? result.result : []);
+            } catch (error) {
+                console.error('Error fetching agencias:', error);
+                setAgencias([]);
             }
         };
         fetchData();
@@ -114,9 +130,9 @@ const Home = () => {
                     </div>
                 </section> */}
                 {/* Main Content */}
-                <main className="w-11/12 mx-auto mt-6 mb-20 md:max-w-7xl md:mb-28">
+                <main className="mb-20 md:mb-28">
                     {/* Músicos más votados */}
-                    <section className="mt-16 md:mt-20">
+                    <section className="pt-16 pb-8 bg-gray-50 md:pt-20">
                         <h2 className="text-3xl text-center font-bold mb-8 mx-auto md:text-4xl md:mb-12">
                             Músicos
                         </h2>
@@ -142,7 +158,7 @@ const Home = () => {
                     </section>
 
                     {/* Salas más votadas */}
-                    <section className="mt-16 md:mt-20">
+                    <section className="mt-10 pb-8 md:mt-16">
                         <h2 className="text-3xl text-center font-bold mb-8 mx-auto md:text-4xl md:mb-12">
                             Salas
                         </h2>
@@ -166,14 +182,80 @@ const Home = () => {
                             </Link>
                         </div>
                     </section>
+                    {/* Agencias más votadas */}
+                    <section className="pt-10 pb-8 bg-gray-50 md:pt-16">
+                        <h2 className="text-3xl text-center font-bold mb-8 mx-auto md:text-4xl md:mb-12">
+                            Agencias
+                        </h2>
+                        {salas.length > 0 ? (
+                            <SliderMulti>
+                                {agencias.slice(0, 8).map((agencia) => (
+                                    <div
+                                        key={agencia.id}
+                                        className="card-generica"
+                                    >
+                                        <Link
+                                            to={`/agencia/${agencia.id}`}
+                                            className="w-full"
+                                        >
+                                            <img
+                                                src={`${VITE_API_URL_BASE}/uploads/${agencia.avatar}`}
+                                                alt={`Imagen de ${agencia.nombre}`}
+                                                className={`grupo-card-image w-full h-48 sm:h-48 rounded-lg mb-4 ${
+                                                    !agencia.avatar
+                                                        ? 'object-contain'
+                                                        : 'object-cover'
+                                                }`}
+                                            />
+                                        </Link>
 
-                    {/* Sección de Steps */}
-                    <section className="mt-20 mx-4 flex justify-center items-center md:mt-28">
-                        <Steps />
+                                        {/* Contenedor del contenido alineado a la izquierda */}
+                                        <div className="flex flex-col flex-1">
+                                            <h2 className="text-lg font-bold mt-2">
+                                                {agencia.nombre}
+                                            </h2>
+                                            <p className="text-gray-400">
+                                                {agencia.provincia}
+                                            </p>
+                                            <p className="text-sm">
+                                                {agencia.especNombres}
+                                            </p>
+
+                                            {/* Botón siempre abajo alineado a la izquierda */}
+                                            <div className="mt-auto pb-2 flex justify-end">
+                                                <Link
+                                                    to={`/agencia/${agencia.id}`}
+                                                    className="mt-4 inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-all"
+                                                >
+                                                    Más info
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </SliderMulti>
+                        ) : (
+                            <p className="text-center text-gray-500">
+                                Agencias no encontradas
+                            </p>
+                        )}
+                        <div className="flex justify-center mt-16">
+                            <Link
+                                to="/agencias"
+                                className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                            >
+                                Todas las agencias
+                            </Link>
+                        </div>
                     </section>
 
+                    {/* Sección de Steps */}
+                    {/* <section className="mt-20 mx-4 flex justify-center items-center md:mt-28">
+                        <Steps />
+                    </section> */}
+
                     {/* Sección de Conectate */}
-                    <section className="mt-20 mx-4 flex flex-col justify-between items-center gap-16 md:flex-row md:mt-28">
+                    <section className="w-11/12 mx-auto mb-20 mt-20 flex flex-col justify-between items-center gap-16 md:max-w-7xl md:flex-row md:mt-28">
                         <Conectate />
                     </section>
                 </main>
