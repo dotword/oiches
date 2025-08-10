@@ -204,45 +204,21 @@ const ConciertoConcurso = () => {
                                         </p>
                                         <p className="flex flex-col lg:flex-row lg:gap-1">
                                             <span className="font-semibold">
-                                                La Conservera:
+                                                - La Conservera:
                                             </span>{' '}
-                                            C/ Costa, 5, 27863, Viveiro (Lugo)
+                                            C/ Costa, 5, 27863, Viveiro
                                         </p>
                                         <p className="flex flex-col lg:flex-row lg:gap-1">
                                             <span className="font-semibold">
-                                                Marlem (Dekada):
+                                                - Marlem (Dekada):
                                             </span>{' '}
-                                            Av. Granxas, 13, 27861 Viveiro
-                                            (Lugo)
+                                            Av. Granxas, 13, 27861, Viveiro
                                         </p>
                                         <p className="flex flex-col lg:flex-row lg:gap-1">
                                             <span className="font-semibold">
-                                                Galipizza Covas:
+                                                - Galipizza Covas:
                                             </span>{' '}
-                                            C/ Suasbarras, 40, 27861 Viveiro
-                                            (Lugo)
-                                        </p>
-                                        <p className="font-semibold text-lg mt-6">
-                                            Venta online
-                                        </p>
-                                        <p>
-                                            Si quieres reservar tu entrada
-                                            escríbenos al email{' '}
-                                            <a
-                                                href="mailto:hola@oiches.com"
-                                                className="underline"
-                                            >
-                                                hola@oiches.com
-                                            </a>
-                                            .
-                                        </p>
-                                        <p>
-                                            Asunto: Entradas Concurso Oiches
-                                            2025.
-                                        </p>
-                                        <p>
-                                            Indica tu nombre, número de entradas
-                                            y tu DNI.
+                                            C/ Suasbarras, 40, 27861, Viveiro
                                         </p>
                                     </div>
                                 </div>
