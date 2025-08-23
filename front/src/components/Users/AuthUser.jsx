@@ -12,6 +12,7 @@ import AdminDeleteUsers from '../Admin/AdminDeleteUsers.jsx';
 import UserAvatar from './UserAvatar.jsx';
 import AccountConfiguration from './AccountConfiguration.jsx';
 import { IoChevronForward } from 'react-icons/io5';
+import AdvertiserDashboard from '../Advertisers/AdvertiserDashboard.jsx';
 
 const AuthUser = () => {
     const { userLogged, token, loading, signOut } = useContext(AuthContext);
@@ -53,7 +54,9 @@ const AuthUser = () => {
         setModalOpen(false);
     };
 
-    return (userLogged && userLogged.id === userId) ||
+    return (userLogged &&
+        userLogged.id === userId &&
+        userLogged.roles !== 'anunciante') ||
         (userLogged && userLogged.roles === 'admin') ? (
         <>
             <div className="w-11/12 mx-auto mb-12">
@@ -149,6 +152,8 @@ const AuthUser = () => {
                 />
             )}
         </>
+    ) : userLogged && userLogged.roles === 'anunciante' ? (
+        <AdvertiserDashboard userId={userId} token={token} />
     ) : (
         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );

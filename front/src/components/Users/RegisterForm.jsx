@@ -107,37 +107,28 @@ export const RegisterForm = () => {
             >
                 <h1 className="text-4xl">Registro</h1>
                 <hr className="mb-4 md:-mb-1" />
-                <div className="flex gap-4">
-                    <label>
-                        Artista{' '}
-                        <input
-                            className="accent-purpleOiches"
-                            type="radio"
-                            name="roles"
-                            value="grupo"
-                        />
-                    </label>
-                    <label>
-                        Sala{' '}
-                        <input
-                            className=" accent-purpleOiches "
-                            type="radio"
-                            required
-                            name="roles"
-                            value="sala"
-                        />
-                    </label>
-                    <label>
-                        Agencia/Manager{' '}
-                        <input
-                            className=" accent-purpleOiches "
-                            type="radio"
-                            required
-                            name="roles"
-                            value="agencia"
-                        />
-                    </label>
-                </div>
+                <label
+                    htmlFor="roles"
+                    className="flex flex-wrap gap-4 items-center"
+                >
+                    Elige tu tipo de usuario*
+                    <select
+                        name="roles"
+                        id="roles"
+                        required
+                        defaultValue=""
+                        className="form-input w-auto p-2 mt-0"
+                    >
+                        <option value="" disabled>
+                            Selecciona
+                        </option>
+                        <option value="grupo">Artista</option>
+                        <option value="sala">Sala</option>
+                        <option value="agencia">Agencia/Manager</option>
+                        <option value="anunciante">Anunciante</option>
+                    </select>
+                </label>
+
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="name">
                         Nombre de usuario*

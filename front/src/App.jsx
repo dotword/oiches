@@ -60,6 +60,11 @@ import {
     EdicionNotice,
 } from './pages/Noticeboard/index.jsx';
 
+import {
+    CreateAdvertiserProfile,
+    EditAdvertiserProfile,
+} from './pages/Advertisers/index.jsx';
+
 function App() {
     // Verificar el modo de mantenimiento
     const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === 'true';
@@ -263,6 +268,16 @@ function App() {
                         <Route
                             path="/bases-sorteo-entradas"
                             element={<BasesSorteoEntradas />}
+                        />
+                        {/* Advertisers */}
+
+                        <Route
+                            path="/advertiser-details/:userId"
+                            element={<CreateAdvertiserProfile />}
+                        />
+                        <Route
+                            path="/advertiser-details/edit/:userId"
+                            element={<EditAdvertiserProfile />}
                         />
                     </Routes>
                 </AnimatePresence>

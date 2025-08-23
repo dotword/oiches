@@ -12,6 +12,7 @@ import adminRouter from './adminRouter.js';
 import agenciasRouter from './agenciasRouter.js';
 import concursoRouter from './concursoRouter.js';
 import noticeboardRouter from './noticeboardRouter.js';
+import advertiserRouter from './advertiserRouter.js';
 
 const router = express.Router();
 
@@ -27,5 +28,6 @@ router.use(adminRouter);
 router.use(agenciasRouter);
 router.use(concursoRouter);
 router.use(noticeboardRouter);
+router.use(advertiserRouter);
 
 export default router;
