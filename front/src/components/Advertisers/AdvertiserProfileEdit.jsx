@@ -290,13 +290,14 @@ const AdvertiserProfileEdit = () => {
     });
 
     const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
 
+    // Inicializar companyDetails cuando profile se cargue (solo si el form está vacío
+    // para evitar sobreescribir mientras el usuario escribe)
     useEffect(() => {
         if (!profile || !profile.advertiser) return;
 
         const isEmpty = Object.values(companyDetails).every((v) => v === '');
-        if (!isEmpty) return;
+        if (!isEmpty) return; // evita sobreescribir si el usuario ya está editando
 
         setCompanyDetails({
             company_name: profile.advertiser.company_name || '',
@@ -308,7 +309,7 @@ const AdvertiserProfileEdit = () => {
             tax_id: profile.advertiser.tax_id || '',
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [profile]);
+    }, [profile]); // intencional: solo depende de profile
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -318,7 +319,6 @@ const AdvertiserProfileEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
         const formData = new FormData();
         Object.entries(companyDetails).forEach(([k, v]) =>
@@ -327,13 +327,10 @@ const AdvertiserProfileEdit = () => {
 
         try {
             await AdvertiserProfileEditService({ token, userId, formData });
-            toast.success('Tus datos han sido guardados correctamente. Ahora puedes publicar anuncios.');
-            setError('');
+            toast.success('Tus datos han sido guardados correctamente.');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
-        } finally {
-            setIsLoading(false);
         }
     };
 
@@ -341,8 +338,7 @@ const AdvertiserProfileEdit = () => {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center">
-                    <h1 className="text-xl font-medium text-gray-800">Acceso Denegado</h1>
-                    <p className="text-gray-600 mt-1">No tienes permisos para acceder a esta página</p>
+                    <h1 className="text-xl font-medium text-gray-800">No puedes acceder a esta página</h1>
                 </div>
             </div>
         );
@@ -354,7 +350,7 @@ const AdvertiserProfileEdit = () => {
             <div className="bg-white border-b shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 py-6">
                     <h1 className="text-2xl font-medium text-gray-900">Datos de facturación</h1>
-                    <p className="text-gray-600 mt-1">Completa tu información para recibir pagos</p>
+                    <p className="text-gray-600 mt-1">Completa tu información</p>
                 </div>
             </div>
 
@@ -382,12 +378,12 @@ const AdvertiserProfileEdit = () => {
             </div>
 
             {/* Contenido principal */}
-            <div className="max-w-7xl mx-auto pb-16">
+            <div className="max-w-7xl mx-auto px-4 pb-6 sm:pb-12">
                 <div className="flex flex-col xl:flex-row gap-12">
                     {/* Formulario de facturación */}
                     <div className="flex-1 max-w-4xl">
                         <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-                            {/* Header de la tarjeta sin fondo */}
+                            {/* Header de la tarjeta */}
                             <div className="px-6 py-5 border-b">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
@@ -403,17 +399,7 @@ const AdvertiserProfileEdit = () => {
                             </div>
 
                             {/* Contenido del formulario */}
-                            <div className="p-6 relative">
-                                {/* Loading overlay */}
-                                {isLoading && (
-                                    <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg z-10">
-                                        <div className="flex items-center gap-3">
-                                            <div className="animate-spin w-6 h-6 border-2 border-purpleOiches border-t-transparent rounded-full"></div>
-                                            <span className="text-gray-600 font-medium">Guardando datos...</span>
-                                        </div>
-                                    </div>
-                                )}
-
+                            <div className="p-6">
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     {/* Información Empresarial */}
                                     <div className="space-y-4">
@@ -427,35 +413,32 @@ const AdvertiserProfileEdit = () => {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="space-y-1">
                                                 <label htmlFor="company_name" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                    <span>Nombre de empresa</span>
-                                                    <span className="text-red-500">*</span>
+                                                    <span>Empresa:*</span>
                                                 </label>
                                                 <input
                                                     id="company_name"
                                                     type="text"
                                                     name="company_name"
-                                                    placeholder="Ej. Mi Empresa S.L."
+                                                    required
+                                                    placeholder="Nombre de la empresa"
                                                     value={companyDetails.company_name}
                                                     onChange={handleChange}
                                                     className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
                                                              focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
                                                              hover:border-gray-400 transition-all duration-200
                                                              bg-white shadow-sm"
-                                                    required
                                                 />
                                             </div>
 
                                             <div className="space-y-1">
                                                 <label htmlFor="tax_id" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                    <span>NIF/CIF</span>
-                                                    <span className="text-red-500">*</span>
-                                                    <span className="text-xs text-gray-400">(9 caracteres)</span>
+                                                    <span>NIF/CIF:*</span>
                                                 </label>
                                                 <input
                                                     id="tax_id"
                                                     type="text"
                                                     name="tax_id"
-                                                    placeholder="B12345678"
+                                                    placeholder="NIF o CIF de la empresa"
                                                     required
                                                     value={companyDetails.tax_id}
                                                     onChange={handleChange}
@@ -463,12 +446,12 @@ const AdvertiserProfileEdit = () => {
                                                              focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
                                                              hover:border-gray-400 transition-all duration-200
                                                              bg-white shadow-sm"
-                                                    maxLength="9"
                                                 />
                                             </div>
                                         </div>
 
-                                        
+                                       
+
                                     {/* Dirección Fiscal */}
                                     <div className="space-y-4">
                                         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
@@ -481,14 +464,13 @@ const AdvertiserProfileEdit = () => {
                                         
                                         <div className="space-y-1">
                                             <label htmlFor="billing_address" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                <span>Dirección completa</span>
-                                                <span className="text-red-500">*</span>
+                                                <span>Dirección:*</span>
                                             </label>
                                             <input
                                                 id="billing_address"
                                                 type="text"
                                                 name="billing_address"
-                                                placeholder="C/ Gran Vía 15, 2º A"
+                                                placeholder="Dirección de la empresa"
                                                 required
                                                 value={companyDetails.billing_address}
                                                 onChange={handleChange}
@@ -499,17 +481,16 @@ const AdvertiserProfileEdit = () => {
                                             />
                                         </div>
 
-                                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div className="space-y-1">
                                                 <label htmlFor="city" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                    <span>Ciudad</span>
-                                                    <span className="text-red-500">*</span>
+                                                    <span>Ciudad:*</span>
                                                 </label>
                                                 <input
                                                     id="city"
                                                     type="text"
                                                     name="city"
-                                                    placeholder="Madrid"
+                                                    placeholder="Ciudad"
                                                     required
                                                     value={companyDetails.city}
                                                     onChange={handleChange}
@@ -521,15 +502,13 @@ const AdvertiserProfileEdit = () => {
                                             </div>
                                             <div className="space-y-1">
                                                 <label htmlFor="postal_code" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                    <span>Código Postal</span>
-                                                    <span className="text-red-500">*</span>
-                                                    <span className="text-xs text-gray-400">(5 dígitos)</span>
+                                                    <span>Código Postal:*</span>
                                                 </label>
                                                 <input
                                                     id="postal_code"
                                                     type="text"
                                                     name="postal_code"
-                                                    placeholder="28001"
+                                                    placeholder="Código Postal"
                                                     required
                                                     value={companyDetails.postal_code}
                                                     onChange={handleChange}
@@ -537,7 +516,6 @@ const AdvertiserProfileEdit = () => {
                                                              focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
                                                              hover:border-gray-400 transition-all duration-200
                                                              bg-white shadow-sm"
-                                                    maxLength="5"
                                                 />
                                             </div>
                                         </div>
@@ -551,17 +529,15 @@ const AdvertiserProfileEdit = () => {
                                             </svg>
                                             Información de Contacto
                                         </h3>
-                                        <div className="space-y-1">
+                                         <div className="space-y-1">
                                             <label htmlFor="contact_name" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                <span>Persona de contacto</span>
-                                                <span className="text-red-500">*</span>
+                                                <span>Nombre de contacto:</span>
                                             </label>
                                             <input
                                                 id="contact_name"
                                                 type="text"
                                                 name="contact_name"
-                                                placeholder="Juan Pérez García"
-                                                required
+                                                placeholder="Nombre de contacto"
                                                 value={companyDetails.contact_name}
                                                 onChange={handleChange}
                                                 className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
@@ -571,17 +547,16 @@ const AdvertiserProfileEdit = () => {
                                             />
                                         </div>
                                     </div>
-
+                                        
                                         <div className="space-y-1">
                                             <label htmlFor="contact_phone" className="flex items-center gap-2 text-sm font-medium text-gray-700">
-                                                <span>Teléfono</span>
-                                                <span className="text-xs text-gray-400">(opcional)</span>
+                                                <span>Teléfono:</span>
                                             </label>
                                             <input
                                                 id="contact_phone"
                                                 type="tel"
                                                 name="contact_phone"
-                                                placeholder="600 123 456"
+                                                placeholder="Teléfono de contacto"
                                                 value={companyDetails.contact_phone}
                                                 onChange={handleChange}
                                                 className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
@@ -608,22 +583,20 @@ const AdvertiserProfileEdit = () => {
                                     <div className="pt-6 border-t border-gray-200">
                                         <button
                                             type="submit"
-                                            disabled={isLoading}
                                             className="w-full bg-purpleOiches hover:bg-purple-700 text-white 
                                                      font-semibold py-3 px-6 rounded-lg transition-all duration-200 
                                                      shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-                                                     focus:ring-4 focus:ring-purple-200 disabled:opacity-50
-                                                     disabled:cursor-not-allowed disabled:transform-none
+                                                     focus:ring-4 focus:ring-purple-200
                                                      flex items-center justify-center gap-2"
                                         >
                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
                                             </svg>
-                                            {isLoading ? 'Guardando...' : 'Guardar Datos'}
+                                            Guardar datos
                                         </button>
                                     </div>
 
-                                   {/* Nota de privacidad */}
+                                    {/* Nota de privacidad */}
                                     <div className="text-center">
                                         <p className="text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-1">
                                             <span className="flex items-center gap-1">
@@ -642,11 +615,11 @@ const AdvertiserProfileEdit = () => {
                         </div>
                     </div>
 
-                        {/* Sidebar de configuración */}
+                    {/* Sidebar de configuración */}
                     <div className="flex-1 max-w-md">
                         <div className="bg-white rounded-xl shadow-lg border border-gray-100 sticky top-0">
                             <div className="px-6 py-4 border-b">
-                                <h3 className="font-bold text-gray-800 flex items-center gap2">
+                                <h3 className="font-bold text-gray-800 flex items-center gap-2">
                                     <svg className="w-5 h-5 text-purpleOiches" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -654,7 +627,7 @@ const AdvertiserProfileEdit = () => {
                                     Configuración de Cuenta
                                 </h3>
                             </div>
-                            <div className="px-6 pb-6  -mt-6">
+                            <div className="px-6 pt-3 pb-6">
                                 <AccountConfiguration
                                     userLogged={userLogged}
                                     userData={userData}
