@@ -6,8 +6,11 @@ import joiErrorMessages from '../joiErrorMessages.js';
 
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const createAdvertiserSchema = Joi.object({
-    nombreEmpresa: Joi.string().allow('').optional().messages(joiErrorMessages),
-    nombreContacto: Joi.string().required().messages(joiErrorMessages),
+    nombreEmpresa: Joi.string().required().messages(joiErrorMessages),
+    nombreContacto: Joi.string()
+        .allow('')
+        .optional()
+        .messages(joiErrorMessages),
     direccion: Joi.string().required().messages(joiErrorMessages),
     ciudad: Joi.string().required().messages(joiErrorMessages),
     codigoPostal: Joi.string().required().messages(joiErrorMessages),

@@ -84,12 +84,13 @@ const AdvertiserProfileCreation = () => {
                     htmlFor="nombreEmpresa"
                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
                 >
-                    <span className="font-semibold">Empresa:</span>
+                    <span className="font-semibold">Empresa:*</span>
 
                     <input
                         type="text"
                         name="nombreEmpresa"
                         placeholder="Nombre de la empresa"
+                        required
                         value={nombreEmpresa}
                         onChange={handleChange}
                         className="form-input"
@@ -100,12 +101,11 @@ const AdvertiserProfileCreation = () => {
                     htmlFor="nombreContacto"
                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
                 >
-                    <span className="font-semibold">Nombre de contacto:*</span>
+                    <span className="font-semibold">Nombre de contacto:</span>
                     <input
                         type="text"
                         name="nombreContacto"
                         placeholder="Nombre de contacto"
-                        required
                         value={nombreContacto}
                         onChange={handleChange}
                         className="form-input"

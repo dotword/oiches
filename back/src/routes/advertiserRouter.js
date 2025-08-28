@@ -5,7 +5,6 @@ import {
     authUser,
     userExists,
     checkIfAdvertiser,
-    // canEditNotice,
 } from '../middleware/index.js';
 
 // Funciones controladoras finales
@@ -13,11 +12,7 @@ import {
     createAdvertiserController,
     getAdvertiserDetailsController,
     editAdvertiserController,
-    // listCategoriesNoticeController,
-    // getNoticeDetailController,
-    // listNoticesController,
-    // listMyOwnNoticesController,
-    // deleteNoticeController,
+    createAdvertController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -49,13 +44,14 @@ router.put(
     editAdvertiserController
 );
 
-// // Endpoint para crear un notice
-// router.post(
-//     '/create-notice/:userId',
-//     authUser,
-//     userExists,
-//     createNoticeboardController
-// );
+// Endpoint para crear un anuncio
+router.post(
+    '/create-advert/:userId',
+    authUser,
+    userExists,
+    checkIfAdvertiser,
+    createAdvertController
+);
 
 // // Endpoint para listar las categorías
 // router.get('/categories-noticeboard', listCategoriesNoticeController);

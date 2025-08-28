@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS ad_classified_stats, ad_classified_images, ad_classifieds, advertiser_profiles, ad_packages, ad_categories, ad_blocks, contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias_especialidades, agencias_especialidad,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS ad_classified_stats, ad_classified_images, ad_classifieds, advertiser_profiles, ad_packages, ad_categories, contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias_especialidades, agencias_especialidad,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -323,7 +323,7 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_blocks (
+            CREATE TABLE IF NOT EXISTS ad_categories (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(100) NOT NULL,
                 description VARCHAR(255) NULL,
@@ -333,20 +333,10 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_categories (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                block_id INT NOT NULL,
-                name VARCHAR(100) NOT NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (block_id) REFERENCES ad_blocks(id)
-            );
-        `);
-
-        await pool.query(`
             CREATE TABLE IF NOT EXISTS ad_packages (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 package ENUM('basico','destacado','premium') NOT NULL DEFAULT 'basico',
+                duration ENUM('three_months','six_months','one_year') NOT NULL DEFAULT 'three_months',
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
@@ -375,11 +365,15 @@ const main = async () => {
                 user_id CHAR(36) NOT NULL,
                 category_id INT NOT NULL,
                 package_id INT NOT NULL,
+                address VARCHAR(255) NULL,
+                city VARCHAR(100) NULL,
+                country VARCHAR(100) NULL DEFAULT 'España',
                 provincia_id INT NULL,
                 title VARCHAR(150) NOT NULL,
                 description TEXT NOT NULL,
                 link VARCHAR(255) NULL,
-                contact VARCHAR(255) NULL,
+                contact_email VARCHAR(255) NULL,
+                contact_phone VARCHAR(50) NULL,
                 status ENUM('pending','published','expired') NOT NULL DEFAULT 'pending',
                 publishedAt DATETIME NULL,
                 expiresAt DATETIME NULL,
@@ -458,41 +452,13 @@ const main = async () => {
             ('grupo', 'Bajista', 1), ('grupo', 'Guitarrista', 1), ('grupo', 'Cantante', 1), ('grupo', 'Batería', 1), ('grupo', 'Teclista', 1), ('grupo', 'Otros', 1);
         `);
         await pool.query(`
-            INSERT INTO ad_blocks (name, description) VALUES
+            INSERT INTO ad_categories (name, description) VALUES
                 ('Tiendas e instrumentos','Compraventa, alquiler y mantenimiento de instrumentos'),
                 ('Estudio y tecnología','Grabación, mezcla, acústica y streaming técnico'),
                 ('Formación','Escuelas, academias y ensayos'),
                 ('Eventos y marketing','Promoción, backline, PR y merch'),
                 ('Logística y seguros','Transporte y coberturas legales'),
                 ('Medios y plataformas','Editoriales, distribución digital y crowdfunding');
-        `);
-
-        await pool.query(`INSERT INTO ad_categories (block_id, name) VALUES
-            (6, 'Tiendas de partituras y editoriales musicales'),
-            (1, 'Talleres de reparación y mantenimiento de instrumentos'),
-            (1, 'Empresas de alquiler de instrumentos y equipo'),
-            (2, 'Estudios de grabación y postproducción'),
-            (4, 'Empresas de producción y renta de sonido e iluminación'),
-            (3, 'Escuelas y academias de música especializadas'),
-            (3, 'Locales y plataformas de ensayo'),
-            (2, 'Distribuidores de software y tecnología musical'),
-            (1, 'Fabricantes y distribuidores de accesorios'),
-            (2, 'Servicios de ingeniería acústica y acondicionamiento de espacios'),
-            (4, 'Agencias de management y booking'),
-            (4, 'Promotoras, festivales y eventos'),
-            (6, 'Plataformas de venta y distribución digital'),
-            (6, 'Editoriales multimedia y revistas especializadas'),
-            (4, 'Empresas de merchandising y serigrafía para conciertos'),
-            (4, 'Servicios de fotografía y vídeo profesional para músicos'),
-            (6, 'Plataformas de crowdfunding y micromecenazgo'),
-            (5, 'Compañías de transporte y logística especializada en instrumentos'),
-            (5, 'Seguros y servicios jurídicos para músicos y salas'),
-            (2, 'Servicios de masterización y remasterización de audio'),
-            (4, 'Consultorías y asesoramiento en marketing musical'),
-            (3, 'Aplicaciones móviles y plataformas educativas de música'),
-            (4, 'Empresas de alquiler de backline y escenarios móviles'),
-            (2, 'Servicios de streaming y soluciones para conciertos online'),
-            (4, 'Agencias de relaciones públicas (PR) y prensa especializada');
         `);
 
         console.log('¡Tablas creadas!');

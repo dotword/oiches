@@ -64,9 +64,7 @@ const AdvertiserProfileEdit = () => {
 
         try {
             await AdvertiserProfileEditService({ token, userId, formData });
-            toast.success(
-                'Tus datos han sido guardados correctamente. Ahora puedes publicar anuncios.'
-            );
+            toast.success('Tus datos han sido guardados correctamente.');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -99,11 +97,12 @@ const AdvertiserProfileEdit = () => {
                     htmlFor="company_name"
                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
                 >
-                    <span className="font-semibold">Empresa:</span>
+                    <span className="font-semibold">Empresa:*</span>
                     <input
                         id="company_name"
                         type="text"
                         name="company_name"
+                        required
                         placeholder="Nombre de la empresa"
                         value={companyDetails.company_name}
                         onChange={handleChange}
@@ -115,13 +114,12 @@ const AdvertiserProfileEdit = () => {
                     htmlFor="contact_name"
                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
                 >
-                    <span className="font-semibold">Nombre de contacto:*</span>
+                    <span className="font-semibold">Nombre de contacto:</span>
                     <input
                         id="contact_name"
                         type="text"
                         name="contact_name"
                         placeholder="Nombre de contacto"
-                        required
                         value={companyDetails.contact_name}
                         onChange={handleChange}
                         className="form-input"
