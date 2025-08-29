@@ -22,6 +22,7 @@ import canEditAgencia from './canEditAgencia.js';
 import noticeExists from './noticeExists.js';
 import canEditNotice from './canEditNotice.js';
 import checkIfAdvertiser from './checkIfAdvertiser.js';
+import canEditAdvert from './canEditAdvert.js';
 
 export {
     authUser,
@@ -48,4 +49,5 @@ export {
     noticeExists,
     canEditNotice,
     checkIfAdvertiser,
+    canEditAdvert,
 };

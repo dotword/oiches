@@ -4,6 +4,9 @@ import editAdvertiserController from './editAdvertiserController.js';
 import createAdvertController from './createAdvertController.js';
 import listAdvertCategoriesController from './listAdvertCategoriesController.js';
 import listAdvertPackagesController from './listAdvertPackagesController.js';
+import listMyOwnAdvertsController from './listMyOwnAdvertsController.js';
+import editAdvertController from './editAdvertController.js';
+import getAdvertDetailsController from './getAdvertDetailsController.js';
 
 export {
     createAdvertiserController,
@@ -12,4 +15,7 @@ export {
     createAdvertController,
     listAdvertCategoriesController,
     listAdvertPackagesController,
+    listMyOwnAdvertsController,
+    editAdvertController,
+    getAdvertDetailsController,
 };

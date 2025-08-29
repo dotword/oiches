@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import FetchAdvertCategoriesService from '../../services/Advertisers/FetchAdvertCategoriesService.js';
 import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPackagesService.js';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 const AdvertNewCreation = () => {
     const { userLogged, token } = useContext(AuthContext);
     const { userId } = useParams();
+    const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
         category_id: '',
@@ -92,6 +93,10 @@ const AdvertNewCreation = () => {
             toast.success(
                 'Vamos a revisar tu anuncio. Muy pronto nos pondremos en contacto contigo.'
             );
+
+            setTimeout(() => {
+                navigate(`/users/account/${userId}`);
+            }, 2000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
