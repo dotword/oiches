@@ -33,10 +33,9 @@ const AdvertiserDashboard = ({ userId, token }) => {
                 <h1 className="text-center text-xl font-semibold mt-12">
                     Mis anuncios
                 </h1>
-                <p>
-                    Aquí irá toda la info de los anuncios, que aún no tengo ni
-                    idea de cómo hacerlo
-                </p>
+                <Link to={`/create-advert/${userId}`} className="btn-degradado">
+                    Publicar un anuncio
+                </Link>
             </section>
         </div>
     );

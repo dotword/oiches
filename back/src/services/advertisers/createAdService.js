@@ -12,7 +12,8 @@ const createAdService = async (
     description,
     link,
     contact_email,
-    contact_phone
+    contact_phone,
+    poster
 ) => {
     const pool = await getPool();
 
@@ -21,8 +22,8 @@ const createAdService = async (
 
     await pool.query(
         `
-            INSERT INTO ad_classifieds (id, user_id, category_id, package_id, address, city, provincia_id, title, description, link, contact_email, contact_phone)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO ad_classifieds (id, user_id, category_id, package_id, address, city, provincia_id, title, description, link, contact_email, contact_phone, image_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
         [
             advId,
@@ -37,6 +38,7 @@ const createAdService = async (
             link,
             contact_email,
             contact_phone,
+            poster,
         ]
     );
 

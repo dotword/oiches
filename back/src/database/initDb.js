@@ -335,8 +335,7 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS ad_packages (
                 id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-                package ENUM('basico','destacado','premium') NOT NULL DEFAULT 'basico',
-                duration ENUM('three_months','six_months','one_year') NOT NULL DEFAULT 'three_months',
+                package VARCHAR(100) NOT NULL NOT,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
             );
@@ -370,10 +369,11 @@ const main = async () => {
                 country VARCHAR(100) NULL DEFAULT 'España',
                 provincia_id INT NULL,
                 title VARCHAR(150) NOT NULL,
-                description TEXT NOT NULL,
+                description TEXT NULL,
                 link VARCHAR(255) NULL,
                 contact_email VARCHAR(255) NULL,
                 contact_phone VARCHAR(50) NULL,
+                image_url VARCHAR(255) NOT NULL,
                 status ENUM('pending','published','expired') NOT NULL DEFAULT 'pending',
                 publishedAt DATETIME NULL,
                 expiresAt DATETIME NULL,
@@ -383,16 +383,6 @@ const main = async () => {
                 FOREIGN KEY (category_id) REFERENCES ad_categories(id),
                 FOREIGN KEY (package_id) REFERENCES ad_packages(id),
                 FOREIGN KEY (provincia_id) REFERENCES provincias(id)
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_classified_images (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                classified_id CHAR(36) NOT NULL,
-                image_url VARCHAR(255) NOT NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (classified_id) REFERENCES ad_classifieds(id)
             );
         `);
 
@@ -450,6 +440,16 @@ const main = async () => {
             INSERT INTO category_noticeboard (role, nombre, parent_id) VALUES 
             ('grupo', 'Nuevo integrante', NULL), ('grupo', 'Compartir bolo/gira', NULL), ('grupo', 'Promotor/Manager', NULL), ('grupo', 'Otros', NULL), ('sala', 'Músicos', NULL), ('sala', 'Otros', NULL), 
             ('grupo', 'Bajista', 1), ('grupo', 'Guitarrista', 1), ('grupo', 'Cantante', 1), ('grupo', 'Batería', 1), ('grupo', 'Teclista', 1), ('grupo', 'Otros', 1);
+        `);
+        await pool.query(`
+            INSERT INTO ad_packages (package) VALUES 
+                ('Básico 3 meses'),
+                ('Básico 6 meses'),
+                ('Básico 1 año'),
+                ('Destacado 3 meses'),
+                ('Destacado 6 meses'),
+                ('Destacado 1 año'),
+                ('Premium');
         `);
         await pool.query(`
             INSERT INTO ad_categories (name, description) VALUES

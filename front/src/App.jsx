@@ -63,6 +63,7 @@ import {
 import {
     CreateAdvertiserProfile,
     EditAdvertiserProfile,
+    CreateNewAdvert,
 } from './pages/Advertisers/index.jsx';
 
 function App() {
@@ -278,6 +279,10 @@ function App() {
                         <Route
                             path="/advertiser-details/edit/:userId"
                             element={<EditAdvertiserProfile />}
+                        />
+                        <Route
+                            path="/create-advert/:userId"
+                            element={<CreateNewAdvert />}
                         />
                     </Routes>
                 </AnimatePresence>

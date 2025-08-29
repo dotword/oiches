@@ -13,6 +13,8 @@ import {
     getAdvertiserDetailsController,
     editAdvertiserController,
     createAdvertController,
+    listAdvertCategoriesController,
+    listAdvertPackagesController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -53,8 +55,11 @@ router.post(
     createAdvertController
 );
 
-// // Endpoint para listar las categorías
-// router.get('/categories-noticeboard', listCategoriesNoticeController);
+// Endpoint para listar las categorías
+router.get('/advert-categories', listAdvertCategoriesController);
+
+// Endpoint para listar los packages
+router.get('/advert-packages', listAdvertPackagesController);
 
 // // Endpoint para que el usuario pueda listar sus notices
 // router.get(
