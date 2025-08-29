@@ -20,8 +20,6 @@ const ListAdvertiserAdv = ({ userId, token }) => {
         fetchUserAds();
     }, [token, userId]);
 
-    console.log('adverts', adverts);
-
     const formatDate = (dateString) => {
         if (!dateString) return ''; // si es null, undefined o cadena vacía
 

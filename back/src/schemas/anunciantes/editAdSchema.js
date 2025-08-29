@@ -7,7 +7,7 @@ import joiErrorMessages from '../joiErrorMessages.js';
 // Creamos el esquema de Joi donde comprobamos todas las propiedades necesarias.
 const editAdSchema = Joi.object({
     category_id: Joi.number().max(10).allow('').messages(joiErrorMessages),
-    package_id: Joi.number().max(10).allow('').messages(joiErrorMessages),
+    package_id: Joi.number().max(10).allow(null, '').messages(joiErrorMessages),
     address: Joi.string().optional().allow('').messages(joiErrorMessages),
     city: Joi.string().optional().allow('').messages(joiErrorMessages),
     provincia_id: Joi.number()

@@ -12,7 +12,7 @@ const EditAdvertDetails = () => {
         >
             <Header txt="Edita tus anuncio" />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
-                {/* <AdvertiserProfileEdit /> */}
+                <AdvertDetailsEdit />
             </main>
             <Footer />
         </motion.div>
