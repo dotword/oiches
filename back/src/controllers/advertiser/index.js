@@ -7,6 +7,7 @@ import listAdvertPackagesController from './listAdvertPackagesController.js';
 import listMyOwnAdvertsController from './listMyOwnAdvertsController.js';
 import editAdvertController from './editAdvertController.js';
 import getAdvertDetailsController from './getAdvertDetailsController.js';
+import editAdvertPosterController from './editAdvertPosterController.js';
 
 export {
     createAdvertiserController,
@@ -18,4 +19,5 @@ export {
     listMyOwnAdvertsController,
     editAdvertController,
     getAdvertDetailsController,
+    editAdvertPosterController,
 };

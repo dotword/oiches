@@ -19,6 +19,7 @@ import {
     listMyOwnAdvertsController,
     editAdvertController,
     getAdvertDetailsController,
+    editAdvertPosterController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -84,6 +85,15 @@ router.put(
     checkIfAdvertiser,
     canEditAdvert,
     editAdvertController
+);
+
+//Editar fotos del anuncio
+router.put(
+    '/edit-advert/poster/:idAdvert',
+    authUser,
+    userExists,
+    canEditAdvert,
+    editAdvertPosterController
 );
 
 // // Endpoint para que un usuario pueda borrar su notice

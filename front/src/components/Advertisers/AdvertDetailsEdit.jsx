@@ -9,6 +9,7 @@ import AdvertDetailsEditService from '../../services/Advertisers/AdvertDetailsEd
 import FetchAdvertCategoriesService from '../../services/Advertisers/FetchAdvertCategoriesService.js';
 import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPackagesService.js';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
+import EditAdvertPhoto from './EditAdvertPhoto.jsx';
 
 const AdvertDetailsEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -29,6 +30,7 @@ const AdvertDetailsEdit = () => {
         link: '',
         contact_email: '',
         contact_phone: '',
+        image_url: '',
     });
 
     const [categories, setCategories] = useState([]);
@@ -101,6 +103,7 @@ const AdvertDetailsEdit = () => {
                 </Link>
             )}
 
+            <EditAdvertPhoto advertData={advertData} token={token} />
             <form
                 onSubmit={handleSubmit}
                 className="mb-12 md:flex md:flex-wrap gap-x-8"

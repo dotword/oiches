@@ -10,8 +10,6 @@ const canEditAdvertService = async (idAdvert, userId) => {
         [idAdvert]
     );
 
-    console.log('noticeOwner', noticeOwner);
-
     const [user] = await pool.query(
         `SELECT id, roles FROM usuarios WHERE id = ?`,
         [userId]
