@@ -5,8 +5,6 @@ import Toastify from '../Toastify.jsx';
 import { toast } from 'react-toastify';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
-import MapComponent from '../MapComponent.jsx';
-import MapShow from '../MapShow.jsx';
 import AddSalaPhotos from './AddSalaPhotos.jsx';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import FetchGenresService from '../../services/FetchGenresService.js';
@@ -28,6 +26,7 @@ const SalaEdit = () => {
         nombre: '',
         direccion: '',
         ciudad: '',
+        googleMapUrl: '',
         provincia: '',
         capacidad: '',
         descripcion: '',
@@ -42,7 +41,7 @@ const SalaEdit = () => {
     const [generos, setGeneros] = useState([]);
     const [deleteGenres, setDeleteGenres] = useState([]);
     const [error, setError] = useState('');
-    const [formattedAddress, setFormattedAddress] = useState('');
+    // const [formattedAddress, setFormattedAddress] = useState('');
 
     useEffect(() => {
         FetchProvinciasService(setProvinces);
@@ -58,6 +57,7 @@ const SalaEdit = () => {
                     nombre: data.sala.nombre || '',
                     direccion: data.sala.direccion || '',
                     ciudad: data.sala.ciudad || '',
+                    googleMapUrl: data.sala.googleMapUrl || '',
                     provincia: data.sala.provinciaId || '',
                     capacidad: data.sala.capacidad || '',
                     descripcion: data.sala.descripcion || '',
@@ -154,6 +154,7 @@ const SalaEdit = () => {
             dataForm.append('nombre', sala.nombre || '');
             dataForm.append('direccion', sala.direccion || '');
             dataForm.append('ciudad', sala.ciudad || '');
+            dataForm.append('googleMapUrl', sala.googleMapUrl || '');
             dataForm.append('provincia', sala.provincia || '');
             dataForm.append('capacidad', sala.capacidad || '');
             dataForm.append('descripcion', sala.descripcion || '');
@@ -180,18 +181,6 @@ const SalaEdit = () => {
                 (activeGenre) => activeGenre.generoId === genre.id
             )
     );
-
-    const handleLocationSelect = (location) => {
-        setSala((prevSala) => ({
-            ...prevSala,
-            direccion: location.direccion,
-            ciudad: location.ciudad,
-        }));
-    };
-
-    const handleAddressChange = (newAddress) => {
-        setFormattedAddress(newAddress);
-    };
 
     return (userLogged && sala.owner === userLogged.id) ||
         (userLogged && userLogged.roles === 'admin') ? (
@@ -278,30 +267,101 @@ const SalaEdit = () => {
                     className="md:grid md:grid-cols-6 md:gap-x-6 md:col-start-1 md:col-end-4"
                 >
                     {/* Nombre */}
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
-                        <label htmlFor="nombre">
+                    <label
+                        htmlFor="nombre"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                    >
+                        <span className="font-semibold">
+                            Nombre de la Sala:
+                        </span>
+
+                        <input
+                            type="text"
+                            name="nombre"
+                            placeholder="Nombre de la sala"
+                            value={sala.nombre}
+                            onChange={(e) =>
+                                setSala({ ...sala, nombre: e.target.value })
+                            }
+                            className="form-input"
+                        />
+                    </label>
+
+                    {/* Dirección */}
+                    <label
+                        htmlFor="direccion"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                    >
+                        <span className="font-semibold">Dirección:</span>
+
+                        <input
+                            type="text"
+                            name="direccion"
+                            placeholder="Dirección de la sala"
+                            value={sala.direccion}
+                            onChange={(e) =>
+                                setSala({
+                                    ...sala,
+                                    direccion: e.target.value,
+                                })
+                            }
+                            className="form-input"
+                        />
+                    </label>
+                    {userLogged && userLogged.roles === 'admin' ? (
+                        <label
+                            htmlFor="googleMapUrl"
+                            className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                        >
                             <span className="font-semibold">
-                                Nombre de la Sala:
+                                Enlace a Google Maps (Admin)
                             </span>
 
                             <input
                                 type="text"
-                                name="nombre"
-                                placeholder="Nombre de la sala"
-                                value={sala.nombre}
+                                name="googleMapUrl"
+                                placeholder="url de Google Maps"
+                                value={sala.googleMapUrl}
+                                required
                                 onChange={(e) =>
-                                    setSala({ ...sala, nombre: e.target.value })
+                                    setSala({
+                                        ...sala,
+                                        googleMapUrl: e.target.value,
+                                    })
                                 }
                                 className="form-input"
                             />
                         </label>
-                    </div>
+                    ) : (
+                        ''
+                    )}
+                    {/* Ciudad */}
+                    <label
+                        htmlFor="ciudad"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-4"
+                    >
+                        <span className="font-semibold"> Ciudad:*</span>
+                        <input
+                            type="text"
+                            name="ciudad"
+                            placeholder="Ciudad de la sala"
+                            value={sala.ciudad}
+                            onChange={(e) =>
+                                setSala({
+                                    ...sala,
+                                    ciudad: e.target.value,
+                                })
+                            }
+                            className="form-input"
+                        />
+                    </label>
 
                     {/* Provincia */}
-                    <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
-                        <label htmlFor="province" className="font-semibold">
-                            Provincia:
-                        </label>
+                    <label
+                        htmlFor="province"
+                        className="flex flex-col mb-4 md:col-start-4 md:col-end-7"
+                    >
+                        <span className="font-semibold">Provincia:</span>
                         <select
                             name="provincia"
                             value={sala.provincia}
@@ -317,55 +377,14 @@ const SalaEdit = () => {
                                 </option>
                             ))}
                         </select>
-                    </div>
-                    {/* Dirección */}
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
-                        {sala.direccion && (
-                            <>
-                                <p className="font-semibold">Dirección:</p>
-                                <p className="text-black">{formattedAddress}</p>
-
-                                <MapShow
-                                    direccion={sala.direccion}
-                                    onAddressChange={handleAddressChange}
-                                    hideMap="hideMap"
-                                />
-                            </>
-                        )}
-
-                        <label htmlFor="direccion" className="font-semibold">
-                            Cambiar dirección:
-                        </label>
-                        <input
-                            type="text"
-                            name="direccion"
-                            placeholder="Dirección de la sala"
-                            value={sala.direccion || ''}
-                            onChange={(e) =>
-                                setSala({ ...sala, direccion: e.target.value })
-                            }
-                            className="hidden"
-                        />
-                        <input
-                            type="text"
-                            name="ciudad"
-                            placeholder="Ciudad de la sala"
-                            value={sala.ciudad || ''}
-                            onChange={(e) =>
-                                setSala({ ...sala, ciudad: e.target.value })
-                            }
-                            className="hidden"
-                        />
-                        <MapComponent
-                            onLocationSelect={handleLocationSelect}
-                            actualAddress={sala.direccion}
-                        />
-                    </div>
+                    </label>
                     {/* Web */}
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-5">
-                        <label htmlFor="web" className="font-semibold">
-                            Web:
-                        </label>
+                    <label
+                        htmlFor="web"
+                        className="flex-col mb-4 md:col-start-1 md:col-end-5"
+                    >
+                        <span className="font-semibold">Web:</span>
+
                         <input
                             type="text"
                             name="web"
@@ -376,13 +395,15 @@ const SalaEdit = () => {
                                 setSala({ ...sala, web: e.target.value })
                             }
                         />
-                    </div>
+                    </label>
 
                     {/* Aforo */}
-                    <div className="flex flex-col mb-4 md:col-start-5 md:col-end-7">
-                        <label htmlFor="capacidad" className="font-semibold">
-                            Aforo:
-                        </label>
+                    <label
+                        htmlFor="capacidad"
+                        className="flex flex-col mb-4 md:col-start-5 md:col-end-7"
+                    >
+                        <span className="font-semibold">Aforo:</span>
+
                         <input
                             type="number"
                             name="capacidad"
@@ -393,12 +414,14 @@ const SalaEdit = () => {
                                 setSala({ ...sala, capacidad: e.target.value })
                             }
                         />
-                    </div>
+                    </label>
+                    {/* Descripción */}
+                    <label
+                        htmlFor="descripcion"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                    >
+                        <span className="font-semibold">Descripción:</span>
 
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
-                        <label htmlFor="descripcion" className="font-semibold">
-                            Descripción:
-                        </label>
                         <textarea
                             name="descripcion"
                             value={sala.descripcion}
@@ -413,12 +436,14 @@ const SalaEdit = () => {
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
-                    </div>
+                    </label>
+                    {/* Condiciones */}
+                    <label
+                        htmlFor="condiciones"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                    >
+                        <span className="font-semibold">Condiciones:</span>
 
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
-                        <label htmlFor="condiciones" className="font-semibold">
-                            Condiciones:
-                        </label>
                         <textarea
                             type="text"
                             name="condiciones"
@@ -434,18 +459,18 @@ const SalaEdit = () => {
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
-                    </div>
-                    <div className="flex flex-col mb-4 md:col-start-1 md:col-end-7">
-                        <label
-                            htmlFor="equipamiento"
-                            className="font-semibold flex flex-col"
-                        >
-                            Rider:
-                            <span className="mt-1 text-gray-500 text-sm font-normal">
-                                Si lo prefieres, puedes subir tu rider en PDF en
-                                el siguiente apartado.
-                            </span>
-                        </label>
+                    </label>
+                    {/* Equipamiento */}
+                    <label
+                        htmlFor="equipamiento"
+                        className="flex flex-col mb-4 md:col-start-1 md:col-end-7"
+                    >
+                        <span className="font-semibold">Rider:</span>
+                        <span className="mt-1 text-gray-500 text-sm font-normal">
+                            Si lo prefieres, puedes subir tu rider en PDF en el
+                            siguiente apartado.
+                        </span>
+
                         <textarea
                             type="text"
                             name="equipamiento"
@@ -461,8 +486,7 @@ const SalaEdit = () => {
                         <p className="mt-1 text-gray-500 text-sm">
                             2000 caracteres como máximo
                         </p>
-                    </div>
-
+                    </label>
                     <div className="my-8 max-w-80 md:col-start-1 md:col-end-3">
                         <input
                             type="submit"

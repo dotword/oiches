@@ -7,7 +7,6 @@ import DefaultProfile from '/DefaultProfile2.png';
 import useAuth from '../../hooks/useAuth.jsx';
 import Seo from '../SEO/Seo.jsx';
 import TextFormat from '../TextFormato.jsx';
-import MapShow from '../MapShow.jsx';
 import usePrevNext from '../../hooks/usePrevNext.jsx';
 import NextPreviousItem from '../Elements/NextPreviousItem.jsx';
 import EditPublishItemAdmin from '../Admin/EditPublishItemAdmin.jsx';
@@ -18,7 +17,7 @@ const SalaDetail = () => {
     const { entry } = useSala(idSala);
     const { currentUser, token } = useAuth();
     const [actualUser, setActualUser] = useState('');
-    const [formattedAddress, setFormattedAddress] = useState('');
+    // const [formattedAddress, setFormattedAddress] = useState('');
 
     const {
         nombre = '',
@@ -29,6 +28,8 @@ const SalaDetail = () => {
         condiciones = '',
         genero = [],
         direccion = '',
+        ciudad = '',
+        googleMapUrl = '',
         capacidad = 0,
         usuarioAvatar = '',
         comentarios = [],
@@ -40,9 +41,9 @@ const SalaDetail = () => {
     const roles = 'sala';
     const { previous, next } = usePrevNext({ idItem: idSala, roles: roles });
 
-    const handleAddressChange = (newAddress) => {
-        setFormattedAddress(newAddress);
-    };
+    // const handleAddressChange = (newAddress) => {
+    //     setFormattedAddress(newAddress);
+    // };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -112,7 +113,7 @@ const SalaDetail = () => {
                         {direccion && (
                             <>
                                 <p className="text-black">
-                                    {formattedAddress || direccion}
+                                    {direccion}, {ciudad}, {provincia}
                                 </p>
                                 <p>
                                     <a
@@ -228,10 +229,13 @@ const SalaDetail = () => {
 
                 <section id="map" className="mt-8">
                     {direccion && (
-                        <MapShow
-                            direccion={direccion}
-                            onAddressChange={handleAddressChange}
-                        />
+                        <iframe
+                            src={googleMapUrl}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            className="w-full h-full min-h-[300px] rounded-lg shadow"
+                            title={`Mapa de ${nombre}`}
+                        ></iframe>
                     )}
                 </section>
                 {comentarios.length > 0 && (

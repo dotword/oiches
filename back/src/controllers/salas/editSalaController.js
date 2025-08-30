@@ -16,6 +16,7 @@ const editSalaController = async (req, res, next) => {
             precios,
             direccion,
             ciudad,
+            googleMapUrl,
             condiciones,
             equipamiento,
             web,
@@ -37,6 +38,8 @@ const editSalaController = async (req, res, next) => {
         if (precios !== undefined) updatedFields.precios = precios;
         if (direccion !== undefined) updatedFields.direccion = direccion;
         if (ciudad !== undefined) updatedFields.ciudad = ciudad;
+        if (googleMapUrl !== undefined)
+            updatedFields.googleMapUrl = googleMapUrl;
         if (condiciones !== undefined) updatedFields.condiciones = condiciones;
         if (equipamiento !== undefined)
             updatedFields.equipamiento = equipamiento;

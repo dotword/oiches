@@ -5,14 +5,13 @@ import Toastify from '../Toastify.jsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import Multiselect from 'multiselect-react-dropdown';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
-import MapComponent from '../MapComponent.jsx';
 
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import FetchGenresService from '../../services/FetchGenresService.js';
 import registerSalaService from '../../services/Salas/registerSalaService.js';
 
 const SalaCreacion = () => {
-    const { currentUser, token } = useContext(AuthContext);
+    const { userLogged, token } = useContext(AuthContext);
     const navigate = useNavigate();
     const { userId } = useParams();
 
@@ -20,6 +19,7 @@ const SalaCreacion = () => {
         nombre: '',
         direccion: '',
         ciudad: '',
+        googleMapUrl: '',
         provincia: '',
         generos: [],
         capacidad: '',
@@ -110,6 +110,7 @@ const SalaCreacion = () => {
         nombre,
         direccion,
         ciudad,
+        googleMapUrl,
         provincia,
         capacidad,
         descripcion,
@@ -117,20 +118,13 @@ const SalaCreacion = () => {
         web,
     } = formValues;
 
-    // Esta función actualizará los valores en el formulario con los datos seleccionados en el mapa
-    const handleLocationSelect = (location) => {
-        setFormValues((prevValues) => ({
-            ...prevValues,
-            direccion: location.direccion,
-            ciudad: location.ciudad,
-        }));
-    };
+    console.log(userLogged);
 
-    return currentUser ? (
+    return userLogged ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
                 <div className="md:w-1/2 md:flex md:flex-wrap md:justify-between">
-                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                    <div className="flex flex-col mb-4 w-full">
                         <label htmlFor="nombre" className="font-semibold">
                             Nombre de la Sala:*
                         </label>
@@ -144,7 +138,78 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
+
+                    <div className="flex flex-col mb-4 md:w-full">
+                        <label htmlFor="direccion" className="font-semibold">
+                            Dirección:*
+                        </label>
+                        <input
+                            type="text"
+                            name="direccion"
+                            placeholder="Dirección de la sala"
+                            value={direccion}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                    </div>
+
                     <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                        <label htmlFor="ciudad" className="font-semibold">
+                            Ciudad:*
+                        </label>
+
+                        <input
+                            type="text"
+                            name="ciudad"
+                            placeholder="Ciudad de la sala"
+                            value={ciudad}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+                    </div>
+
+                    <div className="flex flex-col mb-4 md:w-[calc(50%-0.5rem)]">
+                        <label htmlFor="provincia" className="font-semibold">
+                            Provincia:*
+                        </label>
+                        <select
+                            id="provincia"
+                            name="provincia"
+                            required
+                            value={provincia}
+                            className="form-select"
+                            onChange={handleChange}
+                        >
+                            <option value="">Selecciona</option>
+                            {provinces.map((province) => (
+                                <option key={province.id} value={province.id}>
+                                    {province.provincia}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    {userLogged && userLogged.roles === 'admin' ? (
+                        <div className="flex flex-col mb-4 w-full">
+                            <label
+                                htmlFor="googleMapUrl"
+                                className="font-semibold"
+                            >
+                                Enlace a Google Maps (Admin)
+                            </label>
+                            <input
+                                type="text"
+                                name="googleMapUrl"
+                                placeholder="url de Google Maps"
+                                value={googleMapUrl}
+                                required
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                    <div className="flex flex-col mb-4 w-full">
                         <label htmlFor="generos" className="font-semibold mb-2">
                             Géneros:
                         </label>
@@ -171,52 +236,6 @@ const SalaCreacion = () => {
                             }}
                         />
                     </div>
-
-                    <div className="flex flex-col mb-4 md:w-full">
-                        <label htmlFor="direccion" className="font-semibold">
-                            Dirección:*
-                        </label>
-                        <MapComponent onLocationSelect={handleLocationSelect} />
-                        <span className="hidden">
-                            <input
-                                type="text"
-                                name="direccion"
-                                placeholder="Dirección de la sala"
-                                value={direccion}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type="text"
-                                name="ciudad"
-                                placeholder="Ciudad de la sala"
-                                value={ciudad}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </span>
-                    </div>
-
-                    <div className="flex flex-col mb-4 md:w-[calc(70%-0.5rem)]">
-                        <label htmlFor="provincia" className="font-semibold">
-                            Provincia:*
-                        </label>
-                        <select
-                            id="provincia"
-                            name="provincia"
-                            required
-                            value={provincia}
-                            className="form-select"
-                            onChange={handleChange}
-                        >
-                            <option value="">Selecciona</option>
-                            {provinces.map((province) => (
-                                <option key={province.id} value={province.id}>
-                                    {province.provincia}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-
                     <div className="flex flex-col mb-4 md:w-[calc(30%-0.5rem)]">
                         <label htmlFor="capacidad" className="font-semibold">
                             Aforo:*
@@ -231,7 +250,7 @@ const SalaCreacion = () => {
                             className="form-input"
                         />
                     </div>
-                    <div className="flex flex-col mb-4 md:w-full">
+                    <div className="flex flex-col mb-4  md:w-[calc(70%-0.5rem)]">
                         <label htmlFor="web" className="font-semibold">
                             Web o enlace a tus RRSS:*
                         </label>
