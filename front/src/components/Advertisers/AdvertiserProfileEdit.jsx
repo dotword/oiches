@@ -3,6 +3,10 @@ import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import { useParams, Link } from 'react-router-dom';
+import { IoBusinessOutline } from 'react-icons/io5';
+import { MdOutlinePlace } from 'react-icons/md';
+import { FaPhoneVolume } from 'react-icons/fa6';
+import { MdOutlineSaveAlt } from "react-icons/md";
 import AccountConfiguration from '../Users/AccountConfiguration.jsx';
 import useUser from '../../hooks/useUser.jsx';
 import useAdvertiserProfile from '../../hooks/useAdvertiserProfile';
@@ -26,6 +30,7 @@ const AdvertiserProfileEdit = () => {
     });
 
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     // Inicializar companyDetails cuando profile se cargue (solo si el form está vacío
     // para evitar sobreescribir mientras el usuario escribe)
@@ -55,6 +60,8 @@ const AdvertiserProfileEdit = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError('');
 
         const formData = new FormData();
         Object.entries(companyDetails).forEach(([k, v]) =>
@@ -67,6 +74,8 @@ const AdvertiserProfileEdit = () => {
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -83,21 +92,9 @@ const AdvertiserProfileEdit = () => {
     }
 
     return (
-        <div className="min-h-screen">
-            {/* Header simple sin fondo */}
-            <div className="bg-white border-b shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 py-6">
-                    <h1 className="text-2xl font-medium text-gray-900">
-                        Datos de facturación
-                    </h1>
-                    <p className="text-gray-600 mt-1">
-                        Completa tu información
-                    </p>
-                </div>
-            </div>
-
+    <div className="min-h-screen ">
             {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto px-4 py-4">
+            <div className="max-w-7xl mx-auto px-4 py-4 bg-white">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                     <nav className="text-sm text-gray-600">
                         <Link
@@ -132,7 +129,7 @@ const AdvertiserProfileEdit = () => {
             </div>
 
             {/* Contenido principal */}
-            <div className="max-w-7xl mx-auto px-4 pb-6 sm:pb-12">
+            <div className="max-w-7xl mx-auto px-4 pb-6 sm:pb-12 bg-white">
                 <div className="flex flex-col xl:flex-row gap-12">
                     {/* Formulario de facturación */}
                     <div className="flex-1 max-w-4xl">
@@ -141,19 +138,7 @@ const AdvertiserProfileEdit = () => {
                             <div className="px-6 py-5 border-b">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
-                                        <svg
-                                            className="w-6 h-6 text-white"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                            />
-                                        </svg>
+                                        <IoBusinessOutline className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-bold text-gray-800">
@@ -176,19 +161,7 @@ const AdvertiserProfileEdit = () => {
                                     {/* Información Empresarial */}
                                     <div className="space-y-4">
                                         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
-                                            <svg
-                                                className="w-4 h-4 text-purpleOiches"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h3M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                                                />
-                                            </svg>
+                                            <IoBusinessOutline className="w-7 h-7 text-purpleOiches" />
                                             Información Empresarial
                                         </h3>
 
@@ -243,45 +216,76 @@ const AdvertiserProfileEdit = () => {
                                         </div>
 
                                         {/* Dirección Fiscal */}
-                                        <div className="space-y-4">
-                                            <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
-                                                <svg
-                                                    className="w-4 h-4 text-purpleOiches"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                                    />
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                                    />
-                                                </svg>
-                                                Dirección Fiscal
-                                            </h3>
+                                    </div>
 
+                                    {/* Dirección Fiscal */}
+                                    <div className="space-y-4">
+                                        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
+                                            <MdOutlinePlace className="w-6 h-6 text-purpleOiches" />
+                                            Dirección Fiscal
+                                        </h3>
+
+                                        <div className="space-y-1">
+                                            <label
+                                                htmlFor="billing_address"
+                                                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                            >
+                                                <span>Dirección:*</span>
+                                            </label>
+                                            <input
+                                                id="billing_address"
+                                                type="text"
+                                                name="billing_address"
+                                                placeholder="Dirección de la empresa"
+                                                required
+                                                value={
+                                                    companyDetails.billing_address
+                                                }
+                                                onChange={handleChange}
+                                                className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                     hover:border-gray-400 transition-all duration-200
+                                                     bg-white shadow-sm"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                             <div className="space-y-1">
                                                 <label
-                                                    htmlFor="billing_address"
+                                                    htmlFor="city"
                                                     className="flex items-center gap-2 text-sm font-medium text-gray-700"
                                                 >
-                                                    <span>Dirección:*</span>
+                                                    <span>Ciudad:*</span>
                                                 </label>
                                                 <input
-                                                    id="billing_address"
+                                                    id="city"
                                                     type="text"
-                                                    name="billing_address"
-                                                    placeholder="Dirección de la empresa"
+                                                    name="city"
+                                                    placeholder="Ciudad"
+                                                    required
+                                                    value={companyDetails.city}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                         hover:border-gray-400 transition-all duration-200
+                                                         bg-white shadow-sm"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="postal_code"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Código Postal:*</span>
+                                                </label>
+                                                <input
+                                                    id="postal_code"
+                                                    type="text"
+                                                    name="postal_code"
+                                                    placeholder="Código Postal"
                                                     required
                                                     value={
-                                                        companyDetails.billing_address
+                                                        companyDetails.postal_code
                                                     }
                                                     onChange={handleChange}
                                                     className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
@@ -290,77 +294,16 @@ const AdvertiserProfileEdit = () => {
                                                          bg-white shadow-sm"
                                                 />
                                             </div>
-
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                <div className="space-y-1">
-                                                    <label
-                                                        htmlFor="city"
-                                                        className="flex items-center gap-2 text-sm font-medium text-gray-700"
-                                                    >
-                                                        <span>Ciudad:*</span>
-                                                    </label>
-                                                    <input
-                                                        id="city"
-                                                        type="text"
-                                                        name="city"
-                                                        placeholder="Ciudad"
-                                                        required
-                                                        value={
-                                                            companyDetails.city
-                                                        }
-                                                        onChange={handleChange}
-                                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                             hover:border-gray-400 transition-all duration-200
-                                                             bg-white shadow-sm"
-                                                    />
-                                                </div>
-                                                <div className="space-y-1">
-                                                    <label
-                                                        htmlFor="postal_code"
-                                                        className="flex items-center gap-2 text-sm font-medium text-gray-700"
-                                                    >
-                                                        <span>
-                                                            Código Postal:*
-                                                        </span>
-                                                    </label>
-                                                    <input
-                                                        id="postal_code"
-                                                        type="text"
-                                                        name="postal_code"
-                                                        placeholder="Código Postal"
-                                                        required
-                                                        value={
-                                                            companyDetails.postal_code
-                                                        }
-                                                        onChange={handleChange}
-                                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                             hover:border-gray-400 transition-all duration-200
-                                                             bg-white shadow-sm"
-                                                    />
-                                                </div>
-                                            </div>
                                         </div>
+                                    </div>
 
-                                        {/* Información de Contacto */}
-                                        <div className="space-y-4">
-                                            <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
-                                                <svg
-                                                    className="w-4 h-4 text-purpleOiches"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                                    />
-                                                </svg>
-                                                Información de Contacto
-                                            </h3>
+                                    {/* Información de Contacto */}
+                                    <div className="space-y-4">
+                                        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide pb-2">
+                                            <FaPhoneVolume className="w-4 h-4 text-purpleOiches" />
+                                            Información de Contacto
+                                        </h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <div className="space-y-1">
                                                 <label
                                                     htmlFor="contact_name"
@@ -380,34 +323,33 @@ const AdvertiserProfileEdit = () => {
                                                     }
                                                     onChange={handleChange}
                                                     className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                         hover:border-gray-400 transition-all duration-200
-                                                         bg-white shadow-sm"
+                                                        focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                        hover:border-gray-400 transition-all duration-200
+                                                        bg-white shadow-sm"
                                                 />
                                             </div>
-                                        </div>
-
-                                        <div className="space-y-1">
-                                            <label
-                                                htmlFor="contact_phone"
-                                                className="flex items-center gap-2 text-sm font-medium text-gray-700"
-                                            >
-                                                <span>Teléfono:</span>
-                                            </label>
-                                            <input
-                                                id="contact_phone"
-                                                type="tel"
-                                                name="contact_phone"
-                                                placeholder="Teléfono de contacto"
-                                                value={
-                                                    companyDetails.contact_phone
-                                                }
-                                                onChange={handleChange}
-                                                className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                         hover:border-gray-400 transition-all duration-200
-                                                         bg-white shadow-sm"
-                                            />
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="contact_phone"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Teléfono:</span>
+                                                </label>
+                                                <input
+                                                    id="contact_phone"
+                                                    type="tel"
+                                                    name="contact_phone"
+                                                    placeholder="Teléfono de contacto"
+                                                    value={
+                                                        companyDetails.contact_phone
+                                                    }
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                        focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                        hover:border-gray-400 transition-all duration-200
+                                                        bg-white shadow-sm"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
 
@@ -435,33 +377,34 @@ const AdvertiserProfileEdit = () => {
                                         </div>
                                     )}
 
-                                    {/* Botón de Guardar */}
+                                        {/* Botón de Guardar */}
                                     <div className="pt-6 border-t border-gray-200">
                                         <button
                                             type="submit"
-                                            className="w-full bg-purpleOiches hover:bg-purple-700 text-white 
-                                                     font-semibold py-3 px-6 rounded-lg transition-all duration-200 
-                                                     shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-                                                     focus:ring-4 focus:ring-purple-200
-                                                     flex items-center justify-center gap-2"
+                                            disabled={isLoading}
+                                            className={`w-full ${
+                                                isLoading
+                                                    ? 'bg-gray-400 cursor-not-allowed'
+                                                    : 'bg-purpleOiches hover:bg-purple-700'
+                                            } text-white 
+                                                        font-semibold py-3 px-6 rounded-lg transition-all duration-200 
+                                                        shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
+                                                        focus:ring-4 focus:ring-purple-200
+                                                        flex items-center justify-center gap-2`}
                                         >
-                                            <svg
-                                                className="w-5 h-5"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
-                                                />
-                                            </svg>
-                                            Guardar datos
+                                            {isLoading ? (
+                                                <>
+                                                    <MdOutlineSaveAlt className="w-5 h-5 animate-spin" />
+                                                    Guardando...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <MdOutlineSaveAlt className="w-5 h-5" />
+                                                    Guardar datos
+                                                </>
+                                            )}
                                         </button>
                                     </div>
-
                                     {/* Nota de privacidad */}
                                     <div className="text-center">
                                         <p className="text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-1">
@@ -482,7 +425,7 @@ const AdvertiserProfileEdit = () => {
                                                 Datos protegidos según nuestra
                                             </span>
                                             <Link
-                                                to="/privacy"
+                                                to="/politica-privacidad"
                                                 className="text-purpleOiches hover:underline"
                                             >
                                                 política de privacidad

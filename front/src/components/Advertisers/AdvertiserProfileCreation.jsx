@@ -1,12 +1,230 @@
+// import { useState, useContext } from 'react';
+// import AuthContext from '../../context/auth/AuthContext.jsx';
+// import { toast } from 'react-toastify';
+// import Toastify from '../Toastify.jsx';
+// import { useParams, Link } from 'react-router-dom';
+// import AdvertiserProfileCreationService from '../../services/Advertisers/AdvertiserProfileCreationService.js';
+// import AccountConfiguration from '../Users/AccountConfiguration.jsx';
+// import useUser from '../../hooks/useUser.jsx';
+// import { IoChevronForward } from 'react-icons/io5';
+
+// const AdvertiserProfileCreation = () => {
+//     const { userLogged, token } = useContext(AuthContext);
+//     const { userId } = useParams();
+//     const userData = useUser(userId);
+
+//     const [formValues, setFormValues] = useState({
+//         nombreEmpresa: '',
+//         nombreContacto: '',
+//         direccion: '',
+//         ciudad: '',
+//         codigoPostal: '',
+//         telefono: '',
+//         cif: '',
+//     });
+
+//     const [error, setError] = useState('');
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+
+//         setFormValues({ ...formValues, [name]: value });
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+
+//         const formData = new FormData();
+//         formData.append('nombreEmpresa', formValues.nombreEmpresa);
+//         formData.append('nombreContacto', formValues.nombreContacto);
+//         formData.append('direccion', formValues.direccion);
+//         formData.append('ciudad', formValues.ciudad);
+//         formData.append('codigoPostal', formValues.codigoPostal);
+//         formData.append('telefono', formValues.telefono);
+//         formData.append('cif', formValues.cif);
+
+//         try {
+//             await AdvertiserProfileCreationService({ token, userId, formData });
+
+//             toast.success(
+//                 'Tus datos han sido guardados correctamente. Ahora puedes publicar anuncios.'
+//             );
+//         } catch (error) {
+//             setError(error.message);
+//             toast.error(error.message);
+//         }
+//     };
+
+//     const {
+//         nombreEmpresa,
+//         nombreContacto,
+//         direccion,
+//         ciudad,
+//         codigoPostal,
+//         telefono,
+//         cif,
+//     } = formValues;
+
+//     return userLogged ? (
+//         <>
+//             <Link
+//                 to={`/users/account/${userId}`}
+//                 className="btn-degradado self-end mb-4 flex items-center gap-2"
+//             >
+//                 Mis anuncios
+//                 <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
+//             </Link>
+//             <h2 className="text-2xl font-semibold text-gray-900 mb-6 mt-6">
+//                 Datos de facturación
+//             </h2>
+//             <form
+//                 onSubmit={handleSubmit}
+//                 className="mb-12 md:flex md:flex-wrap gap-x-8"
+//             >
+//                 <label
+//                     htmlFor="nombreEmpresa"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">Empresa:*</span>
+
+//                     <input
+//                         type="text"
+//                         name="nombreEmpresa"
+//                         placeholder="Nombre de la empresa"
+//                         required
+//                         value={nombreEmpresa}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <label
+//                     htmlFor="nombreContacto"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">Nombre de contacto:</span>
+//                     <input
+//                         type="text"
+//                         name="nombreContacto"
+//                         placeholder="Nombre de contacto"
+//                         value={nombreContacto}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <label
+//                     htmlFor="direccion"
+//                     className="flex flex-col mb-4 md:w-full"
+//                 >
+//                     <span className="font-semibold">Dirección:*</span>
+//                     <input
+//                         type="text"
+//                         name="direccion"
+//                         placeholder="Dirección de la empresa"
+//                         required
+//                         value={direccion}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <label
+//                     htmlFor="ciudad"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">Ciudad:*</span>
+//                     <input
+//                         type="text"
+//                         name="ciudad"
+//                         placeholder="Ciudad"
+//                         required
+//                         value={ciudad}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <label
+//                     htmlFor="codigoPostal"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">Código Postal:*</span>
+//                     <input
+//                         type="text"
+//                         name="codigoPostal"
+//                         placeholder="Código Postal"
+//                         required
+//                         value={codigoPostal}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <label
+//                     htmlFor="telefono"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">Teléfono:</span>
+//                     <input
+//                         type="number"
+//                         name="telefono"
+//                         placeholder="Teléfono de contacto"
+//                         value={telefono}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+//                 <label
+//                     htmlFor="cif"
+//                     className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
+//                 >
+//                     <span className="font-semibold">NIF/CIF:*</span>
+//                     <input
+//                         type="text"
+//                         name="cif"
+//                         placeholder="NIF o CIF de la empresa"
+//                         required
+//                         value={cif}
+//                         onChange={handleChange}
+//                         className="form-input"
+//                     />
+//                 </label>
+
+//                 <input
+//                     type="submit"
+//                     value="Guardar"
+//                     className="btn-account my-8 mx-auto p-3 w-full max-w-80 font-semibold"
+//                 />
+
+//                 <div className="w-full">{error && <p>{error}</p>}</div>
+//             </form>
+//             <AccountConfiguration
+//                 userLogged={userLogged}
+//                 userData={userData}
+//                 userId={userId}
+//                 token={token}
+//             />
+//             <Toastify />
+//         </>
+//     ) : (
+//         <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
+//     );
+// };
+
+// export default AdvertiserProfileCreation;
+
 import { useState, useContext } from 'react';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import { useParams, Link } from 'react-router-dom';
+import { IoBusinessOutline } from 'react-icons/io5';
+import { MdOutlinePlace } from 'react-icons/md';
+import { FaPhoneVolume } from 'react-icons/fa6';
+import { MdOutlineSaveAlt } from 'react-icons/md';
 import AdvertiserProfileCreationService from '../../services/Advertisers/AdvertiserProfileCreationService.js';
 import AccountConfiguration from '../Users/AccountConfiguration.jsx';
 import useUser from '../../hooks/useUser.jsx';
-import { IoChevronForward } from 'react-icons/io5';
 
 const AdvertiserProfileCreation = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -24,14 +242,16 @@ const AdvertiserProfileCreation = () => {
     });
 
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-
         setFormValues({ ...formValues, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
         const formData = new FormData();
         formData.append('nombreEmpresa', formValues.nombreEmpresa);
@@ -44,13 +264,15 @@ const AdvertiserProfileCreation = () => {
 
         try {
             await AdvertiserProfileCreationService({ token, userId, formData });
-
             toast.success(
                 'Tus datos han sido guardados correctamente. Ahora puedes publicar anuncios.'
             );
+            setError('');
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -64,150 +286,467 @@ const AdvertiserProfileCreation = () => {
         cif,
     } = formValues;
 
-    return userLogged ? (
-        <>
-            <Link
-                to={`/users/account/${userId}`}
-                className="btn-degradado self-end mb-4 flex items-center gap-2"
-            >
-                Mis anuncios
-                <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
-            </Link>
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6 mt-6">
-                Datos de facturación
-            </h2>
-            <form
-                onSubmit={handleSubmit}
-                className="mb-12 md:flex md:flex-wrap gap-x-8"
-            >
-                <label
-                    htmlFor="nombreEmpresa"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">Empresa:*</span>
+    if (!userLogged) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="text-center">
+                    <h1 className="text-xl font-medium text-gray-800">
+                        No puedes acceder a esta página
+                    </h1>
+                </div>
+            </div>
+        );
+    }
 
-                    <input
-                        type="text"
-                        name="nombreEmpresa"
-                        placeholder="Nombre de la empresa"
-                        required
-                        value={nombreEmpresa}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+    return (
+        <div className="min-h-screen">
+            {/* Breadcrumb */}
+            <div className="max-w-7xl mx-auto px-4 py-4 bg-white shadow-none">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                    <nav className="text-sm text-gray-600">
+                        <Link
+                            to="/"
+                            className="hover:text-purpleOiches transition-colors"
+                        >
+                            Inicio
+                        </Link>
+                        <span className="mx-2">›</span>
+                        <Link
+                            to={`/users/account/${userId}`}
+                            className="hover:text-purpleOiches transition-colors"
+                        >
+                            Mi cuenta
+                        </Link>
+                        <span className="mx-2">›</span>
+                        <span className="text-gray-800 font-medium">
+                            Configuración
+                        </span>
+                    </nav>
+                    <Link
+                        to={`/users/account/${userId}`}
+                        className="flex items-center justify-center gap-2 px-4 py-2 border border-purpleOiches 
+                                 text-purpleOiches font-medium rounded-lg hover:bg-purpleOiches hover:text-white
+                                 transition-all duration-200 text-sm w-fit"
+                    >
+                        ← Volver a mis anuncios
+                    </Link>
+                </div>
+            </div>
 
-                <label
-                    htmlFor="nombreContacto"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">Nombre de contacto:</span>
-                    <input
-                        type="text"
-                        name="nombreContacto"
-                        placeholder="Nombre de contacto"
-                        value={nombreContacto}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+            {/* Contenido principal */}
+            <div className="max-w-7xl mx-auto px-4 pb-6 sm:pb-12 bg-white">
+                <div className="flex flex-col xl:flex-row gap-12">
+                    {/* Formulario de facturación */}
+                    <div className="flex-1 max-w-4xl">
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
+                            {/* Header de la tarjeta */}
+                            <div className="px-6 py-5 border-b">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
+                                        <IoBusinessOutline className="w-7 h-7 text-white" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xl font-bold text-gray-800">
+                                            Datos de Facturación
+                                        </h2>
+                                        <p className="text-sm text-gray-600">
+                                            Información requerida para procesar
+                                            pagos
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
 
-                <label
-                    htmlFor="direccion"
-                    className="flex flex-col mb-4 md:w-full"
-                >
-                    <span className="font-semibold">Dirección:*</span>
-                    <input
-                        type="text"
-                        name="direccion"
-                        placeholder="Dirección de la empresa"
-                        required
-                        value={direccion}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+                            {/* Contenido del formulario */}
+                            <div className="p-6">
+                                {/* Loading overlay */}
+                                {isLoading && (
+                                    <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center rounded-lg z-10">
+                                        <div className="flex items-center gap-3">
+                                            <svg
+                                                className="w-6 h-6 animate-spin text-purpleOiches"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth={2}
+                                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                                />
+                                            </svg>
+                                            <span className="text-gray-600 font-medium">
+                                                Guardando datos...
+                                            </span>
+                                        </div>
+                                    </div>
+                                )}
 
-                <label
-                    htmlFor="ciudad"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">Ciudad:*</span>
-                    <input
-                        type="text"
-                        name="ciudad"
-                        placeholder="Ciudad"
-                        required
-                        value={ciudad}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="space-y-6"
+                                >
+                                    {/* Información Empresarial */}
+                                    <div className="space-y-4">
+                                        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
+                                            <IoBusinessOutline className="w-7 h-7 text-purpleOiches" />
+                                            Información Empresarial
+                                        </h3>
 
-                <label
-                    htmlFor="codigoPostal"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">Código Postal:*</span>
-                    <input
-                        type="text"
-                        name="codigoPostal"
-                        placeholder="Código Postal"
-                        required
-                        value={codigoPostal}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="nombreEmpresa"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Empresa:*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="nombreEmpresa"
+                                                    id="nombreEmpresa"
+                                                    placeholder="Nombre de la empresa"
+                                                    required
+                                                    value={nombreEmpresa}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
 
-                <label
-                    htmlFor="telefono"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">Teléfono:</span>
-                    <input
-                        type="number"
-                        name="telefono"
-                        placeholder="Teléfono de contacto"
-                        value={telefono}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
-                <label
-                    htmlFor="cif"
-                    className="flex flex-col mb-4 md:w-[calc(50%-1rem)]"
-                >
-                    <span className="font-semibold">NIF/CIF:*</span>
-                    <input
-                        type="text"
-                        name="cif"
-                        placeholder="NIF o CIF de la empresa"
-                        required
-                        value={cif}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </label>
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="cif"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>NIF/CIF:*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="cif"
+                                                    id="cif"
+                                                    placeholder="NIF o CIF de la empresa"
+                                                    required
+                                                    value={cif}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
 
-                <input
-                    type="submit"
-                    value="Guardar"
-                    className="btn-account my-8 mx-auto p-3 w-full max-w-80 font-semibold"
-                />
+                                    {/* Dirección Fiscal */}
+                                    <div className="space-y-4">
+                                        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
+                                            <MdOutlinePlace className="w-6 h-6 text-purpleOiches" />
+                                            Dirección Fiscal
+                                        </h3>
 
-                <div className="w-full">{error && <p>{error}</p>}</div>
-            </form>
-            <AccountConfiguration
-                userLogged={userLogged}
-                userData={userData}
-                userId={userId}
-                token={token}
-            />
+                                        <div className="space-y-1">
+                                            <label
+                                                htmlFor="direccion"
+                                                className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                            >
+                                                <span>Dirección:*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="direccion"
+                                                id="direccion"
+                                                placeholder="Dirección de la empresa"
+                                                required
+                                                value={direccion}
+                                                onChange={handleChange}
+                                                className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                         hover:border-gray-400 transition-all duration-200
+                                                         bg-white shadow-sm"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="ciudad"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Ciudad:*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="ciudad"
+                                                    id="ciudad"
+                                                    placeholder="Ciudad"
+                                                    required
+                                                    value={ciudad}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="codigoPostal"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Código Postal:*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="codigoPostal"
+                                                    id="codigoPostal"
+                                                    placeholder="Código Postal"
+                                                    required
+                                                    value={codigoPostal}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Información de Contacto */}
+                                    <div className="space-y-4">
+                                        <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
+                                            <FaPhoneVolume className="w-4 h-4 text-purpleOiches" />
+                                            Información de Contacto
+                                        </h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="nombreContacto"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>
+                                                        Nombre de contacto:
+                                                    </span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    name="nombreContacto"
+                                                    id="nombreContacto"
+                                                    placeholder="Nombre de contacto"
+                                                    value={nombreContacto}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label
+                                                    htmlFor="telefono"
+                                                    className="flex items-center gap-2 text-sm font-medium text-gray-700"
+                                                >
+                                                    <span>Teléfono:</span>
+                                                </label>
+                                                <input
+                                                    type="tel"
+                                                    name="telefono"
+                                                    id="telefono"
+                                                    placeholder="Teléfono de contacto"
+                                                    value={telefono}
+                                                    onChange={handleChange}
+                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
+                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
+                                                             hover:border-gray-400 transition-all duration-200
+                                                             bg-white shadow-sm"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Error */}
+                                    {error && (
+                                        <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
+                                            <div className="flex items-center gap-2">
+                                                <svg
+                                                    className="w-5 h-5 text-red-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
+                                                    />
+                                                </svg>
+                                                <p className="text-red-700 text-sm font-medium">
+                                                    {error}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Botón de Guardar */}
+                                    {/* <div className="pt-6 border-t border-gray-200">
+                                        <button
+                                            type="submit"
+                                            disabled={isLoading}
+                                            className={`w-full ${
+                                                isLoading
+                                                    ? 'bg-gray-400 cursor-not-allowed'
+                                                    : 'bg-purpleOiches hover:bg-purple-700'
+                                            } text-white 
+                                                     font-semibold py-3 px-6 rounded-lg transition-all duration-200 
+                                                     shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
+                                                     focus:ring-4 focus:ring-purple-200
+                                                     flex items-center justify-center gap-2`}
+                                        >
+                                            {isLoading ? (
+                                                <>
+                                                    <svg
+                                                        className="w-5 h-5 animate-spin"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                                        />
+                                                    </svg>
+                                                    Guardando...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg
+                                                        className="w-5 h-5"
+                                                        fill="none"
+                                                        stroke="currentColor"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"
+                                                        />
+                                                    </svg>
+                                                    Guardar datos
+                                                </>
+                                            )}
+                                        </button>
+                                    </div> */}
+
+                                    {/* Botón de Guardar */}
+                                    <div className="pt-6 border-t border-gray-200">
+                                        <button
+                                            type="submit"
+                                            disabled={isLoading}
+                                            className={`w-full ${
+                                                isLoading
+                                                    ? 'bg-gray-400 cursor-not-allowed'
+                                                    : 'bg-purpleOiches hover:bg-purple-700'
+                                            } text-white 
+                                                        font-semibold py-3 px-6 rounded-lg transition-all duration-200 
+                                                        shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
+                                                        focus:ring-4 focus:ring-purple-200
+                                                        flex items-center justify-center gap-2`}
+                                        >
+                                            {isLoading ? (
+                                                <>
+                                                    <MdOutlineSaveAlt className="w-5 h-5 animate-spin" />
+                                                    Guardando...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <MdOutlineSaveAlt className="w-5 h-5" />
+                                                    Guardar datos
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+
+                                    {/* Nota de privacidad */}
+                                    <div className="text-center">
+                                        <p className="text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-1">
+                                            <span className="flex items-center gap-1">
+                                                <svg
+                                                    className="w-3 h-3 text-gray-400"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                                                    />
+                                                </svg>
+                                                Datos protegidos según nuestra
+                                            </span>
+                                            <Link
+                                                to="/politica-privacidad"
+                                                className="text-purpleOiches hover:underline"
+                                            >
+                                                política de privacidad
+                                            </Link>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Sidebar de configuración */}
+                    <div className="flex-1 w-full sm:max-w-md">
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 sticky top-0">
+                            <div className="px-6 py-4 border-b">
+                                <h3 className="font-bold text-gray-800 flex items-center gap-2">
+                                    <svg
+                                        className="w-5 h-5 text-purpleOiches"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                                        />
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                        />
+                                    </svg>
+                                    Configuración de Cuenta
+                                </h3>
+                            </div>
+                            <div className="px-6 pb-6">
+                                <AccountConfiguration
+                                    userLogged={userLogged}
+                                    userData={userData}
+                                    userId={userId}
+                                    token={token}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <Toastify />
-        </>
-    ) : (
-        <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
+        </div>
     );
 };
 
