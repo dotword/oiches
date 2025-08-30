@@ -20,6 +20,7 @@ import {
     editAdvertController,
     getAdvertDetailsController,
     editAdvertPosterController,
+    deleteAdvertController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -96,16 +97,18 @@ router.put(
     editAdvertPosterController
 );
 
-// // Endpoint para que un usuario pueda borrar su notice
-// router.delete(
-//     '/delete-notice/:idNotice',
-//     authUser,
-//     userExists,
-//     canEditNotice,
-//     deleteNoticeController
-// );
+// // Endpoint para que un anunciante pueda borrar su anuncio
+router.delete(
+    '/delete-advert/:idAdvert',
+    authUser,
+    userExists,
+    canEditAdvert,
+    deleteAdvertController
+);
 
 // // Endpoint para listar y filtrar notice aprobadas
 // router.get('/noticeboard?', listNoticesController);
+
+// Endpoint para mostrar las estadísticas de cada anuncio
 
 export default router;

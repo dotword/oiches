@@ -10,6 +10,7 @@ import FetchAdvertCategoriesService from '../../services/Advertisers/FetchAdvert
 import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPackagesService.js';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import EditAdvertPhoto from './EditAdvertPhoto.jsx';
+import DeleteAdvert from './DeleteAdvert.jsx';
 
 const AdvertDetailsEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -309,6 +310,15 @@ const AdvertDetailsEdit = () => {
 
                 <div className="w-full">{error && <p>{error}</p>}</div>
             </form>
+            {advertData.status !== 'pubished' && (
+                <DeleteAdvert
+                    userLogged={userLogged}
+                    token={token}
+                    id={idAdvert}
+                    status={advertData.status}
+                />
+            )}
+            <div className="flex justify-end my-8 lg:w-full"></div>
 
             <Toastify />
         </>
