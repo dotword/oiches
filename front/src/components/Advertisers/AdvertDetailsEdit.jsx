@@ -310,7 +310,7 @@ const AdvertDetailsEdit = () => {
 
                 <div className="w-full">{error && <p>{error}</p>}</div>
             </form>
-            {advertData && advertData.status !== 'pubished' && (
+            {advertData.status !== 'pubished' && (
                 <DeleteAdvert
                     userLogged={userLogged}
                     token={token}
