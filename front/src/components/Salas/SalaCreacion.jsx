@@ -118,8 +118,6 @@ const SalaCreacion = () => {
         web,
     } = formValues;
 
-    console.log(userLogged);
-
     return userLogged ? (
         <>
             <form onSubmit={handleSubmit} className="md:flex md:flex-wrap">
