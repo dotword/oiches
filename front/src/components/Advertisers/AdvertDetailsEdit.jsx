@@ -49,7 +49,7 @@ const AdvertDetailsEdit = () => {
             city: advertData.city || '',
             provincia_id: advertData.provincia_id || '',
             title: advertData.title || '',
-            description: advertData.description || '',
+            description: advertData.advert_description || '',
             link: advertData.link || '',
             contact_email: advertData.contact_email || '',
             contact_phone: advertData.contact_phone || '',
@@ -202,7 +202,7 @@ const AdvertDetailsEdit = () => {
                         onChange={(e) =>
                             setAdvertDetails({
                                 ...advertDetails,
-                                description: e.target.value,
+                                address: e.target.value,
                             })
                         }
                         className="form-input"
@@ -310,7 +310,7 @@ const AdvertDetailsEdit = () => {
 
                 <div className="w-full">{error && <p>{error}</p>}</div>
             </form>
-            {advertData.status !== 'pubished' && (
+            {advertData && advertData.status !== 'pubished' && (
                 <DeleteAdvert
                     userLogged={userLogged}
                     token={token}

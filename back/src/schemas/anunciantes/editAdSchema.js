@@ -16,7 +16,10 @@ const editAdSchema = Joi.object({
         .max(60)
         .messages(joiErrorMessages),
     title: Joi.string().max(200).allow('').messages(joiErrorMessages),
-    description: Joi.string().max(2000).allow('').messages(joiErrorMessages),
+    description: Joi.string()
+        .max(2000)
+        .allow('', null)
+        .messages(joiErrorMessages),
     link: Joi.string().uri().optional().allow('').messages(joiErrorMessages),
     contact_email: Joi.string()
         .email()

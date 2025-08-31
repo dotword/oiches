@@ -1,6 +1,6 @@
 import getPool from '../../database/getPool.js';
 
-const editAdvertService = async (idNotice, updatedFields) => {
+const editAdvertService = async (idAdvert, updatedFields) => {
     const pool = await getPool();
 
     // Crear las partes de la consulta dinámicamente según los campos proporcionados
@@ -12,7 +12,7 @@ const editAdvertService = async (idNotice, updatedFields) => {
     }
 
     if (fields.length !== 0) {
-        values.push(idNotice);
+        values.push(idAdvert);
 
         const query = `
                 UPDATE ad_classifieds
