@@ -61,6 +61,7 @@ const main = async () => {
             precios INT,
             direccion VARCHAR(255) NOT NULL,
             ciudad VARCHAR(255) NOT NULL,
+            googleMapUrl VARCHAR(500) NULL,
             condiciones TEXT,
             equipamiento TEXT,
             web VARCHAR(255),

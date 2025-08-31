@@ -23,6 +23,7 @@ const createSalaController = async (req, res, next) => {
             condiciones,
             equipamiento,
             web,
+            googleMapUrl,
         } = req.body;
 
         // Validamos el body con Joi.
@@ -42,6 +43,7 @@ const createSalaController = async (req, res, next) => {
             precios,
             direccion,
             ciudad,
+            googleMapUrl,
             condiciones,
             equipamiento,
             web,
@@ -75,6 +77,7 @@ const createSalaController = async (req, res, next) => {
                     precios,
                     direccion,
                     ciudad,
+                    googleMapUrl,
                     condiciones,
                     equipamiento,
                     web,

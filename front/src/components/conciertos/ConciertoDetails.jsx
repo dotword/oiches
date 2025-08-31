@@ -4,7 +4,6 @@ import { FaPencilAlt } from 'react-icons/fa';
 import useConcierto from '../../hooks/useConcierto.jsx';
 import useAuth from '../../hooks/useAuth.jsx';
 import Seo from '../SEO/Seo.jsx';
-import MapShow from '../MapShow.jsx';
 import TarjetaEvento from './TarjetaEvento.jsx';
 
 const ConciertoDetail = () => {
@@ -12,12 +11,7 @@ const ConciertoDetail = () => {
     const { conciertoId } = useParams();
     const { concierto, isLoading, error } = useConcierto(conciertoId); // estado de carga y errores
     const { userLogged } = useAuth();
-    const [formattedAddress, setFormattedAddress] = useState('');
     const [isOpen, setIsOpen] = useState(false); // Estado del modal de imagen apertura y demas
-
-    const handleAddressChange = (newAddress) => {
-        setFormattedAddress(newAddress);
-    };
 
     // Funciones utilitarias
     const formatDate = (dateString) => {
@@ -220,19 +214,14 @@ const ConciertoDetail = () => {
                     <h2 className="text-2xl font-bold mb-4">{sala}</h2>
                     <p className="mb-2">
                         <span className="font-semibold">Dirección: </span>{' '}
-                        {formattedAddress}
+                        {direccion}, {ciudad}, {provincia}
                     </p>
                     {infoSala && (
                         <p className="text-gray-700">
                             {limitText(infoSala, 1000)}
                         </p>
                     )}
-                    <div className="mt-4">
-                        <MapShow
-                            direccion={direccion}
-                            onAddressChange={handleAddressChange}
-                        />
-                    </div>
+
                     <a
                         href={`/sala/${sala_id}`}
                         target="_blank"
