@@ -28,7 +28,12 @@ const getAdvertDetailsService = async (idAdvert) => {
         ad_classifieds.updatedAt,
         ad_categories.name AS categoria,
         ad_packages.package AS package,
-        provincias.provincia AS provincia
+        provincias.provincia AS provincia,
+        COALESCE((
+          SELECT SUM(s2.clicks)
+          FROM ad_classified_stats s2
+          WHERE s2.classified_id = ad_classifieds.id
+        ), 0) AS clicks
     FROM ad_classifieds
     LEFT JOIN ad_categories ON ad_categories.id = ad_classifieds.category_id
     LEFT JOIN ad_packages ON ad_packages.id = ad_classifieds.package_id    

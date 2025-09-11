@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import ListarAllNotices from '../../components/Admin/ListarAllNotices';
+import AdvertisersList from '../../components/Advertisers/AdvertisersList';
 import AuthContext from '../../context/auth/AuthContext';
 
-const AdminNoticeboard = () => {
+const AdminAdvertisersDashboard = () => {
     const { userLogged, token } = useContext(AuthContext);
     return userLogged && userLogged.roles === 'admin' ? (
         <motion.div
@@ -13,9 +13,9 @@ const AdminNoticeboard = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Listado de Se Busca" />
+            <Header txt="Listado de Anuncios" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
-                <ListarAllNotices token={token} />
+                <AdvertisersList token={token} />
             </main>
             <Footer />
         </motion.div>
@@ -24,4 +24,4 @@ const AdminNoticeboard = () => {
     );
 };
 
-export default AdminNoticeboard;
+export default AdminAdvertisersDashboard;

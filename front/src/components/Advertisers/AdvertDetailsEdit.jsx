@@ -14,6 +14,8 @@ import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPa
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import EditAdvertPhoto from './EditAdvertPhoto.jsx';
 import DeleteAdvert from './DeleteAdvert.jsx';
+import AdminPubishAdvert from './AdminPubishAdvert.jsx';
+import ResetAdvertClicks from './ResetAdvertClicks.jsx';
 
 const AdvertDetailsEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -35,6 +37,9 @@ const AdvertDetailsEdit = () => {
         contact_email: '',
         contact_phone: '',
         image_url: '',
+        status: '',
+        expiresAt: '',
+        publishedAt: '',
     });
 
     const [categories, setCategories] = useState([]);
@@ -57,6 +62,9 @@ const AdvertDetailsEdit = () => {
             link: advertData.link || '',
             contact_email: advertData.contact_email || '',
             contact_phone: advertData.contact_phone || '',
+            status: advertData.status || '',
+            expiresAt: advertData.expiresAt || '',
+            publishedAt: advertData.publishedAt || '',
         });
     }, [advertData]);
 
@@ -128,7 +136,9 @@ const AdvertDetailsEdit = () => {
                         </span>
                     </nav>
                     <button
-                        onClick={() => navigate(`/users/account/${userLogged.id}`)}
+                        onClick={() =>
+                            navigate(`/users/account/${userLogged.id}`)
+                        }
                         className="flex items-center justify-center gap-2 px-4 py-2 border border-purpleOiches 
                                  text-purpleOiches font-medium rounded-lg hover:bg-purpleOiches hover:text-white
                                  transition-all duration-200 text-sm w-fit"
@@ -160,10 +170,7 @@ const AdvertDetailsEdit = () => {
 
                     {/* Contenido del formulario */}
                     <div className="p-6">
-                        <form
-                            onSubmit={handleSubmit}
-                            className="space-y-8"
-                        >
+                        <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Imagen del Anuncio */}
                             <div className="space-y-6">
                                 <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
@@ -172,7 +179,10 @@ const AdvertDetailsEdit = () => {
                                 </h3>
 
                                 <div className="space-y-4">
-                                    <EditAdvertPhoto advertData={advertData} token={token} />
+                                    <EditAdvertPhoto
+                                        advertData={advertData}
+                                        token={token}
+                                    />
                                 </div>
                             </div>
 
@@ -209,7 +219,10 @@ const AdvertDetailsEdit = () => {
                                         >
                                             <option value="">Selecciona</option>
                                             {packages.map((pack) => (
-                                                <option key={pack.id} value={pack.id}>
+                                                <option
+                                                    key={pack.id}
+                                                    value={pack.id}
+                                                >
                                                     {pack.package}
                                                 </option>
                                             ))}
@@ -241,7 +254,10 @@ const AdvertDetailsEdit = () => {
                                         >
                                             <option value="">Selecciona</option>
                                             {categories.map((categorie) => (
-                                                <option key={categorie.id} value={categorie.id}>
+                                                <option
+                                                    key={categorie.id}
+                                                    value={categorie.id}
+                                                >
                                                     {categorie.name}
                                                 </option>
                                             ))}
@@ -377,7 +393,8 @@ const AdvertDetailsEdit = () => {
                                             onChange={(e) =>
                                                 setAdvertDetails({
                                                     ...advertDetails,
-                                                    provincia_id: e.target.value,
+                                                    provincia_id:
+                                                        e.target.value,
                                                 })
                                             }
                                             className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
@@ -387,7 +404,10 @@ const AdvertDetailsEdit = () => {
                                         >
                                             <option value="">Selecciona</option>
                                             {provinces.map((province) => (
-                                                <option key={province.id} value={province.id}>
+                                                <option
+                                                    key={province.id}
+                                                    value={province.id}
+                                                >
                                                     {province.provincia}
                                                 </option>
                                             ))}
@@ -455,7 +475,7 @@ const AdvertDetailsEdit = () => {
                                                      bg-white shadow-sm"
                                         />
                                     </div>
-                                    
+
                                     <div className="space-y-2">
                                         <label
                                             htmlFor="contact_phone"
@@ -472,7 +492,8 @@ const AdvertDetailsEdit = () => {
                                             onChange={(e) =>
                                                 setAdvertDetails({
                                                     ...advertDetails,
-                                                    contact_phone: e.target.value,
+                                                    contact_phone:
+                                                        e.target.value,
                                                 })
                                             }
                                             className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg

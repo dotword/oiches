@@ -304,6 +304,17 @@ button.react-calendar__navigation__arrow {
     .concurso_winners-card {
         @apply text-white w-full flex flex-col justify-end h-[35rem] max-w-[25rem] px-8 py-2 mb-8 bg-cover bg-center shadow-md cursor-pointer transition-transform duration-500 transform hover:scale-105 hover:z-10 relative inset-0 md:h-[40rem];
     }
+
+    /* CLASFICADOS */
+    .card-ads {
+        @apply bg-greyOiches text-white rounded-lg shadow-lg cursor-pointer w-full flex flex-col h-full relative;
+    }
+    .grupo-list .package-4,
+    .grupo-list .package-5,
+    .grupo-list .package-6,
+    .grupo-list .package-7 {
+        @apply bg-footercolor;
+    }
 }
 
 .active:not(.btn-account) {

@@ -6,6 +6,7 @@ import {
     userExists,
     checkIfAdvertiser,
     canEditAdvert,
+    isAdmin,
 } from '../middleware/index.js';
 
 // Funciones controladoras finales
@@ -21,6 +22,12 @@ import {
     getAdvertDetailsController,
     editAdvertPosterController,
     deleteAdvertController,
+    listAdvertsController,
+    publishAdvertController,
+    listPublishedAdvertsController,
+    clickAdvertController,
+    getAdvertClicksController,
+    resetAdvertClicksController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -106,9 +113,32 @@ router.delete(
     deleteAdvertController
 );
 
-// // Endpoint para listar y filtrar notice aprobadas
-// router.get('/noticeboard?', listNoticesController);
+// Endpoint para que el admin pueda listar y filtrar todos los advert
+router.get('/adverts?', authUser, isAdmin, listAdvertsController);
 
-// Endpoint para mostrar las estadísticas de cada anuncio
+// Endpoint listar y filtrar los advert publicados
+router.get('/published-adverts?', listPublishedAdvertsController);
+
+// Endpoint para que el admin apruebe un anuncio
+router.put(
+    '/published-advert/:idAdvert',
+    authUser,
+    isAdmin,
+    publishAdvertController
+);
+
+// Endpoint cuando el anuncio es clicado
+router.post('/adverts/:id/click', clickAdvertController);
+
+// Endpoint para leer el contador
+router.get('/adverts/:id/clicks', getAdvertClicksController);
+
+// Endpoint para resetear los clics de un anuncio
+router.delete(
+    '/delete-clics/:idAdvert',
+    authUser,
+    isAdmin,
+    resetAdvertClicksController
+);
 
 export default router;

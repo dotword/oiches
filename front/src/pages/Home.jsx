@@ -10,9 +10,7 @@ import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
-// import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
-import ConcertBanner from '../components/Concurso/ConcertBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -98,10 +96,8 @@ const Home = () => {
                 className="overflow-hidden"
             >
                 <HeaderHero />
-                {/* Componente banner anuncio concurso */}
-                <ConcertBanner />
-                {/* Hero Section hero banner comentado para usar banner concurso, descomentar y eliminar comoponente MusicanContestBanner*/}
-                {/* <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
+
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu banda sonora
@@ -114,6 +110,12 @@ const Home = () => {
                             ¡Vive la música en cada rincón!
                         </p>
                         <div className="flex gap-4">
+                            <Link
+                                to="/clasificados"
+                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                            >
+                                Clasificados
+                            </Link>
                             <Link
                                 to="/grupos"
                                 className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
@@ -128,7 +130,7 @@ const Home = () => {
                             </Link>
                         </div>
                     </div>
-                </section> */}
+                </section>
                 {/* Main Content */}
                 <main className="mb-20 md:mb-28">
                     {/* Músicos más votados */}

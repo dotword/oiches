@@ -9,6 +9,12 @@ import editAdvertController from './editAdvertController.js';
 import getAdvertDetailsController from './getAdvertDetailsController.js';
 import editAdvertPosterController from './editAdvertPosterController.js';
 import deleteAdvertController from './deleteAdvertController.js';
+import listAdvertsController from './listAdvertsController.js';
+import publishAdvertController from './publishAdvertController.js';
+import listPublishedAdvertsController from './listPublishedAdvertsController.js';
+import clickAdvertController from './clickAdvertController.js';
+import getAdvertClicksController from './getAdvertClicksController.js';
+import resetAdvertClicksController from './resetAdvertClicksController.js';
 
 export {
     createAdvertiserController,
@@ -22,4 +28,10 @@ export {
     getAdvertDetailsController,
     editAdvertPosterController,
     deleteAdvertController,
+    listAdvertsController,
+    publishAdvertController,
+    listPublishedAdvertsController,
+    clickAdvertController,
+    getAdvertClicksController,
+    resetAdvertClicksController,
 };

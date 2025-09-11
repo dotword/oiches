@@ -10,7 +10,6 @@ const editAdvertiserService = async (userId, updatedFields) => {
         [userId]
     );
 
-    console.log('advertiser', advertiser);
     if (advertiser.length === 0)
         throw generateErrorsUtil('Anunciante no encontrado', 404);
     if (advertiser[0].user_id !== userId)

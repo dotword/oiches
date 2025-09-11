@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import UsersList from '../../components/Admin/UsersList';
-import ListarAllReservas from '../../components/Admin/ListarAllReservas';
 import AuthContext from '../../context/auth/AuthContext';
 
 const AdminDashboard = () => {
@@ -14,10 +13,9 @@ const AdminDashboard = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Admin Dashboard" />
+            <Header txt="Músicos, salas y agencias" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
                 <UsersList token={token} />
-                <ListarAllReservas token={token} />
             </main>
             <Footer />
         </motion.div>

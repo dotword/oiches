@@ -374,7 +374,7 @@ const main = async () => {
                 contact_email VARCHAR(255) NULL,
                 contact_phone VARCHAR(50) NULL,
                 image_url VARCHAR(255) NOT NULL,
-                status ENUM('pending','published','expired') NOT NULL DEFAULT 'pending',
+                status BOOLEAN NOT NULL DEFAULT FALSE,
                 publishedAt DATETIME NULL,
                 expiresAt DATETIME NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -388,11 +388,22 @@ const main = async () => {
 
         await pool.query(`
             CREATE TABLE IF NOT EXISTS ad_classified_stats (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
                 classified_id CHAR(36) NOT NULL,
-                views INT DEFAULT 0,
                 clicks INT DEFAULT 0,
                 last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                FOREIGN KEY (classified_id) REFERENCES ad_classifieds(id)
+            );
+        `);
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS ad_classified_clicks (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                classified_id CHAR(36) NOT NULL,
+                user_id INT NULL,
+                ip VARBINARY(16) NULL,
+                user_agent TEXT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (classified_id) REFERENCES ad_classifieds(id)
             );
         `);
