@@ -167,25 +167,40 @@ const AdvertDetailsEdit = () => {
                             </div>
                         </div>
                     </div>
-
+                    {userLogged && userLogged.roles === 'admin' && (
+                        <>
+                            <AdminPubishAdvert
+                                idAdvert={idAdvert}
+                                newExpiresAt={advertDetails.expiresAt}
+                                publishedAt={advertDetails.publishedAt}
+                                status={advertDetails.status}
+                                userLogged={userLogged}
+                                token={token}
+                            />
+                            <ResetAdvertClicks
+                                clicks={advertData.clicks}
+                                token={token}
+                                idAdvert={idAdvert}
+                            />
+                        </>
+                    )}
                     {/* Contenido del formulario */}
                     <div className="p-6">
-                        <form onSubmit={handleSubmit} className="space-y-8">
-                            {/* Imagen del Anuncio */}
-                            <div className="space-y-6">
-                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                                    <IoImageOutline className="w-5 h-5 text-purpleOiches" />
-                                    IMAGEN DEL ANUNCIO
-                                </h3>
+                        {/* Imagen del Anuncio */}
+                        <div className="space-y-6">
+                            <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                <IoImageOutline className="w-5 h-5 text-purpleOiches" />
+                                IMAGEN DEL ANUNCIO
+                            </h3>
 
-                                <div className="space-y-4">
-                                    <EditAdvertPhoto
-                                        advertData={advertData}
-                                        token={token}
-                                    />
-                                </div>
+                            <div className="space-y-4">
+                                <EditAdvertPhoto
+                                    advertData={advertData}
+                                    token={token}
+                                />
                             </div>
-
+                        </div>
+                        <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Información del Anuncio */}
                             <div className="space-y-6">
                                 <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
