@@ -8,15 +8,12 @@ import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPa
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import AdvertNewCreationService from '../../services/Advertisers/AdvertNewCreationService.js';
 import { IoChevronForward } from 'react-icons/io5';
-import { IoPricetagOutline } from "react-icons/io5";
-import { MdOutlinePlace } from "react-icons/md";
-import { IoMailOutline } from "react-icons/io5";
-import { CiImageOn } from "react-icons/ci"
-import { TfiWrite } from "react-icons/tfi";
-import { FiSend } from "react-icons/fi";
-
-
-
+import { IoPricetagOutline } from 'react-icons/io5';
+import { MdOutlinePlace } from 'react-icons/md';
+import { IoMailOutline } from 'react-icons/io5';
+import { CiImageOn } from 'react-icons/ci';
+import { TfiWrite } from 'react-icons/tfi';
+import { FiSend } from 'react-icons/fi';
 
 const AdvertNewCreation = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -123,11 +120,11 @@ const AdvertNewCreation = () => {
     } = formValues;
 
     return userLogged ? (
-        <div className="min-h-screen bg-transparent pt-20">
+        <div className="min-h-screen bg-transparent pt-10 md:pt-20">
             <div className="mx-auto w-full text-center">
-                <p className="mt-2 font-bold tracking-tight text-white sm:text-4xl">
+                <h1 className="mb-2 text-2xl font-bold tracking-tight text-white sm:text-4xl">
                     Crear nuevo anuncio
-                </p>
+                </h1>
             </div>
             <div className="mx-auto pb-20 mt-4 w-full px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-52">
                 <Link
@@ -138,16 +135,13 @@ const AdvertNewCreation = () => {
                     <IoChevronForward className="text-xl" />
                 </Link>
                 <div className="mx-auto w-full text-center">
-                    <h1 className="text-base font-semibold leading-7 text-indigo-400">
+                    <h2 className="text-base font-semibold leading-7 text-indigo-400">
                         Tarifas de anuncios
-                    </h1>
-                    <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                        Elige el tipo de anuncio que mejor se adapta a ti.
+                    </h2>
+                    <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                        Selecciona el paquete que prefieras para tu anuncio.
                     </p>
                 </div>
-                <p className="mx-auto mt-6 w-full text-center text-lg leading-8 text-gray-300">
-                    Selecciona el paquete que prefieras para tu anuncio.
-                </p>
 
                 <div className="isolate mx-auto mt-10 grid w-full grid-cols-1 gap-8 lg:grid-cols-3">
                     {/* Card 1 - Anuncio Básico */}
@@ -470,7 +464,6 @@ const AdvertNewCreation = () => {
                     <div className="mx-0 sm:mx-auto w-full p-4 rounded mb-4 sm:mb-6">
                         <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
                             <IoPricetagOutline className="text-purpleOiches" />
-
                             Información del Anuncio
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -494,7 +487,6 @@ const AdvertNewCreation = () => {
                                     ))}
                                 </select>
                             </label>
-                           
 
                             <label className="flex flex-col w-full">
                                 <span className="font-semibold text-gray-200 mb-2">
@@ -530,8 +522,7 @@ const AdvertNewCreation = () => {
                     {/* Sección 2: Contenido del Anuncio */}
                     <div className="mx-0 sm:mx-auto w-full p-4 sm:p-6 rounded-xl  mb-4 sm:mb-6">
                         <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                           <TfiWrite className="text-purpleOiches" />
-
+                            <TfiWrite className="text-purpleOiches" />
                             Contenido del Anuncio
                         </h3>
                         <div className="space-y-4 sm:space-y-6">
@@ -569,7 +560,6 @@ const AdvertNewCreation = () => {
                     <div className="mx-0 sm:mx-auto w-full p-4 rounded mb-4 sm:mb-6">
                         <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
                             <MdOutlinePlace className="text-purpleOiches" />
-
                             Ubicación
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
@@ -677,8 +667,7 @@ const AdvertNewCreation = () => {
                     {/* Sección 5: Imagen del Anuncio */}
                     <div className="p-4 sm:p-6 rounded-xl mb-4 sm:mb-6">
                         <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                           <CiImageOn className="text-purpleOiches" />
-
+                            <CiImageOn className="text-purpleOiches" />
                             Imagen del Anuncio
                         </h3>
                         <label className="flex flex-col w-full">
@@ -730,8 +719,7 @@ const AdvertNewCreation = () => {
                             type="submit"
                             className="bg-purpleOiches hover:bg-moradoOiches  text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                         >
-                           <FiSend />
-
+                            <FiSend />
                             Enviar Anuncio
                         </button>
                     </div>
