@@ -96,6 +96,7 @@ const UsersList = ({ token }) => {
                         <option value="sala">Salas</option>
                         <option value="grupo">Músicos</option>
                         <option value="agencia">Agencias</option>
+                        <option value="anunciante">Anunciantes</option>
                         <option value="admin">Admin</option>
                     </select>
                     <select
@@ -152,18 +153,31 @@ const UsersList = ({ token }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsers.map((filteredUsers, index) => (
-                                <tr key={`${index}`}>
+                            {filteredUsers.map((filteredUsers) => (
+                                <tr key={`${filteredUsers.usuario_id}`}>
                                     <td>
-                                        <Link
-                                            to={`/users/account/${filteredUsers.usuario_id}`}
-                                            target="_blank"
-                                        >
-                                            <span className="flex gap-1 items-center justify-center md:justify-start">
-                                                {filteredUsers.username}
-                                                <FiExternalLink />
-                                            </span>
-                                        </Link>
+                                        {filteredUsers.roles ===
+                                        'anunciante' ? (
+                                            <Link
+                                                to={`/advertiser-details/edit/${filteredUsers.usuario_id}`}
+                                                target="_blank"
+                                            >
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                    {filteredUsers.username}
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
+                                        ) : (
+                                            <Link
+                                                to={`/users/account/${filteredUsers.usuario_id}`}
+                                                target="_blank"
+                                            >
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                    {filteredUsers.username}
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
+                                        )}
                                     </td>
                                     <td>{filteredUsers.active}</td>
                                     <td>{filteredUsers.roles}</td>

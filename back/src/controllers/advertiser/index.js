@@ -15,6 +15,7 @@ import listPublishedAdvertsController from './listPublishedAdvertsController.js'
 import clickAdvertController from './clickAdvertController.js';
 import getAdvertClicksController from './getAdvertClicksController.js';
 import resetAdvertClicksController from './resetAdvertClicksController.js';
+import renewAdvertController from './renewAdvertController.js';
 
 export {
     createAdvertiserController,
@@ -34,4 +35,5 @@ export {
     clickAdvertController,
     getAdvertClicksController,
     resetAdvertClicksController,
+    renewAdvertController,
 };

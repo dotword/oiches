@@ -2,15 +2,16 @@ import { useState, useContext, useEffect } from 'react';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { IoBusinessOutline } from 'react-icons/io5';
 import { MdOutlinePlace } from 'react-icons/md';
 import { FaPhoneVolume } from 'react-icons/fa6';
-import { MdOutlineSaveAlt } from "react-icons/md";
 import AccountConfiguration from '../Users/AccountConfiguration.jsx';
 import useUser from '../../hooks/useUser.jsx';
 import useAdvertiserProfile from '../../hooks/useAdvertiserProfile';
 import AdvertiserProfileEditService from '../../services/Advertisers/AdvertiserProfileEditService.js';
+import BreadcrumbAdvert from './BreadcrumbAdvert.jsx';
+import SubmitButton from './SubmitButton.jsx';
 
 const AdvertiserProfileEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -18,6 +19,7 @@ const AdvertiserProfileEdit = () => {
 
     const profile = useAdvertiserProfile({ userId, token });
     const userData = useUser(userId);
+    const navigate = useNavigate();
 
     const [companyDetails, setCompanyDetails] = useState({
         company_name: '',
@@ -31,9 +33,8 @@ const AdvertiserProfileEdit = () => {
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const title = 'Editar datos de facturación';
 
-    // Inicializar companyDetails cuando profile se cargue (solo si el form está vacío
-    // para evitar sobreescribir mientras el usuario escribe)
     useEffect(() => {
         if (!profile || !profile.advertiser) return;
 
@@ -71,6 +72,9 @@ const AdvertiserProfileEdit = () => {
         try {
             await AdvertiserProfileEditService({ token, userId, formData });
             toast.success('Tus datos han sido guardados correctamente.');
+            setTimeout(() => {
+                navigate(`/users/account/${userLogged.id}`);
+            }, 3000);
         } catch (error) {
             setError(error.message);
             toast.error(error.message);
@@ -92,41 +96,8 @@ const AdvertiserProfileEdit = () => {
     }
 
     return (
-    <div className="min-h-screen ">
-            {/* Breadcrumb */}
-            <div className="max-w-7xl mx-auto px-4 py-4 bg-white">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                    <nav className="text-sm text-gray-600">
-                        <Link
-                            to="/"
-                            className="hover:text-purpleOiches transition-colors"
-                        >
-                            Inicio
-                        </Link>
-                        <span className="mx-2">›</span>
-                        <Link
-                            to={`/users/account/${userId}`}
-                            className="hover:text-purpleOiches transition-colors"
-                        >
-                            Mi cuenta
-                        </Link>
-                        <span className="mx-2">›</span>
-                        <span className="text-gray-800 font-medium">
-                            Configuración
-                        </span>
-                    </nav>
-
-                    {/* Botón volver a mis anuncios */}
-                    <Link
-                        to={`/users/account/${userId}`}
-                        className="flex items-center justify-center gap-2 px-4 py-2 border border-purpleOiches 
-                                 text-purpleOiches font-medium rounded-lg hover:bg-purpleOiches hover:text-white
-                                 transition-all duration-200 text-sm w-fit"
-                    >
-                        ← Volver a mis anuncios
-                    </Link>
-                </div>
-            </div>
+        <div className="min-h-screen ">
+            <BreadcrumbAdvert userLogged={userLogged} title={title} />
 
             {/* Contenido principal */}
             <div className="max-w-7xl mx-auto px-4 pb-6 sm:pb-12 bg-white">
@@ -142,7 +113,7 @@ const AdvertiserProfileEdit = () => {
                                     </div>
                                     <div>
                                         <h2 className="text-xl font-bold text-gray-800">
-                                            Datos de Facturación
+                                            {title}
                                         </h2>
                                         <p className="text-sm text-gray-600">
                                             Información requerida para procesar
@@ -162,7 +133,7 @@ const AdvertiserProfileEdit = () => {
                                     <div className="space-y-4">
                                         <h3 className="flex items-center gap-2 text-sm font-semibold text-gray-700 uppercase tracking-wide border-b border-gray-200 pb-2">
                                             <IoBusinessOutline className="w-7 h-7 text-purpleOiches" />
-                                            Información Empresarial
+                                            Información empresarial
                                         </h3>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -183,10 +154,7 @@ const AdvertiserProfileEdit = () => {
                                                         companyDetails.company_name
                                                     }
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                             hover:border-gray-400 transition-all duration-200
-                                                             bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
 
@@ -207,10 +175,7 @@ const AdvertiserProfileEdit = () => {
                                                         companyDetails.tax_id
                                                     }
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                             focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                             hover:border-gray-400 transition-all duration-200
-                                                             bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
                                         </div>
@@ -242,10 +207,7 @@ const AdvertiserProfileEdit = () => {
                                                     companyDetails.billing_address
                                                 }
                                                 onChange={handleChange}
-                                                className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                                className="form-input px-3 py-2"
                                             />
                                         </div>
 
@@ -265,10 +227,7 @@ const AdvertiserProfileEdit = () => {
                                                     required
                                                     value={companyDetails.city}
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                         hover:border-gray-400 transition-all duration-200
-                                                         bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -288,10 +247,7 @@ const AdvertiserProfileEdit = () => {
                                                         companyDetails.postal_code
                                                     }
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                         focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                         hover:border-gray-400 transition-all duration-200
-                                                         bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
                                         </div>
@@ -322,10 +278,7 @@ const AdvertiserProfileEdit = () => {
                                                         companyDetails.contact_name
                                                     }
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                        focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                        hover:border-gray-400 transition-all duration-200
-                                                        bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
                                             <div className="space-y-1">
@@ -344,10 +297,7 @@ const AdvertiserProfileEdit = () => {
                                                         companyDetails.contact_phone
                                                     }
                                                     onChange={handleChange}
-                                                    className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                        focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                        hover:border-gray-400 transition-all duration-200
-                                                        bg-white shadow-sm"
+                                                    className="form-input px-3 py-2"
                                                 />
                                             </div>
                                         </div>
@@ -356,82 +306,16 @@ const AdvertiserProfileEdit = () => {
                                     {/* Error */}
                                     {error && (
                                         <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
-                                            <div className="flex items-center gap-2">
-                                                <svg
-                                                    className="w-5 h-5 text-red-400"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
-                                                    />
-                                                </svg>
-                                                <p className="text-red-700 text-sm font-medium">
-                                                    {error}
-                                                </p>
-                                            </div>
+                                            <p className="text-red-700 text-sm font-medium">
+                                                {error}
+                                            </p>
                                         </div>
                                     )}
 
-                                        {/* Botón de Guardar */}
-                                    <div className="pt-6 border-t border-gray-200">
-                                        <button
-                                            type="submit"
-                                            disabled={isLoading}
-                                            className={`w-full ${
-                                                isLoading
-                                                    ? 'bg-gray-400 cursor-not-allowed'
-                                                    : 'bg-purpleOiches hover:bg-purple-700'
-                                            } text-white 
-                                                        font-semibold py-3 px-6 rounded-lg transition-all duration-200 
-                                                        shadow-lg hover:shadow-xl transform hover:-translate-y-0.5
-                                                        focus:ring-4 focus:ring-purple-200
-                                                        flex items-center justify-center gap-2`}
-                                        >
-                                            {isLoading ? (
-                                                <>
-                                                    <MdOutlineSaveAlt className="w-5 h-5 animate-spin" />
-                                                    Guardando...
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <MdOutlineSaveAlt className="w-5 h-5" />
-                                                    Guardar datos
-                                                </>
-                                            )}
-                                        </button>
-                                    </div>
-                                    {/* Nota de privacidad */}
-                                    <div className="text-center">
-                                        <p className="text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-1">
-                                            <span className="flex items-center gap-1">
-                                                <svg
-                                                    className="w-3 h-3 text-gray-400"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                                                    />
-                                                </svg>
-                                                Datos protegidos según nuestra
-                                            </span>
-                                            <Link
-                                                to="/politica-privacidad"
-                                                className="text-purpleOiches hover:underline"
-                                            >
-                                                política de privacidad
-                                            </Link>
-                                        </p>
-                                    </div>
+                                    <SubmitButton
+                                        isLoading={isLoading}
+                                        textButton="Guardar datos"
+                                    />
                                 </form>
                             </div>
                         </div>
@@ -439,31 +323,7 @@ const AdvertiserProfileEdit = () => {
 
                     {/* Sidebar de configuración */}
                     <div className="flex-1 max-w-md">
-                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 sticky top-0">
-                            <div className="px-6 py-4 border-b">
-                                <h3 className="font-bold text-gray-800 flex items-center gap-2">
-                                    <svg
-                                        className="w-5 h-5 text-purpleOiches"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                                        />
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                    </svg>
-                                    Configuración de Cuenta
-                                </h3>
-                            </div>
+                        <div className="bg-white rounded-xl shadow-lg border border-gray-100 sticky top-0 px-6 py-4">
                             <div className="px-6 pt-3 pb-6">
                                 <AccountConfiguration
                                     userLogged={userLogged}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { EditAdvertPhotoService } from '../../services/Advertisers/AdvertDetailsEditService.js';
 import { toast } from 'react-toastify';
@@ -9,8 +9,9 @@ const EditAdvertPhoto = ({ advertData, token }) => {
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
+    const inputRef = useRef(null);
 
-    // Inicializar preview con la imagen actual del servidor si no hay preview local
+    // Inicializar preview con la imagen del servidor (si existe)
     useEffect(() => {
         if (!previewUrl && advertData?.image_url) {
             setPreviewUrl(
@@ -22,6 +23,7 @@ const EditAdvertPhoto = ({ advertData, token }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [advertData]);
 
+    // Cleanup: revoke object URL cuando cambie o al desmontar
     useEffect(() => {
         return () => {
             if (previewUrl && previewUrl.startsWith('blob:')) {
@@ -30,11 +32,12 @@ const EditAdvertPhoto = ({ advertData, token }) => {
         };
     }, [previewUrl]);
 
+    // --- Aquí está la función solicitada: handleFileChange solo crea preview ---
     const handleFileChange = (e) => {
-        const selected = e.target.files[0];
+        const selected = e.target.files && e.target.files[0];
         if (!selected) return;
 
-        // si había un preview local anterior, liberar
+        // Si había un preview local anterior, liberarlo
         if (previewUrl && previewUrl.startsWith('blob:')) {
             URL.revokeObjectURL(previewUrl);
         }
@@ -45,7 +48,6 @@ const EditAdvertPhoto = ({ advertData, token }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!file) {
             toast.error('Selecciona primero una imagen.');
             return;
@@ -54,14 +56,15 @@ const EditAdvertPhoto = ({ advertData, token }) => {
         setIsUploading(true);
         try {
             const formData = new FormData();
-
+            // Mantengo la key 'poster' como en tu ejemplo backend
             formData.append('poster', file);
 
             await EditAdvertPhotoService({ idAdvert, token, formData });
 
             toast.success('Poster cambiado con éxito');
-
+            // limpiar estado local (mantener preview hasta que quieras reemplazarlo por la URL remota)
             setFile(null);
+            if (inputRef.current) inputRef.current.value = null;
         } catch (err) {
             console.error(err);
             toast.error(err.message || 'Error al subir la imagen');
@@ -77,36 +80,30 @@ const EditAdvertPhoto = ({ advertData, token }) => {
                     onSubmit={handleSubmit}
                     className="flex flex-col items-center gap-4"
                 >
-                    <div className="sect-photo w-96 h-96 relative">
+                    <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-900/50 hover:bg-gray-800/50 hover:border-indigo-500 transition-all duration-200 group overflow-hidden">
                         {previewUrl ? (
                             <img
                                 src={previewUrl}
                                 alt="Vista previa"
-                                className="w-96 h-96 object-cover rounded"
+                                className="object-cover rounded"
                             />
                         ) : (
-                            <div className="w-96 h-96 bg-gray-100 flex items-center justify-center">
+                            <div className="bg-gray-100 flex items-center justify-center">
                                 <span className="text-sm text-gray-400">
                                     Sin imagen
                                 </span>
                             </div>
                         )}
-                    </div>
+                    </label>
 
                     <input
                         id="advert-image-input"
+                        ref={inputRef}
                         type="file"
                         accept="image/*"
                         className="hidden"
                         onChange={handleFileChange}
                     />
-
-                    <label
-                        htmlFor="advert-image-input"
-                        className="inline-block btn-account px-4 py-2 cursor-pointer select-none"
-                    >
-                        Seleccionar imagen
-                    </label>
 
                     {file && (
                         <div>
@@ -120,6 +117,20 @@ const EditAdvertPhoto = ({ advertData, token }) => {
                                 disabled={isUploading}
                                 className="btn-account max-w-44"
                             />
+                        </div>
+                    )}
+
+                    {previewUrl && (
+                        <div className="flex gap-3 mt-2">
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    inputRef.current && inputRef.current.click()
+                                }
+                                className="btn-account px-3 py-2"
+                            >
+                                Selecciona una nueva imagen
+                            </button>
                         </div>
                     )}
                 </form>

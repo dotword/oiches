@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import AgenciaFilter from '../../components/Agencias/AgenciaFilter.jsx';
 import AgenciaList from '../../components/Agencias/AgenciaList.jsx';
 import FetchAgenciasService from '../../services/Agencias/FetchAgenciasService.js';
-import HeaderHero from '../../components/HeaderHero.jsx';
-import { Link } from 'react-router-dom';
+import Header from '../../components/Header.jsx';
 import Footer from '../../components/Footer.jsx';
 import Paginator from '../../components/Paginator.jsx';
 import Seo from '../../components/SEO/Seo.jsx';
@@ -66,33 +65,11 @@ const Agencias = () => {
                 animate={{ opacity: 1, height: '100%' }}
                 exit={{ opacity: 0, height: 0 }}
             >
-                <HeaderHero />
-
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-promotor bg-cover bg-center md:h-[680px] p-8 md:p-16">
-                    <div className="text-left max-w-lg mr-auto">
-                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
-                            Encuentra tu agencia
-                        </h1>
-                        <p className="text-white text-lg md:text-xl mt-4 mb-3 max-[600px]:hidden">
-                            Descubre y conecta con mánagers y agencias musicales
-                        </p>
-                        <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
-                            ¡Vive la música en cada rincón!
-                        </p>
-                        <div className="flex gap-4">
-                            <Link
-                                to="/register"
-                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
-                            >
-                                Regístrate
-                            </Link>
-                        </div>
-                    </div>
-                </section>
+                <Header txt=" Encuentra tu agencia" />
 
                 <section>
                     <div
-                        className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
+                        className="flex justify-center p-2 gap-4 bg-footercolor text-white mt-2 md:hidden"
                         onClick={() => setIsNavOpen((prev) => !prev)}
                     >
                         FILTRAR

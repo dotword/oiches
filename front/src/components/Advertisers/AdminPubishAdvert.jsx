@@ -50,23 +50,8 @@ const AdminPubishAdvert = ({
         );
     }
 
-    const validateForm = () => {
-        // status must be '0' or '1'
-        if (!/^0|1$/.test(updatedAdvert.status)) {
-            setError('El campo status debe ser 0 o 1.');
-            return false;
-        }
-        if (!updatedAdvert.newExpiresAt) {
-            setError('Debes indicar una fecha de caducidad.');
-            return false;
-        }
-        setError('');
-        return true;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
 
         setLoading(true);
         try {
@@ -94,14 +79,14 @@ const AdminPubishAdvert = ({
     return (
         <>
             <h3 className="text-center font-semibold text-lg mb-8">
-                Publicar anuncio
+                Admin publicar anuncio
             </h3>
 
             <form
                 onSubmit={handleSubmit}
-                className="mb-12 md:flex md:flex-wrap gap-x-8"
+                className="sm:grid grid-cols-3 gap-x-2"
             >
-                <label className="flex flex-col mb-4 md:w-[calc(50%-1rem)]">
+                <label className="mb-4">
                     <span className="font-semibold">Status:*</span>
                     <select
                         name="status"
@@ -121,7 +106,7 @@ const AdminPubishAdvert = ({
                     </select>
                 </label>
 
-                <label className="flex flex-col mb-4 md:w-[calc(50%-1rem)]">
+                <label className="mb-4">
                     <span className="font-semibold">Publicado:*</span>
                     <input
                         type="date"
@@ -137,7 +122,7 @@ const AdminPubishAdvert = ({
                         className="form-input"
                     />
                 </label>
-                <label className="flex flex-col mb-4 md:w-[calc(50%-1rem)]">
+                <label className="mb-4">
                     <span className="font-semibold">Caducidad:*</span>
                     <input
                         type="date"
@@ -158,7 +143,7 @@ const AdminPubishAdvert = ({
                     type="submit"
                     value={loading ? 'Publicando...' : 'Publicar anuncio'}
                     disabled={loading}
-                    className="btn-account my-8 mx-auto p-3 w-full max-w-80 font-semibold"
+                    className="btn-account col-span-3 font-semibold"
                 />
 
                 {error && <p className="text-red-500 mt-2">{error}</p>}

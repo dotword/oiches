@@ -28,6 +28,7 @@ import {
     clickAdvertController,
     getAdvertClicksController,
     resetAdvertClicksController,
+    renewAdvertController,
 } from '../controllers/advertiser/index.js';
 
 const router = express.Router();
@@ -104,12 +105,11 @@ router.put(
     editAdvertPosterController
 );
 
-// // Endpoint para que un anunciante pueda borrar su anuncio
+// // Endpoint para que un admin pueda borrar un anuncio
 router.delete(
     '/delete-advert/:idAdvert',
     authUser,
-    userExists,
-    canEditAdvert,
+    isAdmin,
     deleteAdvertController
 );
 
@@ -125,6 +125,16 @@ router.put(
     authUser,
     isAdmin,
     publishAdvertController
+);
+
+// Endpoint para que el advertiser renueve un anuncio
+router.put(
+    '/renew-advert/:idAdvert',
+    authUser,
+    userExists,
+    checkIfAdvertiser,
+    canEditAdvert,
+    renewAdvertController
 );
 
 // Endpoint cuando el anuncio es clicado

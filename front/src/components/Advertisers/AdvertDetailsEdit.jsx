@@ -7,6 +7,7 @@ import { IoPricetagOutline, IoImageOutline } from 'react-icons/io5';
 import { TfiWrite } from 'react-icons/tfi';
 import { MdOutlinePlace, MdOutlineSaveAlt } from 'react-icons/md';
 import { FaPhoneVolume } from 'react-icons/fa6';
+import { CiLock } from 'react-icons/ci';
 import useAdvert from '../../hooks/useAdvert.jsx';
 import AdvertDetailsEditService from '../../services/Advertisers/AdvertDetailsEditService.js';
 import FetchAdvertCategoriesService from '../../services/Advertisers/FetchAdvertCategoriesService.js';
@@ -16,6 +17,8 @@ import EditAdvertPhoto from './EditAdvertPhoto.jsx';
 import DeleteAdvert from './DeleteAdvert.jsx';
 import AdminPubishAdvert from './AdminPubishAdvert.jsx';
 import ResetAdvertClicks from './ResetAdvertClicks.jsx';
+import BreadcrumbAdvert from './BreadcrumbAdvert.jsx';
+import PackagesDetails from './PackagesDetails.jsx';
 
 const AdvertDetailsEdit = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -39,7 +42,6 @@ const AdvertDetailsEdit = () => {
         image_url: '',
         status: '',
         expiresAt: '',
-        publishedAt: '',
     });
 
     const [categories, setCategories] = useState([]);
@@ -47,6 +49,7 @@ const AdvertDetailsEdit = () => {
     const [provinces, setProvinces] = useState([]);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const today = new Date();
 
     useEffect(() => {
         if (!advertData) return;
@@ -77,28 +80,55 @@ const AdvertDetailsEdit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-
-        const formData = new FormData();
-        Object.entries(advertDetails).forEach(([k, v]) =>
-            formData.append(k, v)
-        );
+        setError('');
 
         try {
-            await AdvertDetailsEditService({ token, idAdvert, formData });
+            const formData = new FormData();
+
+            // Campos que el backend espera como número
+            const numericFields = ['provincia_id', 'package_id', 'category_id'];
+
+            Object.entries(advertDetails).forEach(([k, v]) => {
+                // saltar valores vacíos/null/undefined
+                if (v === '' || v === null || v === undefined) return;
+
+                if (numericFields.includes(k)) {
+                    const num = Number(v);
+                    // solo append si la conversión a número tiene sentido
+                    if (!Number.isNaN(num)) {
+                        formData.append(k, num);
+                    }
+                } else {
+                    formData.append(k, v);
+                }
+            });
+
+            await AdvertDetailsEditService({
+                token,
+                idAdvert,
+                formData,
+                advertDetails,
+            });
+
             toast.success(
                 'Vamos a revisar tu anuncio, muy pronto nos pondremos en contacto contigo.'
             );
+
             setTimeout(() => {
                 navigate(`/users/account/${userLogged.id}`);
             }, 3000);
-        } catch (error) {
-            setError(error.message);
-            toast.error(error.message);
+        } catch (err) {
+            setError(err.message || 'Error al actualizar el anuncio');
+            toast.error(err.message || 'Error al actualizar el anuncio');
         } finally {
             setIsLoading(false);
         }
     };
 
+    const title =
+        new Date(advertDetails.expiresAt) < today
+            ? 'Renovar anuncio'
+            : 'Editar anuncio';
     if (!userLogged) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -113,40 +143,7 @@ const AdvertDetailsEdit = () => {
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Breadcrumb */}
-            <div className="w-full mx-auto px-4 py-4 bg-white">
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                    <nav className="text-sm text-gray-600">
-                        <Link
-                            to="/"
-                            className="hover:text-purpleOiches transition-colors"
-                        >
-                            Inicio
-                        </Link>
-                        <span className="mx-2">›</span>
-                        <Link
-                            to={`/users/account/${userLogged.id}`}
-                            className="hover:text-purpleOiches transition-colors"
-                        >
-                            Mi cuenta
-                        </Link>
-                        <span className="mx-2">›</span>
-                        <span className="text-gray-800 font-medium">
-                            Editar anuncio
-                        </span>
-                    </nav>
-                    <button
-                        onClick={() =>
-                            navigate(`/users/account/${userLogged.id}`)
-                        }
-                        className="flex items-center justify-center gap-2 px-4 py-2 border border-purpleOiches 
-                                 text-purpleOiches font-medium rounded-lg hover:bg-purpleOiches hover:text-white
-                                 transition-all duration-200 text-sm w-fit"
-                    >
-                        ← Volver a mis anuncios
-                    </button>
-                </div>
-            </div>
+            <BreadcrumbAdvert userLogged={userLogged} title={title} />
 
             {/* Contenido principal */}
             <div className="w-full mx-auto px-4 pb-6 sm:pb-12 bg-white">
@@ -159,7 +156,7 @@ const AdvertDetailsEdit = () => {
                             </div>
                             <div>
                                 <h2 className="text-xl font-bold text-gray-900">
-                                    Editar Anuncio
+                                    {title}
                                 </h2>
                                 <p className="text-sm text-gray-500">
                                     Modifica la información de tu anuncio
@@ -167,8 +164,9 @@ const AdvertDetailsEdit = () => {
                             </div>
                         </div>
                     </div>
+                    {/* ADMIN */}
                     {userLogged && userLogged.roles === 'admin' && (
-                        <>
+                        <div className="mx-auto mt-6 w-11/12">
                             <AdminPubishAdvert
                                 idAdvert={idAdvert}
                                 newExpiresAt={advertDetails.expiresAt}
@@ -182,24 +180,11 @@ const AdvertDetailsEdit = () => {
                                 token={token}
                                 idAdvert={idAdvert}
                             />
-                        </>
+                        </div>
                     )}
+                    <PackagesDetails />
                     {/* Contenido del formulario */}
                     <div className="p-6">
-                        {/* Imagen del Anuncio */}
-                        <div className="space-y-6">
-                            <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                                <IoImageOutline className="w-5 h-5 text-purpleOiches" />
-                                IMAGEN DEL ANUNCIO
-                            </h3>
-
-                            <div className="space-y-4">
-                                <EditAdvertPhoto
-                                    advertData={advertData}
-                                    token={token}
-                                />
-                            </div>
-                        </div>
                         <form onSubmit={handleSubmit} className="space-y-8">
                             {/* Información del Anuncio */}
                             <div className="space-y-6">
@@ -209,13 +194,11 @@ const AdvertDetailsEdit = () => {
                                 </h3>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="package_id"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Tipo de anuncio:*
-                                        </label>
+                                    <label
+                                        htmlFor="package_id"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Tipo de anuncio:*
                                         <select
                                             id="package_id"
                                             name="package_id"
@@ -227,10 +210,7 @@ const AdvertDetailsEdit = () => {
                                                     package_id: e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="px-3 py-2 form-input"
                                         >
                                             <option value="">Selecciona</option>
                                             {packages.map((pack) => (
@@ -242,15 +222,13 @@ const AdvertDetailsEdit = () => {
                                                 </option>
                                             ))}
                                         </select>
-                                    </div>
+                                    </label>
 
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="category_id"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Categoría:*
-                                        </label>
+                                    <label
+                                        htmlFor="category_id"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Categoría:*
                                         <select
                                             id="category_id"
                                             name="category_id"
@@ -262,10 +240,7 @@ const AdvertDetailsEdit = () => {
                                                     category_id: e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="px-3 py-2 form-input"
                                         >
                                             <option value="">Selecciona</option>
                                             {categories.map((categorie) => (
@@ -277,16 +252,14 @@ const AdvertDetailsEdit = () => {
                                                 </option>
                                             ))}
                                         </select>
-                                    </div>
+                                    </label>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="title"
-                                        className="block text-sm font-medium text-gray-700"
-                                    >
-                                        Título:*
-                                    </label>
+                                <label
+                                    htmlFor="title"
+                                    className="block text-sm font-medium text-gray-700 space-y-2"
+                                >
+                                    Título:*
                                     <input
                                         type="text"
                                         name="title"
@@ -300,20 +273,15 @@ const AdvertDetailsEdit = () => {
                                                 title: e.target.value,
                                             })
                                         }
-                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                 focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                 hover:border-gray-400 transition-all duration-200
-                                                 bg-white shadow-sm"
+                                        className="px-3 py-2 form-input"
                                     />
-                                </div>
+                                </label>
 
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="description"
-                                        className="block text-sm font-medium text-gray-700"
-                                    >
-                                        Descripción:
-                                    </label>
+                                <label
+                                    htmlFor="description"
+                                    className="block text-sm font-medium text-gray-700 space-y-2"
+                                >
+                                    Descripción:
                                     <textarea
                                         name="description"
                                         id="description"
@@ -326,28 +294,23 @@ const AdvertDetailsEdit = () => {
                                                 description: e.target.value,
                                             })
                                         }
-                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                 focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                 hover:border-gray-400 transition-all duration-200
-                                                 bg-white shadow-sm resize-none"
+                                        className="px-3 py-2 form-textarea"
                                     />
-                                </div>
+                                </label>
                             </div>
 
                             {/* Dirección Fiscal */}
                             <div className="space-y-6">
                                 <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
                                     <MdOutlinePlace className="w-5 h-5 text-purpleOiches" />
-                                    DIRECCIÓN FISCAL
+                                    DIRECCIÓN
                                 </h3>
 
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="address"
-                                        className="block text-sm font-medium text-gray-700"
-                                    >
-                                        Dirección:*
-                                    </label>
+                                <label
+                                    htmlFor="address"
+                                    className="block text-sm font-medium text-gray-700 space-y-2"
+                                >
+                                    Dirección:
                                     <input
                                         type="text"
                                         name="address"
@@ -360,21 +323,16 @@ const AdvertDetailsEdit = () => {
                                                 address: e.target.value,
                                             })
                                         }
-                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                 focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                 hover:border-gray-400 transition-all duration-200
-                                                 bg-white shadow-sm"
+                                        className="px-3 py-2 form-input"
                                     />
-                                </div>
+                                </label>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="city"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Ciudad:*
-                                        </label>
+                                    <label
+                                        htmlFor="city"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Ciudad:
                                         <input
                                             type="text"
                                             name="city"
@@ -387,24 +345,19 @@ const AdvertDetailsEdit = () => {
                                                     city: e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="px-3 py-2 form-input"
                                         />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="provincia_id"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Provincia:*
-                                        </label>
+                                    </label>
+
+                                    <label
+                                        htmlFor="provincia_id"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Provincia:
                                         <select
                                             id="provincia_id"
                                             name="provincia_id"
                                             value={advertDetails.provincia_id}
-                                            required
                                             onChange={(e) =>
                                                 setAdvertDetails({
                                                     ...advertDetails,
@@ -412,10 +365,7 @@ const AdvertDetailsEdit = () => {
                                                         e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="px-3 py-2 form-input"
                                         >
                                             <option value="">Selecciona</option>
                                             {provinces.map((province) => (
@@ -427,7 +377,7 @@ const AdvertDetailsEdit = () => {
                                                 </option>
                                             ))}
                                         </select>
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
 
@@ -438,66 +388,54 @@ const AdvertDetailsEdit = () => {
                                     INFORMACIÓN DE CONTACTO
                                 </h3>
 
-                                <div className="space-y-2">
-                                    <label
-                                        htmlFor="contact_email"
-                                        className="block text-sm font-medium text-gray-700"
-                                    >
-                                        Email de contacto:
-                                    </label>
+                                <label
+                                    htmlFor="link"
+                                    className="block text-sm font-medium text-gray-700 space-y-2"
+                                >
+                                    Web o enlace a tus RRSS:
                                     <input
-                                        type="email"
-                                        name="contact_email"
-                                        id="contact_email"
-                                        placeholder="Email de contacto"
-                                        value={advertDetails.contact_email}
+                                        type="text"
+                                        name="link"
+                                        id="link"
+                                        placeholder="https://www.tuenlace.com"
+                                        value={advertDetails.link}
                                         onChange={(e) =>
                                             setAdvertDetails({
                                                 ...advertDetails,
-                                                contact_email: e.target.value,
+                                                link: e.target.value,
                                             })
                                         }
-                                        className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                 focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                 hover:border-gray-400 transition-all duration-200
-                                                 bg-white shadow-sm"
+                                        className="form-input"
                                     />
-                                </div>
+                                </label>
 
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="link"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Web o enlace a tus RRSS:
-                                        </label>
+                                    <label
+                                        htmlFor="contact_email"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Email de contacto:
                                         <input
-                                            type="text"
-                                            name="link"
-                                            id="link"
-                                            placeholder="https://www.tuenlace.com"
-                                            value={advertDetails.link}
+                                            type="email"
+                                            name="contact_email"
+                                            id="contact_email"
+                                            placeholder="Email de contacto"
+                                            value={advertDetails.contact_email}
                                             onChange={(e) =>
                                                 setAdvertDetails({
                                                     ...advertDetails,
-                                                    link: e.target.value,
+                                                    contact_email:
+                                                        e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="px-3 py-2 form-input"
                                         />
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <label
-                                            htmlFor="contact_phone"
-                                            className="block text-sm font-medium text-gray-700"
-                                        >
-                                            Teléfono:
-                                        </label>
+                                    </label>
+                                    <label
+                                        htmlFor="contact_phone"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Teléfono:
                                         <input
                                             type="tel"
                                             name="contact_phone"
@@ -511,36 +449,18 @@ const AdvertDetailsEdit = () => {
                                                         e.target.value,
                                                 })
                                             }
-                                            className="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg
-                                                     focus:border-purpleOiches focus:ring-2 focus:ring-purple-100
-                                                     hover:border-gray-400 transition-all duration-200
-                                                     bg-white shadow-sm"
+                                            className="form-input"
                                         />
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
 
                             {/* Error */}
                             {error && (
                                 <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-lg">
-                                    <div className="flex items-center gap-2">
-                                        <svg
-                                            className="w-5 h-5 text-red-400"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"
-                                            />
-                                        </svg>
-                                        <p className="text-red-700 text-sm font-medium">
-                                            {error}
-                                        </p>
-                                    </div>
+                                    <p className="text-red-700 text-sm font-medium">
+                                        {error}
+                                    </p>
                                 </div>
                             )}
 
@@ -557,26 +477,15 @@ const AdvertDetailsEdit = () => {
                                                 shadow-lg hover:shadow-xl flex items-center justify-center gap-2`}
                                 >
                                     {isLoading ? (
-                                        <>
-                                            <svg
-                                                className="w-5 h-5 animate-spin"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                                                />
-                                            </svg>
-                                            Actualizando...
-                                        </>
+                                        'Actualizando...'
                                     ) : (
                                         <>
                                             <MdOutlineSaveAlt className="w-5 h-5" />
-                                            Guardar datos
+                                            {advertDetails &&
+                                            new Date(advertDetails.expiresAt) <
+                                                today
+                                                ? 'Renueva tu anuncio'
+                                                : 'Editar anuncio'}
                                         </>
                                     )}
                                 </button>
@@ -586,42 +495,46 @@ const AdvertDetailsEdit = () => {
                             <div className="text-center">
                                 <p className="text-xs text-gray-500 flex flex-col sm:flex-row items-center justify-center gap-1">
                                     <span className="flex items-center gap-1">
-                                        <svg
-                                            className="w-3 h-3 text-gray-400"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                                            />
-                                        </svg>
+                                        <CiLock className="text-base" />
                                         Datos protegidos según nuestra
                                     </span>
                                     <Link
                                         to="/politica-privacidad"
                                         className="text-purpleOiches hover:underline"
+                                        target="_blank"
                                     >
                                         política de privacidad
                                     </Link>
                                 </p>
                             </div>
                         </form>
+                        {/* Imagen del Anuncio */}
+                        <div className="space-y-6">
+                            <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                <IoImageOutline className="w-5 h-5 text-purpleOiches" />
+                                CAMBIAR IMAGEN
+                            </h3>
 
-                        {/* DeleteAdvert integrado al final del formulario */}
-                        {advertData?.status !== 'published' && (
-                            <div className="mt-8 pt-6 border-t border-gray-200">
-                                <DeleteAdvert
-                                    userLogged={userLogged}
+                            <div className="space-y-4">
+                                <EditAdvertPhoto
+                                    advertData={advertData}
                                     token={token}
-                                    id={idAdvert}
-                                    status={advertData?.status}
                                 />
                             </div>
-                        )}
+                        </div>
+                        {/* DeleteAdvert integrado al final del formulario */}
+                        {userLogged &&
+                            userLogged.roles === 'admin' &&
+                            advertData?.status !== 'published' && (
+                                <div className="mt-8 pt-6 border-t border-gray-200">
+                                    <DeleteAdvert
+                                        userLogged={userLogged}
+                                        token={token}
+                                        id={idAdvert}
+                                        status={advertData?.status}
+                                    />
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ const ResetAdvertClicks = ({ clicks, token, idAdvert }) => {
     };
 
     return (
-        <section className="mt-12">
+        <section className="my-10 flex gap-6 items-baseline">
             <p>Nº de clicks: {clicks}</p>
             <button
                 className="btn-account max-w-44 min-w-32 bg-red-600"

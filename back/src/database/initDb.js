@@ -459,8 +459,7 @@ const main = async () => {
                 ('Básico 1 año'),
                 ('Destacado 3 meses'),
                 ('Destacado 6 meses'),
-                ('Destacado 1 año'),
-                ('Premium');
+                ('Destacado 1 año');
         `);
         await pool.query(`
             INSERT INTO ad_categories (name, description) VALUES

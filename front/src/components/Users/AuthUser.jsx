@@ -125,8 +125,6 @@ const AuthUser = () => {
         setModalOpen(false);
     };
 
-    // Ramas claras según rol/permiso
-
     // SALAS, GRUPOS Y AGENCIAS
     if (
         userLogged &&

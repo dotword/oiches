@@ -97,7 +97,7 @@ const Home = () => {
             >
                 <HeaderHero />
 
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
+                <section className="hero block relative bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-6 md:flex md:flex-col md:justify-center md:items-start md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu banda sonora
@@ -109,24 +109,27 @@ const Home = () => {
                         <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
                             ¡Vive la música en cada rincón!
                         </p>
-                        <div className="flex gap-4">
+                        <div className="flex flex-wrap gap-4">
                             <Link
                                 to="/clasificados"
-                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                                className="btn-buscar w-auto"
                             >
                                 Clasificados
                             </Link>
                             <Link
                                 to="/grupos"
-                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                                className="btn-buscar w-auto bg-moradoOiches hover:bg-purpleOiches"
                             >
                                 Músicos
                             </Link>
-                            <Link
-                                to="/salas"
-                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
-                            >
+                            <Link to="/salas" className="btn-buscar w-auto">
                                 Salas
+                            </Link>
+                            <Link
+                                to="/agencias"
+                                className="btn-buscar w-auto bg-moradoOiches hover:bg-purpleOiches"
+                            >
+                                Agencias
                             </Link>
                         </div>
                     </div>

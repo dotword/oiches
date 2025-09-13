@@ -39,7 +39,7 @@ const selectAllUsersService = async (filters) => {
         LEFT JOIN provincias prov_grupo ON grupos.provincia = prov_grupo.id
         LEFT JOIN provincias prov_sala ON salas.provincia = prov_sala.id
         LEFT JOIN provincias prov_agencia ON agencias.provincia = prov_agencia.id        
-        WHERE u.roles != 'anunciante' AND 1=1
+        WHERE 1=1
         `;
 
     const queryParams = [];

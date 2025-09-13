@@ -69,19 +69,7 @@ const AdvertisersList = ({ token }) => {
         });
     };
 
-    const getDateOnlyUtcMs = (dateInput) => {
-        if (!dateInput) return null;
-        const d = new Date(dateInput); // acepta ISO string o Date
-        // Construimos un valor en milisegundos usando UTC para evitar shifts por zona horaria
-        return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-    };
-
     const today = new Date();
-    const todayUtcMs = Date.UTC(
-        today.getUTCFullYear(),
-        today.getUTCMonth(),
-        today.getUTCDate()
-    );
 
     return (
         <section className="py-6 border-b-2 border-greyOiches-50">
@@ -174,9 +162,6 @@ const AdvertisersList = ({ token }) => {
                         </thead>
                         <tbody>
                             {filteredUsers.map((filteredUsers) => {
-                                const advertExpiredUtcMs = getDateOnlyUtcMs(
-                                    filteredUsers.expiresAt
-                                );
                                 return (
                                     <tr key={`${filteredUsers.id}`}>
                                         <td>
@@ -194,16 +179,24 @@ const AdvertisersList = ({ token }) => {
                                         </td>
                                         <td
                                             className={
-                                                filteredUsers.status === 1
+                                                filteredUsers.status === 1 &&
+                                                new Date(
+                                                    filteredUsers.expiresAt
+                                                ) >= today
                                                     ? 'text-green-600'
                                                     : 'text-red-600'
                                             }
                                         >
-                                            {filteredUsers.status === 1
-                                                ? 'Aceptado'
-                                                : filteredUsers.status === 0
-                                                ? 'Pendiente'
-                                                : ''}
+                                            {filteredUsers.status === 1 &&
+                                            new Date(filteredUsers.expiresAt) >=
+                                                today
+                                                ? 'Publicado'
+                                                : filteredUsers.status === 1 &&
+                                                  new Date(
+                                                      filteredUsers.expiresAt
+                                                  ) < today
+                                                ? 'Caducado'
+                                                : 'Pendiente'}
                                         </td>
                                         <td>
                                             {filteredUsers.publishedAt &&
@@ -213,7 +206,9 @@ const AdvertisersList = ({ token }) => {
                                         </td>
                                         <td
                                             className={
-                                                advertExpiredUtcMs > todayUtcMs
+                                                new Date(
+                                                    filteredUsers.expiresAt
+                                                ) > today
                                                     ? 'text-green-600'
                                                     : 'text-red-600'
                                             }

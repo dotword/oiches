@@ -33,6 +33,8 @@ const ListAdvertiserAdv = ({ userId, token }) => {
         });
     };
 
+    const today = new Date();
+
     return (
         <>
             {adverts.length > 0 ? (
@@ -54,32 +56,48 @@ const ListAdvertiserAdv = ({ userId, token }) => {
                                     <td>{ad.title}</td>
 
                                     <td>{formatDate(ad.publishedAt)}</td>
-                                    <td>{formatDate(ad.expiresAt)}</td>
+                                    <td
+                                        className={
+                                            new Date(ad.expiresAt) > today
+                                                ? 'text-green-600'
+                                                : 'text-red-600'
+                                        }
+                                    >
+                                        {formatDate(ad.expiresAt)}
+                                    </td>
 
                                     <td
                                         className={
-                                            ad.status === 'pending'
-                                                ? 'text-orange-600'
-                                                : ad.status === 'expired'
-                                                ? 'text-red-700'
-                                                : 'text-green-600'
+                                            ad.status === 1 &&
+                                            new Date(ad.expiresAt) >= today
+                                                ? 'text-green-600'
+                                                : 'text-red-600'
                                         }
                                     >
-                                        {ad.status}
+                                        {ad.status === 1 &&
+                                        new Date(ad.expiresAt) >= today
+                                            ? 'Publicado'
+                                            : ad.status === 1 &&
+                                              new Date(ad.expiresAt) < today
+                                            ? 'Caducado'
+                                            : 'Pendiente'}
                                     </td>
-                                    <td>Nº clics: 25</td>
-                                    <td>
-                                        <Link to={`/edit-advert/${ad.id}`}>
-                                            <span className="flex gap-1 items-center justify-center md:justify-start">
-                                                {ad.status === 'pending'
-                                                    ? 'Editar'
-                                                    : ad.status === 'expired'
-                                                    ? 'Renovar'
-                                                    : 'No puedes editar un anuncio publicado'}
+                                    <td>Nº clics: {ad.clicks}</td>
 
-                                                <FiExternalLink />
-                                            </span>
-                                        </Link>
+                                    <td>
+                                        {ad.status === 1 &&
+                                        new Date(ad.expiresAt) >= today ? (
+                                            'No puedes editar un anuncio publicado'
+                                        ) : (
+                                            <Link to={`/edit-advert/${ad.id}`}>
+                                                <span className="flex gap-1 items-center justify-center md:justify-start">
+                                                    {ad.status === 1
+                                                        ? 'Renovar anuncio'
+                                                        : 'Editar anuncio'}
+                                                    <FiExternalLink />
+                                                </span>
+                                            </Link>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

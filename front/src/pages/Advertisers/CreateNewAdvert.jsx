@@ -12,10 +12,8 @@ const CreateNewAdvert = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header />
-                <main className="w-full mx-auto  md:max-w-1xl">
-                    <div className="bg-custom-gradient p-1 sm:p-6 shadow-md flex flex-col">
-                        <AdvertNewCreation />
-                    </div>
+                <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
+                    <AdvertNewCreation />
                 </main>
                 <Footer />
             </motion.div>

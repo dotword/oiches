@@ -10,7 +10,7 @@ const AdvertiserDashboard = ({ userId, token }) => {
         <div className="flex flex-col items-center">
             {!profile.advertiser ? (
                 <>
-                    <p className="text-center text-xl mb-4">
+                    <p className="text-center text-xl font-semibold my-6">
                         Completa tus datos para publicar anuncios
                     </p>
                     <Link
@@ -22,25 +22,30 @@ const AdvertiserDashboard = ({ userId, token }) => {
                     </Link>
                 </>
             ) : (
-                <Link
-                    to={`/advertiser-details/edit/${userId}`}
-                    className="btn-degradado self-end mb-4 flex items-center gap-2"
-                >
-                    Editar mis datos
-                    <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
-                </Link>
+                <>
+                    <Link
+                        to={`/advertiser-details/edit/${userId}`}
+                        className="btn-degradado self-end mb-4 flex items-center gap-2"
+                    >
+                        Editar mis datos
+                        <IoChevronForward className=" border-purpleOiches hover:bg-purpleOiches text-xl" />
+                    </Link>
+                    <section>
+                        <h1 className="text-center text-xl font-semibold mb-12">
+                            Mis anuncios
+                        </h1>
+                        <Link
+                            to={`/create-advert/${userId}`}
+                            className="btn-degradado"
+                        >
+                            Publicar un nuevo anuncio
+                        </Link>
+                        <div className="mt-12">
+                            <ListAdvertiserAdv userId={userId} token={token} />
+                        </div>
+                    </section>
+                </>
             )}
-            <section>
-                <h1 className="text-center text-xl font-semibold mb-12">
-                    Mis anuncios
-                </h1>
-                <Link to={`/create-advert/${userId}`} className="btn-degradado">
-                    Publicar un nuevo anuncio
-                </Link>
-                <div className="mt-12">
-                    <ListAdvertiserAdv userId={userId} token={token} />
-                </div>
-            </section>
         </div>
     );
 };

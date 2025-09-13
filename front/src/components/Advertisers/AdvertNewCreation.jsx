@@ -1,19 +1,20 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import AuthContext from '../../context/auth/AuthContext.jsx';
 import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import FetchAdvertCategoriesService from '../../services/Advertisers/FetchAdvertCategoriesService.js';
 import FetchAdvertPackagesService from '../../services/Advertisers/FetchAdvertPackagesService.js';
 import FetchProvinciasService from '../../services/FetchProvinciasService.js';
 import AdvertNewCreationService from '../../services/Advertisers/AdvertNewCreationService.js';
-import { IoChevronForward } from 'react-icons/io5';
-import { IoPricetagOutline } from 'react-icons/io5';
+import PackagesDetails from './PackagesDetails.jsx';
+import { IoPricetagOutline, IoImageOutline } from 'react-icons/io5';
 import { MdOutlinePlace } from 'react-icons/md';
-import { IoMailOutline } from 'react-icons/io5';
-import { CiImageOn } from 'react-icons/ci';
+import { FaPhoneVolume } from 'react-icons/fa6';
 import { TfiWrite } from 'react-icons/tfi';
-import { FiSend } from 'react-icons/fi';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
+import BreadcrumbAdvert from './BreadcrumbAdvert.jsx';
+import SubmitButton from './SubmitButton.jsx';
 
 const AdvertNewCreation = () => {
     const { userLogged, token } = useContext(AuthContext);
@@ -34,11 +35,15 @@ const AdvertNewCreation = () => {
         image: null,
     });
 
+    const [imagePreview, setImagePreview] = useState(null);
+    const fileInputRef = useRef(null);
+
     const [categories, setCategories] = useState([]);
     const [selectedDescription, setSelectedDescription] = useState('');
     const [packages, setPackages] = useState([]);
     const [provinces, setProvinces] = useState([]);
     const [error, setError] = useState('');
+    const titulo = 'Crear anuncio';
 
     useEffect(() => {
         FetchAdvertCategoriesService(setCategories);
@@ -46,11 +51,28 @@ const AdvertNewCreation = () => {
         FetchProvinciasService(setProvinces);
     }, []);
 
+    useEffect(() => {
+        return () => {
+            if (imagePreview) URL.revokeObjectURL(imagePreview);
+        };
+    }, [imagePreview]);
+
     const handleChange = (e) => {
         const { name, value, type } = e.target;
 
         if (type === 'file') {
-            setFormValues({ ...formValues, [name]: e.target.files[0] });
+            const file = e.target.files[0];
+            if (file) {
+                // revoke previous preview if any
+                if (imagePreview) URL.revokeObjectURL(imagePreview);
+                const url = URL.createObjectURL(file);
+                setFormValues((prev) => ({ ...prev, [name]: file }));
+                setImagePreview(url);
+            } else {
+                if (imagePreview) URL.revokeObjectURL(imagePreview);
+                setFormValues((prev) => ({ ...prev, [name]: null }));
+                setImagePreview(null);
+            }
             return;
         }
 
@@ -64,6 +86,13 @@ const AdvertNewCreation = () => {
         }
 
         setFormValues({ ...formValues, [name]: value });
+    };
+
+    const removeImage = () => {
+        if (imagePreview) URL.revokeObjectURL(imagePreview);
+        setImagePreview(null);
+        setFormValues((prev) => ({ ...prev, image: null }));
+        if (fileInputRef.current) fileInputRef.current.value = null;
     };
 
     const handleSubmit = async (e) => {
@@ -119,624 +148,284 @@ const AdvertNewCreation = () => {
         contact_phone,
     } = formValues;
 
-    return userLogged ? (
-        <div className="min-h-screen bg-transparent pt-10 md:pt-20">
-            <div className="mx-auto w-full text-center">
-                <h1 className="mb-2 text-2xl font-bold tracking-tight text-white sm:text-4xl">
-                    Crear nuevo anuncio
-                </h1>
-            </div>
-            <div className="mx-auto pb-20 mt-4 w-full px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-52">
-                <Link
-                    to={`/users/account/${userId}`}
-                    className="bg-purple-900/30 text-purple-400 border border-purple-400 rounded-md px-4 py-2 mb-6 inline-flex items-center gap-2 hover:bg-purple-900/50 transition"
-                >
-                    Mis anuncios
-                    <IoChevronForward className="text-xl" />
-                </Link>
-                <div className="mx-auto w-full text-center">
-                    <h2 className="text-base font-semibold leading-7 text-indigo-400">
-                        Tarifas de anuncios
-                    </h2>
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                        Selecciona el paquete que prefieras para tu anuncio.
-                    </p>
-                </div>
+    return (
+        <div className="min-h-screen">
+            <BreadcrumbAdvert userLogged={userLogged} title={titulo} />
 
-                <div className="isolate mx-auto mt-10 grid w-full grid-cols-1 gap-8 lg:grid-cols-3">
-                    {/* Card 1 - Anuncio Básico */}
-                    <div className="bg-gray-900/40 backdrop-blur-lg border border-white/30 rounded-2xl p-4 xl:p-8 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-105 hover:bg-white/20 hover:shadow-[0_8px_40px_rgba(79,70,229,0.3)] hover:border-indigo-400/50 cursor-pointer group flex flex-col h-full">
-                        <div className="flex items-center justify-between gap-x-4 mb-4">
-                            <h3 className="text-lg font-semibold leading-8 text-white group-hover:text-indigo-300 transition-colors duration-300">
-                                Anuncio básico
-                            </h3>
-                        </div>
-
-                        {/* Lista de características - altura fija */}
-                        <div className="flex-1 mb-6">
-                            <div className="text-sm leading-6 text-gray-200">
-                                <ul className="space-y-2 h-32">
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Título
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Hasta 200 palabras
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Imagen pequeña
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Enlace a tu web
-                                    </li>
-                                </ul>
+            {/* Contenido principal */}
+            <div className="w-full mx-auto px-4 pb-6 sm:pb-12 bg-white">
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    {/* Header de la tarjeta */}
+                    <div className="px-6 py-5 border-b border-gray-100">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
+                                <TfiWrite className="w-7 h-7 text-white" />
                             </div>
-                        </div>
-
-                        {/* Precio - posición fija */}
-                        <div className="mb-6">
-                            <p className="flex items-baseline justify-center gap-x-1 transform transition-all duration-300 group-hover:scale-110">
-                                <span className="text-5xl font-bold tracking-tight text-white group-hover:text-indigo-300 transition-colors duration-300">
-                                    20€
-                                </span>
-                                <span className="text-sm font-semibold leading-6 text-gray-200 group-hover:text-indigo-400 transition-colors duration-300">
-                                    /3 meses
-                                </span>
-                            </p>
-                        </div>
-
-                        {/* Descripción y opciones adicionales */}
-                        <div className="mt-auto">
-                            <ul className="space-y-3 text-base leading-6 text-gray-200">
-                                <li className="flex gap-x-3 transition-colors duration-300 group-hover:text-white">
-                                    Orden cronológico/alfabético en su categoría
-                                </li>
-                                <li className="flex items-center justify-center gap-x-3">
-                                    <div className="flex gap-2 flex-wrap justify-center">
-                                        <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-900/40 text-blue-200 border border-blue-700/50 transition-all duration-300 hover:bg-blue-800/60 hover:scale-105 hover:shadow-lg backdrop-blur-sm">
-                                            6 meses: 35€
-                                        </span>
-                                        <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-green-900/40 text-green-200 border border-green-700/50 transition-all duration-300 hover:bg-green-800/60 hover:scale-105 hover:shadow-lg backdrop-blur-sm">
-                                            1 año: 60€
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div>
+                                <h2 className="text-xl font-bold text-gray-900">
+                                    {titulo}
+                                </h2>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Card 2 - Anuncio Destacado */}
-                    <div className="bg-gray-900/50 backdrop-blur-lg border-2 border-indigo-400/40 rounded-2xl p-4 xl:p-8 shadow-[0_4px_30px_rgba(79,70,229,0.2)] transition-all duration-500 hover:scale-105 hover:bg-white/25 hover:shadow-[0_12px_50px_rgba(79,70,229,0.4)] hover:border-indigo-400/60 cursor-pointer group relative overflow-hidden flex flex-col h-full">
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-                        <div className="relative z-10 flex flex-col h-full">
-                            <div className="flex items-baseline justify-between gap-x-4 mb-4">
-                                <h3 className="text-lg font-semibold leading-8 text-white group-hover:text-indigo-200 transition-colors duration-300">
-                                    Anuncio destacado
+                    <PackagesDetails />
+                    {/* Contenido del formulario */}
+                    <div className="p-6">
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            <div className="space-y-6">
+                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                    <IoPricetagOutline className="w-5 h-5 text-purpleOiches" />
+                                    INFORMACIÓN DEL ANUNCIO
                                 </h3>
-                                <span className="rounded-full bg-indigo-500/80 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold leading-5 text-white border border-indigo-400/50 transition-all duration-300 group-hover:bg-indigo-400/90 group-hover:scale-110 group-hover:shadow-lg">
-                                    Más popular
-                                </span>
-                            </div>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <label
+                                        htmlFor="package_id"
+                                        className="block text-sm font-medium text-gray-700 space-y-2"
+                                    >
+                                        Tipo de anuncio:*
+                                        <select
+                                            id="package_id"
+                                            name="package_id"
+                                            required
+                                            value={package_id}
+                                            className="px-3 py-2 form-input"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Selecciona</option>
+                                            {packages.map((pack) => (
+                                                <option
+                                                    key={pack.id}
+                                                    value={pack.id}
+                                                >
+                                                    {pack.package}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
 
-                            {/* Lista de características - altura fija */}
-                            <div className="flex-1 mb-6">
-                                <div className="text-sm leading-6 text-gray-200">
-                                    <ul className="space-y-2 h-32">
-                                        <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                            <svg
-                                                className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            Imagen principal grande
-                                        </li>
-                                        <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                            <svg
-                                                className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            Fondo de color en el listado
-                                        </li>
-                                        <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                            <svg
-                                                className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            Enlace a tu web
-                                        </li>
-                                        <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                            <svg
-                                                className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fillRule="evenodd"
-                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                    clipRule="evenodd"
-                                                />
-                                            </svg>
-                                            Contacto
-                                        </li>
-                                    </ul>
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Categoría:*
+                                        <select
+                                            id="category_id"
+                                            name="category_id"
+                                            required
+                                            value={category_id}
+                                            className="px-3 py-2 form-input"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Selecciona</option>
+                                            {categories.map((categorie) => (
+                                                <option
+                                                    key={categorie.id}
+                                                    value={categorie.id}
+                                                >
+                                                    {categorie.name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        {selectedDescription && (
+                                            <p className="mt-4 text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
+                                                {selectedDescription}
+                                            </p>
+                                        )}
+                                    </label>
                                 </div>
-                            </div>
 
-                            {/* Precio - posición fija */}
-                            <div className="mb-6">
-                                <p className="flex items-baseline justify-center gap-x-1 transform transition-all duration-300 group-hover:scale-110">
-                                    <span className="text-5xl font-bold tracking-tight text-white group-hover:text-indigo-200 transition-colors duration-300">
-                                        30€
-                                    </span>
-                                    <span className="text-sm font-semibold leading-6 text-gray-200 group-hover:text-indigo-400 transition-colors duration-300">
-                                        /3 meses
-                                    </span>
-                                </p>
-                            </div>
-
-                            {/* Descripción y opciones adicionales */}
-                            <div className="mt-auto">
-                                <ul className="space-y-3 text-base leading-6 text-gray-200">
-                                    <li className="flex gap-x-3 transition-colors duration-300 group-hover:text-white">
-                                        Siempre en primeras posiciones, etiqueta
-                                        Destacado
-                                    </li>
-                                    <li className="flex items-center justify-center">
-                                        <div className="flex gap-2 flex-wrap justify-center">
-                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-900/40 text-blue-200 border border-blue-700/50 transition-all duration-300 hover:bg-blue-800/60 hover:scale-105 hover:shadow-lg backdrop-blur-sm">
-                                                6 meses: 50€
-                                            </span>
-                                            <span className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-green-900/40 text-green-200 border border-green-700/50 transition-all duration-300 hover:bg-green-800/60 hover:scale-105 hover:shadow-lg backdrop-blur-sm">
-                                                1 año: 90€
-                                            </span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Card 3 - Flash Premium */}
-                    <div className="bg-gray-900/40 backdrop-blur-lg border border-yellow-400/30 rounded-2xl p-4 xl:p-8 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-105 hover:bg-yellow-500/10 hover:shadow-[0_8px_40px_rgba(234,179,8,0.3)] hover:border-yellow-400/50 cursor-pointer group flex flex-col h-full">
-                        <div className="flex items-center justify-between gap-x-4 mb-4">
-                            <h3 className="text-lg font-semibold leading-8 text-white group-hover:text-yellow-300 transition-colors duration-300">
-                                Paquete Flash Premium
-                            </h3>
-                        </div>
-
-                        {/* Lista de características - altura fija */}
-                        <div className="flex-1 mb-6">
-                            <div className="text-sm leading-6 text-gray-200">
-                                <ul className="space-y-2 h-32">
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Imagen (hero)
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Enlace a la web del anunciante
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Anuncio destacado incluido
-                                    </li>
-                                    <li className="flex gap-x-3 transform transition-transform duration-200 hover:translate-x-1">
-                                        <svg
-                                            className="h-5 w-5 flex-none text-green-400 mt-0.5 transition-colors duration-300 group-hover:text-green-300"
-                                            fill="currentColor"
-                                            viewBox="0 0 20 20"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                        Contacto
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Precio - posición fija */}
-                        <div className="mb-6">
-                            <p className="flex items-baseline gap-x-1 justify-center transform transition-all duration-300 group-hover:scale-110">
-                                <span className="text-5xl font-bold tracking-tight text-white group-hover:text-yellow-300 transition-colors duration-300">
-                                    50€
-                                </span>
-                                <span className="text-sm font-semibold leading-6 text-gray-200 group-hover:text-yellow-400 transition-colors duration-300">
-                                    /mes
-                                </span>
-                            </p>
-                        </div>
-
-                        {/* Descripción adicional */}
-                        <div className="mt-2 mb-10">
-                            <ul className="space-y-3 text-base leading-6 text-gray-200">
-                                <li className="flex gap-x-3 transition-colors duration-300 group-hover:text-white">
-                                    Siempre en primeras posiciones, etiqueta
-                                    Destacado
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Formulario */}
-                <form
-                    onSubmit={handleSubmit}
-                    className="mt-16 mx-0 sm:mx-auto w-full bg-footercolor/60 backdrop-blur-lg border border-white/30 rounded-2xl p-4 sm:p-6 lg:p-8 xl:p-10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] ring-1 ring-white/10"
-                >
-                    {/* Sección 1: Información del Anuncio */}
-                    <div className="mx-0 sm:mx-auto w-full p-4 rounded mb-4 sm:mb-6">
-                        <h3 className="text-lg sm:text-xl font-semibold text-white mb-4 sm:mb-6 flex items-center gap-2">
-                            <IoPricetagOutline className="text-purpleOiches" />
-                            Información del Anuncio
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Tipo de anuncio:*
-                                </span>
-                                <select
-                                    id="package_id"
-                                    name="package_id"
-                                    required
-                                    value={package_id}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Selecciona</option>
-                                    {packages.map((pack) => (
-                                        <option key={pack.id} value={pack.id}>
-                                            {pack.package}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Categoría:*
-                                </span>
-                                <select
-                                    id="category_id"
-                                    name="category_id"
-                                    required
-                                    value={category_id}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Selecciona</option>
-                                    {categories.map((categorie) => (
-                                        <option
-                                            key={categorie.id}
-                                            value={categorie.id}
-                                        >
-                                            {categorie.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                {selectedDescription && (
-                                    <p className="mt-4 text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
-                                        {selectedDescription}
-                                    </p>
-                                )}
-                            </label>
-                        </div>
-                    </div>
-
-                    {/* Sección 2: Contenido del Anuncio */}
-                    <div className="mx-0 sm:mx-auto w-full p-4 sm:p-6 rounded-xl  mb-4 sm:mb-6">
-                        <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                            <TfiWrite className="text-purpleOiches" />
-                            Contenido del Anuncio
-                        </h3>
-                        <div className="space-y-4 sm:space-y-6">
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
+                                <label className="block text-sm font-medium text-gray-700 space-y-2">
                                     Título:*
-                                </span>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    placeholder="Título del anuncio"
-                                    required
-                                    value={title}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Descripción:
-                                </span>
-                                <textarea
-                                    name="description"
-                                    placeholder="Descripción de tu anuncio. Máximo 2000 caracteres."
-                                    value={description}
-                                    onChange={handleChange}
-                                    rows="4"
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200 resize-none"
-                                />
-                            </label>
-                        </div>
-                    </div>
-
-                    {/* Sección 3: Ubicación */}
-                    <div className="mx-0 sm:mx-auto w-full p-4 rounded mb-4 sm:mb-6">
-                        <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                            <MdOutlinePlace className="text-purpleOiches" />
-                            Ubicación
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Dirección:
-                                </span>
-                                <input
-                                    type="text"
-                                    name="address"
-                                    placeholder="Dirección de la empresa"
-                                    value={address}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Ciudad:
-                                </span>
-                                <input
-                                    type="text"
-                                    name="city"
-                                    placeholder="Ciudad"
-                                    value={city}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Provincia:*
-                                </span>
-                                <select
-                                    id="provincia_id"
-                                    name="provincia_id"
-                                    value={provincia_id}
-                                    required
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                    onChange={handleChange}
-                                >
-                                    <option value="">Selecciona</option>
-                                    {provinces.map((province) => (
-                                        <option
-                                            key={province.id}
-                                            value={province.id}
-                                        >
-                                            {province.provincia}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-
-                    {/* Sección 4: Información de Contacto */}
-                    <div className=" sm:p-6 rounded-xl mb-4 sm:mb-6">
-                        <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                            <IoMailOutline className="text-purpleOiches" />
-                            Información de Contacto
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Web o enlace a tus RRSS:
-                                </span>
-                                <input
-                                    type="text"
-                                    name="link"
-                                    placeholder="https://www.tuenlace.com"
-                                    value={link}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Email de contacto:
-                                </span>
-                                <input
-                                    type="email"
-                                    name="contact_email"
-                                    placeholder="Email de contacto"
-                                    value={contact_email}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                            <label className="flex flex-col w-full">
-                                <span className="font-semibold text-gray-200 mb-2">
-                                    Teléfono:
-                                </span>
-                                <input
-                                    type="number"
-                                    name="contact_phone"
-                                    placeholder="Teléfono de contacto"
-                                    value={contact_phone}
-                                    onChange={handleChange}
-                                    className="w-full py-3 px-3 rounded-lg bg-gray-900 text-gray-100 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
-                                />
-                            </label>
-                        </div>
-                    </div>
-
-                    {/* Sección 5: Imagen del Anuncio */}
-                    <div className="p-4 sm:p-6 rounded-xl mb-4 sm:mb-6">
-                        <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                            <CiImageOn className="text-purpleOiches" />
-                            Imagen del Anuncio
-                        </h3>
-                        <label className="flex flex-col w-full">
-                            <span className="font-semibold text-gray-200 mb-2">
-                                Imagen:*
-                            </span>
-                            <div className="flex items-center justify-center w-full">
-                                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-900/50 hover:bg-gray-800/50 hover:border-indigo-500 transition-all duration-200 group">
-                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                                        <svg
-                                            className="w-8 h-8 mb-4 text-gray-400 group-hover:text-indigo-400 transition-colors"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                                            />
-                                        </svg>
-                                        <p className="mb-2 text-sm text-gray-400 group-hover:text-indigo-400 transition-colors">
-                                            <span className="font-semibold">
-                                                Haz clic para subir
-                                            </span>{' '}
-                                            o arrastra y suelta
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            PNG, JPG, GIF (MAX. 2MB)
-                                        </p>
-                                    </div>
                                     <input
-                                        type="file"
-                                        name="image"
+                                        type="text"
+                                        name="title"
+                                        placeholder="Título del anuncio"
                                         required
-                                        accept="image/*"
+                                        value={title}
                                         onChange={handleChange}
-                                        className="hidden"
+                                        className="px-3 py-2 form-input"
+                                    />
+                                </label>
+
+                                <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                    Descripción:
+                                    <textarea
+                                        name="description"
+                                        placeholder="Descripción de tu anuncio. Máximo 2000 caracteres."
+                                        value={description}
+                                        onChange={handleChange}
+                                        rows="4"
+                                        className="px-3 py-2 form-textarea"
                                     />
                                 </label>
                             </div>
-                        </label>
-                    </div>
 
-                    {/* Botón de envío */}
-                    <div className="flex justify-center mt-6 sm:mt-8">
-                        <button
-                            type="submit"
-                            className="bg-purpleOiches hover:bg-moradoOiches  text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-                        >
-                            <FiSend />
-                            Enviar Anuncio
-                        </button>
-                    </div>
+                            {/* Dirección Fiscal */}
+                            <div className="space-y-6">
+                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                    <MdOutlinePlace className="w-5 h-5 text-purpleOiches" />
+                                    DIRECCIÓN
+                                </h3>
 
-                    {error && (
-                        <div className="mt-6 p-4 bg-red-900/20 border border-red-500/50 rounded-lg">
-                            <p className="text-red-400 text-sm text-center">
-                                {error}
-                            </p>
-                        </div>
-                    )}
-                </form>
-                <Toastify />
+                                <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                    Dirección:
+                                    <input
+                                        type="text"
+                                        name="address"
+                                        placeholder="Dirección de la empresa"
+                                        value={address}
+                                        onChange={handleChange}
+                                        className="px-3 py-2 form-input"
+                                    />
+                                </label>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Ciudad:
+                                        <input
+                                            type="text"
+                                            name="city"
+                                            placeholder="Ciudad"
+                                            value={city}
+                                            onChange={handleChange}
+                                            className="px-3 py-2 form-input"
+                                        />
+                                    </label>
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Provincia:
+                                        <select
+                                            id="provincia_id"
+                                            name="provincia_id"
+                                            value={provincia_id}
+                                            className="px-3 py-2 form-input"
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Selecciona</option>
+                                            {provinces.map((province) => (
+                                                <option
+                                                    key={province.id}
+                                                    value={province.id}
+                                                >
+                                                    {province.provincia}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Información de Contacto */}
+                            <div className="space-y-6">
+                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                    <FaPhoneVolume className="w-4 h-4 text-purpleOiches" />
+                                    INFORMACIÓN DE CONTACTO
+                                </h3>
+
+                                <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                    Web o enlace a tus RRSS:
+                                    <input
+                                        type="text"
+                                        name="link"
+                                        placeholder="https://www.tuenlace.com"
+                                        value={link}
+                                        onChange={handleChange}
+                                        className="form-input"
+                                    />
+                                </label>
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Email de contacto:
+                                        <input
+                                            type="email"
+                                            name="contact_email"
+                                            placeholder="Email de contacto"
+                                            value={contact_email}
+                                            onChange={handleChange}
+                                            className="px-3 py-2 form-input"
+                                        />
+                                    </label>
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Teléfono:
+                                        <input
+                                            type="number"
+                                            name="contact_phone"
+                                            placeholder="Teléfono de contacto"
+                                            value={contact_phone}
+                                            onChange={handleChange}
+                                            className="px-3 py-2 form-input"
+                                        />
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Sección 5: Imagen del Anuncio */}
+                            <div className="space-y-6">
+                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+                                    <IoImageOutline className="w-5 h-5 text-purpleOiches" />
+                                    IMAGEN DEL ANUNCIO
+                                </h3>
+
+                                <div className="flex items-center justify-center w-full">
+                                    <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-200 border-dashed rounded-lg cursor-pointer bg-gray-200/30 hover:bg-gray-200/50 hover:border-indigo-500 transition-all duration-200 group overflow-hidden">
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                alt="Previsualización"
+                                                className="object-contain"
+                                            />
+                                        ) : (
+                                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                                <AiOutlineCloudUpload className="text-4xl text-gray-400 group-hover:text-indigo-400 transition-colors mb-4" />
+
+                                                <p className="mb-2 text-sm text-gray-400 group-hover:text-indigo-400 transition-colors font-semibold">
+                                                    Haz clic para subir o
+                                                    arrastra y suelta
+                                                </p>
+                                                <p className="text-xs text-gray-500">
+                                                    PNG, JPEG, WEBP (MAX. 2MB)
+                                                </p>
+                                            </div>
+                                        )}
+
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            name="image"
+                                            required={!imagePreview}
+                                            accept="image/*"
+                                            onChange={handleChange}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                </div>
+                                {imagePreview && (
+                                    <div className="mt-3 flex items-center justify-center gap-4">
+                                        <button
+                                            type="button"
+                                            onClick={removeImage}
+                                            className="px-3 py-1 rounded-md bg-red-700/60 text-white text-sm hover:bg-red-600 transition"
+                                        >
+                                            Eliminar imagen
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            {/* Botón de envío */}
+                            <SubmitButton
+                                isLoading={false}
+                                textButton="Enviar anuncio"
+                            />
+                            {error && (
+                                <div className="mt-6 p-4 bg-red-900/20 border border-red-500/50 rounded-lg">
+                                    <p className="text-red-400 text-sm text-center">
+                                        {error}
+                                    </p>
+                                </div>
+                            )}
+                        </form>
+                    </div>
+                </div>
             </div>
+            <Toastify />
         </div>
-    ) : (
-        <h1 className="text-center text-xl">No puedes acceder a esta página</h1>
     );
 };
 

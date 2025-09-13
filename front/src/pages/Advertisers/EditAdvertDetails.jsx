@@ -10,7 +10,7 @@ const EditAdvertDetails = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Edita tus anuncio" />
+            <Header />
             <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
                 <AdvertDetailsEdit />
             </main>
