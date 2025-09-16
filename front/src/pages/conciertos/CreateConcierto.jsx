@@ -22,7 +22,7 @@ const CreateConcierto = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header txt="Crear concierto" />
-            <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
+            <main className="container-main">
                 {reserva && (
                     <p className="text-center mb-8">
                         Concierto de <b>{reserva.grupo_nombre}</b> en{' '}

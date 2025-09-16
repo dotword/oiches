@@ -12,7 +12,7 @@ const CreateAdvertiserProfile = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header />
-                <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
+                <main className="container-main">
                     <AdvertiserProfileCreation />
                 </main>
                 <Footer />

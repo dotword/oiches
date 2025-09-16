@@ -22,7 +22,7 @@ const CalendarioGruposPage = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header txt={`Reservas de ${entry.nombre}`} />
-            <main className="w-11/12 mx-auto my-6 pb-14 max-w-5xl">
+            <main className="container-calendarios">
                 <section className="mb-12">
                     <h3 className="font-bold text-2xl mt-8 w-full">
                         Preguntas frecuentes

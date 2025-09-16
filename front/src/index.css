@@ -1,7 +1,22 @@
+/*Esquema distribucion
+1 Contenedores - Estructuras base del layout
+2 Botones - Sistema completo de botones
+3 Formularios - Campos y formularios organizados
+4 Cards - Sistema de tarjetas unificado
+5 Grids - Layouts responsivos
+6 Imágenes - Elementos visuales
+7 Tipografía - Sistema de textos
+8 Enlaces - Elementos de navegación
+9 Efectos - Animaciones y transiciones
+10 React Calendar - Componente específico
+*/
+
+
 html,
 body {
     background: #fff;
 }
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,19 +25,24 @@ body {
     html {
         font-family: 'Encode Sans', sans-serif;
     }
+    
     p,
     li,
     h2 {
         margin-bottom: 0.5rem;
     }
+    
+    /* ===== TABLAS RESPONSIVAS ===== */
     table {
         width: 100%;
         overflow-x: auto;
     }
+    
     table thead th {
         color: #fff;
         background-color: #424242;
     }
+    
     table th,
     table td {
         padding: 8px;
@@ -36,7 +56,7 @@ body {
 
     @media (max-width: 767px) {
         table thead {
-            display: none; /* Oculta los encabezados en dispositivos móviles */
+            display: none;
         }
 
         table tr {
@@ -62,75 +82,23 @@ body {
         }
     }
 }
-.react-calendar {
-    font-family: 'Encode Sans', sans-serif;
-    width: 100%;
-    max-width: 25rem;
-    border-color: rgba(128, 128, 128, 0.1);
-}
-button.react-calendar__navigation__arrow {
-    font-size: 1.5rem;
-}
-.react-calendar__navigation__label {
-    order: 1;
-    text-align: left;
-    padding-left: 1rem;
-    font-size: 1.3rem;
-    font-weight: 900;
-    font-family: 'Encode Sans', sans-serif;
-}
-.react-calendar__navigation__prev-button {
-    order: 2;
-}
-.react-calendar__navigation__next-button {
-    order: 3;
-}
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-    background-color: #ffb500;
-}
-.react-calendar abbr:where([title]) {
-    text-decoration: none;
-    text-transform: capitalize;
-}
-.react-calendar__month-view__days__day--weekend {
-    color: initial;
-}
-.react-calendar__tile.react-calendar__month-view__days__day {
-    border: 1px solid rgba(128, 128, 128, 0.1);
-    height: 3rem;
-}
-.react-calendar .unavailable {
-    background-color: #ffcccc;
-    color: #a00;
-}
-.react-calendar .available-date,
-.react-calendar__tile.react-calendar__month-view__days__day.selected-date,
-.calendarReserva .react-calendar__tile.react-calendar__tile--active,
-.concert .react-calendar__tile.react-calendar__tile--active {
-    background-color: #9333ff;
-    color: #fff;
-}
-.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
-    background-color: initial;
-    color: initial;
-}
-.react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.selected-date,
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-    background-color: #ffb500;
-}
-.react-calendar.calendar-concert {
-    max-width: 100%;
-}
-.react-calendar.calendar-concert .react-calendar__navigation__prev2-button,
-.react-calendar.calendar-concert .react-calendar__navigation__next2-button {
-    display: none;
-}
-.calendar-concert .react-calendar__navigation__label {
-    font-size: 1rem;
-}
+
 @layer components {
+    /* ===== CONTENEDORES PRINCIPALES ===== */
+    .container-main {
+        @apply w-11/12 mx-auto my-6 md:max-w-7xl;
+    }
+
+    .container-calendarios {
+        @apply w-11/12 mx-auto my-6 pb-14 max-w-5xl;
+    }
+    
+    .sala-list-container,
+    .grupo-list-container {
+        @apply w-11/12 flex flex-col justify-center mt-12 mx-auto;
+    }
+
+    /* ===== SISTEMA DE BOTONES ===== */
     .btn-account {
         @apply py-1 px-3 bg-purpleOiches rounded-md text-white text-center hover:text-black transition-all hover:cursor-pointer;
     }
@@ -138,54 +106,46 @@ button.react-calendar__navigation__arrow {
     .btn-buscar {
         @apply py-2 px-6 bg-purpleOiches hover:bg-moradoOiches rounded-md text-white text-center font-bold transition-all cursor-pointer w-full md:w-auto;
     }
+    
     .btn-degradado {
         @apply bg-gradient-to-r from-purple-700 to-purple-900 text-white font-bold py-2 px-4 rounded-lg shadow-lg hover:opacity-90;
     }
 
+    .btn-reset {
+        @apply py-2 px-4 bg-red-500 rounded-lg text-white text-center hover:bg-red-600 transition-all;
+    }
+
+    .button {
+        @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
+    }
+
+    .button-large {
+        @apply mt-4 flex justify-center items-center gap-2 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 rounded-lg;
+    }
+
+    /* ===== SISTEMA DE FORMULARIOS ===== */
     .form-input {
         @apply p-3 border border-gray-300 rounded-lg mt-2 h-10 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
     }
+    
     .form-select {
         @apply px-4 border border-gray-300 rounded-md mt-2 h-10 w-full bg-white focus:border-purple-600;
     }
+    
     .form-textarea {
         @apply p-3 border border-gray-300 rounded-lg mt-2 min-h-40 w-full focus:outline-none focus:ring-2 focus:ring-purple-600;
     }
-    .sect-photo {
-        @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
-    }
-    .border-photos {
-        @apply flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-md relative overflow-clip;
-    }
-    .image-shadow,
-    article.yt-lite {
-        @apply rounded-2xl shadow-[3px_3px_6px_2px_rgba(0,0,0,0.3)];
+    
+    .form-section {
+        @apply grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6;
     }
 
-    .enlaces {
-        @apply text-purple-600 hover:underline focus:outline focus:ring-2 focus:ring-purple-600 flex items-center gap-2;
-    }
-
-    /* Zona de héroe */
-    .hero {
-        @apply bg-gray-100 py-16 text-center md:h-[680px] w-full flex flex-col justify-center items-center;
-    }
-
-    .hero-title {
-        @apply text-4xl font-bold text-gray-800 mb-4 z-10 p-4 drop-shadow-[0_4px_3px_rgba(0,0,0,0.9)];
-    }
-
-    .hero-subtitle {
-        @apply text-lg text-gray-800 z-10 font-semibold px-4 mb-8 drop-shadow-[0_2px_1px_rgba(0,0,0,0.9)];
-    }
-
-    /* Contenedor del formulario de filtros */
+    /* ===== FORMULARIOS DE FILTRO ===== */
     .sala-filter-form-container,
     .grupo-filter-form-container {
         @apply w-full bg-footercolor flex justify-center;
     }
 
-    /* Filtros de salas */
     .sala-filter-form,
     .grupo-filter-form {
         @apply w-full max-w-screen-lg flex flex-col md:flex-row justify-between p-4;
@@ -196,6 +156,53 @@ button.react-calendar__navigation__arrow {
         @apply mx-2 my-2;
     }
 
+    .sala-filter-form button,
+    .grupo-filter-form button {
+        @apply flex-none;
+    }
+
+    /* ===== SISTEMA DE CARDS ===== */
+    .card {
+        @apply bg-gray-800 text-white p-3 rounded-lg shadow-lg cursor-pointer w-full max-w-80 mx-auto;
+    }
+    
+    .card-generica {
+        @apply card flex flex-col h-full p-3 bg-footercolor shadow-md rounded-lg cursor-pointer;
+    }
+
+    .card-ads {
+        @apply bg-greyOiches text-white rounded-lg shadow-lg cursor-pointer w-full flex flex-col h-full relative;
+    }
+
+    .sala-card,
+    .grupo-card {
+        @apply bg-gray-900 p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
+    }
+
+    /* ===== CARDS ESPECIALES ===== */
+    .package-card {
+        @apply bg-footercolor backdrop-blur-lg border border-white/30 rounded-2xl p-4 xl:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_10px_rgba(79,70,229,0.3)] hover:border-indigo-400/50 cursor-pointer flex flex-col h-full;
+    }
+
+    .concurso_semifinal-card {
+        @apply text-white w-full flex flex-col h-full px-4 py-4 bg-footercolor shadow-md cursor-pointer transition-transform duration-500 transform hover:scale-105 hover:z-10 border-2 border-solid border-white;
+    }
+
+    .concurso_winners-card {
+        @apply text-white w-full flex flex-col justify-end h-[35rem] max-w-[25rem] px-8 py-2 mb-8 bg-cover bg-center shadow-md cursor-pointer transition-transform duration-500 transform hover:scale-105 hover:z-10 relative inset-0 md:h-[40rem];
+    }
+
+    /* ===== GRIDS Y LAYOUTS ===== */
+    .sala-list,
+    .grupo-list {
+        @apply w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8;
+    }
+
+    .concert-list {
+        @apply w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
+    }
+
+    /* ===== GOLDEN RATIO LAYOUT ===== */
     .golden-ratio-1 {
         @apply flex-1;
     }
@@ -208,38 +215,7 @@ button.react-calendar__navigation__arrow {
         @apply flex-1;
     }
 
-    .sala-filter-form button,
-    .grupo-filter-form button {
-        @apply flex-none;
-    }
-
-    /* Tarjetas de lista */
-    .sala-list-container,
-    .grupo-list-container {
-        @apply w-11/12 flex flex-col justify-center mt-12 mx-auto;
-    }
-
-    .sala-list,
-    .grupo-list {
-        @apply w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8;
-    }
-    .card {
-        @apply bg-gray-800 text-white p-3 rounded-lg shadow-lg cursor-pointer w-full max-w-80 mx-auto;
-    }
-    .card-generica {
-        @apply card flex flex-col h-full p-3 bg-footercolor shadow-md rounded-lg cursor-pointer;
-    }
-    .grupo-list .card-generica,
-    .sala-list .card-generica {
-        @apply transition-transform hover:scale-105;
-    }
-    .sala-card,
-    .grupo-card {
-        @apply bg-gray-900 p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300;
-    }
-    .concert-list {
-        @apply w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8;
-    }
+    /* ===== SISTEMA DE IMÁGENES ===== */
     .sala-card-image,
     .grupo-card-image {
         @apply w-full max-w-full h-48 max-h-48 object-cover rounded-lg mb-4 transition-transform duration-300 transform hover:scale-105;
@@ -248,9 +224,57 @@ button.react-calendar__navigation__arrow {
     .concert-card-image {
         @apply w-full max-w-full h-72 object-cover rounded-lg mb-4 transition delay-150 duration-300 ease-in-out hover:scale-105;
     }
+
+    .concurso_semifinal-image {
+        @apply w-full max-w-full h-72 max-h-72 object-cover rounded-lg mb-4;
+    }
+
+    .image-shadow,
+    article.yt-lite {
+        @apply rounded-2xl shadow-[3px_3px_6px_2px_rgba(0,0,0,0.3)];
+    }
+
+    /* ===== CAMPOS DE FOTO ===== */
+    .sect-photo {
+        @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
+    }
+
+    .border-photos {
+        @apply flex items-center justify-center w-40 h-40 border-2 border-dashed border-gray-300 rounded-md relative overflow-clip;
+    }
+
+    .profile-picture-container {
+        @apply flex flex-col items-center mb-8;
+    }
+
+    .profile-picture {
+        @apply w-32 h-32 mb-4 rounded-full border-4 border-dashed border-gray-300 flex items-center justify-center overflow-hidden;
+    }
+
+    /* ===== SISTEMA DE TIPOGRAFÍA ===== */
+    .hero-title {
+        @apply text-4xl font-bold text-gray-800 mb-4 z-10 p-4 drop-shadow-[0_4px_3px_rgba(0,0,0,0.9)];
+    }
+
+    .hero-subtitle {
+        @apply text-lg text-gray-800 z-10 font-semibold px-4 mb-8 drop-shadow-[0_2px_1px_rgba(0,0,0,0.9)];
+    }
+
     .sala-card-title,
     .grupo-card-title {
         @apply text-xl font-bold text-white mb-2;
+    }
+
+    .concurso_semifinal-title {
+        @apply text-white my-2 text-2xl font-bold;
+    }
+
+    .package-title {
+        @apply text-lg font-semibold leading-8 text-white group-hover:text-indigo-300 transition-colors duration-300;
+    }
+
+    .sub_title_ficha {
+        @apply text-white;
     }
 
     .sala-card-genre,
@@ -262,80 +286,143 @@ button.react-calendar__navigation__arrow {
         @apply text-gray-400;
     }
 
-    .button {
-        @apply p-4 shadow-lg rounded bg-purple-600 text-white hover:scale-105 transition-all;
-    }
-    .button-large {
-        @apply mt-4 flex justify-center items-center gap-2 bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-2 rounded-lg;
-    }
-    .sub_title_ficha {
-        @apply text-white; /*Bold para texto como provincia genero etc... de las fichas*/
-    }
-
-    /* New classes for ProfileForm layout */
-    .form-section {
-        @apply grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6;
-    }
-    .profile-picture-container {
-        @apply flex flex-col items-center mb-8;
-    }
-    .profile-picture {
-        @apply w-32 h-32 mb-4 rounded-full border-4 border-dashed border-gray-300 flex items-center justify-center overflow-hidden;
-    }
-    .btn-reset {
-        @apply py-2 px-4 bg-red-500 rounded-lg text-white text-center hover:bg-red-600 transition-all;
-    }
-
-    /* CONCURSO */
-    .concurso_semifinal-card {
-        @apply text-white w-full flex flex-col h-full px-4 py-4 bg-footercolor shadow-md cursor-pointer  transition-transform duration-500 transform hover:scale-105 hover:z-10 border-2 border-solid border-white;
-    }
-    .concurso_semifinal-image {
-        @apply w-full max-w-full h-72 max-h-72 object-cover rounded-lg mb-4;
-    }
-    .concurso_semifinal-title {
-        @apply text-white my-2 text-2xl font-bold;
-    }
-    .concurso_semifinal-link {
-        @apply inline-flex items-center bg-purple-600 text-white text-lg px-4 py-2 mb-4 rounded-md hover:bg-purple-700 transition-all font-semibold;
-    }
+    /* ===== FUENTES ESPECIALES ===== */
     .kilogram {
         font-family: 'kilogram', sans-serif;
     }
-    .concurso_winners-card {
-        @apply text-white w-full flex flex-col justify-end h-[35rem] max-w-[25rem] px-8 py-2 mb-8 bg-cover bg-center shadow-md cursor-pointer transition-transform duration-500 transform hover:scale-105 hover:z-10 relative inset-0 md:h-[40rem];
+
+    /* ===== HERO SECTIONS ===== */
+    .hero {
+        @apply bg-gray-100 py-16 text-center md:h-[680px] w-full flex flex-col justify-center items-center;
     }
 
-    /* CLASFICADOS */
-    .package-card {
-        @apply bg-footercolor backdrop-blur-lg border border-white/30 rounded-2xl p-4 xl:p-8 shadow-[0_4px_10px_rgba(0,0,0,0.1)] transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_10px_rgba(79,70,229,0.3)] hover:border-indigo-400/50 cursor-pointer flex flex-col h-full;
+    /* ===== SISTEMA DE ENLACES ===== */
+    .enlaces {
+        @apply text-purple-600 hover:underline focus:outline focus:ring-2 focus:ring-purple-600 flex items-center gap-2;
     }
-    .package-title {
-        @apply text-lg font-semibold leading-8 text-white group-hover:text-indigo-300 transition-colors duration-300;
+
+    .concurso_semifinal-link {
+        @apply inline-flex items-center bg-purple-600 text-white text-lg px-4 py-2 mb-4 rounded-md hover:bg-purple-700 transition-all font-semibold;
     }
+
+    /* ===== ELEMENTOS DE PACKAGE ===== */
     .package-desc-item {
         @apply flex items-baseline gap-x-3 transform transition-transform duration-200 hover:translate-x-1;
     }
+
     .package-buttons {
         @apply inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold border backdrop-blur-sm;
     }
+
     .package-popular {
         @apply rounded-full bg-indigo-500/80 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold leading-5 text-white border border-indigo-400/50 transition-all duration-300 group-hover:bg-indigo-400/90 group-hover:scale-110 group-hover:shadow-lg;
     }
-    .card-ads {
-        @apply bg-greyOiches text-white rounded-lg shadow-lg cursor-pointer w-full flex flex-col h-full relative;
+
+    /* ===== EFECTOS HOVER ===== */
+    .grupo-list .card-generica,
+    .sala-list .card-generica {
+        @apply transition-transform hover:scale-105;
     }
+
     .grupo-list .package-4,
     .grupo-list .package-5,
     .grupo-list .package-6,
     .grupo-list .package-7 {
         @apply bg-footercolor;
     }
+
+    /* ===== REACT CALENDAR ===== */
+    .react-calendar {
+        font-family: 'Encode Sans', sans-serif;
+        width: 100%;
+        max-width: 25rem;
+        border-color: rgba(128, 128, 128, 0.1);
+    }
+    
+    button.react-calendar__navigation__arrow {
+        font-size: 1.5rem;
+    }
+    
+    .react-calendar__navigation__label {
+        order: 1;
+        text-align: left;
+        padding-left: 1rem;
+        font-size: 1.3rem;
+        font-weight: 900;
+        font-family: 'Encode Sans', sans-serif;
+    }
+    
+    .react-calendar__navigation__prev-button {
+        order: 2;
+    }
+    
+    .react-calendar__navigation__next-button {
+        order: 3;
+    }
+    
+    .react-calendar__navigation button:enabled:hover,
+    .react-calendar__navigation button:enabled:focus {
+        background-color: #ffb500;
+    }
+    
+    .react-calendar abbr:where([title]) {
+        text-decoration: none;
+        text-transform: capitalize;
+    }
+    
+    .react-calendar__month-view__days__day--weekend {
+        color: initial;
+    }
+    
+    .react-calendar__tile.react-calendar__month-view__days__day {
+        border: 1px solid rgba(128, 128, 128, 0.1);
+        height: 3rem;
+    }
+    
+    .react-calendar .unavailable {
+        background-color: #ffcccc;
+        color: #a00;
+    }
+    
+    .react-calendar .available-date,
+    .react-calendar__tile.react-calendar__month-view__days__day.selected-date,
+    .calendarReserva .react-calendar__tile.react-calendar__tile--active,
+    .concert .react-calendar__tile.react-calendar__tile--active {
+        background-color: #9333ff;
+        color: #fff;
+    }
+    
+    .react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day {
+        background-color: initial;
+        color: initial;
+    }
+    
+    .react-calendar__tile--rangeBothEnds.react-calendar__month-view__days__day.selected-date,
+    .react-calendar__tile--active:enabled:hover,
+    .react-calendar__tile--active:enabled:focus {
+        background-color: #ffb500;
+    }
+    
+    .react-calendar.calendar-concert {
+        max-width: 100%;
+    }
+    
+    .react-calendar.calendar-concert .react-calendar__navigation__prev2-button,
+    .react-calendar.calendar-concert .react-calendar__navigation__next2-button {
+        display: none;
+    }
+    
+    .calendar-concert .react-calendar__navigation__label {
+        font-size: 1rem;
+    }
 }
 
+/* ===== ESTILOS GLOBALES (fuera de @layer) ===== */
 .active:not(.btn-account) {
     font-weight: 600;
 }
+
+/* ===== SLICK CAROUSEL ===== */
 .slick-prev:before,
 .slick-next:before {
     color: #9333ff;
@@ -343,32 +430,31 @@ button.react-calendar__navigation__arrow {
     width: 30px;
     height: 40px;
 }
+
 .slick-slide > div {
     margin: 0px 10px;
 }
-/* Ajustar los dots para que siempre estén visibles y alineados correctamente */
+
 .slick-dots {
-    @apply flex justify-center mt-4; /* Flex para centrar y añadir margen superior */
-    width: 100%; /* Asegura que los dots ocupen todo el ancho del contenedor */
-    position: relative; /* Los dots se quedan en su espacio sin causar desbordamiento */
+    @apply flex justify-center mt-4;
+    width: 100%;
+    position: relative;
     margin: 0 auto;
-    z-index: 2; /* Asegura que los dots se muestren sobre el slider */
+    z-index: 2;
 }
 
-/* Ajustar el tamaño y color de los dots */
 .slick-dots li button:before {
-    @apply text-base; /* Tamaño adecuado para pantallas pequeñas y grandes */
-    color: #9333ff; /* Cambia el color para contraste */
+    @apply text-base;
+    color: #9333ff;
 }
 
-/* Ajustes específicos para pantallas pequeñas */
 @media (max-width: 768px) {
     .slick-dots {
-        @apply mt-2; /* Ajusta el margen en pantallas pequeñas */
+        @apply mt-2;
     }
 }
 
-/*Avatar perfil cuadrado esquinas redondeadas a la par que lso video e imagenes*/
+/* ===== UTILIDADES ESPECIALES ===== */
 .avatar-square {
     @apply w-40 h-40 rounded-lg object-cover;
 }
@@ -376,9 +462,12 @@ button.react-calendar__navigation__arrow {
 .multiSelectContainer input {
     @apply w-full;
 }
+
+/* ===== CONTENIDO DE DESCRIPCIÓN ===== */
 .description-content {
     color: #374151;
 }
+
 .description-content h1,
 .description-content h2,
 .description-content h3 {
@@ -387,9 +476,11 @@ button.react-calendar__navigation__arrow {
     line-height: 2rem;
     margin-bottom: 0.5rem;
 }
+
 .description-content a {
     text-decoration: underline;
 }
+
 .description-content ul {
     list-style: disc;
     padding-left: 1.5rem;
