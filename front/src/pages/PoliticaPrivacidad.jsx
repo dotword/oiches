@@ -29,7 +29,7 @@ const PoliticaPrivacidad = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Política de privacidad" />
-                <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-7xl">
+                <main className="container-main-pb">
                     <h2 className="font-medium text-lg pt-4 pb-2">
                         1. Responsable de tratamiento de los datos
                     </h2>

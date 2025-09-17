@@ -50,7 +50,7 @@ const NoticesSection = ({ userId }) => (
         <div className="flex flex-wrap gap-8 mt-8">
             <Link
                 to={`/noticeboard/user/${userId}`}
-                className="bg-purpleOiches hover:bg-moradoOiches text-white font-semibold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                className="btn-primary-scale"
             >
                 Gestionar mis anuncios
             </Link>
@@ -216,25 +216,25 @@ const AuthUser = () => {
                 <div className="flex flex-wrap gap-8">
                     <Link
                         to="/admin-dashboard"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                        className="btn-primary-scale-mt"
                     >
                         Usuarios
                     </Link>
                     <Link
                         to="/admin-advertisers"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                        className="btn-primary-scale-mt"
                     >
                         Anunciantes
                     </Link>
                     <Link
                         to="/admin-reservas"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                        className="btn-primary-scale-mt"
                     >
                         Reservas
                     </Link>
                     <Link
                         to="/admin-noticeboard"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
+                        className="btn-primary-scale-mt"
                     >
                         Noticeboard
                     </Link>

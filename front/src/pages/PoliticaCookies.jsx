@@ -28,7 +28,7 @@ const PoliticaCookies = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Política de cookies" />
-                <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-7xl">
+                <main className="container-main-pb">
                     <p className="mb-2">
                         Una cookie es un fichero que se descarga en tu ordenador
                         al acceder a determinadas páginas web. Las cookies

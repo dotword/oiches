@@ -155,7 +155,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/grupos"
-                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todos los músicos
                             </Link>
@@ -181,7 +181,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/salas"
-                                className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todas las salas
                             </Link>
@@ -247,7 +247,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/agencias"
-                                className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todas las agencias
                             </Link>

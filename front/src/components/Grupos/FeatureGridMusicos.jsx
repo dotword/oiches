@@ -9,7 +9,7 @@ const FeatureGridMusicos = () => {
 
             <div className="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-4 mx-auto gap-4 md:justify-around md:mx-auto xl:w-1200">
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all text-center md:text-left">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0">
+                    <div className="icon-circle-gradient">
                         <FiMapPin className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-center md:text-left">
@@ -22,7 +22,7 @@ const FeatureGridMusicos = () => {
                 </div>
                 {/* Tarjeta 2 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all text-center md:text-left">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0">
+                    <div className="icon-circle-gradient">
                         <FiCalendar className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-center md:text-left">
@@ -35,7 +35,7 @@ const FeatureGridMusicos = () => {
                 </div>
                 {/* Tarjeta 3 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all text-center md:text-left">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0">
+                    <div className="icon-circle-gradient">
                         <FiMusic className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-center md:text-left">
@@ -48,7 +48,7 @@ const FeatureGridMusicos = () => {
                 </div>
                 {/* Tarjeta 4 */}
                 <div className="bg-white p-8 rounded-lg shadow-md border border-transparent hover:border-purple-600 transition-all text-center md:text-left">
-                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0">
+                    <div className="icon-circle-gradient">
                         <FiStar className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="text-lg font-semibold text-center md:text-left">
