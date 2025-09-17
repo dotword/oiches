@@ -151,7 +151,7 @@ const AdvertDetailsEdit = () => {
                     {/* Header de la tarjeta */}
                     <div className="px-6 py-5 border-b border-gray-100">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
+                            <div className="icon-square-gradient">
                                 <TfiWrite className="w-7 h-7 text-white" />
                             </div>
                             <div>

@@ -374,3 +374,108 @@ Añadir a `index.css` las siguientes clases:
 
 *Actualizado el 17 de septiembre de 2025 - v1.1*  
 *Estado: Patrón 1 completado ✅, Clases preparadas para implementar ⏳*
+
+
+Basándome en la revisión completa de tu proyecto Oiches, he identificado múltiples oportunidades de optimización de Tailwind CSS. Aquí tienes un plan paso a paso detallado:
+
+🚀 PLAN DE OPTIMIZACIÓN TAILWIND CSS - OICHES
+✅ PASO 1: COMPLETAR IMPLEMENTACIÓN DE CLASES FALTANTES (5 min)
+Archivo: index.css Ubicación: Después de la línea 138 (después de .btn-primary-scale-mt)
+
+📋 PASO 2: OPTIMIZAR ARCHIVOS PRIORITARIOS
+🎯 2A. Optimizar Botones Gradiente (ALTA PRIORIDAD)
+1. Archivo: Home.jsx
+
+Línea 158: Cambiar bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105 por btn-gradient-purple
+Línea 184: Mismo cambio
+Línea 250: Mismo cambio
+2. Archivo: FeatureGridMusicos.jsx
+
+Línea 12: Cambiar flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0 por icon-circle-gradient
+Línea 25: Mismo cambio
+Línea 38: Mismo cambio
+Línea 51: Mismo cambio
+3. Archivo: FeatureGridSalas.jsx
+
+Línea 14: Cambiar por icon-circle-gradient
+Línea 28: Mismo cambio
+Línea 42: Mismo cambio
+Línea 57: Mismo cambio
+🎯 2B. Optimizar Iconos Cuadrados Purple
+1. Archivo: AdvertiserProfileEdit.jsx
+
+Línea 111: Cambiar w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center por icon-square-purple
+2. Archivo: AdvertiserProfileCreation.jsx
+
+Línea 105: Cambiar por icon-square-purple
+3. Archivo: AdvertDetailsEdit.jsx
+
+Línea 154: Cambiar por icon-square-purple
+🎯 2C. Optimizar Grids Responsivos
+1. Archivo: AdvertiserProfileEdit.jsx
+
+Línea 139: Cambiar grid grid-cols-1 md:grid-cols-2 gap-4 por grid-responsive-2
+Línea 262: Mismo cambio
+2. Archivo: AdvertiserProfileCreation.jsx
+
+Línea 142: Cambiar por grid-responsive-2
+Línea 255: Mismo cambio
+📋 PASO 3: OPTIMIZAR CONTENEDORES CON PADDING BOTTOM
+1. Archivo: AvisoLegal.jsx
+
+Línea 40: Cambiar w-11/12 mx-auto my-6 pb-14 md:max-w-7xl por container-main-pb
+2. Archivo: PoliticaCookies.jsx
+
+Línea 31: Mismo cambio
+3. Archivo: PoliticaPrivacidad.jsx
+
+Línea 32: Mismo cambio
+📋 PASO 4: OPTIMIZAR UTILIDADES FLEX CENTER
+1. Archivo: NotFound.jsx
+
+Línea 34: Cambiar flex items-center justify-center por flex-center
+2. Archivo: ErrorBoundary.jsx
+
+Línea 45: Cambiar flex flex-col items-center justify-center min-h-screen por flex flex-col flex-center-min-h-screen
+3. Archivo: Maintenance.jsx
+
+Línea 3: Cambiar flex items-center justify-center min-h-screen por flex-center-min-h-screen
+📋 PASO 5: LIMPIAR CÓDIGO COMENTADO Y DUPLICADO
+🧹 5A. Limpiar Header.jsx
+Archivo: Header.jsx
+
+Líneas 96-155: Eliminar todo el código comentado
+🧹 5B. Limpiar HeaderHero.jsx
+Archivo: HeaderHero.jsx
+
+Líneas 88-155: Eliminar todo el código comentado
+📋 PASO 6: OPTIMIZAR IMPORTACIONES NO UTILIZADAS
+Revisar y eliminar importaciones no utilizadas en:
+
+UserValidationPage.jsx - Verificar si todas las importaciones se usan
+AdvertDetailsEdit.jsx - Muchas importaciones, verificar uso
+📋 PASO 7: IMPLEMENTAR COMPONENTES REUTILIZABLES
+🔧 7A. Crear Componente de Icono Gradiente
+Nuevo archivo: front/src/components/UI/IconGradient.jsx
+
+🔧 7B. Crear Componente de Botón Gradiente
+Nuevo archivo: front/src/components/UI/ButtonGradient.jsx
+
+🧪 PASO 8: TESTING Y VERIFICACIÓN
+Ejecutar el proyecto: npm run dev
+Verificar que no hay errores de compilación
+Comprobar que el diseño se mantiene igual
+Probar responsive design en diferentes dispositivos
+Verificar que todas las clases funcionan correctamente
+📊 RESULTADOS ESPERADOS
+✅ Reducción de código: ~60-70% en clases repetitivas
+✅ Archivos optimizados: 20+ archivos
+✅ Mantenimiento: Cambios centralizados
+✅ Performance: Bundle CSS más pequeño
+✅ Legibilidad: Código más limpio y semántico
+⚠️ CONSIDERACIONES IMPORTANTES
+Hacer backup antes de empezar
+Implementar gradualmente para facilitar debugging
+Probar cada cambio antes del siguiente
+Usar git commits granulares para facilitar rollback si es necesario
+¿Te gustaría que empiece por algún paso específico o tienes alguna pregunta sobre la implementación?
