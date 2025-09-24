@@ -10,9 +10,7 @@ import SliderMulti from '../components/SliderMulti.jsx';
 import Footer from '../components/Footer.jsx';
 import Toastify from '../components/Toastify.jsx';
 import Seo from '../components/SEO/Seo.jsx';
-// import Steps from '../components/Steps.jsx';
 import Conectate from '../components/Conectate.jsx';
-import ConcertBanner from '../components/Concurso/ConcertBanner.jsx';
 
 const Home = () => {
     const [salas, setSalas] = useState([]);
@@ -98,10 +96,9 @@ const Home = () => {
                 className="overflow-hidden"
             >
                 <HeaderHero />
-                {/* Componente banner anuncio concurso */}
-                <ConcertBanner />
+
                 {/* Hero Section hero banner comentado para usar banner concurso, descomentar y eliminar comoponente MusicanContestBanner*/}
-                {/* <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
+                <section className="hero relative flex flex-col justify-center items-start bg-hero-home bg-cover bg-center sm:h-96 md:h-[680px] p-8 md:p-16">
                     <div className="text-left max-w-lg mr-auto">
                         <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
                             Encuentra tu banda sonora
@@ -113,7 +110,7 @@ const Home = () => {
                         <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
                             ¡Vive la música en cada rincón!
                         </p>
-                        <div className="flex gap-4">
+                        <div className="flex flex-wrap gap-4">
                             <Link
                                 to="/grupos"
                                 className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
@@ -126,9 +123,15 @@ const Home = () => {
                             >
                                 Salas
                             </Link>
+                            <Link
+                                to="/agencias"
+                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                            >
+                                Agencias
+                            </Link>
                         </div>
                     </div>
-                </section> */}
+                </section>
                 {/* Main Content */}
                 <main className="mb-20 md:mb-28">
                     {/* Músicos más votados */}
@@ -248,11 +251,6 @@ const Home = () => {
                             </Link>
                         </div>
                     </section>
-
-                    {/* Sección de Steps */}
-                    {/* <section className="mt-20 mx-4 flex justify-center items-center md:mt-28">
-                        <Steps />
-                    </section> */}
 
                     {/* Sección de Conectate */}
                     <section className="w-11/12 mx-auto mb-20 mt-20 flex flex-col justify-between items-center gap-16 md:max-w-7xl md:flex-row md:mt-28">
