@@ -135,7 +135,7 @@ const GrupoDetail = () => {
                                 href={`mailto:${email}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                                className="btn-gradient-purple"
                             >
                                 Contactar
                             </a>
@@ -224,7 +224,7 @@ const GrupoDetail = () => {
                 {media.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Videos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+                        <div className="grid-responsive-2-gap8 my-6">
                             {media.map((media) => (
                                 <LiteYouTubeEmbed
                                     key={media.id}
@@ -240,7 +240,7 @@ const GrupoDetail = () => {
                 {fotos.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Fotos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-6">
+                        <div className="grid-responsive-2-gap8 my-8">
                             {fotos.map((photo) => (
                                 <img
                                     key={photo.id}

@@ -108,7 +108,7 @@ const AdvertiserProfileEdit = () => {
                             {/* Header de la tarjeta */}
                             <div className="px-6 py-5 border-b">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
+                                    <div className="icon-square-purple">
                                         <IoBusinessOutline className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
@@ -136,7 +136,7 @@ const AdvertiserProfileEdit = () => {
                                             Información empresarial
                                         </h3>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid-responsive-2">
                                             <div className="space-y-1">
                                                 <label
                                                     htmlFor="company_name"
@@ -259,7 +259,7 @@ const AdvertiserProfileEdit = () => {
                                             <FaPhoneVolume className="w-4 h-4 text-purpleOiches" />
                                             Información de Contacto
                                         </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid-responsive-2">
                                             <div className="space-y-1">
                                                 <label
                                                     htmlFor="contact_name"

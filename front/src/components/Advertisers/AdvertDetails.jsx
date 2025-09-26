@@ -20,7 +20,7 @@ const AdvertDetails = () => {
     return (
         <>
             <main className="px-4 pb-16 mt-6 flex flex-col gap-6 mx-auto shadow-xl w-11/12 md:max-w-1200">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-900 mx-auto md:gap-8 md:mb-8">
+                <div className="grid-details">
                     <div className="py-4 flex flex-col  justify-center">
                         <h1 className="text-3xl font-bold text-gray-800 mb-6 md:text-4xl">
                             {advert[0].title && advert[0].title}

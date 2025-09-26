@@ -111,7 +111,7 @@ const AgenciaEdit = ({ userLogged, token, idAgencia }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Agrupamos los 3 primeros campos en una fila */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid-responsive-2">
                         {/* Nombre */}
                         <div className="w-full">
                             <label

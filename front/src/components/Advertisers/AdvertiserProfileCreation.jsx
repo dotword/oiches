@@ -102,7 +102,7 @@ const AdvertiserProfileCreation = () => {
                             {/* Header de la tarjeta */}
                             <div className="px-6 py-5 border-b">
                                 <div className="flex items-center gap-4">
-                                    <div className="icon-square-gradient">
+                                    <div className="icon-square-purple">
                                         <IoBusinessOutline className="w-7 h-7 text-white" />
                                     </div>
                                     <div>
@@ -139,7 +139,7 @@ const AdvertiserProfileCreation = () => {
                                             Información Empresarial
                                         </h3>
 
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid-responsive-2">
                                             <div className="space-y-1">
                                                 <label
                                                     htmlFor="nombreEmpresa"
@@ -252,7 +252,7 @@ const AdvertiserProfileCreation = () => {
                                             <FaPhoneVolume className="w-4 h-4 text-purpleOiches" />
                                             Información de contacto
                                         </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="grid-responsive-2">
                                             <div className="space-y-1">
                                                 <label
                                                     htmlFor="nombreContacto"
