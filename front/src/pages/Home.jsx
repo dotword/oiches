@@ -254,11 +254,6 @@ const Home = () => {
                         </div>
                     </section>
 
-                    {/* Sección de Steps */}
-                    {/* <section className="mt-20 mx-4 flex justify-center items-center md:mt-28">
-                        <Steps />
-                    </section> */}
-
                     {/* Sección de Conectate */}
                     <section className="w-11/12 mx-auto mb-20 mt-20 flex flex-col justify-between items-center gap-16 md:max-w-7xl md:flex-row md:mt-28">
                         <Conectate />
