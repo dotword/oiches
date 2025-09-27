@@ -2,11 +2,14 @@
 
 ## 📋 **RESUMEN **
 
-Optimización completa del CSS/Tailwind, asi como iconos de react-icons, el uncio que queda es la nota musical en las puntuaciones
+Optimización completa del CSS/Tailwind, asi como iconos de react-icons, el unico icon que queda es la nota musical en las puntuaciones, eliminacion codigo comentado
 
 ### ✅ **COMPLETADO**
 - **Archivos optimizados:** 33 archivos
-- **Beneficios:** Código más limpio, mantenimiento centralizado en index.css
+- **Archivos limpiados:** 8 archivos (código comentado eliminado)
+- **Reducción de código:**  clases repetitivas + ~200 líneas de código eliminadas
+- **React Icons:** implementados (solo queda símbolo musical ♫ en puntuaciones)
+
 
 ### 📊 **PATRONES IMPLEMENTADOS**
 1. ✅ **Contenedores Principales** (15 archivos)
@@ -19,6 +22,7 @@ Optimización completa del CSS/Tailwind, asi como iconos de react-icons, el unci
 8. ✅ **Iconos Circulares Gradiente** (Patrones adicionales)
 9. ✅ **Iconos Cuadrados Purple** (Patrones adicionales)
 10. ✅ **Utilidades Adicionales** (Patrones adicionales)
+11. ✅ **Limpieza de Código Comentado** (8 archivos limpiados)
 
 ---
 
@@ -97,6 +101,53 @@ Optimización completa del CSS/Tailwind, asi como iconos de react-icons, el unci
     }
 }
 ```
+
+---
+
+## 🧹 **#11: LIMPIEZA DE CÓDIGO COMENTADO** ✅ **COMPLETADO**
+**Prioridad:** Alta | **Impacto:** 8 archivos | **Beneficio:** Mejor legibilidad y mantenimiento
+
+### 📋 **Archivos Limpiados**
+
+#### ✅ **ELIMINADO COMPLETAMENTE (6 archivos):**
+1. **`front/src/components/Header.jsx`** 
+   - ✅ Eliminadas ~80 líneas de código JSX comentado
+   - ✅ Versión anterior del componente removida (código duplicado)
+   - ✅ Mejorada legibilidad del código
+
+2. **`front/src/components/HeaderHero.jsx`**
+   - ✅ Eliminadas ~40 líneas de lógica comentada
+   - ✅ Componentes JSX obsoletos removidos
+   - ✅ Archivo más limpio y mantenible
+
+3. **`front/src/pages/Concurso/ListadoGruposInscritos.jsx`**
+   - ✅ Eliminada sección de anuncio temporal obsoleta
+   - ✅ Código HTML comentado removido (mensaje de revisión de votos)
+   - ✅ Componente más enfocado
+
+4. **`front/src/pages/Concurso/index.jsx`**
+   - ✅ Eliminados imports comentados no utilizados
+   - ✅ Referencias obsoletas removidas (InscripcionConcurso, ValidateEmailPage)
+
+5. **`front/src/App.jsx`**
+   - ✅ Eliminados imports comentados
+   - ✅ Referencias de componentes obsoletos removidas
+
+6. **`front/scripts/generate-sitemap.js`**
+   - ✅ Eliminadas ~42 líneas de código obsoleto comentado
+   - ✅ Versión estática antigua removida (mantenida versión dinámica actual)
+
+#### ✅ **ARCHIVOS VERIFICADOS:**
+1. **`front/src/pages/Home.jsx`**
+   - ✅ Componente Steps comentado **eliminado**
+
+
+### 🎯 **Beneficios Obtenidos**
+- **Reducción de líneas:** ~200+ líneas eliminadas
+- **Mejor legibilidad:** Código más limpio y enfocado
+- **Mantenimiento:** Menos confusión para desarrolladores
+- **Performance:** Bundle ligeramente más pequeño
+- **Profesionalismo:** Código production-ready
 
 ---
 
@@ -267,7 +318,7 @@ className="grid-details"
 - ✅ `components/Grupos/GrupoDetail.jsx` (línea 130)
 - ✅ `components/Agencias/AgenciaCreacion.jsx` (línea 212)
 
-### 🎯 **Iconos Circulares Gradiente** ✅ **IMPLEMENTADO**
+### 🎯 **Iconos Circulares Gradiente** ✅ 
 ```css
 .icon-circle-gradient {
     @apply flex items-center justify-center w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-2 mx-auto md:mx-0;
@@ -279,7 +330,7 @@ className="grid-details"
 - ✅ `components/Grupos/FeatureGridMusicos.jsx` (líneas 12, 25, 38, 51)
 - ✅ `components/Agencias/FeatureGridAgencias.jsx` (líneas 12, 27, 42, 57)
 
-### 🎯 **Iconos Cuadrados Purple** ✅ **IMPLEMENTADO**
+### 🎯 **Iconos Cuadrados Purple** ✅ 
 ```css
 .icon-square-purple {
     @apply w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center;
@@ -330,23 +381,12 @@ className="grid-details"
 2. ✅ Responsive ok
 3. ✅ No clases rotas ni errores
 
+### ✅ Fase 6: Limpieza de Código - **Listo**
+1. ✅ Código comentado eliminado (8 archivos)
+2. ✅ Imports obsoletos removidos
+3. ✅ Archivos no funcionales limpiados
+4. ✅ ~200+ líneas de código obsoleto eliminadas
 
-## 🎯 **LOGRADOS**
-
-### 📈 **Performance**
-- ✅ Reducción significativa del tamaño del bundle CSS
-- ✅ Mejor cacheo de estilos
-- ✅ Eliminación de código repetitivo
-
-### 🔧 **Mantenibilidad**
-- ✅ Cambios centralizados en un solo lugar
-- ✅ Nomenclatura semántica clara y consistente
-- ✅ Código más legible y organizado
-
-### 👥 **Experiencia de Desarrollo**
-- ✅ Menos propenso a errores
-- ✅ Autocompletado mejorado en IDE
-- ✅ Documentación implícita en nombres de clases
 
 
 ## 📝 **TAREAS PENDIENTES**
@@ -358,7 +398,7 @@ className="grid-details"
 - [ ] **Mejorar diseño del menú** - Optimizar componente de navegación
 
 ### 🧹 **Limpieza de Código**
-- [ ] **Limpiar código comentado** - Revisar y eliminar código obsoleto
+- [x] ~~**Limpiar código comentado**~~ ✅ **COMPLETADO** - Eliminado código obsoleto (8 archivos)
 - [ ] **Crear componentes reutilizables** - Para elementos que se repiten
 - [ ] **Optimizar importaciones** - Eliminar importaciones no utilizadas
 
@@ -368,4 +408,5 @@ className="grid-details"
 
 
 
-*Documento actualizado el 27 de septiembre de 2025*  
+*Documento actualizado el 27 de septiembre de 2025*    
+*Incluye: CSS Optimizado + React Icons + Código Comentado Eliminado*  
