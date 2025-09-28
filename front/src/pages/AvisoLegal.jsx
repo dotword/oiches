@@ -37,7 +37,7 @@ const AvisoLegal = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Aviso Legal" />
-                <main className="w-11/12 mx-auto my-6 pb-14 md:max-w-7xl">
+                <main className="container-main-pb">
                     <p className="mb-2">
                         En cumplimiento de la Ley 34/2002, de 11 de junio, de
                         servicios de la sociedad de la información y de comercio

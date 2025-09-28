@@ -13,7 +13,7 @@ const AdminNoticeboard = () => {
             animate={{ opacity: 1, height: '100%' }}
             exit={{ opacity: 0, height: 0 }}
         >
-            <Header txt="Admin Noticeboard" />
+            <Header txt="Listado de Se Busca" />
             <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
                 <ListarAllNotices token={token} />
             </main>

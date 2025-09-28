@@ -113,15 +113,18 @@ const Home = () => {
                         <div className="flex flex-wrap gap-4">
                             <Link
                                 to="/grupos"
-                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
+                                className="btn-buscar w-auto bg-moradoOiches hover:bg-purpleOiches"
                             >
                                 Músicos
                             </Link>
-                            <Link
-                                to="/salas"
-                                className="bg-moradoOiches hover:bg-purpleOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
-                            >
+                            <Link to="/salas" className="btn-buscar w-auto">
                                 Salas
+                            </Link>
+                            <Link
+                                to="/agencias"
+                                className="btn-buscar w-auto bg-moradoOiches hover:bg-purpleOiches"
+                            >
+                                Agencias
                             </Link>
                             <Link
                                 to="/agencias"
@@ -131,6 +134,7 @@ const Home = () => {
                             </Link>
                         </div>
                     </div>
+                </section>
                 </section>
                 {/* Main Content */}
                 <main className="mb-20 md:mb-28">
@@ -153,7 +157,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/grupos"
-                                className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todos los músicos
                             </Link>
@@ -179,7 +183,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/salas"
-                                className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todas las salas
                             </Link>
@@ -245,7 +249,7 @@ const Home = () => {
                         <div className="flex justify-center mt-16">
                             <Link
                                 to="/agencias"
-                                className="bg-gradient-to-r from-moradoOiches to-purpleOiches text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform hover:scale-105"
+                                className="btn-gradient-purple"
                             >
                                 Todas las agencias
                             </Link>

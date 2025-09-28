@@ -11,7 +11,7 @@ const EdicionConcierto = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Editar concierto" />
-                <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
+                <main className="container-main">
                     <ConciertoEdit />
                 </main>
             </motion.div>

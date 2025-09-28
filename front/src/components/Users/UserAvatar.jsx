@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import userIcon from '/DefaultProfile2.png';
 import { FaPencilAlt } from 'react-icons/fa';
 import { modifyUserAvatarService } from '../../services/Users/userEditService.js';
 import { toast } from 'react-toastify';
 
-const UserAvatar = ({ userData, userId, token, userLogged }) => {
+const UserAvatar = ({ userData, userId, token }) => {
     const [avatar, setAvatar] = useState('');
     const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -74,32 +73,6 @@ const UserAvatar = ({ userData, userId, token, userLogged }) => {
                     </div>
                 )}
             </form>
-            {userLogged &&
-            userLogged.roles === 'admin' &&
-            userLogged.id === userId ? (
-                <div className="flex flex-wrap gap-8">
-                    <Link
-                        to="/admin-dashboard"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
-                    >
-                        Usuarios y reservas
-                    </Link>
-                    <Link
-                        to="/admin-noticeboard"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
-                    >
-                        Noticeboard
-                    </Link>
-                    <Link
-                        to="/admin-concurso"
-                        className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform mt-8 hover:scale-105"
-                    >
-                        Concurso Oiches
-                    </Link>
-                </div>
-            ) : (
-                ''
-            )}
         </section>
     );
 };

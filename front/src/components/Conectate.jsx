@@ -23,7 +23,7 @@ const Conectate = () => {
                 {/* Botón "Únete hoy" con el estilo del resto de los botones */}
                 <Link
                     to="/register"
-                    className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded"
+                    className="btn-primary-scale-mt"
                 >
                     Únete hoy
                 </Link>

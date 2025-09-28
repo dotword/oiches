@@ -113,9 +113,6 @@ const ListarAllReservas = ({ token }) => {
     return (
         <>
             <section>
-                <h3 className="text-lg font-semibold text-center my-6">
-                    Histórico Reservas
-                </h3>
                 <Link to={`/crear-concierto/non-reserva`}>
                     <span className="flex gap-1 items-center justify-center font-semibold md:justify-start">
                         Crear concierto

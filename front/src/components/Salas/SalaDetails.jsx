@@ -131,7 +131,7 @@ const SalaDetail = () => {
                             <p className="m-auto md:mr-0">
                                 <Link
                                     to={`/sala/${idSala}/reservas`}
-                                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg"
+                                    className="btn-gradient-purple"
                                 >
                                     Quiero tocar aquí
                                 </Link>
@@ -210,7 +210,7 @@ const SalaDetail = () => {
                 {fotos.length > 0 && (
                     <section>
                         <h3 className="font-semibold">Fotos</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 items-start">
+                        <div className="grid-responsive-2 my-8 items-start">
                             {fotos.map((photo) => (
                                 <div
                                     key={photo.id}

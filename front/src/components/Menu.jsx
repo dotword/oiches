@@ -34,6 +34,10 @@ const Menu = ({ mobile }) => {
             </a>
 
             {/* Otros Enlaces */}
+            <NavLink to="/clasificados" className={linkClassName}>
+                {mobile && <span className={backgroundClassName}></span>}
+                <span className={textClassName}>Clasificados</span>
+            </NavLink>
             <NavLink to="/salas" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}
                 <span className={textClassName}>Salas</span>
@@ -95,6 +99,55 @@ const Menu = ({ mobile }) => {
                             )}
                             <span className={textClassName}>Contacto</span>
                         </NavLink>
+                        {/* Dropdown Parent */}
+                        <div
+                            className={`relative ${
+                                mobile ? 'w-full text-center' : 'inline-flex'
+                            }`}
+                            onMouseEnter={() =>
+                                !mobile && setOpenDropdown(true)
+                            }
+                            onMouseLeave={() =>
+                                !mobile && setOpenDropdown(false)
+                            }
+                        >
+                            <button
+                                onClick={() =>
+                                    mobile && setOpenDropdown((prev) => !prev)
+                                }
+                                className="w-full py-2 px-4 text-center relative overflow-hidden group flex items-center justify-center max-lg:uppercase max-lg:hover:text-white lg:text-left lg:justify-normal font-medium max-lg:font-semibold"
+                            >
+                                {mobile && (
+                                    <span
+                                        className={backgroundClassName}
+                                    ></span>
+                                )}
+                                <span className={textClassName}>Concursos</span>
+                                <FiChevronDown
+                                    className={`max-lg:absolute max-lg:right-0 ml-2 transition-transform duration-300 ${
+                                        openDropdown ? 'rotate-180' : 'rotate-0'
+                                    }`}
+                                />
+                            </button>
+
+                            {/* Dropdown Items */}
+                            {openDropdown && (
+                                <div
+                                    className={`${
+                                        mobile
+                                            ? 'bg-gray-50 left-0 right-0 fixed'
+                                            : 'top-full w-56 bg-white left-0 absolute'
+                                    } shadow-lg font-medium rounded z-20 flex flex-col`}
+                                >
+                                    <NavLink
+                                        to="/concurso/concierto-oiches"
+                                        className="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
+                                    >
+                                        Ganadores Oiches 2025
+                                    </NavLink>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
