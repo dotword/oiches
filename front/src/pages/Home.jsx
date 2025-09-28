@@ -126,15 +126,8 @@ const Home = () => {
                             >
                                 Agencias
                             </Link>
-                            <Link
-                                to="/agencias"
-                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
-                            >
-                                Agencias
-                            </Link>
                         </div>
                     </div>
-                </section>
                 </section>
                 {/* Main Content */}
                 <main className="mb-20 md:mb-28">
@@ -155,10 +148,7 @@ const Home = () => {
                             </p>
                         )}
                         <div className="flex justify-center mt-16">
-                            <Link
-                                to="/grupos"
-                                className="btn-gradient-purple"
-                            >
+                            <Link to="/grupos" className="btn-gradient-purple">
                                 Todos los músicos
                             </Link>
                         </div>
@@ -181,10 +171,7 @@ const Home = () => {
                             </p>
                         )}
                         <div className="flex justify-center mt-16">
-                            <Link
-                                to="/salas"
-                                className="btn-gradient-purple"
-                            >
+                            <Link to="/salas" className="btn-gradient-purple">
                                 Todas las salas
                             </Link>
                         </div>
