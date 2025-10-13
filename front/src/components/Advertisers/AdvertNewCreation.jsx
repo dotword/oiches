@@ -173,90 +173,92 @@ const AdvertNewCreation = () => {
                     {/* Contenido del formulario */}
                     <div className="p-6">
                         <form onSubmit={handleSubmit} className="space-y-8">
-                            <div className="space-y-6">
-                                <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
-                                    <IoPricetagOutline className="w-5 h-5 text-purpleOiches" />
-                                    INFORMACIÓN DEL ANUNCIO
-                                </h3>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <label
-                                        htmlFor="package_id"
-                                        className="block text-sm font-medium text-gray-700 space-y-2"
-                                    >
-                                        Tipo de anuncio:*
-                                        <select
-                                            id="package_id"
-                                            name="package_id"
-                                            required
-                                            value={package_id}
-                                            className="px-3 py-2 form-input"
-                                            onChange={handleChange}
-                                        >
-                                            <option value="">Selecciona</option>
-                                            {packages.map((pack) => (
-                                                <option
-                                                    key={pack.id}
-                                                    value={pack.id}
-                                                >
-                                                    {pack.package}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
+                           <div className="space-y-6">
+    <h3 className="flex items-center gap-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+        <IoPricetagOutline className="w-5 h-5 text-purpleOiches" />
+        INFORMACIÓN DEL ANUNCIO
+    </h3>
+    
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <label
+            htmlFor="package_id"
+            className="block text-sm font-medium text-gray-700 space-y-2"
+        >
+            Tipo de anuncio:*
+            <select
+                id="package_id"
+                name="package_id"
+                required
+                value={package_id}
+                className="px-3 py-2 form-input"
+                onChange={handleChange}
+            >
+                <option value="">Selecciona</option>
+                {packages.map((pack) => (
+                    <option
+                        key={pack.id}
+                        value={pack.id}
+                    >
+                        {pack.package}
+                    </option>
+                ))}
+            </select>
+        </label>
 
-                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
-                                        Categoría:*
-                                        <select
-                                            id="category_id"
-                                            name="category_id"
-                                            required
-                                            value={category_id}
-                                            className="px-3 py-2 form-input"
-                                            onChange={handleChange}
-                                        >
-                                            <option value="">Selecciona</option>
-                                            {categories.map((categorie) => (
-                                                <option
-                                                    key={categorie.id}
-                                                    value={categorie.id}
-                                                >
-                                                    {categorie.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {selectedDescription && (
-                                            <p className="mt-4 text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
-                                                {selectedDescription}
-                                            </p>
-                                        )}
-                                    </label>
-                                </div>
+        <label className="block text-sm font-medium text-gray-700 space-y-2">
+            Categoría:*
+            <select
+                id="category_id"
+                name="category_id"
+                required
+                value={category_id}
+                className="px-3 py-2 form-input"
+                onChange={handleChange}
+            >
+                <option value="">Selecciona</option>
+                {categories.map((categorie) => (
+                    <option
+                        key={categorie.id}
+                        value={categorie.id}
+                    >
+                        {categorie.name}
+                    </option>
+                ))}
+            </select>
+        </label>
 
-                                <label className="block text-sm font-medium text-gray-700 space-y-2">
-                                    Título:*
-                                    <input
-                                        type="text"
-                                        name="title"
-                                        placeholder="Título del anuncio"
-                                        required
-                                        value={title}
-                                        onChange={handleChange}
-                                        className="px-3 py-2 form-input"
-                                    />
-                                </label>
+        <label className="block text-sm font-medium text-gray-700 space-y-2">
+            Título:*
+            <input
+                type="text"
+                name="title"
+                placeholder="Título del anuncio"
+                required
+                value={title}
+                onChange={handleChange}
+                className="px-3 py-2 form-input"
+            />
+        </label>
+    </div>
 
-                                <label className="block text-sm font-medium text-gray-700 space-y-2">
-                                    Descripción:
-                                    <textarea
-                                        name="description"
-                                        placeholder="Descripción de tu anuncio. Máximo 2000 caracteres."
-                                        value={description}
-                                        onChange={handleChange}
-                                        rows="4"
-                                        className="px-3 py-2 form-textarea"
-                                    />
-                                </label>
-                            </div>
+    {selectedDescription && (
+        <p className="mt-4 text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
+            {selectedDescription}
+        </p>
+    )}
+
+    <label className="block text-sm font-medium text-gray-700 space-y-2">
+        Descripción:
+        <textarea
+            name="description"
+            placeholder="Descripción de tu anuncio. Máximo 2000 caracteres."
+            value={description}
+            onChange={handleChange}
+            rows="4"
+            className="px-3 py-2 form-textarea"
+        />
+    </label>
+</div>
 
                             {/* Dirección Fiscal */}
                             <div className="space-y-6">
@@ -265,19 +267,19 @@ const AdvertNewCreation = () => {
                                     DIRECCIÓN
                                 </h3>
 
-                                <label className="block text-sm font-medium text-gray-700 space-y-2">
-                                    Dirección:
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        placeholder="Dirección de la empresa"
-                                        value={address}
-                                        onChange={handleChange}
-                                        className="px-3 py-2 form-input"
-                                    />
-                                </label>
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Dirección:
+                                        <input
+                                            type="text"
+                                            name="address"
+                                            placeholder="Dirección de la empresa"
+                                            value={address}
+                                            onChange={handleChange}
+                                            className="px-3 py-2 form-input"
+                                        />
+                                    </label>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                     <label className="block text-sm font-medium text-gray-700 space-y-2">
                                         Ciudad:
                                         <input
@@ -289,6 +291,7 @@ const AdvertNewCreation = () => {
                                             className="px-3 py-2 form-input"
                                         />
                                     </label>
+
                                     <label className="block text-sm font-medium text-gray-700 space-y-2">
                                         Provincia:
                                         <select
@@ -319,18 +322,19 @@ const AdvertNewCreation = () => {
                                     INFORMACIÓN DE CONTACTO
                                 </h3>
 
-                                <label className="block text-sm font-medium text-gray-700 space-y-2">
-                                    Web o enlace a tus RRSS:
-                                    <input
-                                        type="text"
-                                        name="link"
-                                        placeholder="https://www.tuenlace.com"
-                                        value={link}
-                                        onChange={handleChange}
-                                        className="form-input"
-                                    />
-                                </label>
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                                    <label className="block text-sm font-medium text-gray-700 space-y-2">
+                                        Web o enlace a tus RRSS:
+                                        <input
+                                            type="text"
+                                            name="link"
+                                            placeholder="https://www.tuenlace.com"
+                                            value={link}
+                                            onChange={handleChange}
+                                            className="px-3 py-2 form-input"
+                                        />
+                                    </label>
+
                                     <label className="block text-sm font-medium text-gray-700 space-y-2">
                                         Email de contacto:
                                         <input
@@ -342,10 +346,11 @@ const AdvertNewCreation = () => {
                                             className="px-3 py-2 form-input"
                                         />
                                     </label>
+
                                     <label className="block text-sm font-medium text-gray-700 space-y-2">
                                         Teléfono:
                                         <input
-                                            type="number"
+                                            type="tel"
                                             name="contact_phone"
                                             placeholder="Teléfono de contacto"
                                             value={contact_phone}
