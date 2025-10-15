@@ -75,66 +75,64 @@ const EditAdvertPhoto = ({ advertData, token }) => {
 
     return (
         advertData && (
-            <section className="mb-4">
-                <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col items-center gap-4"
-                >
-                    <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-900/50 hover:bg-gray-800/50 hover:border-indigo-500 transition-all duration-200 group overflow-hidden">
-                        {previewUrl ? (
-                            <img
-                                src={previewUrl}
-                                alt="Vista previa"
-                                className="object-cover rounded"
-                            />
-                        ) : (
-                            <div className="bg-gray-100 flex items-center justify-center">
-                                <span className="text-sm text-gray-400">
-                                    Sin imagen
-                                </span>
-                            </div>
-                        )}
-                    </label>
-
-                    <input
-                        id="advert-image-input"
-                        ref={inputRef}
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleFileChange}
-                    />
-
-                    {file && (
-                        <div>
-                            <input
-                                type="submit"
-                                value={
-                                    isUploading
-                                        ? 'Subiendo...'
-                                        : 'Cambiar imagen'
-                                }
-                                disabled={isUploading}
-                                className="btn-account max-w-44"
-                            />
+            <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center gap-4"
+            >
+                <label className="max-w-md h-full border-2 border-gray-200 border-dashed rounded-lg cursor-pointer bg-gray-200/30 hover:bg-gray-200/50 hover:border-indigo-500 transition-all duration-200 group overflow-hidden">
+                    {previewUrl ? (
+                        <img
+                            src={previewUrl}
+                            alt="Vista previa"
+                            className="object-contain"
+                        />
+                    ) : (
+                        <div className="bg-gray-100 flex items-center justify-center">
+                            <span className="text-sm text-gray-400">
+                                Sin imagen
+                            </span>
                         </div>
                     )}
+              
+                <input
+                    id="advert-image-input"
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileChange}
+                />
+                </label>
 
-                    {previewUrl && (
-                        <div className="flex gap-3 mt-2">
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    inputRef.current && inputRef.current.click()
-                                }
-                                className="btn-account px-3 py-2"
-                            >
-                                Selecciona una nueva imagen
-                            </button>
-                        </div>
-                    )}
-                </form>
-            </section>
+                {file && (
+                    <div>
+                        <input
+                            type="submit"
+                            value={
+                                isUploading
+                                    ? 'Subiendo...'
+                                    : 'Cambiar imagen'
+                            }
+                            disabled={isUploading}
+                            className="btn-account max-w-44"
+                        />
+                    </div>
+                )}
+
+                {previewUrl && (
+                    <div className="flex gap-3 mt-2">
+                        <button
+                            type="button"
+                            onClick={() =>
+                                inputRef.current && inputRef.current.click()
+                            }
+                            className="btn-account px-3 py-2"
+                        >
+                            Selecciona una nueva imagen
+                        </button>
+                    </div>
+                )}
+            </form>
         )
     );
 };

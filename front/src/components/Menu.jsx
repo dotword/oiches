@@ -36,7 +36,7 @@ const Menu = ({ mobile }) => {
             {/* Otros Enlaces */}
             <NavLink to="/clasificados" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}
-                <span className={textClassName}>Clasificados</span>
+                <span className={textClassName}>Hub musical</span>
             </NavLink>
             <NavLink to="/salas" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}

@@ -5,12 +5,11 @@ import { CiLock } from 'react-icons/ci';
 const SubmitButton = ({ isLoading, textButton }) => {
     return (
         <>
-            {/* Botón de Guardar */}
-            <div className="pt-6 border-t border-gray-200">
+            {/* Botón de Guardar */}  
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className={`flex w-full ${
+                    className={`flex w-full border-t border-gray-200 ${
                         isLoading
                             ? 'bg-gray-400 cursor-not-allowed'
                             : 'bg-purpleOiches hover:bg-purple-700'
@@ -28,7 +27,6 @@ const SubmitButton = ({ isLoading, textButton }) => {
                         </>
                     )}
                 </button>
-            </div>
 
             {/* Nota de privacidad */}
             <div className="text-center">
