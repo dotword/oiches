@@ -219,6 +219,11 @@ const AdvertNewCreation = () => {
                                             </option>
                                         ))}
                                     </select>
+                                    {selectedDescription && (
+                                        <p className="text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
+                                            {selectedDescription}
+                                        </p>
+                                    )}
                                 </label>
 
                                 <label className="block text-sm font-medium text-gray-700 space-y-2">
@@ -234,12 +239,6 @@ const AdvertNewCreation = () => {
                                     />
                                 </label>
                             </div>
-
-                            {selectedDescription && (
-                                <p className="mt-4 text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
-                                    {selectedDescription}
-                                </p>
-                            )}
 
                             <label className="block text-sm font-medium text-gray-700 space-y-2">
                                 Descripción:

@@ -45,6 +45,7 @@ const AdvertDetailsEdit = () => {
     });
 
     const [categories, setCategories] = useState([]);
+    const [selectedDescription, setSelectedDescription] = useState('');
     const [packages, setPackages] = useState([]);
     const [provinces, setProvinces] = useState([]);
     const [error, setError] = useState('');
@@ -76,6 +77,14 @@ const AdvertDetailsEdit = () => {
         FetchAdvertPackagesService(setPackages);
         FetchProvinciasService(setProvinces);
     }, []);
+
+    useEffect(() => {
+        if (!advertDetails.category_id || categories.length === 0) return;
+        const selected = categories.find(
+            (c) => String(c.id) === String(advertDetails.category_id)
+        );
+        setSelectedDescription(selected ? selected.description : '');
+    }, [advertDetails.category_id, categories]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -144,17 +153,15 @@ const AdvertDetailsEdit = () => {
     return (
         <div className="min-h-screen bg-white">
             <BreadcrumbAdvert userLogged={userLogged} title={title} />
-            {/* Contenido principal */}   
+            {/* Contenido principal */}
             <div className="w-full mx-auto px-4 pb-6 sm:pb-12 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 {/* Header de la tarjeta */}
-                    <div className="flex items-center gap-4 px-6 py-5 border-b border-gray-100">
-                        <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
-                            <TfiWrite className="w-7 h-7 text-white" />
-                        </div>
-                        <h2 className="text-xl font-bold text-gray-900">
-                            {title}
-                        </h2>
+                <div className="flex items-center gap-4 px-6 py-5 border-b border-gray-100">
+                    <div className="w-12 h-12 bg-purpleOiches rounded-xl flex items-center justify-center">
+                        <TfiWrite className="w-7 h-7 text-white" />
                     </div>
+                    <h2 className="text-xl font-bold text-gray-900">{title}</h2>
+                </div>
                 {/* ADMIN */}
                 {userLogged && userLogged.roles === 'admin' && (
                     <div className="mx-auto mt-6 w-11/12">
@@ -175,7 +182,7 @@ const AdvertDetailsEdit = () => {
                 )}
                 <PackagesDetails />
                 {/* Contenido del formulario */}
-       
+
                 <form onSubmit={handleSubmit} className="space-y-8 px-6">
                     {/* Información del Anuncio */}
                     <div className="space-y-6">
@@ -205,10 +212,7 @@ const AdvertDetailsEdit = () => {
                                 >
                                     <option value="">Selecciona</option>
                                     {packages.map((pack) => (
-                                        <option
-                                            key={pack.id}
-                                            value={pack.id}
-                                        >
+                                        <option key={pack.id} value={pack.id}>
                                             {pack.package}
                                         </option>
                                     ))}
@@ -225,12 +229,19 @@ const AdvertDetailsEdit = () => {
                                     name="category_id"
                                     required
                                     value={advertDetails.category_id}
-                                    onChange={(e) =>
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        const selected = categories.find(
+                                            (c) => String(c.id) === String(val)
+                                        );
                                         setAdvertDetails({
                                             ...advertDetails,
-                                            category_id: e.target.value,
-                                        })
-                                    }
+                                            category_id: val,
+                                        });
+                                        setSelectedDescription(
+                                            selected ? selected.description : ''
+                                        );
+                                    }}
                                     className="px-3 py-2 form-input"
                                 >
                                     <option value="">Selecciona</option>
@@ -243,8 +254,13 @@ const AdvertDetailsEdit = () => {
                                         </option>
                                     ))}
                                 </select>
+                            {selectedDescription && (
+                                <p className="text-sm text-white bg-gray-800 p-3 rounded-lg border-l-4 border-indigo-500">
+                                    {selectedDescription}
+                                </p>
+                            )}
                             </label>
-
+                            
                             <label
                                 htmlFor="title"
                                 className="block text-sm font-medium text-gray-700 space-y-2"
@@ -352,8 +368,7 @@ const AdvertDetailsEdit = () => {
                                     onChange={(e) =>
                                         setAdvertDetails({
                                             ...advertDetails,
-                                            provincia_id:
-                                                e.target.value,
+                                            provincia_id: e.target.value,
                                         })
                                     }
                                     className="px-3 py-2 form-input"
@@ -415,8 +430,7 @@ const AdvertDetailsEdit = () => {
                                     onChange={(e) =>
                                         setAdvertDetails({
                                             ...advertDetails,
-                                            contact_email:
-                                                e.target.value,
+                                            contact_email: e.target.value,
                                         })
                                     }
                                     className="px-3 py-2 form-input"
@@ -437,8 +451,7 @@ const AdvertDetailsEdit = () => {
                                     onChange={(e) =>
                                         setAdvertDetails({
                                             ...advertDetails,
-                                            contact_phone:
-                                                e.target.value,
+                                            contact_phone: e.target.value,
                                         })
                                     }
                                     className="px-3 py-2 form-input"
@@ -473,8 +486,7 @@ const AdvertDetailsEdit = () => {
                             <>
                                 <MdOutlineSaveAlt className="w-5 h-5" />
                                 {advertDetails &&
-                                new Date(advertDetails.expiresAt) <
-                                    today
+                                new Date(advertDetails.expiresAt) < today
                                     ? 'Renueva tu anuncio'
                                     : 'Editar anuncio'}
                             </>
@@ -504,26 +516,23 @@ const AdvertDetailsEdit = () => {
                         <IoImageOutline className="w-5 h-5 text-purpleOiches" />
                         CAMBIAR IMAGEN
                     </h3>
-        
-                    <EditAdvertPhoto
-                        advertData={advertData}
-                        token={token}
-                    />          
+
+                    <EditAdvertPhoto advertData={advertData} token={token} />
                 </div>
-                    {/* DeleteAdvert integrado al final del formulario */}
-                    {userLogged &&
-                        userLogged.roles === 'admin' &&
-                        advertData?.status !== 'published' && (
-                            <div className="mt-8 pt-6 border-t border-gray-200">
-                                <DeleteAdvert
-                                    userLogged={userLogged}
-                                    token={token}
-                                    id={idAdvert}
-                                    status={advertData?.status}
-                                />
-                            </div>
-                        )}           
-            </div>       
+                {/* DeleteAdvert integrado al final del formulario */}
+                {userLogged &&
+                    userLogged.roles === 'admin' &&
+                    advertData?.status !== 'published' && (
+                        <div className="mt-8 pt-6 border-t border-gray-200">
+                            <DeleteAdvert
+                                userLogged={userLogged}
+                                token={token}
+                                id={idAdvert}
+                                status={advertData?.status}
+                            />
+                        </div>
+                    )}
+            </div>
             <Toastify />
         </div>
     );
