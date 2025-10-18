@@ -12,6 +12,7 @@ export default {
                 orangecolor: '#FFBC8E',
                 moradoOiches: '#A33ABD',
                 footercolor: '#1f2937',
+                grayLight: '#F5F7FA',
             },
             fontSize: {
                 xxs: '0.625rem', // 10px
