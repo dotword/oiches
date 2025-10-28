@@ -34,10 +34,6 @@ const Menu = ({ mobile }) => {
             </a>
 
             {/* Otros Enlaces */}
-            <NavLink to="/clasificados" className={linkClassName}>
-                {mobile && <span className={backgroundClassName}></span>}
-                <span className={textClassName}>Hub musical</span>
-            </NavLink>
             <NavLink to="/salas" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}
                 <span className={textClassName}>Salas</span>
@@ -53,6 +49,10 @@ const Menu = ({ mobile }) => {
             <NavLink to="/conciertos" className={linkClassName}>
                 {mobile && <span className={backgroundClassName}></span>}
                 <span className={textClassName}>Conciertos</span>
+            </NavLink>
+            <NavLink to="/noticeboard" className={linkClassName}>
+                {mobile && <span className={backgroundClassName}></span>}
+                <span className={textClassName}>Se busca</span>
             </NavLink>
 
             {/* Dropdown Plus */}
@@ -87,12 +87,6 @@ const Menu = ({ mobile }) => {
                                 : 'top-full w-56 bg-white left-0 absolute'
                         } shadow-lg font-medium rounded z-20 flex flex-col`}
                     >
-                        <NavLink to="/noticeboard" className={linkClassName}>
-                            {mobile && (
-                                <span className={backgroundClassName}></span>
-                            )}
-                            <span className={textClassName}>Se busca</span>
-                        </NavLink>
                         <NavLink to="/contacto" className={linkClassName}>
                             {mobile && (
                                 <span className={backgroundClassName}></span>

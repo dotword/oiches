@@ -23,7 +23,7 @@ const main = async () => {
                 password VARCHAR(250) NOT NULL,
                 avatar CHAR(100),
                 registrationCode CHAR(30),
-                roles ENUM('admin','sala','grupo','agencia', 'anunciante') DEFAULT 'grupo',
+                roles ENUM('admin','sala','grupo','agencia') DEFAULT 'grupo',
                 active BOOLEAN DEFAULT false,
                 recoverPassCode CHAR(10),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -323,92 +323,6 @@ const main = async () => {
         `);
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_categories (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                name VARCHAR(100) NOT NULL,
-                description VARCHAR(255) NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_packages (
-                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-                package VARCHAR(100) NOT NULL NOT,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS advertiser_profiles (
-                user_id CHAR(36) PRIMARY KEY NOT NULL,
-                company_name VARCHAR(100) NOT NULL,
-                tax_id VARCHAR(50) NULL,
-                billing_address VARCHAR(255) NULL,
-                city VARCHAR(100) NULL,
-                postal_code VARCHAR(20) NULL,
-                country VARCHAR(100) NULL DEFAULT 'España',
-                contact_name VARCHAR(100) NULL,
-                contact_phone VARCHAR(50) NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES usuarios(id)
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_classifieds (
-                id CHAR(36) PRIMARY KEY NOT NULL,
-                user_id CHAR(36) NOT NULL,
-                category_id INT NOT NULL,
-                package_id INT NOT NULL,
-                address VARCHAR(255) NULL,
-                city VARCHAR(100) NULL,
-                country VARCHAR(100) NULL DEFAULT 'España',
-                provincia_id INT NULL,
-                title VARCHAR(150) NOT NULL,
-                description TEXT NULL,
-                link VARCHAR(255) NULL,
-                contact_email VARCHAR(255) NULL,
-                contact_phone VARCHAR(50) NULL,
-                image_url VARCHAR(255) NOT NULL,
-                status BOOLEAN NOT NULL DEFAULT FALSE,
-                publishedAt DATETIME NULL,
-                expiresAt DATETIME NULL,
-                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (user_id) REFERENCES usuarios(id),
-                FOREIGN KEY (category_id) REFERENCES ad_categories(id),
-                FOREIGN KEY (package_id) REFERENCES ad_packages(id),
-                FOREIGN KEY (provincia_id) REFERENCES provincias(id)
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_classified_stats (
-                id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-                classified_id CHAR(36) NOT NULL,
-                clicks INT DEFAULT 0,
-                last_updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                FOREIGN KEY (classified_id) REFERENCES ad_classifieds(id)
-            );
-        `);
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS ad_classified_clicks (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                classified_id CHAR(36) NOT NULL,
-                user_id INT NULL,
-                ip VARBINARY(16) NULL,
-                user_agent TEXT NULL,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (classified_id) REFERENCES ad_classifieds(id)
-            );
-        `);
-
-        await pool.query(`
             INSERT INTO generos_musicales (nombre) VALUES
                 ('Rock'),
                 ('Pop'),
@@ -451,24 +365,6 @@ const main = async () => {
             INSERT INTO category_noticeboard (role, nombre, parent_id) VALUES 
             ('grupo', 'Nuevo integrante', NULL), ('grupo', 'Compartir bolo/gira', NULL), ('grupo', 'Promotor/Manager', NULL), ('grupo', 'Otros', NULL), ('sala', 'Músicos', NULL), ('sala', 'Otros', NULL), 
             ('grupo', 'Bajista', 1), ('grupo', 'Guitarrista', 1), ('grupo', 'Cantante', 1), ('grupo', 'Batería', 1), ('grupo', 'Teclista', 1), ('grupo', 'Otros', 1);
-        `);
-        await pool.query(`
-            INSERT INTO ad_packages (package) VALUES 
-                ('Básico 3 meses'),
-                ('Básico 6 meses'),
-                ('Básico 1 año'),
-                ('Destacado 3 meses'),
-                ('Destacado 6 meses'),
-                ('Destacado 1 año');
-        `);
-        await pool.query(`
-            INSERT INTO ad_categories (name, description) VALUES
-                ('Tiendas e instrumentos','Compraventa, alquiler y mantenimiento de instrumentos'),
-                ('Estudio y tecnología','Grabación, mezcla, acústica y streaming técnico'),
-                ('Formación','Escuelas, academias y ensayos'),
-                ('Eventos y marketing','Promoción, backline, PR y merch'),
-                ('Logística y seguros','Transporte y coberturas legales'),
-                ('Medios y plataformas','Editoriales, distribución digital y crowdfunding');
         `);
 
         console.log('¡Tablas creadas!');

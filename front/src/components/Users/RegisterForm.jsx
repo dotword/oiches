@@ -5,10 +5,9 @@ import Toastify from '../Toastify.jsx';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importar íconos de ojo
 
 const ROLE_OPTIONS = [
-  { value: 'grupo', label: 'Artista' },
-  { value: 'sala', label: 'Sala' },
-  { value: 'agencia', label: 'Agencia/Manager' },
-  { value: 'anunciante', label: 'Anunciante' },
+    { value: 'grupo', label: 'Artista' },
+    { value: 'sala', label: 'Sala' },
+    { value: 'agencia', label: 'Agencia/Manager' },
 ];
 
 export const RegisterForm = () => {
@@ -115,38 +114,38 @@ export const RegisterForm = () => {
                 <h1 className="text-4xl">Registro</h1>
                 <hr className="mb-4 md:-mb-1" />
 
-        <fieldset className="mb-2">
-          <legend className="mb-4">Elige tu tipo de usuario*</legend>
+                <fieldset className="mb-2">
+                    <legend className="mb-4">Elige tu tipo de usuario*</legend>
 
-          <div
-            role="radiogroup"
-            aria-label="Tipo de usuario"
-            className="flex flex-wrap gap-4"
-          >
-            {ROLE_OPTIONS.map((opt) => {
-              const id = `role-${opt.value}`;
-              return (
-                <div key={opt.value} className="relative mb-2">
-                  <input
-                    id={id}
-                    type="radio"
-                    name="roles"
-                    value={opt.value}
-                    className="sr-only peer"
-                    required 
-                  />
+                    <div
+                        role="radiogroup"
+                        aria-label="Tipo de usuario"
+                        className="flex flex-wrap gap-4"
+                    >
+                        {ROLE_OPTIONS.map((opt) => {
+                            const id = `role-${opt.value}`;
+                            return (
+                                <div key={opt.value} className="relative mb-2">
+                                    <input
+                                        id={id}
+                                        type="radio"
+                                        name="roles"
+                                        value={opt.value}
+                                        className="sr-only peer"
+                                        required
+                                    />
 
-                  <label
-                    htmlFor={id}
-                    className="select-none cursor-pointer px-4 py-2 rounded-2xl border border-gray-300 text-sm shadow-sm transition-colors duration-150 peer-checked:bg-purpleOiches peer-checked:text-white peer-checked:border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-purpleOiches"
-                  >
-                    {opt.label}
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        </fieldset>
+                                    <label
+                                        htmlFor={id}
+                                        className="select-none cursor-pointer px-4 py-2 rounded-2xl border border-gray-300 text-sm shadow-sm transition-colors duration-150 peer-checked:bg-purpleOiches peer-checked:text-white peer-checked:border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-purpleOiches"
+                                    >
+                                        {opt.label}
+                                    </label>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </fieldset>
 
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="name">

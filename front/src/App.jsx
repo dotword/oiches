@@ -31,7 +31,6 @@ import {
     AdminNoticeboard,
     AdminDashboard,
     ReservasDashboard,
-    AdminAdvertisersDashboard,
 } from './pages/Admin/index.jsx';
 import CreateConcierto from './pages/conciertos/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
@@ -57,15 +56,6 @@ import {
     UserNoticeboard,
     EdicionNotice,
 } from './pages/Noticeboard/index.jsx';
-
-import {
-    CreateAdvertiserProfile,
-    EditAdvertiserProfile,
-    CreateNewAdvert,
-    EditAdvertDetails,
-    AdvertPage,
-    ClasificadosPage,
-} from './pages/Advertisers/index.jsx';
 
 function App() {
     // Verificar el modo de mantenimiento
@@ -172,10 +162,7 @@ function App() {
                             path="/admin-dashboard"
                             element={<AdminDashboard />}
                         />
-                        <Route
-                            path="/admin-advertisers"
-                            element={<AdminAdvertisersDashboard />}
-                        />
+
                         <Route
                             path="/admin-noticeboard"
                             element={<AdminNoticeboard />}
@@ -249,31 +236,6 @@ function App() {
                         <Route
                             path="/bases-sorteo-entradas"
                             element={<BasesSorteoEntradas />}
-                        />
-                        {/* Advertisers */}
-                        <Route
-                            path="/advertiser-details/:userId"
-                            element={<CreateAdvertiserProfile />}
-                        />
-                        <Route
-                            path="/advertiser-details/edit/:userId"
-                            element={<EditAdvertiserProfile />}
-                        />
-                        <Route
-                            path="/create-advert/:userId"
-                            element={<CreateNewAdvert />}
-                        />
-                        <Route
-                            path="/edit-advert/:idAdvert"
-                            element={<EditAdvertDetails />}
-                        />
-                        <Route
-                            path="/advert/:idAdvert"
-                            element={<AdvertPage />}
-                        />
-                        <Route
-                            path="/clasificados"
-                            element={<ClasificadosPage />}
                         />
                     </Routes>
                 </AnimatePresence>

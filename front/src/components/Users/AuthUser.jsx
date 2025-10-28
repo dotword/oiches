@@ -11,7 +11,6 @@ import AdminDeleteUsers from '../Admin/AdminDeleteUsers.jsx';
 import UserAvatar from './UserAvatar.jsx';
 import AccountConfiguration from './AccountConfiguration.jsx';
 import { IoChevronForward } from 'react-icons/io5';
-import AdvertiserDashboard from '../Advertisers/AdvertiserDashboard.jsx';
 
 const VITE_API_URL_BASE = import.meta.env.VITE_API_URL_BASE;
 
@@ -203,10 +202,6 @@ const AuthUser = () => {
         );
     }
 
-    if (isAdvertiser && !isAdmin) {
-        return <AdvertiserDashboard userId={userId} token={token} />;
-    }
-
     if (isAdmin) {
         return (
             <>
@@ -220,16 +215,7 @@ const AuthUser = () => {
                     >
                         Usuarios
                     </Link>
-                    <Link
-                        to="/admin-advertisers"
-                        className="btn-primary-scale-mt"
-                    >
-                        Anunciantes
-                    </Link>
-                    <Link
-                        to="/admin-reservas"
-                        className="btn-primary-scale-mt"
-                    >
+                    <Link to="/admin-reservas" className="btn-primary-scale-mt">
                         Reservas
                     </Link>
                     <Link
