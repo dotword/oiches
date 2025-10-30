@@ -38,7 +38,7 @@ const CreacionGrupo = () => {
                 exit={{ opacity: 0, height: 0 }}
             >
                 <Header txt="Publica tu proyecto musical" />
-                <main className="w-11/12 mx-auto my-6 md:max-w-7xl">
+                <main className="container-main">
                     <div className="p-6 bg-white rounded-lg shadow-md">
                         <GrupoCreacion />
                     </div>

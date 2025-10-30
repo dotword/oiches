@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import GrupoFilter from '../../components/Grupos/GrupoFilter.jsx';
 import GrupoList from '../../components/Grupos/GrupoList';
 import FetchGruposService from '../../services/Grupos/FetchGruposService.js';
-import HeaderHero from '../../components/HeaderHero.jsx';
-import { Link } from 'react-router-dom';
+import Header from '../../components/Header.jsx';
 import Footer from '../../components/Footer.jsx';
 import Seo from '../../components/SEO/Seo.jsx'; // Importar el componente SEO
 import FeatureGridMusicos from '../../components/Grupos/FeatureGridMusicos.jsx';
@@ -63,33 +62,11 @@ const Grupos = () => {
                 animate={{ opacity: 1, height: '100%' }}
                 exit={{ opacity: 0, height: 0 }}
             >
-                <HeaderHero />
+                <Header txt="Encuentra a los músicos ideales" />
 
-                <section className="hero relative flex flex-col justify-center items-start bg-hero-grupos bg-cover bg-center md:h-[680px] p-8 md:p-16">
-                    <div className="text-left max-w-lg mr-auto">
-                        <h1 className="text-white text-4xl md:text-5xl font-bold leading-tight">
-                            Encuentra a los músicos ideales
-                        </h1>
-                        <p className="text-white text-lg md:text-xl mt-4 mb-3 max-[600px]:hidden">
-                            Explora diversos talentos, conecta con ellos y llena
-                            tu sala con música en vivo.
-                        </p>
-                        <p className="text-white text-2xl md:text-3xl font-semibold mt-0.25 mb-8">
-                            ¡Vive la música en cada rincón!
-                        </p>
-                        <div className="flex gap-4">
-                            <Link
-                                to="/register"
-                                className="bg-purpleOiches hover:bg-moradoOiches text-white font-bold py-2 px-6 rounded-lg transition-transform hover:scale-105"
-                            >
-                                Regístrate
-                            </Link>
-                        </div>
-                    </div>
-                </section>
                 <section>
                     <div
-                        className="flex justify-center p-2 gap-4 bg-footercolor text-white md:hidden"
+                        className="flex justify-center p-2 gap-4 bg-footercolor text-white mt-2 md:hidden"
                         onClick={() => setIsNavOpen((prev) => !prev)}
                     >
                         FILTRAR

@@ -93,7 +93,7 @@ const AgenciaCreacion = () => {
             <h3 className="text-xl font-semibold mb-6">Publica tu agencia</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Fila de Nombre, Provincia y Web en una línea */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid-responsive-2">
                     {/* Nombre de la agencia */}
                     <div className="w-full">
                         <label
@@ -241,7 +241,7 @@ const AgenciaCreacion = () => {
                     href="mailto:hola@oiches.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-gradient-to-r from-purpleOiches to-moradoOiches text-white font-bold py-2 px-4 rounded-lg shadow-lg flex max-w-32 justify-center"
+                    className="btn-gradient-purple flex max-w-32 justify-center"
                 >
                     Escríbenos
                 </a>

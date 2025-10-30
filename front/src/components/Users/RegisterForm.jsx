@@ -4,6 +4,12 @@ import { toast } from 'react-toastify';
 import Toastify from '../Toastify.jsx';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Importar íconos de ojo
 
+const ROLE_OPTIONS = [
+    { value: 'grupo', label: 'Artista' },
+    { value: 'sala', label: 'Sala' },
+    { value: 'agencia', label: 'Agencia/Manager' },
+];
+
 export const RegisterForm = () => {
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState(false); // Estado para la visibilidad de la contraseña
@@ -103,41 +109,44 @@ export const RegisterForm = () => {
         <>
             <form
                 onSubmit={handleSubmit}
-                className="flex justify-between mb-16 marker:md:justify-evenly max-w-md flex-col gap-5 p-4 lg:w-1/3 mx-auto lg:mt-20 mt-14"
+                className="flex justify-between mb-16 marker:md:justify-evenly max-w-lg flex-col gap-5 p-4 lg:w-2/5 mx-auto lg:mt-20 mt-14"
             >
                 <h1 className="text-4xl">Registro</h1>
                 <hr className="mb-4 md:-mb-1" />
-                <div className="flex gap-4">
-                    <label>
-                        Artista{' '}
-                        <input
-                            className="accent-purpleOiches"
-                            type="radio"
-                            name="roles"
-                            value="grupo"
-                        />
-                    </label>
-                    <label>
-                        Sala{' '}
-                        <input
-                            className=" accent-purpleOiches "
-                            type="radio"
-                            required
-                            name="roles"
-                            value="sala"
-                        />
-                    </label>
-                    <label>
-                        Agencia/Manager{' '}
-                        <input
-                            className=" accent-purpleOiches "
-                            type="radio"
-                            required
-                            name="roles"
-                            value="agencia"
-                        />
-                    </label>
-                </div>
+
+                <fieldset className="mb-2">
+                    <legend className="mb-4">Elige tu tipo de usuario*</legend>
+
+                    <div
+                        role="radiogroup"
+                        aria-label="Tipo de usuario"
+                        className="flex flex-wrap gap-4"
+                    >
+                        {ROLE_OPTIONS.map((opt) => {
+                            const id = `role-${opt.value}`;
+                            return (
+                                <div key={opt.value} className="relative mb-2">
+                                    <input
+                                        id={id}
+                                        type="radio"
+                                        name="roles"
+                                        value={opt.value}
+                                        className="sr-only peer"
+                                        required
+                                    />
+
+                                    <label
+                                        htmlFor={id}
+                                        className="select-none cursor-pointer px-4 py-2 rounded-2xl border border-gray-300 text-sm shadow-sm transition-colors duration-150 peer-checked:bg-purpleOiches peer-checked:text-white peer-checked:border-transparent hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-purpleOiches"
+                                    >
+                                        {opt.label}
+                                    </label>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </fieldset>
+
                 <div className="flex flex-col gap-5 justify-center">
                     <label htmlFor="name">
                         Nombre de usuario*

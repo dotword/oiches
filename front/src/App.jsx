@@ -27,7 +27,11 @@ import PoliticaCookies from './pages/PoliticaCookies.jsx';
 import CookieConsentBanner from './components/CookieConsentBanner.jsx';
 import Maintenance from './components/Maintenance.jsx';
 import Contacto from './pages/Contacto.jsx';
-import { AdminNoticeboard, AdminDashboard } from './pages/Admin/index.jsx';
+import {
+    AdminNoticeboard,
+    AdminDashboard,
+    ReservasDashboard,
+} from './pages/Admin/index.jsx';
 import CreateConcierto from './pages/conciertos/CreateConcierto.jsx';
 import CalendarioSalasPage from './pages/Reservas/CalendariosSalasPage.jsx';
 import CalendarioGruposPage from './pages/Reservas/CalendariosGruposPage.jsx';
@@ -39,14 +43,7 @@ import AgenciaPage from './pages/Agencias/AgenciaPage.jsx';
 import Agencias from './pages/Agencias/Agencias.jsx';
 import AgenciaRoster from './pages/Agencias/AgenciaRoster.jsx';
 import {
-    // InscripcionConcurso,
     AdminConcurso,
-    BasesConcurso,
-    ListadoGruposInscritos,
-    PoliticaVotacion,
-    // ValidateEmailPage,
-    ConcursoMusicosOiches,
-    AdminVoters,
     SemifinalistasConcurso,
     ConciertoConcurso,
     BasesSorteoEntradas,
@@ -165,9 +162,14 @@ function App() {
                             path="/admin-dashboard"
                             element={<AdminDashboard />}
                         />
+
                         <Route
                             path="/admin-noticeboard"
                             element={<AdminNoticeboard />}
+                        />
+                        <Route
+                            path="/admin-reservas"
+                            element={<ReservasDashboard />}
                         />
                         <Route
                             path="/crear-concierto/:reservaId"
@@ -194,38 +196,9 @@ function App() {
                             element={<AgenciaRoster />}
                         />
                         {/* CONCURSO */}
-                        {/* <Route
-                            path="/concurso/inscripcion/:idGrupo"
-                            element={<InscripcionConcurso />}
-                        /> */}
                         <Route
                             path="/admin-concurso"
                             element={<AdminConcurso />}
-                        />
-                        <Route
-                            path="/concurso/admin-voters"
-                            element={<AdminVoters />}
-                        />
-                        <Route
-                            path="/bases-concurso"
-                            xs
-                            element={<BasesConcurso />}
-                        />
-                        <Route
-                            path="/votacion-concurso-Oiches"
-                            element={<ListadoGruposInscritos />}
-                        />
-                        <Route
-                            path="/politica-votacion"
-                            element={<PoliticaVotacion />}
-                        />
-                        {/* <Route
-                            path="/concurso/validate_email/:verification_token"
-                            element={<ValidateEmailPage />}
-                        /> */}
-                        <Route
-                            path="/concurso-musicos-oiches"
-                            element={<ConcursoMusicosOiches />}
                         />
                         <Route
                             path="/concurso/concierto-oiches"

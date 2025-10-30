@@ -14,7 +14,7 @@ const AdminVoters = () => {
             exit={{ opacity: 0, height: 0 }}
         >
             <Header txt="Votantes concurso Oiches 2025" />
-            <main className="w-11/12 mx-auto pb-14 md:max-w-7xl">
+            <main className="container-main">
                 <AdminVotersList token={token} />
             </main>
             <Footer />

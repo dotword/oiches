@@ -107,7 +107,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                     name="provincia"
                     value={filters.provincia}
                     onChange={handleChange}
-                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                    className="form-field-filter"
                 >
                     <option value="">Provincia</option>
                     {allProvincias.map((provincia, index) => (
@@ -122,7 +122,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                     name="ciudad"
                     value={filters.ciudad}
                     onChange={handleChange}
-                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                    className="form-field-filter"
                 >
                     <option value="">Ciudad</option>
                     {cities.map((city, index) => (
@@ -217,7 +217,7 @@ const ConciertosFilter = ({ onFilterChange, cities, allProvincias }) => {
                     name="generos"
                     value={filters.generos}
                     onChange={handleChange}
-                    className="w-full md:w-auto px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purpleOiches"
+                    className="form-field-filter"
                 >
                     <option value="">Género</option>
                     {genres.map((genre) => (

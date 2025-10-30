@@ -66,9 +66,6 @@ const UsersList = ({ token }) => {
 
     return (
         <section className="py-6 border-b-2 border-greyOiches-50">
-            <h2 className="text-center font-semibold text-lg mb-4">
-                Usuarios de Oiches
-            </h2>
             <form className="grupo-filter-form mx-auto px-0 flex flex-wrap flex-row">
                 <div className="w-full flex gap-4">
                     <input
@@ -155,8 +152,8 @@ const UsersList = ({ token }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filteredUsers.map((filteredUsers, index) => (
-                                <tr key={`${index}`}>
+                            {filteredUsers.map((filteredUsers) => (
+                                <tr key={`${filteredUsers.usuario_id}`}>
                                     <td>
                                         <Link
                                             to={`/users/account/${filteredUsers.usuario_id}`}

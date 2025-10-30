@@ -9,7 +9,7 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         await pool.query(
-            'DROP TABLE IF EXISTS contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias_especialidades, agencias_especialidad,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
+            'DROP TABLE IF EXISTS ad_classified_stats, ad_classified_images, ad_classifieds, advertiser_profiles, ad_packages, ad_categories, contest_votes, voters, proyectos_inscritos, noticeboard, category_noticeboard, conciertos,  agencias_especialidades, agencias_especialidad,  agencias, votos_salas, votos_grupos, fechas_disponibles, reservas, grupo_media, grupo_fotos, sala_fotos, generos_grupos, grupos, generos_salas, salas, provincias, generos_musicales, usuarios'
         );
 
         console.log('Creando tablas...');
@@ -321,6 +321,7 @@ const main = async () => {
                 FOREIGN KEY(provincia) REFERENCES provincias(id)
             );
         `);
+
         await pool.query(`
             INSERT INTO generos_musicales (nombre) VALUES
                 ('Rock'),

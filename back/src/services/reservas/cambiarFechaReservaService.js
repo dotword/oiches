@@ -33,8 +33,6 @@ const cambiarFechaReservaService = async (reserva_id, fecha) => {
         // Validar fecha
         validarFechaReservaService(fecha);
 
-        console.log('fecha ', fecha);
-
         // Comprobar el email del grupo
         const [usuarioId] = await pool.query(
             'SELECT usuario_id, nombre FROM grupos WHERE id = ?',
